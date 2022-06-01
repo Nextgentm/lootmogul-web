@@ -1,0 +1,163 @@
+@import url("https://fonts.cdnfonts.com/css/blanch-condensed");
+@import url("https://fonts.googleapis.com/css2?family=Sora&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quantico&display=swap");
+@import "./slick.css"; 
+@import "./slick-theme.css";
+
+body {
+  height: 100%;
+  min-height: 100%;
+  max-width: 100%;
+  background: #000000 !important;
+  font-family: Sora, "Blanch Condensed", "Quantico";
+  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE 11 */
+
+}
+
+nav {
+  position: static;
+  z-index: 100;
+}
+
+.hs-scroll {
+  scrollbar-width: 5;
+}
+
+.react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.borderRadius {
+  border-radius: "5px!important";
+}
+
+.influencerdiv {
+  transition: transform 0.2s; /* Animation */
+}
+
+.influencerdiv:hover,
+.influencerdiv:focus,
+.influencerdiv:active {
+  transform: scale(
+    1.2
+  ); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+/* 
+.react-horizontal-scrolling-menu--scroll-container {
+  overflow-x: hidden !important;
+} */
+
+/* .influencer-card .influencer-card-btn {
+  display: none !important;
+}
+
+.influencer-card .influencer-card:hover .influencer-card-btn {
+  display: block !important;
+} */
+
+.influencer-card .influencer-card-btn-wrapper {
+  display: none;
+}
+
+.influencer-card:hover .influencer-card-btn-wrapper {
+  display: block;
+}
+
+.influencer-card-mobile .influencer-card-btn-wrapper {
+  display: block;
+  position: relative;
+}
+
+.influencer-card-mobile:hover .influencer-card-btn-wrapper {
+  display: block;
+  position: relative;
+}
+
+  .promoClass >.slick-arrows {
+    display:none!important;
+  }
+  .promoClass >.slick-next {
+    display:none!important;
+  }
+  
+  
+
+.tab-item::after {
+  content: "";
+  display: block;
+  height: 5px;
+  width: 100%;
+  background: linear-gradient(90deg, #f2b01c 0%, #ebce2c 100%), #c4c4c4;
+}
+.slick-dots li button::before {
+  font-size: 20px;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.slick-dots li.slick-active button::before {
+  color: #FFC533;
+  opacity: 1;
+}
+.slick-track
+{
+    display: flex !important;
+}
+
+.slick-slide
+{
+    height: auto !important;
+  
+}
+
+
+.customSlide li{
+  
+  width: auto!important;
+  
+  }
+  .limited-dots {
+    text-align: center;
+  }
+  .limited-dots li {
+      display: none;
+    margin: 0 5px;
+  }
+  
+
+   
+  .limited-dots li.slick-active + li,
+  .limited-dots li.slick-active,
+  .limited-dots li.slick-active + li + li 
+ {
+      display: inline-block;
+  }
+  
+  .limited-dots li:nth-last-child(1),
+  .limited-dots li:nth-last-child(2),
+  .limited-dots li:nth-last-child(3){
+      display: inline-block;
+  }
+  
+  .limited-dots li.slick-active ~ li:nth-last-child(1),
+  .limited-dots li.slick-active ~ li:nth-last-child(2),
+  .limited-dots li.slick-active ~ li:nth-last-child(3) {
+      display: none;
+  }
+  .limited-dots li.slick-active + li + li:nth-last-child(3),
+  .limited-dots li.slick-active + li + li:nth-last-child(2),
+  .limited-dots li.slick-active + li + li:nth-last-child(1),
+  .limited-dots li.slick-active + li:nth-last-child(3),
+  .limited-dots li.slick-active + li:nth-last-child(2),
+  .limited-dots li.slick-active + li:nth-last-child(1){
+      display: inline-block;
+  }
+
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }

@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Cabin:wght@300;400;500;600;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;900&display=swap");
+
+@import "./variables/index.scss";
+@import "./mixins/index.scss";
+
+body {
+    background: $color-background !important;
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.screenpadding {
+    padding: 0 10%;
+    box-sizing: border-box;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: $color-primary-3;
+    border: 1px solid $color-primary-3;
+    border-radius: 4px;
+}
+.borderRadius{
+  border-radius: "5px";
+}

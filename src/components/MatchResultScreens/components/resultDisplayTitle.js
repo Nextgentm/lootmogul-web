@@ -1,0 +1,14 @@
+/* eslint-disable react/jsx-key */
+import { Box, Text, Flex } from "@chakra-ui/layout";
+
+const ResultDisplayTitle = (props) => {
+    return (
+        <Flex zIndex="1" justifyContent={"center"} direction={["row"]} m="auto" width={["35%", "100%"]} mt="-1%">
+            <Text color="#F8ED1D" fontFamily="Blanch" fontSize={["28px", "54px"]} mb="12px" textAlign={"center"} mt={["10%", "-3%"]}>
+                {props.name}
+            </Text>
+        </Flex>
+    );
+};
+
+export default ResultDisplayTitle;
