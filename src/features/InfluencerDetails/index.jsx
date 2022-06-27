@@ -21,7 +21,7 @@ import InfluencerInfoCollapsable from "./InfluencerInfoCollapsable";
 const InfluencerDetail = ({ influencer }) => {
     const {  isTabletOrDesktop, user ,influencerLikes,FetchLikes,toggleLoginModal} = useContext(AppContext);
     const [isHeartClick, setHeartClick] = useState(false);
-    const [fullInfluencer, setFullInfluencer] = useState();
+    const [fullInfluencer, setFullInfluencer] = useState(influencer);
 
     const [tabsData, setTabsData] = useState();
     const onHeartClick = async() => {
@@ -46,26 +46,27 @@ const InfluencerDetail = ({ influencer }) => {
         }
     },[influencer,influencerLikes]);
 
-    useEffect(async () => {
-        // fetch user stats
-        if (influencer?.id) {
-            const data = await strapi.findOne("influencers", influencer.id, {
-                populate: [
-                    "contestmasters.icon",
-                    "contestmasters.feeWallet.currency",
-                    "banner",
-                    "icon",
-                    "contestmasters.reward",
-                    "contestmasters.contest_section",
-                    "nft_kreds"
-                ]
-            });
-            if (data?.data) setFullInfluencer(data.data);
-        }
-    }, [influencer]);
+    // useEffect(async () => {
+    //     // fetch user stats
+    //     if (influencer?.id) {
+    //         const data = await strapi.findOne("influencers", influencer.id, {
+    //             populate: [
+    //                 "contestmasters.icon",
+    //                 "contestmasters.feeWallet.currency",
+    //                 "banner",
+    //                 "icon",
+    //                 "contestmasters.reward",
+    //                 "contestmasters.contest_section",
+    //                 "nft_kreds"
+    //             ]
+    //         });
+    //         if (data?.data) setFullInfluencer(data.data);
+    //     }
+    // }, [influencer]);
 
     const breadcrumbsPath = [
         {
+            
             label: "Home",
             path: "/"
         },

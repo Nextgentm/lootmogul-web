@@ -15,5 +15,60 @@ module.exports =withBundleAnalyzer( {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
+  async redirects() {
+    return [
+      {
+        source: '/influencers/category/basketball-player-influencer',
+        destination: '/influencers/category/basketball',
+        permanent: true,
+      },
+      {
+        source: '/influencers/category/hockey-player-influencers',
+        destination: '/influencers/category/hockey',
+        permanent: true,
+      },
+      {
+        source: '/influencers/category/mma-player-influencers',
+        destination: '/influencers/category/mma',
+        permanent: true,
+      },
+      {
+        source: '/influencers/category/baseball-player-influencer',
+        destination: '/influencers/category/baseball',
+        permanent: true,
+      },
+      {
+        source: '/influencers/category/cricket-influencers',
+        destination: '/influencers/category/cricket',
+        permanent: true,
+      },
+      {
+        source: '/influencers/category/food-influencers',
+        destination: '/influencers/category/food',
+        permanent: true,
+      },
+      {
+        source: '/influencers/category/football-influencers',
+        destination: '/influencers/category/football',
+        permanent: true,
+      },
+      {
+        source: '/influencers/category/general-influencers',
+        destination: '/influencers/category/general',
+        permanent: true,
+      },
+      {
+        source: '/influencers/category/soccer-player-influencer',
+        destination: '/influencers/category/soccer',
+        permanent: true,
+      },
+      {
+        source: '/influencers/category/lacrosse-player-influencer',
+        destination: '/influencers/category/lacrosse',
+        permanent: true,
+      },
+      
+    ]
+  },
   
 });

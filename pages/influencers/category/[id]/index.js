@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic'
 import MyPageLoader from '../../../../src/components/MyPageLoader';
-
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 const InfluencersComponent = dynamic(() => import("../../../../src/features/Influencers/components"), 
   { loading: () => 
     <MyPageLoader/>
@@ -8,6 +9,8 @@ const InfluencersComponent = dynamic(() => import("../../../../src/features/Infl
   
 
 export default function InfluencerByCategory({ data,id }) {
+  const router = useRouter();
+  
   return <InfluencersComponent data={data?.data || []} selectedCategory={id} />;
 }
 export async function getStaticProps(context) {
@@ -22,8 +25,7 @@ export async function getStaticProps(context) {
     revalidate: 600, // In seconds
   };
   }
-
-
+ 
 
 
 export async function getStaticPaths() {

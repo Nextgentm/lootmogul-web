@@ -7,6 +7,8 @@ import {defaultAudioSettings, game} from "../../services/audioService";
 import {defaultDataSettings, getCountForCaptcha} from "../../services/dataService";
 import { apiLikeRequests } from "../../features/Home/api";
 import * as ga  from "../../services/googleAnalytics";
+import LMNonCloseALert from "../../components/LMNonCloseALert";
+import moment from "moment";
 
 
 export const AppContext = createContext({});
@@ -18,6 +20,7 @@ export const AppContextContainer = ({ children }) => {
     const [isMobileDevice, setMobileDevice] = useState(false);
 
     const [isTabletOrDesktop, setIsTabletOrDesktop] = useState(false);
+    const [showLoading, setShowLoading] = useState({});
     const [user, setUser] = useState();
     const [influencerLikes, setInfluencerLikes] = useState(null);
 
@@ -27,13 +30,15 @@ export const AppContextContainer = ({ children }) => {
     const [isNotMobile] = useMediaQuery("(min-width:768px)");
     // const isMobileDevice = useMediaQuery("(max-width:767px)")
 
-    const [currentContest, setCurrentContest] = useState(0);
+    const [currentContest, setCurrentContest] = useState();
     const [routePathAfterLogin, setRoutePathAfterLogin] = useState();
     //const [countForCaptcha, setCountForCaptcha] = useState(getCountForCaptcha());
     const [amounts, setAmounts] = useState({});
 
     const [showPaidGameConfirmation, setShowPaidGameConfirmation] = useState({});
     const [showCaptcha, setShowCaptcha] = useState({});
+    const [coupon,setCoupon] = useState("");
+    const [joiningData, setJoiningData] = useState(null);
 
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
@@ -44,6 +49,7 @@ export const AppContextContainer = ({ children }) => {
         // console.log("user",user);
 
         if(!user){
+            setShowLoading({});
             toggleLoginModal();
             setRoutePathAfterLogin({nextPath:"/joining", contestmaster:contestmaster,callerKey});
         }
@@ -56,21 +62,148 @@ export const AppContextContainer = ({ children }) => {
         }
     };
 
-    const CheckLocationAndConfirm = (contestmaster,callerKey)=>{
-      
+    const CheckIfRetry = async(contestmaster, callerKey)=>{
+        // console.log("checking retry");
+    
+        const isRetry = await strapi.request(
+            "post",
+            "contest/custom-contest/checkifretry?contest=" + contestmaster.contest?.id+"&userId="+user?.id,
+            {}
+          );
+        if(isRetry?.retry && isRetry?.free){
+            setShowPaidGameConfirmation({});
+            setCurrentContest(
+                contestmaster
+            );
+            fetchGameJoiningData(contestmaster);
+            //router.push("/joining");
+
+        }
+        else
+        if(isRetry?.retry && !isRetry?.free){
+            setShowLoading({});
+            
+            // show popup that your retries are over and then show below popup
+            setShowPaidGameConfirmation( {'cm': contestmaster.id,'callerKey':callerKey,'retry':"exceeded" });
+        }
+        else{
+            setShowLoading({});
+          setShowPaidGameConfirmation( {'cm': contestmaster.id,'callerKey':callerKey });
+        }
+    }
+
+    const CheckLocationAndConfirm =  (contestmaster,callerKey)=>{
+        if (contestmaster.entryFee>0 && contestmaster.retries>0) {
+            CheckIfRetry(contestmaster,callerKey);
+        }
+        else
         if (contestmaster.entryFee != 0) {
+setShowLoading(false);
             setShowPaidGameConfirmation( {'cm': contestmaster.id,'callerKey':callerKey });
         }
         else
         {
             setShowPaidGameConfirmation({});
             setCurrentContest(
-                contestmaster.id
+                contestmaster
             );
-            router.push("/joining")
+            fetchGameJoiningData(contestmaster);
+            // router.push("/joining")
         }
     
     }
+ 
+const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-${currentContest?.id}`) => {
+    if (contestmaster.entryFee>0 && contestmaster.retries>0) {
+        CheckIfRetry(contestmaster,callerKey);
+    } else fetchGameJoiningData();
+
+}
+    const fetchGameJoiningData = async (contestmaster = currentContest) => {
+        // console.log(coupon);
+        if (contestmaster) {
+          const { data } = await strapi.find("contests", {
+            sort: "createdAt:DESC",
+            filters: { contestmaster: contestmaster.id },
+            populate: {
+              contestmaster:{fields:['id','slug'],
+                  populate:{ game:{fields:['url','type']}}
+              }
+            }
+          });
+          let query = coupon? "contest/custom-contest/join?contest=" + data[0].id +"&coupon="+coupon+"&userId="+user?.id: "contest/custom-contest/join?contest=" + data[0].id;
+          if (data?.length > 0) {
+    
+            const resp = await strapi.request(
+              "post",
+              query,
+              {}
+            );
+       // console.log("joiningg res", resp,data);
+            if (resp?.ticketId) {
+                setCoupon("");
+              if (resp?.status == 0) {
+              
+                // alert.show("Error!", {
+                //   title: resp?.message,
+                //   actions: [
+                //     {
+                //       copy: "Ok",
+                //       onClick: () => {
+                //         // setIsHideHeader(false);
+                //         // setIsHideFooter(false);
+                //         // socket?.disconnect();
+                //         // router.back();
+                //       },
+                //     },
+                //   ],
+                // });
+                // console.log("error tickets data");
+              } else {
+                if(data[0]?.contestmaster?.data?.game?.data?.url && data[0]?.contestmaster?.data?.game?.data?.type=='html'){
+                      if (typeof window !== "undefined") {
+                        window.open(data[0]?.contestmaster?.data?.game?.data?.url+ "?ticketId="+ resp?.ticketId+ "&token=" + strapi.getToken()+"&redirecturi="+encodeURI(process.env.NEXT_PUBLIC_SITE_URL+"/games/"+data[0]?.contestmaster?.data?.slug)+ "&ts="+moment().format(),"_self") ;
+                      }
+                }
+                else 
+                  setJoiningData(resp);
+                  setShowLoading({});
+                  router.push("/joining");
+              }
+            }
+            else{
+                // no ticket found - show error
+                // alert.show("Error!", {
+                //     title: "This game is currently unavailable, please try later.",
+                //     actions: [
+                //       {
+                //         copy: "Ok",
+                //         onClick: () => {
+                //         },
+                //       },
+                //     ],
+                // });
+                setCoupon("");
+                console.log("error tickets data");
+          }
+        } else {
+          //error no contest
+        //   alert.show("Error!", {
+        //     title: "This game is currently unavailable, please try any other game.",
+        //     actions: [
+        //       {
+        //         copy: "Ok",
+        //         onClick: () => {
+        //         },
+        //       },
+        //     ],
+        // });
+        console.log("error tickets data");
+        }
+      };
+    }
+    
+
 
     const [jwt, setJwt] = useState();
 
@@ -292,7 +425,13 @@ export const AppContextContainer = ({ children }) => {
                 setShowPaidGameConfirmation,
                 influencerLikes,
                 FetchLikes,
+                showLoading,
                 showCaptcha, setShowCaptcha,
+                joiningData,
+                fetchGameJoiningData,
+                setShowLoading,
+                onPlayAgain,
+                setCoupon,
                 logout: () => {
                     if (typeof window !== 'undefined' && window.localStorage){
                         localStorage.clear();

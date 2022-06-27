@@ -155,9 +155,17 @@ nav {
   .limited-dots li.slick-active + li:nth-last-child(1){
       display: inline-block;
   }
-
   .react-player {
     position: absolute;
     top: 0;
     left: 0;
+  
   }
+  .react-player > video {
+    object-fit: cover;
+ }
+   .star{
+    position: absolute;z-index: 9; width: 75%; right: 59px; top: 211px; content: url("/assets/star.png"); 
+  }
+  img[alt~="roulette-static"] {  position: absolute; z-index: 5; width: 13%; right: 35px; top: 35px; content: url("/assets/spin_pointer.png"); }
+ 

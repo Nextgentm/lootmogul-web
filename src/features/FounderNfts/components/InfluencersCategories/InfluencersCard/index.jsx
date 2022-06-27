@@ -16,7 +16,7 @@ import { setCountForCaptcha } from "../../../../../services/dataService";
 const InfluencersCard = ({ influencer, slug, style }) => {
     const router = useRouter();
     const [isHeartClick, setHeartClick] = useState(false);
-    const { showPaidGameConfirmation,CheckAndStartGame, showCaptcha, setShowCaptcha} = useContext(AppContext);
+    const { showPaidGameConfirmation,showLoading,setShowLoading,CheckAndStartGame, showCaptcha, setShowCaptcha} = useContext(AppContext);
 
     const onHeartClick =() =>{
         setHeartClick(!isHeartClick);
@@ -71,6 +71,7 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                 <Button variant="solid" h={"28px"} w={"60px"} 
                  onClick={(e) => {
                     e.preventDefault();
+                    setShowLoading({"key":`InfCard-${influencer.contestmasters?.data[0]?.id}`,"show":true});
                     CheckAndStartGame(`InfCard-${influencer.contestmasters?.data[0]?.id}`,influencer.contestmasters?.data[0])
                 }}>
                     Play Now
@@ -86,6 +87,12 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                     CheckAndStartGame(`InfCard-${influencer.contestmasters?.data[0]?.id}`,influencer.contestmasters?.data[0])
                 }}/></LMNonCloseALert>
             }
+            <LMNonCloseALert
+                header={"Please Wait....."}
+                canClose={false}
+                
+                isOpen={showLoading.show && showLoading.key === `InfCard-${influencer.contestmasters?.data[0]?.id}` }
+               >Loading...</LMNonCloseALert>
                 {influencer.contestmasters?.data && showPaidGameConfirmation?.callerKey == `InfCard-${influencer.contestmasters?.data[0]?.id}` &&  <PaidGameConfirmation contestmaster={influencer.contestmasters.data[0]}/>}
                 <Button
                     flex={1}

@@ -35,7 +35,7 @@ const PromoCard = ({ promotion, isDetailed }) => {
             >
                 <Image
                     layout="fill"
-                    src={promotion?.bannerImage?.data[0]?.url}
+                    src={promotion?.bannerImage?.data[1]?.url?promotion?.bannerImage?.data[1]?.url:promotion?.bannerImage?.data[0]?.url}
                     alt="Article"
                 />
                 {promotion?.overlay === "live" && (

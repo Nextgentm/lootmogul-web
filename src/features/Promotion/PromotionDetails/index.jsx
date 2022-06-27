@@ -102,7 +102,7 @@ width="400px"
          layout="fill"
          height="178px"
          width="100%"
-         src={ isNotMobile || promotion.bannerImage.data.length==1 ? getStrapiMedia(promotion.bannerImage.data[0].url) : getStrapiMedia(promotion.bannerImage.data[1].url) }
+         src={ isNotMobile && promotion.bannerImage.data.length===1 ? getStrapiMedia(promotion.bannerImage.data[0].url) : getStrapiMedia(promotion.bannerImage.data[2].url) }
           alt="Article"
         />
         {promotion?.overlay === "live" && (

@@ -22,7 +22,8 @@ const Lottie = dynamic(() => import("react-lottie"));
 
 const MatchResultScreens = (props) => {
     const router = useRouter();
-    const { user, matchResult, setUser, updateUser ,setCurrentContest,setIsHideHeader, setIsHideFooter} = useContext(AppContext);
+    const { user, matchResult, setUser, updateUser ,setCurrentContest,setIsHideHeader,
+        onPlayAgain, setIsHideFooter} = useContext(AppContext);
     const [userResult, setUserResult] = useState();
     const [userStats, setUserStats] = useState();
     const [otherResults, setOtherResults] = useState();
@@ -49,7 +50,8 @@ setDefaultOptions({
         }
     },[ani])
     const handlePlayAgain = () => {
-        router.push("/joining");
+        // router.push("/joining");
+        onPlayAgain();
     };
 
     const handleCancel = () => {

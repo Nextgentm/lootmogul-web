@@ -19,9 +19,9 @@ strapi.axios.interceptors.response.use(
     switch (status) {
       case 401: case 403:{
         console.log("user not found");
-        
-        // localStorage.removeItem('user-storage');
-        window.location.replace("/");
+        strapi.logout();
+        if(location.pathname != "/")
+              window.location.replace("/");
         break;
       }
       default:

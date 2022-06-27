@@ -2,7 +2,11 @@ import { Flex, Text, Box, SimpleGrid } from "@chakra-ui/react";
 import Image from "next/image";
 
 const ExploreTrivia = ({ section,executeScroll }) => {
-    const trivias = section?.filter((item)=>item.name === "Trending Tournament").length > 0?[
+    const trivias = section?.filter((item)=>{
+        if((item.name === "Trending Tournament") && item?.contestmasters?.data?.length > 0)
+        return item;
+    }).length > 0?
+    [
         {
             id: 0,
             label: "Trending Tournament",

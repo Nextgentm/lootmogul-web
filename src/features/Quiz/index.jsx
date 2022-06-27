@@ -117,10 +117,15 @@ useEffect(()=>{
       });
 
     socket.on("game_over", data => {
-      
       setMatchResult(data.ranks);
       updateUser();
+
+      if(data.ranks?.length==1){
+        router.push("/matchresultsingle");
+      }
+      else{
         router.push("/matchresult");
+      }
       });
     
       socket.on("player_left", data => {

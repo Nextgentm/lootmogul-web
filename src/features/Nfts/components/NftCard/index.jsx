@@ -192,7 +192,7 @@ const NftCard = ({ nft, showInfo = false }) => {
         <ReactCardFlip isFlipped={isFlipped} flipDirection={"horizontal"} infinite={true}  h={"400px"}
          
         > 
-
+ <Box cursor="pointer">
 <Link href={"/nfts/"+nft?.slug} passHref={true} _focus={{border:"none"}} >
             { nft.front_image?.indexOf('.mp4') >0 &&
         <video key={nft.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'400px', width:'full'}}>
@@ -210,6 +210,8 @@ const NftCard = ({ nft, showInfo = false }) => {
     }
 
         </Link>
+        </Box>
+        <Box cursor="pointer">
         <Link href={"/nfts/"+nft?.slug} passHref={true} _focus={{border:"none"}} >
         { nft.back_image?.indexOf('.mp4') >0 &&
         <video key={nft.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'400px', width:'full'}}>
@@ -228,6 +230,7 @@ const NftCard = ({ nft, showInfo = false }) => {
                     }
 
 </Link>
+</Box>
                </ReactCardFlip>
                 
            

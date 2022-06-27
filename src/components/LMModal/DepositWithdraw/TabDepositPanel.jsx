@@ -1,17 +1,18 @@
 /* eslint-disable react/jsx-key */
-import { useState, useRef } from "react";
+import { useState, useRef , useEffect, useContext} from "react";
 import {
     Flex,
     Input,
     Select,
     Text,
-    // InputGroup,
-    // InputLeftElement,
+    InputGroup,
+    InputLeftElement,
     Checkbox,
     Button,
     Box
 } from "@chakra-ui/react";
-// import { CouponIcon } from "../../Icons";
+import AppContext from "../../../utils/AppContext";
+import { CouponIcon } from "../../Icons";
 import { AddIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import strapi from "../../../utils/strapi";
@@ -20,18 +21,19 @@ import { useBreakpointValue } from "@chakra-ui/react";
 // import { useAlert } from "react-alert";
 import { useRouter } from "next/router";
 
-// import {
-//     AutoComplete,
-//     AutoCompleteInput,
-//     AutoCompleteItem,
-//     AutoCompleteList
-// } from "@choc-ui/chakra-autocomplete";
+import {
+    AutoComplete,
+    AutoCompleteInput,
+    AutoCompleteItem,
+    AutoCompleteList
+} from "@choc-ui/chakra-autocomplete";
 const stripeJs = async () => await import("@stripe/stripe-js/pure");
 const TabDepositPanel = ({ isDeposit }) => {
     const { asPath } = useRouter();
-    // const router = useRouter();
+    const router = useRouter();
+    const { amounts,user } = useContext(AppContext);
 
-    // const ref = useRef();
+    const ref = useRef();
     const [amount, setAmount] = useState(0);
     const [accepted, setAccepted] = useState(false);
     const currentSize = useBreakpointValue({
@@ -40,8 +42,9 @@ const TabDepositPanel = ({ isDeposit }) => {
         md: "md"
     });
     const [couponCode, setCouponCode] = useState("");
+    const [ couponList, setCouponList] =useState([]);
     const [previousAmount, setPreviousAmount] = useState(0);
-    // const [showCoupon, setShowCoupon] = useState(false);
+    const [showCoupon, setShowCoupon] = useState(false);
 
     const handleIncrease = (addedAmount) => {
         const newAmount = amount + addedAmount;
@@ -63,6 +66,16 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
     ];
 
+    useEffect(()=>{
+        if(user){
+            strapi.find("coupon",{filters:{user:user.id}}).then((response)=>{
+                if(response?.data?.items){
+                    
+                    setCouponList(response?.data?.items.filter((coupon) => coupon.type === "coupon-deposit-cashback"));
+                }else setCouponList([]);
+            })
+        }
+    },[])
     const deposit = async () => {
         try {
             const user = await strapi.fetchUser();
@@ -71,38 +84,33 @@ const TabDepositPanel = ({ isDeposit }) => {
             if (user) {
                 const { id } = user;
                 const resp = await axios.post(
-                    `${
-                        process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-                        "https://gamification.tpix.in"
+                    `${process.env.NEXT_PUBLIC_STRAPI_API_URL ||
+                    "https://gamification.tpix.in"
                     }/api/payment/stripe`,
-                   
+
                     {
                         user_id: id,
                         redirect_url:
                             process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL +
                             asPath,
                         type: "DEPOSIT",
-                        value: amount
+                        value: amount,
+                        couponCode:couponCode?couponCode:""
                     },
                     {
                         headers: {
 
                             Authorization: `Bearer ${strapi.getToken()}`
-                      
-                          }
+
+                        }
                     },
                 );
 
                 // Add coupon redemption item
                 // await axios.post(
-                //     `${
-                //         process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-                //         "https://gamification.tpix.in"
-                //     }/api/coupon/redeem`,
-                //     {
-                //         userId: id,
-                //         coupon: couponCode
-                //     }
+                //     `${process.env.NEXT_PUBLIC_STRAPI_API_URL ||
+                //     "https://gamification.tpix.in"
+                //     }/api/contest/custom-contest/join?couponCode=${couponCode}&userId=${user.id}`
                 // );
 
                 const {
@@ -122,11 +130,10 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
     };
 
-    const applyCouponCode = async () => {
+    const applyCouponCode = async (couponCode) => {
         const validityResp = await axios.get(
-            `${
-                process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-                "https://gamification.tpix.in"
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL ||
+            "https://gamification.tpix.in"
             }/api/coupon/checkValidity/${couponCode}`
         );
         const {
@@ -158,7 +165,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         <Flex h="100%" w="100%" bg="#3F3F3F" direction={"column"}>
             <Flex w="100%" justifyContent={"space-evenly"} bg="#505050" p="2%">
                 <Input
-                    w={currentSize === "base" ? "40%" : "30%"}
+                    w={currentSize === "base" ? "30%" : "30%"}
                     color="white"
                     defaultValue={amount}
                     value={amount}
@@ -172,48 +179,59 @@ const TabDepositPanel = ({ isDeposit }) => {
                 ></Input>
 
                 <Select
-                    w={currentSize === "base" ? "40%" : "30%"}
+                    w={currentSize === "base" ? "25%" : "25%"}
                     color="white"
                 >
                     <option default>USD</option>
                 </Select>
+                {/* <Select bg="#505050" w={currentSize === "base" ? "30%" : "35%"} onChange = {(e)=>{
+if(e.target.value.toString() !== "Apply Coupon"){
+    setCouponCode(e.target.value);
+    }else   setCouponCode("");
 
+                }} color="white" >
+                    <option style={{ background: '#505050' }}>Apply Coupon</option>
+                    {couponList && couponList.map((item,index)=>{
+                        return  <option key={"coupon"+index} value={item.code} style={{ background: '#505050' }} >{item.code}</option>
+                    })}
+                    
+                </Select> */}
                 {/* {currentSize !== "base" && isDeposit && (
                     <Box w="30%!important" >
-{showCoupon &&  <AutoComplete   rollNavigation  onSelectOption={(e)=>{
-    setCouponCode(e.item.value);
-  //  applyCouponCode();
-}}
-   
-    
-    bg="#222222" ref={ref}>
-        <InputGroup w="100%" _focus={{border:"none", boxShadow:"none"}}     color="lightGrey"  >
-        
-          <AutoCompleteInput variant="filled"placeholder="Coupon" bg="#222222" _focus={{border:"none", bg:"#222222", boxShadow:"none"}} />
-        </InputGroup>
-        <AutoCompleteList style={{
-                                    backgroundColor: "#222222",
-                                    color:"lightGrey"
-                                }}>
-            {couponSamples.map((code, cid) => (
-              <AutoCompleteItem
-                key={`option-${cid}`}
-                value={code.slug}
-                textTransform="capitalize"
-                selected={{ bg: "whiteAlpha.50" }}
-                _focus={{ bg: "whiteAlpha.100" }}
-                style={{
-                  bg: "#222222",
-              }}
-              >
-                {code.slug}
-              </AutoCompleteItem>
-            ))}
-          </AutoCompleteList>
-      
-      </AutoComplete>}
-                {   !showCoupon &&  (<Flex  onClick={()=>{setShowCoupon(!showCoupon)}}>
-                        <CouponIcon
+                {showCoupon && <AutoComplete rollNavigation onSelectOption={(e) => {
+                            setCouponCode(e.item.value);
+                            //  applyCouponCode();
+                        }}
+
+
+                            bg="#222222" ref={ref}>
+                <InputGroup w="100%" _focus={{ border: "none", boxShadow: "none" }} color="lightGrey"  >
+
+                                <AutoCompleteInput variant="filled" placeholder="Coupon" bg="#222222" _focus={{ border: "none", bg: "#222222", boxShadow: "none" }} />
+                            </InputGroup>
+                            <AutoCompleteList style={{
+                                backgroundColor: "#222222",
+                                color: "lightGrey"
+                            }}>
+                                {couponSamples.map((code, cid) => (
+                                    <AutoCompleteItem
+                                        key={`option-${cid}`}
+                                        value={code.slug}
+                                        textTransform="capitalize"
+                                        selected={{ bg: "whiteAlpha.50" }}
+                                        _focus={{ bg: "whiteAlpha.100" }}
+                                        style={{
+                                            bg: "#222222",
+                                        }}
+                                    >
+                                        {code.slug}
+                                    </AutoCompleteItem>
+                                ))}
+                            </AutoCompleteList>
+
+                        </AutoComplete>}
+                {!showCoupon && (<Flex onClick={() => { setShowCoupon(!showCoupon) }}>
+                <CouponIcon
                             mt="8%!important"
                             m="auto"
                             mr="0px!important"
@@ -221,31 +239,35 @@ const TabDepositPanel = ({ isDeposit }) => {
                             color="white"
                         />
 
-                        <Text ml="1%!important" m="auto" color="white">
-                            APPLY OFFER
-                        </Text>
-                    </Flex>)}
+                <Text ml="1%!important" m="auto" color="white">
+                                APPLY OFFER
+                                </Text>
+
+
+                </Flex>)}
                 </Box>
                 )} */}
             </Flex>
 
-            {isDeposit && (
-                <Flex w="100%" mt="3%" justifyContent={"space-between"}>
-                    <AddInputBox value={5} onClick={() => handleIncrease(5)} />
-                    <AddInputBox
-                        value={10}
-                        onClick={() => handleIncrease(10)}
-                    />
-                    <AddInputBox
-                        value={50}
-                        onClick={() => handleIncrease(50)}
-                    />
-                    <AddInputBox
-                        value={100}
-                        onClick={() => handleIncrease(100)}
-                    />
-                </Flex>
-            )}
+            {
+                isDeposit && (
+                    <Flex w="100%" mt="3%" justifyContent={"space-between"}>
+                        <AddInputBox value={5} onClick={() => handleIncrease(5)} />
+                        <AddInputBox
+                            value={10}
+                            onClick={() => handleIncrease(10)}
+                        />
+                        <AddInputBox
+                            value={50}
+                            onClick={() => handleIncrease(50)}
+                        />
+                        <AddInputBox
+                            value={100}
+                            onClick={() => handleIncrease(100)}
+                        />
+                    </Flex>
+                )
+            }
 
             <Flex mt="3%" w="100%">
                 <Checkbox
@@ -263,10 +285,10 @@ const TabDepositPanel = ({ isDeposit }) => {
                             color="primary"
                             fontFamily={"Sora"}
                             fontSize="12px"
-                            onClick={(e)=>{
+                            onClick={(e) => {
                                 e.preventDefault();
                                 window.open(
-                                    "https://lootmogul.com/terms-of-services#payment",
+                                    "http://lootmogul.com/terms-of-services#payment",
                                     "_blank"
                                 );
                             }}
@@ -288,7 +310,7 @@ const TabDepositPanel = ({ isDeposit }) => {
             </Button>
 
             {/* <CouponBanner /> */}
-        </Flex>
+        </Flex >
     );
 };
 
@@ -327,43 +349,43 @@ const AddInputBox = ({ value, onClick }) => {
     );
 };
 
-const CouponBanner = () => {
-    const currentSize = useBreakpointValue({
-        base: "base",
-        sm: "sm",
-        md: "md"
-    });
+// const CouponBanner = () => {
+//     const currentSize = useBreakpointValue({
+//         base: "base",
+//         sm: "sm",
+//         md: "md"
+//     });
 
-    return (
-        <Flex
-            mt="3%"
-            bgImage="url('/assets/images/coupon_bg.png')"
-            bgPosition="center"
-            justifyContent={"space-between"}
-            bgRepeat="no-repeat"
-            w="100%"
-            h="100%"
-            pl="25px"
-            pr="25px"
-            pt="2%"
-            pb="2%"
-        >
-            <Box>
-                <Text
-                    variant="couponHead"
-                    style={{
-                        fontSize: currentSize === "base" ? "12px" : "16px"
-                    }}
-                >
-                    2 Special Deposit offer for you
-                </Text>
+//     // return (
+//     //     <Flex
+//     //         mt="3%"
+//     //         bgImage="url('/assets/images/coupon_bg.png')"
+//     //         bgPosition="center"
+//     //         justifyContent={"space-between"}
+//     //         bgRepeat="no-repeat"
+//     //         w="100%"
+//     //         h="100%"
+//     //         pl="25px"
+//     //         pr="25px"
+//     //         pt="2%"
+//     //         pb="2%"
+//     //     >
+//     //         <Box>
+//     //             <Text
+//     //                 variant="couponHead"
+//     //                 style={{
+//     //                     fontSize: currentSize === "base" ? "11px" : "18px"
+//     //                 }}
+//     //             >
+//     //                 2 Special Deposit offer for you
+//     //             </Text>
 
-                <Text mt="3%" variant="couponDesc">
-                    Apply an offer &amp; get extra cashback
-                </Text>
-            </Box>
+//     //             <Text mt="3%" variant="couponDesc" color={["#232323", "#F1A959"]} fontSize={["9px", "14px"]}>
+//     //                 Apply an offer &amp; get extra cashback
+//     //             </Text>
+//     //         </Box>
 
-            <Button disabled>Apply</Button>
-        </Flex>
-    );
-};
+//     //         <Button mt={["10px", "15px"]} width={["50px", "118px"]} height={["25px", "38px"]} disabled>Apply</Button>
+//     //     </Flex>
+//     // );
+// };

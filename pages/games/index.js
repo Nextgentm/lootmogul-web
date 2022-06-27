@@ -16,10 +16,10 @@ import GamesComponent from '../../src/features/Games/index';
 
 };
 
-export default function GamesPage({ data, banners=[] , seoData}) {
+export default function GamesPage({ data, banners=[] , contestSectionsData, seoData}) {
   return <>
     <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 
-  <GamesComponent contestSections={data || []} banners={banners?.data || []} />
+  <GamesComponent contestSectionsData={contestSectionsData?.data || []} contestmasters={data || []} banners={banners?.data || []} />
   </>;
 }
 
@@ -31,28 +31,25 @@ export async function getStaticProps() {
   let pageCount = 1;
   let data = [];
   do {
-    const res = await strapi.find("contest-sections", {
-      fields: ["name", "slug"],
+    const res = await strapi.find("contestmasters", {
+      fields: ["name", "slug","priority","entryFee","isFeatured","retries"],
       sort: "priority",
       populate: {
-        contestmasters: {
-          fields: ["name", "slug","priority","entryFee","isFeatured"],
+        contest_section:{
+          fields: ["name", "slug"]
+        },
+        icon: {
+          fields: ["name", "url"],
+        },
+        feeWallet: {
           populate: {
-            icon: {
-              fields: ["name", "url"],
+            currency: {
+              fields: ["type"],
             },
-            feeWallet: {
-              populate: {
-                currency: {
-                  fields: ["type"],
-                },
-              },
-            },
-            reward:{
-
-            }
           },
         },
+        reward:{
+        }
       },
 
       pagination: {
@@ -74,6 +71,12 @@ export async function getStaticProps() {
 
 
   try{
+    const contestSectionsRes = await fetch(
+      process.env.NEXT_PUBLIC_STRAPI_API_URL+'/api/contest-sections?sort=priority'
+    );
+  
+     const contestSectionsData = await contestSectionsRes.json();
+
     const bannersRes = await fetch(
       process.env.NEXT_PUBLIC_STRAPI_API_URL+'/api/campaigns?sort=priority&populate=bannerImage'
     );
@@ -81,12 +84,13 @@ export async function getStaticProps() {
      const banners = await bannersRes.json();
      const seoData = await getSeoData("games");
   
-     return { props: { data, banners , seoData} };
+     return { props: { data, contestSectionsData, banners , seoData} ,
+     revalidate: 300};
   } catch (error) {
     console.log(error);
     }
     return { props: { data } ,
-    revalidate: 600, // In seconds
+    revalidate: 300, // In seconds
   };
   }
 

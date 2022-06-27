@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import { useEffect,useState } from "react";
 import "../styles/globals.css";
 import * as ga from '../src/services/googleAnalytics';
+import LMNonCloseALert from '../src/components/LMNonCloseALert';
 
 
 const queryClient = new QueryClient({
@@ -52,6 +53,9 @@ function MyApp({ Component, pageProps }) {
     
   };
   const [loading, setLoading] = useState(false);
+
+  const [gameLoading, setGameLoading] = useState(false);
+
   const [loadParticles, setLoadParticles] = useState(true);
   const [stickyBtn, setStickyBtn] = useState(true);
  
@@ -123,9 +127,22 @@ useEffect(()=>{
               {...pageProps}
               loading={loading}
               setLoading={setLoading}
+              setGameLoading={setGameLoading}
             />
         {loading &&    <MyPageLoader/>}
           
+
+        {gameLoading &&  <LMNonCloseALert
+                header={""}
+                canClose={false}
+                data="loading...."
+                isOpen={gameLoading}
+                onClose={() => {
+                  setGameLoading(false);
+                }
+                }
+            />
+          }
           {/* <div style={style}>
           <GridLoader
             color={"#DDBF79"}

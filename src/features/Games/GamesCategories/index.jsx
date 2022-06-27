@@ -18,8 +18,8 @@ const GamesCategories = ({ isMobileDevice, section } ) => {
                 </Text>
 
                 <ContentNavigator
-                    showViewAll={section.contestmasters.data.length > arrowTrashhold && !isMobileDevice}
-                    showArrows={section.contestmasters.data.length > arrowTrashhold}
+                    showViewAll={section?.contestmasters?.data.length > arrowTrashhold && !isMobileDevice}
+                    showArrows={section?.contestmasters?.data.length > arrowTrashhold}
                     handleLeftArroeClick={() => ref.current.scrollPrev()}
                     handleRightArrowClick={() => ref.current.scrollNext()}
                     onViewAllClicked={()=>setShowAll(!showAll)}
@@ -27,7 +27,7 @@ const GamesCategories = ({ isMobileDevice, section } ) => {
             </Flex>
 
           {showAll? <Wrap m="auto !important" >
-                    {section.contestmasters.data.sort((a,b) => a.priority - b.priority)
+                    {section?.contestmasters?.data.sort((a,b) => a.priority - b.priority)
                         .map((cm, index) => (
                             <WrapItem m="auto !important" mb="2%!important"  >
                                 <GamesCard
@@ -40,7 +40,7 @@ const GamesCategories = ({ isMobileDevice, section } ) => {
                         ))}
                    
                 </Wrap>:  <ScrollMenu apiRef={ref}>
-                {section.contestmasters.data.sort((a,b) => a.priority - b.priority).map((cm, index) => (
+                {section?.contestmasters?.data?.sort((a,b) => a.priority - b.priority).map((cm, index) => (
                     
                     <GamesCard
                     style={{ mr: "24px" }}

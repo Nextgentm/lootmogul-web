@@ -19,7 +19,7 @@ import {
     // TableCaption,
     Text
 } from "@chakra-ui/react";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { SearchIcon, CalendarIcon } from "@chakra-ui/icons";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { StatusIcon } from "../../Icons";
@@ -33,17 +33,19 @@ import TransactionTable from "./TransactionTable";
 // import "@y0c/react-datepicker/assets/styles/calendar.scss";
 
 const TransactionHistory = () => {
-    const {user, amounts} = useContext(AppContext);
+    const { user, amounts } = useContext(AppContext);
     const [data, setData] = useState([]);
-        const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const [keyword, setKeyword] = useState("");
     const [status, setStatus] = useState("all");
     const [startingDate, setStartingDate] = useState(
         moment().subtract(1, "weeks").format("YYYY-MM-DD")
     );
-    
-    const [endingDate, setEndingDate] = useState(moment().endOf("day").format("YYYY-MM-DD"));
+
+    const [endingDate, setEndingDate] = useState(
+        moment().endOf("day").format("YYYY-MM-DD")
+    );
     const statusOptions = ["All", "Success", "Pending", "Failed"];
     const [value, onChange] = useState(new Date());
     const currentSize = useBreakpointValue({
@@ -62,51 +64,55 @@ const TransactionHistory = () => {
 
     const fetchData = async (
         status = "all",
-        keyword = "",startingDate=startingDate,endingDate =endingDate
-       
+        keyword = "",
+        startingDate = startingDate,
+        endingDate = endingDate
     ) => {
         try {
             setLoading(true);
-            let pageNo=1;
-  let pageCount = 1;
-  let data = [];
-            
+            let pageNo = 1;
+            let pageCount = 1;
+            let data = [];
+
             let filters = {
-                type:{$in:['credit','debit','hold']}
+                type: { $in: ["credit", "debit", "hold"] }
             };
             if (keyword !== "") {
-                filters['id']= keyword;
+                filters["id"] = keyword;
             }
 
             if (status !== "all") {
-                filters['status']= status;
+                filters["status"] = status;
             }
-            if (startingDate && endingDate ) {
-                 filters['updatedAt']= { $gte:startingDate, $lte:endingDate } 
-                }
-           
-                do {
+            if (startingDate && endingDate) {
+                filters["updatedAt"] = { $gte: startingDate, $lte: endingDate };
+            }
 
-            const res= await strapi.find("transactions", {
-                filters:filters,
-                populate:[ "contest.contestmaster", "currency", "eventmaster"],
-                sort:"id:DESC",
-                pagination: {
-                  page: pageNo,
-                  pageSize: 60,
-                },
-              });
-              if(res?.meta){
-                data.push(res.data);
-                if(pageCount==1){
-                  pageCount = res.meta.pagination.pageCount
+            do {
+                const res = await strapi.find("transactions", {
+                    filters: filters,
+                    populate: [
+                        "contest.contestmaster",
+                        "currency",
+                        "eventmaster"
+                    ],
+                    sort: "id:DESC",
+                    pagination: {
+                        page: pageNo,
+                        pageSize: 60
+                    }
+                });
+                if (res?.meta) {
+                    data.push(res.data);
+                    if (pageCount == 1) {
+                        pageCount = res.meta.pagination.pageCount;
+                    }
                 }
-              }
-               pageNo++;
-              } while (pageNo<=pageCount);
+                pageNo++;
+            } while (pageNo <= pageCount);
             // Pass data to the page via props
             data = data.flat();
-              setLoading(false);
+            setLoading(false);
             setData(data);
         } catch (error) {
             console.log(error);
@@ -126,20 +132,22 @@ const TransactionHistory = () => {
     };
 
     const handleChangeStartingDate = (e) => {
-        fetchData(status, keyword, moment(e).format("YYYY-MM-DD"),endingDate);
+        fetchData(status, keyword, moment(e).format("YYYY-MM-DD"), endingDate);
     };
 
     const handleChangeEndingDate = (e) => {
-        fetchData(status, keyword,startingDate,moment(e).format("YYYY-MM-DD"));
+        fetchData(
+            status,
+            keyword,
+            startingDate,
+            moment(e).format("YYYY-MM-DD")
+        );
     };
-
-    
 
     React.useEffect(() => {
         fetchData();
     }, [user, amounts]);
 
-    
     return (
         <Box mt="40px">
             <Heading color="white">TRANSACTION HISTORY</Heading>
@@ -183,57 +191,84 @@ const TransactionHistory = () => {
                     <CustomDatePicker
                         icon={<CalendarIcon color="white" />}
                         title={"Date Range From"}
-                        value={startingDate}                        
-                        onChange={(e)=>{
+                        value={startingDate}
+                        onChange={(e) => {
                             setStartingDate(new Date(e));
-                            fetchData(status, keyword,new Date(e),endingDate);
-                       }}
+                            fetchData(status, keyword, new Date(e), endingDate);
+                        }}
                     />
-                    
                 </GridItem>
 
                 <GridItem w="100%">
                     <CustomDatePicker
-                    startingDate={startingDate}
+                        startingDate={startingDate}
                         icon={<CalendarIcon color="white" />}
                         title={"Date Range To"}
                         value={endingDate}
-                         onChange={(e)=>{setEndingDate(new Date(e));
-                         fetchData(status, keyword,startingDate,new Date(e));}}
-                        
+                        onChange={(e) => {
+                            setEndingDate(new Date(e));
+                            fetchData(
+                                status,
+                                keyword,
+                                startingDate,
+                                new Date(e)
+                            );
+                        }}
                     />
                 </GridItem>
             </Grid>
 
-            {data &&    <Box width="100%">
-                {currentSize === "base" ? (
-                    data?.length >0 ?  
-                    <TransactionTable isMobile={true} tableData = {data} tableColumns ={["TRANSACTION ID","ACTIVITY","AMOUNT","STATUS"]}/> :
-                           ( <Box>
-                                <Text
-                                    style={{ textAlign: "center" }}
-                                >
-                                 {loading ? "loading.." :  "There are no transactions!" }
+            {data && (
+                <Box width="100%">
+                    {currentSize === "base" ? (
+                        data?.length > 0 ? (
+                            <TransactionTable
+                                isMobile={true}
+                                tableData={data}
+                                tableColumns={[
+                                    "TRANSACTION ID",
+                                    "ACTIVITY",
+                                    "AMOUNT",
+                                    "STATUS"
+                                ]}
+                            />
+                        ) : (
+                            <Box>
+                                <Text style={{ textAlign: "center" }}>
+                                    {loading
+                                        ? "loading.."
+                                        : "There are no transactions!"}
                                 </Text>
-                            </Box>)
-                ) : (
-                    
-                    data?.length >0 ?  
-                        <TransactionTable tableData = {data} tableColumns ={["TRANSACTION ID","ACTIVITY","AMOUNT","STATUS","DATE"]}/> :
-                               ( <Box>
-                                    <Text
-                                        style={{ textAlign: "center" }}
-                                    >
-                                     {loading ? "loading.." :  "There are no transactions!" }
-                                    </Text>
-                                </Box>))}
-          </Box>}
-          </Box>
+                            </Box>
+                        )
+                    ) : data?.length > 0 ? (
+                        <TransactionTable
+                            tableData={data}
+                            tableColumns={[
+                                "TRANSACTION ID",
+                                "ACTIVITY",
+                                "AMOUNT",
+                                "STATUS",
+                                "DATE"
+                            ]}
+                        />
+                    ) : (
+                        <Box>
+                            <Text style={{ textAlign: "center" }}>
+                                {loading
+                                    ? "loading.."
+                                    : "There are no transactions!"}
+                            </Text>
+                        </Box>
+                    )}
+                </Box>
+            )}
+        </Box>
     );
 };
 export default TransactionHistory;
 
-const MobileTable = ({ data ,loading}) => {
+const MobileTable = ({ data, loading }) => {
     return (
         <Box mt={6}>
             <Grid
@@ -332,15 +367,22 @@ const MobileTable = ({ data ,loading}) => {
                                     textAlign="center"
                                     fontFamily="Sora"
                                 >
-                                    {(transaction?.type === "debit" || transaction?.type === "hold")  && transaction?.contest?.data?.contestmaster?.data?.name ? (
-                                            "Played " + transaction.contest.data.contestmaster.data.name 
-                                        ) :
-                                        transaction?.type === "credit" && transaction?.contest?.data?.contestmaster?.data?.name ?
-                                        (
-                                            "Won in " + transaction.contest.data.contestmaster.data.name 
-                                        )
-                                        : transaction?.eventmaster?.data?.name ? ( transaction.eventmaster.data.name ) :  ("transaction") 
-                                    }
+                                    {(transaction?.type === "debit" ||
+                                        transaction?.type === "hold") &&
+                                    transaction?.contest?.data?.contestmaster
+                                        ?.data?.name
+                                        ? "Played " +
+                                          transaction.contest.data.contestmaster
+                                              .data.name
+                                        : transaction?.type === "credit" &&
+                                          transaction?.contest?.data
+                                              ?.contestmaster?.data?.name
+                                        ? "Won in " +
+                                          transaction.contest.data.contestmaster
+                                              .data.name
+                                        : transaction?.eventmaster?.data?.name
+                                        ? transaction.eventmaster.data.name
+                                        : "transaction"}
                                 </Text>
                             </GridItem>
 
@@ -364,7 +406,8 @@ const MobileTable = ({ data ,loading}) => {
                                     textAlign="center"
                                     fontFamily="Sora"
                                 >
-                                    {transaction?.type === "debit" || transaction?.type === "hold" ? (
+                                    {transaction?.type === "debit" ||
+                                    transaction?.type === "hold" ? (
                                         <Text color="#FF6E3B" fontWeight="bold">
                                             -${transaction?.amount}
                                         </Text>
@@ -379,7 +422,8 @@ const MobileTable = ({ data ,loading}) => {
                     ))
                 ) : (
                     <Text>
-                        {loading ? "loading.." :  "There are no transactions!" }</Text>
+                        {loading ? "loading.." : "There are no transactions!"}
+                    </Text>
                 )}
             </Box>
         </Box>
@@ -474,7 +518,7 @@ const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
 ));
 ExampleCustomInput.displayName = "ExampleCustomInput";
 
-const CustomDatePicker = ({ icon, title, startingDate,value,onChange }) => {
+const CustomDatePicker = ({ icon, title, startingDate, value, onChange }) => {
     return (
         <Flex
             style={{
@@ -492,11 +536,10 @@ const CustomDatePicker = ({ icon, title, startingDate,value,onChange }) => {
             </Flex>
 
             <DatePicker
-            
                 selected={new Date(value)}
                 onChange={onChange}
                 customInput={<ExampleCustomInput />}
-                minDate={startingDate?new Date(startingDate):null}
+                minDate={startingDate ? new Date(startingDate) : null}
                 maxDate={new Date()}
             />
         </Flex>

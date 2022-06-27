@@ -3,7 +3,7 @@ import LMSectionTabs from "../../../components/LMSectionTabs";
 import DetailsTab from "./DetailsTab";
 import LeaderboardTab from "./LeaderboardTab";
 
-const GameTabs = ({gameData}) => {
+const GameTabs = ({defaultTab,gameData}) => {
     const tabsData = [
         {
             tab: <Text>Details</Text>,
@@ -16,7 +16,7 @@ const GameTabs = ({gameData}) => {
 
     ];
     return <Box mt="3%" ml={["18px","0px","0px"]} mr="18px" textAlign={"left"}>
-        {gameData && <LMSectionTabs variant={"categoryList"} data={tabsData} />}
+        {gameData && <LMSectionTabs defaultTab={defaultTab} variant={"categoryList"} data={tabsData} />}
     </Box>
 }
 

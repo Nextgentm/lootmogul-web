@@ -10,12 +10,13 @@ import { AppContext } from "../../../utils/AppContext/index";
 
 import FAQ from "../../Home/components/FAQ";
 import Breadcrumbs from "../../../components/Breadcrumbs/index";
-import { Select } from "@chakra-ui/react";
+import { Select,Heading, Button } from "@chakra-ui/react";
 import { CategoryIcon, SortIcon } from "../../../components/Icons";
 import { apiLikeRequests, useApiLikeRequests } from "../../Home/api";
-
+import ReadMoreLess from "../ReadMoreLess";
 
 const SelectBox = ({ style, icon, title, options, onChange }) => {
+
     return (
         <Flex style={style}>
             <Box pl={4}>{icon}</Box>
@@ -50,7 +51,7 @@ const SelectBox = ({ style, icon, title, options, onChange }) => {
 
 const Influencers = ({ data, selectedCategory }) => {
     const defaultCategoryName = "Category";
-    const { isMobileDevice, isTabletOrDesktop, user,influencerLikes } = useContext(AppContext);
+    const { isMobileDevice, isTabletOrDesktop, user, influencerLikes } = useContext(AppContext);
     const [options, setOptions] = useState([]);
     const [category, setCategory] = useState(null);
     const [sortBy, setSortBy] = useState("Sort By");
@@ -73,28 +74,29 @@ const Influencers = ({ data, selectedCategory }) => {
 
 
     useEffect(async () => {
-        if (data && data?.length>0 && options.length == 0) {
+        if (data && data?.length > 0 && options.length == 0) {
             options.push(defaultCategoryName);
             data.map((cat) => {
+
                 options.push(cat.name);
             });
             setCategory(defaultCategoryName);
             setDisplayData(data);
         }
 
-    }, [data,user]);
-;
-const handleCategoryChange = (e) => {
-    const newCategory = e.target.value;
-    setCategory(newCategory);
-};
-useEffect(() => {
-    if (influencerLikes ) {
-            if (influencerLikes?.length) {              
-               
-                let populateData = Array.isArray(data)?data:[data];
-              
-                populateData =populateData.map((infcat) => {
+    }, [data, user]);
+    ;
+    const handleCategoryChange = (e) => {
+        const newCategory = e.target.value;
+        setCategory(newCategory);
+    };
+    useEffect(() => {
+        if (influencerLikes) {
+            if (influencerLikes?.length) {
+
+                let populateData = Array.isArray(data) ? data : [data];
+
+                populateData = populateData.map((infcat) => {
                     if (infcat.influencers?.data) {
                         infcat.influencers.data = infcat.influencers?.data.map(
                             (inf) => {
@@ -107,37 +109,37 @@ useEffect(() => {
                     }
                     return infcat;
                 });
-                if(!selectedCategory){
+                if (!selectedCategory) {
                     setSelCategoriesData([]);
-                }else {
-                    const selData = populateData.filter(    
+                } else {
+                    const selData = populateData.filter(
                         (cat) =>
                             cat.id.toString() === selectedCategory.toString()
                     );
                     setSelCategoriesData(selData);
                 }
                 setDisplayData(populateData);
-            
-           }
-    }
-},[influencerLikes]);
-useEffect(()=>{
-    if(data && selectedCategory){
-        
-setDisplayData(data);
-setSelCategoriesData(data);
 
-    }
-},[selectedCategory])
+            }
+        }
+    }, [influencerLikes]);
+    useEffect(() => {
+        if (data && selectedCategory) {
 
-useEffect(() => {
-    
-        if(displayData && category){
+            setDisplayData(data);
+            setSelCategoriesData(data);
+
+        }
+    }, [selectedCategory])
+
+    useEffect(() => {
+
+        if (displayData && category) {
             setSortBy("Sort by");
             if (
                 category.toLowerCase() !== defaultCategoryName.toLowerCase()
             ) {
-                const selData = displayData.filter(    
+                const selData = displayData.filter(
                     (cat) =>
                         cat.name.toLowerCase() === category.toLowerCase()
                 );
@@ -145,7 +147,7 @@ useEffect(() => {
             } else {
                 setSelCategoriesData(displayData);
             }
-        } 
+        }
     }, [category, displayData]);
 
     const handleSortByChange = (e) => {
@@ -153,7 +155,7 @@ useEffect(() => {
         setSortBy(newSortBy);
     };
     useEffect(() => {
-        if(selectedCategory) return;
+        if (selectedCategory) return;
         if (sortBy.toLowerCase() === "alphabetical") {
             const newCatData = selCategoriesData.map((cat) => {
                 cat.influencers.data?.sort((a, b) =>
@@ -171,6 +173,7 @@ useEffect(() => {
         }
     }, [sortBy]);
 
+    console.log(data);
     return (
         <Box mt="30px">
             <Box
@@ -213,7 +216,7 @@ useEffect(() => {
                 </Text>
                 {/* )} */}
 
-             {!selectedCategory &&(   <HStack spacing="24px" mt="50px">
+                {!selectedCategory && (<HStack spacing="24px" mt="50px">
                     <SelectBox
                         style={{
                             border: "1px solid #FFFFFF",
@@ -240,25 +243,28 @@ useEffect(() => {
                         onChange={handleSortByChange}
                     />
                 </HStack>
+
                 )}
                 <Box>
                     {selCategoriesData?.map((influencer, index) => (
-                        
-                           <InfluencersCategories
-                           
-                           isMobileDevice={isMobileDevice}
-                           key={`influencers-${index}`} 
-                           influencer={influencer}
-                       />
-                      
-                       
+
+                        <InfluencersCategories
+
+                            isMobileDevice={isMobileDevice}
+                            key={`influencers-${index}`}
+                            influencer={influencer}
+
+                        />
                     ))}
+
                 </Box>
-                {/* <Box mt="50px">
-                    <FAQ title="FREQUENTLY ASKED QUESTIONS" />
-                </Box> */}
+
+            {selectedCategory && selCategoriesData[0].description && selCategoriesData[0].description.length>0 && <Box> 
+                <Heading fontFamily="Blanch" color="white" fontSize="32px" mt="5%"> Description</Heading>
+                <ReadMoreLess read={selCategoriesData[0].description} lines={7} /></Box>}    
+              
             </Box>
-        </Box>
+        </Box >
     );
 };
 

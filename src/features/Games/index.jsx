@@ -7,11 +7,12 @@ import ExploreTrivia from "./ExploreTrivia";
 import GameCarouselCard from "./GameCarouselCard";
 import LMThumbnailCarousel from "../../components/LMCarousel/LMThumbnailCarousel";
 
-const GamesComponent = ({ contestSections, banners }) => {
+const GamesComponent = ({ contestmasters, contestSectionsData,banners }) => {
     const { isMobileDevice } = useContext(AppContext);
 
     const[itemRefs, setItemRefs] = useState({});
     // const router = useRouter();
+    const[contestSections, setContestSections] = useState([]);
 
     const[featuredGames, setFeaturedGames] = useState([]);
     const[carouselItem, setCarouselItem] = useState();
@@ -27,23 +28,37 @@ const GamesComponent = ({ contestSections, banners }) => {
   
 
     useEffect(() => {
-       if(contestSections){
+       if(contestmasters){
         const fg =[];
         const cs = [];
-        contestSections.map((section) => {
-            section.contestmasters?.data.map(con=> 
-                con.isFeatured && fg.push(con) && cs.push(section.name))
+        // console.log("contestmasters",contestmasters);
+        contestmasters.map((cm) => {
+                if(cm.isFeatured) fg.push(cm) ;
+
+                let section = contestSectionsData?.find(sec=>sec.id == cm.contest_section?.data?.id);
+                if(section){
+                    if(section?.contestmasters?.data)
+                        section.contestmasters.data?.push(cm);
+                    else{
+                        section.contestmasters = {
+                            data:[cm]
+                        }
+                    }
+                }
+                
         });
         setFeaturedGames(fg);
+        
+        setContestSections(contestSectionsData);
         const ci =fg.map((item,index)=>{
             return  <Link _hover={{textDecoration:"none"}} _focus={{border:"none", boxShadow:"none"}} href={"/games/"+item.slug} width="100%" height={"100%"} key={"gameCar"+index}>
-                <GameCarouselCard sectionName = {cs[index]} contestmaster = {item}/>
+                <GameCarouselCard sectionName = {item.contest_section?.name} contestmaster = {item}/>
                 
                 </Link>
         })
         setCarouselItem(ci.slice(0,3));
        }
-      }, [contestSections]);
+      }, [contestmasters,contestSectionsData]);
     
     return (
         <Box>

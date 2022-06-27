@@ -13,11 +13,10 @@ const WAITING_TIME_IN_SECONDS = 15;
 
 const Joining = (props) => {
   const router = useRouter();
-  const [joiningData, setJoiningData] = useState(null);
 
   const [users, setUsers] = useState([]);
   const [timer, setTimer] = useState(WAITING_TIME_IN_SECONDS);
-  const { getSocket, setIsHideHeader, setIsHideFooter, currentContest } =
+  const { joiningData, getSocket, setIsHideHeader, setIsHideFooter, currentContest } =
     useContext(AppContext);
   const [socket, setSocket] = useState();
   const [ticketId, setTicketId] = useState(0);
@@ -33,7 +32,7 @@ const Joining = (props) => {
       props.setLoading(true);
       setIsHideHeader(true);
       setIsHideFooter(true);
-      fetchData();
+      // fetchData();
     }
 
     const handleRouteChange = (url, { shallow }) => {
@@ -114,57 +113,7 @@ const Joining = (props) => {
     
   }, [socket, ticketId]);
 
-  const fetchData = async () => {
-    if (currentContest) {
-      const { data } = await strapi.find("contests", {
-        sort: "createdAt:DESC",
-        filters: { contestmaster: currentContest },
-        populate: {
-          contestmaster:{fields:['id'],
-              populate:{ game:{fields:['url','type']}}
-          }
-        }
-      });
-      if (data?.length > 0) {
-
-        const resp = await strapi.request(
-          "post",
-          "contest/custom-contest/join?contest=" + data[0].id,
-          {}
-        );
-        if (resp?.ticketId) {
-          if (resp?.status == 0) {
-            alert.show("Error!", {
-              title: resp?.message,
-              actions: [
-                {
-                  copy: "Ok",
-                  onClick: () => {
-                    setIsHideHeader(false);
-                    setIsHideFooter(false);
-                    socket?.disconnect();
-                    router.back();
-                  },
-                },
-              ],
-            });
-          } else {
-            if(data[0]?.contestmaster?.data?.game?.data?.url && data[0]?.contestmaster?.data?.game?.data?.type=='html'){
-                  if (typeof window !== "undefined") {
-
-                    window.open(data[0]?.contestmaster?.data?.game?.data?.url+ "?ticketId="+ resp?.ticketId+ "&token=" + strapi.getToken()+ "&ts="+now(),"_self") ;
-                  }
-            }
-            else 
-              setJoiningData(resp);
-          }
-        }
-      }
-    } else {
-      //error no contest
-    }
-  };
-
+  
   useEffect(() => {}, [user, currentContest]);
 
   return (

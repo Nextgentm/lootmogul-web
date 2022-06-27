@@ -50,6 +50,27 @@ export const BtnStyle = {
         textShadow: "0 -1px 0 #354C8C",
         boxShadow: "none"
     },
+    spinclaimBtn: {
+      background: "red",
+      color: "white",
+      marginBottom: "1rem",
+      outline: "white",
+      boxShadow: "none",
+      padding:"1.2rem",
+      textAlign:"center"
+      
+    },
+    sliderBtn: {
+      background: "#FFB237",
+      color: "white",
+      marginBottom: "1rem",
+      outline: "white",
+      boxShadow: "none",
+      padding:"1.2rem",
+      textAlign:"center",
+      borderRadius:'0px'
+      
+    },
     }
   }
 };

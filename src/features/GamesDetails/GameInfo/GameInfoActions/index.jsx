@@ -1,4 +1,4 @@
-import {  Flex, Button, Text,  Image ,Popover, PopoverTrigger} from "@chakra-ui/react";
+import { Flex, Button, Text, Image, Popover, PopoverTrigger } from "@chakra-ui/react";
 import {
     // AiOutlineHeart,
     // AiOutlineShareAlt,
@@ -9,12 +9,13 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "../../../../utils/AppContext";
 import strapi from "../../../../utils/strapi";
 
-import  {setCountForCaptcha} from "../../../../services/dataService";
+import { setCountForCaptcha } from "../../../../services/dataService";
+import CountDownTimer from "../../../../components/CountDownTimer";
 import dynamic from "next/dynamic";
 const NextShare = dynamic(() => import("../../../../utils/socialbuttons"));
-const PaidGameConfirmation =  dynamic(() => import("../../../Games/PaidGameConfirmation")) ;
-const LMNonCloseALert =  dynamic(() => import("../../../../components/LMNonCloseALert")) ;
-const CaptchaPopup =  dynamic(() => import("../../../../components/LMModal/CaptchaPopup")) ;
+const PaidGameConfirmation = dynamic(() => import("../../../Games/PaidGameConfirmation"));
+const LMNonCloseALert = dynamic(() => import("../../../../components/LMNonCloseALert"));
+const CaptchaPopup = dynamic(() => import("../../../../components/LMModal/CaptchaPopup"));
 
 const iconStyles = {
     width: "40px",
@@ -24,7 +25,7 @@ const iconStyles = {
     align: "center",
     justify: "center",
     ml: "16px",
-    cursor:"pointer"
+    cursor: "pointer"
 
 
 };
@@ -42,11 +43,12 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
         influencerLikes,
         FetchLikes
     } = useContext(AppContext);
-    const { showPaidGameConfirmation, CheckAndStartGame, showCaptcha, setShowCaptcha } =
+    const { showPaidGameConfirmation, CheckAndStartGame, showCaptcha, setShowCaptcha, showLoading, setShowLoading } =
         useContext(AppContext);
     const imgSize = { width: 30, height: 30 };
 
     const [isHeartClick, setHeartClick] = useState(false);
+    const [contestStatus,setContestStatus]= useState(false);
 
     const [animate, setAnimate] = useState(false);
     const animateEffect = () => {
@@ -67,7 +69,7 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
             const resp = await strapi.request(
                 "get",
                 "connection/toggleInfluencerLike?influencer=" +
-                    gameData.influencer.data.id,
+                gameData.influencer.data.id,
                 {}
             );
             FetchLikes();
@@ -99,11 +101,12 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
             </Flex>
 
             <Flex mt={["12px", 0]}>
-                <Button
+                {gameData && gameData.contest && (gameData?.contest?.status === "active" ||contestStatus) && <Button
                     variant="solid"
                     h={"40px"}
                     mr="8px"
                     onClick={() => {
+                        setShowLoading({ "key": `GameDetail-${gameData?.id}`, "show": true });
                         CheckAndStartGame(
                             `GameDetail-${gameData?.id}`,
                             gameData
@@ -111,23 +114,38 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
                     }}
                 >
                     Join Contest
-                </Button>
+                </Button>}
+                {gameData && gameData.contest && (gameData?.contest?.status === "upcoming" && !contestStatus) && (
+                    <Button m="auto" opacity="1!important" variant="outline" mr="8px"
+                        h={"40px"} disabled color="primary" >
+
+                        <CountDownTimer onZero={()=>setContestStatus(true)} startDate={gameData.contest.startDate} /> </Button>)}
+                {gameData && gameData.contest && gameData?.contest?.status === "closed" && (<Button m="auto" variant="outline" mr="8px"
+                    h={"40px"} disabled>
+
+                    Completed </Button>)}
                 {gameData && showCaptcha && showCaptcha?.callerKey ==
-                        `GameDetail-${gameData?.id}` &&  <LMNonCloseALert
-                header={"Clear Captcha!"}
-                canClose={false}                
-                isOpen={showCaptcha}
-              ><CaptchaPopup onChange={()=>{
-                setShowCaptcha({});
-                    setCountForCaptcha(0);
-                    CheckAndStartGame(`GameDetail-${gameData?.id}`,gameData);
-                }}/></LMNonCloseALert>
-            }
+                    `GameDetail-${gameData?.id}` && <LMNonCloseALert
+                        header={"Clear Captcha!"}
+                        canClose={false}
+                        isOpen={showCaptcha}
+                    ><CaptchaPopup onChange={() => {
+                        setShowCaptcha({});
+                        setCountForCaptcha(0);
+                        CheckAndStartGame(`GameDetail-${gameData?.id}`, gameData);
+                    }} /></LMNonCloseALert>
+                }
                 {gameData &&
                     showPaidGameConfirmation?.callerKey ==
-                        `GameInfo-${gameData?.id}` && (
+                    `GameInfo-${gameData?.id}` && (
                         <PaidGameConfirmation contestmaster={gameData} />
                     )}
+
+                <LMNonCloseALert
+                    header={"Please Wait....."}
+                    canClose={false}
+                    isOpen={showLoading.show && showLoading.key === `GameDetail-${gameData?.id}`}
+                ></LMNonCloseALert>
 
                 <Flex
                     {...iconStyles}
@@ -168,7 +186,7 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
                             hashtag="lootmogul"
                             type="influencer"
                             influencer={gameData?.influencer?.data}
-                            user= {user}
+                            user={user}
                         ></NextShare>
                     </Popover>
                 </Flex>

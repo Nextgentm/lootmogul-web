@@ -6,10 +6,9 @@ First, run the development server after installing all required packages:
 
 ```bash
 npm install
-# or
-yarn install
 
-npm run devn
+```bash
+npm run dev
 # or
 yarn dev
 ```

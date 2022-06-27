@@ -30,7 +30,7 @@ const InfluencerGame = ({ contestmasters }) => {
                         itemId={`item-${index}`}
                         key={`item-${index}`}
                         contestmaster={cm}
-                        sectionName={cm.contest_section?.data.name}
+                        sectionName={cm.contest_section?.data?.name}
                     />
                 ))}
             </ScrollMenu>

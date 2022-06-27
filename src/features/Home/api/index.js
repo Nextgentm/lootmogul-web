@@ -79,7 +79,7 @@ export const apiGames = async () => {
 export const apiContestsFeatured = async () => {
     const { data } = await strapi.find("contestmasters", {
         filters: { isFeatured: true, status: "active" },
-        fields: ["name", "slug", "entryFee"],
+        fields: ["name", "slug", "entryFee","retries"],
         sort: "priority",
         populate: {
             feeWallet: {

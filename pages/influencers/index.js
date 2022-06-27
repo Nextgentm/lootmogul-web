@@ -30,7 +30,7 @@ export async function getStaticProps() {
   let data = [];
   do {
     const res = await strapi.find("influencer-categories", {
-      fields: ["name", "slug"],
+      fields: ["name", "slug","description"],
       sort: "priority",
       populate: {
         influencers: {

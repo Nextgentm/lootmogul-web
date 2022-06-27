@@ -7,7 +7,8 @@ import DepostWithdraw from "../../../components/LMModal/DepositWithdraw";
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../../../utils/AppContext";
 
-const PaidGameConfirmation = ({contestmaster}) => {
+const PaidGameConfirmation = ({retry,contestmaster}) => {
+    
     const [locationCheck, setLocationCheck] = useState({
         isBan: false,
         isBanText: ""
@@ -32,7 +33,7 @@ const PaidGameConfirmation = ({contestmaster}) => {
                     
                         if (res.canPlay) {
                             setCurrentContest(
-                                contestmaster?.id
+                                contestmaster
                             );
                             setShowModal({
                                 show: true,
@@ -96,7 +97,7 @@ const PaidGameConfirmation = ({contestmaster}) => {
                     <DepostWithdraw totalAmount={showModal.data.balance} isDeposit={true} />
                 )}
                 {showModal.mode === "joining" && (
-                    <JoiningPopup data={showModal.data} />
+                    <JoiningPopup retry={{"retry":retry,"count":contestmaster?.retries}} data={showModal.data} />
                 )}
             </LMModal>
         </>

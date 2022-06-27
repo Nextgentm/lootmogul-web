@@ -50,7 +50,7 @@ export async function getStaticProps() {
     const seoData = await getSeoData("home");
 
     return { props: { topBanners, bottomBanners,faqData, featuredInfluencers,trendingGames,testimonials,seoData} ,
-    revalidate: 3600, // In seconds
+    revalidate: 300, // In seconds
   };
   } catch (error) {
     console.log(error);

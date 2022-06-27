@@ -1,14 +1,10 @@
 import { Text } from "@chakra-ui/react";
 
-import dynamic from 'next/dynamic'
-import MyPageLoader from "../../../../src/components/MyPageLoader";
-
-const AboutUsDetails = dynamic(() => import("../../../../src/features/AboutUs/AmbassadorsProfile"),  { loading: () => 
-  <MyPageLoader/>
- })
+import AmbassadorsProfile from "../../../../src/features/AboutUs/AmbassadorsProfile"
 
 
-export default function AmbassadorsDetails({ slug, error }) {
+
+export default function AmbassadorsDetails({slug, aboutUsData, error }) {
   if (error) {
     return (
       <Text fontFamily={"Sora"} fontSize="20px" color="white" p="20px">
@@ -17,17 +13,21 @@ export default function AmbassadorsDetails({ slug, error }) {
     );
   }
 
-  return <AboutUsDetails slug={slug} />;
+  return <AmbassadorsProfile slug={slug} aboutUsData={aboutUsData} />;
 }
 export async function getStaticProps(context) {
-  // Fetch data from external API
+    // Fetch data from external API
+    const  slug  = context.params.slug;
+    const aboutUs = await fetch(process.env.NEXT_PUBLIC_STRAPI_API_URL +'/api/about-us-profiles?filters[slug]='+slug+'&populate[0]=profilePic&populate[1]=sharedSeo');
 
-  const  slug  = context.params.slug;
-
-
-  return { props: { slug } ,
-  revalidate: 600, // In seconds
-};
+    let aboutUsData = await aboutUs.json();
+  
+    aboutUsData = aboutUsData.data;
+  
+  
+    return { props: {slug, aboutUsData},
+    revalidate: 600, // In seconds
+  };
 }
 
 

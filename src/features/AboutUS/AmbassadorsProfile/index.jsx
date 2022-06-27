@@ -24,28 +24,12 @@ const newMarkDownTheme = {
   };
 
   
-const AmbassadorsProfile = ({slug})=>{
+const AmbassadorsProfile = ({slug, aboutUsData})=>{
+  // console.log(slug, aboutUsData);
     const router = useRouter();
-    const [detailedData, setDetailedData] = useState();
+    const [detailedData, setDetailedData] = useState(aboutUsData?aboutUsData[0]:[]);
     const { isMobileDevice } = useContext(AppContext);
-    useEffect(async () => {
-        // fetch user stats
-
-        if (slug) {
-            const filter = isNaN(slug) ? {slug: slug}:  {id: slug} ;
-            const data = await strapi.find("about-us-profiles", {
-                filters:filter,
-                populate: [
-                    "profilePic",
-                    "sharedSeo"
-                ]
-            });
-            if (data?.data?.length) {
-                setDetailedData(data.data[0]);
-               
-            }
-        }
-    }, [slug]);
+   
 
     return <Box   mr={["18px!important", "60px!important"]}
     ml={["18px!important", "60px!important"]}

@@ -51,8 +51,8 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                     layout="fill"
                     alt="dtl"
                     src={
-                        gameData?.icon
-                            ? gameData.icon.data?.url
+                        gameData?.icon?.data?.url
+                            ? gameData.icon.data.url
                             : "/assets/game-dtl-player.png"
                     }
                 />
@@ -61,9 +61,9 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                 <Center>
                 <Text 
                     color="#FDFFE5"
-                    fontSize="34px"
+                    fontSize={["25px","28px","34px"]}
                     fontWeight={"600"}
-                    p="70px"
+                    p={["25px","30px","40px"]}
                     flexWrap={"wrap"}
                     textAlign={"center"}
                 >

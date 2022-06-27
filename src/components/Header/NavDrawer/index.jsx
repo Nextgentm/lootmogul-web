@@ -18,9 +18,10 @@ const NavDrawer = ({ isOpen, onClose, renderMobileRoutes }) => {
                         src="/assets/lm_logo.png"
                         width={"92px"}
                         height={"22px"}
+                        
                     />
                 </Box>
-                {renderMobileRoutes()}
+                {renderMobileRoutes}
             </DrawerContent>
         </Drawer>
     );
