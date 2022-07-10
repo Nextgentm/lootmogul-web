@@ -37,7 +37,7 @@ export async function getStaticProps() {
           fields: ["name", "slug","tagline","order"],
           populate: {
             icon: {
-              fields: ["name", "url"],
+                fields: ["name", "url"],
             },
             contestmasters: {
               fields: ["entryFee"],

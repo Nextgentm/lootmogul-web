@@ -41,6 +41,16 @@ const Banners = ({ bannersList }) => {
             return   <Image 
                   key={`top-banner-img-${index}`}
                   alt={`action`}
+                  onClick= {(e)=>{
+                    e.preventDefault();
+                    ga.eventTracking({
+                      action: "main banner "+item.id+"is clicked",
+                      params:{
+                        "banner":item.id
+                      }
+                  
+                    });
+                    callToAction(item)} }cursor={(item.callToAction && item.callToAction !== "")||item.redirectURL?"pointer" :""}
                   w="100%" 
                   h={["453px!important","320px!important","360px!important", "460px!important","580px!important"]}
                   layout = "fill"

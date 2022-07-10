@@ -123,11 +123,11 @@ const GamesComponent = ({ contestmasters, contestSectionsData,banners }) => {
                         iR[index] = el; 
                         setItemRefs(iR);
                     } }>
-                    <GamesCategories 
+                   {section?.contestmasters?.data && section?.contestmasters?.data.length > 0 && <GamesCategories 
                         key={`games-${index}`}
                         isMobileDevice={isMobileDevice}
                         section={section}
-                    />
+                    />}
                     </Box>
                 ))}
             </Box>

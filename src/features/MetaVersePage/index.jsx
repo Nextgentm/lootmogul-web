@@ -1,16 +1,27 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Box, Flex} from "@chakra-ui/react";
+import { useRouter } from "next/router";
+
 import Image from "next/image";
 import LMVideoPlayer from "../../components/LMVideoPlayer";
 import { VolumeIcon } from "../../components/Icons";
 import { AppContext } from "../../utils/AppContext";
-const MetaVersePage = ()=>{
+const MetaVersePage = ({type})=>{
     const { isTabletOrDesktop, isTabletOrMobile } = useContext(AppContext);
+    const router = useRouter();
     const defaultData = {type:"video", src: "/assets/videos/Exterior_block_numbers_Crypto_Arena.mp4",label:"overview",isSelected:true} ;
-    const interiorData = {type:"iframe", src: "https://momento360.com/e/u/4dbcdcf5486446ee89599fd14d753277?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=large",label:"interior",isSelected:true} ;
-    const exteriorData = {type:"iframe", src: "https://momento360.com/e/u/66e98a1b5df64499a342186c72f9a1bd?utm_campaign=embed&utm_source=other&heading=0&pitch=0&field-of-view=75&size=large",label:"exterior",isSelected:true} ;
+    const interiorData = {type:"iframe", src: "https://mls.kuu.la/share/collection/7v1XZ?fs=1&vr=1&zoom=1&sd=1&thumbs=1",label:"interior",isSelected:true} ;
+    const exteriorData = {type:"iframe", src: "https://mls.kuu.la/share/collection/7v1kl?fs=1&vr=1&zoom=1&sd=1&thumbs=1",label:"exterior",isSelected:true} ;
+    const seatData = {type:"iframe", src: "https://mls.kuu.la/share/collection/7vKlp?fs=1&vr=1&zoom=1&sd=1&thumbs=1",label:"seats",isSelected:true} ;
     const [showData, setShowData]= useState(defaultData);
     const [mute, setMute] = useState(true);
+    useEffect(()=>{
+if(!type){
+    setShowData(defaultData);
+} else if(type==="stadium-exterior-nft")  setShowData(exteriorData);
+else if(type === "stadium-internal-nft")  setShowData(interiorData);
+else if(type === "seats-nft")  setShowData(seatData);
+    },[type])
     return (
         <Box  width={"100%"}>
    {showData && showData.type ==="video" && <Box  pos ="relative" width={"100%"}     height="490px" mb="3%">
@@ -40,14 +51,31 @@ style={{width:"100%",height:isTabletOrDesktop?"550px":"300px", border:0,overflow
 </Box>
         }
         <Flex width="100%" my="2%" p="20px" direction={["column","row"]} justifyContent={["center","space-around"]}>          
-         <Box width="100%" m="auto" textAlign={"center"} mb="2%">   <Image style={{cursor:"pointer"}}onClick={()=>{setShowData(exteriorData);
+         <Box width="100%" m="auto" textAlign={"center"} mb="2%">   <Image style={{cursor:"pointer"}}onClick={()=>{setShowData(exteriorData);router.push({
+        pathname: '/metaverse/stadium-exterior-nft'
+      }, 
+      undefined, { shallow: true }
+      )
             if(window)  window.scrollTo(0, 0)
                     }        }src={showData.label === "exterior"?"/assets/Exterior NFT_selected.png":"/assets/Exterior NFT_normal.png"} alt="exterior" width={isTabletOrMobile?"230px":"270px"} height="200px"/>
-        </Box><Box width="100%" m="auto" textAlign={"center"} mb="2%">    <Image style={{cursor:"pointer"}} onClick={()=>{setShowData(interiorData)
+        </Box><Box width="100%" m="auto" textAlign={"center"} mb="2%">    <Image style={{cursor:"pointer"}} onClick={()=>{setShowData(interiorData); router.push({
+        pathname: '/metaverse/stadium-internal-nft'
+      }, 
+      undefined, { shallow: true }
+      );
             if(window)  window.scrollTo(0, 0)
         }  } src={showData.label === "interior"?"/assets/Interior NFT_selected.png":"/assets/Interior NFT_normal.png"} alt="exterior"  width={isTabletOrMobile?"230px":"270px"} height="200px"/>
      </Box> 
-     <Box width="100%" m="auto" textAlign={"center"} mb="2%">    <Image  src="/assets/stadium_comingsoon.png" alt="exterior"  width={isTabletOrMobile?"230px":"270px"} height="200px"/>
+     <Box width="100%" m="auto" textAlign={"center"} mb="2%">    <Image style={{cursor:"pointer"}} onClick={()=>{setShowData(seatData);
+    
+     router.push({
+        pathname: '/metaverse/seats-nft'
+      }, 
+      undefined, { shallow: true }
+      )
+     
+     if(window)  window.scrollTo(0, 0)
+        }  } src={showData.label === "seats"?"/assets/Seat_NFT_selected.png":"/assets/Seat_NFT_normal.png"} alt="seat"  width={isTabletOrMobile?"230px":"270px"} height="200px"/>
      </Box>  </Flex>
         </Box>
     );

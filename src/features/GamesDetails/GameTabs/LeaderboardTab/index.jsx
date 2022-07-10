@@ -20,7 +20,7 @@ const LeaderboardTab = ({ gameData }) => {
 
         if (gameData) {
             const contests = await strapi.find("contests", {
-                filters: { contestmaster: gameData.id },
+                filters: { contestmaster: gameData.id, id:gameData.contest.id },
                 populate: ["leaderboard"]
             });
 

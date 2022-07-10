@@ -16,6 +16,7 @@ import { apiLikeRequests, useApiLikeRequests } from "../../Home/api";
 import ReadMoreLess from "../ReadMoreLess";
 
 const SelectBox = ({ style, icon, title, options, onChange }) => {
+    
 
     return (
         <Flex style={style}>
@@ -49,8 +50,9 @@ const SelectBox = ({ style, icon, title, options, onChange }) => {
     );
 };
 
-const Influencers = ({ data, selectedCategory }) => {
-    const defaultCategoryName = "Category";
+const Influencers = ({ data, selectedCategory , catData}) => {
+    // console.log(catData,"%%%");
+    const defaultCategoryName = "All Category";
     const { isMobileDevice, isTabletOrDesktop, user, influencerLikes } = useContext(AppContext);
     const [options, setOptions] = useState([]);
     const [category, setCategory] = useState(null);
@@ -76,6 +78,11 @@ const Influencers = ({ data, selectedCategory }) => {
     useEffect(async () => {
         if (data && data?.length > 0 && options.length == 0) {
             options.push(defaultCategoryName);
+            // if(catData){
+
+            // }else {
+                
+            // }
             data.map((cat) => {
 
                 options.push(cat.name);
@@ -109,15 +116,7 @@ const Influencers = ({ data, selectedCategory }) => {
                     }
                     return infcat;
                 });
-                if (!selectedCategory) {
-                    setSelCategoriesData([]);
-                } else {
-                    const selData = populateData.filter(
-                        (cat) =>
-                            cat.id.toString() === selectedCategory.toString()
-                    );
-                    setSelCategoriesData(selData);
-                }
+                setSelCategoriesData([]);
                 setDisplayData(populateData);
 
             }
@@ -127,7 +126,7 @@ const Influencers = ({ data, selectedCategory }) => {
         if (data && selectedCategory) {
 
             setDisplayData(data);
-            setSelCategoriesData(data);
+          //  setSelCategoriesData(data);
 
         }
     }, [selectedCategory])
@@ -216,7 +215,7 @@ const Influencers = ({ data, selectedCategory }) => {
                 </Text>
                 {/* )} */}
 
-                {!selectedCategory && (<HStack spacing="24px" mt="50px">
+           {!selectedCategory && (     <HStack spacing="24px" mt="50px">
                     <SelectBox
                         style={{
                             border: "1px solid #FFFFFF",
@@ -225,7 +224,7 @@ const Influencers = ({ data, selectedCategory }) => {
                             width: "170px"
                         }}
                         icon={<CategoryIcon color="#FFFFFF" />}
-                        title="Category"
+                        title="All Category"
                         options={options}
                         onChange={handleCategoryChange}
                     />
@@ -242,9 +241,9 @@ const Influencers = ({ data, selectedCategory }) => {
                         options={sortOptions}
                         onChange={handleSortByChange}
                     />
-                </HStack>
+                </HStack>)}
 
-                )}
+                
                 <Box>
                     {selCategoriesData?.map((influencer, index) => (
 
@@ -259,7 +258,7 @@ const Influencers = ({ data, selectedCategory }) => {
 
                 </Box>
 
-            {selectedCategory && selCategoriesData[0].description && selCategoriesData[0].description.length>0 && <Box> 
+            {selectedCategory && selCategoriesData[0] && selCategoriesData[0].description && selCategoriesData[0].description.length>0 && <Box> 
                 <Heading fontFamily="Blanch" color="white" fontSize="32px" mt="5%"> Description</Heading>
                 <ReadMoreLess read={selCategoriesData[0].description} lines={7} /></Box>}    
               

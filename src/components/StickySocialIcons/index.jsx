@@ -23,7 +23,7 @@ return <Box pos="fixed" bottom={["10%","20%","20%" ,"30%"]} right="0px" zIndex={
  <Link   _focus={{border:"none", boxShadow:"none"}}href="https://discord.gg/mHUqAm8fsh" target="_blank">  
   <Image className="influencerdiv" m="5%" alt="social" width={["35px","50px"]} height={["35px","50px"]} src="/assets/discord-sticky.png"/>
  </Link> 
- <Link   _focus={{border:"none", boxShadow:"none"}}href="https://telegram.me/LootMogulOfficial" target="_blank">
+ <Link   _focus={{border:"none", boxShadow:"none"}}href="https://t.me/lootmogulchat" target="_blank">
     <Image className="influencerdiv" m="5%" alt="social" width={["35px","50px"]} height={["35px","50px"]} src="/assets/telegram-sticky.webp"/>
     </Link>
  {openSpin && <SpinBtn isOpen={openSpin} onClose={onClose}/>}
