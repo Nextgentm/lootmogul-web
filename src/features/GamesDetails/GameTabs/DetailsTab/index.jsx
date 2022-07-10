@@ -73,22 +73,25 @@ const DetailsTab = ({gameData})=>{
 
 
         <Heading mt="2%" color="white"> How to Play</Heading>
-        <UnorderedList mt="2%" color="textual" variant="textualVal">
-  <ListItem>Open your preferred browser from mobile or desktop/laptop and visit website https://lootmogul.com</ListItem>
-  <ListItem>You can Sign Up/Register if it is your first time, or else Login if already registered either with Facebook or Google.</ListItem>
-  <ListItem>Message will pop to allow for location capturing (for regulatory purpose), you may click on “ALLOW” when prompted. It is a mandatory requirement for legal compliance.</ListItem>
-  <ListItem>For playing Cash contests you will first need to deposit and add money to LootMogul.com wallet. Click on Wallet Symbol top right corner in the application from the game lobby page.</ListItem>
-  <ListItem>Once you click the Wallet you will see the My Account page. Click on the “ADD MONEY” button. You may either select denomination for deposit or enter your denomination/amount for deposit. You will be redirected to the payment aggregator page for completing the deposit process. Once the deposit transaction is successfully completed you are ready to play cash games.</ListItem>
-  <ListItem>Once deposit is completed you may return to the main game lobby page and select to play any contest or game listed under “Game of Week / Influencer Tournaments / Advanced Premium Tournaments”. You can play the cash game and WIN cash prizes.</ListItem>
-  <ListItem>When you join the trivia battle contest, you will be shown, searching for the opponent player(s) screen. Minimum 2 players to start a contest, maximum 5 players </ListItem>
-  <ListItem>When matched, the game starts :) ; if not matched with any opponent, money gets refunded (in case of paid contests)</ListItem>
-  <ListItem>You will receive timed questions. Depending on the contest there will be 4 to 5 questions per contest.</ListItem>
-  <ListItem>If you answer within 2 seconds you get 6 points</ListItem>
-  <ListItem>If you answer in T &gt;	2 and T &lt; 5 seconds you get 4 points</ListItem>
-  <ListItem>If you answer in T &gt;	4 and T &lt; 9 seconds you get 2 points</ListItem>
-  <ListItem>If you answer in T &gt; 8 and T &lt; 11 seconds you get 1 points</ListItem>
-  <ListItem>At the end of each contest, you can rejoin the same contest or go back to home &amp; browse other contest categories.</ListItem>
-</UnorderedList>
+        {gameData?.game?.data?.howToPlay  ?
+ (<Box  color="white" > <ReactMarkdown rehypePlugins={[rehypeRaw]}  components={ChakraUIRenderer(newMarkDownTheme)} remarkPlugins={[remarkGfm]} skipHtml>{gameData?.game?.data?.howToPlay}</ReactMarkdown> </Box>
+ ):(  <UnorderedList mt="2%" color="textual" variant="textualVal">
+ <ListItem>Open your preferred browser from mobile or desktop/laptop and visit website https://lootmogul.com</ListItem>
+ <ListItem>You can Sign Up/Register if it is your first time, or else Login if already registered either with Facebook or Google.</ListItem>
+ <ListItem>Message will pop to allow for location capturing (for regulatory purpose), you may click on “ALLOW” when prompted. It is a mandatory requirement for legal compliance.</ListItem>
+ <ListItem>For playing Cash contests you will first need to deposit and add money to LootMogul.com wallet. Click on Wallet Symbol top right corner in the application from the game lobby page.</ListItem>
+ <ListItem>Once you click the Wallet you will see the My Account page. Click on the “ADD MONEY” button. You may either select denomination for deposit or enter your denomination/amount for deposit. You will be redirected to the payment aggregator page for completing the deposit process. Once the deposit transaction is successfully completed you are ready to play cash games.</ListItem>
+ <ListItem>Once deposit is completed you may return to the main game lobby page and select to play any contest or game listed under “Game of Week / Influencer Tournaments / Advanced Premium Tournaments”. You can play the cash game and WIN cash prizes.</ListItem>
+ <ListItem>When you join the trivia battle contest, you will be shown, searching for the opponent player(s) screen. Minimum 2 players to start a contest, maximum 5 players </ListItem>
+ <ListItem>When matched, the game starts :) ; if not matched with any opponent, money gets refunded (in case of paid contests)</ListItem>
+ <ListItem>You will receive timed questions. Depending on the contest there will be 4 to 5 questions per contest.</ListItem>
+ <ListItem>If you answer within 2 seconds you get 6 points</ListItem>
+ <ListItem>If you answer in T &gt;	2 and T &lt; 5 seconds you get 4 points</ListItem>
+ <ListItem>If you answer in T &gt;	4 and T &lt; 9 seconds you get 2 points</ListItem>
+ <ListItem>If you answer in T &gt; 8 and T &lt; 11 seconds you get 1 points</ListItem>
+ <ListItem>At the end of each contest, you can rejoin the same contest or go back to home &amp; browse other contest categories.</ListItem>
+</UnorderedList>)} 
+      
        
 <Heading mt="2%" color="white"> Contest Terms &amp; Conditions</Heading>
 {gameData?.tandc  && 

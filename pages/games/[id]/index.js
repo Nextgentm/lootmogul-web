@@ -35,6 +35,7 @@ export async function getStaticProps(context) {
         "reward.rewardrange",
         "contest_section",
         "feeWallet.currency",
+        "game"
     ]
 });
   if(data)

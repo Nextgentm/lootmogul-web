@@ -128,15 +128,15 @@ const InfluencerDetail = ({ influencer }) => {
                     m={"auto"}
                     src={
                         !isTabletOrDesktop
-                            ? fullInfluencer?.banner.data?.length > 1 &&
-                              fullInfluencer?.banner.data[1].url
+                            ? fullInfluencer?.banner?.data?.length > 1 &&
+                              fullInfluencer?.banner?.data?.[1]?.url
                                 ? getStrapiMedia(
-                                      fullInfluencer?.banner.data[1].url
+                                      fullInfluencer?.banner?.data[1].url
                                   )
                                 : "/assets/influencer-banner-mobile.webp"
-                            : fullInfluencer?.banner.data?.length > 0 &&
-                              fullInfluencer?.banner.data[0].url
-                            ? getStrapiMedia(fullInfluencer?.banner.data[0].url)
+                            : fullInfluencer?.banner?.data?.length > 0 &&
+                              fullInfluencer?.banner?.data?.[0]?.url
+                            ? getStrapiMedia(fullInfluencer?.banner?.data[0].url)
                             : "/assets/influencer-banner.webp"
                     }
                 />

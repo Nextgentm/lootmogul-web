@@ -102,7 +102,7 @@ useEffect(()=>{
   if(router){
   // if(router.route === "/terms-of-services") setLoadParticles(false);
   // else setLoadParticles(true);
-  if(router.route === "/terms-and-conditions-ios") setStickyBtn(false);
+  if(router.route === "/terms-and-conditions-ios" || router.route === "/quizPage" || router.route === "/joining" ) setStickyBtn(false);
   else setStickyBtn(true);
 
   }

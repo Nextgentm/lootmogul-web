@@ -171,7 +171,7 @@ const JoiningPopup = ({ retry, data }) => {
                             </Text>
                         </Flex>
                     </Box>
-                    <Box mt="20px">
+                    {/* <Box mt="20px">
                         <Text
                             fontWeight="600"
                             color="primary"
@@ -250,7 +250,7 @@ const JoiningPopup = ({ retry, data }) => {
 
                             </Flex>
                         )}
-                    </Box>
+                    </Box> */}
                     <Divider mt="5%"></Divider>
                     <Box mt="20px">
                         <Flex mt="5%" justifyContent="space-between">

@@ -31,7 +31,7 @@ const socialLinks = [{
 },
 {
   Image: 'telegram.png',
-  link: 'https://telegram.me/LootMogulOfficial',
+  link: 'https://t.me/lootmogulchat',
 },
 {
   Image: 'twitch.png',
