@@ -9,7 +9,7 @@ const getSeoData = async(slug)=>{
         const { data } = await strapi.find("landing-page-seos", {
           publicationState:'preview',
           filters: { slug: slug },        
-          populate: ["sharedSeo","sharedSeo.metaImage"]
+          populate: ["sharedSeo","sharedSeo.metaImage","banner"]
         });      
         return data;
     

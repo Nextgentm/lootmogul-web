@@ -19,7 +19,7 @@ const defaultSEOData = {
 export default function Influencer({ data, seoData }) {
   return <>
    <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 
-   <InfluencersComponent data={data || []} />
+   <InfluencersComponent data={data || []} banner={seoData[0]?.banner?.data} />
   </>
 }
 

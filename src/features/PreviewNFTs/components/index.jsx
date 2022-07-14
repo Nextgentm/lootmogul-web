@@ -75,14 +75,7 @@ const PreviewNFTs = () => {
     useEffect (async ()=>{
         const data = await strapi.find("nft-collections", {
             sort: "id",
-            publicationState: 'preview',
-            filters:   { publishedAt: {
-                $null: true
-                
-              }
-             
-            },
-            populate: [
+                        populate: [
                 "nftSet.nft_kred"               
             ]
         });

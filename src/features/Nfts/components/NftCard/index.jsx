@@ -20,17 +20,16 @@ const CardInfo = ({nft}) => {
                 {nft.name}
             </Text>
 
-            <Flex justifyContent="space-between" m={0} p={0}>
-                <Text color="#7C7C7C">
+            <Flex mt={"3%!important"} justifyContent="space-between" m={0} p={0}>
+              
+
+          <Box textAlign={"left"}>  <Text color="#7C7C7C">
                     {nft.isAuction ? "Last Bid" : "Price"}
                 </Text>
-
-                <Text color="#7C7C7C">{nft.avail}/{nft.count}</Text>
-            </Flex>
-
             {nft.isAuction  && (
                 <>
-                     <Flex flexDir={"row"} >
+                 
+                 
                         <HStack>
                             <Image
                                 alt="Remaining Time"
@@ -52,52 +51,15 @@ const CardInfo = ({nft}) => {
                   " " + nft.market_price : "US $" + nft.sale_price }
                             </Text>
                         </HStack>
-                        <Spacer />
-                        <HStack>
-                            <Box
-                                cursor="pointer"
-                                position="relative"
-                                my={4}
-                            >
-                                <Popover>
-                                 <PopoverTrigger>
-                                 <Image
-                                    alt="Share"
-                                    objectFit="contain"
-                                    src="/assets/nfts/share.svg"
-                                    layout="fill"
-                                />
-                                            </PopoverTrigger>
-                                    <NextShare link={"https://lootmogul.com/nfts/"+ nft?.id} caption={"Check out this NFT collection for " + nft?.name} hashtag="lootmogul"
-                                    ></NextShare>
-                                 </Popover>
-                               
-                               
-                            </Box>
-
-                            <Box
-                                cursor="pointer"
-
-                                height="24px"
-                                position="relative"
-                                my={4}
-                            >
-                                <Image
-                                    alt="Favorite"
-                                    objectFit="contain"
-                                    src="/assets/nfts/favorite.svg"
-                                    height="22px"
-                                    width="22px"
-                                />
-                            </Box>
-                        </HStack>
-                    </Flex>
+                       
+                       
+                  
                 </>
             )}
 
             {!nft.isAuction  && (
                 <>
-                    <Flex flexDir={"row"} >
+                  
                         <HStack>
                             <Image
                                 alt="Remaining Time"
@@ -119,7 +81,7 @@ const CardInfo = ({nft}) => {
                             </Text>
                         </HStack>
                         <Spacer />
-                        <HStack>
+                        {/* <HStack>
                             <Box
                                 cursor="pointer"
                                 position="relative"
@@ -155,10 +117,22 @@ const CardInfo = ({nft}) => {
                                     width="22px"
                                 />
                             </Box>
-                        </HStack>
-                    </Flex>
+                        </HStack> */}
+                        
+                   
                 </>
             )}
+            
+            </Box>
+            <Link  href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft.symbol+"/all"} target="_blank" _focus={{border:"none",textDecoration:"none"}} _hover={{textDecoration:"none"}}  width="30%">
+                        <Button
+                            className="influencer-card-btn"
+                            width="100%"
+                            fontSize={20}
+                        >
+                            BUY NOW
+                        </Button></Link>
+                        </Flex>
         </Box>
     )
 }
@@ -183,7 +157,8 @@ const NftCard = ({ nft, showInfo = false }) => {
       }
 
     return (
-        <Box  cursor="pointer" m = "auto" textAlign="center" w={"300px"}  h={showInfo? "520px" : "420px"} 
+        <Link href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft.symbol+"/all"} target="_blank" passHref={true}_hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}}  cursor="pointer" >
+            <Box m = "auto" textAlign="center" w={"300px"}  h={showInfo? "520px" : "420px"} 
         
         onMouseEnter={() => setIsFlipped(true)}
          onMouseLeave={() => setIsFlipped(false)}
@@ -193,7 +168,7 @@ const NftCard = ({ nft, showInfo = false }) => {
          
         > 
  <Box cursor="pointer">
-<Link href={"/nfts/"+nft?.slug} passHref={true} _focus={{border:"none"}} >
+<Box  _focus={{border:"none",textDecoration:"none"}}  >
             { nft.front_image?.indexOf('.mp4') >0 &&
         <video key={nft.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'400px', width:'full'}}>
                 <source src={nft.front_image} type="video/mp4" />
@@ -209,10 +184,10 @@ const NftCard = ({ nft, showInfo = false }) => {
         />
     }
 
-        </Link>
+        </Box>
         </Box>
         <Box cursor="pointer">
-        <Link href={"/nfts/"+nft?.slug} passHref={true} _focus={{border:"none"}} >
+        <Box  _focus={{border:"none",textDecoration:"none"}}  >
         { nft.back_image?.indexOf('.mp4') >0 &&
         <video key={nft.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'400px', width:'full'}}>
                 <source src={nft.back_image} type="video/mp4" />
@@ -225,11 +200,11 @@ const NftCard = ({ nft, showInfo = false }) => {
                     title={nft.name}
                     src={nft.back_image}
                     cursor="pointer"
-                    onClick={handleClick}
+                    
                 />
                     }
 
-</Link>
+</Box>
 </Box>
                </ReactCardFlip>
                 
@@ -238,7 +213,8 @@ const NftCard = ({ nft, showInfo = false }) => {
         
         
          { showInfo &&  <CardInfo nft = {nft}/> }
-        </Box>
+         </Box>
+        </Link>
     );
 };
 
