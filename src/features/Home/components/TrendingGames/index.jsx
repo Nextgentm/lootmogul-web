@@ -24,7 +24,7 @@ const TrendingGames = ({data}) => {
 
                 <ContentNavigator
                     showArrows={!isMobileDevice}
-                    handleLeftArroeClick={() => ref.current.scrollPrev()}
+                    handleLeftArrowClick={() => ref.current.scrollPrev()}
                     handleRightArrowClick={() => ref.current.scrollNext()}
                     onViewAllClicked={() => {router.push("/games")}}
                     

@@ -107,7 +107,7 @@ const InfluencerVideos = () => {
                     disableDots={false}
                     type={"testimonial"}
                     slides={slides}
-                   
+
                 />
             </div>
             <LMModal

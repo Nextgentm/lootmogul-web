@@ -20,23 +20,24 @@ const newMarkDownTheme = {
 };
 
 const TermsOfServices = () => {
-    const [data , setData]=useState(null);
-    useEffect(()=>{
+    const [data, setData] = useState(null);
+    useEffect(() => {
         fetch("/assets/terms.json").then(
-            function(res){                
+            function (res) {
                 return res.json();
-         // return res.json();
-          }).then(function(data){
-          // store Data in State Data Variable
-            setData(data[0].data)
-          }).catch(
-            function(err){
-              console.log(err, ' error')
-            }
-          )
-        
-    },[data])
+                // return res.json();
+            }).then(function (data) {
+                // store Data in State Data Variable
+                setData(data[0].data)
+            }).catch(
+                function (err) {
+                    console.log(err, ' error')
+                }
+            )
+
+    }, [data])
     return (
+
         <>
             <ScrollToTop smooth viewBox="20px" style={{ backgroundColor: "black" }} component={<ChevronUpIcon boxSize="20px" color="primary" />} />
             <Box m="4%"
@@ -55,6 +56,7 @@ const TermsOfServices = () => {
                 </ReactMarkdown >
             </Box>
         </>
+
     );
 };
 export default TermsOfServices;

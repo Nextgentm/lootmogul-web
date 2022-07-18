@@ -18,7 +18,7 @@ const InfluencerGame = ({ contestmasters }) => {
                 <ContentNavigator
                     showViewAll={false}
                     showArrows={contestmasters?.data.length > 5}
-                    handleLeftArroeClick={() => ref.current.scrollPrev()}
+                    handleLeftArrowClick={() => ref.current.scrollPrev()}
                     handleRightArrowClick={() => ref.current.scrollNext()}
                 />
             </Flex>

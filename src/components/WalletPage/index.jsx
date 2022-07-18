@@ -24,7 +24,7 @@ const WalletPage = ({ totalAmount, transactions }) => {
         iconName: "add",
         btnText: "Deposit",
         showMore: true,
-        tooltip:"Your deposits that can be used to play paid games. Can't be withdrawn."
+        tooltip: "Your deposits that can be used to play paid games. Can't be withdrawn."
     };
     const withdrawData = {
         title: "Winnings",
@@ -34,7 +34,7 @@ const WalletPage = ({ totalAmount, transactions }) => {
         iconName: "sub",
         btnText: "Withdraw",
         showMore: true,
-        tooltip:"Cash available to withdraw subjected to min. balance eligibility. You may also re-use it to play more games."
+        tooltip: "Cash available to withdraw subjected to min. balance eligibility. You may also re-use it to play more games."
     };
     const bonusData = {
         title: "Bonus",
@@ -43,7 +43,7 @@ const WalletPage = ({ totalAmount, transactions }) => {
         icon: false,
         btnText: "Learn more",
         showMore: false,
-        tooltip:"Amount accumulated through promotions. Part of it can be used to play cash games. Can't be withdrawn."
+        tooltip: "Amount accumulated through promotions. Part of it can be used to play cash games. Can't be withdrawn."
     };
 
     const onChangeAmount = (type, amount) => {
@@ -60,14 +60,14 @@ const WalletPage = ({ totalAmount, transactions }) => {
                 direction={["column", "row"]}
             >
                 <Flex width={["100%"]} justifyContent={"flex-start"}>
-                    <WalletIcon   mt="2%" boxSize={"40px"} color="primary" />
+                    <WalletIcon mt="2%" boxSize={"40px"} color="primary" />
                     <Flex mt="auto" mb={"auto"}>
-                    <Heading ml="15px" color="white">
-                        WALLET BALANCE
-                    </Heading>
-                    <Heading ml="10px" color="primary">
-                        ${totalAmount}
-                    </Heading>
+                        <Heading ml="15px" color="white">
+                            WALLET BALANCE
+                        </Heading>
+                        <Heading ml="10px" color="primary">
+                            ${totalAmount}
+                        </Heading>
                     </Flex>
                 </Flex>
                 {/* <Button
@@ -81,7 +81,7 @@ const WalletPage = ({ totalAmount, transactions }) => {
                     LINK Crypto wallet
                 </Button> */}
             </Flex>
-            <Text mt="10px" variant="hint">
+            <Text fontSize={["12px", "16px"]} mt="10px" variant="hint">
                 Balance : Deposit + Winnings + Bonus = ${totalAmount}
             </Text>
             <Flex
@@ -111,7 +111,7 @@ const WalletPage = ({ totalAmount, transactions }) => {
                     onChange={onChangeAmount}
                 />
             </Flex>
-           
+
             <Flex
                 mt="40px!important"
                 m="auto"
@@ -133,8 +133,8 @@ const WalletPage = ({ totalAmount, transactions }) => {
                 />
                 <Flex
                     justify="flex-start"
-                    width={["75%","75%","75%","55%"]}
-                    direction={["column", "column","column","row"]}
+                    width={["75%", "75%", "75%", "55%"]}
+                    direction={["column", "column", "column", "row"]}
                 >
                     <Text
                         variant="hint"
@@ -152,16 +152,16 @@ const WalletPage = ({ totalAmount, transactions }) => {
                         ml={["0%", "2%"]}
                         cursor="pointer"
                         color="primary"
-                        onClick={()=>{
+                        onClick={() => {
                             router.push("/terms-of-services")
                         }}
                     >
                         Know more....
                     </Text>
                 </Flex>
-                </Flex>
-        
-            
+            </Flex>
+
+
             <TransactionHistory />
 
             <LMModal
@@ -173,10 +173,10 @@ const WalletPage = ({ totalAmount, transactions }) => {
             >
                 {showModal.mode === "linkwallet" && <LinkWallet />}
                 {showModal.mode === "add" && (
-                    <DepostWithdraw isDeposit={true}  totalAmount={totalAmount} />
+                    <DepostWithdraw isDeposit={true} totalAmount={totalAmount} />
                 )}
                 {showModal.mode === "sub" && (
-                    <DepostWithdraw  totalAmount={totalAmount} winAmount={amounts?.winnings} />
+                    <DepostWithdraw totalAmount={totalAmount} winAmount={amounts?.winnings} />
                 )}
             </LMModal>
         </Box>

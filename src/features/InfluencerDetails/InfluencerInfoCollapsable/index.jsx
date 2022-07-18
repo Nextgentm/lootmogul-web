@@ -41,23 +41,23 @@ const InfluencerInfoCollapsable = ({ influencer }) => {
                 </Box>
             </CollapsableRow>
 
-            <CollapsableRow
+        {influencer.Video &&    <CollapsableRow
                 title="Videos"
                 icon={<YouTubeIcon color="#CFBF8A" mt="6px" />}
             >
                 <Text fontWeight={600} color="#C7C7C7" fontSize="10px">
                     Videos
                 </Text>
-            </CollapsableRow>
+            </CollapsableRow>}
 
-            <CollapsableRow
+          {influencer.reviews &&   <CollapsableRow
                 title="Reviewes"
                 icon={<ReviewStarsIcon color="#CFBF8A" mt="6px" />}
             >
                 <Text fontWeight={600} color="#C7C7C7" fontSize="10px">
                     Reviews
                 </Text>
-            </CollapsableRow>
+            </CollapsableRow>}
         </Box>
     );
 };

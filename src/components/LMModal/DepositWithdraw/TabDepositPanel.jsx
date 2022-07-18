@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { useState, useRef , useEffect, useContext} from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import {
     Flex,
     Input,
@@ -31,7 +31,7 @@ const stripeJs = async () => await import("@stripe/stripe-js/pure");
 const TabDepositPanel = ({ isDeposit }) => {
     const { asPath } = useRouter();
     const router = useRouter();
-    const { amounts,user } = useContext(AppContext);
+    const { amounts, user } = useContext(AppContext);
 
     const ref = useRef();
     const [amount, setAmount] = useState(0);
@@ -42,7 +42,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         md: "md"
     });
     const [couponCode, setCouponCode] = useState("");
-    const [ couponList, setCouponList] =useState([]);
+    const [couponList, setCouponList] = useState([]);
     const [previousAmount, setPreviousAmount] = useState(0);
     const [showCoupon, setShowCoupon] = useState(false);
 
@@ -66,16 +66,16 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
     ];
 
-    useEffect(()=>{
-        if(user){
-            strapi.find("coupon",{filters:{user:user.id}}).then((response)=>{
-                if(response?.data?.items){
-                    
+    useEffect(() => {
+        if (user) {
+            strapi.find("coupon", { filters: { user: user.id } }).then((response) => {
+                if (response?.data?.items) {
+
                     setCouponList(response?.data?.items.filter((coupon) => coupon.type === "coupon-deposit-cashback"));
-                }else setCouponList([]);
+                } else setCouponList([]);
             })
         }
-    },[])
+    }, [])
     const deposit = async () => {
         try {
             const user = await strapi.fetchUser();
@@ -95,7 +95,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                             asPath,
                         type: "DEPOSIT",
                         value: amount,
-                        couponCode:couponCode?couponCode:""
+                        couponCode: couponCode ? couponCode : ""
                     },
                     {
                         headers: {
@@ -191,8 +191,8 @@ if(e.target.value.toString() !== "Apply Coupon"){
 
                 }} color="white" >
                     <option style={{ background: '#505050' }}>Apply Coupon</option>
-                    {couponList && couponList.map((item,index)=>{
-                        return  <option key={"coupon"+index} value={item.code} style={{ background: '#505050' }} >{item.code}</option>
+                    {couponList && couponList.map((item, index) => {
+                        return <option key={"coupon" + index} value={item.code} style={{ background: '#505050' }} >{item.code}</option>
                     })}
                     
                 </Select> */}

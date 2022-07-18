@@ -10,16 +10,15 @@ import MyPageLoader from "../src/components/MyPageLoader";
 
 
 
-const StickySocialIcons =dynamic(() => import("../src/components/StickySocialIcons"));
+const StickySocialIcons = dynamic(() => import("../src/components/StickySocialIcons"));
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import Head from "next/head";
 import { useRouter } from 'next/router';
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/globals.css";
 import * as ga from '../src/services/googleAnalytics';
 import LMNonCloseALert from '../src/components/LMNonCloseALert';
-
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -46,11 +45,11 @@ export function reportWebVitals({ id, name, label, value }) {
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
-  const {provider,trackingCode,utm_medium, utm_source, referral_code, utm_term , utm_campaign, utm_content} = router.query
+  const { provider, trackingCode, utm_medium, utm_source, referral_code, utm_term, utm_campaign, utm_content } = router.query
 
-  const handleRouteChange = (url) => {  
+  const handleRouteChange = (url) => {
     ga.pageview(url)
-    
+
   };
   const [loading, setLoading] = useState(false);
 
@@ -58,44 +57,44 @@ function MyApp({ Component, pageProps }) {
 
   const [loadParticles, setLoadParticles] = useState(true);
   const [stickyBtn, setStickyBtn] = useState(true);
- 
+
   useEffect(() => {
-   if(provider&& trackingCode){
+    if (provider && trackingCode) {
       if (typeof window !== 'undefined') {
-         window.localStorage?.setItem("proivder", provider);
-         window.localStorage?.setItem("trackingCode", trackingCode);
+        window.localStorage?.setItem("proivder", provider);
+        window.localStorage?.setItem("trackingCode", trackingCode);
       }
-   }
+    }
   }, [provider, trackingCode]);
 
   useEffect(() => {
-    if(utm_source || utm_medium ||utm_term || utm_campaign ||utm_content){
-       if (typeof window !== 'undefined') {
-          window.localStorage?.setItem("utm_source", utm_source);
-          window.localStorage?.setItem("utm_medium", utm_medium);
-          window.localStorage?.setItem("utm_term", utm_medium);
-          window.localStorage?.setItem("utm_campaign", utm_medium);
-          window.localStorage?.setItem("utm_content", utm_medium);
-       }
+    if (utm_source || utm_medium || utm_term || utm_campaign || utm_content) {
+      if (typeof window !== 'undefined') {
+        window.localStorage?.setItem("utm_source", utm_source);
+        window.localStorage?.setItem("utm_medium", utm_medium);
+        window.localStorage?.setItem("utm_term", utm_medium);
+        window.localStorage?.setItem("utm_campaign", utm_medium);
+        window.localStorage?.setItem("utm_content", utm_medium);
+      }
     }
-   }, [utm_source, utm_medium, utm_term , utm_campaign, utm_content]);
- 
+  }, [utm_source, utm_medium, utm_term, utm_campaign, utm_content]);
+
 
   useEffect(() => {
-    if(referral_code){
-       if (typeof window !== 'undefined') {
-          window.localStorage?.setItem("referral_code", referral_code);
-       }
+    if (referral_code) {
+      if (typeof window !== 'undefined') {
+        window.localStorage?.setItem("referral_code", referral_code);
+      }
     }
-   }, [referral_code]);
+  }, [referral_code]);
 
   useEffect(() => {
-  
+
     router.events.on('routeChangeComplete', handleRouteChange);
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
-    
+
   }, [router.events]);
 
 useEffect(()=>{
@@ -104,11 +103,9 @@ useEffect(()=>{
   // else setLoadParticles(true);
   if(router.route === "/terms-and-conditions-ios" || router.route === "/quizPage" || router.route === "/joining" ) setStickyBtn(false);
   else setStickyBtn(true);
+}
+}, [loadParticles, router])
 
-  }
-},[loadParticles,router])
-
- 
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraUIContainer>
@@ -118,30 +115,30 @@ useEffect(()=>{
               name="viewport"
               content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
             />
-            
+
           </Head>
           <Header />
-        {/* {loadParticles &&  <ParticlesPage/>} */}
-        {stickyBtn &&  <StickySocialIcons/>}
+          {/* {loadParticles &&  <ParticlesPage/>} */}
+          {stickyBtn && <StickySocialIcons />}
           <Component
-              {...pageProps}
-              loading={loading}
-              setLoading={setLoading}
-              setGameLoading={setGameLoading}
-            />
-        {loading &&    <MyPageLoader/>}
-          
+            {...pageProps}
+            loading={loading}
+            setLoading={setLoading}
+            setGameLoading={setGameLoading}
+          />
+          {loading && <MyPageLoader />}
 
-        {gameLoading &&  <LMNonCloseALert
-                header={""}
-                canClose={false}
-                data="loading...."
-                isOpen={gameLoading}
-                onClose={() => {
-                  setGameLoading(false);
-                }
-                }
-            />
+
+          {gameLoading && <LMNonCloseALert
+            header={""}
+            canClose={false}
+            data="loading...."
+            isOpen={gameLoading}
+            onClose={() => {
+              setGameLoading(false);
+            }
+            }
+          />
           }
           {/* <div style={style}>
           <GridLoader
@@ -151,7 +148,7 @@ useEffect(()=>{
            
           />
           </div> */}
-       
+
           <Footer />
         </AppContextContainer>
       </ChakraUIContainer>

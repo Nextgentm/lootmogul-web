@@ -29,7 +29,7 @@ const mobileOpts = {
 
 const LMMediaPlayer = ({ url = "fu6QDHOp_rY", title = "", isNotMobile = isNotMobile }) => {
 
-    return  <YouTube title={title} videoId={url} opts={isNotMobile ? opts : mobileOpts} />
+    return <YouTube title={title} videoId={url} opts={isNotMobile ? opts : mobileOpts} />
 
 }
 

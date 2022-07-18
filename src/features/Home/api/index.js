@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "react-query";
 export const apiBanners = async () => {
     const { data } = await strapi.find("campaigns", {
         filters: { position: "home_top" },
-        fields: ["callToAction", "redirectURL","slug"],
+        fields: ["callToAction", "redirectURL", "slug"],
         sort: "priority",
         populate: {
             bannerImage: {
@@ -18,7 +18,7 @@ export const apiBanners = async () => {
 export const apiPromotionBanners = async () => {
     const { data } = await strapi.find("campaigns", {
         filters: { position: "promotion_top" },
-        fields: ["callToAction", "redirectURL","slug","status","overlay"],
+        fields: ["callToAction", "redirectURL", "slug", "status", "overlay"],
         sort: "priority",
         populate: {
             bannerImage: {
@@ -216,7 +216,7 @@ export const useBanners = () => useQuery(FETCH_BANNERS, apiBanners);
 export const usePromotionBanners = () =>
     useQuery(FETCH_PROMO_BANNERS, apiPromotionBannersDetails);
 
-    export const useFAQs = () => useQuery(FAQ, apiFaqs);
+export const useFAQs = () => useQuery(FAQ, apiFaqs);
 export const useFAQPage = () => useQuery(FAQPAGE, apiFaqPage);
 export const useNews = (activeFilter, options) =>
     useQuery([NEWS, activeFilter], () => apiNews(options));
