@@ -30,7 +30,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     const ref = useRef();
     const [amount, setAmount] = useState(0);
     const [email, setEmail] = useState(null);
-    const [cashOption, setCashOption]= useState([]);
+    const [cashOption, setCashOption] = useState([]);
     const [account, setAccount] = useState(null);
     const [accepted, setAccepted] = useState(false);
     const [alert, setAlertShow] = useState({ iOpen: false, msg: "" });
@@ -39,7 +39,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         sm: "sm",
         md: "md"
     });
-    const [cryptoType,setCryptoType]=useState("Bitcoin");
+    const [cryptoType, setCryptoType] = useState("Bitcoin");
     const [couponCode, setCouponCode] = useState("");
     const [previousAmount, setPreviousAmount] = useState(0);
     // const [showCoupon, setShowCoupon] = useState(false);
@@ -80,15 +80,15 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             });
         }
     }, [user]);
-    useEffect (()=>{
-        if(data){
-        if(data.type === "cash")
-        setCashOption(["USD"]);
-        else 
-        setCashOption(["Bitcoin","Ethereum","Dogecoin"]);
+    useEffect(() => {
+        if (data) {
+            if (data.type === "cash")
+                setCashOption(["USD"]);
+            else
+                setCashOption(["Bitcoin", "Ethereum", "Dogecoin"]);
         }
-    },[data])
-  
+    }, [data])
+
 
     const checkValidity = () => {
         if (!amount || amount === 0)
@@ -137,9 +137,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             mode: data.mode,
             user: user?.id,
             account: account,
-            cryptoType:data.type !== "cash"?cryptoType:null
+            cryptoType: data.type !== "cash" ? cryptoType : null
         };
-       strapi
+        strapi
             .create("withdrawals", withDrawReqData)
             .then((res) => {
                 setAlertShow({ isOpen: true, msg: res.message });
@@ -159,7 +159,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 p="2%"
             >
                 <InputGroup>
-                    <InputLeftAddon w={["48%","40%"]} fontSize={["13px","17px"]} fontWeight="600" >Amount:</InputLeftAddon>
+                    <InputLeftAddon w={["48%", "40%"]} fontSize={["13px", "17px"]} fontWeight="600" >Amount:</InputLeftAddon>
                     <Input
                         w={currentSize === "base" ? "40%" : "50%"}
                         color="white"
@@ -175,12 +175,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     w={currentSize === "base" ? "64%" : "80%"}
                     color="white"
                     bg="#3F3F3F"
-                    onChange={(e)=>{setCryptoType(e.target.value);}}
+                    onChange={(e) => { setCryptoType(e.target.value); }}
                 >
-                    {cashOption.map((type,index)=>{
- return <option style={{backgroundColor:"#3F3F3F"}} key={"cash"+index}>{type}</option>
+                    {cashOption.map((type, index) => {
+                        return <option style={{ backgroundColor: "#3F3F3F" }} key={"cash" + index}>{type}</option>
                     })}
-                   
+
                 </Select>
             </Flex>
             <Flex
@@ -191,7 +191,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 p="2%"
             >
                 <InputGroup>
-                    <InputLeftAddon  fontSize={["13px","17px"]} fontWeight="600" >Email Id:</InputLeftAddon>
+                    <InputLeftAddon fontSize={["13px", "17px"]} fontWeight="600" >Email Id:</InputLeftAddon>
                     <Input
                         color="white"
                         defaultValue={email}
@@ -207,7 +207,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 </Text>
 
                 <InputGroup>
-                    <InputLeftAddon fontSize={["13px","17px"]} fontWeight="600" >Account Id:</InputLeftAddon>
+                    <InputLeftAddon fontSize={["13px", "17px"]} fontWeight="600" >Account Id:</InputLeftAddon>
                     <Input
                         color="white"
                         defaultValue={account}
@@ -235,10 +235,10 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             color="primary"
                             fontFamily={"Sora"}
                             fontSize="12px"
-                            onClick={(e)=>{
+                            onClick={(e) => {
                                 e.preventDefault();
                                 window.open(
-                                    "https://lootmogul.com/terms-of-services#payment",
+                                    "http://lootmogul.com/terms-of-services#payment",
                                     "_blank"
                                 );
                             }}

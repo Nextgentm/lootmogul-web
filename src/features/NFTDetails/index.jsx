@@ -578,7 +578,7 @@ const NFTDetails = ({nftData}) => {
 
           <ContentNavigator
             showArrows={!isMobileDevice}
-            handleLeftArroeClick={() => ref.current.scrollPrev()}
+            handleLeftArrowClick={() => ref.current.scrollPrev()}
             handleRightArrowClick={() => ref.current.scrollNext()}
             showViewAll={false}
           />

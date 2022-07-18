@@ -17,8 +17,8 @@ const MatchlostDisplay = () => {
                     {/* <ResultDisplayTitle name="MATCH RESULT" />
                     <ScoreDisplay text1="Your Rank" text2="Your Score" num1="19" num2="89" reward2="You Lost" reward3="Better luck next time!" /> */}
                 </Box>
-                <Flex width={["100%", "60%"]} direction={["column"]} m="auto" padding={"6%"}><Button width={"auto", "auto"} height="46px" marginTop={["30%", "4%"]} fontSize={"18px"} >PLAY AGAIN</Button>
-                    <Button width={"auto", "auto"} height="46px" variant="outline" fontSize={"18px"} flex="none" order={"0"} marginTop={"3%"} flex-grow="0" >VIEW LEADERBOARD</Button>
+                <Flex width={["100%", "60%"]} direction={["column"]} m="auto" padding={"6%"}><Button width={["auto", "auto"]} height="46px" marginTop={["30%", "4%"]} fontSize={"18px"} >PLAY AGAIN</Button>
+                    <Button width={["auto", "auto"]} height="46px" variant="outline" fontSize={"18px"} flex="none" order={"0"} marginTop={"3%"} flex-grow="0" >VIEW LEADERBOARD</Button>
                 </Flex>
             </Flex>
         </Box>

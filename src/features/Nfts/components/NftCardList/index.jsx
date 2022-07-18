@@ -28,7 +28,7 @@ const NftCardList = ({ data ,isSale = true}) => {
                 <Box mt={["5%", "1%"]} ml={["-5%", "1%"]} alignItems="center">
                     <ScrollMenu className="no-scrollbar" apiRef={ref}>
                         {data
-                            .filter((item) => isSale ? item.isSale : true)
+                            .filter((item) => isSale ? item.isSale : true).sort((a,b) => a.priority - b.priority)
                             .map((item,index) => (
                                 <NftCard nft={item} itemId={`nftcard-${index}`} key={`nftcard-${index}`} showInfo={true} />
                                 // <InfluencerCard

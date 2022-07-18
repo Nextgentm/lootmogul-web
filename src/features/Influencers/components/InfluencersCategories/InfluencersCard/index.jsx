@@ -105,6 +105,7 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                         w="60px"
                         onClick={(e) => {
                             e.preventDefault();
+                            setShowLoading(true);
                             setShowLoading({ "key": `infCatCard-${influencer.contestmasters?.data[0]?.id}`, "show": true });
                             CheckAndStartGame(`infCatCard-${influencer.contestmasters?.data[0]?.id}`, influencer.contestmasters?.data[0])
                         }}

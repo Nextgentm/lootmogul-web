@@ -124,7 +124,7 @@ const CardInfo = ({nft}) => {
             )}
             
             </Box>
-            <Link  href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft.symbol+"/all"} target="_blank" _focus={{border:"none",textDecoration:"none"}} _hover={{textDecoration:"none"}}  width="30%">
+            <Link  href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft?.symbol+"/all"} target="_blank" _focus={{border:"none",textDecoration:"none"}} _hover={{textDecoration:"none"}}  width="30%">
                         <Button
                             className="influencer-card-btn"
                             width="100%"
@@ -138,6 +138,7 @@ const CardInfo = ({nft}) => {
 }
 
 const NftCard = ({ nft, showInfo = false }) => {
+    console.log(nft);
     const router = useRouter();
     const [isFlipped, setIsFlipped] = useState(false);
     
@@ -157,25 +158,25 @@ const NftCard = ({ nft, showInfo = false }) => {
       }
 
     return (
-        <Link href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft.symbol+"/all"} target="_blank" passHref={true}_hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}}  cursor="pointer" >
-            <Box m = "auto" textAlign="center" w={"300px"}  h={showInfo? "520px" : "420px"} 
+      <Link href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft?.symbol+"/all"} target="_blank" passHref={true}_hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}}  cursor="pointer" >
+            <Box m="auto" p="3%" textAlign="center" w={"300px"}  h={showInfo? "520px" : "420px"} 
         
         onMouseEnter={() => setIsFlipped(true)}
          onMouseLeave={() => setIsFlipped(false)}
          >
            
-        <ReactCardFlip isFlipped={isFlipped} flipDirection={"horizontal"} infinite={true}  h={"400px"}
+     <ReactCardFlip  isFlipped={isFlipped} flipDirection={"horizontal"} infinite={true}  h={"400px"}
          
         > 
  <Box cursor="pointer">
 <Box  _focus={{border:"none",textDecoration:"none"}}  >
-            { nft.front_image?.indexOf('.mp4') >0 &&
-        <video key={nft.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'400px', width:'full'}}>
-                <source src={nft.front_image} type="video/mp4" />
+            { nft?.front_image?.indexOf('.mp4') >0 &&
+        <video key={nft?.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'400px', width:'full'}}>
+                <source src={nft?.front_image} type="video/mp4" />
                 
                 Your browser does not support the Video NFT.
         </video>}
-        { nft.front_image?.indexOf('.mp4')<0 &&
+        { nft?.front_image?.indexOf('.mp4')<0 &&
          <Image height="400px" width={"300px"}
          objectFit={"cover"}
          title={nft.name}

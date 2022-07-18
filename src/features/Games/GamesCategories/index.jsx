@@ -20,7 +20,7 @@ const GamesCategories = ({ isMobileDevice, section } ) => {
                 <ContentNavigator
                     showViewAll={section?.contestmasters?.data.length > arrowTrashhold && !isMobileDevice}
                     showArrows={section?.contestmasters?.data.length > arrowTrashhold}
-                    handleLeftArroeClick={() => ref.current.scrollPrev()}
+                    handleLeftArrowClick={() => ref.current.scrollPrev()}
                     handleRightArrowClick={() => ref.current.scrollNext()}
                     onViewAllClicked={()=>setShowAll(!showAll)}
                 />

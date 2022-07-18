@@ -21,10 +21,9 @@ import {
         <Box
           className="abc"
           px={{ base: "0", sm: "0", md: "5", lg: "5" }}
-          mt={{ base: "12px", sm: "102px", md: "69px", lg: "70px" }}
+          mt={{ base: "0px", sm: "0px", md: "69px", lg: "70px" }}
           justifyContent="center"
           d="flex"
-        
          >
           {useIsMedium ? (
             <Box
@@ -35,6 +34,7 @@ import {
               w="100%"
               d="flex"
               justifyContent="center"
+              
             >
               
   
@@ -125,7 +125,7 @@ import {
               py="19px"
               px="8px"
               borderRadius="10px"
-              w={["100%","60%"]}
+              w={["100%","70%"]}
               d="flex"
               justifyContent="center"
             >

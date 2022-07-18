@@ -193,6 +193,8 @@ const handleOptionClicked = (index, option) => {
           md: "row",
           lg: "row",
         }}
+        h='100vh'
+        pos="relative"
       >
         <Box width={{ base: "100%", sm: "100%", md: "30%", lg: "20%" }}>
         <Box
@@ -260,7 +262,8 @@ const handleOptionClicked = (index, option) => {
           }}
           timer={timer}
           maxTime={maxTime}
-          timerValue={timerValue}/>
+          timerValue={timerValue}
+          />
           <QuestionOption
             allUserOptions={ selOption>-1? allUserOptions: []}
             voiceOver={voiceOver}
@@ -274,6 +277,10 @@ const handleOptionClicked = (index, option) => {
           </>)}
 
           <Box
+          pos="absolute"
+          bottom="2"
+          w="90%"
+          h="160px"
             display={{
               base: "block",
               sm: "block",

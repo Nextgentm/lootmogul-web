@@ -127,7 +127,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
 
     return (
         <Flex ml="auto" align="center" h="100%" pl="20px">
-           
+
             {isTabletOrDesktop && (
                 <>
 

@@ -12,13 +12,12 @@ import { AppContext } from "../../../utils/AppContext/index";
 import FAQ from "../../Home/components/FAQ";
 import SEOContainer from "../../SEOContainer";
 import Breadcrumbs from "../../../components/Breadcrumbs/index";
-import { Select,Heading, Button } from "@chakra-ui/react";
+import { Select, Heading, Button } from "@chakra-ui/react";
 import { CategoryIcon, SortIcon } from "../../../components/Icons";
 import { apiLikeRequests, useApiLikeRequests } from "../../Home/api";
 import ReadMoreLess from "../ReadMoreLess";
 
-const SelectBox = ({ style, icon, title, options,value, onChange }) => {
-
+const SelectBox = ({ style, icon, title, options, value, onChange }) => {
     return (
         <Flex style={style}>
             <Box pl={4}>{icon}</Box>
@@ -29,9 +28,8 @@ const SelectBox = ({ style, icon, title, options,value, onChange }) => {
                 color="white"
                 _focus={{ borderColor: "transparent", boxShadow: "none" }}
                 onChange={onChange}
-                
                 style={{ paddingLeft: "6px" }}
-               defaultValue={value}
+                defaultValue={value}
                 value={value}
             >
                 {options &&
@@ -56,7 +54,8 @@ const SelectBox = ({ style, icon, title, options,value, onChange }) => {
 
 const Influencers = ({ data, selectedCategory , banner}) => {
     const defaultCategoryName = "All Category";
-    const { isMobileDevice, isTabletOrDesktop, user, influencerLikes } = useContext(AppContext);
+    const { isMobileDevice, isTabletOrDesktop, user, influencerLikes } =
+        useContext(AppContext);
     const [options, setOptions] = useState([]);
     const [category, setCategory] = useState(defaultCategoryName);
     const [sortBy, setSortBy] = useState("Sort By");
@@ -78,45 +77,49 @@ const Influencers = ({ data, selectedCategory , banner}) => {
         { label: "Influencers",path:"/influencers" }
     ];
 
-
     useEffect(async () => {
         if (data && data?.length > 0 && options.length == 0) {
             options.push(defaultCategoryName);
             // if(catData){
 
             // }else {
-                
+
             // }
             data.map((cat) => {
-
                 options.push(cat.name);
             });
-      setCategory(defaultCategoryName);
+            setCategory(defaultCategoryName);
             setDisplayData(data);
         }
-
     }, [data, user]);
-    ;
     const handleCategoryChange = (e) => {
         const newCategory = e.target.value;
-        if(e.target.value === defaultCategoryName.toLowerCase()){
-            router.push({
-                pathname: '/influencers'
-              },  undefined, { shallow: true });  
-        } else if(displayData){
-            let selData = displayData.filter((data)=>data.name.toLowerCase() === e.target.value);
-            router.push({
-                pathname: '/influencers/category/'+selData[0].slug
-              },  undefined, { shallow: true });
-
+        if (e.target.value === defaultCategoryName.toLowerCase()) {
+            router.push(
+                { 
+                    pathname: "/influencers"
+                },
+                undefined,
+                { shallow: true }
+            );
+        } else if (displayData) {
+            let selData = displayData.filter(
+                (data) => data.name.toLowerCase() === e.target.value
+            );
+            router.push(
+                {
+                    pathname: "/influencers/category/" + selData[0].slug
+                },
+                undefined,
+                { shallow: true }
+            );
         }
-       
+
         setCategory(newCategory);
     };
     useEffect(() => {
         if (influencerLikes) {
             if (influencerLikes?.length) {
-
                 let populateData = Array.isArray(data) ? data : [data];
 
                 populateData = populateData.map((infcat) => {
@@ -134,41 +137,28 @@ const Influencers = ({ data, selectedCategory , banner}) => {
                 });
                 setSelCategoriesData([]);
                 setDisplayData(populateData);
-
             }
         }
     }, [influencerLikes]);
     useEffect(() => {
         if (data && selectedCategory) {
-
-           let selData = data.filter((item)=>item.slug === selectedCategory);
-           setCategory(selData[0].name.toLowerCase());
-           setSelCategoriesData(selData);
-          
-          
-
+            let selData = data.filter((item) => item.slug === selectedCategory);
+            setCategory(selData[0].name.toLowerCase());
+            setSelCategoriesData(selData);
         }
-    }, [selectedCategory])
+    }, [selectedCategory]);
 
     useEffect(() => {
-
         if (displayData && category) {
             setSortBy("Sort by");
-            if (
-                category.toLowerCase() !== defaultCategoryName.toLowerCase()
-            ) {
+            if (category.toLowerCase() !== defaultCategoryName.toLowerCase()) {
                 const selData = displayData.filter(
-                    (cat) =>
-                        cat.name.toLowerCase() === category.toLowerCase()
+                    (cat) => cat.name.toLowerCase() === category.toLowerCase()
                 );
-                              
-               
+
                 setSelCategoriesData(selData);
-              
             } else {
-               
                 setSelCategoriesData(displayData);
-                
             }
         }
     }, [category, displayData]);
@@ -218,7 +208,16 @@ return null;
 
     return (
         <Box mt="30px">
-            {selectedCategory && selCategoriesData && selCategoriesData[0]  && <SEOContainer seoData={selCategoriesData[0]?.seo?selCategoriesData[0]?.seo:selCategoriesData[0]} content={selCategoriesData[0]}/> }
+            {selectedCategory && selCategoriesData && selCategoriesData[0] && (
+                <SEOContainer
+                    seoData={
+                        selCategoriesData[0]?.seo
+                            ? selCategoriesData[0]?.seo
+                            : selCategoriesData[0]
+                    }
+                    content={selCategoriesData[0]}
+                />
+            )}
             <Box
                 ml={["20px", "20px", "20px", "60px"]}
                 mr={["20px", "20px", "20px", "60px"]}
@@ -256,7 +255,7 @@ return null;
                 </>)} 
                 {/* )} */}
 
-               <HStack spacing="24px" mt="50px">
+                <HStack spacing="24px" mt="50px">
                     <SelectBox
                         style={{
                             border: "1px solid #FFFFFF",
@@ -286,27 +285,39 @@ return null;
                     />
                 </HStack>
 
-                
                 <Box>
                     {selCategoriesData?.map((influencer, index) => (
-
                         <InfluencersCategories
-
                             isMobileDevice={isMobileDevice}
                             key={`influencers-${index}`}
                             influencer={influencer}
-
                         />
                     ))}
-
                 </Box>
 
-            { (category.toLowerCase() !== defaultCategoryName.toLowerCase()) &&selectedCategory && selCategoriesData[0] && selCategoriesData[0].description && selCategoriesData[0].description.length>0 && <Box> 
-                <Heading fontFamily="Blanch" color="white" fontSize="32px" mt="5%"> Description</Heading>
-                <ReadMoreLess read={selCategoriesData[0].description} lines={7} /></Box>}    
-              
+                {category.toLowerCase() !== defaultCategoryName.toLowerCase() &&
+                    selectedCategory &&
+                    selCategoriesData[0] &&
+                    selCategoriesData[0].description &&
+                    selCategoriesData[0].description.length > 0 && (
+                        <Box>
+                            <Heading
+                                fontFamily="Blanch"
+                                color="white"
+                                fontSize="32px"
+                                mt="5%"
+                            >
+                                {" "}
+                                Description
+                            </Heading>
+                            <ReadMoreLess
+                                read={selCategoriesData[0].description}
+                                lines={7}
+                            />
+                        </Box>
+                    )}
             </Box>
-        </Box >
+        </Box>
     );
 };
 

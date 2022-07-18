@@ -43,9 +43,9 @@ const QuestionOption = ({
     }
     return (
         <>
-            <Box>
-                <Box textAlign="center" pt={{
-                            base: "11px",
+            <Box pt="60px">
+                <Box textAlign="center" py={{
+                            base: "30px",
                             sm: "11px",
                             md: "60px",
                             lg: "60px"

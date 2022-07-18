@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 const ContentNavigator = ({
-    handleLeftArroeClick,
+    handleLeftArrowClick,
     handleRightArrowClick,
     showViewAll = true,
     showArrows = true,
@@ -33,7 +33,7 @@ const ContentNavigator = ({
                     <Box
                         ml="20px"
                         cursor="pointer"
-                        onClick={handleLeftArroeClick}
+                        onClick={handleLeftArrowClick}
                     >
                         <Image
                             alt="left"
