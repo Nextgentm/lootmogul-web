@@ -31,7 +31,7 @@ const TermsOfServices = () => {
                 setData(data[0].data)
             }).catch(
                 function (err) {
-                    console.log(err, ' error')
+                    //console.log(err, ' error')
                 }
             )
 

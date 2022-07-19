@@ -25,7 +25,7 @@ const newMarkDownTheme = {
 
   
 const AmbassadorsProfile = ({slug, aboutUsData})=>{
-  // console.log(slug, aboutUsData);
+  // //console.log(slug, aboutUsData);
     const router = useRouter();
     const [detailedData, setDetailedData] = useState(aboutUsData?aboutUsData[0]:[]);
     const { isMobileDevice } = useContext(AppContext);

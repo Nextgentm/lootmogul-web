@@ -20,7 +20,7 @@ const defaultSEOData = {
 };
 
 export default function Home({ topBanners, bottomBanners, faqData , featuredInfluencers, trendingGames, testimonials, seoData}) {
-  // console.log("banlen",featuredInfluencers?.length);
+  // //console.log("banlen",featuredInfluencers?.length);
   return (
     <>
      <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 
@@ -53,7 +53,7 @@ export async function getStaticProps() {
     revalidate: 300, // In seconds
   };
   } catch (error) {
-    console.log(error);
+    //console.log(error);
   }
   return { props: {  } };
 }

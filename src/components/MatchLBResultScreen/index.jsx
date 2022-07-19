@@ -59,7 +59,7 @@ const MatchLBResultScreen = (props) => {
                 setUserStats(response.data[0]);
 
             })
-            console.log(currentContest);
+            //console.log(currentContest);
             if(currentContest && currentContest.contest){
                 strapi.find("contests/"+currentContest.contest.id+"?populate=*").then((data)=>{
                     if(data?.data?.leaderboard?.data)

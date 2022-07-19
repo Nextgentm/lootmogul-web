@@ -93,7 +93,7 @@ const PreviewNFTs = ({ nftSelectedCategory }) => {
             setDisplayData(data);
         }
     }, [data]);
-console.log("data",data)
+//console.log("data",data)
 // const selectCategory = (e) => {
 //     if (e.target.value.toString().toLowerCase() === "all")
 //         setDisplayData(data);

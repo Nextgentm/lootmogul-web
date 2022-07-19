@@ -197,7 +197,7 @@ const Influencers = ({ data, selectedCategory , banner}) => {
 return null;
         } 
 
-        }else if(banner || (category.toLowerCase() === defaultCategoryName.toLowerCase())) {
+        }else if(banner && (banner || (category.toLowerCase() === defaultCategoryName.toLowerCase()))) {
           return  !isTabletOrDesktop
             ? banner[1]?.url
             : banner[0]?.url
@@ -234,6 +234,7 @@ return null;
                         alt={`influencers-banner`}
                         src={getBannerImage()}                        
                         layout="fill"
+                        objectFit="cover"
                     />
                 </Flex>
 

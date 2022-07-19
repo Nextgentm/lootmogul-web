@@ -17,25 +17,25 @@ const CardInfo = ({nft}) => {
         key={`nftItem-${nft?.id}`}
         >
             <Text noOfLines={2} fontWeight="bold" color="white" fontFamily="Sora">
-                {nft.name}
+                {nft?.name}
             </Text>
 
             <Flex justifyContent="space-between" m={0} p={0}>
                 <Text color="#7C7C7C">
-                    {nft.isAuction ? "Last Bid" : "Price"}
+                    {nft?.isAuction ? "Last Bid" : "Price"}
                 </Text>
 
                 <Text color="#7C7C7C">{nft.avail}/{nft.count}</Text>
             </Flex>
 
-            {nft.isAuction  && (
+            {nft?.isAuction  && (
                 <>
                      <Flex flexDir={"row"} >
                         <HStack>
                             <Image
                                 alt="Remaining Time"
                                 objectFit="contain"
-                                src={nft.market_price ?
+                                src={nft?.market_price ?
                                     "https://gamificationv2.s3.us-west-2.amazonaws.com/eth_icon_c0b1871b9b.svg" :
                                   "/assets/nfts/money.svg"}
                                 
@@ -48,8 +48,8 @@ const CardInfo = ({nft}) => {
                                 fontSize="12px"
                                 fontWeight="bold"
                             >
-                                  {nft.market_price ?
-                  " " + nft.market_price : "US $" + nft.sale_price }
+                                  {nft?.market_price ?
+                  " " + nft?.market_price : "US $" + nft?.sale_price }
                             </Text>
                         </HStack>
                         <Spacer />
@@ -95,14 +95,14 @@ const CardInfo = ({nft}) => {
                 </>
             )}
 
-            {!nft.isAuction  && (
+            {!nft?.isAuction  && (
                 <>
                     <Flex flexDir={"row"} >
                         <HStack>
                             <Image
                                 alt="Remaining Time"
                                 objectFit="contain"
-                                src={nft.market_price ?
+                                src={nft?.market_price ?
                                     "https://gamificationv2.s3.us-west-2.amazonaws.com/eth_icon_c0b1871b9b.svg" :
                                   "/assets/nfts/money.svg"}
                                 height="16px"
@@ -114,8 +114,8 @@ const CardInfo = ({nft}) => {
                                 fontSize="12px"
                                 fontWeight="bold"
                             >
-                               {nft.market_price ?
-                             " " + nft.market_price : "US $" + nft.sale_price }
+                               {nft?.market_price ?
+                             " " + nft?.market_price : "US $" + nft?.sale_price }
                             </Text>
                         </HStack>
                         <Spacer />
@@ -190,7 +190,7 @@ const NftCard = ({ nft, showInfo = false }) => {
          <Image height="400px" width={"300px"}
          objectFit={"cover"}
          alt="nft-image"
-         title={nft.name}
+         title={nft?.name}
          src={nft.front_image}
          cursor="pointer"
         />
@@ -198,18 +198,18 @@ const NftCard = ({ nft, showInfo = false }) => {
 
         </Box>
         <Box cursor="pointer"  >
-        { nft.back_image?.indexOf('.mp4') >0 &&
+        { nft?.back_image?.indexOf('.mp4') >0 &&
         <video key={nft.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'400px', width:'full'}}>
-                <source src={nft.back_image} type="video/mp4" />
+                <source src={nft?.back_image} type="video/mp4" />
                 
                 Your browser does not support the Video NFT.
         </video>}
-                { nft.back_image?.indexOf('.mp4')<0 &&
+                { nft?.back_image?.indexOf('.mp4')<0 &&
                 <Image height="400px" width={"300px"}
                     objectFit={"cover"}
                     alt="nft-image"
-                    title={nft.name}
-                    src={nft.back_image}
+                    title={nft?.name}
+                    src={nft?.back_image}
                     cursor="pointer"
                    
                 />

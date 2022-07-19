@@ -35,7 +35,7 @@ const PrivacyPolicy = () => {
                 setData(data[0].privacydata)
             }).catch(
                 function (err) {
-                    console.log(err, ' error')
+                    //console.log(err, ' error')
                 }
             )
     }, [data])

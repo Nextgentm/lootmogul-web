@@ -56,7 +56,7 @@ const Spin = ({
     const handleSpinClick = () => {
         // const newPrizeNumber = Math.floor(Math.random() * wheelData.length);
         // setPrizeNumber(newPrizeNumber);
-        // console.log(prizeNumber, data);
+        // //console.log(prizeNumber, data);
         setSpin(true);
         setIsSpinning(true);
         setAni(true);

@@ -46,7 +46,7 @@ export const AppContextContainer = ({ children }) => {
 
     
     const CheckAndStartGame = (callerKey, contestmaster) => {
-        // console.log("user",user);
+        // //console.log("user",user);
 
         if(!user){
             setShowLoading({});
@@ -63,7 +63,7 @@ export const AppContextContainer = ({ children }) => {
     };
 
     const CheckIfRetry = async(contestmaster, callerKey)=>{
-        // console.log("checking retry");
+        // //console.log("checking retry");
     
         const isRetry = await strapi.request(
             "post",
@@ -120,7 +120,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
 
 }
     const fetchGameJoiningData = async (contestmaster = currentContest) => {
-        // console.log(coupon);
+        // //console.log(coupon);
         if (contestmaster) {
           const { data } = await strapi.find("contests", {
             sort: "createdAt:DESC",
@@ -139,7 +139,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
               query,
               {}
             );
-       // console.log("joiningg res", resp,data);
+       // //console.log("joiningg res", resp,data);
             if (resp?.ticketId) {
                 setCoupon("");
               if (resp?.status == 0) {
@@ -158,7 +158,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                 //     },
                 //   ],
                 // });
-                // console.log("error tickets data");
+                // //console.log("error tickets data");
               } else {
                 if(data[0]?.contestmaster?.data?.game?.data?.url && data[0]?.contestmaster?.data?.game?.data?.type=='html'){
                       if (typeof window !== "undefined") {
@@ -184,7 +184,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                 //     ],
                 // });
                 setCoupon("");
-                console.log("error tickets data");
+                //console.log("error tickets data");
           }
         } else {
           //error no contest
@@ -198,7 +198,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
         //       },
         //     ],
         // });
-        console.log("error tickets data");
+        //console.log("error tickets data");
         }
       };
     }
@@ -242,7 +242,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
         //if (!data) data = user;
         
         if(user && !strapi.user){
-            console.log("JWT expired");
+            //console.log("JWT expired");
             setUser(null);
         }
 
@@ -252,7 +252,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
         if(!data) return null;
         setUser(data);
         setLoginModalActive(false);
-        //console.log(data);
+        ////console.log(data);
 
         
         try {
@@ -273,7 +273,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                 return data;
             }
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             return null;
         }
     };
@@ -350,7 +350,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                             {'data': { 'utm_source':provider || utm_source , 'utm_medium': utm_medium || "",'utm_campaign': utm_campaign || "",'utm_term': utm_term || "",'utm_content': utm_content || "", 'trackingCode': trackingCode|| ""}} );
                         }
                         catch (error) {
-                            console.log(error);
+                            //console.log(error);
                         }
 
                        window.localStorage?.removeItem("utm_source");
@@ -370,7 +370,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                             updateUser();
                         }
                         catch (error) {
-                            console.log(error);
+                            //console.log(error);
                         }
 
                        window.localStorage?.removeItem("utm_source");
@@ -438,7 +438,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                     }
                     strapi.logout();
                     setUser(null);
-                    console.log("logout");
+                    //console.log("logout");
                 }
             }}
         >

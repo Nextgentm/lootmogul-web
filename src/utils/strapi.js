@@ -18,7 +18,7 @@ strapi.axios.interceptors.response.use(
     const { status } = error.response;
     switch (status) {
       case 401: case 403:{
-        console.log("user not found");
+        //console.log("user not found");
         strapi.logout();
         if(location.pathname != "/")
               window.location.replace("/");
