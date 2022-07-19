@@ -80,7 +80,7 @@ useEffect(()=>{
     socket.on("next_question", data => {
       setDisplayMessage(null);
       setMilliCounter(Date.now());
-      // console.log("next_question",data);
+      // //console.log("next_question",data);
       props.setLoading(false);
         setUsers(data.users.sort((a, b) => (a.rank > b.rank ? 1 : -1)));
         setQuestion(data.question?.questionText);
@@ -110,7 +110,7 @@ useEffect(()=>{
       });
 
       socket.on("display_message", data => {
-        // console.log("display_message",data);
+        // //console.log("display_message",data);
         props.setLoading(false);
 
         setDisplayMessage(data.message);
@@ -129,13 +129,13 @@ useEffect(()=>{
       });
     
       socket.on("player_left", data => {
-        console.log("user left the game");
+        //console.log("user left the game");
         // user left the game
         });
       
     socket.on("tick", data => {
         setMilliCounter(Date.now());
-        // console.log(Date.now());
+        // //console.log(Date.now());
         setTimer(Math.floor(data.timer));
       });
 

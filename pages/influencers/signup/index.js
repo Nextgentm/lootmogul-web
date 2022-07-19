@@ -152,7 +152,7 @@ const Page = () => {
         values.email !== ""
       ) {
         const resp = await strapi.create('influencer-signups', values);
-        // console.log(resp);
+        // //console.log(resp);
         if (resp.data) {
           setAlertMsg({isOpen:true, title:"Success",message: "Your information has been sent!"});
           

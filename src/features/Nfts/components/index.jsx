@@ -196,6 +196,7 @@ return null;
                         m={"auto"}
                         alt={`nft-banner`}
                         src={getBannerImage()} 
+                        objectFit="cover"
                         layout="fill"
                     />
                 </Flex>

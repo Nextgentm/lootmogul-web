@@ -25,7 +25,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
     const [totalAmount, setTotalAmount] = useState();
     const { logout, isTabletOrDesktop, amounts } = useContext(AppContext);
     const ref = useRef();
-    // console.log(amounts);
+    // //console.log(amounts);
 
     useOutsideClick({
         ref,

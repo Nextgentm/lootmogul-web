@@ -18,11 +18,11 @@ const CricketerNft = () => {
 const createSubscription = async (email)=>{
 let subscription = {email:email}
  strapi.create("subscriptions",subscription).then((resp)=>{
-     console.log(resp);
+     //console.log(resp);
     if (resp.data) {setMessage("Subscribed Successfully!!!")}
     else setMessage("Already Subscribed with this Email!!!")
  }).catch((err)=>{
-     console.log("error",err);
+     //console.log("error",err);
      setMessage("Already Subscribed with this Email!!!")
  })
 

@@ -34,7 +34,7 @@ const CaptchaPopup = ({onChange})=>{
             throw new Error(error.message)
           }
         } catch (error) {
-          console.log(error?.message || "Something went wrong");
+          //console.log(error?.message || "Something went wrong");
         } finally {
         
           recaptchaRef.current?.reset();

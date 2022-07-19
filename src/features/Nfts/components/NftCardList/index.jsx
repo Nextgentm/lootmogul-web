@@ -17,7 +17,7 @@ const NftCardList = ({ data ,isSale = true}) => {
 
                     <ContentNavigator
                         showArrows={true}
-                        handleLeftArroeClick={() => ref.current.scrollPrev()}
+                        handleLeftArrowClick={() => ref.current.scrollPrev()}
                         handleRightArrowClick={() => ref.current.scrollNext()}
                         // onViewAllClicked={() => router.push("/influencers")}
                         onViewAllClicked={() => router.push("")}

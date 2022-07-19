@@ -37,7 +37,7 @@ const SpinBtn = ({ isOpen, onClose }) => {
     const handleClaimClick = async () => {
         // const newPrizeNumber = Math.floor(Math.random() * wheelData.length);
         // setPrizeNumber(newPrizeNumber);
-        // console.log(newPrizeNumber, data);
+        // //console.log(newPrizeNumber, data);
         try {
             await strapi
                 .find("bucketgame/custom-bucketgame/claim", {})
@@ -85,13 +85,13 @@ const SpinBtn = ({ isOpen, onClose }) => {
                 "bucketgame/custom-bucketgame/spin?userId=" + user?.id,
                 {}
             );
-            // console.log(mySpinData);
+            // //console.log(mySpinData);
         }
         const data = await strapi.find("bucketgamemasters", {
             filters: { status: "active", type: "spin" },
             populate: ["reward.currency"]
         });
-        // console.log("data", data);
+        // //console.log("data", data);
 
         data?.data?.length &&
             data.data?.[0].reward?.map((seg, index) => {
@@ -106,7 +106,7 @@ const SpinBtn = ({ isOpen, onClose }) => {
                     ? segs.push(seg.amount + " - " + seg.currency?.data?.name)
                     : segs.push(seg.name);
             });
-        // console.log("segs", segs);
+        // //console.log("segs", segs);
         setSegments(segs);
         setLoading(false);
         setTimer(null);

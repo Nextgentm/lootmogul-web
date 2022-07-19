@@ -13,7 +13,7 @@ class Countdown extends Component {
     getTimeUntil(deadline) {
         const time = Date.parse(deadline) - Date.parse(new Date());
         if (time < 0) {
-            console.log("Date passed");
+            //console.log("Date passed");
         } else {
             const seconds = Math.floor((time / 1000) % 60);
             const minutes = Math.floor((time / 1000 / 60) % 60);

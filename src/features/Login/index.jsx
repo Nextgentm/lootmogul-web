@@ -20,7 +20,7 @@ const Login = ({isOpen, OnLoginClose}) => {
         // window.location.href = "https://quiz.lootmogul.com/login?access_id="+ data.tokenId+"&provider=GOOGLE";
 
         },
-        onFailure: (error) => console.log(error)
+       // onFailure: (error) => //console.log(error)
 
     });
 

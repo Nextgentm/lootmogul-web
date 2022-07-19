@@ -126,6 +126,7 @@ const InfluencerDetail = ({ influencer }) => {
                     alt={`influencer-banner`}
                     layout="fill"
                     m={"auto"}
+                    objectFit="cover"
                     src={
                         !isTabletOrDesktop
                             ? fullInfluencer?.banner?.data?.length > 1 &&
