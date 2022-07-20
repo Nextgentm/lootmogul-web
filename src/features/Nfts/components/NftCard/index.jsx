@@ -138,7 +138,6 @@ const CardInfo = ({nft}) => {
 }
 
 const NftCard = ({ nft, showInfo = false }) => {
-    //console.log(nft);
     const router = useRouter();
     const [isFlipped, setIsFlipped] = useState(false);
     
@@ -158,7 +157,7 @@ const NftCard = ({ nft, showInfo = false }) => {
       }
 
     return (
-      <Link href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft?.symbol+"/all"} target="_blank" passHref={true}_hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}}  cursor="pointer" >
+  nft && (   <Link href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft?.symbol+"/all"} target="_blank" passHref={true}_hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}}  cursor="pointer" >
             <Box m="auto" p="3%" textAlign="center" w={"300px"}  h={showInfo? "520px" : "420px"} 
         
         onMouseEnter={() => setIsFlipped(true)}
@@ -215,7 +214,7 @@ const NftCard = ({ nft, showInfo = false }) => {
         
          { showInfo &&  <CardInfo nft = {nft}/> }
          </Box>
-        </Link>
+        </Link>)
     );
 };
 

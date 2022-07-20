@@ -1,46 +1,93 @@
-import {Flex, Box, Text} from "@chakra-ui/react"
-import {useRef} from "react"
+import { Flex, Box, Text, WrapItem, Wrap } from "@chakra-ui/react";
+import { useRef, useState } from "react";
 import ContentNavigator from "../../../../components/ContentNavigator";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import NftCard from "../NftCard";
-import { useRouter } from 'next/router';
-const NftCardList = ({ data ,isSale = true}) => {
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { AppContext } from "../../../../utils/AppContext/index";
+const NftCardList = ({ data, isSale = true }) => {
+    console.log(data,"data");
     const ref = useRef();
-    const router = useRouter();
-    return <Box width="100%">
-    <Flex width="100%" justifyContent="space-between" alignItems="center" mb="2%">
-                    
-                        <Text fontFamily="Blanch" fontSize={["28px","58px"]} color="white">
-                           Popular
-                        </Text>
-                   
+    const [showAll, setShowAll] = useState(false);
 
-                    <ContentNavigator
-                        showArrows={true}
-                        handleLeftArrowClick={() => ref.current.scrollPrev()}
-                        handleRightArrowClick={() => ref.current.scrollNext()}
-                        // onViewAllClicked={() => router.push("/influencers")}
-                        onViewAllClicked={() => router.push("")}
-                        showViewAll={false}
-                    />
-                </Flex>
+    const { isMobileDevice } = useContext(AppContext);
+    // console.log("showAll",showAll)
+    const arrowThreshold = isMobileDevice ? 2 : 5;
+    return (
+        <Box width="100%">
+            <Flex
+                width="100%"
+                justifyContent="space-between"
+                alignItems="center"
+                mb="2%"
+            >
+                <Text
+                    fontFamily="Blanch"
+                    fontSize={["28px", "58px"]}
+                    color="white"
+                >
+                    Popular
+                </Text>
 
-                <Box mt={["5%", "1%"]} ml={["-5%", "1%"]} alignItems="center">
-                    <ScrollMenu className="no-scrollbar" apiRef={ref}>
-                        {data
-                            .filter((item) => isSale ? item.isSale : true).sort((a,b) => a.priority - b.priority)
-                            .map((item,index) => (
-                                <NftCard nft={item} itemId={`nftcard-${index}`} key={`nftcard-${index}`} showInfo={true} />
-                                // <InfluencerCard
-                                //     img="https://imgcdn.socialos.io/web/files/608cd78df1f70e78ec3a26f4/1634556119658_Front-Gold.jpg"
-                                //     content={item}
-                                //     isLive={true}
-                                //     showsInfo={true}
-                                //     isMobileDevice={isMobileDevice}
-                                // />
-                            ))}
-                    </ScrollMenu>
-                </Box></Box>;
-}
+                <ContentNavigator
+                    showViewAll={
+                        data.length > arrowThreshold && !isMobileDevice
+                    }
+                    showArrows={data.length > arrowThreshold}
+                    handleLeftArrowClick={() => ref.current.scrollPrev()}
+                    handleRightArrowClick={() => ref.current.scrollNext()}
+                    onViewAllClicked={() => setShowAll(!showAll)}
+                />
+            </Flex>
+            {data.length === 0 ? (
+                <Text
+                    fontFamily="Blanch"
+                    fontSize={["28px", "58px"]}
+                    color="white"
+                >
+                   No Nfts to display..........
+                </Text>
+            ) : (
+                <Box>
+                    {showAll ? (
+                        <Wrap m="auto !important">
+                            {data
+                                .filter((item) => (isSale ? item.isSale : true))
+                                .sort((a, b) => a.priority - b.priority)
+                                .map((item, index) => (
+                                    <WrapItem
+                                        m="auto !important"
+                                        mb="2%!important"
+                                    >
+                                        <NftCard
+                                            nft={item}
+                                            itemId={`nftcard-${index}`}
+                                            key={`nftcard-${index}`}
+                                            showInfo={true}
+                                        />
+                                    </WrapItem>
+                                ))}
+                        </Wrap>
+                    ) : (
+                        <ScrollMenu className="no-scrollbar" apiRef={ref}>
+                            {data
+                                .filter((item) => (isSale ? item.isSale : true))
+                                .sort((a, b) => a.priority - b.priority)
+                                .map((item, index) => (
+                                    <NftCard
+                                        nft={item}
+                                        itemId={`nftcard-${index}`}
+                                        key={`nftcard-${index}`}
+                                        showInfo={true}
+                                    />
+                                ))}
+                        </ScrollMenu>
+                    )}
+                </Box>
+            )}
+        </Box>
+    );
+};
 
 export default NftCardList;
