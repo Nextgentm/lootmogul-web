@@ -35,7 +35,7 @@ const NftsCategories = ({ NFTS, isSelectedCat }) => {
                         {NFTS.name}
                     </Text>
                   {!isSelectedCat &&   <ContentNavigator
-                        showArrows={NFTS?.nftSet?.length > arrowThreshold}
+                        showArrows={NFTS?.nftSet.filter((item)=>item.nft_kred?.data)?.length > arrowThreshold}
                         handleLeftArrowClick={() => ref.current.scrollPrev()}
                         handleRightArrowClick={() => ref.current.scrollNext()}
                         onViewAllClicked={() =>

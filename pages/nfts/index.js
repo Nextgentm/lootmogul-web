@@ -37,14 +37,13 @@ export async function getStaticProps() {
   let data = [];
   do {
     const res = await strapi.find("nft-collections", {
-      sort:"id",
+      sort:"priority",
       populate:{
        
         nftSet:{
           
           populate:{
-            nft_kred:{
-             
+            nft_kred:{             
               populate:["*"]
             }
           }

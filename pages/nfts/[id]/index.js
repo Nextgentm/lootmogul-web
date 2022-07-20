@@ -22,7 +22,7 @@ export async function getStaticProps(context) {
   let data = [];
   do {
      const res = await strapi.find("nft-collections", {
-      sort: "id",
+      sort: "priority",
       // publicationState: 'preview',
       //       filters:   { publishedAt: {
       //           $null: true
@@ -59,11 +59,12 @@ export async function getStaticProps(context) {
   data = data.flat();
   if(data)
   { 
-    return { props: { id,data } };
+    return { props: { id,data },
+    revalidate: 600 }
+     
   }
   // Pass data to the page via props
-  return { props: { error: data?.error?.message } ,
-  revalidate: 600, // In seconds
+  return { props: { error: data?.error?.message } // In seconds
 };
 
   
@@ -77,7 +78,7 @@ export async function getStaticPaths() {
   let data = [];
   do {
      const res = await strapi.find("nft-collections", {
-      sort:"id",
+      sort:"priority",
       populate:{
         sharedSeo:{populate:["*"]},
         nftSet:{
