@@ -13,10 +13,10 @@ const NextShare = dynamic(() => import("../../../../utils/socialbuttons"));
 
 const CardInfo = ({nft}) => {
     return (   
-        <Box pl={"20px"} pr={"20px"}
+        <Box pl={"20px"} pr={"20px"} mt="5%"
         key={`nftItem-${nft?.id}`}
         >
-            <Text noOfLines={2} fontWeight="bold" color="white" fontFamily="Sora">
+            <Text noOfLines={2} fontWeight="bold" minH="50px" color="white" fontFamily="Sora">
                 {nft?.name}
             </Text>
 
@@ -158,27 +158,28 @@ const NftCard = ({ nft, showInfo = false }) => {
 
     return (
   nft && (   <Link href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft?.symbol+"/all"} target="_blank" passHref={true}_hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}}  cursor="pointer" >
-            <Box m="auto" p="3%" textAlign="center" w={"300px"}  h={showInfo? "520px" : "420px"} 
+            <Box m="auto" p="3%" textAlign="center" w={"300px"}  h={showInfo? "520px" : "420px"}  minH={showInfo? "520px" : "420px"}
         
         onMouseEnter={() => setIsFlipped(true)}
          onMouseLeave={() => setIsFlipped(false)}
          >
            
-     <ReactCardFlip  isFlipped={isFlipped} flipDirection={"horizontal"} infinite={true}  h={"400px"}
+     <ReactCardFlip  isFlipped={nft?.back_image && nft?.back_image.length?isFlipped:false} flipDirection={"horizontal"} infinite={true}  h={"400px"} minH="400px"
          
         > 
  <Box cursor="pointer">
-<Box  _focus={{border:"none",textDecoration:"none"}}  >
+<Box  _focus={{border:"none",textDecoration:"none"}} height="400px" width={"300px"} >
             { nft?.front_image?.indexOf('.mp4') >0 &&
-        <video key={nft?.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'400px', width:'full'}}>
+        <video key={nft?.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'100%',  width:'full',  objectFit:"cover",padding:"3%"}}>
                 <source src={nft?.front_image} type="video/mp4" />
                 
                 Your browser does not support the Video NFT.
         </video>}
         { nft?.front_image?.indexOf('.mp4')<0 &&
-         <Image height="400px" width={"300px"}
+         <Image layout="fill"
          objectFit={"cover"}
          title={nft?.name}
+         style={{minHeight:'400px'}}
          src={nft.front_image}
          cursor="pointer"
         />
@@ -187,15 +188,15 @@ const NftCard = ({ nft, showInfo = false }) => {
         </Box>
         </Box>
         <Box cursor="pointer">
-        <Box  _focus={{border:"none",textDecoration:"none"}}  >
+        <Box  _focus={{border:"none",textDecoration:"none"}}  height="400px" width={"300px"} >
         { nft?.back_image?.indexOf('.mp4') >0 &&
-        <video key={nft.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'400px', width:'full'}}>
+        <video key={nft.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'100%',  width:'full', objectFit:"cover",padding:"3%"}}>
                 <source src={nft?.back_image} type="video/mp4" />
                 
                 Your browser does not support the Video NFT.
         </video>}
                 { nft?.back_image?.indexOf('.mp4')<0 &&
-                <Image height="400px" width={"300px"}
+                <Image layout="fill"
                     objectFit={"cover"}
                     title={nft?.name}
                     src={nft?.back_image}

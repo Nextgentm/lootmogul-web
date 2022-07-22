@@ -19,6 +19,7 @@ const NftsCategories = ({ NFTS, isSelectedCat }) => {
                 ml={["20px", "20px", "20px", "60px"]}
                 mr={["20px", "20px", "20px", "60px"]}
                 mt="30px"
+                mb="30px"
             >
                 <Flex
                     justify="space-between"

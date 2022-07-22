@@ -228,13 +228,13 @@ return null;
                         style={{ mb: "14px" }}
                     />
                 )}
-            {getBannerImage() && (<>   <Flex position="relative" w="100%" h={"330px"} pt={"20px"}>
+            {getBannerImage() && (<>   <Flex position="relative" w="100%" h={"350px"} pt={"20px"}>
                  <Image
-                        m={"auto"}
                         alt={`influencers-banner`}
                         src={getBannerImage()}                        
-                        layout="fill"
-                        objectFit="cover"
+                       className="custom-img"
+                       layout="fill"
+                        
                     />
                 </Flex>
 

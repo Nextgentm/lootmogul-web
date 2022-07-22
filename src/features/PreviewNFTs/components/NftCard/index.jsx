@@ -175,7 +175,7 @@ const NftCard = ({ nft, showInfo = false }) => {
          onMouseLeave={() => setIsFlipped(false)}
          >
            
-        <ReactCardFlip isFlipped={isFlipped} flipDirection={"horizontal"} infinite={true}  h={"400px"}
+        <ReactCardFlip isFlipped={nft?.back_image && nft?.back_image.length?isFlipped:false} flipDirection={"horizontal"} infinite={true}  h={"400px"}
          
         > 
 
