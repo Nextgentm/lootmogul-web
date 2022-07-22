@@ -191,13 +191,13 @@ return null;
            {getBannerImage() && < Box  ml={["20px", "20px", "20px", "60px"]}
                 mr={["20px", "20px", "20px", "60px"]}> 
                 <Breadcrumbs routes={breadcrumbsPath} style={{ mb: "14px" }} />
-              <Flex position="relative" w="100%" h={"330px"} pt={"20px"}>
+              <Flex position="relative" w="100%" h={"350px"} pt={"20px"}>
                     <Image
                         m={"auto"}
                         alt={`nft-banner`}
                         src={getBannerImage()} 
-                        objectFit="cover"
-                        layout="fill"
+                        className="custom-img"
+                       layout="fill"
                     />
                 </Flex>
                 </Box>}   

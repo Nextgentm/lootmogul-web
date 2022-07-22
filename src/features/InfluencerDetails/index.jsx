@@ -121,12 +121,12 @@ const InfluencerDetail = ({ influencer }) => {
                     style={{ mt: "14px", mb: "14px" }}
                 />
             )}
-            <Box position="relative" align="center" width="100%" height={"330px"}>
+            <Box position="relative" align="center" width="100%" height={"350px"}>
                 <Image
                     alt={`influencer-banner`}
-                    layout="fill"
-                    m={"auto"}
-                    objectFit="cover"
+                        m={"auto"}
+                        className="custom-img"
+                        layout="fill"
                     src={
                         !isTabletOrDesktop
                             ? fullInfluencer?.banner?.data?.length > 1 &&

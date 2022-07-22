@@ -97,8 +97,8 @@ const InfluencerInfo = ({ influencer }) => {
                 {influencer.contestmasters?.data && showPaidGameConfirmation?.callerKey == `infinfo-${influencer.contestmasters.data[0]?.id}` && <PaidGameConfirmation contestmaster={influencer.contestmasters.data[0]} />}
 
 
-                <Button flex={1} ml={"10px"} h="28px" variant="outline">
-                    <Link href={"https://nft.lootmogul.com"}>
+                <Button flex={1} ml={"10px"} h="28px" variant="outline" _hover={{textDecoration:"none",bg:"none"}} _focus={{bg:"none"}} >
+                    <Link href={"https://nft.lootmogul.com"} _hover={{textDecoration:"none",bg:"none"}} _focus={{border:"none",textDecoration:"none"}} >
                         Buy NFTs
                     </Link>
                 </Button>
