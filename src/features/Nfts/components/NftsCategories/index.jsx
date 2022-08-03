@@ -1,7 +1,9 @@
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { useRef } from "react";
 import { useRouter } from "next/router";
-import NftCard from "../NftCard";
+import dynamic from 'next/dynamic'
+// import NftCard from "../NftCard";
+const NftCard =  dynamic(() => import("../NftCard")) ;
 import { Text, Flex, Box, Grid } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../../../../utils/AppContext/index";

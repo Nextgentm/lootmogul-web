@@ -35,7 +35,7 @@ export async function getStaticProps(context) {
 
   const { id = "" } = context.params;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://gamification.tpix.in"}/api/influencers?filters[slug]=${id}&populate[1]=icon&populate[2]=sharedSeo&populate[3]=sharedSeo.metaSocial&populate[4]=contestmasters.icon&populate[5]=contestmasters.feeWallet.currency&populate[6]=banner&populate[7]=contestmasters.reward&populate[8]=contestmasters.contest_section&populate[9]=nft_kreds`
+    `${process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://gamification.tpix.in"}/api/influencers?filters[slug]=${id}&populate[1]=icon&populate[2]=sharedSeo&populate[3]=sharedSeo.metaSocial&populate[4]=contestmasters.icon&populate[5]=contestmasters.feeWallet.currency&populate[6]=banner&populate[7]=contestmasters.reward&populate[8]=contestmasters.contest_section&populate[9]=nft_kreds&populate[10]=influencer_category.banner`
   );
   const data = await res.json();
   // Pass data to the page via props
