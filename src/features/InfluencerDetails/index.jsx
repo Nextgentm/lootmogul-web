@@ -76,7 +76,7 @@ const InfluencerDetail = ({ influencer }) => {
 
     useEffect(() => {
         if (fullInfluencer) {
-            const td = [
+            const td = fullInfluencer?.contestmasters?.data && fullInfluencer?.contestmasters?.data.length>0 ? [
                 {
                     tab: <Text>NFTs</Text>,
                     tabPanel: (
@@ -106,10 +106,57 @@ const InfluencerDetail = ({ influencer }) => {
                         />
                     )
                 }
-            ];
+            ]:[
+                {
+                    tab: <Text>NFTs</Text>,
+                    tabPanel: (
+                        <>
+                            {" "}
+                            {fullInfluencer?.nft_kreds?.data.length > 0 && (
+                                <NftCardList
+                                    data={fullInfluencer?.nft_kreds?.data?.reverse() || []}
+                                    isSale={false}
+                                />
+                            )}
+                            {fullInfluencer?.nft_kreds?.data.length === 0 && (
+                                <Text color="white">Coming soon.. </Text>
+                            )}
+                        </>
+                    )
+                }];
             setTabsData(td);
         }
     }, [fullInfluencer]);
+    const getBannerImage = () =>{
+        if(fullInfluencer){
+            if(fullInfluencer?.banner && fullInfluencer?.banner?.data){
+               
+                return  !isTabletOrDesktop
+                ? fullInfluencer?.banner?.data?.length > 1 &&
+                  fullInfluencer?.banner?.data?.[1]?.url
+                    ? getStrapiMedia(
+                          fullInfluencer?.banner?.data[1].url
+                      )
+                    : "/assets/influencer-banner-mobile.webp"
+                : fullInfluencer?.banner?.data?.length > 0 &&
+                  fullInfluencer?.banner?.data?.[0]?.url
+                ? getStrapiMedia(fullInfluencer?.banner?.data[0].url)
+                : "/assets/influencer-banner.webp"
+            } else if(fullInfluencer?.influencer_category && fullInfluencer?.influencer_category?.data?.banner?.data){
+                return  !isTabletOrDesktop
+                ? fullInfluencer?.influencer_category?.data?.banner?.data?.length > 1 &&
+                  fullInfluencer?.influencer_category?.data?.banner?.data?.[1]?.url
+                    ? getStrapiMedia(
+                          fullInfluencer?.influencer_category?.data?.banner?.data[1].url
+                      )
+                    : "/assets/influencer-banner-mobile.webp"
+                : fullInfluencer?.influencer_category?.data?.banner?.data?.length > 0 &&
+                  fullInfluencer?.influencer_category?.data?.banner?.data?.[0]?.url
+                ? getStrapiMedia(fullInfluencer?.influencer_category?.data?.banner?.data[0].url)
+                : "/assets/influencer-banner.webp"
+            }
+        }
+    }
 
     return (
         <Box mr={[0, "20px"]} ml={[0, "20px"]}>
@@ -128,17 +175,7 @@ const InfluencerDetail = ({ influencer }) => {
                         className="custom-img"
                         layout="fill"
                     src={
-                        !isTabletOrDesktop
-                            ? fullInfluencer?.banner?.data?.length > 1 &&
-                              fullInfluencer?.banner?.data?.[1]?.url
-                                ? getStrapiMedia(
-                                      fullInfluencer?.banner?.data[1].url
-                                  )
-                                : "/assets/influencer-banner-mobile.webp"
-                            : fullInfluencer?.banner?.data?.length > 0 &&
-                              fullInfluencer?.banner?.data?.[0]?.url
-                            ? getStrapiMedia(fullInfluencer?.banner?.data[0].url)
-                            : "/assets/influencer-banner.webp"
+                        getBannerImage()
                     }
                 />
             </Box>

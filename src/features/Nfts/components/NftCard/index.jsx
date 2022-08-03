@@ -168,39 +168,51 @@ const NftCard = ({ nft, showInfo = false }) => {
          
         > 
  <Box cursor="pointer">
-<Box  _focus={{border:"none",textDecoration:"none"}} height="400px" width={"300px"} >
+<Box  _focus={{border:"none",textDecoration:"none"}} height="400px" padding={"3%"} width={"300px"} >
             { nft?.front_image?.indexOf('.mp4') >0 &&
-        <video key={nft?.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'100%',  width:'full',  objectFit:"cover",padding:"3%"}}>
+        <video className="lazy" playsinline key={nft?.id} id={"background-video"+nft.id} loop autoPlay muted 
+         style={{height:"100%",  width:'full',  objectFit:"cover"}}>
                 <source src={nft?.front_image} type="video/mp4" />
                 
                 Your browser does not support the Video NFT.
         </video>}
         { nft?.front_image?.indexOf('.mp4')<0 &&
-         <Image layout="fill"
+         <Image layout="intrinsic"
          objectFit={"cover"}
+         priority={true}
+         blurDataURL={nft.front_image}
+         placeholder="blur"
+         height={400} width={300}
+         alt={"nft_front"+nft?.id}
          title={nft?.name}
-         style={{minHeight:'400px'}}
          src={nft.front_image}
          cursor="pointer"
+         quality={50}
         />
     }
 
         </Box>
         </Box>
         <Box cursor="pointer">
-        <Box  _focus={{border:"none",textDecoration:"none"}}  height="400px" width={"300px"} >
+        <Box  _focus={{border:"none",textDecoration:"none"}} padding="3%" height="400px" width={"300px"} >
         { nft?.back_image?.indexOf('.mp4') >0 &&
-        <video key={nft.id} id={"background-video"+nft.id} loop autoPlay muted style={{height:'100%',  width:'full', objectFit:"cover",padding:"3%"}}>
+        <video className="lazy" playsinline key={nft.id} id={"background-video"+nft.id}  loop autoPlay muted style={{height:"100%",  width:"full", objectFit:"cover"}}>
                 <source src={nft?.back_image} type="video/mp4" />
                 
                 Your browser does not support the Video NFT.
         </video>}
                 { nft?.back_image?.indexOf('.mp4')<0 &&
-                <Image layout="fill"
+                <Image layout="intrinsic"
+                priority={true}
+                alt={"nft_back"+nft?.id}
+                height={400} width={300}
                     objectFit={"cover"}
+                    blurDataURL={nft?.back_image}
+                    placeholder="blur"
                     title={nft?.name}
                     src={nft?.back_image}
                     cursor="pointer"
+                    quality={50}
                     
                 />
                     }

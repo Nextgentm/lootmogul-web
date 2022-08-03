@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { AppContext } from "../../../../utils/AppContext/index";
 const NftCardList = ({ data, isSale = true }) => {
-    console.log(data,"data");
     const ref = useRef();
     const [showAll, setShowAll] = useState(false);
 
