@@ -17,17 +17,17 @@ const NftCardList = ({ data, isSale = true }) => {
         <Box width="100%">
             <Flex
                 width="100%"
-                justifyContent="space-between"
+                justifyContent="flex-end"
                 alignItems="center"
                 mb="2%"
             >
-                <Text
+                {/* <Text
                     fontFamily="Blanch"
                     fontSize={["28px", "58px"]}
                     color="white"
                 >
                     Popular
-                </Text>
+                </Text> */}
 
                 <ContentNavigator
                     showViewAll={

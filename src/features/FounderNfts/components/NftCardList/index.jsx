@@ -8,11 +8,11 @@ const NftCardList = ({ data, isSale = true }) => {
     const ref = useRef();
     const router = useRouter();
     return <Box width="100%">
-        <Flex width="100%" justifyContent="space-between" alignItems="center" mb="2%">
+        <Flex width="100%" justifyContent="flex-end" alignItems="center" mb="2%">
 
-            <Text fontFamily="Blanch" fontSize={["28px", "58px"]} color="white">
+            {/* <Text fontFamily="Blanch" fontSize={["28px", "58px"]} color="white">
                 Popular
-            </Text>
+            </Text> */}
 
 
             <ContentNavigator

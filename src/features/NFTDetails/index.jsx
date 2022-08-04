@@ -471,7 +471,7 @@ const NFTDetails = ({nftData}) => {
             <HStack>
               <img src="/assets/nfts/wallet.svg" alt="Tickets" />
               
-              <Link target={"_blank"} href={ nftData.marketURL || "https://nft.lootmogul.com/token/"+nftData.symbol+"/all"}>
+              <Link target={"_blank"} href={ nftData.marketURL}>
               <Text>{nftData.isAuction ? "Place a bid" : "Buy now"}</Text>
               </Link>
             </HStack>

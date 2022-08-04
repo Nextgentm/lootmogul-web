@@ -124,7 +124,7 @@ const CardInfo = ({nft}) => {
             )}
             
             </Box>
-            <Link  href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft?.symbol+"/all"} target="_blank" _focus={{border:"none",textDecoration:"none"}} _hover={{textDecoration:"none"}}  width="30%">
+            <Link  href={nft?.marketURL?nft?.marketURL:"/"} target="_blank" _focus={{border:"none",textDecoration:"none"}} _hover={{textDecoration:"none"}}  width="30%">
                         <Button
                             className="influencer-card-btn"
                             width="100%"
@@ -157,7 +157,7 @@ const NftCard = ({ nft, showInfo = false }) => {
       }
 
     return (
-  nft && (   <Link href={nft?.marketURL?nft?.marketURL:"https://nft.lootmogul.com/token/"+nft?.symbol+"/all"} target="_blank" passHref={true}_hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}}  cursor="pointer" >
+  nft && (   <Link href={nft?.marketURL?nft?.marketURL:"/"} target="_blank" passHref={true}_hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}}  cursor="pointer" >
             <Box m="auto" p="3%" textAlign="center" w={"300px"}  h={showInfo? "520px" : "420px"}  minH={showInfo? "520px" : "420px"}
         
         onMouseEnter={() => setIsFlipped(true)}
@@ -179,7 +179,6 @@ const NftCard = ({ nft, showInfo = false }) => {
         { nft?.front_image?.indexOf('.mp4')<0 &&
          <Image layout="intrinsic"
          objectFit={"cover"}
-         priority={true}
          blurDataURL={nft.front_image}
          placeholder="blur"
          height={400} width={300}
@@ -203,7 +202,6 @@ const NftCard = ({ nft, showInfo = false }) => {
         </video>}
                 { nft?.back_image?.indexOf('.mp4')<0 &&
                 <Image layout="intrinsic"
-                priority={true}
                 alt={"nft_back"+nft?.id}
                 height={400} width={300}
                     objectFit={"cover"}

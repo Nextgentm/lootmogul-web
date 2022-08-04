@@ -49,7 +49,7 @@ const CardInfo = ({ nft }) => {
                                     " " + nft?.market_price : "US $" + nft?.sale_price}
                             </Text>
                         </HStack>
-                        <Link href={nft.marketURL || "https://nft.lootmogul.com/token/" + nft.symbol + "/all"}>
+                        <Link href={nft.marketURL}>
                             <Button>BUY ON OPENSEA</Button>
                         </Link>
 
@@ -80,7 +80,7 @@ const CardInfo = ({ nft }) => {
                                     " " + nft?.market_price : "US $" + nft?.sale_price}
                             </Text>
                         </HStack>
-                        <Link href={nft.marketURL || "https://nft.lootmogul.com/token/" + nft.symbol + "/all"}>
+                        <Link href={nft.marketURL}>
                             <Button>BUY ON OPENSEA</Button>
                         </Link>
 
