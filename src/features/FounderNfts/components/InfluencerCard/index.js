@@ -230,7 +230,7 @@ const Card = ({
                     width="100%"
                     pr={2}
                 >
-                    <Link href="https://nft.lootmogul.com" width="100%">
+                    <Link href={"/"} width="100%">
                         <Button
                             className="influencer-card-btn"
                             width="100%"

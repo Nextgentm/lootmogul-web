@@ -139,7 +139,7 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                         h={"28px"}
                         mt={0} _hover={{textDecoration:"none",bg:"none"}} _focus={{bg:"none"}} 
                     >
-                        <Link href={"https://nft.lootmogul.com"} _hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}} >Buy NFTs</Link>
+                        <Link href={"/influencer/" + slug+"#nftCardList"}  _hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}} >Buy NFTs</Link>
                     </Button>
                 </Flex>
             </Box>

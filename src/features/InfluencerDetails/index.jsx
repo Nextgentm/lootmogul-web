@@ -83,7 +83,7 @@ const InfluencerDetail = ({ influencer }) => {
                         <>
                             {" "}
                             {fullInfluencer?.nft_kreds?.data.length > 0 && (
-                                <NftCardList
+                                <NftCardList 
                                     data={fullInfluencer?.nft_kreds?.data?.reverse() || []}
                                     isSale={false}
                                 />
@@ -225,7 +225,7 @@ const InfluencerDetail = ({ influencer }) => {
                 </Flex>
             )}
             
-            <Box mt="30px" ml={["20px", "30px"]} mr={["20px", "30px"]}>
+            <Box mt="30px" id="nftCardList" ml={["20px", "30px"]} mr={["20px", "30px"]}>
             { tabsData && <LMSectionTabs variant={"categoryList"} data={tabsData} />}
             </Box>
         </Box>

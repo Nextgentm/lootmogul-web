@@ -98,7 +98,7 @@ const InfluencerInfo = ({ influencer }) => {
 
 
                 <Button flex={1} ml={"10px"} h="28px" variant="outline" _hover={{textDecoration:"none",bg:"none"}} _focus={{bg:"none"}} >
-                    <Link href={"https://nft.lootmogul.com"} _hover={{textDecoration:"none",bg:"none"}} _focus={{border:"none",textDecoration:"none"}} >
+                    <Link href={"#nftCardList"} _hover={{textDecoration:"none",bg:"none"}} _focus={{border:"none",textDecoration:"none"}} >
                         Buy NFTs
                     </Link>
                 </Button>

@@ -35,8 +35,8 @@ export async function getStaticProps(context) {
               sharedSeo:{populate:["*"]},
               nftSet:{
                 populate:{
-                  nft_kred:{
-                    populate:["*"]
+                  nft_kred:{             
+                    fields:["slug","marketURL","front_image","back_image", "name", "isAuction", "market_price", "sale_price"]
                   }
                 }
               },
@@ -79,23 +79,7 @@ export async function getStaticPaths() {
   do {
      const res = await strapi.find("nft-collections", {
       sort:"priority",
-      populate:{
-        sharedSeo:{populate:["*"]},
-        nftSet:{
-         
-          populate:{
-            nft_kred:{
-              populate:["*"]
-            }
-          }
-        },
-        banner:{fields:["url"]}
-      } ,
-      pagination: {
-        page: pageNo,
-        pageSize: 100,
-      },
-    });
+          });
     if(res?.meta){
       data.push(res.data);
       if(pageCount==1){

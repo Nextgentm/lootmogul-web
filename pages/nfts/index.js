@@ -44,7 +44,7 @@ export async function getStaticProps() {
           
           populate:{
             nft_kred:{             
-              populate:["*"]
+              fields:["slug","marketURL","front_image","back_image", "name", "isAuction", "market_price", "sale_price"]
             }
           }
         },
