@@ -9,7 +9,7 @@ module.exports =withBundleAnalyzer( {
     "s3-us-west-2.amazonaws.com"],
     minimumCacheTTL: 3600,
   },
- 
+  experimental: { images: { allowFutureImage: true } },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
