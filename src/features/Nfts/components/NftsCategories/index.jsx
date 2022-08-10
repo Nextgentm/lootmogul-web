@@ -1,5 +1,5 @@
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { useRef } from "react";
+import {  useRef ,useState, useEffect} from "react";
 import { useRouter } from "next/router";
 import dynamic from 'next/dynamic'
 // import NftCard from "../NftCard";
@@ -14,6 +14,19 @@ const NftsCategories = ({ NFTS, isSelectedCat }) => {
     const router = useRouter();
     const { isMobileDevice } = useContext(AppContext);
     const arrowThreshold = isMobileDevice ? 2 : 5;
+    const lazyRoot = useRef(null)
+
+    const [displayCards, setDisplayCards] = useState([]);
+
+    useEffect (() => {
+        const allNfts = NFTS.nftSet?.sort((a,b) => a.priority - b.priority);
+        // if (allNfts.length > arrowThreshold) {
+        //     setDisplayCards(allNfts.slice(0, arrowThreshold));
+        // } else 
+        {
+            setDisplayCards(allNfts);
+        }
+    } , [NFTS]);
 
     return (
         <>
@@ -47,8 +60,8 @@ const NftsCategories = ({ NFTS, isSelectedCat }) => {
                     />}
                 </Flex>
                 {!isSelectedCat ?(<Box ml={{ base: "-15px", sm: "10px", md: "15px" }}>
-                    <ScrollMenu className="no-scrollbar" apiRef={ref}>
-                        {NFTS.nftSet?.sort((a,b) => a.priority - b.priority).map((item, index) => (
+                    <ScrollMenu className="no-scrollbar"  apiRef={ref} ref={lazyRoot}>
+                        {displayCards.map((item, index) => (
                             <NftCard
                                 style={{ w: "250px", mr: "30px", mt: "10px" }}
                                 itemId={`nftcard-${index}`}
@@ -56,14 +69,16 @@ const NftsCategories = ({ NFTS, isSelectedCat }) => {
                                 slug={item.slug}
                                 showInfo={true}
                                 nft={item?.nft_kred?.data}
+                                lazyRoot={lazyRoot}
+                                defaultInView = {isMobileDevice? index < 2 : index < 5}
                             />
                         ))}
                     </ScrollMenu>
                 </Box> ):(
                 <Box ml={{ base: "-15px", sm: "10px", md: "15px" }}>
                 {isMobileDevice ? (
-                <ScrollMenu className="no-scrollbar">
-                  {NFTS.nftSet?.sort((a,b) => a.priority - b.priority).map((item, index) => (
+                <ScrollMenu className="no-scrollbar"apiRef={ref}  ref={lazyRoot||ref}>
+                  {displayCards.map((item, index) => (
                             <NftCard
                                 style={{ w: "250px", mr: "30px", mt: "10px" }}
                                 itemId={`nftcard-${index}`}
@@ -71,6 +86,8 @@ const NftsCategories = ({ NFTS, isSelectedCat }) => {
                                 slug={item.slug}
                                 showInfo={true}
                                 nft={item?.nft_kred?.data}
+                                defaultInView = {isMobileDevice? index < 2 : index < 5}
+                                lazyRoot={lazyRoot}
                             />
                         ))}
                 </ScrollMenu>
@@ -81,7 +98,7 @@ const NftsCategories = ({ NFTS, isSelectedCat }) => {
                     templateColumns="repeat(4, 1fr)"
                     gap={6} width="100%"
                 >
-                   {NFTS.nftSet?.sort((a,b) => a.priority - b.priority).map((item, index) => (
+                   {displayCards.map((item, index) => (
                             <NftCard
                                 style={{ w: "250px", mr: "30px", mt: "10px" }}
                                 itemId={`nftcard-${index}`}
@@ -89,6 +106,7 @@ const NftsCategories = ({ NFTS, isSelectedCat }) => {
                                 slug={item.slug}
                                showInfo={true}
                                 nft={item?.nft_kred?.data}
+                                lazyRoot={lazyRoot}
                             />
                         ))}
                 </Grid>

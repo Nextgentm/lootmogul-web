@@ -5,6 +5,7 @@ import ReactCardFlip from 'react-card-flip';
 import { useState } from "react";
 import Image from "next/image";
 // import NextShare from "../../../../utils/socialbuttons";
+import { useInView } from 'react-intersection-observer';
 
 import * as ga from "../../../../services/googleAnalytics";
 import dynamic from "next/dynamic";
@@ -137,10 +138,15 @@ const CardInfo = ({nft}) => {
     )
 }
 
-const NftCard = ({ nft, showInfo = false ,lazyRoot = null}) => {
+const NftCard = ({ nft, showInfo = false ,lazyRoot = null, defaultInView = false}) => {
     const router = useRouter();
     const [isFlipped, setIsFlipped] = useState(false);
-    
+   
+    const { ref, inView } = useInView({
+        threshold: 0,
+        initialInView: defaultInView,
+        triggerOnce: true
+      });
     const convertImage = (w, h) => `
   <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
@@ -176,26 +182,28 @@ const NftCard = ({ nft, showInfo = false ,lazyRoot = null}) => {
       }
 
     return (
-  nft && (   <Link href={nft?.marketURL?nft?.marketURL:"/"} target="_blank" passHref={true}_hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}}  cursor="pointer" >
+  nft && (   <Link href={nft?.marketURL?nft?.marketURL:"/"} target="_blank" passHref={true}_hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}}  cursor="pointer" 
+  >
             <Box m="auto" p="3%" textAlign="center" w={"300px"}  h={showInfo? "520px" : "420px"}  minH={showInfo? "520px" : "420px"}
         
         onMouseEnter={() => setIsFlipped(true)}
          onMouseLeave={() => setIsFlipped(false)}
          >
-           
-     <ReactCardFlip  isFlipped={nft?.back_image && nft?.back_image.length?isFlipped:false} flipDirection={"horizontal"} infinite={true}  h={"400px"} minH="400px"
-         
+     
+        <Box  h={"400px"} minH="400px" ref={ref}>
+            {inView && (
+     <ReactCardFlip  isFlipped={nft?.back_image && nft?.back_image.length?isFlipped:false} flipDirection={"horizontal"} infinite={true} 
         > 
  <Box cursor="pointer">
 <Box  _focus={{border:"none",textDecoration:"none"}} height="400px" padding={"3%"} width={"300px"} >
-            {/* { nft?.front_image?.indexOf('.mp4') >0 &&
+    { nft?.front_image?.indexOf('.mp4') >0 &&
         <video className="lazy" playsinline key={nft?.id} id={"background-video"+nft.id} loop autoPlay muted 
          style={{height:"100%",  width:'full',  objectFit:"cover"}}>
                 <source src={nft?.front_image} type="video/mp4" />
                 
                 Your browser does not support the Video NFT.
-        </video>} */}
-        { nft?.back_image?.indexOf('.mp4')<0 &&
+        </video>}
+        { nft?.front_image?.indexOf('.mp4')<0 &&
          <Image layout="intrinsic"
          objectFit={"cover"}
         //  blurDataURL={nft.front_image}
@@ -206,23 +214,26 @@ const NftCard = ({ nft, showInfo = false ,lazyRoot = null}) => {
          height={400} width={300}
          alt={"nft_front"+nft?.id}
          title={nft?.name}
-         src={nft.back_image}
+         src={nft.front_image}
          cursor="pointer"
          quality={50}
          lazyRoot={lazyRoot}
         />
     }
+      
+
 
         </Box>
         </Box>
         <Box cursor="pointer">
         <Box  _focus={{border:"none",textDecoration:"none"}} padding="3%" height="400px" width={"300px"} >
-        {/* { nft?.back_image?.indexOf('.mp4') >0 &&
+         { nft?.back_image?.indexOf('.mp4') >0 &&
         <video className="lazy" playsinline key={nft.id} id={"background-video"+nft.id}  loop autoPlay muted style={{height:"100%",  width:"full", objectFit:"cover"}}>
                 <source src={nft?.back_image} type="video/mp4" />
                 
                 Your browser does not support the Video NFT.
-        </video>} */}
+
+        </video>}
                 { nft?.back_image?.indexOf('.mp4')<0 &&isFlipped &&
                 <Image layout="intrinsic"
                 alt={"nft_back"+nft?.id}
@@ -244,7 +255,10 @@ const NftCard = ({ nft, showInfo = false ,lazyRoot = null}) => {
 
 </Box>
 </Box>
+
                </ReactCardFlip>
+               )}
+               </Box>
                 
            
 
