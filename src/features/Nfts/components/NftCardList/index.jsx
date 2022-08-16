@@ -79,6 +79,7 @@ const NftCardList = ({ data, isSale = true }) => {
                                         itemId={`nftcard-${index}`}
                                         key={`nftcard-${index}`}
                                         showInfo={true}
+                                        lazyRoot={ref}
                                     />
                                 ))}
                         </ScrollMenu>
