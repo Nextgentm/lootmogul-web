@@ -13,6 +13,10 @@ import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 
 const MetaVersePage = ({ type }) => {
 
+    useEffect(()=>{
+    window.location.replace('https://lootmogul.wpengine.com/')
+  }); 
+
     const newMarkDownTheme = {
         p: props => {
             const { children } = props;

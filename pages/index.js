@@ -12,6 +12,7 @@ import HomeComponent from '../src/features/Home/components';
 
 import {getSeoData} from "../src/queries/strapiQueries";
 import SEOContainer from "../src/features/SEOContainer";
+import { useEffect } from "react";
 // const SEOContainer = dynamic(() => import("../src/features/SEOContainer"));
 const defaultSEOData = {
   metaTitle:"Lootmogul | Buy And Trade Your Favorite Influencers NFTs",
@@ -21,6 +22,10 @@ const defaultSEOData = {
 
 export default function Home({ topBanners, bottomBanners, faqData , featuredInfluencers, trendingGames, testimonials, seoData}) {
   // //console.log("banlen",featuredInfluencers?.length);
+  useEffect(()=>{
+    window.location.replace('https://lootmogul.wpengine.com/')
+  }); 
+
   return (
     <>
      <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 

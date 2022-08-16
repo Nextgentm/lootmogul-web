@@ -74,7 +74,7 @@ const Footer = () => {
           <Text color="white" fontFamily="Sora" fontSize="16px" fontWeight={700}>
             IMPORTANT
           </Text>
-          <Link  _focus={{border:"none", boxShadow:"none"}}href = "/about-us">
+          <Link  _focus={{border:"none", boxShadow:"none"}} href='https://lootmogul.wpengine.com/about-us/' isExternal>
           <Text  mt="12px" color="#9E9E9E" fontFamily="Sora" fontSize="14px" fontWeight={400}>
             ABOUT US
           </Text>
@@ -89,12 +89,12 @@ const Footer = () => {
             FAQ
           </Text>
           </Link>
-          <Link  _focus={{border:"none", boxShadow:"none"}}href = "/privacy-policy">
+          <Link  _focus={{border:"none", boxShadow:"none"}}href = "https://lootmogul.wpengine.com/privacy-policy/" isExternal>
           <Text mt="6px" color="#9E9E9E" fontFamily="Sora" fontSize="14px" fontWeight={400}>
             PRIVACY POLICY
           </Text>
           </Link>
-          <Link  _focus={{border:"none", boxShadow:"none"}}href = "/terms-of-services">
+          <Link  _focus={{border:"none", boxShadow:"none"}}href = "https://lootmogul.wpengine.com/terms-conditions/" isExternal>
           <Text mt="6px" color="#9E9E9E" fontFamily="Sora" fontSize="14px" fontWeight={400}>
             TERMS OF SERVICES
           </Text>

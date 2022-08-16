@@ -148,7 +148,7 @@ const Header = () => {
 
                     <img
                         style={{ cursor: "pointer" }}
-                        width="130px"
+                        width="200px"
                         onClick={() => router.push("/")}
                         alt="logo"
                         src="/assets/lm_logo.png"
