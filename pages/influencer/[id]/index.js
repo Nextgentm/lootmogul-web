@@ -42,7 +42,8 @@ export async function getStaticProps(context) {
   if (data?.error) return { props: { error: data.error.message } };
 
   return {
-    props: { data },
+    props: {  key: id,
+      data:data },
     revalidate: 600, // In seconds
   };
 }
