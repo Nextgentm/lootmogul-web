@@ -28,6 +28,7 @@ const SearchBar = () => {
       },
     });
     setInfluencers(data);
+    
   }, [getData]);
 
 
@@ -52,7 +53,8 @@ const ref = useRef();
                 <SearchIcon color="lightGrey" />
          </InputLeftElement>
         
-          <AutoCompleteInput onClick={()=>{if(!getData) setGetData(true);}}variant="filled" placeholder="Search..." bg="#222222" _focus={{border:"none", bg:"#222222", boxShadow:"none"}} />
+          <AutoCompleteInput onClick={(e)=>{if(!getData) setGetData(true);
+        if(e?.item?.value)  onClick(e);}}variant="filled" placeholder="Search..." bg="#222222" _focus={{border:"none", bg:"#222222", boxShadow:"none"}} />
         </InputGroup>
         <AutoCompleteList style={{
                                     backgroundColor: "#222222",

@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { AppContext } from "../../../../utils/AppContext/index";
 const NftCardList = ({ data, isSale = true }) => {
     const ref = useRef();
+    const lazyRoot = useRef(null)
     const [showAll, setShowAll] = useState(false);
 
     const { isMobileDevice } = useContext(AppContext);
@@ -64,12 +65,14 @@ const NftCardList = ({ data, isSale = true }) => {
                                             itemId={`nftcard-${index}`}
                                             key={`nftcard-${index}`}
                                             showInfo={true}
+                                            lazyRoot={lazyRoot}
+                                            defaultInView = {isMobileDevice? index < 2 : index < 5}
                                         />
                                     </WrapItem>
                                 ))}
                         </Wrap>
                     ) : (
-                        <ScrollMenu className="no-scrollbar" apiRef={ref}>
+                        <ScrollMenu className="no-scrollbar" ref={lazyRoot} apiRef={ref}>
                             {data
                                 .filter((item) => (isSale ? item.isSale : true))
                                 .sort((a, b) => a.priority - b.priority)
@@ -79,7 +82,8 @@ const NftCardList = ({ data, isSale = true }) => {
                                         itemId={`nftcard-${index}`}
                                         key={`nftcard-${index}`}
                                         showInfo={true}
-                                        lazyRoot={ref}
+                                        lazyRoot={lazyRoot}
+                                defaultInView = {isMobileDevice? index < 2 : index < 5}
                                     />
                                 ))}
                         </ScrollMenu>
