@@ -15,7 +15,7 @@ import SEOContainer from "../src/features/SEOContainer";
 import { useEffect } from "react";
 // const SEOContainer = dynamic(() => import("../src/features/SEOContainer"));
 const defaultSEOData = {
-  metaTitle:"Lootmogul | Buy And Trade Your Favorite Influencers NFTs",
+  metaTitle:"Buy And Trade Your Favorite Influencers NFTs",
   metaDescription:"A Multiverse Blockchain Gaming Platform For Sports Influencers And Fans To Engage | Join And Build Your Own Metaverse Land | Play Games With Influencers",
   canonicalURL:"https://lootmogul.com/"
 };
@@ -23,8 +23,8 @@ const defaultSEOData = {
 export default function Home({ topBanners, bottomBanners, faqData , featuredInfluencers, trendingGames, testimonials, seoData}) {
   // //console.log("banlen",featuredInfluencers?.length);
   useEffect(()=>{
-    window.location.replace('https://lootmogul.wpengine.com/')
-  }); 
+    window.location.replace('https://lootmogul.wpengine.com/home')
+  },[]); 
 
   return (
     <>

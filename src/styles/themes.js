@@ -28,7 +28,7 @@ const override = {
     },
     colors: {
         background: "#0D0D0D",
-        primary: "#F2B01C",
+        primary: "#E90A63",
         secondary: "#FFFFFF",
         lightGrey: "#c0c0c0",
         tabLabel:"#9E9E9E",

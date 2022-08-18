@@ -4,13 +4,14 @@ export const BtnStyle = {
       solid: {
         backgroundColor: "primary",
         fontFamily: "Blanch",
-        color: "#232323",
+        color: "#FFFFFF",
         fontWeight: 410,
         fontSize: "18px",
         borderRadius: "none",
         letterSpacing:"0.01em",
         lineHeight:"24px",
-        bgGradient:"linear(90deg, #F2B01C 0%, #EBCE2C 100%)"
+        bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)",
+        _hover:"none"
 
       },
       outline: {

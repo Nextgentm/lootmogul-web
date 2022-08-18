@@ -14,6 +14,7 @@ import AsSeen from './AsSeen';
 import TrendingGames from './TrendingGames';
 import IntroHeader from './IntroHeader';
 import InstaFollow from './InstaFollow';
+import { useEffect } from "react";
 
 
 // const InfluencerVideos =  dynamic(() => import("./InfluencerVideos")) ;
@@ -33,6 +34,10 @@ import InstaFollow from './InstaFollow';
 //  const InstaFollow = dynamic(() => import("./InstaFollow"));  
 
 const Home = ({ topBanners, bottomBanners, faqData, featuredInfluencers, trendingGames, testimonials }) => {
+
+  useEffect(()=>{
+    window.location.replace('https://lootmogul.wpengine.com/home')
+  },[]); 
 
   const renderWhoWeAre = () => (
     <Flex direction="column" mt="20px" mb="20px" ml={["20px", "20px", "20px", "60px"]} mr={["20px", "20px", "20px", "60px"]}>

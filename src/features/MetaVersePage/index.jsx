@@ -12,10 +12,12 @@ import rehypeRaw from 'rehype-raw'
 import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
 
 const MetaVersePage = ({ type }) => {
-
     useEffect(()=>{
-    window.location.replace('https://lootmogul.wpengine.com/')
-  }); 
+    let pathname = window.location.pathname;
+    if (pathname === '/metaverse') {
+        window.location.replace('https://lootmogul.wpengine.com/metaverse')
+    }
+  },[]); 
 
     const newMarkDownTheme = {
         p: props => {
