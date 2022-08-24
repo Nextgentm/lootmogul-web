@@ -171,7 +171,7 @@ useEffect(() => {
   return (
     <Box py={[5,10]}   >
       <Box
-        bg="#303030"
+        bg="#481A7F8F"
         width={"90%"}
         style={{
           margin: "0 auto"
@@ -180,7 +180,7 @@ useEffect(() => {
       >
         <Box
          p={["10px","40px"]}          
-            border="2.7033px dashed #515151"
+            border="5px solid #481A7F8F"
           
         >
           <Box mb={"30px"}>

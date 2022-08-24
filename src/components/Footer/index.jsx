@@ -190,6 +190,7 @@ const Footer = () => {
         </Box>
     
       <Text mt ="35px" variant="footerText">© 2022 LootMogul. All Rights Reserved.  HQ: 3301 Ocean Park Blvd, Unit 205, Santa Monica, CA 90405</Text>
+      <Text mt="16px" variant="footerText">LootMogul venture is accelerated by National Basketball Player Association in collaboration with Andreessen Horowitz (a16z) cultural leadership fund and Patricof co.</Text>
       <Text mt="16px" variant="footerText">LootMogul is NOT AFFILIATED, AUTHORIZED, LICENSED OR ENDORSED by NBA (National Basketball Association), NFL (National Football League), MLB (Major League Baseball), NHL (National Hockey League), MLS (Major League Soccer),  NCAA (National College Athletic Association) or any other professional and amateur organization.</Text>
     </Flex>
     )}
