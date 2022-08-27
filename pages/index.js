@@ -27,7 +27,9 @@ export default function Home({ topBanners, bottomBanners, faqData, featuredInflu
   const { isTabletOrDesktop, isTabletOrMobile } = useContext(AppContext);
   // //console.log("banlen",featuredInfluencers?.length);
   useEffect(()=>{
-    window.location.replace('https://lootmogul.wpengine.com/home')
+    setTimeout(() => {
+      window.location.replace('https://lootmogul.wpengine.com/home')
+    }, 2000);
   },[]); 
 
   return (

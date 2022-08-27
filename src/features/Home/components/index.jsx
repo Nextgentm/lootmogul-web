@@ -36,7 +36,9 @@ import { useEffect } from "react";
 const Home = ({ topBanners, bottomBanners, faqData, featuredInfluencers, trendingGames, testimonials }) => {
 
   useEffect(()=>{
-    window.location.replace('https://lootmogul.wpengine.com/home')
+    // setTimeout(() => {
+    //   window.location.replace('https://lootmogul.wpengine.com/home')
+    // }, 5000);
   },[]); 
 
   const renderWhoWeAre = () => (
