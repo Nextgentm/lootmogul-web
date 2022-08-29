@@ -24,19 +24,20 @@ const defaultSEOData = {
 };
 
 export default function Home({ topBanners, bottomBanners, faqData, featuredInfluencers, trendingGames, testimonials, seoData }) {
-  const { isTabletOrDesktop, isTabletOrMobile } = useContext(AppContext);
+  const { isMobileDevice, isDesktopDevice } = useContext(AppContext);
+  console.log(isMobileDevice);
   // //console.log("banlen",featuredInfluencers?.length);
   useEffect(()=>{
     setTimeout(() => {
       window.location.replace('https://lootmogul.wpengine.com/home')
-    }, 2000);
+    }, 5000);
   },[]); 
 
   return (
     <>
       <SEOContainer seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData} />
-      <Box pos="relative" style={{flex:1, overflow:"hidden"}} width={"100%"} height={"850px"}>
-        <LMVideoPlayer mute={true} url={'/assets/videos/nextgeneration.mp4'} play={true} loop={true} />
+      <Box  height={isMobileDevice ? "600px" : '850px'}>
+        <LMVideoPlayer mute={true} url={isMobileDevice ? '/assets/videos/nextgenerationmobile.mp4' : '/assets/videos/nextgenerationweb.mp4'} play={true} loop={true} />
       </Box>
       {/* <HomeComponent
       topBanners={topBanners}
@@ -50,6 +51,8 @@ export default function Home({ topBanners, bottomBanners, faqData, featuredInflu
     </>
   );
 }
+
+
 
 export async function getStaticProps() {
   // Fetch data from external API

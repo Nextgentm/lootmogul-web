@@ -121,7 +121,7 @@ useEffect(()=>{
           </Head>
           {router.route === "/" ? '' : <Header />}
           {/* {loadParticles &&  <ParticlesPage/>} */}
-          {stickyBtn && <StickySocialIcons />}
+          {stickyBtn && router.route !== "/" ? <StickySocialIcons /> : ''}
           <Component
             {...pageProps}
             loading={loading}
