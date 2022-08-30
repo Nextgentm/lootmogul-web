@@ -188,12 +188,12 @@ const Header = () => {
                     <Flex {...loginStyle(isMobileDevice, user)}>
                         {!isMobileDevice && (
                             <>
-                            <Link   _focus={{border:"none", boxShadow:"none"}}href="https://discord.gg/mHUqAm8fsh" target="_blank">  
+                            <Link  mt="3%" _focus={{border:"none", boxShadow:"none"}}href="https://discord.gg/mHUqAm8fsh" target="_blank">  
   <Image className="stickyIcon" m="5%" alt="social" width={["35px","50px"]} height={["35px","50px"]} src="/assets/designupdate1/discordicon.png"/>
  </Link> 
-                              <Link   _focus={{border:"none", boxShadow:"none"}}href="https://t.me/lootmogulchat" target="_blank"
+                              <Link  mt="3%"  _focus={{border:"none", boxShadow:"none"}}href="https://t.me/lootmogulchat" target="_blank"
                               >
-                              <FontAwesomeIcon  color="white" icon="fab fa-telegram-plane" alt="telegram"   />
+                              <FontAwesomeIcon  color="white" style={{width:"40px",height:"40px",marginLeft:"5%"}}icon="fab fa-telegram-plane" alt="telegram"   />
     </Link>
     </>
                             // <Button
@@ -223,7 +223,7 @@ const Header = () => {
                                         Login
                                     </Text>
                                 ) : (
-                                    <Button
+                                    <Button mt="5%"
                                         {...loginBtnStyle}
                                         onClick={() => toggleLoginModal()}
                                     >
