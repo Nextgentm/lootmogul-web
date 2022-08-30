@@ -12,6 +12,18 @@ const breakpoints = createBreakpoints({
     xl: "96em"
 });
 const override = {
+    styles: {
+        global: {
+          // styles for the `body`
+          body: {
+            bgImage: "/assets/designupdate1/sitebg.webp",
+            bgPosition:"center center",
+            bgRepeat:"no-repeat",
+            bgSize:"100% 100%",
+            bgAttachment: "fixed"
+          },
+        },
+    },
     components: {
         Popover: {
             variants: {
@@ -44,7 +56,8 @@ const override = {
     fonts: {
         Blanch: "Blanch",
         Sora: "Sora",
-        Quantico: "Quantico"
+        Quantico: "Quantico",
+        CNN: "CNN"
     }
 };
 export default extendTheme(override);

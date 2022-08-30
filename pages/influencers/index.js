@@ -16,10 +16,10 @@ const defaultSEOData = {
 
 };
 
-export default function Influencer({ data, seoData }) {
+export default function Influencer({ data, seoData, newInfluencersSet }) {
   return <>
    <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 
-   <InfluencersComponent data={data || []} banner={seoData[0]?.banner?.data} />
+   <InfluencersComponent data={data || []} newInfluencers={newInfluencersSet} banner={seoData[0]?.banner?.data} />
   </>
 }
 
@@ -28,6 +28,30 @@ export async function getStaticProps() {
   let pageNo = 1;
   let pageCount = 1;
   let data = [];
+  const newInfluencers = await strapi.find("influencers", {
+    sort:"createdAt:DESC",
+    fields: ["name", "slug","tagline","order"],
+    populate: {
+      icon: {
+          fields: ["name", "url"],
+      },
+      contestmasters: {
+        fields: ["entryFee"],
+        populate: {
+          feeWallet: {
+            populate: {
+              currency: {
+                fields: ["type"],
+              },
+            },
+          },
+        },
+      },
+    },
+  }
+  );
+
+
   do {
     const res = await strapi.find("influencer-categories", {
       fields: ["name", "slug","description"],
@@ -70,8 +94,10 @@ export async function getStaticProps() {
   } while (pageNo <= pageCount);
   // Pass data to the page via props
   data = data.flat(); 
+  const newInfluencersSet = newInfluencers?.data;
+
   const seoData = await getSeoData("influencers");
-  return { props: { data, seoData },
+  return { props: { data, seoData, newInfluencersSet },
   revalidate: 600, // In seconds
  };
 }

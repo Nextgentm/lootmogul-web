@@ -7,13 +7,21 @@ export const BtnStyle = {
         color: "#FFFFFF",
         fontWeight: 410,
         fontSize: "18px",
-        borderRadius: "none",
         letterSpacing:"0.01em",
         lineHeight:"24px",
         bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)",
         _hover:"none"
 
       },
+      segment: {
+        backgroundColor: "#261f3aaa",
+        fontFamily: "Blanch",
+        color: "#FFFFFF",
+        fontWeight: 410,
+        fontSize: "2rem",
+        border: "none",
+      },
+
       outline: {
         backgroundColor: "background",
         fontFamily: "Blanch",
@@ -22,7 +30,6 @@ export const BtnStyle = {
         fontSize: "18px",
         border: "1px solid",
         borderColor: "primary",
-        borderRadius: "none"
       },
       copyBtn: {
         background: " #D8653C",

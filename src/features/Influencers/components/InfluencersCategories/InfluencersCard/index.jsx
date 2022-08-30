@@ -50,7 +50,7 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                 <Box
                     cursor="pointer"
                     w="100%"
-                    h="220px"
+                    h="500px"
                     position="relative"
                     overflow={"hidden"}
 
@@ -59,7 +59,8 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                         className="influencerdiv"
                         pos="relative"
                         w="100%"
-                        h="220px"
+                        h="500px"
+                        overflow={"hidden"}
                     >
                         <Image
                             alt={influencer.icon?.data?.url}
@@ -98,7 +99,7 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                     </Box>
                 </Flex>
 
-                <Flex direction={"row"} mt="8px">
+                {/* <Flex direction={"row"} mt="8px">
                     <Button
                         variant="solid"
                         h={"28px"}
@@ -141,7 +142,7 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                     >
                         <Link href={"/influencer/" + slug+"#nftCardList"}  _hover={{textDecoration:"none"}} _focus={{border:"none",textDecoration:"none"}} >Buy NFTs</Link>
                     </Button>
-                </Flex>
+                </Flex> */}
             </Box>
         </Link>
     );

@@ -19,12 +19,12 @@ const ContentNavigator = ({
                     onClick={()=>{
                         setAllClicked(!allClicked);
                         onViewAllClicked();}}
-                    color="#43CCE9"
+                    color="white"
                     fontFamily="Sora"
                     fontSize="14px"
                     cursor="pointer"
                 >
-                   {allClicked?" View Less": "View All"}
+                   {allClicked?" VIEW LESS": "VIEW ALL"}
                 </Text>
             )}
 

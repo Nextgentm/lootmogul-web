@@ -9,6 +9,9 @@ import { AppContextContainer } from "../src/utils/AppContext/index";
 import MyPageLoader from "../src/components/MyPageLoader";
 
 
+import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons/faTelegramPlane';
+
+import {library} from '@fortawesome/fontawesome-svg-core'
 
 const StickySocialIcons = dynamic(() => import("../src/components/StickySocialIcons"));
 
@@ -19,6 +22,8 @@ import { useEffect, useState } from "react";
 import "../styles/globals.css";
 import * as ga from '../src/services/googleAnalytics';
 import LMNonCloseALert from '../src/components/LMNonCloseALert';
+
+library.add(faTelegramPlane);
 
 const queryClient = new QueryClient({
   defaultOptions: {
