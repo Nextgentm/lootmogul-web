@@ -17,6 +17,8 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import { AppContext } from "../../utils/AppContext";
 import SearchBar from "./SearchBar";
 import UserInfo from "./UserInfo";
@@ -185,18 +187,27 @@ const Header = () => {
 
                     <Flex {...loginStyle(isMobileDevice, user)}>
                         {!isMobileDevice && (
-                            <Button
-                                w="100px"
-                                h="35px"
-                                onClick={() =>
-                                    window.open(
-                                        "https://discord.gg/mHUqAm8fsh",
-                                        "_blank"
-                                    )
-                                }
-                            >
-                                Join Discord
-                            </Button>
+                            <>
+                            <Link  mt="3%" _focus={{border:"none", boxShadow:"none"}}href="https://discord.gg/mHUqAm8fsh" target="_blank">  
+  <Image className="stickyIcon" m="5%" alt="social" width={["35px","50px"]} height={["35px","50px"]} src="/assets/designupdate1/discordicon.png"/>
+ </Link> 
+                              <Link  mt="3%"  _focus={{border:"none", boxShadow:"none"}}href="https://t.me/lootmogulchat" target="_blank"
+                              >
+                              <FontAwesomeIcon  color="white" style={{width:"40px",height:"40px",marginLeft:"5%"}}icon="fab fa-telegram-plane" alt="telegram"   />
+    </Link>
+    </>
+                            // <Button
+                            //     w="100px"
+                            //     h="35px"
+                            //     onClick={() =>
+                            //         window.open(
+                            //             "https://discord.gg/mHUqAm8fsh",
+                            //             "_blank"
+                            //         )
+                            //     }
+                            // >
+                            //     Join Discord
+                            // </Button>
                         )}
                         {!user && (
                             <>
@@ -212,7 +223,7 @@ const Header = () => {
                                         Login
                                     </Text>
                                 ) : (
-                                    <Button
+                                    <Button mt="5%"
                                         {...loginBtnStyle}
                                         onClick={() => toggleLoginModal()}
                                     >

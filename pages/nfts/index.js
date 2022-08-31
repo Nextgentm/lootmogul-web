@@ -19,13 +19,13 @@ const NftsComponent = dynamic(
   { loading: () => <MyPageLoader /> }
 );
 
-export default function NFTPage({ data, seoData }) {
+export default function NFTPage({ nftCollections, newNftSet, seoData }) {
   return (
     <>
       <SEOContainer
         seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData}
       />
-      <NftsComponent data={data || []} banner={seoData[0]?.banner?.data} />
+      <NftsComponent data={nftCollections || []} newNfts={newNftSet} banner={seoData[0]?.banner?.data} />
     </>
   );
 }
@@ -35,13 +35,24 @@ export async function getStaticProps() {
   let pageNo = 1;
   let pageCount = 1;
   let data = [];
+
+  const newNfts = await strapi.find("nft-kreds", {
+    sort:"createdAt:DESC",
+    fields:["slug","marketURL","front_image","back_image", "name", "isAuction", "market_price", "sale_price"]
+    }
+  );
+
+
   do {
     const res = await strapi.find("nft-collections", {
       sort:"priority",
+      
       populate:{
        
         nftSet:{
-          
+          filters:{
+            isFeatured:true
+          },
           populate:{
             nft_kred:{             
               fields:["slug","marketURL","front_image","back_image", "name", "isAuction", "market_price", "sale_price"]
@@ -58,17 +69,19 @@ export async function getStaticProps() {
     if (res?.meta) {
       data.push(res.data);
       if (pageCount == 1) {
-        pageCount = res.meta.pagination.pageCount;
+        // pageCount = res.meta.pagination.pageCount;
       }
     }
+
     pageNo++;
   } while (pageNo <= pageCount);
   // Pass data to the page via props
-  data = data.flat();
+  const nftCollections = data.flat();
   const seoData = await getSeoData("nfts");
+  const newNftSet = newNfts?.data;
 
   return {
-    props: { data, seoData },
+    props: { nftCollections, newNftSet, seoData },
     revalidate: 600, // In seconds
   };
 }
