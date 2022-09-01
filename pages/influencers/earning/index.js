@@ -15,6 +15,7 @@ import {
   Button,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import { Image } from '@chakra-ui/react'
 
 const CustomedFormLabel = ({ title, htmlFor, required }) => {
   return (
@@ -40,16 +41,16 @@ const SectionHeader = ({ title, subtitle = "" }) => {
 
   return (
     <Flex
-      my={[3,6]}
-      mt={[5,10]}
+      my={[3, 6]}
+      mt={[5, 10]}
       alignItems="center"
       flexDirection={currentSize === "base" ? "column" : "row"}
     >
       <Text
         color="white"
-        fontSize={["18px","24px"]}
+        fontSize={["18px", "24px"]}
         style={{
-      
+
           fontWeight: "bold",
           textAlign: currentSize === "base" ? "center" : "left",
         }}
@@ -74,7 +75,7 @@ const SectionHeader = ({ title, subtitle = "" }) => {
 };
 
 const Divider = () => {
-  return <Box height="1px" bg="#98B7D2" my={[4,12]} />;
+  return <Box height="1px" bg="#98B7D2" my={[4, 12]} />;
 };
 
 const Page = () => {
@@ -104,63 +105,63 @@ const Page = () => {
   const [nftRoyalties, setNftRoyalties] = useState();
 
   useEffect(() => {
-    if(followers && followersCR)
-    setFollowersC(parseInt(followers*followersCR/100));
+    if (followers && followersCR)
+      setFollowersC(parseInt(followers * followersCR / 100));
   },
-  [followers,followersCR]
-);
+    [followers, followersCR]
+  );
 
-useEffect(() => {
-  if(followersC && entryFee && gamesPlayed && platformShare){
-    setDailyRevenue(followersC*entryFee*gamesPlayed*platformShare/100);
-  }
-},
-[followersC,entryFee,gamesPlayed,platformShare]
-);
+  useEffect(() => {
+    if (followersC && entryFee && gamesPlayed && platformShare) {
+      setDailyRevenue(followersC * entryFee * gamesPlayed * platformShare / 100);
+    }
+  },
+    [followersC, entryFee, gamesPlayed, platformShare]
+  );
 
-useEffect(() => {
-  if(dailyRevenue){
-    setMonthlyRevenue(dailyRevenue*30);
-  }
-},
-[dailyRevenue]
-);
-
-
-useEffect(() => {
-  if(followersC && nftCR && nftPrice && weeklyNftPurchase && commissionFee){
-    setWeeklyRev(followersC*nftCR*nftPrice*weeklyNftPurchase*commissionFee/100);
-  }
-},
-[followersC,nftCR,nftPrice,weeklyNftPurchase,commissionFee]);
+  useEffect(() => {
+    if (dailyRevenue) {
+      setMonthlyRevenue(dailyRevenue * 30);
+    }
+  },
+    [dailyRevenue]
+  );
 
 
-useEffect(() => {
-  if(weeklyRev){
-    setMonthlyRev(weeklyRev*4);
-  }
-},
-[weeklyRev]);
+  useEffect(() => {
+    if (followersC && nftCR && nftPrice && weeklyNftPurchase && commissionFee) {
+      setWeeklyRev(followersC * nftCR * nftPrice * weeklyNftPurchase * commissionFee / 100);
+    }
+  },
+    [followersC, nftCR, nftPrice, weeklyNftPurchase, commissionFee]);
 
 
-useEffect(() => {
-  if(monthlyRev && monthlyRevenue){
-    setTotalRev(monthlyRev + monthlyRevenue );
-  }
-},
-[monthlyRev,monthlyRevenue]);
+  useEffect(() => {
+    if (weeklyRev) {
+      setMonthlyRev(weeklyRev * 4);
+    }
+  },
+    [weeklyRev]);
+
+
+  useEffect(() => {
+    if (monthlyRev && monthlyRevenue) {
+      setTotalRev(monthlyRev + monthlyRevenue);
+    }
+  },
+    [monthlyRev, monthlyRevenue]);
 
 
 
-useEffect(() => {
-  if(nftOV && royaltyPC && nftGrowth && timeElapsed){
-    if(timeElapsed>0)
-      setNftRoyalties(( (nftOV*royaltyPC/100) + (nftOV*royaltyPC/100*nftGrowth/100)) * Math.pow(2,timeElapsed-1));
-    else 
-    setNftRoyalties( (nftOV*royaltyPC/100));
-  }
-},
-[nftOV,royaltyPC,nftGrowth,timeElapsed]);
+  useEffect(() => {
+    if (nftOV && royaltyPC && nftGrowth && timeElapsed) {
+      if (timeElapsed > 0)
+        setNftRoyalties(((nftOV * royaltyPC / 100) + (nftOV * royaltyPC / 100 * nftGrowth / 100)) * Math.pow(2, timeElapsed - 1));
+      else
+        setNftRoyalties((nftOV * royaltyPC / 100));
+    }
+  },
+    [nftOV, royaltyPC, nftGrowth, timeElapsed]);
 
   const currentSize = useBreakpointValue({
     base: "base",
@@ -169,23 +170,37 @@ useEffect(() => {
   });
 
   return (
-    <Box py={[5,10]}   >
+    <Box
+      py={[5, 10]}
+      position="relative"
+      overflowX="hidden"
+      className="custom-earning"
+    >
       <Box
-        bg="#481A7F8F"
+        position="absolute"
+        top="0"
+        left="-250px"
+      >
+        <Image src='/assets/bg-wave.png' alt='wave' />
+      </Box>
+
+      <Box
+        bg="rgba(72, 26, 127, .36)"
         width={"90%"}
         style={{
           margin: "0 auto"
         }}
-        p={["10px","40px"]}
+        p={["10px", "0"]}
+        borderRadius={"8px"}
       >
         <Box
-         p={["10px","40px"]}          
-            border="5px solid #481A7F8F"
-          
+          p={["10px", "40px"]}
+          border="3px solid #481A7F8F"
+          borderRadius={"8px"}
         >
           <Box mb={"30px"}>
             <Text
-              fontSize={["28px","58px"]}
+              fontSize={["28px", "58px"]}
               textAlign="center"
               fontWeight="bold"
               textTransform="uppercase"
@@ -199,7 +214,7 @@ useEffect(() => {
               textAlign="center"
               color="white"
               fontWeight={600}
-              fontSize={["12px","16px"]}
+              fontSize={["12px", "16px"]}
               fontFamily="Sora"
             >
               By gamification of your NFTs and Meta Avatars
@@ -208,7 +223,7 @@ useEffect(() => {
 
           <Grid
             templateColumns={
-             ["repeat(1, 1fr)" ,"repeat(2, 1fr)"]
+              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
             }
             gap={6}
             columnGap={2}
@@ -221,7 +236,7 @@ useEffect(() => {
                   type="number"
                   placeholder="ex: 10000"
                   value={followers}
-                  onChange={(e)=>setFollowers(e.target.value)}
+                  onChange={(e) => setFollowers(e.target.value)}
                   style={styles.input}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
@@ -241,13 +256,13 @@ useEffect(() => {
 
           <Grid
             templateColumns={
-             ["repeat(1, 1fr)" ,"repeat(2, 1fr)"]
+              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
             }
             gap={6}
-            columnGap={[2,24]}
+            columnGap={[2, 24]}
           >
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="followers"
                   title="Conversion Ratio (%)"
@@ -258,18 +273,18 @@ useEffect(() => {
                   placeholder="ex: 4"
                   style={styles.input}
                   value={followersCR}
-                  onChange={(e)=>setFollowersCR(e.target.value)}
+                  onChange={(e) => setFollowersCR(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>
-                Typical ratio for automated influencer branded games
-                is 3% to 7% of total influencer followers
+                  Typical ratio for automated influencer branded games
+                  is 3% to 7% of total influencer followers
                 </FormHelperText>
               </FormControl>
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="follower_conversion"
                   title="Follower Conversion"
@@ -279,7 +294,7 @@ useEffect(() => {
                   type="number"
                   defaultValue={0}
                   value={followersC}
-                  onChange={(e)=>setFollowersC(e.target.value)}
+                  onChange={(e) => setFollowersC(e.target.value)}
                   style={styles.input}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
@@ -287,7 +302,7 @@ useEffect(() => {
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel htmlFor="entry_fee" title="Entry Fee ($)" />
                 <Input
                   id="entry_fee"
@@ -295,7 +310,7 @@ useEffect(() => {
                   placeholder="ex: 1"
                   style={styles.input}
                   value={entryFee}
-                  onChange={(e)=>setEntryFee(e.target.value)}
+                  onChange={(e) => setEntryFee(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>
@@ -305,7 +320,7 @@ useEffect(() => {
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="entry_fee"
                   title="Games Played Per Day"
@@ -316,7 +331,7 @@ useEffect(() => {
                   placeholder="ex: 3"
                   style={styles.input}
                   value={gamesPlayed}
-                  onChange={(e)=>setGamesPlayed(e.target.value)}
+                  onChange={(e) => setGamesPlayed(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>
@@ -326,7 +341,7 @@ useEffect(() => {
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="platform_fee_share"
                   title="Platform Fee Share (50%)"
@@ -338,7 +353,7 @@ useEffect(() => {
 
                   style={styles.input}
                   value={platformShare}
-                  onChange={(e)=>setPlatformShare(e.target.value)}
+                  onChange={(e) => setPlatformShare(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>
@@ -348,7 +363,7 @@ useEffect(() => {
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="game_daily_revenue"
                   title="Daily Revenue ($)"
@@ -359,7 +374,7 @@ useEffect(() => {
                   defaultValue={0}
                   style={styles.input}
                   value={dailyRevenue}
-                  onChange={(e)=>setDailyRevenue(e.target.value)}
+                  onChange={(e) => setDailyRevenue(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>Daily Revenue Calculation</FormHelperText>
@@ -367,7 +382,7 @@ useEffect(() => {
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="game_monthly_revenue"
                   title="Monthly Revenue ($)"
@@ -378,7 +393,7 @@ useEffect(() => {
                   defaultValue={0}
                   style={styles.input}
                   value={monthlyRevenue}
-                  onChange={(e)=>setMonthlyRevenue(e.target.value)}
+                  onChange={(e) => setMonthlyRevenue(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>Monthly Revenue Calculation</FormHelperText>
@@ -392,13 +407,13 @@ useEffect(() => {
 
           <Grid
             templateColumns={
-             ["repeat(1, 1fr)" ,"repeat(2, 1fr)"]
+              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
             }
             gap={6}
-            columnGap={[2,24]}
+            columnGap={[2, 24]}
           >
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="conversion_ratio"
                   title="Conversion Ratio (%)"
@@ -409,7 +424,7 @@ useEffect(() => {
                   placeholder="ex: 1"
                   style={styles.input}
                   value={nftCR}
-                  onChange={(e)=>setNftCR(e.target.value)}
+                  onChange={(e) => setNftCR(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>Typical 0.5% to 1%</FormHelperText>
@@ -417,7 +432,7 @@ useEffect(() => {
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel htmlFor="nft_price" title="NFT Price ($)" />
                 <Input
                   id="nft_price"
@@ -425,14 +440,14 @@ useEffect(() => {
                   placeholder="ex: $25"
                   style={styles.input}
                   value={nftPrice}
-                  onChange={(e)=>setNftPrice(e.target.value)}
+                  onChange={(e) => setNftPrice(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
               </FormControl>
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="weekly_nft_purchases"
                   title="Weekly NFT Purchases"
@@ -443,17 +458,17 @@ useEffect(() => {
                   placeholder="ex: 1"
                   style={styles.input}
                   value={weeklyNftPurchase}
-                  onChange={(e)=>setWeeklyNftPurchase(e.target.value)}
+                  onChange={(e) => setWeeklyNftPurchase(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>
-                Typically gamers will play 1 to 4 rounds with the influencer
+                  Typically gamers will play 1 to 4 rounds with the influencer
                 </FormHelperText>
               </FormControl>
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="commionsionfee"
                   title="Commission Fee (%)"
@@ -464,16 +479,16 @@ useEffect(() => {
                   placeholder="75"
                   style={styles.input}
                   value={commissionFee}
-                  onChange={(e)=>setCommissionFee(e.target.value)}
+                  onChange={(e) => setCommissionFee(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>
-                Loot Mogul gives 75% of NFT Purchase Price
+                  Loot Mogul gives 75% of NFT Purchase Price
                 </FormHelperText>
               </FormControl>
             </GridItem>
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="weekly_revenue"
                   title="Weekly Revenue ($)"
@@ -485,7 +500,7 @@ useEffect(() => {
                   color="white"
                   style={styles.input}
                   value={weeklyRev}
-                  onChange={(e)=>setWeeklyRev(e.target.value)}
+                  onChange={(e) => setWeeklyRev(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>Daily Revenue Calculation</FormHelperText>
@@ -493,7 +508,7 @@ useEffect(() => {
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="monthly_revenue"
                   title="Monthly Revenue ($)"
@@ -505,7 +520,7 @@ useEffect(() => {
                   color="white"
                   style={styles.input}
                   value={monthlyRev}
-                  onChange={(e)=>setMonthlyRev(e.target.value)}
+                  onChange={(e) => setMonthlyRev(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>Monthly Revenue Calculation</FormHelperText>
@@ -519,13 +534,13 @@ useEffect(() => {
 
           <Grid
             templateColumns={
-             ["repeat(1, 1fr)" ,"repeat(2, 1fr)"]
+              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
             }
             gap={6}
-            columnGap={[2,24]}
+            columnGap={[2, 24]}
           >
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="monthly_grand_total"
                   title="Grand Total Monthly Revenue ($)"
@@ -536,7 +551,7 @@ useEffect(() => {
                   placeholder="ex: 100%"
                   style={styles.input}
                   value={totalRev}
-                  onChange={(e)=>setTotalRev(e.target.value)}
+                  onChange={(e) => setTotalRev(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>Monthly - Game + NFT Revenue</FormHelperText>
@@ -553,13 +568,13 @@ useEffect(() => {
 
           <Grid
             templateColumns={
-             ["repeat(1, 1fr)" ,"repeat(2, 1fr)"]
+              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
             }
             gap={6}
-            columnGap={[2,24]}
+            columnGap={[2, 24]}
           >
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="nft_original_value"
                   title="NFT Original Value"
@@ -570,14 +585,14 @@ useEffect(() => {
                   placeholder="ex: $25"
                   style={styles.input}
                   value={nftOV}
-                  onChange={(e)=>setNftOV(e.target.value)}
+                  onChange={(e) => setNftOV(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
               </FormControl>
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="smart_contract_royalty"
                   title="Royalty (%) in Smart Contract"
@@ -588,14 +603,14 @@ useEffect(() => {
                   placeholder="ex: 10%"
                   style={styles.input}
                   value={royaltyPC}
-                  onChange={(e)=>setRoyaltyPc(e.target.value)}
+                  onChange={(e) => setRoyaltyPc(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
               </FormControl>
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="nft_increase"
                   title="Increase of NFT (%)"
@@ -606,7 +621,7 @@ useEffect(() => {
                   placeholder="ex: 100%"
                   style={styles.input}
                   value={nftGrowth}
-                  onChange={(e)=>setNftGrowth(e.target.value)}
+                  onChange={(e) => setNftGrowth(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>The % growth for the NFT</FormHelperText>
@@ -614,7 +629,7 @@ useEffect(() => {
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="time_elapsed"
                   title="Time Elapsed (Months)"
@@ -625,7 +640,7 @@ useEffect(() => {
                   placeholder="ex: 23"
                   style={styles.input}
                   value={timeElapsed}
-                  onChange={(e)=>setTimeElapsed(e.target.value)}
+                  onChange={(e) => setTimeElapsed(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
                 <FormHelperText>
@@ -635,7 +650,7 @@ useEffect(() => {
             </GridItem>
 
             <GridItem>
-              <FormControl mb={["12px","24px"]}>
+              <FormControl mb={["12px", "24px"]}>
                 <CustomedFormLabel
                   htmlFor="nft_royalties"
                   title="NFT Royalties (Per Month)"
@@ -647,13 +662,21 @@ useEffect(() => {
                   defaultValue={0}
                   style={styles.input}
                   value={nftRoyalties}
-                  onChange={(e)=>setNftRoyalties(e.target.value)}
+                  onChange={(e) => setNftRoyalties(e.target.value)}
                   _placeholder={{ color: "#7C7C7C" }}
                 />
               </FormControl>
             </GridItem>
           </Grid>
         </Box>
+      </Box>
+
+      <Box
+        position="absolute"
+        bottom="0"
+        right="-700px"
+      >
+        <Image src='/assets/bg-bottom-wave.png' alt='wave' />
       </Box>
     </Box>
   );
