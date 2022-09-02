@@ -50,9 +50,9 @@ const SectionHeader = ({ title, subtitle = "" }) => {
         color="white"
         fontSize={["18px", "24px"]}
         style={{
-
           fontWeight: "bold",
           textAlign: currentSize === "base" ? "center" : "left",
+          textTransform: "uppercase"
         }}
         fontFamily="Sora"
         pr={4}
@@ -180,6 +180,7 @@ const Page = () => {
         position="absolute"
         top="0"
         left="-250px"
+        zIndex="-1"
       >
         <Image src='/assets/bg-wave.png' alt='wave' />
       </Box>
@@ -238,7 +239,7 @@ const Page = () => {
                   value={followers}
                   onChange={(e) => setFollowers(e.target.value)}
                   style={styles.input}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>
                   Total number of followers across all social channels (e.g.
@@ -274,7 +275,7 @@ const Page = () => {
                   style={styles.input}
                   value={followersCR}
                   onChange={(e) => setFollowersCR(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>
                   Typical ratio for automated influencer branded games
@@ -296,7 +297,7 @@ const Page = () => {
                   value={followersC}
                   onChange={(e) => setFollowersC(e.target.value)}
                   style={styles.input}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
               </FormControl>
             </GridItem>
@@ -311,7 +312,7 @@ const Page = () => {
                   style={styles.input}
                   value={entryFee}
                   onChange={(e) => setEntryFee(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>
                   Average fee is $1 to $3 per 60 second battle
@@ -332,7 +333,7 @@ const Page = () => {
                   style={styles.input}
                   value={gamesPlayed}
                   onChange={(e) => setGamesPlayed(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>
                   Typically gamers will play 2 to 7 rounds
@@ -354,7 +355,7 @@ const Page = () => {
                   style={styles.input}
                   value={platformShare}
                   onChange={(e) => setPlatformShare(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>
                   There is a 50/50 split platform fee
@@ -375,7 +376,7 @@ const Page = () => {
                   style={styles.input}
                   value={dailyRevenue}
                   onChange={(e) => setDailyRevenue(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>Daily Revenue Calculation</FormHelperText>
               </FormControl>
@@ -394,7 +395,7 @@ const Page = () => {
                   style={styles.input}
                   value={monthlyRevenue}
                   onChange={(e) => setMonthlyRevenue(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>Monthly Revenue Calculation</FormHelperText>
               </FormControl>
@@ -425,7 +426,7 @@ const Page = () => {
                   style={styles.input}
                   value={nftCR}
                   onChange={(e) => setNftCR(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>Typical 0.5% to 1%</FormHelperText>
               </FormControl>
@@ -441,7 +442,7 @@ const Page = () => {
                   style={styles.input}
                   value={nftPrice}
                   onChange={(e) => setNftPrice(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
               </FormControl>
             </GridItem>
@@ -459,7 +460,7 @@ const Page = () => {
                   style={styles.input}
                   value={weeklyNftPurchase}
                   onChange={(e) => setWeeklyNftPurchase(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>
                   Typically gamers will play 1 to 4 rounds with the influencer
@@ -480,7 +481,7 @@ const Page = () => {
                   style={styles.input}
                   value={commissionFee}
                   onChange={(e) => setCommissionFee(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>
                   Loot Mogul gives 75% of NFT Purchase Price
@@ -501,7 +502,7 @@ const Page = () => {
                   style={styles.input}
                   value={weeklyRev}
                   onChange={(e) => setWeeklyRev(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>Daily Revenue Calculation</FormHelperText>
               </FormControl>
@@ -521,7 +522,7 @@ const Page = () => {
                   style={styles.input}
                   value={monthlyRev}
                   onChange={(e) => setMonthlyRev(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>Monthly Revenue Calculation</FormHelperText>
               </FormControl>
@@ -552,7 +553,7 @@ const Page = () => {
                   style={styles.input}
                   value={totalRev}
                   onChange={(e) => setTotalRev(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>Monthly - Game + NFT Revenue</FormHelperText>
               </FormControl>
@@ -586,7 +587,7 @@ const Page = () => {
                   style={styles.input}
                   value={nftOV}
                   onChange={(e) => setNftOV(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
               </FormControl>
             </GridItem>
@@ -604,7 +605,7 @@ const Page = () => {
                   style={styles.input}
                   value={royaltyPC}
                   onChange={(e) => setRoyaltyPc(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
               </FormControl>
             </GridItem>
@@ -622,7 +623,7 @@ const Page = () => {
                   style={styles.input}
                   value={nftGrowth}
                   onChange={(e) => setNftGrowth(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>The % growth for the NFT</FormHelperText>
               </FormControl>
@@ -641,7 +642,7 @@ const Page = () => {
                   style={styles.input}
                   value={timeElapsed}
                   onChange={(e) => setTimeElapsed(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>
                   Number of months you would like to see in value of the NFT
@@ -663,7 +664,7 @@ const Page = () => {
                   style={styles.input}
                   value={nftRoyalties}
                   onChange={(e) => setNftRoyalties(e.target.value)}
-                  _placeholder={{ color: "#7C7C7C" }}
+                  _placeholder={{ color: "#707070" }}
                 />
               </FormControl>
             </GridItem>
@@ -675,6 +676,7 @@ const Page = () => {
         position="absolute"
         bottom="0"
         right="-700px"
+        zIndex="-1"
       >
         <Image src='/assets/bg-bottom-wave.png' alt='wave' />
       </Box>

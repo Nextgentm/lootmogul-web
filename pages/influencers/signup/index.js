@@ -186,6 +186,7 @@ const Page = () => {
         position="absolute"
         top="0"
         left="-250px"
+        zIndex="-1"
       >
         <Image src='/assets/bg-wave.png' alt='wave' />
       </Box>
@@ -547,6 +548,7 @@ const Page = () => {
         position="absolute"
         bottom="150px"
         right="-700px"
+        zIndex="-1"
       >
         <Image src='/assets/bg-bottom-wave.png' alt='wave' />
       </Box>

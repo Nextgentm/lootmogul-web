@@ -188,13 +188,10 @@ nav {
   .custom-earning .chakra-form__helper-text {
     color: #fff !important;
     font-size: 17px !important;
-    font-family: "open sans";
-    font-weight: var(--chakra-fontWeights-normal);
   }
-  .custom-earning .chakra-text {
+  .custom-earning .chakra-form__label .chakra-text {
     color: #fff !important;
     font-size: 21px !important;
-    font-family: "open sans";
-    font-weight: var(--chakra-fontWeights-normal);
+    font-weight: 600;
   } 
  
