@@ -12,12 +12,14 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Button
 } from '@chakra-ui/react'
-
+import { DatePicker } from 'chakra-ui-date-input'
 
 const InfluencerSummary = () => {
   const [data, setData] = useState(null);
   const { user } = useContext(AppContext);
+
   useEffect(async () => {
 
     const resp = await strapi.request(
@@ -30,27 +32,106 @@ const InfluencerSummary = () => {
   }, [user])
 
 
-  return <Box width="100%" m="auto" textAlign={"center"}>
+  return <Box width="100%" m="auto" pb="40px" textAlign={"center"}
+    bgImage="linear-gradient(to right, 
+    #070623, rgba(31, 5, 44, .3)), url(/assets/bg-wave-1.png)"
+    bgRepeat="no-repeat"
+    bgPosition="right top"
+  >
     {
-      data && data.length !== 0 && <><Heading color="primary" my="2%"> Influencer Summary</Heading>
+      data && data.length !== 0 && <> <Heading color="#fff" pt="60px" mb="30px" fontFamily="Open Sans" fontSize="31px" fontWeight="bold" textTransform="uppercase"> Influencer Summary</Heading>
+
+        <Box
+          mx="30px"
+          mb="30px"
+          className="influencer-summary-date"
+        >
+          <Flex
+            width="70%"
+            margin="0 auto"
+            justifyContent="center"
+            alignItems="center">
+            <Box
+              mr="25px"
+            >
+              <DatePicker
+                placeholder='Date Range From'
+                name='form_date'
+                onChange={(date) => console.log(date)}
+                _placeholder={{ color: "#fff", opacity: "1" }}
+                color="#fff"
+                fontFamily="Open Sans"
+                fontSize="20px"
+                fontWeight="500"
+                bgColor="rgba(12, 19, 51, .5)"
+                bgImage="url('./assets/Calender-icon.svg')"
+                bgSize="26px"
+                bgRepeat="no-repeat"
+                bgPosition="10px center"
+                borderColor="#707070"
+                borderWidth="2px"
+                borderRadius="0"
+                p="23px 25px 23px 50px"
+              />
+            </Box>
+
+            <Box
+              mr="25px"
+            >
+              <DatePicker
+                placeholder='Date Range To'
+                name='to_date'
+                onChange={(date) => console.log(date)}
+                _placeholder={{ color: "#fff", opacity: "1" }}
+                color="#fff"
+                fontFamily="Open Sans"
+                fontSize="20px"
+                fontWeight="500"
+                bgColor="rgba(12, 19, 51, .5)"
+                bgImage="url('./assets/Calender-icon.svg')"
+                bgSize="26px"
+                bgRepeat="no-repeat"
+                bgPosition="10px center"
+                borderColor="#707070"
+                borderWidth="2px"
+                borderRadius="0"
+                p="23px 25px 23px 50px"
+              />
+            </Box>
+
+            <Button
+              bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+              filter="drop-shadow(0 0 20px #FF0080)"
+              boxShadow="inset 0 0 3px -10px #481A7F"
+              width="155px"
+              fontFamily="Open Sans"
+              fontSize="21px"
+              fontWeight="500"
+              p="23px"
+            >
+              Search
+            </Button>
+          </Flex>
+        </Box>
+
         {
-          <TableContainer>
+          <TableContainer mx="30px">
             <Table variant='simple' colorScheme='teal'>
-              <TableCaption>Influencer Summary</TableCaption>
-              <Thead>
+              {/* <TableCaption>Influencer Summary</TableCaption> */}
+              <Thead bgColor="#250d47">
                 <Tr>
                   {
                     Object.keys(data).map((key, i) => (
-                      <Th style={{color:'white',textAlign:'center'}}>{key.toUpperCase()}</Th>
+                      <Th style={{ color: 'white', textAlign: 'center', fontFamily: "Open Sans", fontSize: '17px', fontWeight: "500", borderBottomWidth: '0' }} py="25px">{key.toUpperCase()}</Th>
                     ))
                   }
                 </Tr>
               </Thead>
-              <Tbody>
+              <Tbody bgColor="#291f3d">
                 <Tr>
                   {
                     Object.keys(data).map((key, i) => (
-                      <Td style={{color:'white',textAlign:'center'}}>{data[key]}</Td>
+                      <Td style={{ color: 'white', textAlign: 'center', borderBottomWidth: '0' }} py="20px">{data[key]}</Td>
                     ))
                   }
                 </Tr>
