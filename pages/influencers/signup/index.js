@@ -28,6 +28,7 @@ import { useFormik } from "formik";
 // import { useAlert } from "react-alert";
 import { AppContext } from "../../../src/utils/AppContext/index";
 import strapi from "../../../src/utils/strapi";
+import { Image } from '@chakra-ui/react'
 
 const CustomedFormLabel = ({ title, htmlFor, required }) => {
   return (
@@ -53,14 +54,14 @@ const SectionHeader = ({ title, subtitle = "" }) => {
 
   return (
     <Flex
-      my={[3,6]}
-      mt={[5,10]}
+      my={[3, 6]}
+      mt={[5, 10]}
       alignItems="center"
-      flexDirection={["column" , "row"]}
+      flexDirection={["column", "row"]}
     >
       <Text
         color="white"
-        fontSize={["18px","24px"]}
+        fontSize={["18px", "24px"]}
         style={{
           fontWeight: "bold",
           textAlign: currentSize === "base" ? "center" : "left",
@@ -74,7 +75,7 @@ const SectionHeader = ({ title, subtitle = "" }) => {
       {subtitle !== "" && (
         <Text
           color="white"
-          fontSize={["12px","14px"]}
+          fontSize={["12px", "14px"]}
           textAlign={["left", "center"]}
           fontFamily="Sora"
           mt={currentSize === "base" ? 2 : 0}
@@ -87,7 +88,7 @@ const SectionHeader = ({ title, subtitle = "" }) => {
 };
 
 const Divider = () => {
-  return <Box height="1px" bg="#98B7D2" my={[4,12]} />;
+  return <Box height="1px" bg="#98B7D2" my={[4, 12]} />;
 };
 
 const Page = () => {
@@ -101,8 +102,8 @@ const Page = () => {
     sm: "sm",
     md: "md",
   });
-  const ShowAlert = () =>{
-    return  (<AlertDialog
+  const ShowAlert = () => {
+    return (<AlertDialog
       isOpen={alertMsg?.isOpen}
       motionPreset='slideInBottom'
       isCentered
@@ -111,18 +112,19 @@ const Page = () => {
       closeOnOverlayClick={true}
       closeOnEsc={true}
       onClose={() => {
-        setAlertMsg({})}
-    }
+        setAlertMsg({})
+      }
+      }
     >
       <AlertDialogOverlay />
-  
+
       <AlertDialogContent p="10px" bg="background">
-          <Box  border="2.7033px dashed #515151">
-        <AlertDialogHeader><Heading color="white">{alertMsg?.title}</Heading></AlertDialogHeader>
-      
-        <AlertDialogBody>
-       <Text variant="hint">{alertMsg?.message}</Text>
-        </AlertDialogBody>
+        <Box border="2.7033px dashed #515151">
+          <AlertDialogHeader><Heading color="white">{alertMsg?.title}</Heading></AlertDialogHeader>
+
+          <AlertDialogBody>
+            <Text variant="hint">{alertMsg?.message}</Text>
+          </AlertDialogBody>
         </Box>
       </AlertDialogContent>
     </AlertDialog>)
@@ -143,7 +145,7 @@ const Page = () => {
       youtubeURL: "",
     },
     onSubmit: async (values, { resetForm }) => {
-      
+
 
 
       if (
@@ -154,16 +156,16 @@ const Page = () => {
         const resp = await strapi.create('influencer-signups', values);
         // //console.log(resp);
         if (resp.data) {
-          setAlertMsg({isOpen:true, title:"Success",message: "Your information has been sent!"});
-          
+          setAlertMsg({ isOpen: true, title: "Success", message: "Your information has been sent!" });
+
           resetForm();
         } else {
-          setAlertMsg({isOpen:true, title:"Error",message: "There is an error while sending your information!"});
+          setAlertMsg({ isOpen: true, title: "Error", message: "There is an error while sending your information!" });
 
           // ShowAlert({title:"Error",message: "There is an error while sending your information!"});
         }
       } else {
-        setAlertMsg({isOpen:true, title:"Error",message: "Required fields must not be left blank!"});
+        setAlertMsg({ isOpen: true, title: "Error", message: "Required fields must not be left blank!" });
 
         // ShowAlert({title:"Error",message: "Required fields must not be left blank!"});
       }
@@ -175,23 +177,37 @@ const Page = () => {
   };
 
   return (
-    <Box py={[5,10]}>
+    <Box
+      py={[5, 10]}
+      position="relative"
+      overflowX="hidden"
+    >
       <Box
-        bg="#481A7F8F"
+        position="absolute"
+        top="0"
+        left="-250px"
+        zIndex="-1"
+      >
+        <Image src='/assets/bg-wave.png' alt='wave' />
+      </Box>
+
+      <Box
+        bg="rgba(72, 26, 127, .36)"
         width={"90%"}
         style={{
           margin: "0 auto"
         }}
-        p={["10px","40px"]}
+        p={["10px", "0"]}
+        borderRadius={"8px"}
       >
         <Box
-         p={["10px","40px"]}          
-         border="5px solid #481A7F8F"
-        
+          p={["10px", "40px"]}
+          border="2px solid #481A7F"
+          borderRadius={"8px"}
         >
           <Text
             mb={"30px"}
-            fontSize={["28px","58px"]}
+            fontSize={["28px", "58px"]}
             textAlign="center"
             fontWeight="bold"
             textTransform="uppercase"
@@ -203,14 +219,14 @@ const Page = () => {
 
           <Grid
             templateColumns={
-             ["repeat(1, 1fr)" ,"repeat(2, 1fr)"]
+              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
             }
             gap={6}
-            columnGap={[2,24]}
+            columnGap={[2, 24]}
           >
             <Grid
               templateColumns={
-               ["repeat(1, 1fr)" ,"repeat(2, 1fr)"]
+                ["repeat(1, 1fr)", "repeat(2, 1fr)"]
               }
               gap={6}
             >
@@ -293,10 +309,10 @@ const Page = () => {
 
           <Grid
             templateColumns={
-             ["repeat(1, 1fr)" ,"repeat(2, 1fr)"]
+              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
             }
             gap={6}
-            columnGap={[2,24]}
+            columnGap={[2, 24]}
           >
             <GridItem>
               <FormControl style={{ marginBottom: "12px" }}>
@@ -395,10 +411,10 @@ const Page = () => {
 
           <Grid
             templateColumns={
-             ["repeat(1, 1fr)" ,"repeat(2, 1fr)"]
+              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
             }
             gap={6}
-            columnGap={[2,24]}
+            columnGap={[2, 24]}
           >
             <GridItem>
               <FormControl style={{ marginBottom: "12px" }}>
@@ -433,10 +449,10 @@ const Page = () => {
 
           <Grid
             templateColumns={
-             ["repeat(1, 1fr)" ,"repeat(2, 1fr)"]
+              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
             }
             gap={6}
-            columnGap={[2,24]}
+            columnGap={[2, 24]}
           >
             <GridItem>
               <FormControl style={{ marginBottom: "12px" }}>
@@ -499,7 +515,7 @@ const Page = () => {
               style={{ marginBottom: "12px", color: "white" }}
               onChange={toggleAccepted}
             >
-              <Flex fontSize={["12px","14px"]}>
+              <Flex fontSize={["12px", "14px"]}>
                 <Text>I agree to</Text>{" "}
                 <Text color="#FFD43E" fontWeight="bold" pl={1}>
                   Terms &amp; conditions.
@@ -516,6 +532,10 @@ const Page = () => {
               disabled={!accepted}
               onClick={formik.handleSubmit}
               width={240}
+              bgImage="linear-gradient(90deg, #E90A63 0%, rgba(72, 26, 127, .45) 100%)"
+              opacity="1 !important"
+              filter="drop-shadow(0 0 20px #FF0080)"
+              boxShadow="inset 0 0 3px -10px #481A7F !important"
             >
               Submit
             </Button>
@@ -523,7 +543,15 @@ const Page = () => {
         </Box>
       </Box>
       {ShowAlert()}
-      
+
+      <Box
+        position="absolute"
+        bottom="150px"
+        right="-700px"
+        zIndex="-1"
+      >
+        <Image src='/assets/bg-bottom-wave.png' alt='wave' />
+      </Box>
     </Box>
   );
 };

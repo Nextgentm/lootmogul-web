@@ -184,4 +184,14 @@ nav {
     position: absolute;z-index: 9; width: 75%; right: 59px; top: 211px; content: url("/assets/star.png"); 
   }
   img[alt~="roulette-static"] {  position: absolute; z-index: 5; width: 13%; right: 35px; top: 35px; content: url("/assets/spin_pointer.png"); }
+
+  .custom-earning .chakra-form__helper-text {
+    color: #fff !important;
+    font-size: 17px !important;
+  }
+  .custom-earning .chakra-form__label .chakra-text {
+    color: #fff !important;
+    font-size: 21px !important;
+    font-weight: 600;
+  } 
  
