@@ -16,6 +16,11 @@ import {
 } from '@chakra-ui/react'
 import { DatePicker } from 'chakra-ui-date-input'
 
+function keyInsertSpaces(string) {
+  string = string.replace(/([a-z])([A-Z])/g, '$1 $2');
+  return string.toUpperCase();
+}
+
 const InfluencerSummary = () => {
   const [data, setData] = useState(null);
   const { user } = useContext(AppContext);
@@ -60,7 +65,6 @@ const InfluencerSummary = () => {
                 onChange={(date) => console.log(date)}
                 _placeholder={{ color: "#fff", opacity: "1" }}
                 color="#fff"
-                fontFamily="Open Sans"
                 fontSize="20px"
                 fontWeight="500"
                 bgColor="rgba(12, 19, 51, .5)"
@@ -84,7 +88,6 @@ const InfluencerSummary = () => {
                 onChange={(date) => console.log(date)}
                 _placeholder={{ color: "#fff", opacity: "1" }}
                 color="#fff"
-                fontFamily="Open Sans"
                 fontSize="20px"
                 fontWeight="500"
                 bgColor="rgba(12, 19, 51, .5)"
@@ -104,7 +107,6 @@ const InfluencerSummary = () => {
               filter="drop-shadow(0 0 20px #FF0080)"
               boxShadow="inset 0 0 3px -10px #481A7F"
               width="155px"
-              fontFamily="Open Sans"
               fontSize="21px"
               fontWeight="500"
               p="23px"
@@ -115,14 +117,15 @@ const InfluencerSummary = () => {
         </Box>
 
         {
-          <TableContainer mx="30px">
+          <TableContainer mx="30px" 
+          className="influencer-table-date">
             <Table variant='simple' colorScheme='teal'>
               {/* <TableCaption>Influencer Summary</TableCaption> */}
               <Thead bgColor="#250d47">
                 <Tr>
                   {
                     Object.keys(data).map((key, i) => (
-                      <Th style={{ color: 'white', textAlign: 'center', fontFamily: "Open Sans", fontSize: '17px', fontWeight: "500", borderBottomWidth: '0' }} py="25px">{key.toUpperCase()}</Th>
+                      <Th style={{ color: 'white', textAlign: 'center', fontSize: '17px', fontWeight: "500", borderBottomWidth: '0' }} py="25px" className={key}>{keyInsertSpaces(key)}</Th>
                     ))
                   }
                 </Tr>
@@ -131,7 +134,7 @@ const InfluencerSummary = () => {
                 <Tr>
                   {
                     Object.keys(data).map((key, i) => (
-                      <Td style={{ color: 'white', textAlign: 'center', borderBottomWidth: '0' }} py="20px">{data[key]}</Td>
+                      <Td style={{ color: 'white', textAlign: 'center', borderBottomWidth: '0' }} py="20px" className={key}>{data[key]}</Td>
                     ))
                   }
                 </Tr>
