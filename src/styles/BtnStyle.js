@@ -6,11 +6,14 @@ export const BtnStyle = {
         fontFamily: "Blanch",
         color: "#FFFFFF",
         fontWeight: 410,
-        fontSize: "18px",
+        
         letterSpacing:"0.01em",
         lineHeight:"24px",
         bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)",
-        _hover:"none"
+        _hover:"none",
+        borderRadius: "0.1em",
+        fontSize: "2rem",
+
 
       },
       segment: {

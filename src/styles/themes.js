@@ -5,12 +5,14 @@ import { HeadingStyle } from "./HeadingStyle";
 import { TextStyle } from "./TextStyle";
 import {TabStyle} from "./TabStyle";
 
-const breakpoints = createBreakpoints({
-    sm: "48em",
-    md: "62em",
-    lg: "80em",
-    xl: "96em"
-});
+const breakpoints =  {
+    base:'320px',
+    sm: '420px',
+    md: '768px',
+    lg: '960px',
+    xl: '1200px',
+    '2xl': '1536px',
+  }
 const override = {
     styles: {
         global: {
@@ -46,10 +48,10 @@ const override = {
         tabLabel:"#9E9E9E",
         textual:"#C7C7C7",
         stripedTable: {
-            50: "#1C1C1C",
-            100: "#272727",
+            50: "#240e45",
+            100: "#150627",
             // ...
-            900: "#272727"
+            900: "#150627"
         }
     },
     breakpoints,

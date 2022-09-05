@@ -58,10 +58,10 @@ const Footer = () => {
     return (
         <>
             <Flex >
-                <Flex justifyContent="space-around" w={["80%","97%","100%","100%"]} m="auto" flexDirection={["column","row","row","row","row"]}>
+                <Flex justifyContent="space-around" w={["80%","80%","80%","100%","100%"]} m="auto" flexDirection={["column","column","column","row","row"]}>
                     <Box>
                         <Box mb="30px">
-                            <Text style={BoldWhiteText} fontSize={["15px","20px","15px","20px","20px"]}>Contact Us</Text>
+                            <Text style={BoldWhiteText} fontSize={["15px","20px","25px","20px","20px"]}>Contact Us</Text>
                             <Link
                                 _focus={{ border: "none", boxShadow: "none" }}
                                 href="mailto:support@lootmogul.com"
@@ -71,7 +71,7 @@ const Footer = () => {
                                 </Text>
                             </Link>
                         </Box>
-                        <Text style={BoldWhiteText} fontSize={["15px","20px","15px","20px","20px"]}>Get The latest</Text>
+                        <Text style={BoldWhiteText} fontSize={["15px","20px","25px","20px","20px"]}>Get The latest</Text>
                         <Flex>
                         <Input bg="#FFF" w={["300px","200px","300px","300px","300px"]} />
                         <Button
@@ -85,20 +85,25 @@ const Footer = () => {
                         </Button>
                         </Flex>
                     </Box>
-                    <Box
-                    display={["block","none","none","none","none"]}
-                            w="100%"
-                            h="2px"
-                            bg="#FFF"
-                            my="30px"
-                        />
-                    <Flex flexDirection={["column","row","row","row","row"]} >
+                   
+                    <Flex flexDirection={["column","column","row","row","row"]} my="3em" >
                         <Box>
-                            <Text style={BoldWhiteText} fontSize={["15px","15px","15px","20px","20px"]}>Site Map</Text>
+                            
+                            <Text style={BoldWhiteText} fontSize={["15px","15px","25px","20px","20px"]}>Site Map</Text>
+                            <Link
+                                _focus={{ border: "none", boxShadow: "none" }}
+                                href="https://metaverse.lootmogul.com/what-is-metaverse/"
+                            >
                             <Text style={LightWhiteText}>
-                                What is Metavers
+                                What is Metaverse
                             </Text>
+                            </Link>
+                            <Link
+                                _focus={{ border: "none", boxShadow: "none" }}
+                                href="https://metaverse.lootmogul.com/what-is-nft/"
+                            >
                             <Text style={LightWhiteText}>What is NFT</Text>
+                            </Link>
                             <Link
                                 _focus={{ border: "none", boxShadow: "none" }}
                                 href="https://lootmogul.wpengine.com/about-us/"
@@ -135,10 +140,10 @@ const Footer = () => {
                         <Box
                             w="2px"
                             bg="#FFF"
-                            mx={["1rem", "1rem", "3rem", "4rem", "5rem"]}
+                            mx={["1rem", "1rem", "6em", "2rem", "5rem"]}
                         />
                         <Box>
-                            <Text style={BoldWhiteText} fontSize={["15px","15px","15px","20px","20px"]}>Influencer</Text>
+                            <Text style={BoldWhiteText} fontSize={["15px","15px","25px","20px","20px"]}>Influencer</Text>
                             <Link
                                 _focus={{ border: "none", boxShadow: "none" }}
                                 href="/influencers/signup"
@@ -166,7 +171,7 @@ const Footer = () => {
                             onClick={() => router.push("/")}
                             {...logoStyle}
                         />
-                        <Text style={BoldWhiteText} fontSize={["15px","15px","15px","20px","20px"]}>Community</Text>
+                        <Text style={BoldWhiteText} fontSize={["15px","15px","25px","20px","20px"]}>Community</Text>
                         <Flex
                             mt="6px"
                             justify="flex-start"
@@ -178,7 +183,7 @@ const Footer = () => {
                                 <Box
                                     key={`cimg-${index}`}
                                     mt={["5px", 0, 0, 0]}
-                                    mr={["5px","5px","5px", "10px"]}
+                                    mr={["5px","5px","15px","5px", "10px"]}
                                 >
                                     <Link
                                         _focus={{
@@ -190,8 +195,8 @@ const Footer = () => {
                                     >
                                         <Image
                                             alt={img.Image}
-                                            width={["20px","18px","20px","22px","22px"]}
-                                            height={["20px","18px","20px","22px","22px"]}
+                                            width={["20px","18px","25px","22px","22px"]}
+                                            height={["20px","18px","25px","22px","22px"]}
                                             src={`/assets/${img.Image}`}
                                             color="#FFF"
                                         />
@@ -199,8 +204,8 @@ const Footer = () => {
                                 </Box>
                             ))}
                         </Flex>
-                        <Text style={BoldWhiteText} fontSize={["15px","15px","15px","20px","20px"]}>Try our App</Text>
-                        <Image alt="" />
+                        <Text style={BoldWhiteText} fontSize={["15px","15px","25px","20px","20px"]}>Try our App</Text>
+                        <Image alt="" src="https://metaverse.lootmogul.com/wp-content/uploads/2022/07/1_V9-OPWpauGEi-JMp05RC_A.png" w="170px"/>
                     </Box>
                 </Flex>
             </Flex>
@@ -270,7 +275,7 @@ const BoldWhiteText = {
 const LightWhiteText = {
     fontFamily: "Sora",
     color: "lightgray",
-    fontSize: "13px",
+    fontSize: "15px",
     marginBottom: "0.5rem"
 };
 export default Footer;

@@ -23,7 +23,7 @@ const DetailsTab = ({gameData})=>{
         <Heading color="white"> Prizing</Heading>
         
         {gameData?.type=='battle' && (
-              <Table mt="2%" w = "100%" bg="#1C1C1C" variant="striped" color="#C7C7C7" colorScheme="stripedTable">
+              <Table mt="2%" w = "100%" bg="#240e45" variant="striped" color="#C7C7C7" colorScheme="stripedTable">
         <Thead key="thead_1">
             <Th color= "white">No of Players</Th>
             <Th color= "white" textAlign="right"> WINNINGS</Th>
@@ -46,7 +46,7 @@ const DetailsTab = ({gameData})=>{
 
         )}
         {gameData?.type=='leaderboard' && (
-                  <Table mt="2%" w = "100%" bg="#1C1C1C" variant="striped" color="#C7C7C7" colorScheme="stripedTable">
+                  <Table mt="2%" w = "100%" bg="#240e45" variant="striped" color="#C7C7C7" colorScheme="stripedTable">
         <Thead key="thead_1">
             <Th color= "white">Rank</Th>
             <Th color= "white" textAlign="right"> WINNINGS</Th>

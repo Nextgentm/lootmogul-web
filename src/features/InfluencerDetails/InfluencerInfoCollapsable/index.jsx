@@ -30,6 +30,7 @@ const InfluencerInfoCollapsable = ({ influencer }) => {
                 title="About" 
                 icon={<AboutInfoIcon color="#CFBF8A" />}
                 isOpen={true}
+                
             >
                 {/* <Text fontWeight={600} color="#C7C7C7" fontSize="10px">
                     {influencer.tagline}

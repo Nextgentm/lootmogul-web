@@ -20,8 +20,10 @@ const CaptchaPopup = dynamic(() => import("../../../../components/LMModal/Captch
 const iconStyles = {
     width: "40px",
     height: "40px",
-    background: "#2D2D2D",
+    // background: "#2D2D2D",
+    border: "1px",
     borderRadius: "4px",
+    color: "white",
     align: "center",
     justify: "center",
     ml: "16px",
@@ -45,7 +47,7 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
     } = useContext(AppContext);
     const { showPaidGameConfirmation, CheckAndStartGame, showCaptcha, setShowCaptcha, showLoading, setShowLoading } =
         useContext(AppContext);
-    const imgSize = { width: 30, height: 30 };
+    const imgSize = { width: 25, height: 25 };
 
     const [isHeartClick, setHeartClick] = useState(false);
     const [contestStatus,setContestStatus]= useState(false);
@@ -95,7 +97,7 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
                 <Text fontWeight={600} fontSize="16px" color="white">
                     Entry
                 </Text>
-                <Text fontWeight={600} fontSize="16px" ml="5px" color="#F8ED1D">
+                <Text fontWeight={600} fontSize="16px" ml="5px" color="#d63065">
                     {gameData?.entryFee ? "$ " + gameData?.entryFee : " Free"}
                 </Text>
             </Flex>
@@ -156,8 +158,8 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
                         alt="fav"
                         src={
                             isHeartClick
-                                ? "/assets/favsel.svg"
-                                : "/assets/fav.svg"
+                                ? "/assets/designupdate1/games_like_icon1.svg"
+                                : "/assets/designupdate1/games_like_icon.svg"
                         }
                         onClick={animateEffect}
                         {...imgSize}
@@ -175,7 +177,7 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
                             <Image
                                 alt="share"
                                 {...imgSize}
-                                src="/assets/share.svg"
+                                src="/assets/designupdate1/games_share_icon.svg"
                             />
                         </PopoverTrigger>
                         <NextShare
@@ -192,7 +194,12 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
                 </Flex>
 
                 <Flex {...iconStyles}>
-                    <AiOutlineQuestionCircle color="white" />
+                        <Image
+                                alt="share"
+                                {...imgSize}
+                                src="/assets/designupdate1/games_question_icon.svg"
+                            />
+                    {/* <AiOutlineQuestionCircle color="white" /> */}
                 </Flex>
             </Flex>
         </Flex>
