@@ -211,4 +211,7 @@ nav {
   background-size: unset;
   background-position: center;
 }
+.influencer-table-date .createdAt, .influencer-table-date .updatedAt {
+  display: none;
+}
  
