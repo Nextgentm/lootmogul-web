@@ -21,10 +21,10 @@ import dynamic from "next/dynamic";
 
 const NextShare = dynamic(() => import("../../../../utils/socialbuttons"));
 
-const cardWidth= "420px";
-const cardHeight = "550px";
-const infoboxWidth= "350px";
-const imageHeight = "510px";
+const cardWidth= ["300px","320px","420px"];
+const cardHeight = ["400px","420px","550px"];
+const infoboxWidth= ["260px","280px","350px"];
+const imageHeight = ["380px","400px","510px"];
 
 const CardInfo = ({ nft }) => {
     return (
@@ -40,8 +40,9 @@ const CardInfo = ({ nft }) => {
             position={"absolute"}
             bottom={"0px"}
             width= {infoboxWidth}
-            ml="2em"
+            
             p={"20px"}
+            mx={["20px","20px","40px"]}
             // transform= "translatex(61px)"
         >
             {/* <Text
@@ -72,7 +73,7 @@ const CardInfo = ({ nft }) => {
                
                 <Text
                    ml="15px"
-                   mr= "15px"
+                   mr= "6px"
                     fontWeight="bold"
                 >
                     {nft?.market_price
@@ -82,13 +83,12 @@ const CardInfo = ({ nft }) => {
                 <Image
                     alt="Remaining Time"
                     objectFit="contain"
+                    mt="5px"
                     src={
-                        nft?.market_price
-                            ? "https://gamificationv2.s3.us-west-2.amazonaws.com/eth_icon_c0b1871b9b.svg"
-                            : "/assets/nfts/money.svg"
+                        "https://gamificationv2.s3.us-west-2.amazonaws.com/eth_icon_c0b1871b9b.svg"
                     }
-                    height="16"
-                    width="16"
+                    height="22px"
+                    width="22px"
                 />
 
             </Flex>
@@ -161,7 +161,7 @@ const NftCard = ({
     objectFit={"cover"}
     //  blurDataURL={nft.front_image}
     blurDataURL={`data:image/svg+xml;base64,${toBase64(
-        convertImage(cardWidth, imageHeight)
+        convertImage(300, 400)
     )}`}
     placeholder="blur"
     height={imageHeight}
@@ -186,15 +186,16 @@ const NftCard = ({
                 _hover={{ textDecoration: "none" }}
                 _focus={{ border: "none", textDecoration: "none" }}
                 cursor="pointer"
+                mr={["10px","30px","30px"]}
+                w={cardWidth}
+                h={showInfo ? cardHeight : imageHeight}
+                minH={showInfo ? cardHeight : imageHeight}
             >
                 <Box
                     // m="auto"
                     // p="3%"
-                    mr={"30px"}
                     textAlign="center"
-                    w={cardWidth}
-                    h={showInfo ? cardHeight : imageHeight}
-                    minH={showInfo ? cardHeight : imageHeight}
+
                     onMouseEnter={() => setIsFlipped(true)}
                     onMouseLeave={() => setIsFlipped(false)}
                 >

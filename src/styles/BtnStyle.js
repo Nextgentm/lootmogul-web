@@ -3,26 +3,33 @@ export const BtnStyle = {
     variants: {
       solid: {
         backgroundColor: "primary",
-        fontFamily: "Blanch",
         color: "#FFFFFF",
-        fontWeight: 410,
+        fontWeight: "600",
         
         letterSpacing:"0.01em",
         lineHeight:"24px",
         bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)",
         _hover:"none",
-        borderRadius: "0.1em",
-        fontSize: "2rem",
-
+        borderRadius: "5px",
+        border: "0",
+        fontSize: "1.5rem",
+        fontFamily: "Sora",
+        padding: "30px 40px",
+        boxShadow: "0px 0px 30px 10px #e90a6355",
+        textDecor:"none"
 
       },
       segment: {
-        backgroundColor: "#261f3aaa",
-        fontFamily: "Blanch",
+        backgroundColor: "#261f3acc",
+        fontSize: "1.5rem",
+        fontFamily: "Sora",
         color: "#FFFFFF",
-        fontWeight: 410,
-        fontSize: "2rem",
+        fontWeight: "600",
+        fontSize: "1rem",
         border: "none",
+        padding: "40px 50px",
+        borderRadius: "10px",
+
       },
 
       outline: {
