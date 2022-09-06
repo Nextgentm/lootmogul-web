@@ -532,7 +532,7 @@ const Page = () => {
               disabled={!accepted}
               onClick={formik.handleSubmit}
               width={240}
-              bgImage="linear-gradient(90deg, #E90A63 0%, rgba(72, 26, 127, .45) 100%)"
+              bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
               opacity="1 !important"
               filter="drop-shadow(0 0 20px #FF0080)"
               boxShadow="inset 0 0 3px -10px #481A7F !important"

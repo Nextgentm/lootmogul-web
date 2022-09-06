@@ -193,5 +193,25 @@ nav {
     color: #fff !important;
     font-size: 21px !important;
     font-weight: 600;
-  } 
+  }
+
+.influencer-summary-date .chakra-input__right-element {
+  height: 100%;
+  background-color: #0C1333;
+  border: 2px solid #707070;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.influencer-summary-date .chakra-input__right-element .chakra-icon path {
+  display: none;
+}
+.influencer-summary-date .chakra-input__right-element .chakra-icon {
+  background-image: url("../public/assets/Arrow-Down.svg");
+  background-repeat: no-repeat;
+  background-size: unset;
+  background-position: center;
+}
+.influencer-table-date .createdAt, .influencer-table-date .updatedAt {
+  display: none;
+}
  
