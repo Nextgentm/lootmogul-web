@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useGoogleLogin } from "react-google-login";
-import { Flex, Text, Box, Button, Link,  Modal,ModalBody, ModalContent, ModalOverlay} from "@chakra-ui/react";
-import Image from "next/image";
+import { Flex, Text, Box, Button, Link,  Modal,ModalBody, ModalContent, ModalOverlay,Image} from "@chakra-ui/react";
+// import Image from "next/image";
 import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
@@ -37,25 +37,26 @@ const Login = ({isOpen, OnLoginClose}) => {
     background="transparent">
     
     <ModalBody>
-    <Flex zIndex={999999} {...root} bgImage="url('/assets/login-bg.png')" pos="relative">
+    <Flex zIndex={999999} {...root}  pos="relative" backgroundColor="#1a0629"  borderRadius="10px" >
               
          
-              <Box  width="90%" height="90%" m="20px" zIndex={999} border="2.7033px dashed #515151">
+              <Box  zIndex={999} border="7px solid #5f2593" borderRadius="10px">
               <Flex pt={["0px","0px","0px","5px"]} px="20px" pb="20px" direction={"column"} zIndex={999} align="center">
-                  <Text fontSize={["35px","45px"]} mt="2%" mb="2%" {...loginTitleStyle}>{selectedOption === "login"?"LOGIN":"SIGNUP"}</Text>
+                  <Text fontSize={["15px","35px"]} fontWeight="bold"  my="5%" {...loginTitleStyle}>{selectedOption === "login"?"LOGIN":"SIGNUP"}</Text>
                   
                   <Button  mt="2%" mb="2%" 
                       leftIcon={
-                          <Image
+                          <Image 
                               alt="google"
                               width="20px"
                               height="20px"
                               src={
-                                  "https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_google.png"
+                                  "https://upload.wikimedia.org/wikipedia/commons/archive/5/53/20161129182045%21Google_%22G%22_Logo.svg"
                               }
                           />
                       }
-                      backgroundColor="#DD4B39"
+                      backgroundColor="#FFF"
+                      color="black"
                       variant="login"
                       onClick={signIn}
                   >
@@ -79,13 +80,14 @@ const Login = ({isOpen, OnLoginClose}) => {
                               width={"20px"}
                               height={"20px"}
                                   src={
-                                      "https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png"
+                                      "https://upload.wikimedia.org/wikipedia/commons/4/4d/F_icon_reversed.svg"
                                   }
                               />
                           }
                           onClick={renderProps.onClick}
-                          backgroundColor="#4C69BA"
-                          backgroundImage="linear-gradient(#4C69BA, #3B55A0)"
+                          backgroundColor="#FFF"
+                          color="black"
+                        //   backgroundImage="linear-gradient(#4C69BA, #3B55A0)"
                           variant="login"
                       >
                           {selectedOption === "login"?"Login":"Signup"}  with Facebook
@@ -95,10 +97,11 @@ const Login = ({isOpen, OnLoginClose}) => {
     
                   <Text
                       color="primary"
-                      mt="12px"
+                      mt="17px"
                       cursor="pointer"
                       fontFamily="Sora"
-                      fontSize="12px"
+                      fontWeight="normal"
+                      fontSize={["12px","14px"]}
                       onClick={() =>
                           setSelectedOption(
                               selectedOption === "login" ? "signup" : "login"
@@ -110,18 +113,21 @@ const Login = ({isOpen, OnLoginClose}) => {
                           : "Already user? Login"}
                   </Text>
                   <Text
-                   mt="12px"
+                   my="12px"
                    textAlign="center"
                    fontFamily="Sora"
                    color="white"
-                   fontSize="12px">
+                   fontWeight="normal"
+                      fontSize={["12px","14px"]}>
     By registering, you accept you are 18+ & agree to our <Link  color="primary"
                   
                       fontFamily="Sora"
-                      fontSize="12px">T&C</Link> & <Link  href="/privacy-policy" isExternal color="primary"
+                   fontWeight="normal"
+                      fontSize={["12px","14px"]}>T&C</Link> & <Link  href="/privacy-policy" isExternal color="primary"
                   
                       fontFamily="Sora"
-                      fontSize="12px">Privacy Policy</Link>
+                   fontWeight="normal"
+                      fontSize={["12px","14px"]}>Privacy Policy</Link>
                   </Text>
               </Flex>
               </Box>

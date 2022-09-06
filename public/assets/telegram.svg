@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16.619" height="13.592" viewBox="0 0 16.619 13.592">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.66" y1="0.437" x2="0.851" y2="0.802" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#eff7fc"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+  </defs>
+  <g id="telegram-white" transform="translate(-5.564 -8.989)">
+    <path id="Trazado_115" data-name="Trazado 115" d="M84.038,91.8c-.5,0-.411-.182-.582-.642L82,86.483,93.208,80" transform="translate(-72.223 -70.039)" fill="#c8daea"/>
+    <path id="Trazado_116" data-name="Trazado 116" d="M98,148.206a.988.988,0,0,0,.764-.373L100.8,145.9,98.258,144.4" transform="translate(-86.186 -126.448)" fill="#a9c9dd"/>
+    <path id="Trazado_117" data-name="Trazado 117" d="M55.43,81.15l6.16,4.437c.7.378,1.21.182,1.385-.636l2.507-11.52c.257-1-.392-1.459-1.065-1.161L49.695,77.805c-1,.393-1,.94-.183,1.183l3.778,1.15,8.747-5.38c.413-.244.792-.113.481.156" transform="translate(-43.356 -63.191)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>

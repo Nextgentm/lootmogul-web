@@ -6,7 +6,7 @@ const CollapsableRow = ({ title, children, icon,isOpen }) => {
     const [isExpanded, setExpanded] = useState(false);
 
     return (
-        <Box bg="#1c1c1c" p="10px" pl="20px" mt="2px">
+        <Box bg="#270e4699" p="10px" pl="20px" mt="2px">
             <Collapsible
             open = {isOpen}
                 transitionTime={200}

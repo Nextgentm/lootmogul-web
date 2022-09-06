@@ -6,13 +6,13 @@ import {
     Spacer,
     HStack,
     Popover,
-    PopoverTrigger,
+    Image,
     Link
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import ReactCardFlip from "react-card-flip";
 import { useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 // import NextShare from "../../../../utils/socialbuttons";
 import { useInView } from "react-intersection-observer";
 
@@ -21,16 +21,18 @@ import dynamic from "next/dynamic";
 
 const NextShare = dynamic(() => import("../../../../utils/socialbuttons"));
 
-const cardWidth= "380px";
-const cardHeight = "560px";
-const infoboxWidth= "340px";
+const cardWidth= "420px";
+const cardHeight = "550px";
+const infoboxWidth= "350px";
 const imageHeight = "510px";
 
 const CardInfo = ({ nft }) => {
     return (
-        <Box
-            pl={"20px"}
-            pr={"20px"}
+            
+            <Box >
+<Box
+            // pl={"20px"}
+            // pr={"20px"}
             
             key={`nftItem-${nft?.id}`}
             bg="#00000088"
@@ -38,10 +40,11 @@ const CardInfo = ({ nft }) => {
             position={"absolute"}
             bottom={"0px"}
             width= {infoboxWidth}
-            ml="20px"
+            ml="2em"
             p={"20px"}
+            // transform= "translatex(61px)"
         >
-            <Text
+            {/* <Text
                 noOfLines={2}
                 fontWeight="bold"
                 minH="50px"
@@ -49,7 +52,7 @@ const CardInfo = ({ nft }) => {
                 fontFamily="Sora"
             >
                 {nft?.name}
-            </Text>
+            </Text> */}
 
             <Flex
                 mt={"3%!important"}
@@ -101,6 +104,7 @@ const CardInfo = ({ nft }) => {
                     BUY NOW
                 </Button>
             </Link>
+        </Box>
         </Box>
     );
 };
@@ -172,6 +176,8 @@ const NftCard = ({
 
     
     return (
+        
+         
         nft && (
             <Link
                 href={nft?.marketURL ? nft?.marketURL : "/"}
@@ -192,7 +198,11 @@ const NftCard = ({
                     onMouseEnter={() => setIsFlipped(true)}
                     onMouseLeave={() => setIsFlipped(false)}
                 >
-                    <Box h={cardHeight} minH={cardHeight} ref={ref}>
+                   
+                    <Box h={cardHeight} minH={cardHeight} ref={ref} >
+                    
+
+
                         {inView && (
                             <ReactCardFlip
                                 isFlipped={
@@ -286,6 +296,7 @@ const NftCard = ({
                             </ReactCardFlip>
                         )}
                         {showInfo && <CardInfo nft={nft} />}
+                        
                     </Box>
 
                     

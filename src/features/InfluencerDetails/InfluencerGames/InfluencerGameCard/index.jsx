@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Text, Flex, Button, Box, Center, VStack, Link } from "@chakra-ui/react";
+import { Text, Flex, Box, Center, VStack, Link, Button } from "@chakra-ui/react";
 import Image from "next/image";
 import { getStrapiMedia } from "../../../../utils/medias";
 import SocialActions from "../../SocialActions";
@@ -45,39 +45,32 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
 
     return (
         <Link href={"/games/" + contestmaster?.slug} passHref={true} _focus={{ border: "none" }} key={`igc-${contestmaster?.id}`}>
-            <Box overflow={"hidden"} w={"240px"} {...style}
+            <Box overflow={"hidden"} w={"280px"} {...style}
             >
                 <VStack>
-                    <Box
-                        backgroundImage={"/assets/gamecardbg.png"}
+                    <Flex
+                        backgroundImage={"/assets/designupdate1/gamecard_portrait.svg"}
                         backgroundPosition="center"
                         backgroundRepeat="no-repeat"
                         backgroundSize={"auto"}
                         borderRadius={"md"}
-                        float="left"
                         cursor="pointer"
                         w={"full"}
-                        h={["320px", "320px"]}
-
+                        h={["360px", "360px"]}
+                        flexDir={"column"}
                     >
-                        <Flex
-                            pt={["25px", "25px"]}
-                            pr={["5px", "6px"]}
-                            flexDir="row-reverse"
-                        >
-                            <Text
-                                isTruncated
+                      
+                      <Text
+                      mt={"30px"}
                                 color="#FDFFE5"
                                 fontSize="14px"
                                 fontWeight={"600"}
-                                maxWidth={"140px"}
+                                textAlign="center"
                             >
                                 {sectionName}
                             </Text>
-                        </Flex>
 
-                        <Center h="60%" m="auto">
-                            <Flex width="100%" h="100%" m="auto">
+                              
                                 {imgUrl && (
                                     <Box
                                         m="auto"
@@ -95,7 +88,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                         />
                                     </Box>
                                 )}
-                                {contestmaster.reward?.data?.description && (
+                                {/* {contestmaster.reward?.data?.description && (
                                     <VStack w="50%" m={"auto"} mt="20px">
                                         <Text
                                             pl={2}
@@ -115,19 +108,19 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                             {contestmaster.reward?.data.description}
                                         </Text>
                                     </VStack>
-                                )}
-                            </Flex>
-                        </Center>
+                                )} */}
+                        
 
                         <Text
                             color="#FDFFE5"
                             fontSize="20px"
                             fontWeight={"600"}
                             align={"center"}
+                            mb={"30px"}
                         >
                             {contestmaster.name}
                         </Text>
-                    </Box>
+                    </Flex>
 
                     <Flex w={"full"} align="flex-end" justify={"space-between"}>
                         <Box>
@@ -137,7 +130,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                     width={"14px"}
                                     height={"8px"}
                                     objectFit={"contain"}
-                                    src="/assets/price-tag.png"
+                                    src="/assets/designupdate1/cash_icon.svg"
                                 />
 
                                 <Text ml="6px" color="#CFBF8A" fontSize="12px">
@@ -147,7 +140,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                 </Text>
                             </Flex>
 
-                            <Text mt="4px" color="#7C7C7C" fontSize="10px">
+                            <Text mt="4px" ml={"20px"} color="#7C7C7C" fontSize="10px">
                                 {nFormatter(contestmaster.roomsCount, 1)} Plays
                             </Text>
                         </Box>
@@ -162,7 +155,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
 
                     {contestmaster && contestmaster.contest && (contestmaster?.contest?.status === "active" || contestStatus) && <Button
                         variant="solid"
-                        h={["34px", "28px"]}
+                        h={["40px", "40px"]}
                         mt="12px"
                         w="full"
                         onClick={(e) => {
