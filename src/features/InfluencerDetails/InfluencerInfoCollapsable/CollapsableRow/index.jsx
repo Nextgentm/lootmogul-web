@@ -6,7 +6,7 @@ const CollapsableRow = ({ title, children, icon,isOpen }) => {
     const [isExpanded, setExpanded] = useState(false);
 
     return (
-        <Box bg="#270e4699" p="10px" pl="20px" mt="2px">
+        <Box bg="#270e4699" p="10px" pl="20px" mt="2px" >
             <Collapsible
             open = {isOpen}
                 transitionTime={200}
@@ -16,10 +16,11 @@ const CollapsableRow = ({ title, children, icon,isOpen }) => {
                     <Flex align="center" w="100%">
                         {icon}
                         <Text
-                            fontSize="20px"
-                            fontFamily="Blanch"
-                            color="#CFBF8A"
-                            ml="10px"
+                            fontSize="2rem"
+                            fontFamily="Sora"
+                            color="white"
+                            fontWeight={"600"}
+                            
                         >
                             {title}
                         </Text>

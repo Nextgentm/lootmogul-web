@@ -1,6 +1,7 @@
 import React, { useState, useEffect, forwardRef } from "react";
 // import dynamic from 'next/dynamic';
 import { useRouter } from "next/router";
+ import {GrFilter} from "react-icons/gr"
 import InfluencersCategories from "./InfluencersCategories";
 // const InfluencersCategories =  dynamic(() => import("./InfluencersCategories")) ;
 import {
@@ -28,7 +29,8 @@ import { apiLikeRequests, useApiLikeRequests } from "../../Home/api";
 import ReadMoreLess from "../ReadMoreLess";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import InfluencersCard from "./InfluencersCategories/InfluencersCard";
-import ContentNavigator from "../../../components/ContentNavigator";
+// import ContentNavigator from "../../../components/ContentNavigator";
+import { LeftArrow, RightArrow } from "../../../components/ContentNavigator/arrows";
 
 const SelectBox = ({ style, icon, title, options, value, onChange }) => {
     return (
@@ -216,14 +218,15 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             (banner ||
                 category.toLowerCase() === defaultCategoryName.toLowerCase())
         ) {
-            return !isTabletOrDesktop ? banner[1]?.url : banner[0]?.url;
+            return "/assets/designupdate1/influencer_banner.png";
+           // return !isTabletOrDesktop ? banner[1]?.url : banner[0]?.url;
         } else {
             return null;
         }
     };
 
     return (
-        <Box mt="30px">
+        <Box>
             {selectedCategory && selCategoriesData && selCategoriesData[0] && (
                 <SEOContainer
                     seoData={
@@ -235,23 +238,20 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 />
             )}
 
-            <Box bg="#161F2D">
+            <Box >
                 {/* <Breadcrumbs routes={breadcrumbsPath} style={{ mb: "14px" }} /> */}
-                <SimpleGrid
-                    direction={"column-reverse"}
-                    bg="linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.33) 50.79%, rgba(18, 50, 98, 0) 101.39%);"
-                    columns={[1, 1, 1, 2]}
-                    spacing={10}
+                <Flex
+                    flexDir={["column","column","column","row"]}
                 >
-                    <Box order={[2, 2, 2, 1]} px={10} pb={12} pt={12}>
-                        <Box mt={!isMobileDevice ? 36 : 0}>
-                            <Text
+                    <Box  px={10} pb={12} pt="2em" mt={[0,0,10]} ml={["0em","0em","2em","2em"]} width={["100%","100%","100%","55%"]}>
+                        
+                            <Text 
                                 color="white"
-                                fontSize={["3em", "4em"]}
+                                fontSize={["1.3rem","2rem","3rem","2.5rem", "4rem"]}
                                 fontFamily="CNN"
                             >
-                                Play your favorite <br />
-                                Influencer Tournament <br />
+                                Play your favorite 
+                                Influencer Tournament
                                 and win NFT
                                 {/* <span style={{ color: "#F8ED1D" }}>
                                     New releases
@@ -260,44 +260,49 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
 
                             <Text
                                 color="white"
-                                fontSize={"1em"}
-                                fontWeight="bold"
+                                fontSize={["1rem","1.3rem","1.3rem","1.3rem","1.3rem"]}
+                                fontFamily="Sora"
+
+                                fontWeight="normal"
+                                width={["100%","100%","80%"]}
                             >
-                                Become a virtual landlord to some of the largest{" "}
-                                <br />
+                                Become a virtual landlord to some of the largest
+                                
                                 projects in crypto
                             </Text>
 
                             <Button
                                 mt={6}
-                                fontSize="24px"
-                                width="200px"
+                               variant="solid"
+                               fontWeight="normal"
+                               fontSize={["1.0rem","1.0rem","1.3rem"]}
+                               padding={"30px 30px"}
                                 onClick={() => {
                                     executeScroll(0);
                                 }}
                             >
-                                Buy NFTS
+                                BUY NFTS
                             </Button>
-                        </Box>
+                        
                     </Box>
                     <Box
-                        order={[1, 1, 1, 2]}
                         bgSize="cover"
                         textAlign={"center"}
-                        px={10}
-                        pb={12}
-                        pt={12}
+                        px={[0,0,0,10]}
+                        pb={[0,0,0,12]}
+                        pt={[0,0,0,12]}
+                        width={["120%","120%","120%","50%"]}
                     >
                         {getBannerImage() && (
                             <Box
-                                ml={["20px", "20px", "20px", "60px"]}
-                                mr={["20px", "20px", "20px", "60px"]}
+                                ml={["20px", "20px", "20px", "-100px"]}
+                                mr={["20px", "20px", "20px", "-100px"]}
                             >
                                 <Flex
                                     position="relative"
-                                    w="100%"
-                                    h={"350px"}
-                                    pt={"20px"}
+                                    mt={["50px"]}
+                                    h={["200px","200px","390px"]}
+                                    
                                 >
                                     <Image
                                         m={"auto"}
@@ -310,11 +315,9 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                             </Box>
                         )}
                     </Box>
-                </SimpleGrid>
+                </Flex>
             </Box>
             <Box
-                ml={["20px", "20px", "20px", "60px"]}
-                mr={["20px", "20px", "20px", "60px"]}
             >
                 {/* {isTabletOrDesktop && (
                     <Breadcrumbs
@@ -385,17 +388,21 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                             mt="20px"
                             align="center"
                             mb="20px"
-                        >
+                            ml={["20px", "20px", "20px", "60px"]}
+                            mr={["20px", "20px", "20px", "60px"]}
+                         >
                             <Text
                                 color="white"
-                                fontFamily="Blanch"
-                                fontSize="32px"
+                                fontSize={["2rem", "2.5rem"]}
+                                fontFamily="Sora"
+                                fontWeight="bold"
                                 mt="20px"
+                                textAlign="center"
                             >
                                 NEW IN INFLUENCERS
                             </Text>
 
-                            <ContentNavigator
+                            {/* <ContentNavigator
                                 showArrows={true}
                                 handleLeftArrowClick={() =>
                                     ref.current.scrollPrev()
@@ -406,47 +413,56 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                 onViewAllClicked={() =>
                                     router.push({ pathname: "/influencers/newest" })
                                 }
-                            />
+                            /> */}
                         </Flex>
                         <ScrollMenu
                             className="no-scrollbar"
                             apiRef={ref}
                             ref={lazyRoot}
+                            LeftArrow={LeftArrow}
+                            RightArrow={RightArrow}
+                            mt={"10px"}
                         >
                             {newInfluencers.map((item, index) => (
+                                <Box w="100% !important" mr={["0px","10px","10px"]} px="15px">
                                   <InfluencersCard
-                                  style={{ w: "375px", mr: "30px", mt: "10px" }}
+                                //   style={{w:"300px", mr:"10px" ,px:"15px"}}
                                   itemId={`item-${index}`}
                                   key={`item-${index}`}
                                   slug={item.slug}
                                   influencer={item}
                                   lazyRoot={lazyRoot}
                               />
+                              </Box>
                                
                             ))}
                         </ScrollMenu>
                     </>
                 )}
 
+            <Box 
+                     ml={["20px", "20px", "20px", "60px"]}
+                            mr={["20px", "20px", "20px", "60px"]}>
                     <Text
                         color="white"
-                        fontSize={["3em", "4em"]}
-                        fontFamily="Blanch"
-                        mt={6}
+                        fontSize={["2rem", "2.5rem"]}
+                        fontFamily="Sora"
+                        fontWeight="bold"
+                        mt={20} mb="15" display={["none","none","block"]}
                     >
                         EXPLORE
                     </Text>
 
-                    <Wrap mt={20}>
+                    <Wrap mt={20} spacing='30px' mx="auto" display={["none","none","block"]} >
                 {selCategoriesData?.map((influencerCat, index) => (
-                    <WrapItem w={240}>
+                    <WrapItem w={[240,240,150,200,240]}  >
                     <Button
-                    mt={2}
+                    
+                    fontSize={["15px !important","11px !important","10px !important","13px !important","15px !important"]}
                     variant={"segment"}
-                    fontSize="24px"
-                    width={240}
+                    // width={[240,240,200,200,240]}
                     onClick={() => {
-                        nftSelectCategory(influencerCat.name.toLowerCase());
+                      //  nftSelectCategory(influencerCat.name.toLowerCase());
                     }}
                 >
                     {influencerCat.name}
@@ -456,27 +472,32 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 </Wrap>
 
                 <Flex
+                flexDir={["column","column","column","row","row"]}
                             justify="space-between"
                             mt="20px"
                             align="center"
-                            mb="20px"
+                            textAlign="center"
+                            // my="1em"
                         >
                     <Text
-                        color="white"
-                        fontSize={["3em", "4em"]}
-                        fontFamily="Blanch"
+                         color="white"
+                         fontSize={["2rem", "2.5rem"]}
+                         fontFamily="Sora"
+                         fontWeight="bold"
+                        //   mb="1em"
                         mt={6}
                     >
                         ALL IN INFLUENCERS
                     </Text>
                     <Button
                     fontSize="24px"
+                    my="2em"
                     width={240}
                     onClick={() => {
                         // nftSelectCategory(influencerCat.name.toLowerCase());
                     }}
                 >
-                    FILTER
+                    FILTER<Box ml="1em" ><GrFilter/></Box>
                 </Button>
                 </Flex>
                 <Box>
@@ -511,6 +532,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                         </Box>
                     )}
             </Box>
+        </Box>
         </Box>
     );
 };

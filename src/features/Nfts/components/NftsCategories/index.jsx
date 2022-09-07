@@ -20,6 +20,7 @@ import { useContext } from "react";
 import { AppContext } from "../../../../utils/AppContext/index";
 import moment from "moment";
 import CardNavigator from "../../../../components/CardNavigator";
+import { LeftArrow, RightArrow } from "../../../../components/ContentNavigator/arrows";
 
 
 const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
@@ -82,6 +83,9 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                             className="no-scrollbar"
                             apiRef={ref}
                             ref={lazyRoot || ref}
+                             
+                            LeftArrow={LeftArrow}
+                            RightArrow={RightArrow}
                         >
                             {displayCards.map((item, index) => (
                                 <NftCard
@@ -227,7 +231,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                         "3em !important"
                                     ]}
                                     fontSize="24px"
-                                    width="200px"
+                                    width="300px"
                                     onClick={() => {
                                         handleClick();
                                     }}
@@ -251,7 +255,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                         colSpan={6}
                     >
                         <Center>
-                            <CardNavigator
+                            {/* <CardNavigator
                                 showArrows={true}
                                 handleLeftArrowClick={() =>
                                     ref.current.scrollPrev()
@@ -259,7 +263,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                 handleRightArrowClick={() =>
                                     ref.current.scrollNext()
                                 }
-                            >
+                            > */}
                                 <Box w={"500px"}>
                                     <ScrollMenu
                                         
@@ -273,13 +277,14 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                         apiRef={ref}
                                         ref={lazyRoot}
                             px="10px"
-
+ 
+                            LeftArrow={LeftArrow}
+                            RightArrow={RightArrow}
                                     >
                                         {displayCards.map((item, index) => (
                                             <NftCard
                                                 style={{
-                                                    transform:
-                                                        "translateX(40px) !important",
+                                                    
                                                     mr: "30px",
                                                     mt: "10px"
                                                 }}
@@ -298,7 +303,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                         ))}
                                     </ScrollMenu>
                                 </Box>
-                            </CardNavigator>
+                            {/* </CardNavigator> */}
                         </Center>
                     </GridItem>
                 </Grid>

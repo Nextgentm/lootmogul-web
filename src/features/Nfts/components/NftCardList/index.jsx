@@ -6,6 +6,8 @@ import NftCard from "../NftCard";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { AppContext } from "../../../../utils/AppContext/index";
+import { LeftArrow, RightArrow } from "../../../../components/ContentNavigator/arrows";
+
 const NftCardList = ({ data, isSale = true }) => {
     const ref = useRef();
     const lazyRoot = useRef(null)
@@ -16,20 +18,12 @@ const NftCardList = ({ data, isSale = true }) => {
     const arrowThreshold = isMobileDevice ? 2 : 5;
     return (
         <Box width="100%">
-            <Flex
+            {/* <Flex
                 width="100%"
                 justifyContent="flex-end"
                 alignItems="center"
                 mb="2%"
             >
-                {/* <Text
-                    fontFamily="Blanch"
-                    fontSize={["28px", "58px"]}
-                    color="white"
-                >
-                    Popular
-                </Text> */}
-
                 <ContentNavigator
                     showViewAll={
                         data.length > arrowThreshold && !isMobileDevice
@@ -39,7 +33,7 @@ const NftCardList = ({ data, isSale = true }) => {
                     handleRightArrowClick={() => ref.current.scrollNext()}
                     onViewAllClicked={() => setShowAll(!showAll)}
                 />
-            </Flex>
+            </Flex> */}
             {data.length === 0 ? (
                 <Text
                     fontFamily="Blanch"
@@ -72,12 +66,16 @@ const NftCardList = ({ data, isSale = true }) => {
                                 ))}
                         </Wrap>
                     ) : (
-                        <ScrollMenu className="no-scrollbar" ref={lazyRoot} apiRef={ref}>
+                        <ScrollMenu  className="no-scrollbar" ref={lazyRoot} apiRef={ref}
+                        LeftArrow={LeftArrow}
+                        RightArrow={RightArrow}
+                            >
                             {data
                                 .filter((item) => (isSale ? item.isSale : true))
                                 .sort((a, b) => a.priority - b.priority)
                                 .map((item, index) => (
                                     <NftCard
+                                    
                                         nft={item}
                                         itemId={`nftcard-${index}`}
                                         key={`nftcard-${index}`}
