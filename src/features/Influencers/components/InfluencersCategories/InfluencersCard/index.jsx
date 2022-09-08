@@ -16,7 +16,7 @@ const CaptchaPopup = dynamic(() => import("../../../../../components/LMModal/Cap
 
 
 
-const InfluencersCard = ({ influencer, slug, style }) => {
+const InfluencersCard = ({ influencer, slug, style, wid="100%", marginR="30px" }) => {
     const [isHeartClick, setHeartClick] = useState(false);
     const { showPaidGameConfirmation, showLoading, setShowLoading, setShowCaptcha, showCaptcha, CheckAndStartGame, user, toggleLoginModal, FetchLikes } = useContext(AppContext);
 
@@ -45,8 +45,8 @@ const InfluencersCard = ({ influencer, slug, style }) => {
     const router = useRouter();
     return (
         <Link href={"/influencer/" + slug} passHref={true} _focus={{ border: "none" }} key={`infCatCard-${influencer.contestmasters?.data[0]?.id}`}>
-            <Box 
-            >
+            <Box  width={wid} mr={marginR}
+            > 
                 <Box
                     cursor="pointer"
                     w="100%"

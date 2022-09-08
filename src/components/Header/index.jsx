@@ -126,7 +126,9 @@ const Header = () => {
         <>
             {!isHideHeader && (
                 <Box
-                    bg="background"
+                    bg="url('https://metaverse.lootmogul.com/wp-content/uploads/2022/07/Section-2.png')"
+                    bgRepeat={"no-repeat"}
+                    bgSize={"cover"}
                     w="100%"
                     h="65px"
                     display="flex"

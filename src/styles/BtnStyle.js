@@ -12,7 +12,7 @@ export const BtnStyle = {
         _hover:"none",
         borderRadius: "5px",
         border: "0",
-        fontSize: "1.5rem",
+        // fontSize: "1.5rem",
         fontFamily: "Sora",
         padding: "30px 40px",
         boxShadow: "0px 0px 30px 10px #e90a6355",
