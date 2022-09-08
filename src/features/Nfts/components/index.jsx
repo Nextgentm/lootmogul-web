@@ -95,6 +95,12 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
         { label: "nft" }
     ];
 
+    const { callAuthService } = useContext(AppContext);
+
+    useEffect(() => {
+        callAuthService("google", router.query.access_token)
+    }, []);
+
     useEffect(async () => {
         if (data && data?.length > 0 && options.length == 0) {
             options.push(defaultCategories);
