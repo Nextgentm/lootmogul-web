@@ -6,12 +6,13 @@ import GamesCategories from "./GamesCategories";
 import ExploreTrivia from "./ExploreTrivia";
 import GameCarouselCard from "./GameCarouselCard";
 import LMThumbnailCarousel from "../../components/LMCarousel/LMThumbnailCarousel";
+import { useRouter } from "next/router";
 
 const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     const { isMobileDevice } = useContext(AppContext);
 
     const [itemRefs, setItemRefs] = useState({});
-    // const router = useRouter();
+    const router = useRouter();
     const [contestSections, setContestSections] = useState([]);
 
     const [featuredGames, setFeaturedGames] = useState([]);
@@ -26,7 +27,12 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
         itemRefs[id].scrollIntoView({ block: 'center', behavior: "smooth" });
     }
 
+    const { callAuthService } = useContext(AppContext);
 
+    useEffect(() => {
+        callAuthService("google", router.query.access_token)
+    }, []);
+    
     useEffect(() => {
        if(contestmasters){
         const fg =[];

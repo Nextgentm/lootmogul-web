@@ -77,6 +77,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const [displayData, setDisplayData] = useState(data);
     const [selCategoriesData, setSelCategoriesData] = useState(data);
     const ref = React.useRef();
+    const { callAuthService } = useContext(AppContext);
 
     const lazyRoot = React.useRef(null);
 
@@ -95,6 +96,12 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
         },
         { label: "Influencers", path: "/influencers" }
     ];
+
+    
+
+    useEffect(() => {
+        callAuthService("google", router.query.access_token)
+    }, []);
 
     useEffect(async () => {
         if (data && data?.length > 0 && options.length == 0) {
@@ -334,7 +341,6 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                         
                     />
                 </Flex>
-
                 <Text
                     fontFamily="Sora"
                     fontSize="14px"
@@ -350,7 +356,6 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                     Now!!!
                 </Text>
                 </>)} 
-
                 <HStack spacing="24px" mt="50px">
                     <SelectBox
                         style={{
@@ -365,7 +370,6 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                         options={options}
                         onChange={handleCategoryChange}
                     />
-
                     <SelectBox
                         style={{
                             border: "1px solid #FFFFFF",
