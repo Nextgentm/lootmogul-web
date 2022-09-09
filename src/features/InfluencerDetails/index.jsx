@@ -159,15 +159,15 @@ const InfluencerDetail = ({ influencer }) => {
     }
 
     return (
-        <Box mr={[0, "20px"]} ml={[0, "20px"]} mb={["10vw"]}>
+        <Box mr={[0, "20px"]} ml={[0, "20px"]}>
                 <SEOContainer seoData={influencer.sharedSeo} content={influencer} pageName={"influencer"}/> 
-{/*                 
+                
             {isTabletOrDesktop && (
                 <Breadcrumbs
                     routes={breadcrumbsPath}
                     style={{ mt: "14px", mb: "14px" }}
                 />
-            )} */}
+            )}
             <Box position="relative" align="center" width="100%" height={"350px"}>
                 <Image
                     alt={`influencer-banner`}

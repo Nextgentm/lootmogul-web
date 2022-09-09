@@ -11,26 +11,22 @@ import {
     SimpleGrid,
     Text,
     Wrap,
-    WrapItem,
-    Image,
-    GridItem
+    WrapItem
 } from "@chakra-ui/react";
-// import Image from "next/image";
+import Image from "next/image";
 import { useContext } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
 import Breadcrumbs from "../../../components/Breadcrumbs/index";
 import { CategoryIcon, SortIcon } from "../../../components/Icons";
 import SEOContainer from "../../SEOContainer";
 import ReadMoreLess from "../../Influencers/ReadMoreLess";
-import { MdArrowForwardIos, MdArrowBackIos } from "react-icons/md";
+
 import { useRouter } from "next/router";
 
 import NftsCategories from "./NftsCategories";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import NftCard from "./NftCard";
 import ContentNavigator from "../../../components/ContentNavigator";
-import CardNavigator from "../../../components/CardNavigator";
-
 const SelectBox = ({ style, icon, title, options, value, onChange }) => {
     return (
         <Flex style={style}>
@@ -217,198 +213,90 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                     content={selCategoriesData[0]}
                 />
             )}
-            {router.pathname === "/nfts/[id]" ? (
-                <>
-                 <Box >
-                        <Flex 
-                        flexDirection={["column","column","column","row","row"]}
-                            bg="linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.33) 50.79%, rgba(18, 50, 98, 0) 101.39%);"
-                            // columns={[1, 1, 1, 2]}
-                            spacing={10}
-                        >
-                     <Box 
-                                order="1"
-                                px={["7", "10", "10", "10"]}
-                                pb={12}
-                                pt={["3em", "3em", "3em", "6em", "6em"]}
-                            >
-                    <Box
-                        mt={!isMobileDevice ? 10 : 0}
-                        ml={!isMobileDevice ? 20 : 0}
-                    >
-                        {selCategoriesData?.map((nfts, index) => (
+            <Box bg="#161F2D">
+                {/* <Breadcrumbs routes={breadcrumbsPath} style={{ mb: "14px" }} /> */}
+                <SimpleGrid
+                    direction={"column-reverse"}
+                    bg="linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.33) 50.79%, rgba(18, 50, 98, 0) 101.39%);"
+                    columns={[1, 1, 1, 2]}
+                    spacing={10}
+                >
+                    <Box order={[2, 2, 2, 1]} px={10} pb={12} pt={12}>
+                        <Box mt={!isMobileDevice ? 36 : 0}>
                             <Text
-                             textAlign={["center","center","center","left","left"]}
                                 color="white"
-                                fontSize={[
-                                    "38px",
-                                    "3.2em",
-                                    "5em",
-                                    "3.5em",
-                                    "4em"
-                                ]}
+                                fontSize={["3em", "4em"]}
                                 fontFamily="CNN"
                             >
-                                {nfts.name} Collection
-                            </Text>
-                        ))}
-                    </Box>
-                    </Box>
-                    <Box
-                                order="2"
-                                bgSize="cover"
-                                textAlign={"center"}
-                                // px={["1", "2", "3", "10"]}
-                                pb={12}
-                                pt={12}
-                            >
-                                {getBannerImage() && (
-                                    <Box
-                                        ml={["20px", "20px", "20px", "60px"]}
-                                        mr={["20px", "20px", "20px", "60px"]}
-                                    >
-                                        <Flex
-                                            position="relative"
-                                            w="100%"
-                                            // h={"500px"}
-                                            // pt={"20px"}
-                                        >
-                                            {isMobileDevice?( <Image
-                                                m={"auto"}
-                                                alt={`nft-banner`}
-                                                src="/assets/nftcategorymobile.png"
-                                                className="custom-img"
-                                                layout="fill"
-                                                w="100%"
-                                                h="600px"
-                                            />):( <Image
-                                                m={"auto"}
-                                                alt={`nft-banner`}
-                                                src="/assets/nftcategorydesktop.png"
-                                                className="custom-img"
-                                                layout="fill"
-                                                w="100%"
-                                                h="600px"
-                                            />)}
-                                           
-                                        </Flex>
-                                    </Box>
-                                )}
-                            </Box>
-                    </Flex>
-                    </Box>
-                </>
-            ) : (
-                <>
-                    {" "}
-                    <Box bg="#161F2D">
-                        {/* <Breadcrumbs routes={breadcrumbsPath} style={{ mb: "14px" }} /> */}
-                        <SimpleGrid
-                            direction={"column-reverse"}
-                            bg="linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.33) 50.79%, rgba(18, 50, 98, 0) 101.39%);"
-                            columns={[1, 1, 1, 2]}
-                            spacing={10}
-                        >
-                            <Box
-                                order="1"
-                                px={["7", "10", "10", "10"]}
-                                pb={12}
-                                pt={["3em", "3em", "3em", "6em", "6em"]}
-                            >
-                                <Box
-                                    mt={!isMobileDevice ? 10 : 0}
-                                    ml={!isMobileDevice ? 20 : 0}
-                                >
-                                    <Text
-                                        color="white"
-                                        fontSize={[
-                                            "38px",
-                                            "3.2em",
-                                            "5em",
-                                            "3.5em",
-                                            "4em"
-                                        ]}
-                                        fontFamily="CNN"
-                                    >
-                                        Buy and Trade <br />
-                                        Your favorite <br />
-                                        Influencers NFT
-                                        {/* <span style={{ color: "#F8ED1D" }}>
+                                Buy and Trade <br />
+                                Your favorite <br />
+                                Influencers NFT
+                                {/* <span style={{ color: "#F8ED1D" }}>
                                     New releases
                                 </span> */}
-                                    </Text>
+                            </Text>
 
-                                    <Text
-                                        color="white"
-                                        fontSize={[
-                                            "18px",
-                                            "1.4em",
-                                            "2.5em",
-                                            "1.5em",
-                                            "2em"
-                                        ]}
-                                        fontWeight="normal"
-                                        mt="1em"
-                                    >
-                                        Become a virtual landlord to <br />
-                                        some of the largest projects in
-                                        <br /> crypto
-                                    </Text>
-
-                                    <Button
-                                        mt={6}
-                                        fontSize="24px"
-                                        width="200px"
-                                        onClick={() => {
-                                            executeScroll(0);
-                                        }}
-                                    >
-                                        Buy NFTS
-                                    </Button>
-                                </Box>
-                            </Box>
-                            <Box
-                                order="2"
-                                bgSize="cover"
-                                textAlign={"center"}
-                                px={["1", "2", "3", "10"]}
-                                pb={12}
-                                pt={12}
+                            <Text
+                                color="white"
+                                fontSize={"1em"}
+                                fontWeight="bold"
                             >
-                                {getBannerImage() && (
-                                    <Box
-                                        ml={["20px", "20px", "20px", "60px"]}
-                                        mr={["20px", "20px", "20px", "60px"]}
-                                    >
-                                        <Flex
-                                            position="relative"
-                                            w="100%"
-                                            // h={"500px"}
-                                            // pt={"20px"}
-                                        >
-                                            <Image
-                                                m={"auto"}
-                                                alt={`nft-banner`}
-                                                src="/assets/bannerNfts.png"
-                                                className="custom-img"
-                                                layout="fill"
-                                                boxSize="500px"
-                                            />
-                                        </Flex>
-                                    </Box>
-                                )}
-                            </Box>
-                        </SimpleGrid>
+                                Become a virtual landlord to some of the largest{" "}
+                                <br />
+                                projects in crypto
+                            </Text>
+
+                            <Button
+                                mt={6}
+                                fontSize="24px"
+                                width="200px"
+                                onClick={() => {
+                                    executeScroll(0);
+                                }}
+                            >
+                                Buy NFTS
+                            </Button>
+                        </Box>
                     </Box>
-                </>
-            )}
+                    <Box
+                        order={[1, 1, 1, 2]}
+                        bgSize="cover"
+                        textAlign={"center"}
+                        px={10}
+                        pb={12}
+                        pt={12}
+                    >
+                        {getBannerImage() && (
+                            <Box
+                                ml={["20px", "20px", "20px", "60px"]}
+                                mr={["20px", "20px", "20px", "60px"]}
+                            >
+                                <Flex
+                                    position="relative"
+                                    w="100%"
+                                    h={"350px"}
+                                    pt={"20px"}
+                                >
+                                    <Image
+                                        m={"auto"}
+                                        alt={`nft-banner`}
+                                        src={getBannerImage()}
+                                        className="custom-img"
+                                        layout="fill"
+                                    />
+                                </Flex>
+                            </Box>
+                        )}
+                    </Box>
+                </SimpleGrid>
+            </Box>
 
             <Box
-                ml={["20px", "20px", "20px", "60px"]}
-                mr={["20px", "20px", "20px", "60px"]}
-                mt="30px"
-                mb="30px"
-            >
+                        ml={["20px", "20px", "20px", "60px"]}
+                        mr={["20px", "20px", "20px", "60px"]}
+                        mt="30px"
+                        mb="30px"
+                    >
                 {/* <Box
                     ml={["20px", "20px", "20px", "60px"]}
                     mr={["20px", "20px", "20px", "60px"]}
@@ -453,7 +341,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                 </Box> */}
 
                 {newNfts?.length && (
-                    <>
+                        <>
                         <Flex
                             justify="space-between"
                             mt="20px"
@@ -463,42 +351,13 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                             <Text
                                 color="white"
                                 fontFamily="Blanch"
-                                fontSize={["2em", "3em", "4em", "5em", "5em"]}
+                                fontSize="32px"
+                                mt="20px"
                             >
                                 NEWEST NFTS
                             </Text>
-                            <Flex alignItems="center">
-                                <Text
-                                    color="white"
-                                    fontFamily="Blanch"
-                                    fontSize={[
-                                        "1em",
-                                        "1em",
-                                        "1.5em",
-                                        "2em",
-                                        "2em"
-                                    ]}
-                                >
-                                    VIEW ALL
-                                </Text>
-                                <Image
-                                    alt=""
-                                    src="/assets/rightArrow.png"
-                                    ml="0.5em"
-                                    onClick={() =>
-                                        router.push({
-                                            pathname: "/nfts/newest"
-                                        })
-                                    }
-                                />
-                            </Flex>
-                        </Flex>
 
-                        <Box
-                            mx={["15px", "15px", "30px", "30px", "30px"]}
-                            w="100%"
-                        >
-                            <CardNavigator
+                            <ContentNavigator
                                 showArrows={true}
                                 handleLeftArrowClick={() =>
                                     ref.current.scrollPrev()
@@ -506,76 +365,62 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                                 handleRightArrowClick={() =>
                                     ref.current.scrollNext()
                                 }
-                            >
-                                <ScrollMenu
-                                    className="no-scrollbar"
-                                    apiRef={ref}
-                                    ref={lazyRoot}
-                                    px="10px"
-                                >
-                                    {newNfts.map((item, index) => (
-                                        <NftCard
-                                            // style={{ w: "250px", mr: "30px", mt: "10px" }}
-                                            itemId={`nftcard-${index}`}
-                                            key={`nftcard-${index}`}
-                                            slug={item.slug}
-                                            showInfo={true}
-                                            nft={item}
-                                            lazyRoot={lazyRoot}
-                                            defaultInView={
-                                                isMobileDevice
-                                                    ? index < 2
-                                                    : index < 5
-                                            }
-                                        />
-                                    ))}
-                                </ScrollMenu>
-                            </CardNavigator>
-                        </Box>
-                    </>
+                                onViewAllClicked={() =>
+                                    router.push({ pathname: "/nfts/newest" })
+                                }
+                            />
+                        </Flex>
+                        <ScrollMenu
+                            className="no-scrollbar"
+                            apiRef={ref}
+                            ref={lazyRoot}
+                        >
+                            {newNfts.map((item, index) => (
+                                <NftCard
+                                    // style={{ w: "250px", mr: "30px", mt: "10px" }}
+                                    itemId={`nftcard-${index}`}
+                                    key={`nftcard-${index}`}
+                                    slug={item.slug}
+                                    showInfo={true}
+                                    nft={item}
+                                    lazyRoot={lazyRoot}
+                                    defaultInView={
+                                        isMobileDevice ? index < 2 : index < 5
+                                    }
+                                />
+                            ))}
+                        </ScrollMenu>
+                        </>
+                   
                 )}
 
                 <Center>
                     <Text
-                        color="white"
-                        fontSize={["3em", "4em"]}
-                        fontFamily="Blanch"
-                        mt={6}
-                    >
-                        EXPLORE NFT'S
-                    </Text>
-                </Center>
-                <Wrap mt={20} w="100%" justifyContent="center">
-                    {selCategoriesData?.map((nfts, index) => (
-                        <WrapItem
-                            w={["100%", "100%", "220px", "220px", "220px"]}
-                        >
-                            <Button
-                                py="1.2em"
-                                mt={2}
-                                variant={"segment"}
-                                fontSize={[
-                                    "28px",
-                                    "24px",
-                                    "24px",
-                                    "24px",
-                                    "24px"
-                                ]}
-                                width={[
-                                    "100%",
-                                    "100%",
-                                    "240px",
-                                    "240px",
-                                    "240px"
-                                ]}
-                                onClick={() => {
-                                    nftSelectCategory(nfts.name.toLowerCase());
-                                }}
+                                color="white"
+                                fontSize={["3em", "4em"]}
+                                fontFamily="Blanch"
+                                mt={6}
                             >
-                                {nfts.name}
-                            </Button>
-                        </WrapItem>
-                    ))}
+                            
+                                EXPLORE NFT'S
+                            </Text>
+                            </Center>
+                <Wrap mt={20}>
+                {selCategoriesData?.map((nfts, index) => (
+                    <WrapItem w={240}>
+                    <Button
+                    mt={2}
+                    variant={"segment"}
+                    fontSize="24px"
+                    width={240}
+                    onClick={() => {
+                        nftSelectCategory(nfts.name.toLowerCase());
+                    }}
+                >
+                    {nfts.name}
+                </Button>
+                </WrapItem>
+                ))}
                 </Wrap>
                 <Box>
                     {selCategoriesData?.map((nfts, index) => (

@@ -17,26 +17,26 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
         <Flex
             w={["100%"]}
             h="330px"
-            
+            bg="#5B5B5B"
             position="relative"
-            bgImage={"/assets/designupdate1/gamecard_landscape.svg"}
+            bgImage={"/assets/gamedtailscardbg.png"}
             backgroundRepeat="no-repeat"
             backgroundSize={"100% 100%"}
             borderRadius={"md"}
             flexDir="column"
             overflow={"hidden"}
-            
         >
             <Flex
                 pt={["45px", "45px"]}
-                pr={["41px", "41px"]}
+                pr={["21px", "21px"]}
                 flexDir="row-reverse"
                 w="full"
             >
                 <Text
+                    isTruncated
                     color="#FDFFE5"
-                    fontSize="18px"
-                    fontWeight={"400"}
+                    fontSize="22px"
+                    fontWeight={"600"}
                     maxWidth={["140px", "140px", "400px"]}
                 >
                     {gameData?.contest_section?.data?.name}
@@ -107,7 +107,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                             fontWeight={600}
                             fontSize={["20px", "36px"]}
                             ml="10px"
-                            color="#d63065"
+                            color="#F8ED1D"
                         >
                          {gameData?.reward?.data?.description}
                         </Text>

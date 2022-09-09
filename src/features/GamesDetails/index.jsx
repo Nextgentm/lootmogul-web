@@ -48,20 +48,16 @@ const GameDetails = ({ gameData }) => {
         <Box
             mr={["18px", "60px"]}
             ml={["18px", "60px"]}
-            
             m="auto"
             textAlign={"center"}
             key={`GameDetail-${gameData?.id}`}
-            mt={["20px","40px"]}
-            mb={"10vw"}
         >
-
-            {/* {isTabletOrDesktop && (
+            {isTabletOrDesktop && (
                 <Breadcrumbs
                     routes={breadcrumbsPath}
                     style={{ mt: "14px", mb: "14px" }}
                 />
-            )} */}
+            )}
 
             {gameData && <GameInfo isTabletOrDesktop={isTabletOrDesktop} gameData={gameData} />}
             {gameData && <GameTabs defaultTab={defaultTab} gameData={gameData} />}

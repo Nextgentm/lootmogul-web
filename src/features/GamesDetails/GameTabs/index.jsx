@@ -16,7 +16,7 @@ const GameTabs = ({defaultTab,gameData}) => {
 
     ];
     return <Box mt="3%" ml={["18px","0px","0px"]} mr="18px" textAlign={"left"}>
-        {gameData && <LMSectionTabs defaultTab={defaultTab} variant={"unstyled"} data={tabsData} />}
+        {gameData && <LMSectionTabs defaultTab={defaultTab} variant={"categoryList"} data={tabsData} />}
     </Box>
 }
 

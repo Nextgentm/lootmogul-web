@@ -67,35 +67,38 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     }, [contestmasters, contestSectionsData]);
 
     return (
-        <Box mb={"10vw"}>
-            <Box >
-                <SimpleGrid direction={"column-reverse"} 
+        <Box>
+            <Box bg="#161F2D"  >
+                <SimpleGrid direction={"column-reverse"} bg="linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0.33) 50.79%, rgba(18, 50, 98, 0) 101.39%);"
                     columns={[1, 1, 1, 2]} spacing={10} >
                     <Box order={[2, 2, 2, 1]} px={10} pb={12} pt={12} >
                         <Box mt={!isMobileDevice ? 36 : 0}>
                             <Text
                                 color="white"
-                                fontSize={["3em", "4em"]}
-                                fontFamily="CNN"
+                                fontSize="2em"
+                                fontFamily="Blanch"
                                 mb={0}
                             >
-                                Check out New releases <br />
-                                ARE YOU READY TO PLAY ?
-
+                                Check out  &nbsp;{""}
+                                <span style={{ color: "#F8ED1D" }}>
+                                    New releases
+                                </span>
                             </Text>
 
                             <Text
                                 color="white"
-                                fontSize={"1em"}
+                                fontSize={isMobileDevice ? "3em" : "4em"}
                                 fontWeight="bold"
+                                textTransform="uppercase"
+                                fontFamily="Blanch"
+                                lineHeight="52px"
                             >
-                                Become a virtual landlord to some of the largest{" "}
-                                <br />
-                                projects in crypto
+                                ARE YOU READY TO PLAY ?
                             </Text>
 
 
-                            <Button mt={6} fontSize="24px" width="200px"
+
+                            <Button mt={6} fontSize="24px" width="250px"
                                 onClick={() => {
 
                                     executeScroll(0);
@@ -107,7 +110,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                             </Button>
                         </Box>
                     </Box>
-                    <Box order={[1, 1, 1, 2]} 
+                    <Box order={[1, 1, 1, 2]} bg={"linear-gradient(90deg, #101721 0%, rgba(0, 0, 0, 0) 101.39%), url(/assets/gamecarouselbg.png)"}
                         bgSize="cover" textAlign={"center"} px={10} pb={12} pt={12}   >
                         {carouselItem && <LMThumbnailCarousel isLimitedDots={true} disableDots={true} autoplaySpeed={5000} children1={carouselItem}
                         >
@@ -135,7 +138,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                 ))}
             </Box>
 
-            {/* {bottomBanners && <BottomBanners bannersList={bottomBanners} />} */}
+            {bottomBanners && <BottomBanners bannersList={bottomBanners} />}
         </Box>
     );
 };

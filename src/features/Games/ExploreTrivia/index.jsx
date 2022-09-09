@@ -11,24 +11,24 @@ const ExploreTrivia = ({ section,executeScroll }) => {
             id: 0,
             label: "Trending Tournament",
             color: "#D0FFD8",
-            icon: "games_trending_icon.svg"
+            icon: "trending.png"
         },
         {
             id: 1, label: "Influencer Tournament",
             color: "#FFDBED",
-            icon: "games_influencer_tournament.svg"
+            icon: "role-play.png"
         },
         {
             id: 2,
             label: "Advanced Premium",
             color: "#D0FFD8",
-            icon: "games_advanced_premium_icon.svg"
+            icon: "badge.png"
         },
         {
             id: 3,
             label: "Free Tournament",
             color: "#FFE7A3",
-            icon: "games_free_tournament.svg"
+            icon: "free.png"
         }
 
 
@@ -37,19 +37,19 @@ const ExploreTrivia = ({ section,executeScroll }) => {
         {
             id: 0, label: "Influencer Tournament",
             color: "#FFDBED",
-            icon: "games_influencer_tournament.svg"
+            icon: "role-play.png"
         },
         {
             id: 1,
             label: "Advanced Premium",
             color: "#D0FFD8",
-            icon: "games_advanced_premium_icon.svg"
+            icon: "badge.png"
         },
         {
             id: 2,
             label: "Free Tournament",
             color: "#FFE7A3",
-            icon: "games_free_tournament.svg"
+            icon: "free.png"
         }
 
 
@@ -58,21 +58,22 @@ const ExploreTrivia = ({ section,executeScroll }) => {
     return (
         <Box ml={["20px", "20px", "20px", "60px"]} mr={["20px", "20px", "20px", "60px"]} mt="30px">
 
-<Text color="white" fontFamily="Blanch" fontSize={["28px", "28px", "28px", "58px", "58px"]}>
-                        EXPLORE TRIVIA
-                    </Text>
-
             <Flex
                 align={["flex-start", "center"]}
                 direction={["column", "row"]}
                 mt="20px"
             >
-               
                 <Flex
-                 pr={["20px", 0]}
+
+
+
+                    pr={["20px", 0]}
                     justify="space-between"
                 >
-                   
+                    <Text color="white" fontFamily="Blanch" fontSize={["28px", "28px", "28px", "58px", "58px"]}>
+                        Explore Trivia
+                    </Text>
+
                     {/* <Box w="25px" h="25px" position={"relative"} top="10px">
                     <Image
                         alt={"ellipse"}
@@ -97,32 +98,28 @@ const ExploreTrivia = ({ section,executeScroll }) => {
                             bg={item.color}
                             mr={["4px", "16px"]}
                             align="center"
-                            borderRadius={["2px", "4px"]}
+                            borderRadius={["5px", "10px"]}
+                            h={["26px", "36px", "40px"]}
                             p="10px"
                             w={"100%"}
                             flex={1}
-                            flexDir={"column"}
-                            textAlign="center"
-                            bgGradient="linear(90deg, #E90A63 0%, #481A7F 100%)"
-                            box-shadow= "120px 80px 40px 20px #0ff"
-
                         >
                             <Image
                                 width={"20px"}
                                 height={"20px"}
                                 alt={item.icon}
                                 objectFit={"contain"}
-                                src={`/assets/designupdate1/${item.icon}`}
+                                src={`/assets/${item.icon}`}
                             />
 
 
 
                             <Text
-                                mt={["6px", "6px", "12px", "12px"]}
+                                ml={["6px", "6px", "12px", "12px"]}
                                 lineHeight={"14px"}
                                 width="100%"
                                 fontFamily={"Blanch"}
-                                color="white"
+                                color="#363636"
                                 fontSize={["12px", "16px", "18px", "20px"]}
                             >
                                 {item.label}

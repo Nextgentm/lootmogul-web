@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Text, GridItem, Center} from "@chakra-ui/react";
+import { Box, Flex, Grid, Text, GridItem} from "@chakra-ui/react";
 import { nFormatter } from "../../../../utils/utils";
 import Image from "next/image";
 
@@ -6,20 +6,20 @@ const GameInfoGrid = ({gameData}) => {
     const gameInfo = [
         {
             label: gameData?.contest_section?.data?.name,
-            icon: "games_apt_icon.svg"
+            icon: "influencer-tournament.png"
         },
         {
             label:  nFormatter(gameData?.ticketsCount, 1) +" players",
-            icon: "games_players_icon.svg"
+            icon: "players-count.png"
         },
         {
             label: (gameData?.reward?.data?.totalWinners || "1") + ((gameData?.reward?.data?.totalWinners> 1) ? " winners" : " winner"),
-            icon: "games_winners_icon.svg"
+            icon: "winner.png"
         },
         {
             label: nFormatter(gameData?.roomsCount, 1) + " Plays"
             ,
-            icon: "games_plays_icon.svg"
+            icon: "plays.png"
         }
     ];
 
@@ -36,20 +36,15 @@ const GameInfoGrid = ({gameData}) => {
             {gameInfo.map((item, index) => (
                 <GridItem key={`info-${index}`} colSpan={1}>
                     <Flex align="center">
-                        <Box pos="relative" width={["48px","48px","60px","60px"]}
-                            height={["40px","48px","60px","60px"]}
-                            bg="#260e46" 
-                            
-                            >
-                        <Center width={"90%"} height={"90%"}>
-
+                        <Box pos="relative" width={["48px","48px","60px","70px"]}
+                            height={["40px","48px","60px","70px"]}>
                         <Image
                            
                             alt={item.icon}
-                            src={`/assets/designupdate1/${item.icon}`}
+                            src={`/assets/${item.icon}`}
                             layout='fill'
+
                         />
-                        </Center>
                         </Box>
                         <Text ml="12px" color="#C7C7C7" fontSize={[12,12,14,18]} textAlign={"left"}>
                             {item.label}
