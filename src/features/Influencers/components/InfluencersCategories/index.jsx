@@ -1,5 +1,5 @@
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { Text, Grid, Link, Flex } from "@chakra-ui/react";
+import { Text, Grid, Link } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 //import dynamic from 'next/dynamic';
 import InfluencersCard from "./InfluencersCard";
@@ -14,7 +14,7 @@ const InfluencersCategories = ({ isMobileDevice, influencer }) => {
                 </Text>
             </Link> */}
 
-            {/* {isMobileDevice ? (
+            {isMobileDevice ? (
                 <ScrollMenu className="no-scrollbar">
                     {influencer.influencers.data.map((influencer, index) => (
 
@@ -27,17 +27,15 @@ const InfluencersCategories = ({ isMobileDevice, influencer }) => {
 
                     ))}
                 </ScrollMenu>
-            ) : ( */}
+            ) : (
                 <Grid
-                flexWrap="wrap"
-                    rowGap={5}
+                    rowGap={10}
                     mt="10px"
-                    templateColumns={["repeat(1, 1fr)","repeat(1, 1fr)","repeat(2, 1fr)","repeat(4, 1fr)"]}
-                    gap={5}
+                    templateColumns="repeat(4, 1fr)"
+                    gap={6}
                 >
                     {influencer.influencers.data.map((influencer, index) => (
                         <InfluencersCard
-                        style={ {w:"100%" ,px:"15px"}}
                             colSpan={4}
                             itemId={`item-${index}`}
                             key={`item-${index}`}
@@ -46,7 +44,7 @@ const InfluencersCategories = ({ isMobileDevice, influencer }) => {
                         />
                     ))}
                 </Grid>
-            {/* )} */}
+            )}
         </>
     );
 };

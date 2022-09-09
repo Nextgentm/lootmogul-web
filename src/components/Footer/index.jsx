@@ -77,10 +77,9 @@ const Footer = () => {
                         <Button
                             className="influencer-card-btn"
                             width="20%"
-                            fontSize={"1rem"}
+                            fontSize={24}
                             pos="relative"
                              right="1rem"
-                            padding="10px 10px"
                         >
                             Go
                         </Button>

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { VisibilityContext } from "react-horizontal-scrolling-menu";
-import {Image}  from "@chakra-ui/react";
+
 function Arrow({
   children,
   disabled,
@@ -18,11 +18,7 @@ function Arrow({
         justifyContent: "center",
         right: "1%",
         opacity: disabled ? "0" : "1",
-        userSelect: "none",
-        marginRight:"-40px",
-        marginLeft:"-40px",
-        zIndex: 1
-
+        userSelect: "none"
       }}
     >
       {children}
@@ -64,8 +60,7 @@ export function LeftArrow() {
 
   return (
     <Arrow disabled={disabled} onClick={clickHandler}>
-      
-      <Image  src={ disabled ? `/assets/designupdate1/arrow-left-selected.svg` : `/assets/designupdate1/arrow-left-selected.svg`}  />
+      Left
     </Arrow>
   );
 }
@@ -102,8 +97,7 @@ export function RightArrow() {
 
   return (
     <Arrow disabled={disabled} onClick={clickHandler}>
-      <Image  src={ disabled ? `/assets/designupdate1/arrow-right-selected.svg` : `/assets/designupdate1/arrow-right-selected.svg`}  />
+      Right
     </Arrow>
-    
   );
 }

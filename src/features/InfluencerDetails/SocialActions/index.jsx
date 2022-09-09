@@ -13,8 +13,7 @@ import {
     Button,
     Textarea,
     Image as CImage,Input,
-    useDisclosure,
-    Center
+    useDisclosure
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import Image from "next/image";
@@ -60,20 +59,14 @@ const[rating,setRating]=useState({title:"",review:"",star:0.0});
 
     return (
         <Flex w="fit-content" {...style}>
-            <Box w="24px" h="24px" cursor="pointer" style = {animate ? style1 : null} border={"1px"} borderColor="#ffffff44"  
-             >
-            
-            <CImage 
-            mt="2px"
-            ml="2px"
+            <Box cursor="pointer" style = {animate ? style1 : null}>
+            <Image 
             alt="fav"
-            src ={ isHeartClick? '/assets/designupdate1/games_like_icon1.svg' : '/assets/designupdate1/games_like_icon.svg'}
-            maxH="80%"
-            maxW="80%"
+            src ={ isHeartClick? '/assets/favsel.svg' : '/assets/fav.svg'}
             
              onClick={
                 animateEffect
-                  }   />;
+                  }  {...imgSize}  />;
                 {/* <ExportedImage alt="fav" {...imgSize} src="/assets/fav.svg" /> */}
             </Box>
 
@@ -82,13 +75,7 @@ const[rating,setRating]=useState({title:"",review:"",star:0.0});
             <Popover
               >
                 <PopoverTrigger>
-                    <Box w="24px" h="24px" border={"1px"} borderColor="#ffffff44">
-                <CImage 
-                  mt="2px"
-                  ml="2px"
-                maxH="80%"
-            maxW="80%"
- alt="share" src="/assets/designupdate1/games_share_icon.svg" /></Box>
+                <CImage alt="share" {...imgSize} src="/assets/share.svg" />
             </PopoverTrigger>
             <NextShare link={"https://lootmogul.com/influencer/"+ influencer?.data?.slug} caption={"Come and play with "+influencer?.data?.name} hashtag="lootmogul"
               type="influencer"

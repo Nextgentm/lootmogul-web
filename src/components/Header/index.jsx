@@ -155,7 +155,7 @@ const Header = () => {
                         alt="logo"
                         src="/assets/lm_logo.png"
                     />
-                    {/* <SearchBar /> */}
+                    <SearchBar />
 
                     {isMobileDevice ? (
                         <NavDrawer
@@ -255,10 +255,8 @@ const Header = () => {
                                     <Button
                                         {...loginBtnStyle}
                                         onClick={() => toggleLoginModal()}
-                                        padding="20px 20px"
-                                        fontSize={"1rem"}
                                     >
-                                        LOGIN
+                                        Login
                                     </Button>
                                 )}
                             </>

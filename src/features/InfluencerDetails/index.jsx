@@ -20,8 +20,8 @@ import InfluencerInfoCollapsable from "./InfluencerInfoCollapsable";
 
 const InfluencerDetail = ({ influencer }) => {
     const {  isTabletOrDesktop, user ,influencerLikes,FetchLikes,toggleLoginModal} = useContext(AppContext);
-    const [fullInfluencer, setFullInfluencer] = useState(influencer);
     const [isHeartClick, setHeartClick] = useState(false);
+    const [fullInfluencer, setFullInfluencer] = useState(influencer);
 
     const [tabsData, setTabsData] = useState();
     const onHeartClick = async() => {
@@ -95,7 +95,7 @@ const InfluencerDetail = ({ influencer }) => {
                     )
                 },
                 {
-                    tab: <Text>GAMES</Text>,
+                    tab: <Text>Games</Text>,
                     tabPanel: (
                         fullInfluencer &&  <InfluencerGame
                             contestmasters={
@@ -108,7 +108,7 @@ const InfluencerDetail = ({ influencer }) => {
                 }
             ]:[
                 {
-                    tab: <Text>NFTS</Text>,
+                    tab: <Text>NFTs</Text>,
                     tabPanel: (
                         <>
                             {" "}
@@ -196,23 +196,27 @@ const InfluencerDetail = ({ influencer }) => {
                     />
                 </Box>
             ) : (
-                <Flex mt="30px" ml="12px">
+                <Flex mt="20px" ml="12px">
                     <InfluencerInfo influencer={fullInfluencer || influencer} />
-                    {/* <Box
+                    <Box
                         w="1px"
                         bg="rgba(255, 255, 255, 0.2)"
                         ml="20px"
                         alignSelf={"stretch"}
-                    /> */}
+                    />
 
                     <Flex
                         direction={"column"}
                         flex={1}
                         ml="20px"
                         align={"flex-end"}
-                        
                     >
-                       
+                        <SocialActions
+                            onHeartClick={onHeartClick}
+                            isHeartClick={isHeartClick}
+                            influencer={{ data: fullInfluencer || influencer }}
+                            showWriteReview
+                        />
 
                         <InfluencerInfoCollapsable
                             influencer={fullInfluencer || influencer}
@@ -221,10 +225,7 @@ const InfluencerDetail = ({ influencer }) => {
                 </Flex>
             )}
             
-            <Box color="white" border="solid 2px" borderColor={"#421d7a"} bg="#270e4699" 
-        borderRadius={["4px","8px"]} p="30px" w="100%" id="nftCardList" mt="30px">
-
-            
+            <Box mt="30px" id="nftCardList" ml={["20px", "30px"]} mr={["20px", "30px"]}>
             { tabsData && <LMSectionTabs variant={"categoryList"} data={tabsData} />}
             </Box>
         </Box>

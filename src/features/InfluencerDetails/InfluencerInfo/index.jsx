@@ -1,4 +1,4 @@
-import { Box, Image, Flex, Text, Button, Center, Link } from "@chakra-ui/react";
+import { Box, Avatar, Flex, Text, Button, Center, Link } from "@chakra-ui/react";
 import { getStrapiMedia } from "../../../utils/medias";
 import { useRouter } from "next/router";
 
@@ -7,59 +7,33 @@ import { setCountForCaptcha } from "../../../services/dataService";
 import AppContext from "../../../utils/AppContext";
 import { useContext } from "react";
 import dynamic from "next/dynamic";
-import SocialActions from "../SocialActions";
-import { useState , useEffect} from "react";
 const PaidGameConfirmation = dynamic(() => import("../../Games/PaidGameConfirmation"));
 const LMNonCloseALert = dynamic(() => import("../../../components/LMNonCloseALert"));
 const CaptchaPopup = dynamic(() => import("../../../components/LMModal/CaptchaPopup"));
 
 const InfluencerInfo = ({ influencer }) => {
-    // const { showPaidGameConfirmation, CheckAndStartGame, setShowCaptcha, showCaptcha } = useContext(AppContext);
-    const {  influencerLikes,FetchLikes,toggleLoginModal} = useContext(AppContext);
+    const { showPaidGameConfirmation, CheckAndStartGame, setShowCaptcha, showCaptcha } = useContext(AppContext);
+    const router = useRouter();
 
-    // const router = useRouter();
-    const [isHeartClick, setHeartClick] = useState(false);
-    const onHeartClick = async() => {
-        if(!user){
-            toggleLoginModal();
-            return;
-        }
-        if(influencer){
-            const resp = await strapi.request(
-                "get",
-                "connection/toggleInfluencerLike?influencer=" + influencer.id,
-                {}
-              );
-              FetchLikes();
-                setHeartClick(!isHeartClick);
-            }
-        
-    };
-    useEffect(()=>{
-        if (influencerLikes?.includes(influencer.id)){
-            setHeartClick(true);
-        }
-    },[influencer,influencerLikes]);
     return (
         <Flex direction="column"
+            align="center" w="200px" h={"270px"}
             key={`infinfo-${influencer.contestmasters?.data[0]?.id}`}
         >
 
-            <Center >
+            <Center h="60%">
                 {influencer.icon?.data?.url && (
-                    <Image
-                        w={["290px"]}
-                        h={["340px"]}
-                        border="1px solid gray"
+                    <Avatar
+                        boxSize="90px"
+                        border="5px solid gray"
                         alt={`influencer-dp`}
-                        borderRadius={["4px","8px"]}
                         src={getStrapiMedia(influencer.icon?.data?.url)}
                     />
                 )}
             </Center>
             <Text
                 mt="12px"
-                fontSize={"1.2rem"}
+                fontSize={"14px"}
                 fontFamily="Sora"
                 color="white"
                 fontWeight={700}
@@ -67,49 +41,40 @@ const InfluencerInfo = ({ influencer }) => {
                 {influencer.name}
             </Text>
 
-            <Flex justify={"space-between"}  mt="8px">
-
-            <Text fontSize={"1rem"} fontFamily="Sora" color="white">
+            <Text mt="4px" fontSize={"12px"} fontFamily="Sora" color="white">
                 {influencer.tagline || "N.A."}
             </Text>
-            <SocialActions
-                            onHeartClick={onHeartClick}
-                            isHeartClick={isHeartClick}
-                            influencer={{ data: influencer }}
-                            showWriteReview
-                        />
-            </Flex>
             <Flex justify={"space-between"} w="160px" mt="8px">
                 <Box align="center" key={`info-like`}>
-                    <Text fontSize={"1rem"} color="white" fontWeight={700}>
+                    <Text fontSize={"10px"} color="white" fontWeight={700}>
                         {influencer.likeCount || 0}
                     </Text>
-                    <Text fontSize={"1rem"} color="#7C7C7C">
+                    <Text fontSize={"10px"} color="#7C7C7C">
                         Fav
                     </Text>
                 </Box>
 
                 <Box align="center" key={`info-shared`}>
-                    <Text fontSize={"1rem"} color="white" fontWeight={700}>
+                    <Text fontSize={"10px"} color="white" fontWeight={700}>
                         {influencer.shareCount || 0}
                     </Text>
-                    <Text fontSize={"1rem"} color="#7C7C7C">
+                    <Text fontSize={"10px"} color="#7C7C7C">
                         Shared
                     </Text>
                 </Box>
 
                 <Box align="center" key={`info-reviews`}>
-                    <Text fontSize={"1rem"} color="white" fontWeight={700}>
+                    <Text fontSize={"10px"} color="white" fontWeight={700}>
                         {influencer.reviewCount || 0}
                     </Text>
-                    <Text fontSize={"1rem"} color="#7C7C7C">
+                    <Text fontSize={"10px"} color="#7C7C7C">
                         Reviews
                     </Text>
                 </Box>
             </Flex>
 
 
-            {/* <Flex direction={"row"} m="8px">
+            <Flex direction={"row"} m="8px">
 
                 <Button variant="solid" h={"28px"} flex={1}
                     onClick={(e) => {
@@ -137,7 +102,7 @@ const InfluencerInfo = ({ influencer }) => {
                         Buy NFTs
                     </Link>
                 </Button>
-            </Flex> */}
+            </Flex>
         </Flex>
     );
 };

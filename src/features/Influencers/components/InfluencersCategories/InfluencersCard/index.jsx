@@ -45,16 +45,15 @@ const InfluencersCard = ({ influencer, slug, style }) => {
     const router = useRouter();
     return (
         <Link href={"/influencer/" + slug} passHref={true} _focus={{ border: "none" }} key={`infCatCard-${influencer.contestmasters?.data[0]?.id}`}>
-            <Box 
+            <Box {...style}
             >
                 <Box
                     cursor="pointer"
                     w="100%"
-                    h="400px"
+                    h="500px"
                     position="relative"
                     overflow={"hidden"}
-                    border= "1px solid #A8A8A8"
-                    borderRadius= "8px"
+
                 >
                     <Box
                         className="influencerdiv"
@@ -62,11 +61,11 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                         w="100%"
                         h="500px"
                         overflow={"hidden"}
-                        
                     >
                         <Image
                             alt={influencer.icon?.data?.url}
                             layout="fill"
+                            objectFit="contain"
                             src={getStrapiMedia(influencer.icon?.data?.url)}
                         />
                     </Box>
@@ -74,9 +73,8 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                 <Text
                     color="white"
                     fontFamily="Sora"
-                    fontSize="1.2rem"
-                    fontWeight={"600"}
-                    mt="10px"
+                    fontSize="14px"
+                    mt="4px"
                     noOfLines={1}
                 >
                     {influencer.name}
@@ -84,9 +82,9 @@ const InfluencersCard = ({ influencer, slug, style }) => {
                 <Flex mt="4px" justify={"space-between"} align="center">
                     <Text
                         noOfLines={1}
-                        color="white"
+                        color="#7C7C7C"
                         fontFamily="Sora"
-                        fontSize="1rem"
+                        fontSize="12px"
                         width="62%"
                     >
                         {influencer.tagline || "N.A."}

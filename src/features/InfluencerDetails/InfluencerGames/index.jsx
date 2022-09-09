@@ -5,8 +5,6 @@ import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import ContentNavigator from "../../../components/ContentNavigator";
 import GamesCard from "./InfluencerGameCard/index";
 import { AppContext } from "../../../utils/AppContext/index";
-import { LeftArrow, RightArrow } from "../../../components/ContentNavigator/arrows";
-
 const InfluencerGame = ({ contestmasters }) => {
     console.log("contestmasters", contestmasters);
     const ref = React.useRef();
@@ -17,8 +15,7 @@ const InfluencerGame = ({ contestmasters }) => {
         <Box>
           {contestmasters?.data.length === 0 ? (
                   <Text  mt="20px" color="white">Coming soon.. </Text>
-            ):(  <> 
-             {/* <Flex justify="space-between" mt="20px" align="center" mb="20px">
+            ):(  <>  <Flex justify="space-between" mt="20px" align="center" mb="20px">
                 <Text color="white" fontFamily="Blanch" fontSize="32px">
                     Games
                 </Text>
@@ -33,7 +30,7 @@ const InfluencerGame = ({ contestmasters }) => {
                     handleRightArrowClick={() => ref.current.scrollNext()}
                     onViewAllClicked={() => setShowAll(!showAll)}
                 />
-            </Flex> */}
+            </Flex>
           
                 <Box>
                     {showAll ? (
@@ -53,12 +50,9 @@ const InfluencerGame = ({ contestmasters }) => {
                             ))}
                         </Wrap>
                     ) : (
-                        <ScrollMenu className="no-scrollbar" apiRef={ref}
-                        LeftArrow={LeftArrow}
-                        RightArrow={RightArrow}>
+                        <ScrollMenu className="no-scrollbar" apiRef={ref}>
                             {contestmasters?.data.map((cm, index) => (
                                 <GamesCard
-                                
                                     style={{ mr: "24px" }}
                                     itemId={`item-${index}`}
                                     key={`item-${index}`}

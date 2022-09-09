@@ -25,18 +25,17 @@ const newMarkDownTheme = {
 
 const InfluencerInfoCollapsable = ({ influencer }) => {
     return (
-        <Box color="white" border="solid 2px" borderColor={"#421d7a"}
-        borderRadius={["4px","8px"]}>
+        <Box mt="16px" color="white" >
             <CollapsableRow
                 title="About" 
-                // icon={<AboutInfoIcon color="#CFBF8A" />}
+                icon={<AboutInfoIcon color="#CFBF8A" />}
                 isOpen={true}
                 
             >
                 {/* <Text fontWeight={600} color="#C7C7C7" fontSize="10px">
                     {influencer.tagline}
                 </Text> */}
-                <Box maxH="390px" overflowY={"scroll"}>
+                <Box maxH="200px" overflowY={"scroll"}>
 
                 
                 <ReactMarkdown rehypePlugins={[rehypeRaw]}  components={ChakraUIRenderer(newMarkDownTheme)} remarkPlugins={[remarkGfm]} skipHtml>{influencer.about}</ReactMarkdown>
