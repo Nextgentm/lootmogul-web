@@ -16,11 +16,11 @@ const StickySocialIcons=()=>{
     const onClose =()=>{
         setOpenSpin(false);
     }
-return <Box pos="fixed" bottom={["10%","20%","20%" ,"20%"]} right="0px" zIndex={9999}>
-    <Tooltip placement="auto"  label="Spin the Wheel" bg="#383838" borderRadius="10px" color="white" fontSize='sm'>
+return <Box pos="fixed" bottom={["20%","30%","30%" ,"30%"]} right="0px" zIndex={9999}>
+    {/* <Tooltip placement="auto"  label="Spin the Wheel" bg="#383838" borderRadius="10px" color="white" fontSize='sm'>
       <Image mb="15%!important" className="stickyIcon" m="5%" alt="social" width={["35px","50px"]} height={["35px","50px"]} src="/assets/spin.webp" onClick={()=>{
           spinClick();
-      }}/></Tooltip>
+      }}/></Tooltip> */}
       <Tooltip placement="auto"  label="Join Discord" bg="#383838" borderRadius="10px" color="white" fontSize='sm'>
  <Link   _focus={{border:"none", boxShadow:"none"}}href="https://discord.gg/mHUqAm8fsh" target="_blank">  
   <Image className="stickyIcon" m="5%" alt="social" width={["35px","50px"]} height={["35px","50px"]} src="/assets/discord-sticky.png"/>
@@ -31,7 +31,7 @@ return <Box pos="fixed" bottom={["10%","20%","20%" ,"20%"]} right="0px" zIndex={
     <Image className="stickyIcon" m="5%" alt="social" width={["35px","50px"]} height={["35px","50px"]} src="/assets/telegram-sticky.webp"/>
     </Link>
     </Tooltip>
- {openSpin && <SpinBtn isOpen={openSpin} onClose={onClose}/>}
+ {/* {openSpin && <SpinBtn isOpen={openSpin} onClose={onClose}/>} */}
 </Box>
 }
 
