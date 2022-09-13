@@ -206,6 +206,17 @@ export const TextStyle = {
                 letterSpacing: "0em",
 
             },
+            headText:{
+                color:"white",
+                fontFamily:"CNN",
+                textShadow:" 2px 2px 8px #fff"
+            },
+            secHeadText:{
+                color:"white",
+                fontFamily:"Sora",
+                fontWeight:"bold",
+               
+            }
            
         }
     }

@@ -1,4 +1,4 @@
-import { Box, SimpleGrid, Button, Text, Link } from "@chakra-ui/react";
+import { Box, SimpleGrid, Button, Text, Link, Flex } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 import { useContext, useEffect, useRef, useState } from "react";
 import BottomBanners from "../Home/components/BottomBanners";
@@ -62,22 +62,24 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
 
                 </Link>
             })
-            setCarouselItem(ci.slice(0, 3));
+            setCarouselItem(ci.slice(0, 1));
         }
     }, [contestmasters, contestSectionsData]);
 
     return (
-        <Box mb={"10vw"}>
+        <Box mx={["2rem","2.5rem","5rem"]}>
+        <Box mb={"10vw"} >
             <Box >
-                <SimpleGrid direction={"column-reverse"} 
-                    columns={[1, 1, 1, 2]} spacing={10} >
-                    <Box order={[2, 2, 2, 1]} px={10} pb={12} pt={12} >
-                        <Box mt={!isMobileDevice ? 36 : 0}>
+                <Flex direction={["column","column","column","row","row"]} 
+                     >
+                    <Box pb={12}  w={["100%","100%","100%","70%"]} >
+                        <Box mt={!isMobileDevice ? 26 : 0}>
                             <Text
-                                color="white"
-                                fontSize={["3em", "4em"]}
-                                fontFamily="CNN"
+                               variant="headText"
+                                fontSize={["1.5em","2.1em","3.5em", "4em"]}
+                                mt="5rem"
                                 mb={0}
+                               
                             >
                                 Check out New releases <br />
                                 ARE YOU READY TO PLAY ?
@@ -86,8 +88,8 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
 
                             <Text
                                 color="white"
-                                fontSize={"1em"}
-                                fontWeight="bold"
+                                fontSize={["0.7em","1em","1.3em"]}
+                                fontWeight="normal"
                             >
                                 Become a virtual landlord to some of the largest{" "}
                                 <br />
@@ -95,7 +97,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                             </Text>
 
 
-                            <Button mt={6} fontSize="24px" width="200px"
+                            <Button mt={6} fontSize={["20px","20px","24px"]} width="200px" fontWeight="normal"
                                 onClick={() => {
 
                                     executeScroll(0);
@@ -107,7 +109,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                             </Button>
                         </Box>
                     </Box>
-                    <Box order={[1, 1, 1, 2]} 
+                    <Box  w={["100%","100%","100%","30%"]}  m="auto"
                         bgSize="cover" textAlign={"center"} px={10} pb={12} pt={12}   >
                         {carouselItem && <LMThumbnailCarousel isLimitedDots={true} disableDots={true} autoplaySpeed={5000} children1={carouselItem}
                         >
@@ -115,7 +117,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
 
 
                     </Box>
-                </SimpleGrid>
+                </Flex>
             </Box>
 
             <ExploreTrivia section={contestSections} executeScroll={executeScroll} />
@@ -136,6 +138,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
             </Box>
 
             {/* {bottomBanners && <BottomBanners bannersList={bottomBanners} />} */}
+        </Box>
         </Box>
     );
 };

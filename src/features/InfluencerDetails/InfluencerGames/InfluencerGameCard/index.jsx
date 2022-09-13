@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Text, Flex, Box, Center, VStack, Link, Button } from "@chakra-ui/react";
-import Image from "next/image";
+import { Text, Flex, Box, Center, VStack, Link, Button,Image } from "@chakra-ui/react";
+// import Image from "next/image";
 import { getStrapiMedia } from "../../../../utils/medias";
 import SocialActions from "../../SocialActions";
 import { useRouter } from "next/router";
@@ -62,9 +62,10 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                       
                       <Text
                       mt={"30px"}
-                                color="#FDFFE5"
-                                fontSize="14px"
-                                fontWeight={"600"}
+                                color="#FFFF"
+                                fontSize="17px"
+                                fontWeight={"500"}
+                                fontFamily="Sora"
                                 textAlign="center"
                             >
                                 {sectionName}
@@ -88,33 +89,13 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                         />
                                     </Box>
                                 )}
-                                {/* {contestmaster.reward?.data?.description && (
-                                    <VStack w="50%" m={"auto"} mt="20px">
-                                        <Text
-                                            pl={2}
-                                            color="#FDFFE5"
-                                            fontSize="14px"
-                                            fontWeight={"600"}
-                                            align={"center"}
-                                        >
-                                            Win Up To
-                                        </Text>
-                                        <Text
-                                            color="#F8ED1D"
-                                            fontSize="20px"
-                                            fontWeight={"600"}
-                                            align={"center"}
-                                        >
-                                            {contestmaster.reward?.data.description}
-                                        </Text>
-                                    </VStack>
-                                )} */}
+                               
                         
 
                         <Text
-                            color="#FDFFE5"
+                            color="#FFF"
                             fontSize="20px"
-                            fontWeight={"600"}
+                            fontWeight={"500"}
                             align={"center"}
                             mb={"30px"}
                         >
@@ -122,25 +103,25 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                         </Text>
                     </Flex>
 
-                    <Flex w={"full"} align="flex-end" justify={"space-between"}>
+                 
+                       <Flex w={"full"} align="flex-end" justify={"space-between"} px="10px" alignItems="center">
                         <Box>
                             <Flex>
                                 <Image
                                     alt="tag"
-                                    width={"14px"}
-                                    height={"8px"}
+                                    boxSize="30px"
                                     objectFit={"contain"}
                                     src="/assets/designupdate1/cash_icon.svg"
                                 />
 
-                                <Text ml="6px" color="#CFBF8A" fontSize="12px">
+                                <Text ml="7px" color="#FFF" fontSize="17px">
                                     {contestmaster.entryFee != 0
                                         ? "Entry Fee - $" + contestmaster.entryFee
                                         : "Free"}
                                 </Text>
                             </Flex>
 
-                            <Text mt="4px" ml={"20px"} color="#7C7C7C" fontSize="10px">
+                            <Text mt="4px" ml={"20px"} color="#FFF" fontSize="14px" fontWeight="100">
                                 {nFormatter(contestmaster.roomsCount, 1)} Plays
                             </Text>
                         </Box>
@@ -157,7 +138,8 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                         variant="solid"
                         h={["40px", "40px"]}
                         mt="12px"
-                        w="full"
+                        w="full" textShadow=" 2px 2px 8px #fff"
+                        
                         onClick={(e) => {
                             e.preventDefault();
                             setShowLoading({ "key": `igc-${contestmaster?.id}`, "show": true });
@@ -166,6 +148,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     >
                         Play Now
                     </Button>}
+                 
                     {contestmaster && contestmaster.contest && (contestmaster?.contest?.status === "upcoming" && !contestStatus) && (
                         <Button m="auto" h={["34px", "28px"]}
                             mt="12px" opacity="1!important" color="primary"

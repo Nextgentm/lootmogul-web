@@ -63,7 +63,7 @@ function MyApp({ Component, pageProps }) {
   const [gameLoading, setGameLoading] = useState(false);
 
   const [loadParticles, setLoadParticles] = useState(true);
-  const [stickyBtn, setStickyBtn] = useState(true);
+  const [stickyBtn, setStickyBtn] = useState(false);
 
   useEffect(() => {
     if (provider && trackingCode) {
@@ -108,8 +108,8 @@ useEffect(()=>{
   if(router){
   // if(router.route === "/terms-of-services") setLoadParticles(false);
   // else setLoadParticles(true);
-  if(router.route === "/terms-and-conditions-ios" || router.route === "/quizPage" || router.route === "/joining" ) setStickyBtn(false);
-  else setStickyBtn(true);
+  // if(router.route === "/terms-and-conditions-ios" || router.route === "/quizPage" || router.route === "/joining" ) setStickyBtn(false);
+  // else setStickyBtn(true);
 }
 }, [loadParticles, router])
 
