@@ -51,7 +51,8 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
         });
     };
 
-    return (<>{router.pathname === "/nfts/[id]" || router.pathname === "/nfts/newest" ? (
+    return (<>
+    {router.pathname === "/nfts/[id]" || router.pathname === "/nfts/newest" ? (
                     <Grid
                         // className="no-scrollbar"
                         // apiRef={ref}
@@ -67,6 +68,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                         mt="10px"
                         gap={6}
                         width="100%"
+                        
                     >
                         {displayCards?.map((item, index) => (
                             // <GridItem >
