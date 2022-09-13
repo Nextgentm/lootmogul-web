@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { Box, SimpleGrid, Button, Text, Link, Flex } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -6,13 +7,12 @@ import GamesCategories from "./GamesCategories";
 import ExploreTrivia from "./ExploreTrivia";
 import GameCarouselCard from "./GameCarouselCard";
 import LMThumbnailCarousel from "../../components/LMCarousel/LMThumbnailCarousel";
-import { useRouter } from "next/router";
 
 const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     const { isMobileDevice } = useContext(AppContext);
 
     const [itemRefs, setItemRefs] = useState({});
-    const router = useRouter();
+     const router = useRouter();
     const [contestSections, setContestSections] = useState([]);
 
     const [featuredGames, setFeaturedGames] = useState([]);
@@ -26,7 +26,6 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     const executeScroll = (id) => {
         itemRefs[id].scrollIntoView({ block: 'center', behavior: "smooth" });
     }
-
     const { callAuthService } = useContext(AppContext);
 
     if(router.query.access_token){
@@ -36,7 +35,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
             callAuthService("google", router.query.access_token)
         }
     }
-    
+
     useEffect(() => {
        if(contestmasters){
         const fg =[];
@@ -101,7 +100,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                             </Text>
 
 
-                            <Button mt={6} fontSize={["20px","20px","24px"]} width="200px" fontWeight="normal"
+                            <Button mt={6} fontSize={["20px","20px","24px"]}  fontWeight="normal"
                                 onClick={() => {
 
                                     executeScroll(0);
@@ -140,8 +139,8 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                     </Box>
                 ))}
             </Box>
-
-            {/* {bottomBanners && <BottomBanners bannersList={bottomBanners} />} */}
+           
+            {bottomBanners && <BottomBanners bannersList={bottomBanners} />}
         </Box>
         </Box>
     );

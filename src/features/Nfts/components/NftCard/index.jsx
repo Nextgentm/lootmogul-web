@@ -21,10 +21,12 @@ import dynamic from "next/dynamic";
 
 const NextShare = dynamic(() => import("../../../../utils/socialbuttons"));
 
+
 const cardWidth= ["280px","360px","360px","420px"];
-const cardHeight = ["400px","540px","480px","620px"];
+const cardHeight = ["400px","540px","540px","620px"];
 const infoboxWidth= ["240px","320px","320px","350px"];
-const imageHeight = ["380px","500px","460px","590px"];
+const imageHeight = ["380px","500px","500px","590px"];
+
 
 const CardInfo = ({ nft }) => {
     return (
@@ -40,10 +42,12 @@ const CardInfo = ({ nft }) => {
             position={"absolute"}
             bottom={"0px"}
             width= {infoboxWidth}
-            
+            ml="20px"
             p={"20px"}
+            mx={["20px","20px","40px"]}
+            // transform= "translatex(61px)"
         >
-            <Text
+            {/* <Text
                 noOfLines={2}
                 fontWeight="bold"
                 minH="50px"
@@ -51,12 +55,13 @@ const CardInfo = ({ nft }) => {
                 fontFamily="Sora"
             >
                 {nft?.name}
-            </Text>
+            </Text> */}
 
             <Flex
                 mt={"3%!important"}
                 justifyContent="center"
-                
+                m={0}
+                p={0}
                 color="white"
                 fontSize={20}
             >
@@ -158,7 +163,7 @@ const NftCard = ({
     objectFit={"cover"}
     //  blurDataURL={nft.front_image}
     blurDataURL={`data:image/svg+xml;base64,${toBase64(
-        convertImage(400, 400)
+        convertImage(300, 400)
     )}`}
     placeholder="blur"
     height={imageHeight}
@@ -183,7 +188,7 @@ const NftCard = ({
                 _hover={{ textDecoration: "none" }}
                 _focus={{ border: "none", textDecoration: "none" }}
                 cursor="pointer"
-                mr={["10px","10px","30px"]}
+                mr={["10px","30px","30px"]}
                 w={cardWidth}
                 h={showInfo ? cardHeight : imageHeight}
                 minH={showInfo ? cardHeight : imageHeight}

@@ -28,7 +28,7 @@ const ContentNavigator = ({
                 </Text>
             )}
 
-            {showArrows && !allClicked && (
+            {/* {showArrows && !allClicked && (
                 <>
                     <Box
                         ml="20px"
@@ -55,7 +55,7 @@ const ContentNavigator = ({
                         />
                     </Box>
                 </>
-            )}
+            )} */}
         </Flex>
     );
 };

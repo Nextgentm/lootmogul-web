@@ -64,8 +64,8 @@ const[rating,setRating]=useState({title:"",review:"",star:0.0});
              >
             
             <CImage 
-            mt="4px"
-            ml="3px"
+            mt="2px"
+            ml="2px"
             alt="fav"
             src ={ isHeartClick? '/assets/designupdate1/games_like_icon1.svg' : '/assets/designupdate1/games_like_icon.svg'}
             maxH="80%"
@@ -84,8 +84,8 @@ const[rating,setRating]=useState({title:"",review:"",star:0.0});
                 <PopoverTrigger>
                     <Box w="24px" h="24px" border={"1px"} borderColor="#ffffff44">
                 <CImage 
-                  mt="4px"
-                  ml="4px"
+                  mt="2px"
+                  ml="2px"
                 maxH="80%"
             maxW="80%"
  alt="share" src="/assets/designupdate1/games_share_icon.svg" /></Box>

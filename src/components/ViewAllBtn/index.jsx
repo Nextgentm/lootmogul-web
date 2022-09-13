@@ -1,10 +1,16 @@
 import { Flex, Image, Text } from '@chakra-ui/react'
-import React from 'react'
+import React,{useState} from 'react'
 
 const ViewAllBtn=()=> {
+
+    const [allClicked, setAllClicked] =useState(false);
+
+
   return (
-    <Flex alignItems="center">
+    <Flex alignItems="center" cursor="pointer">
     <Text
+      onClick={()=>{
+        setAllClicked(!allClicked);}}
         color="white"
         fontFamily="Blanch"
         fontSize={[
@@ -15,7 +21,7 @@ const ViewAllBtn=()=> {
             "2em"
         ]}
     >
-        VIEW ALL
+      {allClicked?" VIEW LESS": "VIEW ALL"}
     </Text>
     <Image
         alt=""

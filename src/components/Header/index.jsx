@@ -109,6 +109,7 @@ const Header = () => {
                 ml={["7%", "25%"]}
                 w="100px"
                 h="35px"
+                fontSize={["12px"]}
                 onClick={() =>
                     window.open("https://discord.gg/mHUqAm8fsh", "_blank")
                 }
@@ -126,9 +127,7 @@ const Header = () => {
         <>
             {!isHideHeader && (
                 <Box
-                    bg="url('https://metaverse.lootmogul.com/wp-content/uploads/2022/07/Section-2.png')"
-                    bgRepeat={"no-repeat"}
-                    bgSize={"cover"}
+                    bg="background"
                     w="100%"
                     h="65px"
                     display="flex"
@@ -258,7 +257,7 @@ const Header = () => {
                                         {...loginBtnStyle}
                                         onClick={() => toggleLoginModal()}
                                         padding="20px 20px"
-                                        fontSize={"1rem"}
+                                        fontSize={"0.8rem"}
                                     >
                                         LOGIN
                                     </Button>

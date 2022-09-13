@@ -33,7 +33,7 @@ const InfluencersCategories = ({ isMobileDevice, influencer }) => {
                     rowGap={5}
                     mt="10px"
                     templateColumns={["repeat(1, 1fr)","repeat(1, 1fr)","repeat(2, 1fr)","repeat(4, 1fr)"]}
-                    gap={"30px"}
+                    gap={5}
                 >
                     {influencer.influencers.data.map((influencer, index) => (
                         <InfluencersCard

@@ -15,14 +15,16 @@ import GameInfoGrid from "./GameInfoGrid";
 const GameInfo = ({ gameData, isTabletOrDesktop }) => {
     const renderBanner = () => (
         <Flex
-        
+            w={["100%"]}
+            h="330px"
+            
             position="relative"
             bgImage={"/assets/designupdate1/gamecard_landscape.svg"}
             backgroundRepeat="no-repeat"
+            backgroundSize={"100% 100%"}
             borderRadius={"md"}
             flexDir="column"
             overflow={"hidden"}
-            bgSize="cover"
             
         >
             <Flex
@@ -76,9 +78,8 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
         <Flex direction={["column", "row"]} justifyContent="space-between">
             <Flex
                 direction="column"
-                width={["90%", "55%", "55%", "40%"]}
+                width={["90%", "55%", "55%", "45%"]}
                 m={"auto"}
-                
             >
                 {renderBanner()}
                 {isTabletOrDesktop && (

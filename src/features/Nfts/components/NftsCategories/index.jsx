@@ -22,6 +22,7 @@ import {
     LeftArrow,
     RightArrow
 } from "../../../../components/ContentNavigator/arrows";
+import NftCardInCollection from "./NftCardInCollection";
 
 const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
     const ref = useRef();
@@ -50,11 +51,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
         });
     };
 
-    return (
-        <>
-            {router.pathname === "/nfts/[id]" || router.pathname === "/nfts/newest" ? (
-                <>
-                    {" "}
+    return (<>{router.pathname === "/nfts/[id]" || router.pathname === "/nfts/newest" ? (
                     <Grid
                         // className="no-scrollbar"
                         // apiRef={ref}
@@ -63,32 +60,35 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                             "repeat(1, 1fr)",
                             "repeat(1, 1fr)",
                             "repeat(2, 1fr)",
-                            "repeat(, 1fr)",
-                            "repeat(3, 1fr)"
+                            "repeat(4, 1fr)",
+                            "repeat(4, 1fr)"
                         ]}
+                        rowGap={10}
+                        mt="10px"
+                        gap={6}
+                        width="100%"
                     >
                         {displayCards?.map((item, index) => (
-                            <GridItem>
-                                <NftCard
+                            // <GridItem >
+                                <NftCardInCollection
+                                 itemId={`nftcard-${index}`}
+                                 key={`nftcard-${index}`}
                                     style={{
-                                        w: "250px",
-                                        mr: "30px",
+                                        w: "200px",
+                                        mr: "20px",
                                         mt: "10px"
                                     }}
-                                    itemId={`nftcard-${index}`}
-                                    key={`nftcard-${index}`}
                                     slug={item.slug}
                                     showInfo={true}
                                     nft={item?.nft_kred?.data || item}
-                                    // defaultInView={
-                                    //     isMobileDevice ? index < 2 : index < 5
-                                    // }
-                                    // lazyRoot={lazyRoot}
+                                    defaultInView={
+                                        isMobileDevice ? index < 2 : index < 10
+                                    }
+                                    lazyRoot={lazyRoot}
                                 />
-                            </GridItem>
+                            // </GridItem>
                         ))}
                     </Grid>
-                </>
             ) : (
                 <>
                     {isSelectedCat ? (
@@ -172,13 +172,9 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                     <VStack align="left">
                                         <Text
                                             color="white"
-                                            fontFamily="Blanch"
+                                            fontFamily="Sora"
                                             fontSize={[
-                                                "50px",
-                                                "50px",
-                                                "50px",
-                                                "45px",
-                                                "50px"
+                                                "27px"
                                             ]}
                                             mt={["0px","20px"]}
                                             fontWeight="bold"
@@ -190,11 +186,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                                 color="white"
                                                 fontFamily="Sora"
                                                 fontSize={[
-                                                    "1rem",
-                                                    "1rem",
-                                                    "30px",
-                                                    "22px",
-                                                    "30px"
+                                                    "17px", "20px"
                                                 ]}
                                                 fontWeight="normal"
                                             >
@@ -204,11 +196,8 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                                 color="white"
                                                 fontFamily="Sora"
                                                 fontSize={[
-                                                    "1rem",
-                                                    "1rem",
-                                                    "20px",
-                                                    "15px",
-                                                    "20px"
+                                                    
+                                                    "15px"
                                                 ]}
                                                 fontWeight="normal"
                                                 ml={[
@@ -229,10 +218,10 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                             color="white"
                                             fontFamily="Sora"
                                             fontSize={[
-                                                "1rem",
-                                                "1rem",
+                                                "20px",
+                                                "20px",
                                                 "30px",
-                                                "27px",
+                                                "25px",
                                                 "30px"
                                             ]}
                                             mt="20px"
@@ -247,8 +236,8 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                                 "3em !important",
                                                 "3em !important"
                                             ]}
-                                            fontSize={["1rem","1.5rem"]}
-                                            width={["200px","300px"]}
+                                            fontSize={["1rem","1.2rem"]}
+                                            width={["250px"]}
                                             onClick={() => {
                                                 handleClick();
                                             }}
@@ -289,7 +278,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                             > */}
                                     <Box
                                         
-                                        width={["100%","100%","100%","480px"]}
+                                        width={["100%","100%","480px","480px"]}
                                         mx={["0px", "0px", "-40px"]}
                                     >
                                         <ScrollMenu
@@ -334,7 +323,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                     )}
                 </>
             )}
-        </>
+      </>   
     );
 };
 

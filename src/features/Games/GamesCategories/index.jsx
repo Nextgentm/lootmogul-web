@@ -9,10 +9,9 @@ import {
     RightArrow
 } from "../../../components/ContentNavigator/arrows";
 const GamesCategories = ({ isMobileDevice, section }) => {
-    const [showAll, setShowAll] = useState(false);
     const ref = useRef();
     const arrowTrashhold = isMobileDevice ? 2 : 5;
-
+    const [showAll, setShowAll] = useState(false);
     return (
         <Box>
             <Flex justify="space-between" my="40px" align="center">
@@ -23,20 +22,16 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                 >
                     {section.name}
                 </Text>
-                {!isMobileDevice && (
-                    <Box
-                        onClick={() =>
-                            router.push({
-                                // pathname: "/nfts/newest"
-                            })
-                        }
-                    >
+                {section?.contestmasters?.data.length > arrowTrashhold ? (
+                    <Box onClick={() => setShowAll(!showAll)}>
                         <ViewAllBtn />
                     </Box>
+                ) : (
+                    ""
                 )}
             </Flex>
-
             {showAll ? (
+                
                 <Wrap m="auto !important">
                     {section?.contestmasters?.data
                         .sort((a, b) => a.priority - b.priority)
