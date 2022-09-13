@@ -29,9 +29,13 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
 
     const { callAuthService } = useContext(AppContext);
 
-    useEffect(() => {
-        callAuthService("google", router.query.access_token)
-    }, []);
+    if(router.query.access_token){
+        if(router.query.provider == "facebook"){
+            callAuthService("facebook", router.query.access_token)
+        }else{
+            callAuthService("google", router.query.access_token)
+        }
+    }
     
     useEffect(() => {
        if(contestmasters){
