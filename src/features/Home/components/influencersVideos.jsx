@@ -55,7 +55,7 @@ const InfluencersVideos = () => {
             <div style={{ flex: isMobileDevice ? 1 : "0.8", whiteSpace: "nowrap", height: "auto", marginTop: "auto", overflowX: "auto", overflowY: "hidden" }}>
 
                 <LMMultipleCarousel disableDots={true} type={"asseen"} slides={slides} />
-            </div>
+            </div> 
         </Flex >
     );
 };

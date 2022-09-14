@@ -16,35 +16,32 @@ import { useState } from "react";
 // import NextShare from "../../../../utils/socialbuttons";
 import { useInView } from "react-intersection-observer";
 
-import * as ga from "../../../../services/googleAnalytics";
+import * as ga from "../../../../../services/googleAnalytics";
 import dynamic from "next/dynamic";
 
-const NextShare = dynamic(() => import("../../../../utils/socialbuttons"));
+const NextShare = dynamic(() => import("../../../../../utils/socialbuttons"));
 
 
-const cardWidth= ["280px","360px","360px","420px"];
-const cardHeight = ["400px","540px","540px","620px"];
-const infoboxWidth= ["240px","320px","320px","350px"];
-const imageHeight = ["380px","500px","500px","590px"];
+const cardWidth= ["300px","300px","300px","300px"];
+const cardHeight = ["420px","420px","420px","420px"];
+const infoboxWidth= ["260px","260px","260px","260px"];
+const imageHeight = ["380px","340px","340px","380px"];
 
 
 const CardInfo = ({ nft }) => {
-    return (
-            
-            <Box >
-<Box
+    return <Box
             // pl={"20px"}
             // pr={"20px"}
             
-            key={`nftItem-${nft?.id}`}
+            // key={`nftIteminfo-${nft?.id}`}
             bg="#00000088"
             border='1px' borderColor='gray.600'
-            position={"absolute"}
-            bottom={"0px"}
+            position={"relative"}
+            bottom={0}
             width= {infoboxWidth}
-            ml="20px"
+            mt={"-80px"}
             p={"20px"}
-            mx={["20px","20px","40px"]}
+            mx={["20px","20px","20px"]}
             // transform= "translatex(61px)"
         >
             {/* <Text
@@ -107,11 +104,9 @@ const CardInfo = ({ nft }) => {
                 </Button>
             </Link>
         </Box>
-        </Box>
-    );
 };
 
-const NftCard = ({
+const NftCardInCollection = ({
     nft,
     showInfo = false,
     lazyRoot = null,
@@ -190,7 +185,7 @@ const NftCard = ({
                 cursor="pointer"
                 mr={["10px","30px","30px"]}
                 w={cardWidth}
-                h={showInfo ? cardHeight : imageHeight}
+                height={showInfo ? cardHeight : imageHeight}
                 minH={showInfo ? cardHeight : imageHeight}
             >
                 <Box
@@ -206,7 +201,7 @@ const NftCard = ({
                     
 
 
-                        {inView && (
+                        {(
                             <ReactCardFlip
                                 isFlipped={
                                     nft?.back_image && nft?.back_image.length
@@ -299,14 +294,16 @@ const NftCard = ({
                             </ReactCardFlip>
                         )}
                         {showInfo && <CardInfo nft={nft} />}
-                        
                     </Box>
 
                     
                 </Box>
+                
+                
+
             </Link>
         )
     );
 };
 
-export default NftCard;
+export default NftCardInCollection;

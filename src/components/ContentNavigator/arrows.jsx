@@ -1,14 +1,14 @@
 import React from "react";
 
 import { VisibilityContext } from "react-horizontal-scrolling-menu";
-import {Image, Box}  from "@chakra-ui/react";
+import {Image}  from "@chakra-ui/react";
 function Arrow({
   children,
   disabled,
   onClick
 }) {
   return (
-    <Box
+    <button
       disabled={disabled}
       onClick={onClick}
       style={{
@@ -19,16 +19,14 @@ function Arrow({
         right: "1%",
         opacity: disabled ? "0" : "1",
         userSelect: "none",
-       
+        marginRight:"-40px",
+        marginLeft:"-40px",
         zIndex: 1
 
       }}
-      marginRight={["-20px","-40px","-40px"]}
-      marginLeft={["-20px","-40px","-40px"]}
-      
     >
       {children}
-    </Box>
+    </button>
   );
 }
 
@@ -67,9 +65,11 @@ export function LeftArrow() {
   return (
     <Arrow disabled={disabled} onClick={clickHandler}>
       
+
       <Image  
-      width={["50px","90px","100px","120px"]} p={"0px"}
+      width={["75px","90px","100px","120px"]} p={"0px"}
       src={ disabled ? `/assets/designupdate1/arrow-left-selected.svg` : `/assets/designupdate1/arrow-left-selected.svg`}  />
+
     </Arrow>
   );
 }
@@ -106,7 +106,9 @@ export function RightArrow() {
 
   return (
     <Arrow disabled={disabled} onClick={clickHandler}>
-      <Image width={["50px","90px","100px","120px"]} p={"0px"} src={ disabled ? `/assets/designupdate1/arrow-right-selected.svg` : `/assets/designupdate1/arrow-right-selected.svg`}  />
+
+      <Image width={["75px","90px","100px","120px"]} p={"0px"} src={ disabled ? `/assets/designupdate1/arrow-right-selected.svg` : `/assets/designupdate1/arrow-right-selected.svg`}  />
+
     </Arrow>
     
   );

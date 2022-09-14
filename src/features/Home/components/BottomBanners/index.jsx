@@ -27,8 +27,8 @@ const BottomBanners = ({ bannersList }) => {
 
         display="inline-block"
         mt={["16px", 0, 0, 0]}
-        w={"375px"}
-        h="125px"
+        w={"870px"}
+        h="225px"
         position="relative"
         marginRight={["16px", "30px"]}
         cursor={"pointer"}
@@ -41,8 +41,8 @@ const BottomBanners = ({ bannersList }) => {
           <Image
             pos="absolute"
             alt={`action`}
-            width={"375px"}
-            height="125px"
+            width={"870px"}
+            height="225px"
             src={"/assets/livebanner.webp"}
           />
         )}
@@ -50,8 +50,8 @@ const BottomBanners = ({ bannersList }) => {
           <Image
             pos="absolute"
             alt={`action`}
-            width={"375px"}
-            height="125px"
+            width={"870px"}
+            height="225px"
             src={"/assets/completedbanner.webp"}
           />
         )}
@@ -62,34 +62,34 @@ const BottomBanners = ({ bannersList }) => {
   )
 
   return (
-    <Flex
-      direction={["column", "row"]}
-      h={["fit-content", "fit-content"]}
-      background={["transparent", "#1c1c1c"]}
-      backgroundImage="linear-gradient(172deg, #7C7C7C -85%, rgba(255, 255, 255, 0) 50%)!important"
-      m={0}
-      mt={["20px", "35px"]}
-      align={["flext-start", "center"]}
-      pt={[0, "20px", "20px", "20px"]}
-      pb={[0, "20px", "20px", "20px"]}
-      pl={["20px", "20px", "20px", "60px"]}
-      pr={["20px", "20px", "20px", "60px"]}
+    <Box
+      // direction={["column", "row"]}
+      // h={["fit-content", "fit-content"]}
+      // background={["transparent", "#1c1c1c"]}
+      // backgroundImage="linear-gradient(172deg, #7C7C7C -85%, rgba(255, 255, 255, 0) 50%)!important"
+      // m={0}
+      // mt={["20px", "35px"]}
+      // // align={["flext-start", "center"]}
+      // pt={[0, "20px", "20px", "20px"]}
+      // pb={[0, "20px", "20px", "20px"]}
+      // pl={["20px", "20px", "20px", "60px"]}
+      // pr={["20px", "20px", "20px", "60px"]}
     >
-      {isMobileDevice ? (
-        <Text flex="0.2" color="white" fontFamily="Blanch" fontSize={["28px", "", "28px", "58px"]}>
-          New OFFERS & PROMOTIONS
-        </Text>
-      ) : (
-        <Text flex="0.2" color="white" lineHeight={"63px"} fontFamily="Blanch" fontSize={["28px", "", "28px", "58px"]}>
-          New OFFERS & PROMOTIONS
-        </Text>
-      )}
+    
+       <Text
+                    variant="secHeadText"
+                    fontSize={["25px", "35px"]}
+                    my="50px"
+         
+          >  NEW OFFERS & PROMOTIONS</Text>
 
-      <div style={{ flex: isMobileDevice ? 1 : "0.8", whiteSpace: "nowrap", overflow: "auto", width: "100%" }}>
+      <Box w="100%" px="29px">
+      <div style={{ whiteSpace: "nowrap", overflow: "auto", width: "100%" }}>
 
-        <LMMultipleCarousel disableDots={true} type={"featured"} slides={slides} />
-      </div>
-    </Flex>
+<LMMultipleCarousel disableDots={true} type={"featured"} slides={slides} />
+</div>
+      </Box>
+    </Box>
   );
 };
 

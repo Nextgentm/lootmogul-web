@@ -74,7 +74,7 @@ const SelectBox = ({ style, icon, title, options, value, onChange }) => {
 
 const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const defaultCategoryName = "All Category";
-    const { isMobileDevice, isTabletOrDesktop, user, influencerLikes } =
+    const { isMobileDevice, isTabletOrDesktop, user, influencerLikes, callAuthService } =
         useContext(AppContext);
     const [options, setOptions] = useState([]);
     const [category, setCategory] = useState(defaultCategoryName);
@@ -88,7 +88,6 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
 
     const ref = React.useRef();
-    const { callAuthService } = useContext(AppContext);
 
     const lazyRoot = React.useRef(null);
 
@@ -107,8 +106,6 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
         },
         { label: "Influencers", path: "/influencers" }
     ];
-
-    
     useEffect(() => {
         if(router.query.access_token){
             if(router.query.provider == "facebook"){
@@ -280,12 +277,12 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 />
             )}
 
-            <Box>
+            <Box w="100% "overflow="hidden">
                 {/* <Breadcrumbs routes={breadcrumbsPath} style={{ mb: "14px" }} /> */}
                 <Flex
                     flexDir={["column", "column", "column", "row"]}
                     w="100%"
-                    overflow="hidden"
+                    
                 >
                     <Box
                         px={10}
@@ -388,7 +385,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                 NEW IN INFLUENCERS
                             </Text>
                         </Flex>
-                        <Box px="2rem">
+                        <Box px="3rem">
                             <ScrollMenu
                                 className="no-scrollbar"
                                 apiRef={ref}
@@ -474,7 +471,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                 ? category.toUpperCase()
                                 : "ALL IN INFLUENCERS"}
                         </Text>
-                        <Button
+                        {/* <Button
                             fontSize="1.5rem"
                             my="2em"
                             width={240}
@@ -483,10 +480,10 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                             }}
                         >
                             FILTER
-                            {/* <Box ml="1em">
+                            <Box ml="1em">
                                 <GrFilter />
-                            </Box> */}
-                        </Button>
+                            </Box>
+                        </Button> */}
                     </Flex>
                     <Box>
                         <Grid
@@ -537,7 +534,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                     }
                                 />
 
-                                <Box height="50px" mt="35px">
+                                <Box height="50px" mt="35px" mx="auto">
                                     <Text
                                         color="white"
                                         fontSize={["1rem", "1.5rem"]}

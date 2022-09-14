@@ -168,7 +168,7 @@ const InfluencerDetail = ({ influencer }) => {
                     style={{ mt: "14px", mb: "14px" }}
                 />
             )} */}
-            <Box position="relative" align="center" width="100%" height={"350px"} >
+            <Box position="relative" align="center" width="100%" height={"350px"}>
                 <Image
                     alt={`influencer-banner`}
                         m={"auto"}

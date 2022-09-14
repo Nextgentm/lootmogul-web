@@ -1,7 +1,10 @@
-import { Flex, Text, Box, SimpleGrid, Image } from "@chakra-ui/react";
+import { Flex, Text, Box, SimpleGrid, Image, Button } from "@chakra-ui/react";
 // import Image from "next/image";
-
+import React,{useState} from "react";
 const ExploreTrivia = ({ section, executeScroll }) => {
+  
+
+  
     const trivias =
         section?.filter((item) => {
             if (
@@ -14,25 +17,25 @@ const ExploreTrivia = ({ section, executeScroll }) => {
                   {
                       id: 0,
                       label: "Trending Tournament",
-                      color: "#D0FFD8",
+                    //   color: "#D0FFD8",
                       icon: "games_trending_icon.svg"
                   },
                   {
                       id: 1,
                       label: "Influencer Tournament",
-                      color: "#FFDBED",
+                    //   color: "#FFDBED",
                       icon: "games_influencer_tournament.svg"
                   },
                   {
                       id: 2,
                       label: "Advanced Premium",
-                      color: "#D0FFD8",
+                    //   color: "#D0FFD8",
                       icon: "games_advanced_premium_icon.svg"
                   },
                   {
                       id: 3,
                       label: "Free Tournament",
-                      color: "#FFE7A3",
+                    //   color: "#FFE7A3",
                       icon: "games_free_tournament.svg"
                   }
               ]
@@ -40,19 +43,19 @@ const ExploreTrivia = ({ section, executeScroll }) => {
                   {
                       id: 0,
                       label: "Influencer Tournament",
-                      color: "#FFDBED",
+                    //   color: "#FFDBED",
                       icon: "games_influencer_tournament.svg"
                   },
                   {
                       id: 1,
                       label: "Advanced Premium",
-                      color: "#D0FFD8",
+                    //   color: "#D0FFD8",
                       icon: "games_advanced_premium_icon.svg"
                   },
                   {
                       id: 2,
                       label: "Free Tournament",
-                      color: "#FFE7A3",
+                    //   color: "#FFE7A3",
                       icon: "games_free_tournament.svg"
                   }
               ];
@@ -75,20 +78,25 @@ const ExploreTrivia = ({ section, executeScroll }) => {
                 flexWrap="wrap"
             >
                 {trivias.map((item, index) => (
-                    <Flex
-                        style={{ cursor: "pointer" }}
-                        onClick={() => executeScroll(item.id)}
+                    <Button
+                        // style={{ cursor: "pointer" }}
+                        onClick={() => {
+                            executeScroll(item.id)
+                        }}
                         key={`trivia-${index}`}
-                        bg={item.color}
+                        // bg={item.color}
                         align="center"
                         borderRadius="6px"
                         p="10px"
                         mt="20px"
                         mr={["0em","0em","1.5em","1em","1.5em"]}
+                        height="100px"
                         flexDir={"column"}
                         textAlign="center"
-                        bgGradient="linear(90deg, #E90A63 0%, #481A7F 100%)"
-                        boxShadow="0px 0px 30px 10px #e90a6355"
+                        background= {["transparent", "#1c1c1c"]}
+                        
+                        _focus={{  bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)",boxShadow:"0px 0px 30px 10px #e90a6355" }}
+                          
                     >
                         <Image
                             boxSize="40px"
@@ -108,11 +116,19 @@ const ExploreTrivia = ({ section, executeScroll }) => {
                         >
                             {item.label}
                         </Text>
-                    </Flex>
+                    </Button>
                 ))}
             </SimpleGrid>
         </Box>
     );
 };
 
+ const focus={
+    bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)",
+    boxShadow:"0px 0px 30px 10px #e90a6355"
+ }
+  const bg={
+    bgGradient:"linear(90deg, #FFFF 0%, #481A7F 100%)",
+    boxShadow:"0px 0px 30px 10px #e90a6355"
+  }
 export default ExploreTrivia;
