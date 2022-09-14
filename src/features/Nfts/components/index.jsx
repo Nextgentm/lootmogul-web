@@ -539,7 +539,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                         </Box>
                     ))}
                 </Flex>
-                <Flex m="auto" w="100%">
+                <Flex m="auto" w="100%" flexDir={"column"}>
                     {selCategoriesData?.map((nfts, index) => (
                         <NftsCategories
                             isMobileDevice={isMobileDevice}
