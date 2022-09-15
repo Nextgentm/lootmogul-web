@@ -60,7 +60,7 @@ const InfluencerSummary = () => {
             {" "}
             Influencer Summary
           </Heading>
-          <Box mx="30px" mb="30px" className="influencer-summary-date">
+          {/* <Box mx="30px" mb="30px" className="influencer-summary-date">
             <Flex
               width="70%"
               margin="0 auto"
@@ -121,7 +121,7 @@ const InfluencerSummary = () => {
                 Search
               </Button>
             </Flex>
-          </Box>
+          </Box> */}
           {
             <TableContainer mx="30px" className="influencer-table-date">
               <Table variant="simple" colorScheme="teal">
