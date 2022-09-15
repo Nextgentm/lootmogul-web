@@ -1,7 +1,7 @@
 @import url("https://fonts.cdnfonts.com/css/blanch-condensed");
 @import url("https://fonts.googleapis.com/css2?family=Sora&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Quantico&display=swap");
-@import "./slick.css"; 
+@import "./slick.css";
 @import "./slick-theme.css";
 
 body {
@@ -12,7 +12,6 @@ body {
   font-family: Sora, "Blanch Condensed", "Quantico";
   scrollbar-width: none;
   -ms-overflow-style: none; /* IE 11 */
-
 }
 
 nav {
@@ -87,14 +86,14 @@ nav {
   position: relative;
 }
 
-  .promoClass >.slick-arrows {
-    display:none!important;
-  }
-  .promoClass >.slick-next {
-    display:none!important;
-  }
-  
-  /* .chakra-button {
+.promoClass > .slick-arrows {
+  display: none !important;
+}
+.promoClass > .slick-next {
+  display: none !important;
+}
+
+/* .chakra-button {
     border-width: 0px !important;
     color: #FFFFFF!important;
     background-color: transparent!important;
@@ -115,73 +114,96 @@ nav {
 }
 
 .slick-dots li.slick-active button::before {
-  color: #FFC533;
+  color: #ffc533;
   opacity: 1;
 }
-.slick-track
-{
-    display: flex !important;
+.slick-track {
+  display: flex !important;
 }
 
-.slick-slide
-{
-    height: auto !important;
-  
+.slick-slide {
+  height: auto !important;
 }
 
+.customSlide li {
+  width: auto !important;
+}
+.limited-dots {
+  text-align: center;
+}
+.limited-dots li {
+  display: none;
+  margin: 0 5px;
+}
 
-.customSlide li{
-  
-  width: auto!important;
-  
-  }
-  .limited-dots {
-    text-align: center;
-  }
-  .limited-dots li {
-      display: none;
-    margin: 0 5px;
-  }
-  
+.limited-dots li.slick-active + li,
+.limited-dots li.slick-active,
+.limited-dots li.slick-active + li + li {
+  display: inline-block;
+}
 
-   
-  .limited-dots li.slick-active + li,
-  .limited-dots li.slick-active,
-  .limited-dots li.slick-active + li + li 
- {
-      display: inline-block;
-  }
-  
-  .limited-dots li:nth-last-child(1),
-  .limited-dots li:nth-last-child(2),
-  .limited-dots li:nth-last-child(3){
-      display: inline-block;
-  }
-  
-  .limited-dots li.slick-active ~ li:nth-last-child(1),
-  .limited-dots li.slick-active ~ li:nth-last-child(2),
-  .limited-dots li.slick-active ~ li:nth-last-child(3) {
-      display: none;
-  }
-  .limited-dots li.slick-active + li + li:nth-last-child(3),
-  .limited-dots li.slick-active + li + li:nth-last-child(2),
-  .limited-dots li.slick-active + li + li:nth-last-child(1),
-  .limited-dots li.slick-active + li:nth-last-child(3),
-  .limited-dots li.slick-active + li:nth-last-child(2),
-  .limited-dots li.slick-active + li:nth-last-child(1){
-      display: inline-block;
-  }
-  .react-player {
-    position: absolute;
-    top: 0;
-    left: 0;
-  
-  }
-  .react-player > video {
-    object-fit: cover;
- }
-   .star{
-    position: absolute;z-index: 9; width: 75%; right: 59px; top: 211px; content: url("/assets/star.png"); 
-  }
-  img[alt~="roulette-static"] {  position: absolute; z-index: 5; width: 13%; right: 35px; top: 35px; content: url("/assets/spin_pointer.png"); }
- 
+.limited-dots li:nth-last-child(1),
+.limited-dots li:nth-last-child(2),
+.limited-dots li:nth-last-child(3) {
+  display: inline-block;
+}
+
+.limited-dots li.slick-active ~ li:nth-last-child(1),
+.limited-dots li.slick-active ~ li:nth-last-child(2),
+.limited-dots li.slick-active ~ li:nth-last-child(3) {
+  display: none;
+}
+.limited-dots li.slick-active + li + li:nth-last-child(3),
+.limited-dots li.slick-active + li + li:nth-last-child(2),
+.limited-dots li.slick-active + li + li:nth-last-child(1),
+.limited-dots li.slick-active + li:nth-last-child(3),
+.limited-dots li.slick-active + li:nth-last-child(2),
+.limited-dots li.slick-active + li:nth-last-child(1) {
+  display: inline-block;
+}
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.react-player > video {
+  object-fit: cover;
+}
+.star {
+  position: absolute;
+  z-index: 9;
+  width: 75%;
+  right: 59px;
+  top: 211px;
+  content: url("/assets/star.png");
+}
+img[alt~="roulette-static"] {
+  position: absolute;
+  z-index: 5;
+  width: 13%;
+  right: 35px;
+  top: 35px;
+  content: url("/assets/spin_pointer.png");
+}
+
+.influencer-summary-date .chakra-input__right-element {
+  height: 100%;
+  background-color: #0c1333;
+  border: 2px solid #707070;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+.influencer-summary-date .chakra-input__right-element .chakra-icon path {
+  display: none;
+}
+.influencer-summary-date .chakra-input__right-element .chakra-icon {
+  background-image: url("../public/assets/Arrow-Down.svg");
+  background-repeat: no-repeat;
+  background-size: unset;
+  background-position: center;
+}
+
+.influencer-table-date .createdAt,
+.influencer-table-date .updatedAt {
+  display: none;
+}
