@@ -301,6 +301,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                 "2.5rem",
                                 "4rem"
                             ]}
+                            lineHeight={["35px","45px","80px"]}
                         >
                             Play your favorite Influencer Tournament and win NFT
                         </Text>
@@ -329,7 +330,8 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                             fontSize={["1.0rem", "1.0rem", "1.3rem"]}
                             padding={"30px 30px"}
                             onClick={() => {
-                                executeScroll(0);
+                            //    executeScroll(0);
+                            router.push("/nfts");
                             }}
                         >
                             BUY NFTS
@@ -371,9 +373,9 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                     <>
                         <Flex
                             justify="space-between"
-                            mt="20px"
+                            my={["20px","40px"]}
                             align="center"
-                            mb="20px"
+                            // mb="30px"
                             ml={["20px", "20px", "20px", "60px"]}
                             mr={["20px", "20px", "20px", "60px"]}
                         >
@@ -419,16 +421,16 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                     <Text
                         variant="secHeadText"
                         fontSize={["2rem", "2.5rem"]}
-                        display={["none", "none", "block"]}
+                        display={["block", "block", "block"]}
                     >
                         EXPLORE
                     </Text>
 
                     <Wrap
-                        mt={20}
+                        my={[10,20]}
                         spacing="30px"
                         mx="auto"
-                        display={["none", "none", "block"]}
+                        display={["block", "block", "block"]}
                     >
                         {data?.map((influencerCat, index) => (
                             <WrapItem w={[240, 240, 150, 200, 240]}>
@@ -458,10 +460,9 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                     <Flex
                         flexDir={["column", "column", "column", "row", "row"]}
                         justify="space-between"
-                        mt="20px"
                         align="center"
                         textAlign="center"
-                        // my="1em"
+                        my={["2em","2.5em"]}
                     >
                         <Text
                             fontSize={["2rem", "2.5rem"]}
@@ -488,13 +489,13 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                     <Box>
                         <Grid
                             flexWrap="wrap"
-                            rowGap={5}
+                            rowGap={10}
                             mt="10px"
                             templateColumns={[
                                 "repeat(1, 1fr)",
                                 "repeat(1, 1fr)",
                                 "repeat(2, 1fr)",
-                                "repeat(4, 1fr)"
+                                "repeat(3, 1fr)"
                             ]}
                             gap={"30px"}
                         >

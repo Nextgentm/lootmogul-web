@@ -33,10 +33,11 @@ module.exports = {
     ...(isMobile && { right: "20px" }),
   }),
   navLinksStyle: (isActive) => ({
-    ml: ["16px", "50px"],
+    ml: ["16px", "40px"],
+    textTransform:"uppercase",
     // passHref: true,
-    fontFamily: "Blanch",
-    fontSize: ["24px", "24px"],
+    fontFamily: "Sora",
+    fontSize: ["24px", "17px"],
     mt: ["16px", 0],
     color: isActive ? "primary" : "secondary",
 

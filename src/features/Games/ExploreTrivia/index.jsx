@@ -90,16 +90,16 @@ const ExploreTrivia = ({ section, executeScroll }) => {
                         p="10px"
                         mt="20px"
                         mr={["0em","0em","1.5em","1em","1.5em"]}
-                        height="100px"
+                        height="140px"
                         flexDir={"column"}
                         textAlign="center"
                         background= {["transparent", "#1c1c1c"]}
                         
-                        _focus={{  bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)",boxShadow:"0px 0px 30px 10px #e90a6355" }}
+                        _hover={{  bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)",boxShadow:"0px 0px 30px 10px #e90a6355" }}
                           
                     >
                         <Image
-                            boxSize="40px"
+                            boxSize="55px"
                             alt={item.icon}
                             objectFit={"contain"}
                             src={`/assets/designupdate1/${item.icon}`}
@@ -112,7 +112,7 @@ const ExploreTrivia = ({ section, executeScroll }) => {
                             fontFamily={"Sora"}
                             fontWeight="normal"
                             color="white"
-                            fontSize={["20px", "20px", "12px","12px", "16px"]}
+                            fontSize={["20px", "20px", "13px","13px", "16px"]}
                         >
                             {item.label}
                         </Text>

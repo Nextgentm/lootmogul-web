@@ -66,7 +66,7 @@ const SelectBox = ({ style, icon, title, options, value, onChange }) => {
         </Flex>
     );
 };
-const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
+const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
     const router = useRouter();
     const [featuredNfts, setFeaturedNfts] = useState([]);
     const { isMobileDevice, isTabletOrDesktop } = useContext(AppContext);
@@ -225,13 +225,13 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
             {router.pathname === "/nfts/[id]" ? (
                 // <>
                  
-                    <Box mx={"-9vw"} 
+                    <Box 
+                    mx={"-9vw"} 
                                 order="2"
                                 bgSize="cover"
                                 textAlign={"center"}
                                 // px={["1", "2", "3", "10"]}
                                 pb={12}
-                                pt={12}
                             >
                                 {getBannerImage() && (
                                     <Box
@@ -325,10 +325,9 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
 
                                     <Button
                                         mt={6}
+                                        cursor="default"
                                         fontSize={["1.5rem"]}
-                                        onClick={() => {
-                                            executeScroll(0);
-                                        }}
+                                        
                                     >
                                         BUY NFTS
                                     </Button>
@@ -339,13 +338,13 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                                 textAlign={"center"}
                             >
                                 {getBannerImage() && (
-                                    <Flex
+                                    <Flex 
                                     >
                                       
                                             <Image
                                                 m={"auto"}
                                                 alt={`nft-banner`}
-                                                src="/assets/designupdate1/nft_banner.png"
+                                                src={getBannerImage()}
                                                 className="custom-img"
                                                 layout="fill"
                                                 width={"100%"}
@@ -423,7 +422,11 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                             >
                                 NEWEST NFTS
                             </Text>
-                            {!isMobileDevice  && <Flex alignItems="center">
+                            {!isMobileDevice  && <Flex alignItems="center" cursor="pointer"  onClick={() =>
+                                        router.push({
+                                            pathname: "/nfts/newest"
+                                        })
+                                    }>
                                 <Text
                                     color="white"
                                     fontFamily="Blanch"
@@ -441,29 +444,15 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                                     alt=""
                                     src="/assets/rightArrow.png"
                                     ml="0.5em"
-                                    onClick={() =>
-                                        router.push({
-                                            pathname: "/nfts/newest"
-                                        })
-                                    }
+                                   
                                 />
                             </Flex>}
                         </Flex>
 
                         <Box px={["1rem","0rem"]}
-                        // mx={["-20px","-40px"]}   
-                        
-                            // mx={["15px", "15px", "30px", "30px", "30px"]}
+                      
                         >
-                            {/* <CardNavigator
-                                showArrows={true}
-                                handleLeftArrowClick={() =>
-                                    ref.current.scrollPrev()
-                                }
-                                handleRightArrowClick={() =>
-                                    ref.current.scrollNext()
-                                }
-                            > */}
+                           
                                 <ScrollMenu
                                     className="no-scrollbar"
                                     apiRef={ref}
@@ -489,7 +478,6 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                                         />
                                     ))}
                                 </ScrollMenu>
-                            {/* </CardNavigator> */}
                         </Box>
                     </>
                 )}
@@ -514,7 +502,41 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                         {selCategoriesData?.[0].name}
                     </Text>
                 }
-                <Flex mt={10} ml={["10px","20px"]} flexWrap="wrap" justifyContent={["center","flex-start"]}> 
+                {isNewest && (<Flex
+                            justify={"flex-end"}
+                            mt="20px"
+                            align="center"
+                            mb="20px"
+                            textAlign={"center"}
+                        >
+                          
+                            {!isMobileDevice  && <Flex alignItems="center" cursor="pointer"  onClick={() =>
+                                        router.push({
+                                            pathname: "/nfts"
+                                        })
+                                    }>
+                                <Text
+                                    color="white"
+                                    fontFamily="Blanch"
+                                    fontSize={[
+                                        "1em",
+                                        "1em",
+                                        "1.5em",
+                                        "2em",
+                                        "2em"
+                                    ]}
+                                >
+                                    VIEW ALL
+                                </Text>
+                                <Image
+                                    alt=""
+                                    src="/assets/rightArrow.png"
+                                    ml="0.5em"
+                                   
+                                />
+                            </Flex>}
+                        </Flex>)}
+             {!isNewest && (   <Flex mt={10} ml={["10px","20px"]} flexWrap="wrap" justifyContent={["center","flex-start"]}> 
                     {displayData?.map((nfts, index) => (
                         <Box w={[240, 240, 120, 200, 200]} mx={["10px","20px"]}  my={["10px","20px"]}>
                             <Button
@@ -538,8 +560,8 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                             </Button>
                         </Box>
                     ))}
-                </Flex>
-                <Flex m="auto" w="100%" flexDir={"column"}>
+                </Flex>)}
+                <Flex m="auto" w="100%" flexDir={"column"}px="1rem">
                     {selCategoriesData?.map((nfts, index) => (
                         <NftsCategories
                             isMobileDevice={isMobileDevice}
@@ -550,27 +572,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts }) => {
                         />
                     ))}
                 </Flex>
-                {/* {categories.toLowerCase() !== defaultCategories.toLowerCase() &&
-                    selectedCategory &&
-                    selCategoriesData[0] &&
-                    selCategoriesData[0].description &&
-                    selCategoriesData[0].description.length > 0 && (
-                        <Box>
-                            <Heading
-                                fontFamily="Blanch"
-                                color="white"
-                                fontSize="32px"
-                                mt="5%"
-                            >
-                              
-                                Description
-                            </Heading>
-                            <ReadMoreLess
-                                read={selCategoriesData[0].description}
-                                lines={7}
-                            />
-                        </Box>
-                    )} */}
+                
             </Box>
         </Box>
     );

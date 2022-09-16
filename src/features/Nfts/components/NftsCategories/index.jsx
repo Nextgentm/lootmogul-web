@@ -175,7 +175,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                         <Text
                                             color="white"
                                             fontFamily="Sora"
-                                            fontSize={[
+                                            fontSize={[ "24px",
                                                 "27px"
                                             ]}
                                             mt={["0px","20px"]}
@@ -198,7 +198,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                                 color="white"
                                                 fontFamily="Sora"
                                                 fontSize={[
-                                                    
+                                                    "12px",
                                                     "15px"
                                                 ]}
                                                 fontWeight="normal"
@@ -279,7 +279,6 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                 }
                             > */}
                                     <Box
-                                        
                                         width={["100%","100%","480px","480px"]}
                                         mx={["0px", "0px", "-40px"]}
                                     >
@@ -302,6 +301,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                                     style={{
                                                         mr: "30px",
                                                         mt: "10px"
+
                                                     }}
                                                     itemId={`nftcard-${index}`}
                                                     key={`nftcard-${index}`}
