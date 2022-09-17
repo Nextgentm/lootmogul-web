@@ -82,6 +82,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                                 fontSize={["1.5em","2.1em","3.5em", "4em"]}
                                 mt="5rem"
                                 mb={0}
+                                lineHeight={["35px","45px","80px"]}
                                
                             >
                                 Check out New releases <br />

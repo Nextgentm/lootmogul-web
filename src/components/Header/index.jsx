@@ -127,14 +127,15 @@ const Header = () => {
         <>
             {!isHideHeader && (
                 <Box
-                    bg="background"
+                  //   bg="rgb(18,5,39)   "
                     w="100%"
                     h="65px"
                     display="flex"
                     pl={["16px", "60px"]}
                     pr={["16px", "20px"]}
+                    pt="1em"
                     alignItems="center"
-                    pos="sticky"
+                  //  pos="sticky"
                     top="0"
                     justify="space-between"
                     as="nav"
@@ -149,9 +150,11 @@ const Header = () => {
                         />
                     )}
 
-                    <img
+                    <Image
                         style={{ cursor: "pointer" }}
-                        width="200px"
+                        width="250px"
+                        height="70px"
+                        // objectFit="cover"
                         onClick={() => router.push("/")}
                         alt="logo"
                         src="/assets/lm_logo.png"
@@ -165,7 +168,7 @@ const Header = () => {
                             renderMobileRoutes={renderMobileRoutes()}
                         />
                     ) : (
-                        <Flex direction="row">
+                        <Flex direction="row" justifyContent="center" w="60%">
                             {routes.map(({ label, path, queryPath }, index) => (
                                 <Link
                                     _focus={{ border: "none" }}
@@ -202,8 +205,7 @@ const Header = () => {
                                         // m="5%"
                                         marginRight="20px"
                                         alt="social"
-                                        width={["35px", "50px"]}
-                                        height={["35px", "50px"]}
+                                        boxSize={["30px", "38px"]}
                                         src="/assets/designupdate1/discordicon.png"
                                     />
                                 </Link>
@@ -216,12 +218,11 @@ const Header = () => {
                                     target="_blank"
                                 >
                                     <Image
-                                        className="telegram"
+                                        className="telegram stickyIcon"
                                         // m="5%"
                                         marginRight="20px"
                                         alt="social"
-                                        width={["35px", "40px"]}
-                                        height={["35px", "40px"]}
+                                        boxSize={["25px", "30px"]}
                                         src="/assets/telegram.svg"
                                     />
                                 </Link>
@@ -245,7 +246,7 @@ const Header = () => {
                                     <Text
                                         cursor="pointer"
                                         color="primary"
-                                        fontFamily="Blanch"
+                                        fontFamily="Sora"
                                         ml="auto"
                                         fontSize="26px"
                                         onClick={() => toggleLoginModal()}
@@ -255,9 +256,12 @@ const Header = () => {
                                 ) : (
                                     <Button
                                         {...loginBtnStyle}
+                                        fontFamily="Sora !important "
+                                        fontWeight="300"
                                         onClick={() => toggleLoginModal()}
-                                        padding="20px 20px"
-                                        fontSize={"0.8rem"}
+                                        padding="25px 57px"
+                                        boxShadow= "0px 0px 30px 10px #e90a6355"
+                                        fontSize={"1rem"}
                                     >
                                         LOGIN
                                     </Button>

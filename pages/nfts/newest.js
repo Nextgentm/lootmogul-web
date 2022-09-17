@@ -9,7 +9,7 @@ import strapi from "../../src/utils/strapi";
 export default function NftbyId({ data}) {
  
 
-  return <NftsComponent data={[{nftSet:data, name:"newest"}] || []} selectedCategory={"newest"} />;
+  return <NftsComponent data={[{nftSet:data, name:"newest"}] || []}  isNewest={true} />;
 }
 
 export async function getStaticProps(context) {

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Text, Flex, Box, Center, VStack, Link, Button } from "@chakra-ui/react";
-import Image from "next/image";
+import { Text, Flex, Box, Center, VStack, Link, Button,Image } from "@chakra-ui/react";
+// import Image from "next/image";
 import { getStrapiMedia } from "../../../../utils/medias";
 import SocialActions from "../../SocialActions";
 import { useRouter } from "next/router";
@@ -122,25 +122,24 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                         </Text>
                     </Flex>
 
-                    <Flex w={"full"} align="flex-end" justify={"space-between"}>
+                    <Flex w={"full"} align="flex-end" justify={"space-between"} px="1rem">
                         <Box>
                             <Flex>
                                 <Image
                                     alt="tag"
-                                    width={"14px"}
-                                    height={"8px"}
-                                    objectFit={"contain"}
+                                    boxSize={"30px"}
+                                    // objectFit={"contain"}
                                     src="/assets/designupdate1/cash_icon.svg"
                                 />
 
-                                <Text ml="6px" color="#CFBF8A" fontSize="12px">
+                                <Text ml="6px" color="#FFF" fontSize="17px" fontWeight="400">
                                     {contestmaster.entryFee != 0
                                         ? "Entry Fee - $" + contestmaster.entryFee
                                         : "Free"}
                                 </Text>
                             </Flex>
 
-                            <Text mt="4px" ml={"20px"} color="#7C7C7C" fontSize="10px">
+                            <Text mt="4px" ml={"20px"} color="#FFF" fontSize="15px" fontWeight="200">
                                 {nFormatter(contestmaster.roomsCount, 1)} Plays
                             </Text>
                         </Box>
@@ -157,7 +156,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                         variant="solid"
                         h={["40px", "40px"]}
                         mt="12px"
-                        _hover={{textDecoration:"none!important"}}
+                        _hover={{textDecoration:"none !important"}}
                         w="full"
                         onClick={(e) => {
                             e.preventDefault();
