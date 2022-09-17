@@ -64,7 +64,8 @@
     "socket.io-client": "^4.4.1",
     "strapi-sdk-js": "^2.2.0",
     "stripe": "^8.204.0",
-    "yup": "^0.28.5"
+    "yup": "^0.28.5",
+    "chakra-ui-date-input": "^1.0.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^12.1.5",
