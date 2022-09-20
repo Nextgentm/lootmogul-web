@@ -44,15 +44,15 @@ const CardInfo = ({ nft }) => {
             mx={["20px","20px","20px"]}
             // transform= "translatex(61px)"
         >
-            {/* <Text
+            <Text
                 noOfLines={2}
-                fontWeight="bold"
-                minH="50px"
+                fontWeight="normal"
+                minH="10px"
                 color="white"
                 fontFamily="Sora"
             >
                 {nft?.name}
-            </Text> */}
+            </Text>
 
             <Flex
                 mt={"3%!important"}
@@ -183,10 +183,11 @@ const NftCardInCollection = ({
                 _hover={{ textDecoration: "none" }}
                 _focus={{ border: "none", textDecoration: "none" }}
                 cursor="pointer"
-                mr={["10px","30px","30px"]}
+                mr={["0px","0px","30px"]}
                 w={cardWidth}
                 height={showInfo ? cardHeight : imageHeight}
                 minH={showInfo ? cardHeight : imageHeight}
+                mb={["20","0","0"]}
             >
                 <Box
                     // m="auto"

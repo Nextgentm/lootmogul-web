@@ -4,11 +4,11 @@ import {
     Text,
     Spacer,
     SimpleGrid,
-    Center
-    
+    Center,
+    Image
 
 } from "@chakra-ui/react";
-import Image from "next/image";
+// import Image from "next/image";
 import GameInfoActions from "./GameInfoActions";
 import GameInfoGrid from "./GameInfoGrid";
 
@@ -16,69 +16,66 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
     const renderBanner = () => (
         <Flex
             w={["100%"]}
-            h="330px"
+            h={["260px","260px","260px","260px","410px"]}
             
             position="relative"
-            bgImage={"/assets/designupdate1/gamecard_landscape.svg"}
-            backgroundRepeat="no-repeat"
-            backgroundSize={"100% 100%"}
+            //bgImage={"/assets/designupdate1/gamecard_landscape.svg"}
+            //backgroundRepeat="no-repeat"
+            //backgroundSize={"100% 100%"}
             borderRadius={"md"}
             flexDir="column"
             overflow={"hidden"}
             
         >
-            <Flex
-                pt={["45px", "45px"]}
-                pr={["41px", "41px"]}
-                flexDir="row-reverse"
-                w="full"
-            >
+            <Image src="/assets/designupdate1/gamecard_landscape.svg"
+            objectFit={"contain"}
+            h={["260px","260px","260px","260px","410px"]}
+            pos="absolute"
+                >
+
+            </Image>
+            <Flex w="100%" h={["120px","120px","150px","180px","230"]} pos="relative" top={["70px","70px","55px","40px","50px"]} >
+                <Flex w="50%" justifyContent="center"  pos="relative" bottom="-26px">
+                <Image 
+                pos="relative" bottom="0px"
+        boxSize={["100px","100px","120px","150px","200px"]} alt="game" src={
+                            gameData?.icon?.data?.url
+                                ? gameData.icon.data.url
+                                : "/assets/game-dtl-player.png"
+                        }/>
+                </Flex>
+                <Flex direction="column" w="50%" justifyContent="space-between" h="100%"  mr="35px">
                 <Text
                     color="#FDFFE5"
-                    fontSize="18px"
+                    fontSize={["12px","12px","12px","18px","18px"]}
                     fontWeight={"400"}
-                    maxWidth={["140px", "140px", "400px"]}
                 >
                     {gameData?.contest_section?.data?.name}
                 </Text>
-            </Flex>
-            <Spacer></Spacer>
-            <SimpleGrid columns={2} spacing={10}>
-                <Center >
-                        <Box bottom={0} pos="relative"
-                    maxH={"200px"} width={"200px"} height={"260px"}>
-                <Image  
-                    layout="fill"
-                    alt="dtl"
-                    src={
-                        gameData?.icon?.data?.url
-                            ? gameData.icon.data.url
-                            : "/assets/game-dtl-player.png"
-                    }
-                />
-                </Box>
-                </Center>
-                <Center>
                 <Text 
-                    color="#FDFFE5"
-                    fontSize={["25px","28px","34px"]}
-                    fontWeight={"600"}
-                    p={["25px","30px","40px"]}
+                    color="#FFF"
+                    fontSize={["15px","15px","15px","20px","25px"]}
+                    fontWeight={"500"}
                     flexWrap={"wrap"}
+                   fontFamily="Sora"
                     textAlign={"center"}
                 >
                     {gameData.name}
                 </Text>
-                </Center>
-            </SimpleGrid>
+                </Flex>
+
+            </Flex>
+           
         </Flex>
+        
     );
 
-    return (
-        <Flex direction={["column", "row"]} justifyContent="space-between">
+    return (<>
+   
+        <Flex direction={["column","column", "row"]} justifyContent="space-between">
             <Flex
                 direction="column"
-                width={["90%", "55%", "55%", "45%"]}
+                width={["80%", "100%", "55%", "45%"]}
                 m={"auto"}
             >
                 {renderBanner()}
@@ -88,24 +85,29 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                         isTabletOrDesktop={isTabletOrDesktop}
                     />
                 )}
+                
             </Flex>
+    
             <Box
-                width={["100%", "40%", "50%", "50%"]}
-                ml={["12px", "32px"]}
-                mt={["16px", 0]}
+                width={["80%", "100%", "50%", "50%"]}
+                pl={["0px","0px","12px", "32px"]}
+                // mt={["16px", 0]}
+                m={"auto"}
+
             >
                 {gameData?.reward?.data?.description ? (
                     <Flex>
                         <Text
-                            fontWeight={600}
-                            fontSize={["20px", "36px"]}
+                            fontWeight={300}
+                            fontSize={["17px","17px","17px","25px", "36px"]}
                             color="white"
+                            fontFamily="Sora"
                         >
                             Winning prize
                         </Text>
                         <Text
                             fontWeight={600}
-                            fontSize={["20px", "36px"]}
+                            fontSize={["17px","17px","17px","25px", "36px"]}
                             ml="10px"
                             color="#d63065"
                         >
@@ -116,14 +118,14 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                     <Flex>
                         <Text
                             fontWeight={600}
-                            fontSize={["20px", "24px", "28px", "36px"]}
+                            fontSize={["17px", "24px", "28px",  "36px"]}
                             color="white"
                         >
                             Practice for Free
                         </Text>
                     </Flex>
                 )}
-                <Text mt="8px" color="white" fontSize="16px" textAlign={"left"}>
+                <Text mt="8px" color="white" fontWeight="200" fontSize={["12px","12px","12px","16px","16px"]} textAlign={"left"}>
                     {gameData?.reward?.data?.description
                         ? "Make your highest score & win cash rewards!"
                         : "Make your highest score"}
@@ -131,15 +133,17 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
 
                 <GameInfoGrid gameData={gameData} />
             </Box>
-
+            <Box>
             {!isTabletOrDesktop && (
-                <GameInfoActions
-                    gameData={gameData}
-                    isTabletOrDesktop={isTabletOrDesktop}
-                />
-            )}
+        <GameInfoActions
+            gameData={gameData}
+            isTabletOrDesktop={isTabletOrDesktop}
+        />
+    )}
+            </Box>
+            
         </Flex>
-    );
+        </>);
 };
 
 export default GameInfo;

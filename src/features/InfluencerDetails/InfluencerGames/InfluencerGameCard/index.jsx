@@ -113,10 +113,14 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
 
                         <Text
                             color="#FDFFE5"
-                            fontSize="20px"
+                            fontSize={["15px","15px","20px"]}
                             fontWeight={"600"}
                             align={"center"}
                             mb={"30px"}
+                            ml="25px"
+                            w="80%"
+                            h="50px"
+                            textOverflow="ellipsis" overflow="hidden"
                         >
                             {contestmaster.name}
                         </Text>
@@ -127,19 +131,19 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             <Flex>
                                 <Image
                                     alt="tag"
-                                    boxSize={"30px"}
+                                    boxSize={["25px","30px"]}
                                     // objectFit={"contain"}
                                     src="/assets/designupdate1/cash_icon.svg"
                                 />
 
-                                <Text ml="6px" color="#FFF" fontSize="17px" fontWeight="400">
+                                <Text ml="6px" color="#FFF" fontSize={["15px" ,"17px" ]}fontWeight="400">
                                     {contestmaster.entryFee != 0
                                         ? "Entry Fee - $" + contestmaster.entryFee
                                         : "Free"}
                                 </Text>
                             </Flex>
 
-                            <Text mt="4px" ml={"20px"} color="#FFF" fontSize="15px" fontWeight="200">
+                            <Text mt="4px" ml={"20px"} color="#FFF" fontSize={["12px","15px"]} fontWeight="200">
                                 {nFormatter(contestmaster.roomsCount, 1)} Plays
                             </Text>
                         </Box>
@@ -155,6 +159,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     {contestmaster && contestmaster.contest && (contestmaster?.contest?.status === "active" || contestStatus) && <Button
                         variant="solid"
                         h={["40px", "40px"]}
+                        fontSize={["20px","25px"]}
                         mt="12px"
                         _hover={{textDecoration:"none !important"}}
                         w="full"

@@ -8,7 +8,7 @@ const GameCarouselCard = ({ contestmaster, sectionName }) => {
 
     return (
         <Box m="auto"  mb={["8%","5%"]} textAlign={"center"}>
-                                <Text
+                                {/* <Text
                                     fontWeight="bold"
                                     fontSize="30px"
                                     fontFamily="Sora"
@@ -21,8 +21,8 @@ const GameCarouselCard = ({ contestmaster, sectionName }) => {
                                     }}
                                 >
                                 {contestmaster?.name}
-                                </Text>
-                                <Text
+                                </Text> */}
+                                {/* <Text
                                     fontWeight="bold"
                                     fontSize="18px"
                                     color="#C7C7C7"
@@ -30,9 +30,10 @@ const GameCarouselCard = ({ contestmaster, sectionName }) => {
                                     lineHeight="16px"
                                 >
                                 {sectionName}
-                                </Text>
+                                </Text> */}
 
-                   {imgUrl &&     <Image m="auto" width="240px" height="240px" alt="bg" src = {imgUrl}></Image>}
+                   {imgUrl &&     <Image m="auto" width="280px" height="280px" alt="bg" src = {imgUrl}></Image>}
+                 
                    </Box>    );
 };
 

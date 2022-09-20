@@ -13,7 +13,8 @@ import {
     Wrap,
     WrapItem,
     Image,
-    GridItem
+    GridItem,
+    Tooltip
 } from "@chakra-ui/react";
 // import Image from "next/image";
 import { useContext } from "react";
@@ -296,6 +297,8 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                                         ]}
                                         fontFamily="CNN"
                                         
+                            variant="headText"
+                                        
                                     >
                                         Buy and Trade <br />
                                         Your favorite <br />
@@ -333,12 +336,13 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                                     </Button>
                             </Box>
                             <Box
+                             mt={["20px","20px","0px"]}
                                 order="2"
                                 bgSize="cover"
                                 textAlign={"center"}
                             >
                                 {getBannerImage() && (
-                                    <Flex 
+                                    <Flex
                                     >
                                       
                                             <Image
@@ -348,7 +352,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                                                 className="custom-img"
                                                 layout="fill"
                                                 width={"100%"}
-                                                height={"100%"}
+                                                height={"400px"}
                                                 // boxSize="500px"
                                             />
                                             </Flex>
@@ -492,7 +496,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                         EXPLORE NFT'S
                     </Text>
                 </Center>
-                :
+                : <Center>
                 <Text
                         color="white"
                         fontSize={["3em", "4em"]}
@@ -500,7 +504,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                         mt={6}
                     >
                         {selCategoriesData?.[0].name}
-                    </Text>
+                    </Text></Center>
                 }
                 {isNewest && (<Flex
                             justify={"flex-end"}
@@ -536,32 +540,31 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                                 />
                             </Flex>}
                         </Flex>)}
-             {!isNewest && (   <Flex mt={10} ml={["10px","20px"]} flexWrap="wrap" justifyContent={["center","flex-start"]}> 
+             {!isNewest && (   <Flex mt={10} ml={["10px","20px"]} flexWrap="wrap" justifyContent={["center","center","space-between"]}> 
                     {displayData?.map((nfts, index) => (
-                        <Box w={[240, 240, 120, 200, 200]} mx={["10px","20px"]}  my={["10px","20px"]}>
+                        <Box w={["100%", "100%", 200, 200, 200]} mx={["10px","5px","5px","5px","20px"]}  my={["10px","5px","5px","5px","20px"]}>
+                            <Tooltip label={nfts.name}>
                             <Button
                             w="100%"
-                                py="1.5em"
                                 mt={2}
                                 variant={"segment"}
                                 fontSize={[
-                                    "15px !important",
-                                    "11px !important",
-                                    "10px !important",
-                                    "13px !important",
-                                    "15px !important"
+                                    "20px !important",
+                                    "20px !important",
+                                    "17px !important",
+                                   
                                 ]}
                                
                                 onClick={() => {
                                     nftSelectCategory(nfts.name.toLowerCase());
                                 }}
-                            >
-                                {nfts.name}
-                            </Button>
+                            > <Text textOverflow="ellipsis" overflow="hidden">{nfts.name.substr(0, nfts.name.indexOf(" "))}</Text>
+                                
+                            </Button></Tooltip>
                         </Box>
                     ))}
                 </Flex>)}
-                <Flex m="auto" w="100%" flexDir={"column"}px="1rem">
+                <Flex m="auto" w="100%" flexDir={"column"}px="1rem" >
                     {selCategoriesData?.map((nfts, index) => (
                         <NftsCategories
                             isMobileDevice={isMobileDevice}

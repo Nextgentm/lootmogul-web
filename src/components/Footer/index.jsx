@@ -57,11 +57,11 @@ const Footer = () => {
 
     return (
         <>
-            <Flex >
+            <Flex bg="background" py="2rem" >
                 <Flex justifyContent="space-around" w={["80%","80%","80%","100%","100%"]} m="auto" flexDirection={["column","column","column","row","row"]}>
                     <Box>
                         <Box mb="30px">
-                            <Text style={BoldWhiteText} fontSize={["15px","20px","25px","20px","20px"]}>Contact Us</Text>
+                            <Text style={BoldWhiteText} fontSize={["18px","25px","30px","20px","20px"]}>Contact Us</Text>
                             <Link
                                 _focus={{ border: "none", boxShadow: "none" }}
                                 href="mailto:support@lootmogul.com"
@@ -71,9 +71,9 @@ const Footer = () => {
                                 </Text>
                             </Link>
                         </Box>
-                        <Text style={BoldWhiteText} fontSize={["15px","20px","25px","20px","20px"]}>Get The latest</Text>
+                        <Text style={BoldWhiteText}  fontSize={["18px","25px","30px","20px","20px"]}>Get The latest Updates</Text>
                         <Flex>
-                        <Input bg="#FFF" w={["300px","200px","300px","300px","300px"]} />
+                        <Input bg="#FFF" w={["310px","300px","300px","300px","300px"]} />
                         <Button
                             className="influencer-card-btn"
                             width="20%"
@@ -87,10 +87,10 @@ const Footer = () => {
                         </Flex>
                     </Box>
                    
-                    <Flex flexDirection={["column","column","row","row","row"]} my="3em" >
+                    <Flex flexDirection={["column","column","column","row","row"]} my={["3em","3em","3em","0em"]} >
                         <Box>
                             
-                            <Text style={BoldWhiteText} fontSize={["15px","15px","25px","20px","20px"]}>Site Map</Text>
+                            <Text style={BoldWhiteText} fontSize={["18px","25px","30px","20px","20px"]}>Site Map</Text>
                             <Link
                                 _focus={{ border: "none", boxShadow: "none" }}
                                 href="https://metaverse.lootmogul.com/what-is-metaverse/"
@@ -142,9 +142,10 @@ const Footer = () => {
                             w="2px"
                             bg="#FFF"
                             mx={["1rem", "1rem", "6em", "2rem", "5rem"]}
+                            display={["none","none","none","block"]}
                         />
                         <Box>
-                            <Text style={BoldWhiteText} fontSize={["15px","15px","25px","20px","20px"]}>Influencer</Text>
+                            <Text style={BoldWhiteText} fontSize={["18px","25px","30px","20px","20px"]}>Influencer</Text>
                             <Link
                                 _focus={{ border: "none", boxShadow: "none" }}
                                 href="/influencers/signup"
@@ -167,16 +168,15 @@ const Footer = () => {
                         <Image
                             alt=""
                             src="/assets/lm_logo.png"
-                            width={["154px"]}
-                            height={35}
+                            width={["290px","200px"]}
                             onClick={() => router.push("/")}
-                            {...logoStyle}
+                            {...logoStyle} alignItem="left"
                         />
-                        <Text style={BoldWhiteText} fontSize={["15px","15px","25px","20px","20px"]}>Community</Text>
+                        <Text style={BoldWhiteText} fontSize={["18px","25px","30px","20px","20px"]}>Community</Text>
                         <Flex
                             mt="6px"
                             justify="flex-start"
-                            width={["90%", "100%"]}
+                            width={["100%", "100%"]}
                             flexWrap={"wrap"}
                             py="1rem"
                         >
@@ -184,7 +184,7 @@ const Footer = () => {
                                 <Box
                                     key={`cimg-${index}`}
                                     mt={["5px", 0, 0, 0]}
-                                    mr={["5px","5px","15px","5px", "10px"]}
+                                    mr={["16px","5px","15px","5px", "10px"]}
                                 >
                                     <Link
                                         _focus={{
@@ -205,7 +205,7 @@ const Footer = () => {
                                 </Box>
                             ))}
                         </Flex>
-                        <Text style={BoldWhiteText} fontSize={["15px","15px","25px","20px","20px"]}>Try our App</Text>
+                        <Text style={BoldWhiteText} fontSize={["18px","25px","30px","20px","20px"]}>Try our App</Text>
                         <Image alt="" src="https://metaverse.lootmogul.com/wp-content/uploads/2022/07/1_V9-OPWpauGEi-JMp05RC_A.png" w="170px"/>
                     </Box>
                 </Flex>
@@ -220,8 +220,9 @@ const Footer = () => {
                     <Text
                         color="white"
                         fontFamily="Sora"
-                        fontSize="16px"
+                        fontSize="20px"
                         fontWeight={700}
+                        mr="40px"
                     >
                         Our Payment Partners
                     </Text>
@@ -244,7 +245,7 @@ const Footer = () => {
                 </Flex>
             </Box>
             <Box w="100%" h="2px" bg="#FFF" my="10px" />
-            <Text mt="35px" variant="footerText" color="#FFF !important">
+            <Text my="20px" variant="footerText" color="#FFF !important" fontWeight="600">
                 © 2022 LootMogul. All Rights Reserved. HQ: 3301 Ocean Park Blvd,
                 Unit 205, Santa Monica, CA 90405
             </Text>
@@ -268,7 +269,7 @@ const Footer = () => {
 
 const BoldWhiteText = {
     fontFamily: "Sora",
-    fontWeight: "600",
+    fontWeight: "400",
    marginTop:"10px",
     marginBottom: "0.5rem",
     color: "#FFF"
@@ -276,7 +277,7 @@ const BoldWhiteText = {
 const LightWhiteText = {
     fontFamily: "Sora",
     color: "lightgray",
-    fontSize: "15px",
+    fontSize: "13px",
     marginBottom: "0.5rem"
 };
 export default Footer;

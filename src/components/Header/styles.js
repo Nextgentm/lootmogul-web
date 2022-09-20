@@ -37,8 +37,8 @@ module.exports = {
     textTransform:"uppercase",
     // passHref: true,
     fontFamily: "Sora",
-    fontSize: ["24px", "17px"],
-    mt: ["16px", 0],
+    fontSize: ["13px", "17px"],
+    mt: ["16px","16px", 0],
     color: isActive ? "primary" : "secondary",
 
     ...(isActive && {
