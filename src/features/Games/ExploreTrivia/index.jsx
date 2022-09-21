@@ -93,9 +93,10 @@ const ExploreTrivia = ({ section, executeScroll }) => {
                         height="140px"
                         flexDir={"column"}
                         textAlign="center"
-                        background= {["transparent", "#1c1c1c"]}
-                        
-                        _hover={{  bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)",boxShadow:"0px 0px 30px 10px #e90a6355" }}
+                        variant={"trivia"}
+                        // bgGradient="linear(90deg, #E90A63 0%, #481A7F 100%)"
+                        // boxShadow="0px 0px 30px 10px #e90a6355"
+                        // _hover={{  bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)",boxShadow:"0px 0px 30px 10px #e90a6355" }}
                           
                     >
                         <Image

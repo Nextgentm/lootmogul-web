@@ -47,7 +47,7 @@ const CardInfo = ({ nft }) => {
             mx={["20px","20px","40px"]}
             // transform= "translatex(61px)"
         >
-            {/* <Text
+            <Text
                 noOfLines={2}
                 fontWeight="bold"
                 minH="50px"
@@ -55,7 +55,7 @@ const CardInfo = ({ nft }) => {
                 fontFamily="Sora"
             >
                 {nft?.name}
-            </Text> */}
+            </Text>
 
             <Flex
                 mt={"3%!important"}

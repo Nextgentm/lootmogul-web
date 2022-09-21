@@ -14,16 +14,16 @@ const GamesCategories = ({ isMobileDevice, section }) => {
     const [showAll, setShowAll] = useState(false);
     return (
         <Box>
-            <Flex justify="space-between" my="40px" align="center">
+            <Flex justify="space-between" my="40px" align="center" w="100%">
                 <Text
                     variant="secHeadText"
-                    fontSize={["25px", "35px"]}
+                    fontSize={["20px", "35px"]}
                     my="10px"
                 >
                     {section.name}
                 </Text>
                 {section?.contestmasters?.data.length > arrowTrashhold ? (
-                    <Box onClick={() => setShowAll(!showAll)}>
+                    <Box onClick={() => setShowAll(!showAll)} w="100%" pos="relative" right="0">
                         <ViewAllBtn />
                     </Box>
                 ) : (

@@ -183,13 +183,13 @@ const InfluencerDetail = ({ influencer }) => {
             {!isTabletOrDesktop ? (
                 <Box position="relative" align="center" mt="20px" zIndex={10}>
                     <InfluencerInfo influencer={fullInfluencer || influencer} />
-                    <SocialActions
+                    {/* <SocialActions
                         onHeartClick={onHeartClick}
-                        isHeartClick={isHeartClick}
+                        // isHeartClick={isHeartClick}
                         influencer={{ data: fullInfluencer || influencer }}
                         style={{ mt: "8px" }}
                         showWriteReview
-                    />
+                    /> */}
 
                     <InfluencerInfoCollapsable
                         influencer={fullInfluencer || influencer}

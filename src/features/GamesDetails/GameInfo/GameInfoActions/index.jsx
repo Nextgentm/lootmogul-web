@@ -18,15 +18,15 @@ const LMNonCloseALert = dynamic(() => import("../../../../components/LMNonCloseA
 const CaptchaPopup = dynamic(() => import("../../../../components/LMModal/CaptchaPopup"));
 
 const iconStyles = {
-    width: "40px",
+    width: "30px",
     height: "40px",
     // background: "#2D2D2D",
     border: "1px",
     borderRadius: "4px",
-    color: "white",
+    color: "grey",
     align: "center",
     justify: "center",
-    ml: "16px",
+    ml: "10px",
     cursor: "pointer"
 
 
@@ -47,7 +47,7 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
     } = useContext(AppContext);
     const { showPaidGameConfirmation, CheckAndStartGame, showCaptcha, setShowCaptcha, showLoading, setShowLoading } =
         useContext(AppContext);
-    const imgSize = { width: 25, height: 25 };
+    // const imgSize = { width: 25, height: 25 };
 
     const [isHeartClick, setHeartClick] = useState(false);
     const [contestStatus,setContestStatus]= useState(false);
@@ -86,27 +86,35 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
 
     return (
         <Flex
+            px={["0","0","0","2","6"]}
             mt="20px"
+            mb={["20px","20px","0px"]}
             ml={["16px", 0]}
-            direction={["column", "row"]}
-            align={["flex-start", "center"]}
-            w="100%"
+            // direction={[ "row"]}
+            // align={["flex-start", "center"]}
+            justifyContent="space-between"
+            alignItems="center"
+            w={["90%","90%","100%"]}
             key={`GameDetail-${gameData?.id}`}
         >
-            <Flex flex={1}>
-                <Text fontWeight={600} fontSize="16px" color="white">
+            <Flex>
+                <Text fontWeight={500} fontSize="19px" color="white">
                     Entry
                 </Text>
-                <Text fontWeight={600} fontSize="16px" ml="5px" color="#d63065">
+                <Text fontWeight={700} fontSize="19px"  ml="5px" color="#d63065">
                     {gameData?.entryFee ? "$ " + gameData?.entryFee : " Free"}
                 </Text>
             </Flex>
 
-            <Flex mt={["12px", 0]}>
+            <Flex mt={["12px", 0]} ml={["10px","10px","0px"]}>
                 {gameData && gameData.contest && (gameData?.contest?.status === "active" ||contestStatus) && <Button
                     variant="solid"
-                    h={"40px"}
-                    mr="8px"
+                    h={"30px"}
+                    px={["10px !important","10px !important","20px !important"]}
+                    py="20px"
+                    // mr="8px"
+                    fontWeight="300"
+                    fontSize={["10px"]}
                     onClick={() => {
                         setShowLoading({ "key": `GameDetail-${gameData?.id}`, "show": true });
                         CheckAndStartGame(
@@ -149,12 +157,13 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
                     isOpen={showLoading.show && showLoading.key === `GameDetail-${gameData?.id}`}
                 ></LMNonCloseALert>
 
-                <Flex
-                    {...iconStyles}
+                {/* <Flex
+                    {...iconStyles}  w={["30px","30px","30px","40px"]} 
                     cursor="pointer"
                     style={animate ? style1 : null}
                 >
                     <Image
+                    boxSize="20px"
                         alt="fav"
                         src={
                             isHeartClick
@@ -164,19 +173,22 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
                         onClick={animateEffect}
                         {...imgSize}
                     />
-                    ;
-                    {/* <ExportedImage alt="fav" {...imgSize} src="/assets/fav.svg" /> */}
-                </Flex>
+                    
+                    <ExportedImage alt="fav" {...imgSize} src="/assets/fav.svg" />
+                </Flex> */}
                 {/* <Flex {...iconStyles}>
                     <AiOutlineHeart color="white" />
                 </Flex> */}
 
-                <Flex {...iconStyles}>
+                <Flex 
+                {...iconStyles}  w={["30px","30px","30px","40px"]} 
+                >
                     <Popover>
                         <PopoverTrigger>
                             <Image
+                            boxSize="20px"
                                 alt="share"
-                                {...imgSize}
+                                // {...imgSize}
                                 src="/assets/designupdate1/games_share_icon.svg"
                             />
                         </PopoverTrigger>
@@ -193,14 +205,15 @@ const GameInfoActions = ({ gameData, isTabletOrDesktop }) => {
                     </Popover>
                 </Flex>
 
-                <Flex {...iconStyles}>
+                {/* <Flex {...iconStyles} w={["30px","30px","30px","40px"]}  >
                         <Image
+                        boxSize="20px"
                                 alt="share"
-                                {...imgSize}
+                                // {...imgSize}
                                 src="/assets/designupdate1/games_question_icon.svg"
                             />
-                    {/* <AiOutlineQuestionCircle color="white" /> */}
-                </Flex>
+                    <AiOutlineQuestionCircle color="white" />
+                </Flex> */}
             </Flex>
         </Flex>
     );

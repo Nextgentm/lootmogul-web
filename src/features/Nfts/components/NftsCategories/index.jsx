@@ -68,6 +68,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                         mt="10px"
                         gap={6}
                         width="100%"
+                        justifyContent="center"
                         
                     >
                         {displayCards?.map((item, index) => (
@@ -161,8 +162,8 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                                 <Box pl={["0","0","20%"]} pr="10%" w="100%" mt={["1em","5em"]}>
                                     <Box
                                         w="100%"
-                                        h={"2px"}
-                                        bg="#FFF"
+                                        h={"1px"}
+                                        bg="#e3e3e3"
                                         display={[
                                             "none",
                                             "none",
@@ -251,9 +252,9 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                             </GridItem>
                             <GridItem order={2} colSpan={1} mr="-2rem">
                                 <Box
-                                    w="2px"
+                                    w="1px"
                                     h={"100%"}
-                                    bg="#FFF"
+                                    bg="#e3e3e3"
                                     display={[
                                         "none",
                                         "none",

@@ -25,7 +25,8 @@ const GameInfoGrid = ({gameData}) => {
 
     return (
         <Grid
-            ml="10px"
+        pl={["0","5"]}
+            ml={["0px","0px","10px"]}
             gridColumnGap={"50px"}
             gridRowGap={"35px"}
             mt="30px"
@@ -35,23 +36,22 @@ const GameInfoGrid = ({gameData}) => {
         >
             {gameInfo.map((item, index) => (
                 <GridItem key={`info-${index}`} colSpan={1}>
-                    <Flex align="center">
-                        <Box pos="relative" width={["48px","48px","60px","60px"]}
-                            height={["40px","48px","60px","60px"]}
+                    <Flex align="center" flexDirection={["column","column","row","row"]}>
+                        <Box pos="relative" width={["48px","48px","50px","50px","60px"]}
+                            height={["40px","48px","50px","50px","60px"]}
                             bg="#260e46" 
                             
                             >
                         <Center width={"90%"} height={"90%"}>
 
                         <Image
-                           
                             alt={item.icon}
                             src={`/assets/designupdate1/${item.icon}`}
                             layout='fill'
                         />
                         </Center>
                         </Box>
-                        <Text ml="12px" color="#C7C7C7" fontSize={[12,12,14,18]} textAlign={"left"}>
+                        <Text ml={["0px","0px","12px","12px"]} fontWeight="200" color="#FFF" fontSize={[12,12,14,15]} textAlign={["center","center","left","left"]}>
                             {item.label}
                         </Text>
                     </Flex>

@@ -127,15 +127,14 @@ const Header = () => {
         <>
             {!isHideHeader && (
                 <Box
-                  //   bg="rgb(18,5,39)   "
+                    bg="transparent"
                     w="100%"
                     h="65px"
                     display="flex"
                     pl={["16px", "60px"]}
                     pr={["16px", "20px"]}
-                    pt="1em"
+                    py="2.5em"
                     alignItems="center"
-                  //  pos="sticky"
                     top="0"
                     justify="space-between"
                     as="nav"
@@ -152,9 +151,9 @@ const Header = () => {
 
                     <Image
                         style={{ cursor: "pointer" }}
-                        width="250px"
-                        height="70px"
-                        // objectFit="cover"
+                        width={["200px","180px","250px"]}
+                        height={["80px","70px"]}
+                     objectFit="contain"
                         onClick={() => router.push("/")}
                         alt="logo"
                         src="/assets/lm_logo.png"
@@ -218,7 +217,7 @@ const Header = () => {
                                     target="_blank"
                                 >
                                     <Image
-                                        className="telegram stickyIcon"
+                                        className="telegram"
                                         // m="5%"
                                         marginRight="20px"
                                         alt="social"
@@ -242,7 +241,7 @@ const Header = () => {
                         )}
                         {!user && (
                             <>
-                                {isMobileDevice ? (
+                                {/* {isMobileDevice ? (
                                     <Text
                                         cursor="pointer"
                                         color="primary"
@@ -253,19 +252,20 @@ const Header = () => {
                                     >
                                         Login
                                     </Text>
-                                ) : (
+                                ) : ( */}
                                     <Button
                                         {...loginBtnStyle}
                                         fontFamily="Sora !important "
-                                        fontWeight="300"
+                                        fontWeight="200"
                                         onClick={() => toggleLoginModal()}
-                                        padding="25px 57px"
+                                        padding={["0px 30px","0px 36px","25px 57px"]}
                                         boxShadow= "0px 0px 30px 10px #e90a6355"
-                                        fontSize={"1rem"}
+                                        fontSize={["0.7rem","0.8rem","1rem"]}
+                                        height="35px"
                                     >
                                         LOGIN
                                     </Button>
-                                )}
+                                {/* )} */}
                             </>
                         )}
                     </Flex>

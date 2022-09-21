@@ -15,7 +15,8 @@ import {
     Wrap,
     WrapItem,
     Grid,
-    Image as CImage
+    Image as CImage,
+    Tooltip
 } from "@chakra-ui/react";
 import Image from "next/image";
 
@@ -295,13 +296,13 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                         <Text
                             variant="headText"
                             fontSize={[
-                                "1.3rem",
-                                "2rem",
-                                "3rem",
+                                "2.3rem",
                                 "2.5rem",
+                                "3.2rem",
+                                "2.7rem",
                                 "4rem"
                             ]}
-                            lineHeight={["35px","45px","80px"]}
+                            lineHeight={["44px","48px","72px","50px","80px"]}
                         >
                             Play your favorite Influencer Tournament and win NFT
                         </Text>
@@ -315,8 +316,10 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                 "1.3rem",
                                 "1.3rem"
                             ]}
+                            mt="20px"
                             fontFamily="Sora"
                             fontWeight="normal"
+                            lineHeight={["30px","30px","36px"]}
                             width={["100%", "100%", "80%"]}
                         >
                             Become a virtual landlord to some of the largest
@@ -342,7 +345,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                         textAlign={"center"}
                         px={[0, 0, 0, 10]}
                         pb={[0, 0, 0, 12]}
-                        pt={[0, 0, 0, 12]}
+                        pt={[5, 5, 0, 12]}
                         width={["120%", "120%", "120%", "50%"]}
                     >
                         {getBannerImage() && (
@@ -352,7 +355,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                             >
                                 <Flex
                                     position="relative"
-                                    mt={["50px"]}
+                                    mt={["-35px","-11px","50px"]}
                                     h={["200px", "200px", "390px"]}
                                 >
                                     <Image
@@ -361,6 +364,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                         src={getBannerImage()}
                                         className="custom-img"
                                         layout="fill"
+                                        objectFit="contain"
                                     />
                                 </Flex>
                             </Box>
@@ -369,6 +373,48 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 </Flex>
             </Box>
             <Box>
+                <Box mt="20"
+                    ml={["20px", "20px", "20px", "60px"]}
+                    mr={["20px", "20px", "20px", "60px"]}>
+                <Center>
+                    <Text
+                        variant="secHeadText"
+                        fontSize={["2rem", "2.5rem"]}
+                        display={["block", "block", "block"]}
+                    >
+                        EXPLORE
+                    </Text>
+                    </Center>
+                    <Flex mt={10} ml={["10px","20px"]} flexWrap="wrap" justifyContent={["center","center","space-between"]}> 
+                        {data?.map((influencerCat, index) => (
+
+                             <Box w={["100%", "100%", 200, 200, 200]} mx={["10px","5px","5px","5px","20px"]}  my={["10px","5px","5px","5px","20px"]}>
+                                <Tooltip label={influencerCat.name}>
+                                <Button
+                                w="100%"
+                                    fontSize={[
+                                        "20px !important",
+                                        "20px !important",
+                                        "17px !important",
+                                       
+                                       
+                                    ]}
+                                    variant={"segment"}
+                                    // width={[240,240,200,200,240]}
+                                    onClick={() => {
+                                        handleCategoryChange(
+                                            influencerCat.name.toLowerCase()
+                                        );
+                                        //  nftSelectCategory(influencerCat.name.toLowerCase());
+                                    }}
+                                >
+                                    <Text textOverflow="ellipsis" overflow="hidden"> {influencerCat.name.substr(0, influencerCat.name.indexOf(" "))}</Text>
+                                   
+                                </Button></Tooltip>
+                            </Box>
+                        ))}
+                    </Flex>
+                </Box>
                 {newInfluencers?.length && (
                     <>
                         <Flex
@@ -414,48 +460,12 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 )}
 
                 <Box
+                
                     mt="20"
                     ml={["20px", "20px", "20px", "60px"]}
                     mr={["20px", "20px", "20px", "60px"]}
                 >
-                    <Text
-                        variant="secHeadText"
-                        fontSize={["2rem", "2.5rem"]}
-                        display={["block", "block", "block"]}
-                    >
-                        EXPLORE
-                    </Text>
-
-                    <Wrap
-                        my={[10,20]}
-                        spacing="30px"
-                        mx="auto"
-                        display={["block", "block", "block"]}
-                    >
-                        {data?.map((influencerCat, index) => (
-                            <WrapItem w={[240, 240, 150, 200, 240]}>
-                                <Button
-                                    fontSize={[
-                                        "15px !important",
-                                        "11px !important",
-                                        "10px !important",
-                                        "13px !important",
-                                        "15px !important"
-                                    ]}
-                                    variant={"segment"}
-                                    // width={[240,240,200,200,240]}
-                                    onClick={() => {
-                                        handleCategoryChange(
-                                            influencerCat.name.toLowerCase()
-                                        );
-                                        //  nftSelectCategory(influencerCat.name.toLowerCase());
-                                    }}
-                                >
-                                    {influencerCat.name}
-                                </Button>
-                            </WrapItem>
-                        ))}
-                    </Wrap>
+                    
 
                     <Flex
                         flexDir={["column", "column", "column", "row", "row"]}
@@ -467,10 +477,10 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                         <Text
                             fontSize={["2rem", "2.5rem"]}
                             variant="secHeadText"
-                        >
-                            {category
+                        >ALL IN INFLUENCERS
+                            {/* {category
                                 ? category.toUpperCase()
-                                : "ALL IN INFLUENCERS"}
+                                : "ALL IN INFLUENCERS"} */}
                         </Text>
                         {/* <Button
                             fontSize="1.5rem"
@@ -495,7 +505,8 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                 "repeat(1, 1fr)",
                                 "repeat(1, 1fr)",
                                 "repeat(2, 1fr)",
-                                "repeat(3, 1fr)"
+                                "repeat(3, 1fr)",
+                                "repeat(4, 1fr)"
                             ]}
                             gap={"30px"}
                         >

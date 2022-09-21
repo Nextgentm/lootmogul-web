@@ -41,7 +41,7 @@ const InfluencerInfo = ({ influencer }) => {
         }
     },[influencer,influencerLikes]);
     return (
-        <Flex direction="column"
+        <Flex direction="column" 
             key={`infinfo-${influencer.contestmasters?.data[0]?.id}`}
         >
 
@@ -57,56 +57,59 @@ const InfluencerInfo = ({ influencer }) => {
                     />
                 )}
             </Center>
+            <Box px={["40px","50px","0px","0px","0px"]} m="auto">
             <Text
                 mt="12px"
                 fontSize={"1.2rem"}
                 fontFamily="Sora"
                 color="white"
-                fontWeight={700}
+                textAlign="left"
+                fontWeight={500}
             >
                 {influencer.name}
             </Text>
 
             <Flex justify={"space-between"}  mt="8px">
 
-            <Text fontSize={"1rem"} fontFamily="Sora" color="white">
+            <Text fontSize={"17px"}    fontWeight="200" textAlign="left"  color="white">
                 {influencer.tagline || "N.A."}
             </Text>
             <SocialActions
                             onHeartClick={onHeartClick}
                             isHeartClick={isHeartClick}
                             influencer={{ data: influencer }}
-                            showWriteReview
+                            // showWriteReview
                         />
             </Flex>
-            <Flex justify={"space-between"} w="160px" mt="8px">
-                <Box align="center" key={`info-like`}>
+            <Flex justifyContent={"flex-start"} w="100%" mt="8px" >
+                <Box align="center" mr="20px" key={`info-like`}>
                     <Text fontSize={"1rem"} color="white" fontWeight={700}>
                         {influencer.likeCount || 0}
                     </Text>
-                    <Text fontSize={"1rem"} color="#7C7C7C">
+                    <Text fontSize={"17px"} color="#FFF" fontWeight="200">
                         Fav
                     </Text>
                 </Box>
 
-                <Box align="center" key={`info-shared`}>
+                <Box align="center" mr="20px" key={`info-shared`}>
                     <Text fontSize={"1rem"} color="white" fontWeight={700}>
                         {influencer.shareCount || 0}
                     </Text>
-                    <Text fontSize={"1rem"} color="#7C7C7C">
+                    <Text fontSize={"17px"} color="#FFF" fontWeight="200">
                         Shared
                     </Text>
                 </Box>
 
-                <Box align="center" key={`info-reviews`}>
+                <Box align="center" mr="20px" key={`info-reviews`}>
                     <Text fontSize={"1rem"} color="white" fontWeight={700}>
                         {influencer.reviewCount || 0}
                     </Text>
-                    <Text fontSize={"1rem"} color="#7C7C7C">
+                    <Text fontSize={"17px"} color="#FFF" fontWeight="200">
                         Reviews
                     </Text>
                 </Box>
             </Flex>
+            </Box>
 
 
             {/* <Flex direction={"row"} m="8px">

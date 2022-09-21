@@ -22,6 +22,26 @@ export const BtnStyle = {
         textDecor:"none"
 
       },
+      trivia: {
+        backgroundColor: "#261f3acc",
+        color: "#FFFFFF",
+        fontWeight: "600",
+        
+        letterSpacing:"0.01em",
+        lineHeight:"24px",
+        _hover:{textDecoration:"none!important",border:"none", bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)"},
+        _focus:{textDecoration:"none!important",border:"none", bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)"},
+        // _active:{textDecoration:"none!important", border:"none",bgGradient:"linear(90deg, #E90A63 0%, #481A7F 100%)"},
+
+        borderRadius: "5px",
+        border: "0",
+        fontSize: "1.5rem",
+        fontFamily: "Sora",
+        padding: "30px 40px",
+        // boxShadow: "0px 0px 30px 10px #e90a6355",
+        textDecor:"none"
+
+      },
       segment: {
         backgroundColor: "#261f3acc",
         fontSize: "1.5rem",

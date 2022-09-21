@@ -59,8 +59,8 @@ const SocialActions = ({
 const[rating,setRating]=useState({title:"",review:"",star:0.0});
 
     return (
-        <Flex w="fit-content" {...style}>
-            <Box w="24px" h="24px" cursor="pointer" style = {animate ? style1 : null} border={"1px"} borderColor="#ffffff44"  
+        <Flex w="fit-content" {...style} className="aa">
+            {/* <Box w="24px" h="24px" cursor="pointer" style = {animate ? style1 : null} border={"1px"} borderColor="#ffffff44"  
              >
             
             <CImage 
@@ -74,21 +74,21 @@ const[rating,setRating]=useState({title:"",review:"",star:0.0});
              onClick={
                 animateEffect
                   }   />;
-                {/* <ExportedImage alt="fav" {...imgSize} src="/assets/fav.svg" /> */}
-            </Box>
+                <ExportedImage alt="fav" {...imgSize} src="/assets/fav.svg" />
+            </Box> */}
 
 
              <Box ml={"10px"}>
             <Popover
               >
                 <PopoverTrigger>
-                    <Box w="24px" h="24px" border={"1px"} borderColor="#ffffff44">
+                    <Box w="24px" h="24px" p ={"10%"} border={"1px"} borderColor="#ffffff44">
                 <CImage 
-                  mt="2px"
-                  ml="2px"
-                maxH="80%"
-            maxW="80%"
- alt="share" src="/assets/designupdate1/games_share_icon.svg" /></Box>
+                  m="auto"
+                h="100%"
+            w="100%"
+        alt="share" src="/assets/designupdate1/games_share_icon.svg" />
+ </Box> 
             </PopoverTrigger>
             <NextShare link={"https://lootmogul.com/influencer/"+ influencer?.data?.slug} caption={"Come and play with "+influencer?.data?.name} hashtag="lootmogul"
               type="influencer"
@@ -101,7 +101,7 @@ const[rating,setRating]=useState({title:"",review:"",star:0.0});
             </Box>
 
 
-            {showWriteReview && user && (
+            {/* {showWriteReview && user && (
                <Popover onOpen={()=>{
                if( user && influencer)
             strapi.find("ratings",{filters: { reviewer: user.id,influencer:influencer.data.id },
@@ -183,7 +183,7 @@ const[rating,setRating]=useState({title:"",review:"",star:0.0});
                </>
                )}
            </Popover>
-            )}
+            )} */}
         </Flex>
     );
 };
