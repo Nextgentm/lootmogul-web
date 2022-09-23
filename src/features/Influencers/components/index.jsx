@@ -75,8 +75,13 @@ const SelectBox = ({ style, icon, title, options, value, onChange }) => {
 
 const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const defaultCategoryName = "All Category";
-    const { isMobileDevice, isTabletOrDesktop, user, influencerLikes, callAuthService } =
-        useContext(AppContext);
+    const {
+        isMobileDevice,
+        isTabletOrDesktop,
+        user,
+        influencerLikes,
+        callAuthService
+    } = useContext(AppContext);
     const [options, setOptions] = useState([]);
     const [category, setCategory] = useState(defaultCategoryName);
     const [sortBy, setSortBy] = useState("Sort By");
@@ -108,11 +113,11 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
         { label: "Influencers", path: "/influencers" }
     ];
     useEffect(() => {
-        if(router.query.access_token){
-            if(router.query.provider == "facebook"){
-                callAuthService("facebook", router.query.access_token)
-            }else{
-                callAuthService("google", router.query.access_token)
+        if (router.query.access_token) {
+            if (router.query.provider == "facebook") {
+                callAuthService("facebook", router.query.access_token);
+            } else {
+                callAuthService("google", router.query.access_token);
             }
         }
     }, []);
@@ -158,6 +163,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
 
         setCategory(newCategory);
     };
+    
     useEffect(() => {
         if (influencerLikes) {
             if (influencerLikes?.length) {
@@ -183,7 +189,8 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     }, [influencerLikes]);
     useEffect(() => {
         if (data && selectedCategory) {
-            let selData = data.filter((item) => item.slug === selectedCategory);
+            
+       let  selData = data.filter((item) => item.slug === selectedCategory);
             setCategory(selData[0].name.toLowerCase());
             setSelCategoriesData(selData);
         }
@@ -264,8 +271,8 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             return null;
         }
     };
-
     return (
+        
         <Box>
             {selectedCategory && selCategoriesData && selCategoriesData[0] && (
                 <SEOContainer
@@ -278,139 +285,189 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 />
             )}
 
-            <Box w="100% "overflow="hidden">
+            <Box w="100% " overflow="hidden">
                 {/* <Breadcrumbs routes={breadcrumbsPath} style={{ mb: "14px" }} /> */}
-                <Flex
-                    flexDir={["column", "column", "column", "row"]}
-                    w="100%"
-                    
-                >
+                {router.pathname ===  "/influencers/category/[id]" ? (
+                
+                <Box mr={[0, "50px"]} ml={[0, "50px"]}>
+                {getBannerImage() && (
                     <Box
-                        px={10}
-                        pb={12}
-                        pt="2em"
-                        mt={[0, 0, 10]}
-                        ml={["0em", "0em", "2em", "2em"]}
-                        width={["100%", "100%", "100%", "55%"]}
+                        position="relative"
+                        align="center"
+                        width="100%"
+                        height={"350px"}
                     >
-                        <Text
-                            variant="headText"
-                            fontSize={[
-                                "2.3rem",
-                                "2.5rem",
-                                "3.2rem",
-                                "2.7rem",
-                                "4rem"
-                            ]}
-                            lineHeight={["44px","48px","72px","50px","80px"]}
-                        >
-                            Play your favorite Influencer Tournament and win NFT
-                        </Text>
-
-                        <Text
-                            color="white"
-                            fontSize={[
-                                "1rem",
-                                "1.3rem",
-                                "1.3rem",
-                                "1.3rem",
-                                "1.3rem"
-                            ]}
-                            mt="20px"
-                            fontFamily="Sora"
-                            fontWeight="normal"
-                            lineHeight={["30px","30px","36px"]}
-                            width={["100%", "100%", "80%"]}
-                        >
-                            Become a virtual landlord to some of the largest
-                            projects in crypto
-                        </Text>
-
-                        <Button
-                            mt={6}
-                            variant="solid"
-                            fontWeight="normal"
-                            fontSize={["1.0rem", "1.0rem", "1.3rem"]}
-                            padding={"30px 30px"}
-                            onClick={() => {
-                            //    executeScroll(0);
-                            router.push("/nfts");
-                            }}
-                        >
-                            BUY NFTS
-                        </Button>
+                        <Image
+                            alt={`influencer-banner`}
+                            m={"auto"}
+                            className="custom-img"
+                            layout="fill"
+                            src={getBannerImage()}
+                        />
                     </Box>
-                    <Box
-                        bgSize="cover"
-                        textAlign={"center"}
-                        px={[0, 0, 0, 10]}
-                        pb={[0, 0, 0, 12]}
-                        pt={[5, 5, 0, 12]}
-                        width={["120%", "120%", "120%", "50%"]}
+                )}
+            </Box>
+
+                      
+                 ) : (
+                 
+                  
+                
+               < Flex
+                        flexDir={["column", "column", "column", "row"]}
+                        w="100%"
                     >
-                        {getBannerImage() && (
-                            <Box
-                                ml={["20px", "20px", "20px", "-100px"]}
-                                mr={["20px", "20px", "20px", "-100px"]}
+                        <Box
+                            px={10}
+                            pb={12}
+                            pt="2em"
+                            mt={[0, 0, 10]}
+                            ml={["0em", "0em", "2em", "2em"]}
+                            width={["100%", "100%", "100%", "55%"]}
+                        >
+                            <Text
+                                variant="headText"
+                                fontSize={[
+                                    "2.3rem",
+                                    "2.5rem",
+                                    "3.2rem",
+                                    "2.7rem",
+                                    "4rem"
+                                ]}
+                                lineHeight={[
+                                    "44px",
+                                    "48px",
+                                    "72px",
+                                    "50px",
+                                    "80px"
+                                ]}
                             >
-                                <Flex
-                                    position="relative"
-                                    mt={["-35px","-11px","50px"]}
-                                    h={["200px", "200px", "390px"]}
+                                Play your favorite Influencer Tournament and win
+                                NFT
+                            </Text>
+
+                            <Text
+                                color="white"
+                                fontSize={[
+                                    "1rem",
+                                    "1.3rem",
+                                    "1.3rem",
+                                    "1.3rem",
+                                    "1.3rem"
+                                ]}
+                                mt="20px"
+                                fontFamily="Sora"
+                                fontWeight="normal"
+                                lineHeight={["30px", "30px", "36px"]}
+                                width={["100%", "100%", "80%"]}
+                            >
+                                Become a virtual landlord to some of the largest
+                                projects in crypto
+                            </Text>
+
+                            {/* <Button
+                                mt={6}
+                                variant="solid"
+                                fontWeight="normal"
+                                fontSize={["1.0rem", "1.0rem", "1.3rem"]}
+                                padding={"30px 30px"}
+                                onClick={() => {
+                                    //    executeScroll(0);
+                                    router.push("/nfts");
+                                }}
+                            >
+                                BUY NFTS
+                            </Button> */}
+                        </Box>
+                        <Box
+                            bgSize="cover"
+                            textAlign={"center"}
+                            px={[0, 0, 0, 10]}
+                            pb={[0, 0, 0, 12]}
+                            pt={[5, 5, 0, 12]}
+                            width={["120%", "120%", "120%", "50%"]}
+                        >
+                            {getBannerImage() && (
+                                <Box
+                                    ml={["20px", "20px", "20px", "-100px"]}
+                                    mr={["20px", "20px", "20px", "-100px"]}
                                 >
-                                    <Image
-                                        m={"auto"}
-                                        alt={`nft-banner`}
-                                        src={getBannerImage()}
-                                        className="custom-img"
-                                        layout="fill"
-                                        objectFit="contain"
-                                    />
-                                </Flex>
-                            </Box>
-                        )}
-                    </Box>
-                </Flex>
+                                    <Flex
+                                        position="relative"
+                                        mt={["-35px", "-11px", "50px"]}
+                                        h={["200px", "200px", "390px"]}
+                                    >
+                                        <Image
+                                            m={"auto"}
+                                            alt={`nft-banner`}
+                                            src={getBannerImage()}
+                                            className="custom-img"
+                                            layout="fill"
+                                            objectFit="contain"
+                                        />
+                                    </Flex>
+                                </Box>
+                            )}
+                        </Box>
+                    </Flex>
+                )} 
             </Box>
             <Box>
-                <Box mt="20"
+                <Box
+                    mt="20"
                     ml={["20px", "20px", "20px", "60px"]}
-                    mr={["20px", "20px", "20px", "60px"]}>
-                <Center>
-                    <Text
-                        variant="secHeadText"
-                        fontSize={["2rem", "2.5rem"]}
-                        display={["block", "block", "block"]}
-                    >
-                        EXPLORE
-                    </Text>
+                    mr={["20px", "20px", "20px", "60px"]}
+                >
+                    <Center>
+                        <Text
+                            variant="secHeadText"
+                            fontSize={["2rem", "2.5rem"]}
+                            display={["block", "block", "block"]}
+                        >
+                            EXPLORE
+                        </Text>
                     </Center>
-                    <Flex mt={10} ml={["10px","20px"]} flexWrap="wrap" justifyContent={["center","center","space-between"]}> 
+                    <Flex
+                        mt={10}
+                        ml={["10px", "20px"]}
+                        flexWrap="wrap"
+                        justifyContent={["center", "center", "space-between"]}
+                    >
                         {data?.map((influencerCat, index) => (
-
-                             <Box w={["100%", "100%", 200, 200, 200]} mx={["10px","5px","5px","5px","20px"]}  my={["10px","5px","5px","5px","20px"]}>
+                            <Box
+                                w={["100%", "100%", 200, 200, 200]}
+                                mx={["10px", "5px", "5px", "5px", "20px"]}
+                                my={["10px", "5px", "5px", "5px", "20px"]}
+                            >
                                 <Tooltip label={influencerCat.name}>
-                                <Button
-                                w="100%"
-                                    fontSize={[
-                                        "20px !important",
-                                        "20px !important",
-                                        "17px !important",
-                                       
-                                       
-                                    ]}
-                                    variant={"segment"}
-                                    // width={[240,240,200,200,240]}
-                                    onClick={() => {
-                                        handleCategoryChange(
-                                            influencerCat.name.toLowerCase()
-                                        );
-                                        //  nftSelectCategory(influencerCat.name.toLowerCase());
-                                    }}
-                                >
-                                    <Text textOverflow="ellipsis" overflow="hidden"> {influencerCat.name.substr(0, influencerCat.name.indexOf(" "))}</Text>
-                                   
-                                </Button></Tooltip>
+                                    <Button
+                                        w="100%"
+                                        fontSize={[
+                                            "20px !important",
+                                            "20px !important",
+                                            "17px !important"
+                                        ]}
+                                        variant={"segment"}
+                                        // width={[240,240,200,200,240]}
+                                        onClick={() => {
+                                            handleCategoryChange(
+                                                influencerCat.name.toLowerCase()
+                                            );
+                                            //  nftSelectCategory(influencerCat.name.toLowerCase());
+                                        }}
+                                    >
+                                        <Text
+                                            textOverflow="ellipsis"
+                                            overflow="hidden"
+                                        >
+                                            {" "}
+                                            {influencerCat.name.substr(
+                                                0,
+                                                influencerCat.name.indexOf(" ")
+                                            )}
+                                        </Text>
+                                    </Button>
+                                </Tooltip>
                             </Box>
                         ))}
                     </Flex>
@@ -419,7 +476,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                     <>
                         <Flex
                             justify="space-between"
-                            my={["20px","40px"]}
+                            my={["20px", "40px"]}
                             align="center"
                             // mb="30px"
                             ml={["20px", "20px", "20px", "60px"]}
@@ -460,27 +517,25 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 )}
 
                 <Box
-                
                     mt="20"
                     ml={["20px", "20px", "20px", "60px"]}
                     mr={["20px", "20px", "20px", "60px"]}
                 >
-                    
-
                     <Flex
                         flexDir={["column", "column", "column", "row", "row"]}
                         justify="space-between"
                         align="center"
                         textAlign="center"
-                        my={["2em","2.5em"]}
+                        my={["2em", "2.5em"]}
                     >
                         <Text
                             fontSize={["2rem", "2.5rem"]}
                             variant="secHeadText"
-                        >ALL IN INFLUENCERS
-                            {/* {category
+                        >
+                            {/* ALL IN INFLUENCERS */}
+                            {category
                                 ? category.toUpperCase()
-                                : "ALL IN INFLUENCERS"} */}
+                                : "ALL IN INFLUENCERS"}
                         </Text>
                         {/* <Button
                             fontSize="1.5rem"
@@ -535,7 +590,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                         <Center mt={"30px"} height="30px" py="50px">
                             <Flex width={"440px"}>
                                 <CImage
-                                    width="100px"
+                                     width={ pageNo > 0?"100px":"60px"}
                                     onClick={() => {
                                         if (pageNo > 0) setPageNo(pageNo - 1);
                                     }}
@@ -559,7 +614,8 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                 </Box>
 
                                 <CImage
-                                    width="100px"
+                                    overflow="hidden"
+                                    width={ pageNo < totalPages - 1?"100px":"60px"}
                                     onClick={() => {
                                         if (pageNo < totalPages - 1)
                                             setPageNo(pageNo + 1);

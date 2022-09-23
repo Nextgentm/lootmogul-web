@@ -159,7 +159,7 @@ const InfluencerDetail = ({ influencer }) => {
     }
 
     return (
-        <Box mr={[0, "20px"]} ml={[0, "20px"]} mb={["10vw"]}>
+        <Box mr={[0, "50px"]} ml={[0, "50px"]} mb={["10vw"]}>
                 <SEOContainer seoData={influencer.sharedSeo} content={influencer} pageName={"influencer"}/> 
 {/*                 
             {isTabletOrDesktop && (
@@ -196,7 +196,7 @@ const InfluencerDetail = ({ influencer }) => {
                     />
                 </Box>
             ) : (
-                <Flex mt="30px" ml="12px">
+                <Flex mt="30px" >
                     <InfluencerInfo influencer={fullInfluencer || influencer} />
                     {/* <Box
                         w="1px"

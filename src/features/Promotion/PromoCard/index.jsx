@@ -3,13 +3,12 @@ import {
   Text,
   Box,
   Button
-  // Link
 } from "@chakra-ui/react";
 import Image from "next/image";
 
 import { HorizontalLine } from "../../../components/Icons";
 import { useRouter } from "next/router";
-const PromoCard = ({ promotion, isDetailed }) => {
+const PromoCard = ({ promotion }) => {
   const router = useRouter();
 
   const deposit = (data) => {

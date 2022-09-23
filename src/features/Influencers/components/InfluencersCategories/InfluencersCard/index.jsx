@@ -46,7 +46,7 @@ const InfluencersCard = ({ influencer, slug, style, wid, marginR }) => {
     return (
         <Link href={"/influencer/" + slug} passHref={true} _focus={{ border: "none" }} key={`infCatCard-${influencer.contestmasters?.data[0]?.id}`}>
             <Box 
-            width={wid} marginRight={marginR} >
+            width={wid} marginRight={marginR} mb="30px" >
                 <Box
                     cursor="pointer"
                     w="100%"
