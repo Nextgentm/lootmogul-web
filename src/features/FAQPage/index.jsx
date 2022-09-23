@@ -1,4 +1,4 @@
-import { Box, Text, Heading } from "@chakra-ui/layout";
+import { Box, Text } from "@chakra-ui/layout";
 import ScrollToTop from "react-scroll-to-top";
 import {ChevronUpIcon} from "@chakra-ui/icons"
 

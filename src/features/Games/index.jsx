@@ -81,7 +81,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     }, [contestmasters, contestSectionsData]);
 
     return (
-        <Box mx={["2rem", "2.5rem", "5rem"]}>
+        <Box mx={["2rem", "2.5rem","3rem","3rem", "5rem"]}>
             <Box mb={"10vw"}>
                 <Box>
                     <Flex
@@ -104,18 +104,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                                      Check out New releases
                                             <br />
                                             ARE YOU READY TO PLAY?
-                                    {/* {isMobileDevice ? (
-                                        <p>
-                                            Check out New releases ARE YOU READY
-                                            TO PLAY ?
-                                        </p>
-                                    ) : (
-                                        <p>
-                                            Check out New releases
-                                            <br />
-                                            ARE YOU READY TO PLAY ?
-                                        </p>
-                                    )} */}
+                                   
                                 </Text>
 
                                 <Text

@@ -45,7 +45,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
 
     return (
         <Link href={"/games/" + contestmaster?.slug} passHref={true}  _hover={{ border: "none",textDecoration:"none" }} _focus={{ border: "none",textDecoration:"none" }} key={`igc-${contestmaster?.id}`}>
-            <Box overflow={"hidden"} w={"280px"} {...style}
+            <Box overflow={"hidden"} w={["225px","225px","290px","260px", "300px"]} {...style}
             >
                 <VStack>
                     <Flex
@@ -56,16 +56,20 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                         borderRadius={"md"}
                         cursor="pointer"
                         w={"full"}
-                        h={["360px", "360px"]}
-                        flexDir={"column"}
-                    >
+                        h={["360px"]}
+                        flexDir={"column"}>
                       
                       <Text
-                      mt={"30px"}
+                           mt={"30px"}
                                 color="#FDFFE5"
-                                fontSize="14px"
+                                fontSize="19px"
                                 fontWeight={"600"}
                                 textAlign="center"
+                                mx="auto"
+                               noOfLines={2}
+                               w="70%"
+                               h="90px"
+
                             >
                                 {sectionName}
                             </Text>
@@ -75,7 +79,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                     <Box
                                         m="auto"
                                         pos="relative"
-                                        w="50%"
+                                        w="65%"
                                         h="100%"
                                         pt="20px"
                                         className="influencerdiv"
@@ -113,7 +117,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
 
                         <Text
                             color="#FDFFE5"
-                            fontSize={["15px","15px","20px"]}
+                            fontSize={["20px"]}
                             fontWeight={"600"}
                             align={"center"}
                             mb={"30px"}
@@ -136,16 +140,19 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                     src="/assets/designupdate1/cash_icon.svg"
                                 />
 
+                                <Box mt="2px">
                                 <Text ml="6px" color="#FFF" fontSize={["15px" ,"17px" ]}fontWeight="400">
                                     {contestmaster.entryFee != 0
                                         ? "Entry Fee - $" + contestmaster.entryFee
                                         : "Free"}
                                 </Text>
-                            </Flex>
-
-                            <Text mt="4px" ml={"20px"} color="#FFF" fontSize={["12px","15px"]} fontWeight="200">
+                                <Text mt="-3px" ml={"6px"} color="#FFF" fontSize={["12px","14px"]} fontWeight="200"  >
                                 {nFormatter(contestmaster.roomsCount, 1)} Plays
                             </Text>
+                                </Box>
+                            </Flex>
+
+                            
                         </Box>
 
                         <SocialActions
@@ -159,8 +166,9 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     {contestmaster && contestmaster.contest && (contestmaster?.contest?.status === "active" || contestStatus) && <Button
                         variant="solid"
                         h={["40px", "40px"]}
-                        fontSize={["20px","25px"]}
+                        fontSize={["20px"]}
                         mt="12px"
+                        textTransform="uppercase"
                         _hover={{textDecoration:"none !important"}}
                         w="full"
                         onClick={(e) => {

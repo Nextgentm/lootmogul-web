@@ -40,12 +40,7 @@ const socialLinks = [
     }
 ];
 
-const certs = [
-    { icon: "foot1.png", label: "Instant Bonus on Signup" },
-    { icon: "foot2.png", label: "Play & Win" },
-    { icon: "foot3.png", label: "Engage with Influencers" },
-    { icon: "foot4.png", label: "Safe & Secure" }
-];
+
 
 const payments = ["paypal2.png", "stripe.png"];
 
@@ -56,8 +51,8 @@ const Footer = () => {
 
 
     return (
-        <>
-            <Flex bg="background" py="2rem" >
+        <Box bg="#240e45">
+            <Flex   py="2rem" >
                 <Flex justifyContent="space-around" w={["80%","80%","80%","100%","100%"]} m="auto" flexDirection={["column","column","column","row","row"]}>
                     <Box>
                         <Box mb="30px">
@@ -87,8 +82,8 @@ const Footer = () => {
                         </Flex>
                     </Box>
                    
-                    <Flex flexDirection={["column","column","column","row","row"]} my={["3em","3em","3em","0em"]} >
-                        <Box>
+                    <Flex flexDirection="row" my={["3em","3em","3em","0em"]} >
+                        <Box mr={["70px","70px","100px","0px",]}>
                             
                             <Text style={BoldWhiteText} fontSize={["18px","25px","30px","20px","20px"]}>Site Map</Text>
                             <Link
@@ -164,7 +159,7 @@ const Footer = () => {
                             </Link>
                         </Box>
                     </Flex>
-                    <Box>
+                    <Flex alignItems={["start","start","start","end"]} flexDirection="column">
                         <Image
                             alt=""
                             src="/assets/lm_logo.png"
@@ -207,10 +202,10 @@ const Footer = () => {
                         </Flex>
                         <Text style={BoldWhiteText} fontSize={["18px","25px","30px","20px","20px"]}>Try our App</Text>
                         <Image alt="" src="https://metaverse.lootmogul.com/wp-content/uploads/2022/07/1_V9-OPWpauGEi-JMp05RC_A.png" w="170px"/>
-                    </Box>
+                    </Flex>
                 </Flex>
             </Flex>
-            <Box m="auto" textAlign={["left", "center"]} w="100%" mt="25px">
+            <Box  bg="#240e45" m="auto" textAlign={["left", "center"]} w="100%" mt="25px">
                 <Flex
                     justify={[ "center"]}
                     wrap="wrap"
@@ -254,7 +249,7 @@ const Footer = () => {
                 m="auto"
                 w="80%"
                 variant="footerText"
-                my="15px !important"
+                my="15px !important"  color="#FFF !important"
             >
                 LootMogul is NOT AFFILIATED, AUTHORIZED, LICENSED OR ENDORSED by
                 NBA (National Basketball Association), NFL (National Football
@@ -263,7 +258,7 @@ const Footer = () => {
                 Athletic Association) or any other professional and amateur
                 organization.
             </Text>
-        </>
+        </Box>
     );
 };
 

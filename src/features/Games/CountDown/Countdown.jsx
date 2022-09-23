@@ -13,7 +13,6 @@ class Countdown extends Component {
     getTimeUntil(deadline) {
         const time = Date.parse(deadline) - Date.parse(new Date());
         if (time < 0) {
-            //console.log("Date passed");
         } else {
             const seconds = Math.floor((time / 1000) % 60);
             const minutes = Math.floor((time / 1000 / 60) % 60);
@@ -35,21 +34,77 @@ class Countdown extends Component {
 
     render() {
         return (
-
-            <Flex fontSize={"40px"} marginRight={"14px"} paddingRight="49px" display={"flex"} color="white">
-                <Text background={"red"} fontSize="25px" padding={"10px"} display="inline-flex" textTransform={"uppercase"} >
-                    Contest Starts in: </Text>
-                {this.state.days}<Text background={"#ff4800"} fontSize="25px" padding={"10px"} display="inline-flex" textTransform={"uppercase"} paddingLeft={"7px"}>Days </Text>
-
-                {this.state.hours}<Text background={"#ff4800"} fontSize="25px" padding={"10px"} display="inline-flex" textTransform={"uppercase"} paddingLeft={"7px"} >Hours</Text>
-
-                {this.state.minutes} <Text background={"#ff4800"} fontSize="25px" padding={"10px"} display="inline-flex" textTransform={"uppercase"} paddingLeft={"7px"}>Minutes</Text>
-
-                {this.state.seconds}<Text background={"#ff4800"} fontSize="25px" padding={"10px"} display="inline-flex" textTransform={"uppercase"} paddingLeft={"7px"}>Secs</Text>
-
+            <Flex
+                fontSize={"40px"}
+                marginRight={"14px"}
+                paddingRight="49px"
+                display={"flex"}
+                color="white"
+            >
+                <Text
+                    background={"red"}
+                    fontSize="25px"
+                    padding={"10px"}
+                    display="inline-flex"
+                    textTransform={"uppercase"}
+                >
+                    Contest Starts in:{" "}
+                </Text>
+                {this.state.days}
+                <Text
+                    background={"#ff4800"}
+                    fontSize="25px"
+                    padding={"10px"}
+                    display="inline-flex"
+                    textTransform={"uppercase"}
+                    paddingLeft={"7px"}
+                >
+                    Days{" "}
+                </Text>
+                {this.state.hours}
+                <Text
+                    background={"#ff4800"}
+                    fontSize="25px"
+                    padding={"10px"}
+                    display="inline-flex"
+                    textTransform={"uppercase"}
+                    paddingLeft={"7px"}
+                >
+                    Hours
+                </Text>
+                {this.state.minutes}{" "}
+                <Text
+                    background={"#ff4800"}
+                    fontSize="25px"
+                    padding={"10px"}
+                    display="inline-flex"
+                    textTransform={"uppercase"}
+                    paddingLeft={"7px"}
+                >
+                    Minutes
+                </Text>
+                {this.state.seconds}
+                <Text
+                    background={"#ff4800"}
+                    fontSize="25px"
+                    padding={"10px"}
+                    display="inline-flex"
+                    textTransform={"uppercase"}
+                    paddingLeft={"7px"}
+                >
+                    Secs
+                </Text>
             </Flex>
         );
     }
 }
+ const timerNum ={
+    background:"#ff4800",
+    fontSize:"25px",
+    padding:"10px",
+    display:"inline-flex",
+    textTransform:"uppercase",
+    paddingLeft:"7px"
+ }
 
 export default Countdown;

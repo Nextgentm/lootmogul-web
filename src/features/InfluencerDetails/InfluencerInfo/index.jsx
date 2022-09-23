@@ -57,7 +57,7 @@ const InfluencerInfo = ({ influencer }) => {
                     />
                 )}
             </Center>
-            <Box px={["40px","50px","0px","0px","0px"]} m="auto">
+            <Box px={["40px","23px","0px","0px","0px"]}>
             <Text
                 mt="12px"
                 fontSize={"1.2rem"}

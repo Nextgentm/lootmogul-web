@@ -2,14 +2,9 @@ import { useEffect, useState } from "react";
 import {
     Box,
     Text,
-    Link,
-    OrderedList,
-    UnorderedList,
-    ListItem
 } from "@chakra-ui/react";
 import ScrollToTop from "react-scroll-to-top";
 import { ChevronUpIcon } from "@chakra-ui/icons";
-//import { privacyData } from "../PrivacyPolicy/privacy";
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -35,7 +30,7 @@ const PrivacyPolicy = () => {
                 setData(data[0].privacydata)
             }).catch(
                 function (err) {
-                    //console.log(err, ' error')
+                  
                 }
             )
     }, [data])

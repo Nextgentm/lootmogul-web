@@ -13,7 +13,6 @@ import { useBreakpointValue } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 const Card = ({
-    img,
     content,
     width = "265px",
     isLive = false,
@@ -98,8 +97,7 @@ const Card = ({
                         alt="Logo"
                         objectFit="contain"
                         src="/assets/lm_logo.png"
-                        layout='fill'
-
+                        layout="fill"
                     />
                 </Box>
 
@@ -140,7 +138,6 @@ const Card = ({
                                 transform: "translateX(-50%)"
                             }}
                         />
-                        {/* <ExportedImage alt={img} layout="fill" src={img} /> */}
                     </Box>
                 </Box>
 
@@ -214,8 +211,7 @@ const Card = ({
                                 alt="Logo"
                                 objectFit="contain"
                                 src="/assets/lm_logo.png"
-                                layout='fill'
-
+                                layout="fill"
                             />
                         </Box>
                     </Center>
@@ -288,7 +284,6 @@ const Card = ({
                                 <HStack>
                                     <Box
                                         cursor="pointer"
-                                        // width="100%"
                                         height="14px"
                                         width="14px"
                                         position="relative"
@@ -314,7 +309,6 @@ const Card = ({
                                 <HStack>
                                     <Box
                                         cursor="pointer"
-                                        // width="100%"
                                         height="24px"
                                         position="relative"
                                         my={4}
@@ -323,14 +317,12 @@ const Card = ({
                                             alt="Share"
                                             objectFit="contain"
                                             src="/assets/nfts/share.svg"
-                                            layout='fill'
-
+                                            layout="fill"
                                         />
                                     </Box>
 
                                     <Box
                                         cursor="pointer"
-                                        // width="100%"
                                         height="24px"
                                         position="relative"
                                         my={4}
@@ -339,8 +331,7 @@ const Card = ({
                                             alt="Favorite"
                                             objectFit="contain"
                                             src="/assets/nfts/favorite.svg"
-                                            layout='fill'
-
+                                            layout="fill"
                                         />
                                     </Box>
                                 </HStack>
@@ -354,7 +345,6 @@ const Card = ({
                                 <HStack>
                                     <Box
                                         cursor="pointer"
-                                        // width="100%"
                                         height="14px"
                                         position="relative"
                                         my={4}
@@ -365,7 +355,6 @@ const Card = ({
                                             src="/assets/nfts/money.svg"
                                             height="16px"
                                             width="16px"
-
                                         />
                                     </Box>
 
@@ -382,7 +371,6 @@ const Card = ({
                                 <HStack>
                                     <Box
                                         cursor="pointer"
-                                        // width="100%"
                                         height="24px"
                                         position="relative"
                                         my={4}
@@ -393,13 +381,11 @@ const Card = ({
                                             src="/assets/nfts/share.svg"
                                             height="22px"
                                             width="22px"
-
                                         />
                                     </Box>
 
                                     <Box
                                         cursor="pointer"
-                                        //  width="100%"
                                         height="24px"
                                         position="relative"
                                         my={4}
