@@ -27,13 +27,19 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     };
     const { callAuthService } = useContext(AppContext);
 
-    if (router.query.access_token) {
-        if (router.query.provider == "facebook") {
-            callAuthService("facebook", router.query.access_token);
-        } else {
-            callAuthService("google", router.query.access_token);
+    useEffect(() => {
+        if (!router.isReady) return;
+        const access_token = router.query.access_token;
+        const provider = router.query.provider;
+        console.log(access_token, provider);
+        if (access_token) {
+            if (provider == "facebook") {
+                callAuthService("facebook", access_token);
+            } else {
+                callAuthService("google", access_token);
+            }
         }
-    }
+    }, [router.isReady]);
 
     useEffect(() => {
         if (contestmasters) {
@@ -81,17 +87,21 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     }, [contestmasters, contestSectionsData]);
 
     return (
-        <Box mx={["2rem", "2.5rem","3rem","3rem", "5rem"]}>
+        <Box mx={["2rem", "2.5rem", "3rem", "3rem", "5rem"]}>
             <Box mb={"10vw"}>
                 <Box>
                     <Flex
                         direction={["column", "column", "column", "row", "row"]}
                     >
-                        <Box pb={[5,5,12]} w={["100%", "100%", "100%", "70%"]}>
+                        <Box
+                            pb={[5, 5, 12]}
+                            w={["100%", "100%", "100%", "70%"]}
+                        >
                             <Box mt={!isMobileDevice ? 26 : 0}>
                                 <Text
                                     variant="headText"
-                                    fontSize={["35px",
+                                    fontSize={[
+                                        "35px",
                                         "2.5em",
                                         "53px",
                                         "3.5em",
@@ -101,18 +111,17 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                                     mb={0}
                                     lineHeight={["50px", "45px", "80px"]}
                                 >
-                                     Check out New releases
-                                            <br />
-                                            ARE YOU READY TO PLAY?
-                                   
+                                    Check out New releases
+                                    <br />
+                                    ARE YOU READY TO PLAY?
                                 </Text>
 
                                 <Text
                                     color="#FFF !important"
-                                    fontSize={["18px","18px", "25px", "1.3em"]}
-                                    lineHeight={["35px","35px","40px"]}
+                                    fontSize={["18px", "18px", "25px", "1.3em"]}
+                                    lineHeight={["35px", "35px", "40px"]}
                                     fontWeight="normal"
-                                    width={["100%","100%","100%", "50%"]}
+                                    width={["100%", "100%", "100%", "50%"]}
                                     my="1em"
                                 >
                                     Become a virtual landlord to some of the
@@ -138,7 +147,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                             textAlign={"center"}
                             px={10}
                             pb={12}
-                            pt={[0,0,0,8, 12]}
+                            pt={[0, 0, 0, 8, 12]}
                             mt={[]}
                         >
                             {carouselItem && (

@@ -113,14 +113,18 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
         { label: "Influencers", path: "/influencers" }
     ];
     useEffect(() => {
-        if (router.query.access_token) {
-            if (router.query.provider == "facebook") {
-                callAuthService("facebook", router.query.access_token);
+        if (!router.isReady) return;
+        const access_token = router.query.access_token;
+        const provider = router.query.provider;
+        console.log(access_token, provider);
+        if (access_token) {
+            if (provider == "facebook") {
+                callAuthService("facebook", access_token);
             } else {
-                callAuthService("google", router.query.access_token);
+                callAuthService("google", access_token);
             }
         }
-    }, []);
+    }, [router.isReady]);
 
     useEffect(async () => {
         if (data && data?.length > 0 && options.length == 0) {
@@ -163,7 +167,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
 
         setCategory(newCategory);
     };
-    
+
     useEffect(() => {
         if (influencerLikes) {
             if (influencerLikes?.length) {
@@ -189,8 +193,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     }, [influencerLikes]);
     useEffect(() => {
         if (data && selectedCategory) {
-            
-       let  selData = data.filter((item) => item.slug === selectedCategory);
+            let selData = data.filter((item) => item.slug === selectedCategory);
             setCategory(selData[0].name.toLowerCase());
             setSelCategoriesData(selData);
         }
@@ -272,7 +275,6 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
         }
     };
     return (
-        
         <Box>
             {selectedCategory && selCategoriesData && selCategoriesData[0] && (
                 <SEOContainer
@@ -287,33 +289,27 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
 
             <Box w="100% " overflow="hidden">
                 {/* <Breadcrumbs routes={breadcrumbsPath} style={{ mb: "14px" }} /> */}
-                {router.pathname ===  "/influencers/category/[id]" ? (
-                
-                <Box mr={[0, "50px"]} ml={[0, "50px"]}>
-                {getBannerImage() && (
-                    <Box
-                        position="relative"
-                        align="center"
-                        width="100%"
-                        height={"350px"}
-                    >
-                        <Image
-                            alt={`influencer-banner`}
-                            m={"auto"}
-                            className="custom-img"
-                            layout="fill"
-                            src={getBannerImage()}
-                        />
+                {router.pathname === "/influencers/category/[id]" ? (
+                    <Box mr={[0, "50px"]} ml={[0, "50px"]}>
+                        {getBannerImage() && (
+                            <Box
+                                position="relative"
+                                align="center"
+                                width="100%"
+                                height={"350px"}
+                            >
+                                <Image
+                                    alt={`influencer-banner`}
+                                    m={"auto"}
+                                    className="custom-img"
+                                    layout="fill"
+                                    src={getBannerImage()}
+                                />
+                            </Box>
+                        )}
                     </Box>
-                )}
-            </Box>
-
-                      
-                 ) : (
-                 
-                  
-                
-               < Flex
+                ) : (
+                    <Flex
                         flexDir={["column", "column", "column", "row"]}
                         w="100%"
                     >
@@ -410,7 +406,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                             )}
                         </Box>
                     </Flex>
-                )} 
+                )}
             </Box>
             <Box>
                 <Box
@@ -590,7 +586,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                         <Center mt={"30px"} height="30px" py="50px">
                             <Flex width={"440px"}>
                                 <CImage
-                                     width={ pageNo > 0?"100px":"60px"}
+                                    width={pageNo > 0 ? "100px" : "60px"}
                                     onClick={() => {
                                         if (pageNo > 0) setPageNo(pageNo - 1);
                                     }}
@@ -615,7 +611,11 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
 
                                 <CImage
                                     overflow="hidden"
-                                    width={ pageNo < totalPages - 1?"100px":"60px"}
+                                    width={
+                                        pageNo < totalPages - 1
+                                            ? "100px"
+                                            : "60px"
+                                    }
                                     onClick={() => {
                                         if (pageNo < totalPages - 1)
                                             setPageNo(pageNo + 1);
