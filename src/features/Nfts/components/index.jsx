@@ -398,7 +398,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                     >
                         {displayData?.map((nfts, index) => (
                             <Box
-                                w={["100%", "100%", 200, 200, 200]}
+                                w={["100%", "100%", "200px", "200px", "200px"]}
                                 mx={["10px", "5px", "5px", "5px", "20px"]}
                                 my={["10px", "5px", "5px", "5px", "20px"]}
                             >
@@ -423,10 +423,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                                             textOverflow="ellipsis"
                                             overflow="hidden"
                                         >
-                                            {nfts.name.substr(
-                                                0,
-                                                nfts.name.indexOf(" ")
-                                            )}
+                                            {nfts.name}
                                         </Text>
                                     </Button>
                                 </Tooltip>

@@ -460,7 +460,10 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                             {influencerCat.name.substr(
                                                 0,
                                                 influencerCat.name.indexOf(" ")
-                                            )}
+                                            )!==""?influencerCat.name.substr(
+                                                0,
+                                                influencerCat.name.indexOf(" ")
+                                            ):influencerCat.name}
                                         </Text>
                                     </Button>
                                 </Tooltip>
