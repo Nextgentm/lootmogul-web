@@ -182,8 +182,8 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                     <Text
                       color="white"
                       fontFamily="Sora"
-                      fontSize={["20px", "20px", "30px", "25px", "30px"]}
-                      mt="20px"
+                      fontSize={["18px","20px"]}
+                      mt="30px!important"
                     >
                       {NFTS.description}
                     </Text>

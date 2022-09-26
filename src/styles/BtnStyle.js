@@ -50,7 +50,7 @@ export const BtnStyle = {
         fontWeight: "600",
         fontSize: "1rem",
         border: "none",
-        padding: "40px 50px",
+        padding: "30px 25px",
         borderRadius: "10px",
 
       },
