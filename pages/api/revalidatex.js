@@ -37,17 +37,17 @@ export default async function handler(req, res) {
     }
     
   try {
-       res.unstable_revalidate('/')
-       res.unstable_revalidate('/influencers')
-       res.unstable_revalidate('/nfts')
-       res.unstable_revalidate('/games')
-       res.unstable_revalidate('/about-us')
-       res.unstable_revalidate('/founder-nfts')
+       res.revalidate('/')
+       res.revalidate('/influencers')
+       res.revalidate('/nfts')
+       res.revalidate('/games')
+       res.revalidate('/about-us')
+       res.revalidate('/founder-nfts')
 
       const allInf = await FetchData("influencers")
       allInf?.map(async inf=>{
           if(inf.slug)
-             res.unstable_revalidate('/influencer/'+inf.slug)
+             res.revalidate('/influencer/'+inf.slug)
         }
       )
 
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
 
       allContests?.map(async contest=>
         { if(contest.slug)
-             res.unstable_revalidate('/games/'+ contest.slug)
+             res.revalidate('/games/'+ contest.slug)
         }
 
       )
@@ -65,7 +65,7 @@ export default async function handler(req, res) {
       allNfts?.map(async nft=>
         {
           if(nft.slug)
-             res.unstable_revalidate('/nfts/'+ nft.slug)
+             res.revalidate('/nfts/'+ nft.slug)
         }
 
       )
@@ -73,7 +73,7 @@ export default async function handler(req, res) {
 
       allPromos?.map(async pro=>{
         if(pro.slug)
-           res.unstable_revalidate('/promotions/'+ pro.slug)
+           res.revalidate('/promotions/'+ pro.slug)
       }
 
       )
