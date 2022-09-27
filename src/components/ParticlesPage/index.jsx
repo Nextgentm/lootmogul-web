@@ -27,30 +27,7 @@ const ParticlesPage = ()=> {
           },
           shape: {
             type: "image",
-            // image:[{
-            //     src: "/assets/shapes/shape1.png",
-            //     width: 100,
-            //     height: 100
-            //   },
-            //   {
-            //     src: "/assets/shapes/shape2.png",
-            //   width: 100,
-            //   height: 100
-            // },
-            // {
-            //     src: "/assets/shapes/shape3.png",
-            //   width: 100,
-            //   height: 100
-            // },{
-            //     src: "/assets/shapes/shape4.png",
-            //   width: 100,
-            //   height: 100
-            // },
-            //   {
-            //       src: "/assets/shapes/shape5.png",
-            //     width: 100,
-            //     height: 100
-            //   }],
+            
            
             images: [{
                 src: "/assets/shapes/shape1.png",

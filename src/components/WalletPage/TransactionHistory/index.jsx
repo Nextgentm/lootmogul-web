@@ -9,14 +9,6 @@ import {
     Input,
     InputLeftElement,
     Select,
-    // Table,
-    // Thead,
-    // Tbody,
-    // Tfoot,
-    // Tr,
-    // Th,
-    // Td,
-    // TableCaption,
     Text
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
@@ -30,7 +22,6 @@ import moment from "moment";
 import strapi from "../../../utils/strapi";
 import AppContext from "../../../utils/AppContext";
 import TransactionTable from "./TransactionTable";
-// import "@y0c/react-datepicker/assets/styles/calendar.scss";
 
 const TransactionHistory = () => {
     const { user, amounts } = useContext(AppContext);
@@ -47,20 +38,11 @@ const TransactionHistory = () => {
         moment().endOf("day").format("YYYY-MM-DD")
     );
     const statusOptions = ["All", "Success", "Pending", "Failed"];
-    const [value, onChange] = useState(new Date());
     const currentSize = useBreakpointValue({
         base: "base",
         sm: "sm",
         md: "md"
     });
-    // const filterOptions = [
-    //     "See all",
-    //     "Deposits",
-    //     "Withdrawls",
-    //     "Purchase",
-    //     "Bonus",
-    //     "Joined Contest"
-    // ];
 
     const fetchData = async (
         status = "all",
@@ -110,13 +92,10 @@ const TransactionHistory = () => {
                 }
                 pageNo++;
             } while (pageNo <= pageCount);
-            // Pass data to the page via props
             data = data.flat();
             setLoading(false);
             setData(data);
-        } catch (error) {
-            //console.log(error);
-        }
+        } catch (error) {}
     };
 
     const handleChangeKeyword = (e) => {
@@ -129,19 +108,6 @@ const TransactionHistory = () => {
         const newStatus = e.target.value;
         setStatus(newStatus);
         fetchData(newStatus, keyword, startingDate, endingDate);
-    };
-
-    const handleChangeStartingDate = (e) => {
-        fetchData(status, keyword, moment(e).format("YYYY-MM-DD"), endingDate);
-    };
-
-    const handleChangeEndingDate = (e) => {
-        fetchData(
-            status,
-            keyword,
-            startingDate,
-            moment(e).format("YYYY-MM-DD")
-        );
     };
 
     React.useEffect(() => {
@@ -479,30 +445,6 @@ const SelectBox = ({ style, icon, title, options, onChange }) => {
                     })}
             </Select>
         </Flex>
-    );
-};
-
-const DatePickerBox = ({ style, icon, title, options, value, onChange }) => {
-    return (
-        <InputGroup style={style}>
-            <InputLeftElement border="none" pointerEvents="none" width="40%">
-                <Flex>
-                    <Box>{icon}</Box>
-                    <Text color="white">{title}</Text>
-                </Flex>
-            </InputLeftElement>
-
-            <Input
-                type="date"
-                border="none"
-                placeholder="Starting Date"
-                _focus={{ boxShadow: "none", color: "white" }}
-                style={{ color: "white" }}
-                value={value}
-                onChange={onChange}
-                width="60%"
-            />
-        </InputGroup>
     );
 };
 

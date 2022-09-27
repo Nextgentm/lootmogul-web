@@ -1,39 +1,34 @@
 import { useEffect, useState } from "react";
-import {
-    Box,
-    Text,
-} from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import ScrollToTop from "react-scroll-to-top";
 import { ChevronUpIcon } from "@chakra-ui/icons";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
-import ChakraUIRenderer from 'chakra-ui-markdown-renderer';
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 const newMarkDownTheme = {
-    p: props => {
+    p: (props) => {
         const { children } = props;
         return (
-            <Text mb={2} color="white!important" fontSize={'14px'}>
+            <Text mb={2} color="white!important" fontSize={"14px"}>
                 {children}
             </Text>
         );
-    },
+    }
 };
 const PrivacyPolicy = () => {
-    const [data, setData] = useState(null)
+    const [data, setData] = useState(null);
 
     useEffect(() => {
-        fetch("/privacy.json").then(
-            function (res) {
+        fetch("/privacy.json")
+            .then(function (res) {
                 return res.json();
-            }).then(function (data) {
-                setData(data[0].privacydata)
-            }).catch(
-                function (err) {
-                  
-                }
-            )
-    }, [data])
+            })
+            .then(function (data) {
+                setData(data[0].privacydata);
+            })
+            .catch(function (err) {});
+    }, [data]);
     return (
         <>
             <ScrollToTop
@@ -63,9 +58,14 @@ const PrivacyPolicy = () => {
                 >
                     PRIVACY POLICY
                 </Text>
-                <ReactMarkdown rehypePlugins={[rehypeRaw]} components={ChakraUIRenderer(newMarkDownTheme)} remarkPlugins={[remarkGfm]} skipHtml>
+                <ReactMarkdown
+                    rehypePlugins={[rehypeRaw]}
+                    components={ChakraUIRenderer(newMarkDownTheme)}
+                    remarkPlugins={[remarkGfm]}
+                    skipHtml
+                >
                     {data}
-                </ReactMarkdown >
+                </ReactMarkdown>
             </Box>
         </>
     );

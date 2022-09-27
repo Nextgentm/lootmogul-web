@@ -8,11 +8,7 @@ const CountDownTimer = ({
     cancelLink,
     rescheduleLink,
     onCancelClick,
-    onReScheduleClick,
-    storyId,
-    profile,
-    isRated,
-    creator
+    onReScheduleClick
 }) => {
     const [currentTime, setCurrentTime] = useState(moment());
     const timeBetween = moment.duration(currentTime);
@@ -81,14 +77,7 @@ const CountDownTimer = ({
                         textAlign={"center"}
                     >
                         <Text
-                            textAlign="center"
-                            fontSize="16"
-                            fontWeight="bold"
-                            lineHeight="18px"
-                            textDecor="underline"
-                            fontFamily="cabin"
-                            cursor="pointer"
-                            color="primary_1"
+                            style={optionText}
                             mt="3%"
                             mr="5%"
                             mb={["6%", "2%"]}
@@ -101,14 +90,7 @@ const CountDownTimer = ({
                             Reschedule
                         </Text>
                         <Text
-                            textAlign="center"
-                            fontSize="16"
-                            fontWeight="bold"
-                            lineHeight="18px"
-                            textDecor="underline"
-                            fontFamily="cabin"
-                            cursor="pointer"
-                            color="primary_1"
+                            style={optionText}
                             mt="3%"
                             mb="2%"
                             onClick={(e) => {
@@ -124,6 +106,17 @@ const CountDownTimer = ({
             )}
         </>
     );
+};
+
+const optionText = {
+    textAlign: "center",
+    fontSize: "16px",
+    fontWeight: "bold",
+    lineHeight: "18px",
+    textDecor: "underline",
+    fontFamily: "cabin",
+    cursor: "pointer",
+    color: "primary_1"
 };
 
 export default CountDownTimer;

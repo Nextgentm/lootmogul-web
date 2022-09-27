@@ -46,8 +46,10 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
 
   return (
     <>
+     
       {router.pathname === "/nfts/[id]" ||
       router.pathname === "/nfts/newest" ? (
+       
         <Grid
           templateColumns={[
             "repeat(1, 1fr)",
@@ -58,24 +60,21 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
           ]}
           rowGap={10}
           mt="10px"
+          mx="auto"
           gap={6}
           width="100%"
           justifyContent="center"
         >
+         
           {displayCards?.map((item, index) => (
-            <NftCardInCollection
-              itemId={`nftcard-${index}`}
-              key={`nftcard-${index}`}
-              style={{
-                w: "200px",
-                mr: "20px",
-                mt: "10px",
-              }}
-              slug={item.slug}
-              showInfo={true}
-              nft={item?.nft_kred?.data || item}
-              defaultInView={isMobileDevice ? index < 2 : index < 10}
-              lazyRoot={lazyRoot}
+            <NftCard
+            itemId={`nftcard-${index}`}
+            key={`nftcard-${index}`}
+            slug={item.slug}
+            showInfo={true}
+            nft={item?.nft_kred?.data}
+            defaultInView={isMobileDevice ? index < 2 : index < 5}
+            lazyRoot={lazyRoot}
             />
           ))}
         </Grid>
@@ -91,6 +90,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                   LeftArrow={LeftArrow}
                   RightArrow={RightArrow}
                 >
+                  
                   {displayCards.map((item, index) => (
                     <NftCard
                       itemId={`nftcard-${index}`}
@@ -233,7 +233,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                       RightArrow={RightArrow}
                     >
                       {displayCards.map((item, index) => (
-                        <NftCard
+                        <NftCardInCollection
                           style={{
                             mr: "30px",
                             mt: "10px",

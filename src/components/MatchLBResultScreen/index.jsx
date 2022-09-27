@@ -1,9 +1,8 @@
 /* eslint-disable react/jsx-key */
 import React, { useContext, useState, useEffect } from "react";
-import { Box, Text, Border } from "@chakra-ui/layout";
-import { Flex, Button, useConst } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/layout";
+import { Flex, Button } from "@chakra-ui/react";
 import ScoreDisplay from "./components/ScoreDisplay";
-import Back from "./components/backIcon";
 import ResultDisplayTitle from "./components/resultDisplayTitle";
 import PaidGameConfirmation from "../../features/Games/PaidGameConfirmation";
 import { useRouter } from "next/router";
@@ -17,12 +16,21 @@ const animationData = dynamic(() => import("../../lotties/spinWin.json"));
 
 const MatchLBResultScreen = (props) => {
     const router = useRouter();
-    const { user, matchResult, setUser, updateUser ,currentContest, showPaidGameConfirmation,setCurrentContest,setIsHideHeader, 
-        setIsHideFooter,onPlayAgain
+    const {
+        user,
+        matchResult,
+        setUser,
+        updateUser,
+        currentContest,
+        showPaidGameConfirmation,
+        setCurrentContest,
+        setIsHideHeader,
+        setIsHideFooter,
+        onPlayAgain
     } = useContext(AppContext);
     const [userResult, setUserResult] = useState();
     const [userStats, setUserStats] = useState();
-    const [lbResult,setLbResult] = useState();
+    const [lbResult, setLbResult] = useState();
 
     const defaultOptions = {
         loop: false,
@@ -37,38 +45,41 @@ const MatchLBResultScreen = (props) => {
     const [ani, setAni] = useState(false);
 
     const handlePlayAgain = () => {
-        // router.push("/joining");
-        
         onPlayAgain();
     };
 
     const handleLBClicked = () => {
-        if(currentContest?.slug)
-            router.push("/games/"+ currentContest?.slug+"#leaderboard");
-        else 
-        router.push("/");
+        if (currentContest?.slug)
+            router.push("/games/" + currentContest?.slug + "#leaderboard");
+        else router.push("/");
         setCurrentContest(null);
     };
 
     useEffect(() => {
         props.setLoading(false);
         if (matchResult) {
-            
-            strapi.find("user-stats",{filters:{user: user.id}}).then((response)=>{
-               if(response && response.data)
-                setUserStats(response.data[0]);
-
-            })
-            //console.log(currentContest);
-            if(currentContest && currentContest.contest){
-                strapi.find("contests/"+currentContest.contest.id+"?populate=*").then((data)=>{
-                    if(data?.data?.leaderboard?.data)
-                    strapi.find("custom-leaderboard/getuserscoreboard/"+data?.data?.leaderboard?.data?.id).then((response)=>{
-                        setLbResult(response); 
-                       })
-
-                })
-          
+            strapi
+                .find("user-stats", { filters: { user: user.id } })
+                .then((response) => {
+                    if (response && response.data)
+                        setUserStats(response.data[0]);
+                });
+            if (currentContest && currentContest.contest) {
+                strapi
+                    .find(
+                        "contests/" + currentContest.contest.id + "?populate=*"
+                    )
+                    .then((data) => {
+                        if (data?.data?.leaderboard?.data)
+                            strapi
+                                .find(
+                                    "custom-leaderboard/getuserscoreboard/" +
+                                        data?.data?.leaderboard?.data?.id
+                                )
+                                .then((response) => {
+                                    setLbResult(response);
+                                });
+                    });
             }
             matchResult.map((pl) => {
                 if (pl.id == user.id) {
@@ -82,30 +93,24 @@ const MatchLBResultScreen = (props) => {
                 }
             });
         } else {
-            // show error alert
         }
     }, [matchResult, user]);
 
-
-
     useEffect(() => {
-        // fetch user stats
-     //   props.setLoading(true);
         return () => {
             props.setLoading(false);
 
             updateUser();
             setIsHideHeader(false);
             setIsHideFooter(false);
-          }
+        };
     }, []);
 
     return (
         <>
             {userResult && (
                 <Box
-                    
-                bgImage="url('/assets/image 132.jpg')"
+                    bgImage="url('/assets/image 132.jpg')"
                     bgRepeat="no-repeat"
                     bgSize="cover"
                 >
@@ -120,10 +125,8 @@ const MatchLBResultScreen = (props) => {
                             />
                         )}
                     </Box>
-                    <Box pt="28px" pl="30px">
-                    {/* <Back /> */}
-                    </Box>
-                    
+                    <Box pt="28px" pl="30px"></Box>
+
                     <Flex
                         m={["10px", "60px"]}
                         width={["auto", "auto"]}
@@ -134,7 +137,7 @@ const MatchLBResultScreen = (props) => {
                             <ResultDisplayTitle name="MATCH RESULT" />
 
                             <ScoreDisplay
-                            user={user}
+                                user={user}
                                 userResult={userResult}
                                 userStats={userStats}
                                 lbResult={lbResult}
@@ -159,7 +162,6 @@ const MatchLBResultScreen = (props) => {
                             </Button>
                             <Button
                                 onClick={() => handleLBClicked()}
-
                                 width={["auto", "auto"]}
                                 height="46px"
                                 variant="outline"
@@ -173,7 +175,14 @@ const MatchLBResultScreen = (props) => {
                             </Button>
                         </Flex>
                     </Flex>
-                    { currentContest && showPaidGameConfirmation?.callerKey == `CheckRetry-${currentContest?.id}`  &&  <PaidGameConfirmation retry={showPaidGameConfirmation.retry}contestmaster={currentContest}/>}
+                    {currentContest &&
+                        showPaidGameConfirmation?.callerKey ==
+                            `CheckRetry-${currentContest?.id}` && (
+                            <PaidGameConfirmation
+                                retry={showPaidGameConfirmation.retry}
+                                contestmaster={currentContest}
+                            />
+                        )}
                 </Box>
             )}
         </>

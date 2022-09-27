@@ -18,7 +18,6 @@ const TrendingGamesCard = ({ contestmaster, style }) => {
         useContext(AppContext);
     const router = useRouter();
     const img = contestmaster?.icon?.data?.url;
-    //console.log(contestmaster);
     const [contestStatus,setContestStatus]= useState(false);
     return (
         <Link href={"/games/" + contestmaster.slug} passHref={true} _focus={{ border: "none" }} key={`tgc-${contestmaster?.id}`}>

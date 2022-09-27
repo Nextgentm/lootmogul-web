@@ -2,11 +2,9 @@ import {
     Box,
     Heading,
     Text,
-    Input,
     Flex,
     Button,
     Divider,
-    Select
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -24,7 +22,6 @@ const JoiningPopup = ({ retry, data }) => {
         fetchGameJoiningData,
         setCoupon
     } = useContext(AppContext);
-    const [couponCode, setCouponCode] = useState("");
     const [couponAmount, setCouponAmount] = useState({
         show: false,
         amount: 0
@@ -53,30 +50,7 @@ const JoiningPopup = ({ retry, data }) => {
         }
     }, []);
 
-    const applyCouponCode = async (couponCode) => {
-        await axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-            "https://gamification.tpix.in"
-            }/api/coupon/checkValidity/${couponCode}`
-        ).then((response) => {
-            const {
-                success,
-                message,
-                data: { isVariable, multiplier, amount: promotionAmount }
-            } = response?.data;
-
-            if (success) {
-                if (promotionAmount) {
-                    setCouponAmount({ show: true, amount: promotionAmount });
-                }
-            }
-        }).catch((error) => {
-            if (error.response) {
-                setCouponAmount({ show: true, message: error.response?.data?.message, amount: 0 });
-            }
-        });
-
-    };
+ 
 
     return (
         <Box
@@ -171,86 +145,7 @@ const JoiningPopup = ({ retry, data }) => {
                             </Text>
                         </Flex>
                     </Box>
-                    {/* <Box mt="20px">
-                        <Text
-                            fontWeight="600"
-                            color="primary"
-                            variant="hint"
-                            fontSize={["14px", "16px"]}
-                        >
-                            Apply coupon
-                        </Text>
-                        <Select
-                            mt="2%"
-                            color="white"
-                            onChange={(e) => {
-                                e.preventDefault();
-                                if (
-                                    e.target.value.toString() !==
-                                    "Select coupon code"
-                                ) {
-                                    setCouponCode(e.target.value);
-                                    setCoupon(e.target.value);
-                                    applyCouponCode(e.target.value);
-                                } else {
-                                    setCouponCode("");
-                                    setCoupon("");
-                                    setCouponAmount({ show: false, amount: 0 });
-                                }
-                            }}
-                        >
-                            <option style={{ color: "black" }}>
-                                Select coupon code
-                            </option>
-                            {couponList &&
-                                couponList.map((item, index) => {
-                                    return (
-                                        <option
-                                            key={"coupon" + index}
-                                            value={item.code}
-                                            style={{ background: "#505050" }}
-                                        >
-                                            {item.code}
-                                        </option>
-                                    );
-                                })}
-                        </Select>
-
-
-                        {couponAmount.show && couponAmount.amount >= 0 && (
-                            <Flex mt="5%" justifyContent="space-between">
-                                <Text
-                                    fontWeight="600"
-                                    color="white"
-                                    variant="hint"
-                                    fontSize={["14px", "16px"]}
-                                >
-                                    Applied coupon
-                                </Text>
-                                <Text
-                                    fontWeight="600"
-                                    color="white"
-                                    variant="hint"
-                                    fontSize={["14px", "16px"]}
-                                >
-                                    -{couponAmount.amount}$
-                                </Text>
-                            </Flex>
-                        )}
-                        {couponAmount.show && couponAmount.message && (
-                            <Flex mt="5%" justifyContent="space-between">
-                                <Text
-                                    fontWeight="600"
-                                    color="white"
-                                    variant="hint"
-                                    fontSize={["14px", "16px"]}
-                                >
-                                    {couponAmount.message}
-                                </Text>
-
-                            </Flex>
-                        )}
-                    </Box> */}
+                 
                     <Divider mt="5%"></Divider>
                     <Box mt="20px">
                         <Flex mt="5%" justifyContent="space-between">
@@ -288,7 +183,6 @@ const JoiningPopup = ({ retry, data }) => {
                         width="100%"
                         my="5%"
                         onClick={() => {
-                            // router.push("/joining")
                             setLoading(true);
                             fetchGameJoiningData();
                             // setShowPaidGameConfirmation({});

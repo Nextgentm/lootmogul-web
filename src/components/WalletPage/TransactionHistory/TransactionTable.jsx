@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useTable, usePagination } from "react-table";
 import {
     Table,
@@ -8,20 +8,11 @@ import {
     Th,
     Td,
     Flex,
-    IconButton,
     Box,
     Text,
     Tooltip,
-    Select,
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
-    NumberIncrementStepper,
-    NumberDecrementStepper
 } from "@chakra-ui/react";
 import {
-    ArrowRightIcon,
-    ArrowLeftIcon,
     ChevronRightIcon,
     ChevronLeftIcon
 } from "@chakra-ui/icons";
@@ -29,7 +20,6 @@ import {
 import { makeData, makeColumn } from "./makeData";
 
 function CustomTable({ columns, data }) {
-    // Use the state and functions returned from useTable to build your UI
     const {
         getTableProps,
         getTableBodyProps,
@@ -39,11 +29,8 @@ function CustomTable({ columns, data }) {
         canPreviousPage,
         canNextPage,
         pageOptions,
-        pageCount,
-        gotoPage,
         nextPage,
         previousPage,
-        setPageSize,
         state: { pageIndex, pageSize }
     } = useTable(
         {
@@ -53,24 +40,9 @@ function CustomTable({ columns, data }) {
         },
         usePagination
     );
-    // Render the UI for your table
     return (
         <Box width="100%">
-            {/* <pre>
-        <code>
-          {JSON.stringify(
-            {
-              pageIndex,
-              pageSize,
-              pageCount,
-              canNextPage,
-              canPreviousPage
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre> */}
+       
             <Table
                 mt="5%"
                 width="100%"

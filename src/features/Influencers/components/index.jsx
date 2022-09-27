@@ -94,6 +94,8 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
 
     const ref = React.useRef();
+    
+    const paginationSectionTitle = React.useRef();
 
     const lazyRoot = React.useRef(null);
 
@@ -248,8 +250,8 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             });
             setDisplayInfluencers(inf);
             const tp = parseInt((inf?.length / 12).toFixed() || 1);
-            console.log("tp", tp);
-            console.log("inf", inf.length);
+            // console.log("tp", tp);
+            // console.log("inf", inf.length);
             setTotalPages(tp);
         }
     }, [selCategoriesData]);
@@ -273,6 +275,9 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
         } else {
             return null;
         }
+    };
+    const executePaginationScroll =() => {
+        paginationSectionTitle?.current?.scrollIntoView({ block: "start", behavior: "smooth" });
     };
     return (
         <Box>
@@ -506,7 +511,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                         slug={item.slug}
                                         influencer={item}
                                         lazyRoot={lazyRoot}
-                                        wid={["240px", "320px"]}
+                                        wid={"280px"}
                                         marginR={["10px", "20px"]}
                                     />
                                 ))}
@@ -519,6 +524,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                     mt="20"
                     ml={["20px", "20px", "20px", "60px"]}
                     mr={["20px", "20px", "20px", "60px"]}
+                    ref={paginationSectionTitle}
                 >
                     <Flex
                         flexDir={["column", "column", "column", "row", "row"]}
@@ -574,10 +580,11 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
 
                                     ?.map((influencer, index) => (
                                         <InfluencersCard
-                                            style={{ w: "100%", px: "15px" }}
+                                            style={{ px: "15px" }}
                                             colSpan={4}
                                             itemId={`item-${index}`}
                                             key={`item-${index}`}
+                                            wid={"280px"}
                                             slug={influencer.slug}
                                             influencer={influencer}
                                         />
@@ -591,7 +598,11 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                 <CImage
                                     width={pageNo > 0 ? "100px" : "60px"}
                                     onClick={() => {
-                                        if (pageNo > 0) setPageNo(pageNo - 1);
+                                        if (pageNo > 0) {
+                                            setPageNo(pageNo - 1);
+                                            executePaginationScroll();
+                                        }
+                                        
                                     }}
                                     src={
                                         pageNo > 0
@@ -620,8 +631,11 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                                             : "60px"
                                     }
                                     onClick={() => {
-                                        if (pageNo < totalPages - 1)
+                                        if (pageNo < totalPages - 1){
                                             setPageNo(pageNo + 1);
+                                            executePaginationScroll();
+                                        }
+                                        
                                     }}
                                     src={
                                         pageNo < totalPages - 1

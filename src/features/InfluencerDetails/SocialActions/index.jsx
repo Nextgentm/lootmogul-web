@@ -1,28 +1,13 @@
 import {
     Flex,
     Box,
-    Text,
     Popover,
     PopoverTrigger,
-    PopoverContent,
-    PopoverHeader,
-    PopoverBody,
-    PopoverFooter,
-    PopoverArrow,
-    PopoverCloseButton,
-    Button,
-    Textarea,
-    Image as CImage,Input,
+    Image as CImage,
     useDisclosure,
-    Center
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import Image from "next/image";
-// import NextShare from "../../../utils/socialbuttons";
 import AppContext from "../../../utils/AppContext";
-import Rating from "react-rating";
-import { AiOutlineStar, AiFillStar } from "react-icons/ai";
-import strapi from "../../../utils/strapi";
 import dynamic from "next/dynamic";
 const NextShare = dynamic(() => import("../../../utils/socialbuttons"));
 

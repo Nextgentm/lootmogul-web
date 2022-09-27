@@ -1,7 +1,5 @@
-/* eslint-disable react/jsx-key */
 import {
     Drawer,
-    DrawerOverlay,
     DrawerContent,
     DrawerCloseButton,
     Box    

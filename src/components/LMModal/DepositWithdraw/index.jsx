@@ -1,24 +1,7 @@
-/* eslint-disable react/jsx-key */
-import {
-    Box,
-    Flex,
-    Heading,
-    Text,
-    Input,
-    Select,
-    InputGroup,
-    InputLeftElement,
-    Checkbox,
-    Button
-} from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import { WalletIcon } from "../../Icons";
 import LMTabs from "../../LMTabs";
-import TabLabel from "./TabLabel";
-import TabDepositPanel from "./TabDepositPanel";
 import { useBreakpointValue } from "@chakra-ui/react";
-
-
-
 
 const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
     const currentSize = useBreakpointValue({
@@ -29,8 +12,6 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
 
     return (
         <Flex width="100%" h={["50px", "65px"]}>
-
-
             <Flex w="100%">
                 {currentSize !== "base" && (
                     <Flex width={["50%", "58%"]}>
@@ -40,49 +21,39 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                             borderTopLeftRadius="8px"
                             paddingBottom="6%"
                             paddingLeft={"2%"}
-
                             bg="#3F3F3F"
                         >
-                            <Heading ml="10%" fontWeight="600" variant="modalHeader">
+                            <Heading
+                                ml="10%"
+                                fontWeight="600"
+                                variant="modalHeader"
+                            >
                                 {isDeposit ? "DEPOSIT" : "WITHDRAW"}
                             </Heading>
                         </Box>
-
-
-                    </Flex >
+                    </Flex>
                 )}
 
-                {
-                    currentSize === "base" && (
-                        <Box
-                            width="35%"
-                            paddingTop="10%"
-                            marginRight="16px"
-                            borderTopLeftRadius="8px"
-                            paddingLeft="1%"
-
-                            bg="#3F3F3F"
+                {currentSize === "base" && (
+                    <Box
+                        width="35%"
+                        paddingTop="10%"
+                        marginRight="16px"
+                        borderTopLeftRadius="8px"
+                        paddingLeft="1%"
+                        bg="#3F3F3F"
+                    >
+                        <Heading
+                            ml="10%"
+                            fontWeight="600"
+                            variant="modalHeader"
+                            fontSize={["10px", "16px"]}
                         >
-                            <Heading ml="10%" fontWeight="600" variant="modalHeader" fontSize={["10px", "16px"]}>
-                                {isDeposit ? "DEPOSIT" : "WITHDRAW"}
-                            </Heading>
+                            {isDeposit ? "DEPOSIT" : "WITHDRAW"}
+                        </Heading>
+                    </Box>
+                )}
 
-                        </Box>
-                    )}
-                {/* <Flex w="100%" justifyContent="center">
-                    <WalletIcon
-                        mt="auto"
-                        mb="auto"
-                        boxSize={["15px", "30px"]}
-                        color="primary"
-                    />
-
-                    <Heading fontWeight="400" fontFamily="Blanch" fontSize={["24px", "28px", "38px"]} ml={["6px!important", "15px!important"]} m="auto" color="white">
-                        {isDeposit ? "WALLET BALANCE" : "WIN BALANCE"}
-                    </Heading>
-
-                </Box>
-            )} */}
                 <Flex w="100%" justifyContent="flex-end" mr="3%">
                     <Flex m="auto 0px" justifyContent="flex-end">
                         <WalletIcon
@@ -92,17 +63,30 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                             color="primary"
                         />
 
-                        <Heading fontWeight="400" fontFamily="Blanch" fontSize={["24px", "28px", "38px"]} ml={["6px!important", "15px!important"]} m="auto" color="white">
+                        <Heading
+                            fontWeight="400"
+                            fontFamily="Blanch"
+                            fontSize={["24px", "28px", "38px"]}
+                            ml={["6px!important", "15px!important"]}
+                            m="auto"
+                            color="white"
+                        >
                             {isDeposit ? "WALLET BALANCE" : "WIN BALANCE"}
                         </Heading>
                     </Flex>
 
-                    <Heading fontSize={["24px", "28px", "38px"]} mt="auto" ml="10px" mb="auto" color="primary">
+                    <Heading
+                        fontSize={["24px", "28px", "38px"]}
+                        mt="auto"
+                        ml="10px"
+                        mb="auto"
+                        color="primary"
+                    >
                         ${isDeposit ? totalAmount : winAmount}
                     </Heading>
                 </Flex>
-            </Flex >
-        </Flex >
+            </Flex>
+        </Flex>
     );
 };
 
@@ -124,49 +108,14 @@ const WalletBody = ({ isDeposit }) => {
             url: "/assets/images/stripe.png",
             name: "Stripe"
         }
-        // {
-        //     url: "/assets/images/portis.png",
-        //     name: "Portis"
-        // },
-        // {
-        //     url: "/assets/images/metamask.png",
-        //     name: "Metamask"
-        // },
-        // {
-        //     url: "/assets/images/coinbase.png",
-        //     name: "Coinbase wallet"
-        // },
-
-        // {
-        //     url: "/assets/images/lmwallet.png",
-        //     name: "Lootmogul Wallet",
-        //     desc: "0xC398609A1fC813026E94F8fc03c30c162679640A",
-        //     type: "Private Key:"
-        // }
     ];
     const withDrawData = [
-        // {
-        //    // url: "/assets/images/stripe.png",
-        //     name: "Stripe",
-        //     mode: "stripe",
-        //     type:"cash"
-        // },
         {
             //url: "/assets/images/lmwallet.png",
             name: "Paypal",
             mode: "paypal",
             type: "cash"
-
         },
-
-        // {
-        //     //url: "/assets/images/lmwallet.png",
-        //     name: "Paytm",
-        //     mode: "paytm",
-        //     type:"cash"
-
-        // },
-
         {
             //url: "/assets/images/metamask.png",
             name: "Metamask",
@@ -178,17 +127,7 @@ const WalletBody = ({ isDeposit }) => {
             name: "Coinbase wallet",
             mode: "coinbase",
             type: "crypto"
-        },
-
-
-
-        // {
-        //   //  url: "/assets/images/lmwallet.png",
-        //     name: "Bank",
-        //     mode: "bank",
-        //     type:"cash"
-
-        // }
+        }
     ];
 
     const currentSize = useBreakpointValue({
@@ -211,7 +150,11 @@ const WalletBody = ({ isDeposit }) => {
 const DepostWithdraw = ({ totalAmount, isDeposit, winAmount }) => {
     return (
         <Box width="100%" bg="#303030" borderRadius="8px">
-            <WalletHeader isDeposit={isDeposit} totalAmount={totalAmount} winAmount={winAmount} />
+            <WalletHeader
+                isDeposit={isDeposit}
+                totalAmount={totalAmount}
+                winAmount={winAmount}
+            />
             <WalletBody isDeposit={isDeposit} />
             <WalletFooter />
         </Box>

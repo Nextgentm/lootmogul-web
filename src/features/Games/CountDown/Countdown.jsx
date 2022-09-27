@@ -51,60 +51,23 @@ class Countdown extends Component {
                     Contest Starts in:{" "}
                 </Text>
                 {this.state.days}
-                <Text
-                    background={"#ff4800"}
-                    fontSize="25px"
-                    padding={"10px"}
-                    display="inline-flex"
-                    textTransform={"uppercase"}
-                    paddingLeft={"7px"}
-                >
-                    Days{" "}
-                </Text>
+                <Text style={timerNum}>Days </Text>
                 {this.state.hours}
-                <Text
-                    background={"#ff4800"}
-                    fontSize="25px"
-                    padding={"10px"}
-                    display="inline-flex"
-                    textTransform={"uppercase"}
-                    paddingLeft={"7px"}
-                >
-                    Hours
-                </Text>
-                {this.state.minutes}{" "}
-                <Text
-                    background={"#ff4800"}
-                    fontSize="25px"
-                    padding={"10px"}
-                    display="inline-flex"
-                    textTransform={"uppercase"}
-                    paddingLeft={"7px"}
-                >
-                    Minutes
-                </Text>
+                <Text style={timerNum}>Hours</Text>
+                {this.state.minutes} <Text style={timerNum}>Minutes</Text>
                 {this.state.seconds}
-                <Text
-                    background={"#ff4800"}
-                    fontSize="25px"
-                    padding={"10px"}
-                    display="inline-flex"
-                    textTransform={"uppercase"}
-                    paddingLeft={"7px"}
-                >
-                    Secs
-                </Text>
+                <Text style={timerNum}>Secs</Text>
             </Flex>
         );
     }
 }
- const timerNum ={
-    background:"#ff4800",
-    fontSize:"25px",
-    padding:"10px",
-    display:"inline-flex",
-    textTransform:"uppercase",
-    paddingLeft:"7px"
- }
+const timerNum = {
+    background: "#ff4800",
+    fontSize: "25px",
+    padding: "10px",
+    display: "inline-flex",
+    textTransform: "uppercase",
+    paddingLeft: "7px"
+};
 
 export default Countdown;

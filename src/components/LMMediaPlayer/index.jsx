@@ -1,8 +1,6 @@
 import React from 'react'
 import YouTube from 'react-youtube';
-import { Flex } from "@chakra-ui/react";
-{/* <Flex ml="10%" background={"#000000"}>
-</Flex> */}
+
 const opts = {
     height: '500px',
     width: '100%',

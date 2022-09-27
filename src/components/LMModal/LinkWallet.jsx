@@ -5,7 +5,6 @@ import Image from "next/image";
 import axios from "axios";
 import strapi from "../../utils/strapi";
 import React, { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
 
 import AppContext from "../../utils/AppContext";
 import { isEmpty } from "lodash";
@@ -41,7 +40,7 @@ const LinkWallet = () => {
                 const {
                     data: { stripe_session_id }
                 } = resp.data;
-                
+
                 const stripe = await loadStripe(
                     process.env.NEXT_PUBLIC_STRIPE_API_KEY
                 );
@@ -55,12 +54,11 @@ const LinkWallet = () => {
         }
     };
 
-   
     const connectMetamask = async () => {
-        setLoading(true); 
+        setLoading(true);
         if (!window.web3?.currentProvider?.isMetaMask) {
             alert("Please install Metamask");
-            setLoading(false); 
+            setLoading(false);
             return;
         }
         let wallet = await localStorage.getItem("selected-wallet", "");
@@ -84,17 +82,15 @@ const LinkWallet = () => {
                     user: user.id,
                     type: "metamask",
                     address: window.ethereum?.selectedAddress,
-                    isActive:  true
-                }
-                const resp = await strapi.create("crypto-wallets", cryptoAdd
-                );
+                    isActive: true
+                };
+                const resp = await strapi.create("crypto-wallets", cryptoAdd);
                 setCryptoWallet(resp);
             } else {
                 localStorage.setItem("selected-wallet", "");
             }
-            
         }
-        setLoading(false); 
+        setLoading(false);
     };
 
     const defaultData = [
@@ -121,18 +117,10 @@ const LinkWallet = () => {
             handler: payWithStripe,
             disabled: false
         }
-        // {
-        //     url: "/assets/images/lmwallet.png",
-        //     name: "Lootmogul Wallet",
-        //     desc: "0xC398609A1fC813026E94F8fc03c30c162679640A",
-        //     type: "Private Key:",
-        //     disabled: true
-        // }
     ];
 
-
     useEffect(async () => {
-        setLoading(true); 
+        setLoading(true);
         if (!isEmpty(window.ethereum?.selectedAddress)) {
             localStorage.setItem(
                 "selected-wallet",
@@ -151,7 +139,7 @@ const LinkWallet = () => {
             );
             if (mw) setCryptoWallet(mw);
         }
-        setLoading(false); 
+        setLoading(false);
     }, []);
 
     return (
@@ -174,8 +162,7 @@ const LinkWallet = () => {
                 <Image layout="fill" alt="cut" src="/assets/login-cut.png" />
             </Box>
 
-           
-             <Box
+            <Box
                 border="1px dashed #515151;"
                 w="100%"
                 m="auto"
@@ -188,27 +175,24 @@ const LinkWallet = () => {
                     </Heading>
                 </Flex>
 
-                {!loading && <Box p="10px">
-                    <Text mb="10px" variant="textualVal" fontWeight={600}>
-                        Crypto Wallets
-                    </Text>
-                    {defaultData &&  
-                        defaultData.map((wallet) => {
-                            return (
-                                <WalletBar
-                                    key={wallet.name}
-                                    item={wallet}
-                                    cryptoWallet={cryptoWallet}
-                                />
-                            );
-                        })}
-                </Box>
-            }
-                {/* <Button mt="15px!important" mb="20px!important" m="auto">
-                    Connect other Wallet
-                </Button> */}
+                {!loading && (
+                    <Box p="10px">
+                        <Text mb="10px" variant="textualVal" fontWeight={600}>
+                            Crypto Wallets
+                        </Text>
+                        {defaultData &&
+                            defaultData.map((wallet) => {
+                                return (
+                                    <WalletBar
+                                        key={wallet.name}
+                                        item={wallet}
+                                        cryptoWallet={cryptoWallet}
+                                    />
+                                );
+                            })}
+                    </Box>
+                )}
             </Box>
-            
         </Box>
     );
 };
@@ -247,25 +231,21 @@ const WalletBar = ({ item, cryptoWallet }) => {
                                 {cryptoWallet.address}
                             </Text>
                         )}
-
-                    
                 </Box>
             </Flex>
 
-            
-                <Button
-                    onClick={item?.handler}
-                    width="25%"
-                    variant="outline"
-                    disabled={item.disabled}
-                >
-                    {item.type == cryptoWallet?.type && cryptoWallet?.isActive
-                        ? "Disconnect"
-                        : (item.disabled
-                        ? "Coming Soon"
-                        : "Connect")}
-                </Button>
-            
+            <Button
+                onClick={item?.handler}
+                width="25%"
+                variant="outline"
+                disabled={item.disabled}
+            >
+                {item.type == cryptoWallet?.type && cryptoWallet?.isActive
+                    ? "Disconnect"
+                    : item.disabled
+                    ? "Coming Soon"
+                    : "Connect"}
+            </Button>
         </Flex>
     );
 };

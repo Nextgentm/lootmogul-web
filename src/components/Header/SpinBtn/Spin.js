@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import {
     Flex,
     Box,
-    Tooltip,
     Stack,
     Button,
     Heading,
@@ -13,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import Lottie from "react-lottie";
 import animationData from "../../../lotties/spinWin.json";
-import Link from 'next/link'
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 const Wheel = dynamic(
@@ -21,42 +19,26 @@ const Wheel = dynamic(
     { ssr: false }
 );
 
-
 const Spin = ({
     data,
     handleClaimClick,
     prizeNumber,
     spinTimeRemaining,
     spinTimeRemainingFormat,
-    rewardType,modalClose
+    rewardType,
+    modalClose
 }) => {
     const [isSpin, setSpin] = React.useState(false);
     const [isSpinning, setIsSpinning] = React.useState(null);
     const [ani, setAni] = useState(true);
     const [btn, setBtn] = useState(true);
-    
+
     const router = useRouter();
     const wheelData = data.map((ele, index) => {
         return { option: ele };
     });
-    const [state, setState] = useState("star");
-    const rotateFunction = () => {
-        setState("star");
-       
-    };
-    // const spinData = [
-    //   { option: "REACT" },
-    //   { option: "CUSTOM" },
-    //   { oponion: "CUSTOM" },
-    //   { option: "ROULETTE"},
-    //   { option: "WHEEL" },
-    //   { option: "REACT" },
 
-    // ];
     const handleSpinClick = () => {
-        // const newPrizeNumber = Math.floor(Math.random() * wheelData.length);
-        // setPrizeNumber(newPrizeNumber);
-        // //console.log(prizeNumber, data);
         setSpin(true);
         setIsSpinning(true);
         setAni(true);
@@ -75,11 +57,12 @@ const Spin = ({
     return (
         <Stack>
             <Flex direction="column" alignItems="center">
-               
-             <Flex w="65%" ml ="auto"  mt="4%">   <Heading fontSize={32} mr="4%" color={"secondary"}>
-                    Spin &amp; win prizes
-                </Heading>
-                <Image
+                <Flex w="65%" ml="auto" mt="4%">
+                    {" "}
+                    <Heading fontSize={32} mr="4%" color={"secondary"}>
+                        Spin &amp; win prizes
+                    </Heading>
+                    <Image
                         borderRadius="full"
                         boxSize={["20px", "25px"]}
                         src={`/assets/info-icon.png`}
@@ -88,11 +71,10 @@ const Spin = ({
                         zIndex={999}
                         onClick={(e) => {
                             e.preventDefault();
-                            window.open("/spin-terms","_blank");
+                            window.open("/spin-terms", "_blank");
                         }}
-                       
                     />
-                    </Flex>
+                </Flex>
                 <Flex w="93%" mt="-30px" mb="3">
                     <Spacer />
                     <Image
@@ -100,9 +82,6 @@ const Spin = ({
                         boxSize={["25px", "30px"]}
                         src={`/assets/close.png`}
                         alt="info"
-                        // onClick={() => {
-                        //     window.open("/spin-terms");
-                        // }}
                         onClick={modalClose}
                     />
                 </Flex>
@@ -117,9 +96,14 @@ const Spin = ({
                     )}
                 </Box>
                 <Box pos="relative">
-                    <Box pos="absolute" zIndex={9} width="75%" top="17%" left="12%"
-                   >
-                      <Image alt="star" src="/assets/star.png"/>  
+                    <Box
+                        pos="absolute"
+                        zIndex={9}
+                        width="75%"
+                        top="17%"
+                        left="12%"
+                    >
+                        <Image alt="star" src="/assets/star.png" />
                     </Box>
 
                     <Wheel
@@ -142,9 +126,7 @@ const Spin = ({
                         textDistance={55}
                         outerBorderWidth={20}
                         radiusLineWidth={0}
-                        // radiusLineColor="#fff"
                         innerBorderWidth={25}
-                        // innerRadius={0}
                         innerBorderColor={"#1D1D1D"}
                         onStopSpinning={() => {
                             setSpin(false);
@@ -178,17 +160,8 @@ const Spin = ({
                             <Heading fontSize={32}>{data[prizeNumber]}</Heading>
                         )}
                     </Text>
-                    // <Button
-                    //   variant="spinclaimBtn"
-                    //   zIndex={1000}
-                    //   onClick={handleClaimClick}
-                    //   mb="5"
-                    // >
-                    //   claim
-                    // </Button>
                 )}
             </Flex>
-         
         </Stack>
     );
 };
