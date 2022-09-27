@@ -10,11 +10,14 @@ import {
 import { useState, useContext, useRef } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
 
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-const DepostWithdrawModal = dynamic(() => import("../../LMModal/DepositWithdraw"), {
-    loading: () => <p>Loading...</p>
-});
+const DepostWithdrawModal = dynamic(
+    () => import("../../LMModal/DepositWithdraw"),
+    {
+        loading: () => <p>Loading...</p>
+    }
+);
 const LMModalComponent = dynamic(() => import("../../LMModal"), {
     loading: () => <p>Loading...</p>
 });
@@ -37,10 +40,6 @@ const UserInfo = ({ user, isMobileDevice }) => {
             label: "My Wallet",
             action: () => router.push("/wallet")
         },
-        // { label: "My NFTs" },
-        // { label: "Last Played" },
-        // { label: "Leaderboard" },
-        // { label: "Refer & Earn" },
         {
             label: "Deposit",
             action: () => setShowModal({ show: true, mode: "sub" })
@@ -49,7 +48,10 @@ const UserInfo = ({ user, isMobileDevice }) => {
             label: "Withdrawal",
             action: () => setShowModal({ show: true, mode: "add" })
         },
-        // { label: "Payment History" },
+        {
+            label: "My Report",
+            action: () => router.push("/influencer-summary")
+        },
         { label: "Logout", action: () => logout() }
     ];
 
@@ -115,22 +117,18 @@ const UserInfo = ({ user, isMobileDevice }) => {
 
     useEffect(() => {
         if (user?.wallets) {
-            const totalAmount = user?.wallets?.reduce(
-                (partialSum, a) => partialSum + a?.balance,
-                0
-            )?.toFixed(2);;
+            const totalAmount = user?.wallets
+                ?.reduce((partialSum, a) => partialSum + a?.balance, 0)
+                ?.toFixed(2);
 
             setTotalAmount(totalAmount);
         }
     }, [user, user?.wallets]);
 
-
     return (
         <Flex ml="auto" align="center" h="100%" pl="20px">
-
             {isTabletOrDesktop && (
                 <>
-
                     {user?.wallets?.length > 0 && (
                         <>
                             <Image
@@ -139,7 +137,13 @@ const UserInfo = ({ user, isMobileDevice }) => {
                                 height={30}
                                 src="/assets/vertical_line.png"
                             />
-                            <Flex zIndex={99} ml="20px" mr="20px" align="center" onClick={() => router.push("/wallet")}>
+                            <Flex
+                                zIndex={99}
+                                ml="20px"
+                                mr="20px"
+                                align="center"
+                                onClick={() => router.push("/wallet")}
+                            >
                                 <Image
                                     alt="wallet"
                                     src="/assets/wallet.svg"
@@ -193,10 +197,18 @@ const UserInfo = ({ user, isMobileDevice }) => {
                 style={{ padding: "2%" }}
                 handleClose={() => setShowModal(false)}
             >
-                {showModal.mode === "sub" && <DepostWithdrawModal isDeposit={true} totalAmount={totalAmount}
-                    winAmount={amounts?.winnings} />}
+                {showModal.mode === "sub" && (
+                    <DepostWithdrawModal
+                        isDeposit={true}
+                        totalAmount={totalAmount}
+                        winAmount={amounts?.winnings}
+                    />
+                )}
                 {showModal.mode === "add" && (
-                    <DepostWithdrawModal totalAmount={totalAmount} winAmount={amounts?.winnings} />
+                    <DepostWithdrawModal
+                        totalAmount={totalAmount}
+                        winAmount={amounts?.winnings}
+                    />
                 )}
             </LMModalComponent>
         </Flex>

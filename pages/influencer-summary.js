@@ -12,12 +12,15 @@ import {
   Td,
   TableCaption,
   TableContainer,
-  Button
-} from '@chakra-ui/react'
-import { DatePicker } from 'chakra-ui-date-input'
+  Button,
+} from "@chakra-ui/react";
+import { DatePicker } from "chakra-ui-date-input";
 
 function keyInsertSpaces(string) {
-  string = string.replace(/([a-z])([A-Z])/g, '$1 $2');
+  string = string.replace(/([a-z])([A-Z])/g, "$1 $2");
+  if (string.toUpperCase() == "USERS ACQUIRED") {
+    string = "users referred";
+  }
   return string.toUpperCase();
 }
 
@@ -26,27 +29,48 @@ const InfluencerSummary = () => {
   const { user } = useContext(AppContext);
 
   useEffect(async () => {
-
     const resp = await strapi.request(
       "get",
       "influencersummarries/getSummary",
       {}
     );
-    setData(resp)
+    const objectOrder = {
+      nftsRevenue: null,
+      gamesRevenue: null,
+      totalRevenue: resp.nftsRevenue + resp.gamesRevenue,
+    };
+    const addObjectResource = Object.assign(objectOrder, resp);
+    delete addObjectResource.id;
+    setData(addObjectResource);
+  }, [user]);
 
-  }, [user])
-
-
-  return <Box width="100%" m="auto" pb="40px" textAlign={"center"}
-    bgImage="linear-gradient(to right, 
+  return (
+    <Box
+      width="100%"
+      m="auto"
+      pb="40px"
+      textAlign={"center"}
+      bgImage="linear-gradient(to right, 
     #070623, rgba(31, 5, 44, .3)), url(/assets/bg-wave-1.png)"
-    bgRepeat="no-repeat"
-    bgPosition="right top"
-  >
-    {
-      data && data.length !== 0 && <> <Heading color="#fff" pt="60px" mb="30px" fontFamily="Open Sans" fontSize="31px" fontWeight="bold" textTransform="uppercase"> Influencer Summary</Heading>
-
-        <Box
+      bgRepeat="no-repeat"
+      bgPosition="right top"
+    >
+      {data && data.length !== 0 && (
+        <>
+          {" "}
+          <Heading
+            color="#fff"
+            pt="60px"
+            mb="30px"
+            fontFamily="Open Sans"
+            fontSize="31px"
+            fontWeight="bold"
+            textTransform="uppercase"
+          >
+            {" "}
+            Influencer / Ambassador Revenue Summary
+          </Heading>
+          {/* <Box
           mx="30px"
           mb="30px"
           className="influencer-summary-date"
@@ -114,39 +138,61 @@ const InfluencerSummary = () => {
               Search
             </Button>
           </Flex>
-        </Box>
-
-        {
-          <TableContainer mx="30px" 
-          className="influencer-table-date">
-            <Table variant='simple' colorScheme='teal'>
-              {/* <TableCaption>Influencer Summary</TableCaption> */}
-              <Thead bgColor="#250d47">
-                <Tr>
-                  {
-                    Object.keys(data).map((key, i) => (
-                      <Th style={{ color: 'white', textAlign: 'center', fontSize: '17px', fontWeight: "500", borderBottomWidth: '0' }} py="25px" className={key}>{keyInsertSpaces(key)}</Th>
-                    ))
-                  }
-                </Tr>
-              </Thead>
-              <Tbody bgColor="#291f3d">
-                <Tr>
-                  {
-                    Object.keys(data).map((key, i) => (
-                      <Td style={{ color: 'white', textAlign: 'center', borderBottomWidth: '0' }} py="20px" className={key}>{data[key]}</Td>
-                    ))
-                  }
-                </Tr>
-              </Tbody>
-            </Table>
-          </TableContainer>
-        }
-      </>}
-    {!data || data.length === 0 && <Heading color="primary" my="2%"> Please Login or Check for relating your account with influencer</Heading>}
-
-  </Box>
-
+        </Box> */}
+          {
+            <TableContainer mx="30px" className="influencer-table-date">
+              <Table variant="simple" colorScheme="teal">
+                {/* <TableCaption>Influencer Summary</TableCaption> */}
+                <Thead bgColor="#250d47">
+                  <Tr>
+                    {Object.keys(data).map((key, i) => (
+                      <Th
+                        style={{
+                          color: "white",
+                          textAlign: "center",
+                          fontSize: "17px",
+                          fontWeight: "500",
+                          borderBottomWidth: "0",
+                        }}
+                        py="25px"
+                        className={key}
+                      >
+                        {keyInsertSpaces(key)}
+                      </Th>
+                    ))}
+                  </Tr>
+                </Thead>
+                <Tbody bgColor="#291f3d">
+                  <Tr>
+                    {Object.keys(data).map((key, i) => (
+                      <Td
+                        style={{
+                          color: "white",
+                          textAlign: "center",
+                          borderBottomWidth: "0",
+                        }}
+                        py="20px"
+                        className={key}
+                      >
+                        {data[key]}
+                      </Td>
+                    ))}
+                  </Tr>
+                </Tbody>
+              </Table>
+            </TableContainer>
+          }
+        </>
+      )}
+      {!data ||
+        (data.length === 0 && (
+          <Heading color="primary" my="2%">
+            {" "}
+            Please Login or Check for relating your account with influencer
+          </Heading>
+        ))}
+    </Box>
+  );
 };
 
 export default InfluencerSummary;
