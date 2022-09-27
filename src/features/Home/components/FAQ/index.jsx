@@ -15,9 +15,7 @@ const FAQ = ({title, style = {} , data=[] }) => {
      {data && data.map((faq, index) => (
         <FAQRow key={`faq-${index}`} row={faq} index={index + 1} currentOpen={currentOpen} setCurrentOpen={setCurrentOpen} />
       ))}
-      {/* {!data &&  fadata.map((faq, index) => (
-        <FAQRow key={`faq-${index}`} row={faq} index={index + 1} currentOpen={currentOpen} setCurrentOpen={setCurrentOpen}  />
-      ))} */}
+     
     </Box>
   );
 };

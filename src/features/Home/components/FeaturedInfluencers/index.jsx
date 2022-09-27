@@ -4,12 +4,10 @@ import { Box, Text, Flex } from "@chakra-ui/react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import ContentNavigator from "../../../../components/ContentNavigator";
 import FeaturedInfluencersCard from "./FeaturedInfluencersCard";
-// import { useFeaturedInfluencers } from "../../api/index";
 import { AppContext } from "../../../../utils/AppContext";
 import { useRouter } from "next/router";
 
 const FeaturedInfluencers = ({data=[]}) => {
-    // const { data = [] } = useFeaturedInfluencers();
 
     const { isMobileDevice } = useContext(AppContext);
 
@@ -31,24 +29,7 @@ const FeaturedInfluencers = ({data=[]}) => {
                 />
             </Flex>
 
-            {/* {isMobileDevice ? (
-                <Flex>
-                    {data.length &&
-                        data
-                            .map((influencer, index) => (
-                                <FeaturedInfluencersCard
-                                    style={{
-                                        flex: 1,
-                                        ml: index > 0 ? "8px" : 0,
-                                        mr: index === 0 ? "8px" : 0
-                                    }}
-                                    itemId={`item-${index}`}
-                                    key={`item-${index}`}
-                                    influencer={influencer}
-                                />
-                            ))}
-                </Flex>
-            ) : ( */}
+           
                 <ScrollMenu className="no-scrollbar" apiRef={ref}>
                     {data?.length && data.map((influencer, index) => (
                         <FeaturedInfluencersCard
@@ -59,7 +40,7 @@ const FeaturedInfluencers = ({data=[]}) => {
                         />
                     ))}
                 </ScrollMenu>
-            {/* )} */}
+          
         </Box>
     );
 };

@@ -1,8 +1,7 @@
 /* eslint-disable @next/next/no-sync-scripts */
-import { useContext, useEffect, useState } from "react";
-import { Text, Tag, TagLabel, Flex, Box, Link } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { Text,Box } from "@chakra-ui/react";
 
-import { AppContext } from "../../../../utils/AppContext/index";
 
 
 const InstaFollow = () => {

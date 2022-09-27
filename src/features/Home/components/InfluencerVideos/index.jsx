@@ -5,7 +5,6 @@ import { AppContext } from "../../../../utils/AppContext/index";
 import LMMultipleCarousel from "../../../../components/LMCarousel/LMMultipleCarousel";
 const LMMediaPlayer = dynamic(() => import("../../../../components/LMMediaPlayer")) ;
 const LMModal = dynamic(() => import("../../../../components/LMModal")) ;
-// import { AiFillYoutube } from "react-icons/ai";
 
 const InfluencerVideos = () => {
     const videoList = [
@@ -51,12 +50,9 @@ const InfluencerVideos = () => {
                     width={["95%", "280px", "316px", "450px"]}
                     justifyContent={["center", "center"]}
                 >
-                    {/* <Box  position="relative" pos="absolute" top="40%" left="45%"> */}
-                    {/* <AiFillYoutube fill ="white" opacity={"0.65"} style={{width:"5em",height:"5em"}} /> */}
-                    {/* </Box> */}
+                  
                     <Image alt="ambas" objectFit={"cover"} src={item.img} />
                 </Flex>
-                {/* <LMMediaPlayer url={item.url} isNotMobile={isNotMobile} /> */}
             </Box>
         );
     });

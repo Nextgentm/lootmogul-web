@@ -2,10 +2,10 @@ import { Text, Button, Flex, Box, Image, Link } from "@chakra-ui/react";
 import ReactCardFlip from "react-card-flip";
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
-const cardWidth = ["280px", "360px", "360px", "420px"];
-const cardHeight = ["400px", "540px", "540px", "620px"];
-const infoboxWidth = ["240px", "320px", "320px", "350px"];
-const imageHeight = ["380px", "500px", "500px", "590px"];
+const cardWidth = "290px";
+const cardHeight ="440px";
+const infoboxWidth = "260px";
+const imageHeight = "370px";
 
 const CardInfo = ({ nft }) => {
   return (
@@ -14,12 +14,12 @@ const CardInfo = ({ nft }) => {
       bg="#00000088"
       border="1px"
       borderColor="gray.600"
-      position={"absolute"}
+      position={"relative"}
       bottom={"0px"}
       width={infoboxWidth}
-      ml="20px"
-      p={"20px"}
-      mx={["20px", "20px", "40px"]}
+     mt="-120px"
+      p={"15px"}
+      mx={"15px"}
     >
       <Text
         noOfLines={2}
@@ -31,7 +31,7 @@ const CardInfo = ({ nft }) => {
         {nft?.name}
       </Text>
 
-      <Flex
+      { nft?.market_price && (    <Flex
         mt={"3%!important"}
         justifyContent="center"
         m={0}
@@ -44,7 +44,7 @@ const CardInfo = ({ nft }) => {
           {"    "}
         </Box>
 
-        <Text ml="15px" mr="6px" fontWeight="bold">
+      <Text ml="15px" mr="6px" fontWeight="bold">
           {nft?.market_price
             ? " " + nft?.market_price
             : "US $" + nft?.sale_price}
@@ -60,7 +60,7 @@ const CardInfo = ({ nft }) => {
           width="22px"
         />
       </Flex>
-
+      )}
       <Link
         href={nft?.marketURL ? nft?.marketURL : "/"}
         target="_blank"
@@ -86,6 +86,7 @@ const NftCard = ({
   lazyRoot = null,
   defaultInView = false,
 }) => {
+  
   const [isFlipped, setIsFlipped] = useState(false);
 
   const { ref, inView } = useInView({
@@ -139,11 +140,12 @@ const NftCard = ({
       <Link
         href={nft?.marketURL ? nft?.marketURL : "/"}
         target="_blank"
+        mx="auto"
         passHref={true}
         _hover={{ textDecoration: "none" }}
         _focus={{ border: "none", textDecoration: "none" }}
         cursor="pointer"
-        mr={["10px", "30px", "30px"]}
+       // mr={["10px", "30px", "30px"]}
         w={cardWidth}
         h={showInfo ? cardHeight : imageHeight}
         minH={showInfo ? cardHeight : imageHeight}
@@ -183,8 +185,8 @@ const NftCard = ({
                         muted
                         style={{
                           height: "100%",
-                          width: "full",
-                          objectFit: "cover",
+                          width: "100%" ,
+                          objectFit: "fill",
                         }}
                       >
                         <source src={nft?.front_image} type="video/mp4" />
@@ -216,8 +218,8 @@ const NftCard = ({
                         muted
                         style={{
                           height: "100%",
-                          width: "full",
-                          objectFit: "cover",
+                          width: "100%" ,
+                          objectFit: "fill",
                         }}
                       >
                         <source src={nft?.back_image} type="video/mp4" />

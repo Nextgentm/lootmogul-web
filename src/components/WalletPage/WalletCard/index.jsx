@@ -1,12 +1,11 @@
 import {
     Box,
     Text,
-    Input,
     Button,
     InputGroup,
     useNumberInput,
     InputRightElement,
-    Tooltip 
+    Tooltip
 } from "@chakra-ui/react";
 import { InfoIcon } from "../../Icons";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
@@ -48,15 +47,25 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
             >
                 <>
                     <Text variant="walletCardHeader">{displayData.title}</Text>
-                   {displayData.tooltip && ( <Tooltip placement="top-end" label={displayData.tooltip} bg="#383838" borderRadius="10px" color="white" fontSize='sm'>
-                       <Text>
-                    <InfoIcon
-                        color="white"
-                        float="right"
-                        mt="-20px!important"
-                        boxSize={"24px"}
-                    /></Text>
-                    </Tooltip>)}
+                    {displayData.tooltip && (
+                        <Tooltip
+                            placement="top-end"
+                            label={displayData.tooltip}
+                            bg="#383838"
+                            borderRadius="10px"
+                            color="white"
+                            fontSize="sm"
+                        >
+                            <Text>
+                                <InfoIcon
+                                    color="white"
+                                    float="right"
+                                    mt="-20px!important"
+                                    boxSize={"24px"}
+                                />
+                            </Text>
+                        </Tooltip>
+                    )}
                     <Text
                         variant="hint"
                         fontSize="14px"

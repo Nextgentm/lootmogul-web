@@ -8,24 +8,14 @@ import {
     InputGroup,
     InputLeftAddon,
     Checkbox,
-    Button,
-    Box
+    Button
 } from "@chakra-ui/react";
-import { CouponIcon } from "../../Icons";
-import { AddIcon } from "@chakra-ui/icons";
-import axios from "axios";
+
 import strapi from "../../../utils/strapi";
 import AppContext from "../../../utils/AppContext";
 import { useBreakpointValue } from "@chakra-ui/react";
-// import { useAlert } from "react-alert";
 import LMNonCloseALert from "../../../components/LMNonCloseALert";
 
-// import {
-//     AutoComplete,
-//     AutoCompleteInput,
-//     AutoCompleteItem,
-//     AutoCompleteList
-// } from "@choc-ui/chakra-autocomplete";
 const TabWithdrawPanel = ({ data, isDeposit }) => {
     const ref = useRef();
     const [amount, setAmount] = useState(0);
@@ -40,29 +30,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         md: "md"
     });
     const [cryptoType, setCryptoType] = useState("Bitcoin");
-    const [couponCode, setCouponCode] = useState("");
-    const [previousAmount, setPreviousAmount] = useState(0);
-    // const [showCoupon, setShowCoupon] = useState(false);
 
-    // const handleIncrease = (addedAmount) => {
-    //     const newAmount = amount + addedAmount;
-
-    //     setAmount(newAmount);
-    // };
-    // const couponSamples = [
-    //     {
-    //         slug: "DEAL50"
-    //     },
-    //     {
-    //         slug: "DEAL50"
-    //     },
-    //     {
-    //         slug: "DEAL50"
-    //     },
-    //     {
-    //         slug: "DEAL50"
-    //     }
-    // ];
     const [userBal, setuserBal] = useState({});
     const { user, updateUser } = useContext(AppContext);
     useEffect(() => {
@@ -74,21 +42,17 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 winnings: user?.wallets?.find(
                     (w) => w.currency?.type === "winning"
                 )?.balance,
-                bonus: user?.wallets?.find(
-                    (w) => w.currency?.type === "bonus"
-                )?.balance
+                bonus: user?.wallets?.find((w) => w.currency?.type === "bonus")
+                    ?.balance
             });
         }
     }, [user]);
     useEffect(() => {
         if (data) {
-            if (data.type === "cash")
-                setCashOption(["USD"]);
-            else
-                setCashOption(["Bitcoin", "Ethereum", "Dogecoin"]);
+            if (data.type === "cash") setCashOption(["USD"]);
+            else setCashOption(["Bitcoin", "Ethereum", "Dogecoin"]);
         }
-    }, [data])
-
+    }, [data]);
 
     const checkValidity = () => {
         if (!amount || amount === 0)
@@ -159,7 +123,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 p="2%"
             >
                 <InputGroup>
-                    <InputLeftAddon w={["48%", "40%"]} fontSize={["13px", "17px"]} fontWeight="600" >Amount:</InputLeftAddon>
+                    <InputLeftAddon
+                        w={["48%", "40%"]}
+                        fontSize={["13px", "17px"]}
+                        fontWeight="600"
+                    >
+                        Amount:
+                    </InputLeftAddon>
                     <Input
                         w={currentSize === "base" ? "40%" : "50%"}
                         color="white"
@@ -175,12 +145,20 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     w={currentSize === "base" ? "64%" : "80%"}
                     color="white"
                     bg="#3F3F3F"
-                    onChange={(e) => { setCryptoType(e.target.value); }}
+                    onChange={(e) => {
+                        setCryptoType(e.target.value);
+                    }}
                 >
                     {cashOption.map((type, index) => {
-                        return <option style={{ backgroundColor: "#3F3F3F" }} key={"cash" + index}>{type}</option>
+                        return (
+                            <option
+                                style={{ backgroundColor: "#3F3F3F" }}
+                                key={"cash" + index}
+                            >
+                                {type}
+                            </option>
+                        );
                     })}
-
                 </Select>
             </Flex>
             <Flex
@@ -191,7 +169,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 p="2%"
             >
                 <InputGroup>
-                    <InputLeftAddon fontSize={["13px", "17px"]} fontWeight="600" >Email Id:</InputLeftAddon>
+                    <InputLeftAddon
+                        fontSize={["13px", "17px"]}
+                        fontWeight="600"
+                    >
+                        Email Id:
+                    </InputLeftAddon>
                     <Input
                         color="white"
                         defaultValue={email}
@@ -207,7 +190,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 </Text>
 
                 <InputGroup>
-                    <InputLeftAddon fontSize={["13px", "17px"]} fontWeight="600" >Account Id:</InputLeftAddon>
+                    <InputLeftAddon
+                        fontSize={["13px", "17px"]}
+                        fontWeight="600"
+                    >
+                        Account Id:
+                    </InputLeftAddon>
                     <Input
                         color="white"
                         defaultValue={account}

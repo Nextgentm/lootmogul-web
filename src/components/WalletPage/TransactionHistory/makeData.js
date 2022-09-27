@@ -2,14 +2,6 @@ import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Text, Box, Flex } from "@chakra-ui/react";
 import moment from "moment";
 
-const range = (len) => {
-    const arr = [];
-    for (let i = 0; i < len; i++) {
-        arr.push(i);
-    }
-    return arr;
-};
-
 const transactionTableData = (transaction, isMobile) => {
     return {
         transactionid: isMobile ? (

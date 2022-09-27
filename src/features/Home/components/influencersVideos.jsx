@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Text, Box, SimpleGrid, Flex } from "@chakra-ui/react";
+import { Text, Box, Flex } from "@chakra-ui/react";
 import { AppContext } from "../../../utils/AppContext/index";
 import LMMultipleCarousel from "../../../components/LMCarousel/LMMultipleCarousel";
 import LMMediaPlayer from "../../../components/LMMediaPlayer";
@@ -8,11 +8,11 @@ const InfluencersVideos = () => {
     const videoList = [
         { url: '/assets/videos/CarlosBoozer.mp4' },
         { url: '/assets/videos/LisaLeslie.mp4' },
-        // { url: '/assets/videos/Shiba.mp4' }
+      
     ];
 
     const { isMobileDevice } = useContext(AppContext);
-    const { toggleLoginModal, isNotMobile } = useContext(AppContext);
+    const { isNotMobile } = useContext(AppContext);
 
     const slides = videoList.map((item) => {
         return <Box display="inline-block"

@@ -215,3 +215,15 @@ nav {
   display: none;
 }
  
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4c1c83;
+  border: 1px solid  #260c44;
+  width:8px;
+  border-radius: 4px;
+}

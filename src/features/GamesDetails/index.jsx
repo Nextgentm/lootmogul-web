@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../utils/AppContext/index";
 import { Box, Button } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import Breadcrumbs from "../../components/Breadcrumbs/index";
 import { getCountForCaptcha, setCountForCaptcha } from "../../services/dataService";
 import dynamic from "next/dynamic";
 const PaidGameConfirmation = dynamic(() => import("../Games/PaidGameConfirmation"));
@@ -22,28 +21,21 @@ const GameDetails = ({ gameData }) => {
     const [defaultTab, setDefaultTab] = useState(router.asPath.includes("#leaderboard")?1:0);
     const [contestStatus,setContestStatus]= useState(false);
 
-    const [breadcrumbsPath, setBreadCrumbPath] = useState([
-        {
-            label: "Home",
-            path: "/"
-        },
-        { label: "Games", path: "/games" }
-    ]);
+   
+    // useEffect(async () => {
+    //     // fetch user stats
+    //     if (gameData) {
+    //         setBreadCrumbPath([
+    //             {
+    //                 label: "Home",
+    //                 path: "/"
+    //             },
+    //             { label: "Games", path: "/games" },
+    //             { label: gameData.name }
+    //         ]);
+    //     }
 
-    useEffect(async () => {
-        // fetch user stats
-        if (gameData) {
-            setBreadCrumbPath([
-                {
-                    label: "Home",
-                    path: "/"
-                },
-                { label: "Games", path: "/games" },
-                { label: gameData.name }
-            ]);
-        }
-
-    }, [gameData]);
+    // }, [gameData]);
     return (
         <Box
             mr={["18px", "60px"]}
@@ -56,12 +48,7 @@ const GameDetails = ({ gameData }) => {
             mb={"10vw"}
         >
 
-            {/* {isTabletOrDesktop && (
-                <Breadcrumbs
-                    routes={breadcrumbsPath}
-                    style={{ mt: "14px", mb: "14px" }}
-                />
-            )} */}
+         
 
             {gameData && <GameInfo isTabletOrDesktop={isTabletOrDesktop} gameData={gameData} />}
             {gameData && <GameTabs defaultTab={defaultTab} gameData={gameData} />}

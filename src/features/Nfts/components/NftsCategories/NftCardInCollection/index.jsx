@@ -2,36 +2,36 @@ import { Text, Button, Flex, Box, Image, Link } from "@chakra-ui/react";
 import ReactCardFlip from "react-card-flip";
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
-
-const cardWidth = ["300px", "300px", "300px", "300px"];
-const cardHeight = ["420px", "420px", "420px", "420px"];
-const infoboxWidth = ["260px", "260px", "260px", "260px"];
-const imageHeight = ["380px", "340px", "340px", "380px"];
+const cardWidth = ["280px", "360px", "360px", "420px"];
+const cardHeight = ["400px", "540px", "540px", "620px"];
+const infoboxWidth = ["240px", "320px", "320px", "350px"];
+const imageHeight = ["380px", "500px", "500px", "590px"];
 
 const CardInfo = ({ nft }) => {
   return (
     <Box
+      key={`nftItem-${nft?.id}`}
       bg="#00000088"
       border="1px"
       borderColor="gray.600"
-      position={"relative"}
-      bottom={0}
+      position={"absolute"}
+      bottom={"0px"}
       width={infoboxWidth}
-      mt={"-80px"}
+      ml="20px"
       p={"20px"}
-      mx="20px"
+      mx={["20px", "20px", "40px"]}
     >
       <Text
-        noOfLines={1}
-        fontWeight="normal"
-        minH="10px"
+        noOfLines={2}
+        fontWeight="bold"
+        minH="50px"
         color="white"
         fontFamily="Sora"
       >
         {nft?.name}
       </Text>
 
-      <Flex
+      {nft?.market_price && (<Flex
         mt={"3%!important"}
         justifyContent="center"
         m={0}
@@ -59,7 +59,7 @@ const CardInfo = ({ nft }) => {
           height="22px"
           width="22px"
         />
-      </Flex>
+      </Flex>)} 
 
       <Link
         href={nft?.marketURL ? nft?.marketURL : "/"}
@@ -86,6 +86,7 @@ const NftCardInCollection = ({
   lazyRoot = null,
   defaultInView = false,
 }) => {
+  
   const [isFlipped, setIsFlipped] = useState(false);
 
   const { ref, inView } = useInView({
@@ -111,6 +112,7 @@ const NftCardInCollection = ({
     typeof window === "undefined"
       ? Buffer.from(str).toString("base64")
       : window.btoa(str);
+
 
   const nftImage = (img) => {
     return (
@@ -142,19 +144,18 @@ const NftCardInCollection = ({
         _hover={{ textDecoration: "none" }}
         _focus={{ border: "none", textDecoration: "none" }}
         cursor="pointer"
-        mr={["0px", "0px", "10px"]}
+        mr={["10px", "30px", "30px"]}
         w={cardWidth}
-        height={showInfo ? cardHeight : imageHeight}
+        h={showInfo ? cardHeight : imageHeight}
         minH={showInfo ? cardHeight : imageHeight}
-        mb={["20"]}
       >
         <Box
           textAlign="center"
           onMouseEnter={() => setIsFlipped(true)}
           onMouseLeave={() => setIsFlipped(false)}
-        >
+         >
           <Box h={cardHeight} minH={cardHeight} ref={ref}>
-            {
+            {inView && (
               <ReactCardFlip
                 isFlipped={
                   nft?.back_image && nft?.back_image.length ? isFlipped : false
@@ -183,8 +184,8 @@ const NftCardInCollection = ({
                         muted
                         style={{
                           height: "100%",
-                          width: "full",
-                          objectFit: "cover",
+                          width: "100%" ,
+                          objectFit: "fill",
                         }}
                       >
                         <source src={nft?.front_image} type="video/mp4" />
@@ -216,8 +217,8 @@ const NftCardInCollection = ({
                         muted
                         style={{
                           height: "100%",
-                          width: "full",
-                          objectFit: "cover",
+                          width: "100%" ,
+                          objectFit: "fill",
                         }}
                       >
                         <source src={nft?.back_image} type="video/mp4" />
@@ -230,7 +231,7 @@ const NftCardInCollection = ({
                   </Box>
                 </Box>
               </ReactCardFlip>
-            }
+            )}
             {showInfo && <CardInfo nft={nft} />}
           </Box>
         </Box>

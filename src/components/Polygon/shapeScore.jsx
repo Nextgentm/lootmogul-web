@@ -1,4 +1,4 @@
-import { Flex, Box, Text, Heading } from '@chakra-ui/react';
+import {  Text } from '@chakra-ui/react';
 
 const ShapeScore = (props) => {
     return (
