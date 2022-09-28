@@ -167,7 +167,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
             )}
             {router.pathname === "/nfts/[id]" ? (
                 <Box
-                    mx={"-9vw"}
+                    mx={"-6vw"}
                     order="2"
                     bgSize="cover"
                     textAlign={"center"}
@@ -175,8 +175,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                 >
                     {getBannerImage() && (
                         <Box
-                            ml={["20px", "20px", "20px", "60px"]}
-                            mr={["20px", "20px", "20px", "60px"]}
+                           
                         >
                             <Flex position="relative" w="100%">
                                 {isMobileDevice ? (
@@ -186,6 +185,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                                         src={getBannerImage()}
                                         className="custom-img"
                                         layout="fill"
+                                        objectFit={"fill"}
                                         w="100%"
                                         h="600px"
                                     />
@@ -196,6 +196,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                                         src={getBannerImage()}
                                         className="custom-img"
                                         layout="fill"
+                                        objectFit={"fill"}
                                         w="100%"
                                         h="600px"
                                     />
@@ -299,7 +300,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                             </Text>
                         </Flex>
 
-                        <Box px={["1rem", "0rem"]}>
+                        <Box px={["0rem", "0rem"]}>
                             <ScrollMenu
                                 className="no-scrollbar"
                                 apiRef={ref}

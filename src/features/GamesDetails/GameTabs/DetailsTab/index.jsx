@@ -20,7 +20,7 @@ const newMarkDownTheme = {
     p: (props) => {
         const { children } = props;
         return (
-            <Text mb={2} fontSize={"14px"}>
+            <Text mb={2} textAlign="left" fontSize={"14px"}>
                 {children}
             </Text>
         );
@@ -105,12 +105,12 @@ const DetailsTab = ({ gameData }) => {
                 </>
             )}
 
-            <Heading mt="2%" color="white">
+            <Heading mt="2%" color="white" textAlign={"left"}>
                 {" "}
                 How to Play
             </Heading>
             {gameData?.game?.data?.howToPlay ? (
-                <Box color="white">
+                <Box color="white" mt="2%" textAlign={"left"}>
                     {" "}
                     <ReactMarkdown
                         rehypePlugins={[rehypeRaw]}
@@ -122,7 +122,7 @@ const DetailsTab = ({ gameData }) => {
                     </ReactMarkdown>{" "}
                 </Box>
             ) : (
-                <UnorderedList mt="2%" color="textual" variant="textualVal">
+                <UnorderedList mt="2%" color="textual" textAlign={"left"} variant="textualVal">
                     <ListItem>
                         Open your preferred browser from mobile or
                         desktop/laptop and visit website https://lootmogul.com
@@ -197,12 +197,12 @@ const DetailsTab = ({ gameData }) => {
                 </UnorderedList>
             )}
 
-            <Heading mt="2%" color="white">
+            <Heading mt="2%" color="white" textAlign={"left"}>
                 {" "}
                 Contest Terms &amp; Conditions
             </Heading>
             {gameData?.tandc && (
-                <Box color="white">
+                <Box color="white" mt="2%" textAlign={"left"}>
                     {" "}
                     <ReactMarkdown
                         rehypePlugins={[rehypeRaw]}
@@ -215,7 +215,7 @@ const DetailsTab = ({ gameData }) => {
                 </Box>
             )}
             {!gameData?.tandc && (
-                <UnorderedList mt="2%" color="textual" variant="textualVal">
+                <UnorderedList textAlign={"left"} mt="2%" color="textual" variant="textualVal">
                     <ListItem>
                         The contest joining is $1/$2/$5 to play as shown above
                         in the entry fee.
