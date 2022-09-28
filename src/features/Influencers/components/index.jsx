@@ -421,9 +421,15 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 >
                     <Center>
                         <Text
-                            variant="secHeadText"
-                            fontSize={["2rem", "2.5rem"]}
-                            display={["block", "block", "block"]}
+                          color="white"
+                          fontFamily="Blanch"
+                          fontSize={[
+                              "4rem",
+                              "4rem",
+                              "4rem",
+                              "5rem",
+                              "5rem"
+                          ]}
                         >
                             EXPLORE
                         </Text>
@@ -487,9 +493,15 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                             mr={["20px", "20px", "20px", "60px"]}
                         >
                             <Text
-                                variant="secHeadText"
-                                fontSize={["2rem", "2.5rem"]}
-                                textAlign="center"
+                                color="white"
+                                fontFamily="Blanch"
+                                fontSize={[
+                                    "4rem",
+                                    "4rem",
+                                    "4rem",
+                                    "5rem",
+                                    "5rem"
+                                ]}
                             >
                                 NEW IN INFLUENCERS
                             </Text>
@@ -534,8 +546,15 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                         my={["2em", "2.5em"]}
                     >
                         <Text
-                            fontSize={["2rem", "2.5rem"]}
-                            variant="secHeadText"
+                              color="white"
+                              fontFamily="Blanch"
+                              fontSize={[
+                                  "4rem",
+                                  "4rem",
+                                  "4rem",
+                                  "5rem",
+                                  "5rem"
+                              ]}
                         >
                             {/* ALL IN INFLUENCERS */}
                             {category

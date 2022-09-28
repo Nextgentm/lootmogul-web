@@ -55,7 +55,15 @@ const BottomBanners = ({ bannersList }) => {
 
     return (
         <Box>
-            <Text variant="secHeadText" fontSize={["25px", "35px"]} my="50px">
+            <Text   color="white"
+          fontFamily="Blanch"
+          fontSize={[
+              "4rem",
+              "4rem",
+              "4rem",
+              "5rem",
+              "5rem"
+          ]} my="50px">
                 {" "}
                 NEW OFFERS & PROMOTIONS
             </Text>

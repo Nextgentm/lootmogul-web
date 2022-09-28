@@ -52,9 +52,15 @@ const ExploreTrivia = ({ section, executeScroll }) => {
   return (
     <Box>
       <Text
-        variant="secHeadText"
-        fontSize={["25px", "35px"]}
-        textAlign={["center", "left"]}
+         color="white"
+         fontFamily="Blanch"
+         fontSize={[
+             "4rem",
+             "4rem",
+             "4rem",
+             "5rem",
+             "5rem"
+         ]}
         my="30px"
       >
         EXPLORE TRIVIA

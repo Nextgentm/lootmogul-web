@@ -2,10 +2,10 @@ import { Text, Button, Flex, Box, Image, Link } from "@chakra-ui/react";
 import ReactCardFlip from "react-card-flip";
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
-const cardWidth = ["280px", "360px", "360px", "420px"];
-const cardHeight = ["400px", "540px", "540px", "620px"];
-const infoboxWidth = ["240px", "320px", "320px", "350px"];
-const imageHeight = ["380px", "500px", "500px", "590px"];
+const cardWidth = ["380px"];
+const cardHeight = ["509px"];
+const infoboxWidth = "342px";
+const imageHeight = "440px";
 
 const CardInfo = ({ nft }) => {
   return (
@@ -14,12 +14,12 @@ const CardInfo = ({ nft }) => {
       bg="#00000088"
       border="1px"
       borderColor="gray.600"
-      position={"absolute"}
+      position={"relative"}
       bottom={"0px"}
       width={infoboxWidth}
-      ml="20px"
-      p={"20px"}
-      mx={["20px", "20px", "40px"]}
+      mt="-100px"
+      p={"15px"}
+      mx={"auto"}
     >
       <Text
         noOfLines={2}
@@ -118,7 +118,7 @@ const NftCardInCollection = ({
     return (
       <Image
         layout="intrinsic"
-        objectFit={"cover"}
+        objectFit={"fill"}
         blurDataURL={`data:image/svg+xml;base64,${toBase64(
           convertImage(300, 400)
         )}`}
@@ -202,7 +202,7 @@ const NftCardInCollection = ({
                       border: "none",
                       textDecoration: "none",
                     }}
-                    padding="3%"
+                    padding={"3%"}
                     height={imageHeight}
                     width={cardWidth}
                   >

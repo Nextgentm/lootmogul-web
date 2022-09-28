@@ -233,6 +233,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                       RightArrow={RightArrow}
                     >
                       {displayCards.map((item, index) => (
+                   
                         <NftCardInCollection
                           style={{
                             mr: "30px",

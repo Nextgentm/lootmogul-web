@@ -69,7 +69,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
         >
             <Box
                 overflow={"hidden"}
-                w={["230px", "230px", "290px", "260px", "300px"]}
+                w={"300px"}
                 {...style}
             >
                 <VStack>
