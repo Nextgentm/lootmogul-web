@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react/jsx-key */
-import React, { useState } from "react";
+import React from "react";
 import {
     Box,
     Text,
     Flex,
-    Button,
     Table,
     Tr,
     Td,
@@ -14,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 
-const ScoreDisplay = ({ user,userResult, userStats, lbResult }) => {
+const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
     return (
         <Box
             className="abc"
@@ -73,46 +72,16 @@ const ScoreDisplay = ({ user,userResult, userStats, lbResult }) => {
                             fontFamily={"Blanch"}
                             textColor="#FFFFFF"
                         >
-                            {lbResult?lbResult?.currentRank:userResult?.rank}
+                            {lbResult
+                                ? lbResult?.currentRank
+                                : userResult?.rank}
                         </Text>
                     </Box>
                 </Flex>
-                {/* <Box
-                    width={["65px", "65px"]}
-                    height={["65px", "65px"]}
-                    margin="auto"
-                    mt="7%"
-                    ml="15%"
-                    bgImage="url('/assets/Ellipse45.jpg')"
-                    bgPosition="center"
-                    bgRepeat="no-repeat"
-                    bgGradient="(180deg, #FFFFFF 50%, rgba(55, 55, 55, 0.2) 100%)"
-                >
-                    {userResult?.profilePic && (
-                        <Box
-                            width={["100%", "65px"]}
-                            height={["40%", "65px"]}
-                            bgClip="image"
-                            border="1px solid #9A9A9A"
-                            mt={["250%", "7%"]}
-                            ml={["-70%", "10%"]}
-                        >
-                            <Avatar
-                                src={userResult?.profilePic}
-                                boxSize={{
-                                    base: "60px",
-                                    sm: "70px",
-                                    md: "100px",
-                                    lg: "100px"
-                                }}
-                                showBorder={true}
-                            ></Avatar>
-                        </Box>
-                    )}
-                </Box> */}
+
                 <Avatar
-                  name={user.fullName}
-                  src={user.profilePic}
+                    name={user.fullName}
+                    src={user.profilePic}
                     boxSize={{
                         base: "60px",
                         sm: "60px",
@@ -254,7 +223,7 @@ const ScoreDisplay = ({ user,userResult, userStats, lbResult }) => {
                     direction="row"
                 ></Box>
             </Flex>
-            <Table size="sm" variant='unstyled' mt="5">
+            <Table size="sm" variant="unstyled" mt="5">
                 <Tbody>
                     <Tr>
                         <Td
@@ -273,10 +242,12 @@ const ScoreDisplay = ({ user,userResult, userStats, lbResult }) => {
                             fontWeight={"700"}
                         >
                             {" "}
-                            {lbResult?lbResult?.averageScore:userStats?.averageScore} 
+                            {lbResult
+                                ? lbResult?.averageScore
+                                : userStats?.averageScore}
                         </Td>
                     </Tr>
-                   
+
                     <Tr>
                         <Td
                             textColor={"#FFFFFF"}
@@ -292,30 +263,33 @@ const ScoreDisplay = ({ user,userResult, userStats, lbResult }) => {
                             textAlign={"justify"}
                             fontWeight={"700"}
                         >
-                            {lbResult?lbResult?.bestScore:userStats?.allTimeHigh}
+                            {lbResult
+                                ? lbResult?.bestScore
+                                : userStats?.allTimeHigh}
                         </Td>
                     </Tr>
-                  {lbResult &&  <Tr>
-                        <Td
-                            textColor={"#FFFFFF"}
-                            fontSize={["14px", "17px"]}
-                            textAlign={"justify"}
-                            fontWeight={"700"}
-                        >
-                            Rank 1 Score
-                        </Td>
-                        <Td
-                            textColor={"#FFFFFF"}
-                            fontSize={["14px", "17px"]}
-                            textAlign={"justify"}
-                            fontWeight={"700"}
-                        >
-                            {lbResult?.rank1Score}
-                        </Td>
-                    </Tr>}
+                    {lbResult && (
+                        <Tr>
+                            <Td
+                                textColor={"#FFFFFF"}
+                                fontSize={["14px", "17px"]}
+                                textAlign={"justify"}
+                                fontWeight={"700"}
+                            >
+                                Rank 1 Score
+                            </Td>
+                            <Td
+                                textColor={"#FFFFFF"}
+                                fontSize={["14px", "17px"]}
+                                textAlign={"justify"}
+                                fontWeight={"700"}
+                            >
+                                {lbResult?.rank1Score}
+                            </Td>
+                        </Tr>
+                    )}
                 </Tbody>
             </Table>
-           
         </Box>
     );
 };

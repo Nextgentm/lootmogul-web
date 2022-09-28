@@ -154,7 +154,7 @@ const NftCard = ({ nft, isMobileDevice, showInfo = false }) => {
                             loop
                             autoPlay
                             muted
-                            style={{ height: heightVal, width: "full" }}
+                            style={{ height: heightVal, width: "100%" }}
                         >
                             <source src={nft.front_image} type="video/mp4" />
                             Your browser does not support the Video NFT.
@@ -185,7 +185,7 @@ const NftCard = ({ nft, isMobileDevice, showInfo = false }) => {
                             loop
                             autoPlay
                             muted
-                            style={{ height: heightVal, width: "full" }}
+                            style={{ height: heightVal, width: "100%"  }}
                         >
                             <source src={nft?.back_image} type="video/mp4" />
                             Your browser does not support the Video NFT.

@@ -7,31 +7,17 @@ import {
     Flex,
     useDisclosure,
     Image,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import { AppContext } from "../../utils/AppContext";
-import SearchBar from "./SearchBar";
 import UserInfo from "./UserInfo";
 import dynamic from "next/dynamic";
 import {
-    logoStyle,
-    rootStyle,
     loginBtnStyle,
     loginStyle,
     navLinksStyle
 } from "./styles";
 import { HamburgerIcon } from "@chakra-ui/icons";
-// const NavDrawer = dynamic(() => import("./NavDrawer/index"));
 const Login = dynamic(() => import("../../features/Login"));
 import NavDrawer from "./NavDrawer/index";
 const routes = [
@@ -57,15 +43,6 @@ const routes = [
         label: "Games",
         path: "/games"
     }
-
-    // {
-    //     label: "Founder's NFT",
-    //     path: "/founder-nfts"
-    // }
-    // {
-    //     label: "Promotion",
-    //     path: "/promotions"
-    // }
 ];
 
 const Header = () => {
@@ -76,7 +53,6 @@ const Header = () => {
 
     const router = useRouter();
 
-    // check router path
     const isActiveLink = (path, queryPath) => {
         if (queryPath)
             return path === router.pathname || queryPath === router.pathname;
@@ -151,14 +127,13 @@ const Header = () => {
 
                     <Image
                         style={{ cursor: "pointer" }}
-                        width={["200px","180px","250px"]}
-                        height={["80px","70px"]}
-                     objectFit="contain"
+                        width={["200px", "180px", "250px"]}
+                        height={["80px", "70px"]}
+                        objectFit="contain"
                         onClick={() => router.push("/")}
                         alt="logo"
                         src="/assets/lm_logo.png"
                     />
-                    {/* <SearchBar /> */}
 
                     {isMobileDevice ? (
                         <NavDrawer
@@ -188,7 +163,10 @@ const Header = () => {
                         </Flex>
                     )}
 
-                    <Flex {...loginStyle(isMobileDevice, user)} alignItems="center">
+                    <Flex
+                        {...loginStyle(isMobileDevice, user)}
+                        alignItems="center"
+                    >
                         {!isMobileDevice && (
                             <>
                                 <Link
@@ -226,45 +204,25 @@ const Header = () => {
                                     />
                                 </Link>
                             </>
-                            // <Button
-                            //     w="100px"
-                            //     h="35px"
-                            //     onClick={() =>
-                            //         window.open(
-                            //             "https://discord.gg/mHUqAm8fsh",
-                            //             "_blank"
-                            //         )
-                            //     }
-                            // >
-                            //     Join Discord
-                            // </Button>
                         )}
                         {!user && (
                             <>
-                                {/* {isMobileDevice ? (
-                                    <Text
-                                        cursor="pointer"
-                                        color="primary"
-                                        fontFamily="Sora"
-                                        ml="auto"
-                                        fontSize="26px"
-                                        onClick={() => toggleLoginModal()}
-                                    >
-                                        Login
-                                    </Text>
-                                ) : ( */}
-                                    <Button
-                                        {...loginBtnStyle}
-                                        fontFamily="Sora !important "
-                                        fontWeight="200"
-                                        onClick={() => toggleLoginModal()}
-                                        padding={["0px 30px","0px 36px","25px 57px"]}
-                                        boxShadow= "0px 0px 30px 10px #e90a6355"
-                                        fontSize={["0.7rem","0.8rem","1rem"]}
-                                        height="35px"
-                                    >
-                                        LOGIN
-                                    </Button>
+                                <Button
+                                    {...loginBtnStyle}
+                                    fontFamily="Sora !important "
+                                    fontWeight="200"
+                                    onClick={() => toggleLoginModal()}
+                                    padding={[
+                                        "0px 30px",
+                                        "0px 36px",
+                                        "25px 57px"
+                                    ]}
+                                    boxShadow="0px 0px 30px 10px #e90a6355"
+                                    fontSize={["0.7rem", "0.8rem", "1rem"]}
+                                    height="35px"
+                                >
+                                    LOGIN
+                                </Button>
                                 {/* )} */}
                             </>
                         )}

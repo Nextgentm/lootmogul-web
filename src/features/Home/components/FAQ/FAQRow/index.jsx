@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Flex, Text, Circle } from "@chakra-ui/layout";
+import { Box, Flex, Text } from "@chakra-ui/layout";
 import Collapsible from "react-collapsible";
 import { AiFillCloseCircle, AiFillPlusCircle } from "react-icons/ai";
 

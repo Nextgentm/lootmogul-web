@@ -44,7 +44,6 @@ const CricketerNft = () => {
                             <Input bgColor={"white"} borderRadius={"1px"} width="100%" textAlign="center" defaultValue={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter your email Id" textColor={"black"} /></Flex>
                         <Flex mt="5%">
                             <Button borderRadius={"1px"} margin="auto" width="50%" onClick={() => {
-                                //console.log(email);
                             }} >Submit</Button>
                         </Flex>
 
@@ -53,7 +52,6 @@ const CricketerNft = () => {
                     <Flex mt="1%">
                         <Input bgColor={"white"} borderRadius={"1px"} width="75%" textAlign="center" defaultValue={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Enter your email Id" textColor={"black"} />
                         <Button borderRadius={"1px"} margin="auto" width="30%" onClick={() => {
-                            //console.log(email);
                         }} >Submit</Button>
                     </Flex>
                 )}

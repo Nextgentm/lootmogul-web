@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { useContext, useState } from "react";
-import { Box, Flex, Heading, Button, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { WalletIcon } from "../Icons";
 import WalletCard from "./WalletCard";
@@ -12,7 +12,7 @@ import DepostWithdraw from "../LMModal/DepositWithdraw";
 import AppContext from "../../utils/AppContext";
 import { useRouter } from "next/router";
 
-const WalletPage = ({ totalAmount, transactions }) => {
+const WalletPage = ({ totalAmount }) => {
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
     const router = useRouter();
     const { amounts } = useContext(AppContext);
@@ -24,7 +24,8 @@ const WalletPage = ({ totalAmount, transactions }) => {
         iconName: "add",
         btnText: "Deposit",
         showMore: true,
-        tooltip: "Your deposits that can be used to play paid games. Can't be withdrawn."
+        tooltip:
+            "Your deposits that can be used to play paid games. Can't be withdrawn."
     };
     const withdrawData = {
         title: "Winnings",
@@ -34,7 +35,8 @@ const WalletPage = ({ totalAmount, transactions }) => {
         iconName: "sub",
         btnText: "Withdraw",
         showMore: true,
-        tooltip: "Cash available to withdraw subjected to min. balance eligibility. You may also re-use it to play more games."
+        tooltip:
+            "Cash available to withdraw subjected to min. balance eligibility. You may also re-use it to play more games."
     };
     const bonusData = {
         title: "Bonus",
@@ -43,7 +45,8 @@ const WalletPage = ({ totalAmount, transactions }) => {
         icon: false,
         btnText: "Learn more",
         showMore: false,
-        tooltip: "Amount accumulated through promotions. Part of it can be used to play cash games. Can't be withdrawn."
+        tooltip:
+            "Amount accumulated through promotions. Part of it can be used to play cash games. Can't be withdrawn."
     };
 
     const onChangeAmount = (type, amount) => {
@@ -55,10 +58,7 @@ const WalletPage = ({ totalAmount, transactions }) => {
 
     return (
         <Box m={["10px", "60px"]} bg="black" width={["auto", "auto"]}>
-            <Flex
-                justifyContent={"flex-start"}
-                direction={["column", "row"]}
-            >
+            <Flex justifyContent={"flex-start"} direction={["column", "row"]}>
                 <Flex width={["100%"]} justifyContent={"flex-start"}>
                     <WalletIcon mt="2%" boxSize={"40px"} color="primary" />
                     <Flex mt="auto" mb={"auto"}>
@@ -70,16 +70,6 @@ const WalletPage = ({ totalAmount, transactions }) => {
                         </Heading>
                     </Flex>
                 </Flex>
-                {/* <Button
-                    width={["40%", "10%"]}
-                    fontSize={"22px"}
-                    mt={["5%", "auto"]}
-                    onClick={() =>
-                        setShowModal({ show: true, mode: "linkwallet" })
-                    }
-                >
-                    LINK Crypto wallet
-                </Button> */}
             </Flex>
             <Text fontSize={["12px", "16px"]} mt="10px" variant="hint">
                 Balance : Deposit + Winnings + Bonus = ${totalAmount}
@@ -153,14 +143,13 @@ const WalletPage = ({ totalAmount, transactions }) => {
                         cursor="pointer"
                         color="primary"
                         onClick={() => {
-                            router.push("/terms-of-services")
+                            router.push("/terms-of-services");
                         }}
                     >
                         Know more....
                     </Text>
                 </Flex>
             </Flex>
-
 
             <TransactionHistory />
 
@@ -173,10 +162,16 @@ const WalletPage = ({ totalAmount, transactions }) => {
             >
                 {showModal.mode === "linkwallet" && <LinkWallet />}
                 {showModal.mode === "add" && (
-                    <DepostWithdraw isDeposit={true} totalAmount={totalAmount} />
+                    <DepostWithdraw
+                        isDeposit={true}
+                        totalAmount={totalAmount}
+                    />
                 )}
                 {showModal.mode === "sub" && (
-                    <DepostWithdraw totalAmount={totalAmount} winAmount={amounts?.winnings} />
+                    <DepostWithdraw
+                        totalAmount={totalAmount}
+                        winAmount={amounts?.winnings}
+                    />
                 )}
             </LMModal>
         </Box>

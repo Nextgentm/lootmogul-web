@@ -20,6 +20,7 @@ import {
     LeftArrow,
     RightArrow
 } from "../../../components/ContentNavigator/arrows";
+import NftCardInCollection from "./NftsCategories/NftCardInCollection"
 
 const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
     const router = useRouter();
@@ -307,7 +308,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                                 RightArrow={RightArrow}
                             >
                                 {newNfts.map((item, index) => (
-                                    <NftCard
+                                    <NftCardInCollection
                                         itemId={`nftcard-${index}`}
                                         key={`nftcard-${index}`}
                                         slug={item.slug}
@@ -320,6 +321,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                                                 : index < 4
                                         }
                                     />
+       
                                 ))}
                             </ScrollMenu>
                         </Box>

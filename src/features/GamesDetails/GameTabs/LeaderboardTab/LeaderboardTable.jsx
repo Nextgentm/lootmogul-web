@@ -26,11 +26,10 @@ function CustomTable({ columns, data, currentUser, rawData, noOfRec }) {
         canPreviousPage,
         canNextPage,
         pageOptions,
-        pageCount,
-        gotoPage,
+
         nextPage,
         previousPage,
-        setPageSize,
+
         state: { pageIndex, pageSize }
     } = useTable(
         {
@@ -38,112 +37,11 @@ function CustomTable({ columns, data, currentUser, rawData, noOfRec }) {
             data,
             initialState: {
                 pageIndex: 0,
-                // pageSize: 25
                 pageSize: noOfRec
             }
         },
         usePagination
     );
-
-    const renderUserRow = (item) => {
-        if (item?.rank <= 10) {
-            return null;
-        }
-
-        return (
-            <Tr>
-                <Td
-                    fontSize={["10px", "16px"]}
-                    color="#C7C7C7"
-                    py={[2, 4]}
-                    px={[4, 6]}
-                    fontWeight="bold"
-                    textAlign="center"
-                    fontFamily="Sora"
-                >
-                    <Flex align="center" justify="center" direction="column">
-                        <Flex align="center">
-                            <Box
-                                width="12px"
-                                height="12px"
-                                backgroundColor="#FFC533"
-                                borderRadius="50%"
-                                textAlign={"center"}
-                                boxShadow="inset 0px -2px 2px rgba(0, 0, 0, 0.35)"
-                            ></Box>
-
-                            <Text marginLeft="6px" fontSize={["8px", "16px"]}>
-                                YOU
-                            </Text>
-                        </Flex>
-
-                        <Text
-                            marginTop={["3px", "6px"]}
-                            fontSize={["8px", "16px"]}
-                        >
-                            {item?.rank}
-                        </Text>
-                    </Flex>
-                </Td>
-
-                <Td>
-                    <Box padding="0">
-                        <Flex align="center">
-                            <Avatar
-                                name={
-                                    item?.user?.data?.fullName
-                                        ? item?.user?.data?.fullName
-                                        : item?.user?.data?.username
-                                }
-                                src={item?.user?.data?.photoURL}
-                            />
-
-                            <Text
-                                fontSize={["12px", "16px"]}
-                                color="white"
-                                fontWeight="bold"
-                                textAlign="left"
-                                fontFamily="Sora"
-                                marginLeft="16px"
-                            >
-                                {item?.user?.data?.fullName
-                                    ? item?.user?.data?.fullName
-                                    : item?.user?.data?.username}
-                            </Text>
-                        </Flex>
-                    </Box>
-                </Td>
-
-                <Td>
-                    <Box>
-                        <Text
-                            fontSize={["12px", "14px"]}
-                            color="#C7C7C7"
-                            fontWeight="bold"
-                            textAlign="center"
-                            fontFamily="Sora"
-                        >
-                            {item?.prize}
-                        </Text>
-                    </Box>
-                </Td>
-
-                <Td>
-                    <Box>
-                        <Text
-                            fontSize={["12px", "14px"]}
-                            color="#C7C7C7"
-                            fontWeight="bold"
-                            textAlign="center"
-                            fontFamily="Sora"
-                        >
-                            {item?.score}
-                        </Text>
-                    </Box>
-                </Td>
-            </Tr>
-        );
-    };
 
     return (
         <Box width="100%">
@@ -211,8 +109,6 @@ function CustomTable({ columns, data, currentUser, rawData, noOfRec }) {
                             </Tr>
                         );
                     })}
-
-                    {/* {renderUserRow(currentUser)} */}
                 </Tbody>
             </Table>
 

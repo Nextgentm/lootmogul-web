@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Text, Flex, Box, Center, VStack, Link, Button,Image } from "@chakra-ui/react";
-// import Image from "next/image";
+import { Text, Flex, Box, VStack, Link, Button, Image } from "@chakra-ui/react";
 import { getStrapiMedia } from "../../../../utils/medias";
 import SocialActions from "../../SocialActions";
 import { useRouter } from "next/router";
@@ -10,17 +9,34 @@ import strapi from "../../../../utils/strapi";
 import { setCountForCaptcha } from "../../../../services/dataService";
 import dynamic from "next/dynamic";
 import CountDownTimer from "../../../../components/CountDownTimer";
-const PaidGameConfirmation = dynamic(() => import("../../../Games/PaidGameConfirmation"));
-const LMNonCloseALert = dynamic(() => import("../../../../components/LMNonCloseALert"));
-const CaptchaPopup = dynamic(() => import("../../../../components/LMModal/CaptchaPopup"));
+const PaidGameConfirmation = dynamic(() =>
+    import("../../../Games/PaidGameConfirmation")
+);
+const LMNonCloseALert = dynamic(() =>
+    import("../../../../components/LMNonCloseALert")
+);
+const CaptchaPopup = dynamic(() =>
+    import("../../../../components/LMModal/CaptchaPopup")
+);
 
 const GamesCard = ({ contestmaster, style, sectionName }) => {
     const imgUrl = contestmaster?.icon?.data?.url;
     const router = useRouter();
     const [isHeartClick, setHeartClick] = useState(false);
-    const [contestStatus,setContestStatus]= useState(false);
+    const [contestStatus, setContestStatus] = useState(false);
 
-    const { showPaidGameConfirmation, CheckAndStartGame, showCaptcha, setShowCaptcha, user, influencerLikes, FetchLikes, toggleLoginModal, setShowLoading, showLoading } = useContext(AppContext);
+    const {
+        showPaidGameConfirmation,
+        CheckAndStartGame,
+        showCaptcha,
+        setShowCaptcha,
+        user,
+        influencerLikes,
+        FetchLikes,
+        toggleLoginModal,
+        setShowLoading,
+        showLoading
+    } = useContext(AppContext);
     const onHeartClick = async () => {
         if (!user) {
             toggleLoginModal();
@@ -29,13 +45,13 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
         if (contestmaster.influencer?.data?.id) {
             const resp = await strapi.request(
                 "get",
-                "connection/toggleInfluencerLike?influencer=" + contestmaster.influencer.data.id,
+                "connection/toggleInfluencerLike?influencer=" +
+                    contestmaster.influencer.data.id,
                 {}
             );
             FetchLikes();
             setHeartClick(!isHeartClick);
         }
-
     };
     useEffect(() => {
         if (influencerLikes?.includes(contestmaster.influencer?.data?.id)) {
@@ -44,12 +60,23 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
     }, [contestmaster, influencerLikes]);
 
     return (
-        <Link href={"/games/" + contestmaster?.slug} passHref={true}  _hover={{ border: "none",textDecoration:"none" }} _focus={{ border: "none",textDecoration:"none" }} key={`igc-${contestmaster?.id}`}>
-            <Box overflow={"hidden"} w={["225px","225px","290px","260px", "300px"]} {...style}
+        <Link
+            href={"/games/" + contestmaster?.slug}
+            passHref={true}
+            _hover={{ border: "none", textDecoration: "none" }}
+            _focus={{ border: "none", textDecoration: "none" }}
+            key={`igc-${contestmaster?.id}`}
+        >
+            <Box
+                overflow={"hidden"}
+                w={["230px", "230px", "290px", "260px", "300px"]}
+                {...style}
             >
                 <VStack>
                     <Flex
-                        backgroundImage={"/assets/designupdate1/gamecard_portrait.svg"}
+                        backgroundImage={
+                            "/assets/designupdate1/gamecard_portrait.svg"
+                        }
                         backgroundPosition="center"
                         backgroundRepeat="no-repeat"
                         backgroundSize={"auto"}
@@ -57,63 +84,39 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                         cursor="pointer"
                         w={"full"}
                         h={["360px"]}
-                        flexDir={"column"}>
-                      
-                      <Text
-                           mt={"30px"}
-                                color="#FDFFE5"
-                                fontSize="19px"
-                                fontWeight={"600"}
-                                textAlign="center"
-                                mx="auto"
-                               noOfLines={2}
-                               w="70%"
-                               h="90px"
+                        flexDir={"column"}
+                    >
+                        <Text
+                            mt={"30px"}
+                            color="#FDFFE5"
+                            fontSize="19px"
+                            fontWeight={"600"}
+                            textAlign="center"
+                            mx="auto"
+                            noOfLines={2}
+                            w="70%"
+                            h="90px"
+                        >
+                            {sectionName}
+                        </Text>
 
+                        {imgUrl && (
+                            <Box
+                                m="auto"
+                                pos="relative"
+                                w="65%"
+                                h="100%"
+                                pt="20px"
+                                className="influencerdiv"
                             >
-                                {sectionName}
-                            </Text>
-
-                              
-                                {imgUrl && (
-                                    <Box
-                                        m="auto"
-                                        pos="relative"
-                                        w="65%"
-                                        h="100%"
-                                        pt="20px"
-                                        className="influencerdiv"
-                                    >
-                                        <Image
-                                            objectFit="contain"
-                                            alt={imgUrl}
-                                            layout="fill"
-                                            src={getStrapiMedia(imgUrl)}
-                                        />
-                                    </Box>
-                                )}
-                                {/* {contestmaster.reward?.data?.description && (
-                                    <VStack w="50%" m={"auto"} mt="20px">
-                                        <Text
-                                            pl={2}
-                                            color="#FDFFE5"
-                                            fontSize="14px"
-                                            fontWeight={"600"}
-                                            align={"center"}
-                                        >
-                                            Win Up To
-                                        </Text>
-                                        <Text
-                                            color="#F8ED1D"
-                                            fontSize="20px"
-                                            fontWeight={"600"}
-                                            align={"center"}
-                                        >
-                                            {contestmaster.reward?.data.description}
-                                        </Text>
-                                    </VStack>
-                                )} */}
-                        
+                                <Image
+                                    objectFit="contain"
+                                    alt={imgUrl}
+                                    layout="fill"
+                                    src={getStrapiMedia(imgUrl)}
+                                />
+                            </Box>
+                        )}
 
                         <Text
                             color="#FDFFE5"
@@ -124,35 +127,54 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             ml="25px"
                             w="80%"
                             h="50px"
-                            textOverflow="ellipsis" overflow="hidden"
+                            textOverflow="ellipsis"
+                            overflow="hidden"
                         >
                             {contestmaster.name}
                         </Text>
                     </Flex>
 
-                    <Flex w={"full"} align="flex-end" justify={"space-between"} px="1rem">
+                    <Flex
+                        w={"full"}
+                        align="flex-end"
+                        justify={"space-between"}
+                        px="1rem"
+                    >
                         <Box>
                             <Flex>
                                 <Image
                                     alt="tag"
-                                    boxSize={["25px","30px"]}
-                                    // objectFit={"contain"}
+                                    boxSize={["25px", "30px"]}
                                     src="/assets/designupdate1/cash_icon.svg"
                                 />
 
                                 <Box mt="2px">
-                                <Text ml="6px" color="#FFF" fontSize={["15px" ,"17px" ]}fontWeight="400">
-                                    {contestmaster.entryFee != 0
-                                        ? "Entry Fee - $" + contestmaster.entryFee
-                                        : "Free"}
-                                </Text>
-                                <Text mt="-3px" ml={"6px"} color="#FFF" fontSize={["12px","14px"]} fontWeight="200"  >
-                                {nFormatter(contestmaster.roomsCount, 1)} Plays
-                            </Text>
+                                    <Text
+                                        ml="6px"
+                                        color="#FFF"
+                                        fontSize={["15px", "17px"]}
+                                        fontWeight="400"
+                                    >
+                                        {contestmaster.entryFee != 0
+                                            ? "Entry Fee - $" +
+                                              contestmaster.entryFee
+                                            : "Free"}
+                                    </Text>
+                                    <Text
+                                        mt="-3px"
+                                        ml={"6px"}
+                                        color="#FFF"
+                                        fontSize={["12px", "14px"]}
+                                        fontWeight="200"
+                                    >
+                                        {nFormatter(
+                                            contestmaster.roomsCount,
+                                            1
+                                        )}{" "}
+                                        Plays
+                                    </Text>
                                 </Box>
                             </Flex>
-
-                            
                         </Box>
 
                         <SocialActions
@@ -163,52 +185,101 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                         />
                     </Flex>
 
-                    {contestmaster && contestmaster.contest && (contestmaster?.contest?.status === "active" || contestStatus) && <Button
-                        variant="solid"
-                        h={["40px", "40px"]}
-                        fontSize={["20px"]}
-                        mt="12px"
-                        textTransform="uppercase"
-                        _hover={{textDecoration:"none !important"}}
-                        w="full"
-                        onClick={(e) => {
-                            e.preventDefault();
-                            setShowLoading({ "key": `igc-${contestmaster?.id}`, "show": true });
-                            CheckAndStartGame(`igc-${contestmaster?.id}`, contestmaster)
-                        }}
-                    >
-                        Play Now
-                    </Button>}
-                    {contestmaster && contestmaster.contest && (contestmaster?.contest?.status === "upcoming" && !contestStatus) && (
-                        <Button m="auto" h={["34px", "28px"]}
-                            mt="12px" opacity="1!important" color="primary"
-                            w="full" variant="outline" disabled >
-
-                            <CountDownTimer onZero={()=>setContestStatus(true)} startDate={contestmaster.contest.startDate} /> </Button>)}
-                    {contestmaster && contestmaster.contest && contestmaster?.contest?.status === "closed" && (<Button h={["34px", "28px"]}
-                        mt="12px"
-                        w="full" m="auto" variant="outline" disabled >
-
-                        Completed </Button>)}
-                    {contestmaster && showCaptcha && showCaptcha?.callerKey == `igc-${contestmaster?.id}` && <LMNonCloseALert
-                        header={"Clear Captcha!"}
-                        canClose={false}
-
-                        isOpen={showCaptcha}
-                    ><CaptchaPopup onChange={() => {
-                        setShowCaptcha({});
-                        setCountForCaptcha(0);
-                        CheckAndStartGame(`igc-${contestmaster?.id}`, contestmaster)
-                    }} /></LMNonCloseALert>
-                    }
-                    {showPaidGameConfirmation?.callerKey == `igc-${contestmaster?.id}` && <PaidGameConfirmation contestmaster={contestmaster} />}
+                    {contestmaster &&
+                        contestmaster.contest &&
+                        (contestmaster?.contest?.status === "active" ||
+                            contestStatus) && (
+                            <Button
+                                variant="solid"
+                                h={["40px", "40px"]}
+                                fontSize={["20px"]}
+                                mt="12px"
+                                textTransform="uppercase"
+                                _hover={{ textDecoration: "none !important" }}
+                                w="full"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setShowLoading({
+                                        key: `igc-${contestmaster?.id}`,
+                                        show: true
+                                    });
+                                    CheckAndStartGame(
+                                        `igc-${contestmaster?.id}`,
+                                        contestmaster
+                                    );
+                                }}
+                            >
+                                Play Now
+                            </Button>
+                        )}
+                    {contestmaster &&
+                        contestmaster.contest &&
+                        contestmaster?.contest?.status === "upcoming" &&
+                        !contestStatus && (
+                            <Button
+                                m="auto"
+                                h={["34px", "28px"]}
+                                mt="12px"
+                                opacity="1!important"
+                                color="primary"
+                                w="full"
+                                variant="outline"
+                                disabled
+                            >
+                                <CountDownTimer
+                                    onZero={() => setContestStatus(true)}
+                                    startDate={contestmaster.contest.startDate}
+                                />{" "}
+                            </Button>
+                        )}
+                    {contestmaster &&
+                        contestmaster.contest &&
+                        contestmaster?.contest?.status === "closed" && (
+                            <Button
+                                h={["34px", "28px"]}
+                                mt="12px"
+                                w="full"
+                                m="auto"
+                                variant="outline"
+                                disabled
+                            >
+                                Completed{" "}
+                            </Button>
+                        )}
+                    {contestmaster &&
+                        showCaptcha &&
+                        showCaptcha?.callerKey ==
+                            `igc-${contestmaster?.id}` && (
+                            <LMNonCloseALert
+                                header={"Clear Captcha!"}
+                                canClose={false}
+                                isOpen={showCaptcha}
+                            >
+                                <CaptchaPopup
+                                    onChange={() => {
+                                        setShowCaptcha({});
+                                        setCountForCaptcha(0);
+                                        CheckAndStartGame(
+                                            `igc-${contestmaster?.id}`,
+                                            contestmaster
+                                        );
+                                    }}
+                                />
+                            </LMNonCloseALert>
+                        )}
+                    {showPaidGameConfirmation?.callerKey ==
+                        `igc-${contestmaster?.id}` && (
+                        <PaidGameConfirmation contestmaster={contestmaster} />
+                    )}
 
                     <LMNonCloseALert
                         header={"Please Wait....."}
                         canClose={false}
-                        isOpen={showLoading.key == `igc-${contestmaster?.id}` && showLoading.show}
+                        isOpen={
+                            showLoading.key == `igc-${contestmaster?.id}` &&
+                            showLoading.show
+                        }
                     ></LMNonCloseALert>
-
                 </VStack>
             </Box>
         </Link>

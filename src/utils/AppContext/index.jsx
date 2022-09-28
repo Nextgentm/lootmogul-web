@@ -46,7 +46,6 @@ export const AppContextContainer = ({ children }) => {
 
     
     const CheckAndStartGame = (callerKey, contestmaster) => {
-        // //console.log("user",user);
 
         if(!user){
             setShowLoading({});
@@ -63,7 +62,6 @@ export const AppContextContainer = ({ children }) => {
     };
 
     const CheckIfRetry = async(contestmaster, callerKey)=>{
-        // //console.log("checking retry");
     
         const isRetry = await strapi.request(
             "post",
@@ -76,7 +74,6 @@ export const AppContextContainer = ({ children }) => {
                 contestmaster
             );
             fetchGameJoiningData(contestmaster);
-            //router.push("/joining");
 
         }
         else
@@ -120,7 +117,6 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
 
 }
     const fetchGameJoiningData = async (contestmaster = currentContest) => {
-        // //console.log(coupon);
         if (contestmaster) {
           const { data } = await strapi.find("contests", {
             sort: "createdAt:DESC",
@@ -139,26 +135,11 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
               query,
               {}
             );
-       // //console.log("joiningg res", resp,data);
             if (resp?.ticketId) {
                 setCoupon("");
               if (resp?.status == 0) {
               
-                // alert.show("Error!", {
-                //   title: resp?.message,
-                //   actions: [
-                //     {
-                //       copy: "Ok",
-                //       onClick: () => {
-                //         // setIsHideHeader(false);
-                //         // setIsHideFooter(false);
-                //         // socket?.disconnect();
-                //         // router.back();
-                //       },
-                //     },
-                //   ],
-                // });
-                // //console.log("error tickets data");
+              
               } else {
                 if(data[0]?.contestmaster?.data?.game?.data?.url && data[0]?.contestmaster?.data?.game?.data?.type=='html'){
                       if (typeof window !== "undefined") {
@@ -172,32 +153,11 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
               }
             }
             else{
-                // no ticket found - show error
-                // alert.show("Error!", {
-                //     title: "This game is currently unavailable, please try later.",
-                //     actions: [
-                //       {
-                //         copy: "Ok",
-                //         onClick: () => {
-                //         },
-                //       },
-                //     ],
-                // });
+              
                 setCoupon("");
-                //console.log("error tickets data");
           }
         } else {
-          //error no contest
-        //   alert.show("Error!", {
-        //     title: "This game is currently unavailable, please try any other game.",
-        //     actions: [
-        //       {
-        //         copy: "Ok",
-        //         onClick: () => {
-        //         },
-        //       },
-        //     ],
-        // });
+         
         //console.log("error tickets data");
         }
       };
@@ -242,7 +202,6 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
         //if (!data) data = user;
         
         if(user && !strapi.user){
-            //console.log("JWT expired");
             setUser(null);
         }
 
@@ -252,7 +211,6 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
         if(!data) return null;
         setUser(data);
         setLoginModalActive(false);
-        ////console.log(data);
 
         
         try {

@@ -1,16 +1,9 @@
 import React  from "react";
-
 import { Text, Box } from "@chakra-ui/react";
-// import { ScrollMenu } from "react-horizontal-scrolling-menu";
-// import Slider from "react-slick";
-// import AliceCarousel from 'react-alice-carousel';
-
-// import { useTestimonials } from "../../api";
 import TestimonialCard from "./TestimonialCard";
 import LMMultipleCarousel from "../../../../components/LMCarousel/LMMultipleCarousel"
 
 const Testimonials = (data=[]) => {
-  // const { data = [] } = useTestimonials();
     const slides =  data?.data?.length ? data?.data?.map((slide, index) => {
 
     return <TestimonialCard

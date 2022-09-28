@@ -11,14 +11,10 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-
 import { FilterIcon } from "../../../components/Icons";
 import { useContext } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
 import strapi from "../../../utils/strapi";
-
-import { usePromotionBanners } from "../../Home/api";
-
 import NftCard from "./NftCard";
 
 const SelectBox = ({ style, icon, title, options, onChange }) => {
@@ -59,12 +55,7 @@ const PreviewNFTs = ({ nftSelectedCategory }) => {
     const [data, setPreviewNFTData] = useState();
     const [displayData, setDisplayData] = useState();
     const [featuredNfts, setFeaturedNfts] = useState([]);
-    const [mainSliderChild, setMainSliderChild] = useState();
-    const bottomBanners = usePromotionBanners();
-    const [showAll, setShowAll] = useState(true);
     const { isMobileDevice, isTabletOrDesktop } = useContext(AppContext);
-    const [visibleCount, setVisibleCount] = useState(8);
-    const [total, setTotal] = useState(0);
     const defaultCategories = "All";
     const [options, setOptions] = useState([]);
     const [categories, setCategories] = useState(null);
@@ -73,9 +64,7 @@ const PreviewNFTs = ({ nftSelectedCategory }) => {
     useEffect(async () => {
         const data = await strapi.find("nft-collections", {
             sort: "id",
-                        populate: [
-                "nftSet.nft_kred"               
-            ]
+            populate: ["nftSet.nft_kred"]
         });
         if (data) {
             setPreviewNFTData(data.data);
@@ -93,19 +82,7 @@ const PreviewNFTs = ({ nftSelectedCategory }) => {
             setDisplayData(data);
         }
     }, [data]);
-//console.log("data",data)
-// const selectCategory = (e) => {
-//     if (e.target.value.toString().toLowerCase() === "all")
-//         setDisplayData(data);
-//     else
-//         setDisplayData(
-//             data?.filter(
-//                 (item, index) =>
-//                     item.name.toLowerCase() ===
-//                     e.target.value.toString().toLowerCase()
-//             )
-//         );
-// };
+
     const selectCategory = (e) => {
         const newCategory = e.target.value;
         if (e.target.value === defaultCategories.toString().toLowerCase()) {
@@ -133,7 +110,9 @@ const PreviewNFTs = ({ nftSelectedCategory }) => {
     };
     useEffect(() => {
         if (data && nftSelectedCategory) {
-            let selData = data.filter((item) => item.slug === nftSelectedCategory);
+            let selData = data.filter(
+                (item) => item.slug === nftSelectedCategory
+            );
             setCategories(selData[0].name.toLowerCase());
             setSelCategoriesData(selData);
         }
@@ -177,8 +156,6 @@ const PreviewNFTs = ({ nftSelectedCategory }) => {
         );
     });
 
-    
-
     return (
         <Box>
             <Box
@@ -187,15 +164,6 @@ const PreviewNFTs = ({ nftSelectedCategory }) => {
                 mt="20px"
             >
                 <Flex justify="flex-start" mt="20px" align="center" mb="20px">
-                    {/* <Text
-                        className="tab-item"
-                        fontFamily="Blanch"
-                        color="white"
-                        cursor="pointer"
-                        fontSize={["28px", "28px", "58px", "58px"]}
-                    >
-                        PREVIEW NFT'S
-                    </Text> */}
                     <SelectBox
                         style={{
                             border: "1px solid #FFFFFF",

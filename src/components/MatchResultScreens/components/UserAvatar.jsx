@@ -30,7 +30,6 @@ const UserAvatar = ({ userResult }) => {
                             padding="5px"
                             mt={["30%", "18%"]}
                             border="1px solid #9A9A9A"
-                            // backgroundImage="linear-gradient(180deg, #FFFFFF 50%, rgba(55, 55, 55, 0.2) 100%)"
                             zIndex="1"
                         ></Avatar>
                         <Box
@@ -82,7 +81,6 @@ const UserAvatar = ({ userResult }) => {
                             pos="relative"
                             padding="5px"
                             border="1px solid #9A9A9A"
-                            // backgroundImage="linear-gradient(180deg, #FFFFFF 50%, rgba(55, 55, 55, 0.2) 100%)"
                             zIndex="1"
                         ></Avatar>
                         <Box
