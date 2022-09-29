@@ -218,7 +218,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
               <GridItem order={[1, 1, 1, index % 2 == 0 ? 3 : 1]} colSpan={6}>
                 <Center>
                   <Box
-                    width={["100%", "100%", "480px", "480px"]}
+                    width={["100%", "100%","420px", "450px", "450px"]}
                     mx={["0px", "0px", "-40px"]}
                   >
                     <ScrollMenu
