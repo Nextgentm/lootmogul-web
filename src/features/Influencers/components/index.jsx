@@ -270,8 +270,8 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             (banner ||
                 category.toLowerCase() === defaultCategoryName.toLowerCase())
         ) {
-            return "/assets/designupdate1/influencer_banner.png";
-            // return !isTabletOrDesktop ? banner[1]?.url : banner[0]?.url;
+           // return "/assets/designupdate1/influencer_banner.png";
+             return !isTabletOrDesktop ? banner[1]?.url : banner[0]?.url;
         } else {
             return null;
         }
@@ -591,7 +591,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                         >
                             {displayInfluencers?.length &&
                                 displayInfluencers
-                                    .filter(
+                                .sort((a, b) => a.order - b.order) .filter(
                                         (_, index) =>
                                             index < (pageNo + 1) * 12 &&
                                             index >= pageNo * 12
