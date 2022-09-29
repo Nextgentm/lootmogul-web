@@ -11,7 +11,7 @@ const InfluencersCategories = ({ isMobileDevice, influencer }) => {
 
             {isMobileDevice ? (
                 <ScrollMenu>
-                    {influencer.influencers.data.map((influencer, index) => (
+                    {influencer?.influencers?.data?.sort((a, b) => a.order - b.order).map((influencer, index) => (
                         <InfluencersCard
                             style={{ w: "190px", mr: "30px", mt: "10px" }}
                             itemId={`item-${index}`}

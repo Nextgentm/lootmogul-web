@@ -308,7 +308,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                                 LeftArrow={LeftArrow}
                                 RightArrow={RightArrow}
                             >
-                                {newNfts.map((item, index) => (
+                                {newNfts.sort((a, b) => a.priority - b.priority).map((item, index) => (
                                     <NftCardInCollection
                                         itemId={`nftcard-${index}`}
                                         key={`nftcard-${index}`}
@@ -399,7 +399,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                         flexWrap="wrap"
                         justifyContent={["center", "center", "space-between"]}
                     >
-                        {displayData?.map((nfts, index) => (
+                        {displayData?.sort((a, b) => a.priority - b.priority).map((nfts, index) => (
                             <Box
                                 w={["100%", "100%", "200px", "200px", "200px"]}
                                 mx={["10px", "5px", "5px", "5px", "20px"]}
@@ -435,7 +435,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                     </Flex>
                 )}
                 <Flex m="auto" w="100%" flexDir={"column"} px="1rem">
-                    {selCategoriesData?.map((nfts, index) => (
+                    {selCategoriesData?.sort((a, b) => a.priority - b.priority).map((nfts, index) => (
                         <NftsCategories
                             isMobileDevice={isMobileDevice}
                             key={`nfts-${index}`}
