@@ -1,3 +1,5 @@
+const { transform } = require("framer-motion");
+
 module.exports = {
   rootStyle: {
     bg: "background",
@@ -33,42 +35,27 @@ module.exports = {
     ...(isMobile && { right: "20px" }),
   }),
   navLinksStyle: (isActive) => ({
-    ml: ["16px", "40px"],
+    ml: ["8px", "0px"],
     textTransform:"uppercase",
     // passHref: true,
-    fontFamily: "Sora",
-    fontSize: ["13px", "17px"],
+    padding:"13px 20px",
+    fontFamily: "Blanch",
+    fontSize: ["13px", "30px"],
+    textDecoration:"none!important",
     mt: ["16px","16px", 0],
     color: isActive ? "primary" : "secondary",
 
     ...(isActive && {
-      _after: {
-        content: `""`,
-        width: ["12%", "15%", "15%", "60%"],
-        borderBottom: "1px solid #fff",
-        // position: absolute;
-        left: 0,
-        bottom: 0,
-        display: "block",
-        borderBottom: "1px",
-        borderRadius: "1px",
-        borderColor: "linear-gradient(90deg, #F2B01C 0%, #EBCE2C 100%), #C4C4C4", borderBottomWidth: "2px", borderBottomStyle: "solid"
-      }
+      color: "primary"
     }),
     _hover: {
       color: "primary",
-      _after: {
-        content: `""`,
-        width: "60%",
-        borderBottom: "1px solid #fff",
-        // position: absolute;
-        left: 0,
-        bottom: 0,
-        display: "block",
-        borderBottom: "1px",
-        borderRadius: "1px",
-        borderColor: "linear-gradient(90deg, #F2B01C 0%, #EBCE2C 100%), #C4C4C4", borderBottomWidth: "2px", borderBottomStyle: "solid"
-      }
+      textDecoration:"none!important",
+      transition:".4s",
+      transform: "scale(1.2)"
+    },
+    _focus:{
+      textDecoration:"none!important"
     }
   })
 };

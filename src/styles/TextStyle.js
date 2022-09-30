@@ -216,7 +216,8 @@ export const TextStyle = {
                 fontFamily:"Sora",
                 fontWeight:"bold",
                
-            }
+            },
+            
            
         }
     }

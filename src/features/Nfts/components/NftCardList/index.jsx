@@ -12,7 +12,7 @@ import {
 const NftCardList = ({ data, isSale = true }) => {
   const ref = useRef();
   const lazyRoot = useRef(null);
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(true);
 
   const { isMobileDevice } = useContext(AppContext);
   return (

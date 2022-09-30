@@ -13,7 +13,7 @@ function Arrow({ children, disabled, onClick }) {
                 flexDirection: "column",
                 justifyContent: "center",
                 right: "1%",
-                opacity: disabled ? "0" : "1",
+                opacity: "1",
                 userSelect: "none",
                 marginRight: "-40px",
                 marginLeft: "-40px",
@@ -61,12 +61,14 @@ export function LeftArrow() {
         <Arrow disabled={disabled} onClick={clickHandler}>
             <Box width={["75px", "90px", "100px", "120px"]} overflow="hidden">
                 <Image
+                    alt="left arrow"
                     width={["100%"]}
+                    objectFit="fill"
                     p={"0px"}
                     src={
                         disabled
-                            ? `/assets/designupdate1/arrow-left-selected.svg`
-                            : `/assets/designupdate1/arrow-left-selected.svg`
+                            ? `/assets/designupdate1/arrow-left-unselected.png`
+                            : `/assets/designupdate1/arrow-left-selected.png`
                     }
                 />
             </Box>
@@ -95,21 +97,26 @@ export function RightArrow() {
     const clickHandler = () => {
         const nextItem = getNextItem();
         scrollToItem(nextItem?.entry?.target, "smooth", "end");
+        
     };
 
     return (
         <Arrow disabled={disabled} onClick={clickHandler}>
+            <Box width={["75px", "90px", "100px", "120px"]} overflow="hidden">
+
             <Image
                 alt="rightArrow"
-                width={["75px", "90px", "100px", "120px"]}
+                width={["100%"]}
                 overflow="hidden"
                 p={"0px"}
+                objectFit="fill"
                 src={
                     disabled
-                        ? `/assets/designupdate1/arrow-right-selected.svg`
-                        : `/assets/designupdate1/arrow-right-selected.svg`
+                        ? `/assets/designupdate1/arrow-right-unselected.png`
+                        : `/assets/designupdate1/arrow-right-selected.png`
                 }
             />
+            </Box>
         </Arrow>
     );
 }

@@ -6,18 +6,14 @@ import {
   Flex,
   Text,
   Input,
-  Textarea,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
-  InputGroup,
-  Button,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { Image } from '@chakra-ui/react'
+import { Image } from "@chakra-ui/react";
 
-const CustomedFormLabel = ({ title, htmlFor, required }) => {
+const CustomedFormLabel = ({ title, required }) => {
   return (
     <FormLabel htmlFor="email">
       <Flex>
@@ -52,7 +48,7 @@ const SectionHeader = ({ title, subtitle = "" }) => {
         style={{
           fontWeight: "bold",
           textAlign: currentSize === "base" ? "center" : "left",
-          textTransform: "uppercase"
+          textTransform: "uppercase",
         }}
         fontFamily="Sora"
         pr={4}
@@ -79,7 +75,6 @@ const Divider = () => {
 };
 
 const Page = () => {
-
   const [followers, setFollowers] = useState();
   const [followersCR, setFollowersCR] = useState();
   const [followersC, setFollowersC] = useState();
@@ -106,68 +101,55 @@ const Page = () => {
 
   useEffect(() => {
     if (followers && followersCR)
-      setFollowersC(parseInt(followers * followersCR / 100));
-  },
-    [followers, followersCR]
-  );
+      setFollowersC(parseInt((followers * followersCR) / 100));
+  }, [followers, followersCR]);
 
   useEffect(() => {
     if (followersC && entryFee && gamesPlayed && platformShare) {
-      setDailyRevenue(followersC * entryFee * gamesPlayed * platformShare / 100);
+      setDailyRevenue(
+        (followersC * entryFee * gamesPlayed * platformShare) / 100
+      );
     }
-  },
-    [followersC, entryFee, gamesPlayed, platformShare]
-  );
+  }, [followersC, entryFee, gamesPlayed, platformShare]);
 
   useEffect(() => {
     if (dailyRevenue) {
       setMonthlyRevenue(dailyRevenue * 30);
     }
-  },
-    [dailyRevenue]
-  );
-
+  }, [dailyRevenue]);
 
   useEffect(() => {
     if (followersC && nftCR && nftPrice && weeklyNftPurchase && commissionFee) {
-      setWeeklyRev(followersC * nftCR * nftPrice * weeklyNftPurchase * commissionFee / 100);
+      setWeeklyRev(
+        (followersC * nftCR * nftPrice * weeklyNftPurchase * commissionFee) /
+          100
+      );
     }
-  },
-    [followersC, nftCR, nftPrice, weeklyNftPurchase, commissionFee]);
-
+  }, [followersC, nftCR, nftPrice, weeklyNftPurchase, commissionFee]);
 
   useEffect(() => {
     if (weeklyRev) {
       setMonthlyRev(weeklyRev * 4);
     }
-  },
-    [weeklyRev]);
-
+  }, [weeklyRev]);
 
   useEffect(() => {
     if (monthlyRev && monthlyRevenue) {
       setTotalRev(monthlyRev + monthlyRevenue);
     }
-  },
-    [monthlyRev, monthlyRevenue]);
-
-
+  }, [monthlyRev, monthlyRevenue]);
 
   useEffect(() => {
     if (nftOV && royaltyPC && nftGrowth && timeElapsed) {
       if (timeElapsed > 0)
-        setNftRoyalties(((nftOV * royaltyPC / 100) + (nftOV * royaltyPC / 100 * nftGrowth / 100)) * Math.pow(2, timeElapsed - 1));
-      else
-        setNftRoyalties((nftOV * royaltyPC / 100));
+        setNftRoyalties(
+          ((nftOV * royaltyPC) / 100 +
+            (((nftOV * royaltyPC) / 100) * nftGrowth) / 100) *
+            Math.pow(2, timeElapsed - 1)
+        );
+      else setNftRoyalties((nftOV * royaltyPC) / 100);
     }
-  },
-    [nftOV, royaltyPC, nftGrowth, timeElapsed]);
-
-  const currentSize = useBreakpointValue({
-    base: "base",
-    sm: "sm",
-    md: "md",
-  });
+  }, [nftOV, royaltyPC, nftGrowth, timeElapsed]);
 
   return (
     <Box
@@ -176,20 +158,15 @@ const Page = () => {
       overflowX="hidden"
       className="custom-earning"
     >
-      <Box
-        position="absolute"
-        top="0"
-        left="-250px"
-        zIndex="-1"
-      >
-        <Image src='/assets/bg-wave.png' alt='wave' />
+      <Box position="absolute" top="0" left="-250px" zIndex="-1">
+        <Image src="/assets/bg-wave.png" alt="wave" />
       </Box>
 
       <Box
         bg="rgba(72, 26, 127, .36)"
         width={"90%"}
         style={{
-          margin: "0 auto"
+          margin: "0 auto",
         }}
         p={["10px", "0"]}
         borderRadius={"8px"}
@@ -223,9 +200,7 @@ const Page = () => {
           </Box>
 
           <Grid
-            templateColumns={
-              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
-            }
+            templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
             gap={6}
             columnGap={2}
           >
@@ -256,9 +231,7 @@ const Page = () => {
           <SectionHeader title="Game Revenue" />
 
           <Grid
-            templateColumns={
-              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
-            }
+            templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
             gap={6}
             columnGap={[2, 24]}
           >
@@ -278,8 +251,8 @@ const Page = () => {
                   _placeholder={{ color: "#707070" }}
                 />
                 <FormHelperText>
-                  Typical ratio for automated influencer branded games
-                  is 3% to 7% of total influencer followers
+                  Typical ratio for automated influencer branded games is 3% to
+                  7% of total influencer followers
                 </FormHelperText>
               </FormControl>
             </GridItem>
@@ -351,7 +324,6 @@ const Page = () => {
                   id="platform_fee_share"
                   type="number"
                   placeholder="50"
-
                   style={styles.input}
                   value={platformShare}
                   onChange={(e) => setPlatformShare(e.target.value)}
@@ -407,9 +379,7 @@ const Page = () => {
           <SectionHeader title="NFT Revenue" />
 
           <Grid
-            templateColumns={
-              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
-            }
+            templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
             gap={6}
             columnGap={[2, 24]}
           >
@@ -534,9 +504,7 @@ const Page = () => {
           <SectionHeader title="Grand Total" />
 
           <Grid
-            templateColumns={
-              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
-            }
+            templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
             gap={6}
             columnGap={[2, 24]}
           >
@@ -568,9 +536,7 @@ const Page = () => {
           />
 
           <Grid
-            templateColumns={
-              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
-            }
+            templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
             gap={6}
             columnGap={[2, 24]}
           >
@@ -672,13 +638,8 @@ const Page = () => {
         </Box>
       </Box>
 
-      <Box
-        position="absolute"
-        bottom="0"
-        right="-700px"
-        zIndex="-1"
-      >
-        <Image src='/assets/bg-bottom-wave.png' alt='wave' />
+      <Box position="absolute" bottom="0" right="-700px" zIndex="-1">
+        <Image src="/assets/bg-bottom-wave.png" alt="wave" />
       </Box>
     </Box>
   );

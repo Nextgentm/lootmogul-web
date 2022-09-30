@@ -24,6 +24,9 @@ nav {
   scrollbar-width: 5;
 }
 
+.react-horizontal-scrolling-menu--inner-wrapper {
+  overflow: visible!important;
+}
 .react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
   display: none;
 }

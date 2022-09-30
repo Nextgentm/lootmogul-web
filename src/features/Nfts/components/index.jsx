@@ -20,21 +20,28 @@ import {
     LeftArrow,
     RightArrow
 } from "../../../components/ContentNavigator/arrows";
-import NftCardInCollection from "./NftsCategories/NftCardInCollection"
+import NftCardInCollection from "./NftsCategories/NftCardInCollection";
+import { GrFilter } from "react-icons/gr";
+import CategoryComponent from "../categoryComp";
+import NftDetailBanner from "./NftDetailBanner";
+import NftBanner from "./NftBanner";
+import NewNfts from "./NewNfts";
+import structuredClone from '@ungap/structured-clone';
 
-const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
+const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
     const router = useRouter();
     const { isMobileDevice, isTabletOrDesktop } = useContext(AppContext);
     const [sortBy, setSortBy] = useState("Sort By");
     const [displayData, setDisplayData] = useState(data);
     const [selCategoriesData, setSelCategoriesData] = useState(data);
+    const [priceRange, setPriceRange] = useState(null);
+    const [tempPriceRange, setTempPriceRange] = useState(null);
 
-    const defaultCategories = "All";
+    const defaultCategories = "All NFTs";
     const [options, setOptions] = useState([]);
     const [categories, setCategories] = useState(defaultCategories);
-    const ref = React.useRef();
-
-    const lazyRootNew = React.useRef(null);
+    const [ tempFilterValue, setTempFilterValue] = useState(defaultCategories);
+   
 
     const { callAuthService } = useContext(AppContext);
 
@@ -42,7 +49,6 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
         const provider = router.query.provider;
-        console.log(access_token, provider);
         if (access_token) {
             if (provider == "facebook") {
                 callAuthService("facebook", access_token);
@@ -59,11 +65,28 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                 options.push(cat.name);
             });
             setCategories(defaultCategories);
+            setTempFilterValue(defaultCategories);
             setDisplayData(data);
         }
     }, [data]);
+    const nftFilterCategory = () => {        
+        const newCategory = tempFilterValue;
+        if (newCategory.toString().toLowerCase() === defaultCategories.toString().toLowerCase()) {
+           router.push("/nfts");
+        } else if (displayData) {
+            let selData = displayData.filter(
+                (data) => data.name.toLowerCase() === newCategory.toString().toLowerCase()
+            );
 
+            history.pushState({}, null, "/nfts/" + selData[0].slug);
+            
+        }
+        setCategories(newCategory);
+        ChangePriceRange(tempPriceRange);
+        
+    };
     const nftSelectCategory = (e) => {
+          
         const newCategory = e.target?.value || e;
         if (newCategory === defaultCategories.toString().toLowerCase()) {
             router.push(
@@ -86,13 +109,25 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                 { shallow: true }
             );
         }
+        setTempFilterValue(newCategory);
         setCategories(newCategory);
     };
     useEffect(() => {
         if (data && selectedCategory) {
             let selData = data.filter((item) => item.slug === selectedCategory);
+            setTempFilterValue(selData[0].name.toLowerCase());
             setCategories(selData[0].name.toLowerCase());
-            setSelCategoriesData(selData);
+            let pr = {min:1000 , max:0};
+            selData[0]?.nftSet?.map((nft) => {
+                if( pr.min > nft?.nft_kred?.data?.market_price) pr.min = nft.nft_kred?.data?.market_price;
+                if( pr.max < nft?.nft_kred?.data?.market_price) pr.max = nft.nft_kred?.data?.market_price;
+            });
+            if(pr.min === pr.max){
+                pr.min = 0;                
+            }
+            pr.minSel = pr.min;
+            pr.maxSel = pr.max;
+            setPriceRange(pr);
         }
     }, [selectedCategory]);
 
@@ -100,14 +135,16 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
         if (displayData && categories) {
             setSortBy("Sort by");
             if (categories.toLowerCase() !== defaultCategories.toLowerCase()) {
-                const selData = displayData.filter(
+                const clonedData = structuredClone(displayData);
+                const selData = clonedData.filter(
                     (cat) => cat.name.toLowerCase() === categories.toLowerCase()
                 );
-
+                
                 setSelCategoriesData(selData);
             } else {
                 setSelCategoriesData(displayData);
             }
+            
         }
     }, [categories, displayData]);
 
@@ -127,6 +164,8 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
             setSelCategoriesData(newCatData);
         }
     }, [sortBy]);
+
+   
     const getBannerImage = () => {
         if (selectedCategory && selCategoriesData) {
             if (selCategoriesData[0] && selCategoriesData[0].banner?.data) {
@@ -153,6 +192,37 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                 categories.toLowerCase() !== defaultCategories.toLowerCase())
         );
     };
+    const ChangePriceRange = (pr) =>{        
+        setPriceRange((pr)=> ({...priceRange, minSel:pr.minSel, maxSel:pr.maxSel }));
+
+    }
+
+    useEffect(() => {
+
+        
+        if (displayData && selCategoriesData && selCategoriesData.length<=1 && priceRange) {
+            const clonedData = structuredClone(displayData);
+
+            let selData = clonedData.filter(
+                cat => cat.name.toLowerCase() === categories.toLowerCase()
+            );
+           
+             let nftSet =selData.length? selData?.[0]?.nftSet:[];     
+             if(nftSet.length){
+            const newCatNftSet = nftSet.filter(nft => 
+                 parseFloat(nft?.nft_kred?.data?.market_price) >= parseFloat(priceRange.minSel) && 
+                 parseFloat(nft?.nft_kred?.data?.market_price) <= parseFloat(priceRange.maxSel)
+                
+            );
+            let newCatData = selData;
+            newCatData[0].nftSet = newCatNftSet;
+            setSelCategoriesData(newCatData);
+             }else setSelCategoriesData([]);
+         }
+    }, [priceRange]);
+
+
+
     return (
         <Box mx={["6vw"]}>
             {selectedCategory && selCategoriesData && selCategoriesData[0] && (
@@ -165,287 +235,32 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest }) => {
                     content={selCategoriesData[0]}
                 />
             )}
-            {router.pathname === "/nfts/[id]" ? (
-                <Box
-                    mx={"-6vw"}
-                    order="2"
-                    bgSize="cover"
-                    textAlign={"center"}
-                    pb={12}
-                >
-                    {getBannerImage() && (
-                        <Box
-                           
-                        >
-                            <Flex position="relative" w="100%">
-                                {isMobileDevice ? (
-                                    <Image
-                                        m={"auto"}
-                                        alt={`nft-banner`}
-                                        src={getBannerImage()}
-                                        className="custom-img"
-                                        layout="fill"
-                                        objectFit={"fill"}
-                                        w="100%"
-                                        h="600px"
-                                    />
-                                ) : (
-                                    <Image
-                                        m={"auto"}
-                                        alt={`nft-banner`}
-                                        src={getBannerImage()}
-                                        className="custom-img"
-                                        layout="fill"
-                                        objectFit={"fill"}
-                                        w="100%"
-                                        h="600px"
-                                    />
-                                )}
-                            </Flex>
-                        </Box>
-                    )}
-                </Box>
+            {categories.toLowerCase() !== defaultCategories.toLowerCase() ? (
+                <NftDetailBanner getBannerImage={getBannerImage} />
             ) : (
-                <>
-                    <Box>
-                        <SimpleGrid
-                            direction={"column-reverse"}
-                            columns={[1, 1, 1, 2]}
-                            spacing={10}
-                            pt={[10, 10, 10, 20, 20]}
-                            pb={12}
-                        >
-                            <Box order="1">
-                                <Text
-                                    color="white"
-                                    fontSize={[
-                                        "2rem",
-                                        "3.2em",
-                                        "3.5rem",
-                                        "4rem",
-                                        "4rem"
-                                    ]}
-                                    fontFamily="CNN"
-                                    variant="headText"
-                                >
-                                    Buy and Trade <br />
-                                    Your favorite <br />
-                                    Influencers NFT
-                                </Text>
-
-                                <Text
-                                    color="white"
-                                    fontSize={[
-                                        "1rem",
-                                        "1.2rem",
-                                        "1.2rem",
-                                        "1.2em",
-                                        "1.5rem"
-                                    ]}
-                                    fontWeight="normal"
-                                    mt="1rem"
-                                    width={"90%"}
-                                >
-                                    Become a virtual landlord to some of the
-                                    largest projects in crypto
-                                </Text>
-                            </Box>
-                            <Box
-                                mt={["20px", "20px", "0px"]}
-                                order="2"
-                                bgSize="cover"
-                                textAlign={"center"}
-                            >
-                                {getBannerImage() && (
-                                    <Flex>
-                                        <Image
-                                            m={"auto"}
-                                            alt={`nft-banner`}
-                                            src={getBannerImage()}
-                                            className="custom-img"
-                                            layout="fill"
-                                            width={"100%"}
-                                            height={"400px"}
-                                        />
-                                    </Flex>
-                                )}
-                            </Box>
-                        </SimpleGrid>
-                    </Box>
-                </>
+                <NftBanner getBannerImage={getBannerImage} />
             )}
 
-            <Box mt="30px" mb="30px">
-                {newNfts?.length && (
-                    <>
-                        <Flex
-                            justify={["center", "center", "space-between"]}
-                            mt="20px"
-                            align="center"
-                            mb="20px"
-                            textAlign={"center"}
-                        >
-                            <Text
-                                color="white"
-                                fontFamily="Blanch"
-                                fontSize={[
-                                    "4rem",
-                                    "4rem",
-                                    "4rem",
-                                    "5rem",
-                                    "5rem"
-                                ]}
-                            >
-                                NEWEST NFTS
-                            </Text>
-                        </Flex>
+            <NewNfts
+                newNfts={newNfts}
+                defaultCategories={defaultCategories}
+                selectedCategory={selectedCategory}
+                selCategoriesData={selCategoriesData}
+                data={data}
+                isNewest={isNewest}
+                isToShowAll={isToShowAll}
+                displayData={displayData}
+                nftSelectCategory={nftSelectCategory}
+                LeftArrow={LeftArrow}
+                RightArrow={RightArrow}
+                priceRange={priceRange}
+                setPriceRange={setTempPriceRange}
+                tempPriceRange={tempPriceRange}
+                setTempFilterValue={setTempFilterValue}
+                nftFilterCategory={nftFilterCategory}
+            
+            />
 
-                        <Box px={["0rem", "0rem"]}>
-                            <ScrollMenu
-                                className="no-scrollbar"
-                                apiRef={ref}
-                                ref={lazyRootNew}
-                                LeftArrow={LeftArrow}
-                                RightArrow={RightArrow}
-                            >
-                                {newNfts.map((item, index) => (
-                                    <NftCardInCollection
-                                        itemId={`nftcard-${index}`}
-                                        key={`nftcard-${index}`}
-                                        slug={item.slug}
-                                        showInfo={true}
-                                        nft={item}
-                                        lazyRoot={lazyRootNew}
-                                        defaultInView={
-                                            isMobileDevice
-                                                ? index < 2
-                                                : index < 4
-                                        }
-                                    />
-       
-                                ))}
-                            </ScrollMenu>
-                        </Box>
-                    </>
-                )}
-
-                {!selectedCategory ? (
-                    <Center>
-                        <Text
-                            color="white"
-                            fontSize={["3em", "4em"]}
-                            fontFamily="Blanch"
-                            mt={6}
-                        >
-                            EXPLORE NFT'S
-                        </Text>
-                    </Center>
-                ) : (
-                    <Center>
-                        <Text
-                            color="white"
-                            fontSize={["3em", "4em"]}
-                            fontFamily="Blanch"
-                            mt={6}
-                        >
-                            {selCategoriesData?.[0].name}
-                        </Text>
-                    </Center>
-                )}
-                {isNewest && (
-                    <Flex
-                        justify={"flex-end"}
-                        mt="20px"
-                        align="center"
-                        mb="20px"
-                        textAlign={"center"}
-                    >
-                        {!isMobileDevice && (
-                            <Flex
-                                alignItems="center"
-                                cursor="pointer"
-                                onClick={() =>
-                                    router.push({
-                                        pathname: "/nfts"
-                                    })
-                                }
-                            >
-                                <Text
-                                    color="white"
-                                    fontFamily="Blanch"
-                                    fontSize={[
-                                        "1em",
-                                        "1em",
-                                        "1.5em",
-                                        "2em",
-                                        "2em"
-                                    ]}
-                                >
-                                    VIEW ALL
-                                </Text>
-                                <Image
-                                    alt=""
-                                    src="/assets/rightArrow.png"
-                                    ml="0.5em"
-                                />
-                            </Flex>
-                        )}
-                    </Flex>
-                )}
-                {!isNewest && (
-                    <Flex
-                        mt={10}
-                        ml={["10px", "20px"]}
-                        flexWrap="wrap"
-                        justifyContent={["center", "center", "space-between"]}
-                    >
-                        {displayData?.map((nfts, index) => (
-                            <Box
-                                w={["100%", "100%", "200px", "200px", "200px"]}
-                                mx={["10px", "5px", "5px", "5px", "20px"]}
-                                my={["10px", "5px", "5px", "5px", "20px"]}
-                            >
-                                <Tooltip label={nfts.name}>
-                                    <Button
-                                        w="100%"
-                                        mt={2}
-                                        variant={"segment"}
-                                        fontSize={[
-                                            "20px !important",
-                                            "20px !important",
-                                            "17px !important"
-                                        ]}
-                                        onClick={() => {
-                                            nftSelectCategory(
-                                                nfts.name.toLowerCase()
-                                            );
-                                        }}
-                                    >
-                                        {" "}
-                                        <Text
-                                            textOverflow="ellipsis"
-                                            overflow="hidden"
-                                        >
-                                            {nfts.name}
-                                        </Text>
-                                    </Button>
-                                </Tooltip>
-                            </Box>
-                        ))}
-                    </Flex>
-                )}
-                <Flex m="auto" w="100%" flexDir={"column"} px="1rem">
-                    {selCategoriesData?.map((nfts, index) => (
-                        <NftsCategories
-                            isMobileDevice={isMobileDevice}
-                            key={`nfts-${index}`}
-                            NFTS={nfts}
-                            isSelectedCat={isToShowAll()}
-                            index={index}
-                        />
-                    ))}
-                </Flex>
-            </Box>
         </Box>
     );
 };

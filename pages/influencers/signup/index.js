@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState} from "react";
 import {
   Box,
   Grid,
@@ -10,12 +10,9 @@ import {
   Textarea,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
-  InputGroup,
   Button,
   Checkbox,
-  CheckboxGroup,
   useBreakpointValue,
   AlertDialog,
   AlertDialogBody,
@@ -25,10 +22,8 @@ import {
   AlertDialogOverlay,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
-// import { useAlert } from "react-alert";
-import { AppContext } from "../../../src/utils/AppContext/index";
 import strapi from "../../../src/utils/strapi";
-import { Image } from '@chakra-ui/react'
+import { Image } from "@chakra-ui/react";
 
 const CustomedFormLabel = ({ title, htmlFor, required }) => {
   return (
@@ -92,42 +87,38 @@ const Divider = () => {
 };
 
 const Page = () => {
-  // const alert = useAlert();
   const [accepted, setAccepted] = useState(false);
-  const { jwt } = useContext(AppContext);
   const [alertMsg, setAlertMsg] = useState({});
 
-  const currentSize = useBreakpointValue({
-    base: "base",
-    sm: "sm",
-    md: "md",
-  });
   const ShowAlert = () => {
-    return (<AlertDialog
-      isOpen={alertMsg?.isOpen}
-      motionPreset='slideInBottom'
-      isCentered
-      size={"xl"}
-      bg="background"
-      closeOnOverlayClick={true}
-      closeOnEsc={true}
-      onClose={() => {
-        setAlertMsg({})
-      }
-      }
-    >
-      <AlertDialogOverlay />
+    return (
+      <AlertDialog
+        isOpen={alertMsg?.isOpen}
+        motionPreset="slideInBottom"
+        isCentered
+        size={"xl"}
+        bg="background"
+        closeOnOverlayClick={true}
+        closeOnEsc={true}
+        onClose={() => {
+          setAlertMsg({});
+        }}
+      >
+        <AlertDialogOverlay />
 
-      <AlertDialogContent p="10px" bg="background">
-        <Box border="2.7033px dashed #515151">
-          <AlertDialogHeader><Heading color="white">{alertMsg?.title}</Heading></AlertDialogHeader>
+        <AlertDialogContent p="10px" bg="background">
+          <Box border="2.7033px dashed #515151">
+            <AlertDialogHeader>
+              <Heading color="white">{alertMsg?.title}</Heading>
+            </AlertDialogHeader>
 
-          <AlertDialogBody>
-            <Text variant="hint">{alertMsg?.message}</Text>
-          </AlertDialogBody>
-        </Box>
-      </AlertDialogContent>
-    </AlertDialog>)
+            <AlertDialogBody>
+              <Text variant="hint">{alertMsg?.message}</Text>
+            </AlertDialogBody>
+          </Box>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
   };
   const formik = useFormik({
     initialValues: {
@@ -145,29 +136,34 @@ const Page = () => {
       youtubeURL: "",
     },
     onSubmit: async (values, { resetForm }) => {
-
-
-
       if (
         values.firstName !== "" &&
         values.lastName !== "" &&
         values.email !== ""
       ) {
-        const resp = await strapi.create('influencer-signups', values);
+        const resp = await strapi.create("influencer-signups", values);
         // //console.log(resp);
         if (resp.data) {
-          setAlertMsg({ isOpen: true, title: "Success", message: "Your information has been sent!" });
+          setAlertMsg({
+            isOpen: true,
+            title: "Success",
+            message: "Your information has been sent!",
+          });
 
           resetForm();
         } else {
-          setAlertMsg({ isOpen: true, title: "Error", message: "There is an error while sending your information!" });
-
-          // ShowAlert({title:"Error",message: "There is an error while sending your information!"});
+          setAlertMsg({
+            isOpen: true,
+            title: "Error",
+            message: "There is an error while sending your information!",
+          });
         }
       } else {
-        setAlertMsg({ isOpen: true, title: "Error", message: "Required fields must not be left blank!" });
-
-        // ShowAlert({title:"Error",message: "Required fields must not be left blank!"});
+        setAlertMsg({
+          isOpen: true,
+          title: "Error",
+          message: "Required fields must not be left blank!",
+        });
       }
     },
   });
@@ -177,25 +173,16 @@ const Page = () => {
   };
 
   return (
-    <Box
-      py={[5, 10]}
-      position="relative"
-      overflowX="hidden"
-    >
-      <Box
-        position="absolute"
-        top="0"
-        left="-250px"
-        zIndex="-1"
-      >
-        <Image src='/assets/bg-wave.png' alt='wave' />
+    <Box py={[5, 10]} position="relative" overflowX="hidden">
+      <Box position="absolute" top="0" left="-250px" zIndex="-1">
+        <Image src="/assets/bg-wave.png" alt="wave" />
       </Box>
 
       <Box
         bg="rgba(72, 26, 127, .36)"
         width={"90%"}
         style={{
-          margin: "0 auto"
+          margin: "0 auto",
         }}
         p={["10px", "0"]}
         borderRadius={"8px"}
@@ -218,16 +205,12 @@ const Page = () => {
           </Text>
 
           <Grid
-            templateColumns={
-              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
-            }
+            templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
             gap={6}
             columnGap={[2, 24]}
           >
             <Grid
-              templateColumns={
-                ["repeat(1, 1fr)", "repeat(2, 1fr)"]
-              }
+              templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
               gap={6}
             >
               <GridItem>
@@ -300,17 +283,13 @@ const Page = () => {
 
           <Divider />
 
-          {/* Social Media Accounts */}
-
           <SectionHeader
             title="Social Media Accounts"
             subtitle="* Leave blank if you don't have a specific accounts."
           />
 
           <Grid
-            templateColumns={
-              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
-            }
+            templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
             gap={6}
             columnGap={[2, 24]}
           >
@@ -381,8 +360,6 @@ const Page = () => {
 
           <Divider />
 
-          {/* Personal Bio */}
-
           <SectionHeader title="Personal Bio" />
 
           <FormControl style={{ marginBottom: "12px" }}>
@@ -405,14 +382,10 @@ const Page = () => {
 
           <Divider />
 
-          {/* PayPal Payment Information */}
-
           <SectionHeader title="PayPal Payment Information" />
 
           <Grid
-            templateColumns={
-              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
-            }
+            templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
             gap={6}
             columnGap={[2, 24]}
           >
@@ -441,16 +414,13 @@ const Page = () => {
 
           <Divider />
 
-          {/* Account */}
           <SectionHeader
             title="Bank Direct Deposit Information"
             subtitle="(OPTIONAL, if you do not have a PayPal account)"
           />
 
           <Grid
-            templateColumns={
-              ["repeat(1, 1fr)", "repeat(2, 1fr)"]
-            }
+            templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
             gap={6}
             columnGap={[2, 24]}
           >
@@ -544,13 +514,8 @@ const Page = () => {
       </Box>
       {ShowAlert()}
 
-      <Box
-        position="absolute"
-        bottom="150px"
-        right="-700px"
-        zIndex="-1"
-      >
-        <Image src='/assets/bg-bottom-wave.png' alt='wave' />
+      <Box position="absolute" bottom="150px" right="-700px" zIndex="-1">
+        <Image src="/assets/bg-bottom-wave.png" alt="wave" />
       </Box>
     </Box>
   );

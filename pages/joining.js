@@ -5,7 +5,6 @@ import { AppContext } from "../src/utils/AppContext/index";
 import strapi from "../src/utils/strapi";
 import {setMatchCount } from "../src/services/dataService";
 import dynamic from "next/dynamic";
-import { now } from "moment";
 
 const PlayersJoining = dynamic(() => import("../src/features/PlayersJoining"));
 

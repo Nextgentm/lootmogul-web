@@ -147,14 +147,7 @@ useEffect(()=>{
             }
           />
           }
-          {/* <div style={style}>
-          <GridLoader
-            color={"#DDBF79"}
-            loading={loading}
-            size={20}
-           
-          />
-          </div> */}
+        
           {router.route === "/" ? '' : <Footer />}
         </AppContextContainer>
       </ChakraUIContainer>
