@@ -69,6 +69,7 @@ const MetaVersePage = ({ type }) => {
         else if (type === "stadium-internal-nft") setShowData(interiorData);
         else if (type === "seats-nft") setShowData(seatData);
     }, [type]);
+    
     return (
         <Box width={"100%"}>
             {showData && showData.type === "video" && (

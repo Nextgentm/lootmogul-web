@@ -76,7 +76,7 @@ const StickySocialIcons = () => {
             >
                 <Link
                     _focus={{ border: "none", boxShadow: "none" }}
-                    href="https://t.me/lootmogulchat"
+                    href="https://t.me/LootMogulcommunitychat"
                     target="_blank"
                 >
                     <Image

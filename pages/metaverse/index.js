@@ -1,3 +1,4 @@
+
 import MetaVersePage from "../../src/features/MetaVersePage";
 import SEOContainer from "../../src/features/SEOContainer";
 import { getSeoData } from "../../src/queries/strapiQueries";
@@ -21,11 +22,16 @@ const Metaverse = ({ seoData }) => {
         />
       )}
       <MetaVersePage />
+
+
+
     </>
   );
 };
 export default Metaverse;
 export async function getStaticProps() {
+
   const seoData = await getSeoData("metaverse");
   return { props: { seoData } };
 }
+

@@ -220,6 +220,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 )}
             </Box>
             <Box>
+
                 <Explore
                     data={data}
                     defaultCategoryName={defaultCategoryName}
@@ -243,6 +244,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                     handleCategoryChange={handleFilterChange}
                     setFilterValue={setFilterValue}
                 />
+
             </Box>
         </Box>
     );

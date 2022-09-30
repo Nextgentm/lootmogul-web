@@ -261,6 +261,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
             
             />
 
+
         </Box>
     );
 };
