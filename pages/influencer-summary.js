@@ -39,9 +39,19 @@ const InfluencerSummary = () => {
       gamesRevenue: null,
       totalRevenue: resp.nftsRevenue + resp.gamesRevenue,
     };
-    const addObjectResource = Object.assign(objectOrder, resp);
-    delete addObjectResource.id;
-    setData(addObjectResource);
+    // const addObjectResource = Object.assign(objectOrder, resp);
+    //   delete addObjectResource.id;
+    //   setData(addObjectResource);
+    if (resp && resp.length !== 0) {
+      const addObjectResource = Object.assign(objectOrder, resp);
+      delete addObjectResource.id;
+      delete addObjectResource.autoComputation;
+      console.log(addObjectResource);
+      setData(addObjectResource);
+    } else {
+      setData(resp);
+    }
+
   }, [user]);
 
   return (

@@ -12,6 +12,10 @@ const socialLinks = [
         link: "https://www.facebook.com/LootMogul/"
     },
     {
+        Image: "medium.svg",
+        link: "https://medium.com/@lootmogul"
+    },
+    {
         Image: "youtube.png",
         link: "https://www.youtube.com/channel/UCsooAZi-4pYR7MXTJMVRFPg/videos"
     },
@@ -26,7 +30,7 @@ const socialLinks = [
     },
     {
         Image: "telegram.png",
-        link: "https://t.me/lootmogulchat"
+        link: "https://t.me/LootMogulcommunitychat"
     },
     {
         Image: "twitch.png",
