@@ -1,12 +1,7 @@
-// import dynamic from 'next/dynamic'
-// import MyPageLoader from '../../src/components/MyPageLoader';
+
 import {Text} from "@chakra-ui/react";
 
 import AboutUS from '../../src/features/AboutUS'
-
-// const AboutUS = dynamic(() => import("../../src/features/AboutUS"),  { loading: () => 
-//   <MyPageLoader/>
-//  })
 
 
 export default function About({ data,aboutUsData, error }) {

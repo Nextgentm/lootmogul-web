@@ -1,44 +1,132 @@
-import React from "react";
-import { Text, Flex, Image, Menu, MenuButton, MenuList, MenuItem, } from "@chakra-ui/react";
-import { CategoryIcon } from "../../components/Icons";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import React , {useState, useEffect} from "react";
+import {
+    Text,
+    Flex,
+    Menu,
+    MenuButton,
+    MenuList,
+    MenuItem, Box
+} from "@chakra-ui/react";
+
 import { useRouter } from "next/router";
 
-const cates = [
-    { icon: "baseball-bat 1.png", label: "Baseball", path: "/" },
-    { icon: "basketball 1.png", label: "Basketball", path: "/" },
-    { icon: "hamburger 1.png", label: "Food", path: "/" },
-    { icon: "american-football 1.png", label: "Football", path: "/" },
-    { icon: "book-stack 1.png", label: "General", path: "/" },
-    { icon: "hockey-sticks 1.png", label: "Hockey", path: "/" },
-    { icon: "boxing-gloves 1.png", label: "MMA", path: "/" },
-    { icon: "soccer-ball 1.png", label: "Soccer", path: "/" }];
+import { AiFillCaretDown } from "react-icons/ai";
 
-const CategoryComponent = () => {
+const CategoryComponent = ({ displayData,defaultCategory, setTempFilterValue,selectedCategory }) => {
     const router = useRouter();
+    const [ activeCategory, setActiveCategory] = useState(selectedCategory);
 
     return (
-        <Flex ml={"15px"} border="1px solid #FFFFFF" borderRadius={"30px"} width="170px"  >
+        <Flex border="1px solid #C7C7C7" bg="#0f0625" h="55px">
             <Menu>
+                <MenuButton
+                    border="none"
+                    color="#FFFFFF"
+                    _focus={{ borderColor: "transparent", boxShadow: "none" }}
+                    fontFamily="Sora"
+                    fontSize={"20px"}
+                   lineHeight="40px"
+                   h="100%"
+                
+                >
+                     <Flex
+                        alignItems={"center"}
+                        justifyContent={"space-around"}
+                       h="100%" 
+                        
+                    >
+                   <Text h="100%" borderRightWidth="1px" 
+                        pl={3} pr={6}noOfLines={1}>{activeCategory}</Text>
 
-                <MenuButton border="none" color="#FFFFFF" _focus={{ borderColor: "transparent", boxShadow: "none" }} fontFamily="Blanch" fontSize={"22px"} lineHeight="40px" ><CategoryIcon color="#FFFFFF" ml="30px" mr="15px" />Category
-                    {<ChevronDownIcon color="#FFFFFF" ml="12px" />}
+                        <Box h={"full"}   p={3}borderColor={"white"} >
+                            <AiFillCaretDown
+                           
+                                bg="#FFFFFF"
+                                m="auto"
+                                w="40px"
+                                h="40px"
+                            /></Box>
+                            </Flex>
                 </MenuButton>
 
-                <MenuList mt="11px" backgroundColor="#1C1C1C">
-
-                    <Flex direction={"column"} onClick={() => router.push("/influencers")} {...cates.path}>
-                        <MenuItem color="#C7C7C7"
-                            fontSize={["12px", "14px"]} _hover={{ bg: '#413D40' }}>   All </MenuItem>
-
-                        {cates.map((cate, index) => (
-                            <MenuItem color="#C7C7C7"
-                                fontSize={["12px", "14px"]} _hover={{ bg: 'black' }}>
-                                <Flex ml={["6px", 0]} key={`cate-${index}`} mt="6px">
-                                    <Image alt={cate.label} width="20px" height="20px" mr="10px" src={`/assets/nfts/${cate.icon}`} />
-                                    <Text ml="10px" color="#C7C7C7" fontFamily="Sora" fontSize="14px"
-                                        fontWeight={600} lineHeight={"18px"}>
-                                        {cate.label}
+                <MenuList zIndex={99} style={{minWidth:"min-content"}}  mt="11px" backgroundColor="#0f0625">
+                    <Flex
+                        direction={"column"}   
+                        alignItems={"center"}
+                        justifyContent={"space-around"}
+                        py="4"
+                        px="3"
+                        // onClick={() => router.push("/influencers/")}
+                        // {...selectedCategory.path}
+                    >
+                         <MenuItem
+                                color="#C7C7C7"
+                                _hover={{ bg: "#E90A63" }}
+                                
+                                fontFamily="Sora"
+                                _focus={{bg:"transparent"}}
+                                fontSize={"22px"}
+                               
+                                onClick={()=>{
+                                    setActiveCategory(defaultCategory);
+                                    setTempFilterValue(defaultCategory.toLowerCase());
+                                }}
+                              
+                            >
+                                <Flex
+                                    ml={["6px", 0]}
+                                 
+                                    my="6px"
+                                >
+                                   
+                                    <Text
+                                        // ml="10px"
+                                        color="#FFF"
+                                        fontFamily="Sora"
+                                        fontSize={"20px"}
+                                        fontWeight={200}
+                                       
+                                    >
+                                       {defaultCategory}
+                                    </Text>
+                                </Flex>
+                            </MenuItem>
+                       
+                        {displayData.map((cate, index) => (
+                            <MenuItem
+                            color="#C7C7C7"
+                            _hover={{ bg: "#E90A63" }}
+                            
+                            fontFamily="Sora"
+                            _focus={{bg:"transparent"}}
+                            fontSize={"22px"}
+                                onClick={()=>{
+                                    setActiveCategory(cate.name);
+                                    setTempFilterValue(cate.name.toLowerCase());
+                                }}
+                               
+                            >
+                                <Flex
+                                    ml={["6px", 0]}
+                                    key={`cate-${index}`}
+                                    my="6px"
+                                >
+                                    {/* <Image
+                                        alt={cate.label}
+                                        width="20px"
+                                        height="20px"
+                                        mr="10px"
+                                        src={`/assets/nfts/${cate.icon}` || ""}
+                                    /> */}
+                                    <Text
+                                        // ml="10px"
+                                        color="#FFF"
+                                        fontFamily="Sora"
+                                        fontSize={"20px"}
+                                        fontWeight={200}
+                                       
+                                    >
+                                        {cate.name}
                                     </Text>
                                 </Flex>
                             </MenuItem>
@@ -46,9 +134,7 @@ const CategoryComponent = () => {
                     </Flex>
                 </MenuList>
             </Menu>
-        </Flex >
+        </Flex>
     );
 };
 export default CategoryComponent;
-
-

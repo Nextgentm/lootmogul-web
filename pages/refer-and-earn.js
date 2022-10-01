@@ -1,15 +1,7 @@
-// import dynamic from 'next/dynamic'
-// import MyPageLoader from '../src/components/MyPageLoader';
-import ReferEarn from '../src/features/ReferEarn';
-// const ReferEarn = dynamic(() => import("../src/features/ReferEarn"),  { loading: () => 
-//     <MyPageLoader/>
-//    })
-  
-
+import ReferEarn from "../src/features/ReferEarn";
 
 const ReferAndEarn = () => {
-
-    return <ReferEarn />;
+  return <ReferEarn />;
 };
 
 export default ReferAndEarn;

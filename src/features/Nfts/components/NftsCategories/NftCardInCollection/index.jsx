@@ -2,24 +2,21 @@ import { Text, Button, Flex, Box, Image, Link } from "@chakra-ui/react";
 import ReactCardFlip from "react-card-flip";
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
-const cardWidth = ["380px"];
-const cardHeight = ["509px"];
-const infoboxWidth = "342px";
-const imageHeight = "440px";
+import { useBreakpointValue } from '@chakra-ui/react'
 
-const CardInfo = ({ nft }) => {
+const CardInfo = ({ nft, w }) => {
   return (
     <Box
-      key={`nftItem-${nft?.id}`}
-      bg="#00000088"
-      border="1px"
-      borderColor="gray.600"
-      position={"relative"}
-      bottom={"0px"}
-      width={infoboxWidth}
-      mt="-100px"
-      p={"15px"}
-      mx={"auto"}
+    key={`nftItem-${nft?.id}`}
+    bg="#00000088"
+    border="1px"
+    borderColor="gray.600"
+    position={"relative"}
+    bottom={"0px"}
+    width={w}
+    mt="-100px"
+    p={"15px"}
+    mx={"8%"}
     >
       <Text
         noOfLines={2}
@@ -85,8 +82,11 @@ const NftCardInCollection = ({
   showInfo = false,
   lazyRoot = null,
   defaultInView = false,
+  cardWidth
 }) => {
   
+  const cardHeight = ["480px","480px","509px"];
+  const imageHeight = ["420px","420px","460px"];
   const [isFlipped, setIsFlipped] = useState(false);
 
   const { ref, inView } = useInView({
@@ -202,7 +202,7 @@ const NftCardInCollection = ({
                       border: "none",
                       textDecoration: "none",
                     }}
-                    padding={"3%"}
+                    padding="3%"
                     height={imageHeight}
                     width={cardWidth}
                   >
@@ -232,7 +232,7 @@ const NftCardInCollection = ({
                 </Box>
               </ReactCardFlip>
             )}
-            {showInfo && <CardInfo nft={nft} />}
+            {showInfo && <CardInfo nft={nft}/>}
           </Box>
         </Box>
       </Link>

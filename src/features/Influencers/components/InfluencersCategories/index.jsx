@@ -15,7 +15,9 @@ const InfluencersCategories = ({ influencer }) => {
                 ]}
                 gap={5}
             >
+
                 {influencer?.influencers?.data?.sort((a, b) => a.order - b.order).map((influencer, index) => (
+
                     <InfluencersCard
                         style={{ w: "100%", px: "15px" }}
                         colSpan={4}

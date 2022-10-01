@@ -3,9 +3,7 @@ import dynamic from "next/dynamic";
 import MyPageLoader from "../../src/components/MyPageLoader";
 import SEOContainer from "../../src/features/SEOContainer";
 import { getSeoData } from "../../src/queries/strapiQueries";
-// const Nfts = dynamic(() => import("../../src/features/Nfts/components"),  { loading: () =>
-//   <MyPageLoader/>
-//  })
+
 
 const defaultSEOData = {
   metaTitle:
@@ -38,6 +36,7 @@ export async function getStaticProps() {
 
   const newNfts = await strapi.find("nft-kreds", {
     sort:"createdAt:DESC",
+    pagination:{limit:10},
     fields:["slug","marketURL","front_image","back_image", "name", "isAuction", "market_price", "sale_price"]
     }
   );

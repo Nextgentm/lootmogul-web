@@ -1,12 +1,10 @@
 import strapi from '../../src/utils/strapi';
-// import dynamic from 'next/dynamic'
+
 import {getSeoData} from "../../src/queries/strapiQueries";
-// import MyPageLoader from '../../src/components/MyPageLoader';
+
 import SEOContainer from '../../src/features/SEOContainer';
  import FounderNfts from '../../src/features/FounderNfts/components';
-// const FounderNfts = dynamic(() => import("../../src/features/FounderNfts/components"),  { loading: () => 
-//   <MyPageLoader/>
-//  })
+
 
  const defaultSEOData = {
   metaTitle:"Grab Lootmogul Founder's NFTs",

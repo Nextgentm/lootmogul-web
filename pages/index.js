@@ -1,5 +1,4 @@
-// import dynamic from "next/dynamic";
-// import MyPageLoader from "../src/components/MyPageLoader";
+
 import {
   apiBanners,
   apiPromotionBanners,
@@ -8,7 +7,6 @@ import {
   apiTestimonials,
   apiFaqs
 } from "../src/features/Home/api";
-import HomeComponent from '../src/features/Home/components';
 
 import { getSeoData } from "../src/queries/strapiQueries";
 import SEOContainer from "../src/features/SEOContainer";
@@ -16,17 +14,14 @@ import { useContext, useEffect } from "react";
 import LMVideoPlayer from "../src/components/LMVideoPlayer";
 import { Box } from "@chakra-ui/react";
 import AppContext from "../src/utils/AppContext";
-// const SEOContainer = dynamic(() => import("../src/features/SEOContainer"));
 const defaultSEOData = {
   metaTitle: "Buy And Trade Your Favorite Influencers NFTs",
   metaDescription: "A Multiverse Blockchain Gaming Platform For Sports Influencers And Fans To Engage | Join And Build Your Own Metaverse Land | Play Games With Influencers",
   canonicalURL: "https://lootmogul.com/"
 };
 
-export default function Home({ topBanners, bottomBanners, faqData, featuredInfluencers, trendingGames, testimonials, seoData }) {
-  const { isMobileDevice, isDesktopDevice } = useContext(AppContext);
-  console.log(isMobileDevice);
-  // //console.log("banlen",featuredInfluencers?.length);
+export default function Home({ seoData }) {
+  const { isMobileDevice } = useContext(AppContext);
   useEffect(()=>{
     setTimeout(() => {
       window.location.replace('https://lootmogul.wpengine.com/home')
@@ -39,15 +34,7 @@ export default function Home({ topBanners, bottomBanners, faqData, featuredInflu
       <Box  height={isMobileDevice ? "600px" : '850px'}>
         <LMVideoPlayer mute={true} url={isMobileDevice ? '/assets/videos/nextgenerationmobile.mp4' : '/assets/videos/nextgenerationweb.mp4'} play={true} loop={true} />
       </Box>
-      {/* <HomeComponent
-      topBanners={topBanners}
-      bottomBanners={bottomBanners}
-      faqData={faqData}
-      featuredInfluencers={featuredInfluencers}
-      trendingGames={trendingGames}
-      testimonials={testimonials}
-      
-    /> */}
+     
     </>
   );
 }

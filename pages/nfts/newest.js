@@ -1,6 +1,5 @@
 import React, { } from "react";
 import dynamic from 'next/dynamic'
-import {Text} from "@chakra-ui/react";
 
 const NftsComponent = dynamic(() => import("../../src/features/Nfts/components"));
 import strapi from "../../src/utils/strapi";

@@ -1,13 +1,8 @@
 import { Text } from "@chakra-ui/react";
-// import dynamic from 'next/dynamic'
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-// import MyPageLoader from "../../../src/components/MyPageLoader";
-
 import InfluencerDetail from "../../../src/features/InfluencerDetails";
-// const InfluencerDetail = dynamic(() => import("../../../src/features/InfluencerDetails"),  { loading: () => 
-//   <MyPageLoader/>
-//  })
+
 
 import strapi from "../../../src/utils/strapi";
 

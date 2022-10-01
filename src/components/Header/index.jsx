@@ -145,7 +145,8 @@ const Header = () => {
                         <Flex direction="row" justifyContent="center" w="60%">
                             {routes.map(({ label, path, queryPath }, index) => (
                                 <Link
-                                    _focus={{ border: "none" }}
+                                    _focus={{ border: "none", textDecor:"none" }}
+                                    _hover={{ border: "none", textDecor:"none" }}
                                     href={path}
                                     passHref={true}
                                     key={`route-${index}`}

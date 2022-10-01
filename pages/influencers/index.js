@@ -3,7 +3,6 @@ import MyPageLoader from "../../src/components/MyPageLoader";
 import strapi from "../../src/utils/strapi";
 import SEOContainer from "../../src/features/SEOContainer";
 import {getSeoData} from "../../src/queries/strapiQueries";
-//  import InfluencersComponent from '../../src/features/Influencers/components';
 // 
 const InfluencersComponent = dynamic(
   () => import("../../src/features/Influencers/components"),
@@ -31,6 +30,7 @@ export async function getStaticProps() {
   const newInfluencers = await strapi.find("influencers", {
     sort:"createdAt:DESC",
     fields: ["name", "slug","tagline","order"],
+    pagination:{limit:10},
     populate: {
       icon: {
           fields: ["name", "url"],

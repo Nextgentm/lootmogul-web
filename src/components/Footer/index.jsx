@@ -44,7 +44,7 @@ const Footer = () => {
     const router = useRouter();
 
     return (
-        <Box bg="#240e45">
+        <Box bg="#0F092D">
             <Flex py="2rem">
                 <Flex
                     justifyContent="space-around"
@@ -56,6 +56,7 @@ const Footer = () => {
                         <Box mb="30px">
                             <Text
                                 style={BoldWhiteText}
+                                
                                 fontSize={[
                                     "18px",
                                     "25px",
@@ -77,9 +78,10 @@ const Footer = () => {
                         </Box>
                         <Text
                             style={BoldWhiteText}
-                            fontSize={["18px", "25px", "30px", "20px", "20px"]}
+                            
+                            
                         >
-                            Get The latest Updates
+                            Subscribe to get the updates
                         </Text>
                         <Flex>
                             <Input
@@ -94,13 +96,13 @@ const Footer = () => {
                             />
                             <Button
                                 className="influencer-card-btn"
-                                width="20%"
+                                width={["40%","30%"]}
                                 fontSize={"1rem"}
                                 pos="relative"
                                 right="1rem"
                                 padding="10px 10px"
                             >
-                                Go
+                              Submit
                             </Button>
                         </Flex>
                     </Box>
@@ -109,6 +111,7 @@ const Footer = () => {
                         <Box mr={["70px", "70px", "100px", "0px"]}>
                             <Text
                                 style={BoldWhiteText}
+                                
                                 fontSize={[
                                     "18px",
                                     "25px",
@@ -175,6 +178,7 @@ const Footer = () => {
                         <Box>
                             <Text
                                 style={BoldWhiteText}
+                                
                                 fontSize={[
                                     "18px",
                                     "25px",
@@ -217,7 +221,8 @@ const Footer = () => {
                         />
                         <Text
                             style={BoldWhiteText}
-                            fontSize={["18px", "25px", "30px", "20px", "20px"]}
+                            
+                            
                         >
                             Community
                         </Text>
@@ -267,7 +272,6 @@ const Footer = () => {
                         </Flex>
                         <Text
                             style={BoldWhiteText}
-                            fontSize={["18px", "25px", "30px", "20px", "20px"]}
                         >
                             Try our App
                         </Text>
@@ -280,7 +284,7 @@ const Footer = () => {
                 </Flex>
             </Flex>
             <Box
-                bg="#240e45"
+                bg="#0F092D"
                 m="auto"
                 textAlign={["left", "center"]}
                 w="100%"
@@ -293,10 +297,7 @@ const Footer = () => {
                     alignItems="center"
                 >
                     <Text
-                        color="white"
-                        fontFamily="Sora"
-                        fontSize="20px"
-                        fontWeight={700}
+                        style={BoldWhiteText}
                         mr="40px"
                     >
                         Our Payment Partners
@@ -349,8 +350,9 @@ const Footer = () => {
 };
 
 const BoldWhiteText = {
-    fontFamily: "Sora",
+    fontFamily: "Blanch",
     fontWeight: "400",
+    fontSize:"32px",
     marginTop: "10px",
     marginBottom: "0.5rem",
     color: "#FFF"
@@ -358,7 +360,7 @@ const BoldWhiteText = {
 const LightWhiteText = {
     fontFamily: "Sora",
     color: "lightgray",
-    fontSize: "13px",
+    fontSize: "16px",
     marginBottom: "0.5rem"
 };
 export default Footer;

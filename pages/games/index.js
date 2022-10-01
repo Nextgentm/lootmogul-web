@@ -1,14 +1,8 @@
-// import dynamic from 'next/dynamic'
-// import MyPageLoader from '../../src/components/MyPageLoader';
+
 import strapi from "../../src/utils/strapi";
 import SEOContainer from '../../src/features/SEOContainer';
 import {getSeoData} from "../../src/queries/strapiQueries";
 import GamesComponent from '../../src/features/Games/index';
-
-
-// const GamesComponent = dynamic(() => import(""),  { loading: () => 
-//   <MyPageLoader/>
-//  })
  const defaultSEOData = {
   metaTitle:"Play Online Trivia Games With Your Favorite Influencers",
   metaDescription:"Play Games With Your Favorite Influencers And Win Exciting Prizes",

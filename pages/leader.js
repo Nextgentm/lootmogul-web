@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 
 import dynamic from 'next/dynamic'
 import MyPageLoader from '../src/components/MyPageLoader';

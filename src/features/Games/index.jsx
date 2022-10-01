@@ -23,7 +23,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     );
 
     const executeScroll = (id) => {
-        itemRefs[id].scrollIntoView({ block: "center", behavior: "smooth" });
+        itemRefs[id].scrollIntoView({ block: "start", behavior: "smooth" });
     };
     const { callAuthService } = useContext(AppContext);
 

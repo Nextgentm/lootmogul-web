@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { AppContext } from "../src/utils/AppContext";
 
 import dynamic from 'next/dynamic'
@@ -12,7 +12,6 @@ const WalletPage = dynamic(() => import("../src/components/WalletPage"),  { load
 
 
 const Wallet = () => {
-  // const [amounts, setAmounts] = useState({});
   const { user,updateUser } = useContext(AppContext);
   const { jwt } = useContext(AppContext);
   const router = useRouter();
