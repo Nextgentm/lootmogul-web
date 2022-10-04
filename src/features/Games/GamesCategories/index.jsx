@@ -20,7 +20,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
   const [isLargerScreen] = useMediaQuery("(min-width: 2200px)");
   const arrowTrashhold = isMobileDevice ? 2 :isLargerScreen ? 7: 5;
   const [showAll, setShowAll] = useState(false);
-  console.log(section?.contestmasters?.data.length);
+  
   return (
     <Box>
       <Flex justify="space-between" my="40px" align="center" w="100%">

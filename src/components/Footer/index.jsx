@@ -139,7 +139,6 @@ const Footer = () => {
                             <Link
                                 _focus={{ border: "none", boxShadow: "none" }}
                                 href="https://lootmogul.wpengine.com/about-us/"
-                                isExternal
                             >
                                 <Text style={LightWhiteText}>About us</Text>
                             </Link>
@@ -167,7 +166,14 @@ const Footer = () => {
                                     Terms & Services
                                 </Text>
                             </Link>
-                            <Text style={LightWhiteText}>Blog</Text>
+                            <Link
+                                _focus={{ border: "none", boxShadow: "none" }}
+                                href="https://lootmogul.wpengine.com/news/"
+                                
+                            >
+                                <Text style={LightWhiteText}>News</Text>
+                            </Link>
+                            
                         </Box>
                         <Box
                             w="2px"

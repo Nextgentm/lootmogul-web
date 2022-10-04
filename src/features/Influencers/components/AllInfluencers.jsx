@@ -49,7 +49,7 @@ const AllInfluencers = ({
                 textAlign="center"
                 mt={["2em", "2.5em"]}
             >
-            <Heading variant="sectionTitle">{category ? category.toUpperCase() : "ALL IN INFLUENCERS"}
+            <Heading variant="sectionTitle">{category ? category.toUpperCase() : "ALL INFLUENCERS"}
             </Heading>
 
                 

@@ -58,7 +58,7 @@ export async function getStaticProps() {
       revalidate: 300, // In seconds
     };
   } catch (error) {
-    //console.log(error);
+    
   }
   return { props: {} };
 }

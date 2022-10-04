@@ -97,7 +97,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 });
             }
         } catch (error) {
-            //console.log(error);
+            
         }
     };
 
