@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "../../../../../utils/AppContext";
 import strapi from "../../../../../utils/strapi";
 
-const InfluencersCard = ({ influencer, slug, style, wid, marginR }) => {
+const InfluencersCard = ({ influencer, slug, style, wid, margin }) => {
     const [isHeartClick, setHeartClick] = useState(false);
     const { user, toggleLoginModal, FetchLikes } = useContext(AppContext);
 
@@ -37,14 +37,15 @@ const InfluencersCard = ({ influencer, slug, style, wid, marginR }) => {
             href={"/influencer/" + slug}
             passHref={true}
             mx="auto"
+            width="280px"
             _focus={{ border: "none" }}
             key={`infCatCard-${influencer.contestmasters?.data[0]?.id}`}
         >
-            <Box width={wid} marginRight={marginR} mb="30px">
+            <Box width={wid} mx={margin} mb="30px">
                 <Box
                     cursor="pointer"
                     w="100%"
-                    h="335px"
+                    
                     position="relative"
                     overflow={"hidden"}
                     border="1px solid #A8A8A8"

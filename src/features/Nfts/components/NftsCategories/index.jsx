@@ -95,9 +95,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                   RightArrow={RightArrow}
                 >
                   
-
                   {displayCards?.sort((a, b) => a.priority - b.priority).map((item, index) => (
-
                     <NftCard
                       itemId={`nftcard-${index}`}
                       key={`nftcard-${index}`}
@@ -118,7 +116,6 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                   width="100%"
                 >
                   {displayCards?.sort((a, b) => a.priority - b.priority).map((item, index) => (
-
                     <NftCard
                       itemId={`nftcard-${index}`}
                       key={`nftcard-${index}`}
@@ -240,9 +237,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                       LeftArrow={LeftArrow}
                       RightArrow={RightArrow}
                     >
-
                       {displayCards?.sort((a, b) => a.priority - b.priority).map((item, index) => (
-
                         <NftCardInCollection
                           // style={{
                           //   mr: "30px",

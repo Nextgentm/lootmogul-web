@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import React,{useRef} from 'react'
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import InfluencersCard from './InfluencersCategories/InfluencersCard'
@@ -10,36 +10,17 @@ const NewInfluencers = ({newInfluencers,LeftArrow,RightArrow}) => {
   return (<>
     {newInfluencers?.length && (
         <>
-            <Flex
-                justify="space-between"
-                my={["20px", "40px"]}
-                align="center"
-                // mb="30px"
-                ml={["20px", "20px", "20px", "60px"]}
-                mr={["20px", "20px", "20px", "60px"]}
-            >
-                <Text
-                  color="white"
-                  fontFamily="Blanch"
-                  fontSize={[
-                      "4rem",
-                      "4rem",
-                      "4rem",
-                      "5rem",
-                      "5rem"
-                  ]}
-                >
+                  <Heading mx={[5, 10]} my={10}
+                    variant="sectionTitle">
                     NEW IN INFLUENCERS
-                </Text>
-            </Flex>
-            <Box px="3rem">
+                </Heading>
+            <Box px={7} mt={10}>
                 <ScrollMenu
                     className="no-scrollbar"
                     apiRef={ref}
                     ref={lazyRoot}
                     LeftArrow={LeftArrow}
                     RightArrow={RightArrow}
-                    mt={"10px"}
                 >
                     {newInfluencers.map((item, index) => (
                         <InfluencersCard
@@ -48,8 +29,8 @@ const NewInfluencers = ({newInfluencers,LeftArrow,RightArrow}) => {
                             slug={item.slug}
                             influencer={item}
                             lazyRoot={lazyRoot}
-                            wid={["240px", "320px"]}
-                            marginR={["10px", "20px"]}
+                            wid={["79vw","78vw","320px"]}
+                            margin={["10px", "10px","20px"]}
                         />
                     ))}
                 </ScrollMenu>

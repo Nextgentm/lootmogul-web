@@ -7,11 +7,21 @@ import GamesCategories from "./GamesCategories";
 import ExploreTrivia from "./ExploreTrivia";
 import GameCarouselCard from "./GameCarouselCard";
 import LMThumbnailCarousel from "../../components/LMCarousel/LMThumbnailCarousel";
+import React from "react";
 
 const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     const { isMobileDevice } = useContext(AppContext);
 
-    const [itemRefs, setItemRefs] = useState({});
+    const [itemRefs, setItemRefs] = useState([]);
+    
+    useEffect(() => {
+      let irs = [];
+      for(let i=0;i<10;i++){
+          irs[i]= React.createRef() ;
+      }
+      setItemRefs(irs);
+    }, []);
+    
     const router = useRouter();
     const [contestSections, setContestSections] = useState([]);
 
@@ -23,7 +33,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     );
 
     const executeScroll = (id) => {
-        itemRefs[id].scrollIntoView({ block: "start", behavior: "smooth" });
+        itemRefs[id].current.scrollIntoView({ block: "start", behavior: "smooth" });
     };
     const { callAuthService } = useContext(AppContext);
 
@@ -86,7 +96,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     }, [contestmasters, contestSectionsData]);
 
     return (
-        <Box mx={["2rem", "2.5rem", "3rem", "3rem", "5rem"]}>
+      <Box mx={[4,8]}>
             <Box mb={"10vw"}>
                 <Box>
                 <Flex direction={["column", "column", "column", "row"]}>
@@ -159,11 +169,12 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
             contestSections.map((section, index) => (
               <Box
                 key={"sec-index-" + index}
-                ref={(el) => {
-                  let iR = itemRefs;
-                  iR[index] = el;
-                  setItemRefs(iR);
-                }}
+                ref = {itemRefs[index]}
+                // ref={(el) => {
+                //   let iR = itemRefs;
+                //   iR[index] = el;
+                //   setItemRefs(iR);
+                // }}
               >
                 {section?.contestmasters?.data &&
                   section?.contestmasters?.data.length > 0 && (

@@ -138,12 +138,12 @@ const HeadingBanner = ({ isNotMobile, promotion }) => {
                                 width="100%"
                                 src={
                                     isNotMobile &&
-                                    promotion.bannerImage.data.length === 1
+                                    promotion.bannerImage?.data?.length === 1
                                         ? getStrapiMedia(
-                                              promotion.bannerImage.data[0].url
+                                              promotion.bannerImage?.data?.[0].url
                                           )
                                         : getStrapiMedia(
-                                              promotion.bannerImage.data[2].url
+                                              promotion.bannerImage.data?.[1].url
                                           )
                                 }
                                 alt="Article"

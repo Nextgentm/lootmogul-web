@@ -26,7 +26,7 @@ const InfluencerInfoCollapsable = ({ influencer }) => {
             borderRadius={["4px", "8px"]}
         >
             <CollapsableRow title="About" isOpen={true}>
-                <Box maxH="390px" overflowY={"auto"}>
+                <Box maxH="390px" overflowY={"auto"} textAlign="left">
                     <ReactMarkdown
                         rehypePlugins={[rehypeRaw]}
                         components={ChakraUIRenderer(newMarkDownTheme)}
