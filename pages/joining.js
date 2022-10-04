@@ -89,7 +89,6 @@ const Joining = (props) => {
       });
 
       socket.on("player_left", data => {
-        // //console.log("user left the game", data.playerId);
         setUsers(data.users);
         // user left the game
         });

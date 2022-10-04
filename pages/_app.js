@@ -52,7 +52,7 @@ function MyApp({ Component, pageProps }) {
   
   const router = useRouter();
   const { provider, trackingCode, utm_medium, utm_source, referral_code, utm_term, utm_campaign, utm_content } = router.query
-  console.log(router.asPath);
+  
 
   const handleRouteChange = (url) => {
     ga.pageview(url)

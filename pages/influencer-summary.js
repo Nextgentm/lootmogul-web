@@ -46,7 +46,7 @@ const InfluencerSummary = () => {
       const addObjectResource = Object.assign(objectOrder, resp);
       delete addObjectResource.id;
       delete addObjectResource.autoComputation;
-      console.log(addObjectResource);
+      
       setData(addObjectResource);
     } else {
       setData(resp);
