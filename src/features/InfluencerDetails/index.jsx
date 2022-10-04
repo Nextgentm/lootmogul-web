@@ -78,6 +78,7 @@ const InfluencerDetail = ({ influencer }) => {
                               tab: <Text>GAMES</Text>,
                               tabPanel: fullInfluencer && (
                                   <InfluencerGame
+                                  showAllDefault={true}
                                       contestmasters={
                                           fullInfluencer?.contestmasters
                                               ? fullInfluencer?.contestmasters
@@ -101,6 +102,7 @@ const InfluencerDetail = ({ influencer }) => {
                                                   []
                                               }
                                               isSale={false}
+                                              showAll={true}
                                           />
                                       )}
                                       {fullInfluencer?.nft_kreds?.data

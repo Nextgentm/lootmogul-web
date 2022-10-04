@@ -25,28 +25,27 @@ const CategoryComponent = ({ defaultCategoryName, selCategoriesData ,setFilterVa
                     _focus={{ borderColor: "transparent", boxShadow: "none" }}
                     fontFamily="Sora"
                     fontSize={"20px"}
-                   lineHeight="40px"
+                    w="100%"
                    h="100%"
                 
                   >
                  
                  <Flex
                         alignItems={"center"}
-                        justifyContent={"space-around"}
-                       h="100%" 
-                        
+                        justifyContent={"space-between"}
                     >
-                        <Text h="100%" borderRightWidth="1px" 
-                        pl={3} pr={6}noOfLines={1}>{selectedCategory}</Text>
+                        <Text h="100%"
+                        px={3} noOfLines={1}>{selectedCategory}</Text>
 
-                        <Box h={"full"}   p={3}borderColor={"white"} >
+                        <Flex alignItems={"center"} px={3} w="50px" h="55px" borderColor={"white"} borderWidth="1px">
+                            
                             <AiFillCaretDown
                            
                                 bg="#FFFFFF"
                                 m="auto"
                                 w="40px"
                                 h="40px"
-                            /></Box>
+                        /></Flex>
                         
                     </Flex>
                           
