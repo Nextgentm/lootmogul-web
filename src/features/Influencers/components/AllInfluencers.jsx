@@ -49,18 +49,10 @@ const AllInfluencers = ({
                 textAlign="center"
                 mt={["2em", "2.5em"]}
             >
-                <Text   color="white"
-                              fontFamily="Blanch"
-                              fontSize={[
-                                  "4rem",
-                                  "4rem",
-                                  "4rem",
-                                  "5rem",
-                                  "5rem"
-                              ]}>
-                    {/* ALL IN INFLUENCERS */}
-                    {category ? category.toUpperCase() : "ALL IN INFLUENCERS"}
-                </Text>
+            <Heading variant="sectionTitle">{category ? category.toUpperCase() : "ALL IN INFLUENCERS"}
+            </Heading>
+
+                
                 <Flex alignItems="center" pos="relative">
                     <Button
                         variant={!isActive ? "filterBtnSegment" : "filterBtn"}

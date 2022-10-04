@@ -85,7 +85,7 @@ const NftCardInCollection = ({
   cardWidth
 }) => {
   
-  const cardHeight = ["480px","480px","509px"];
+  const cardHeight = ["500px","500px","540px"];
   const imageHeight = ["420px","420px","460px"];
   const [isFlipped, setIsFlipped] = useState(false);
 

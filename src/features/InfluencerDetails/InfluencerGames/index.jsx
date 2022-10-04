@@ -8,9 +8,9 @@ import {
     RightArrow
 } from "../../../components/ContentNavigator/arrows";
 
-const InfluencerGame = ({ contestmasters }) => {
+const InfluencerGame = ({ contestmasters, showAllDefault = false }) => {
     const ref = React.useRef();
-    const [showAll, setShowAll] = useState(false);
+    const [showAll, setShowAll] = useState(showAllDefault);
     return (
         <Box>
             {contestmasters?.data.length === 0 ? (

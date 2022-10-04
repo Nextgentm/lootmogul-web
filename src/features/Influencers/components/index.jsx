@@ -34,7 +34,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
 
     const router = useRouter();
-
+    console.log("data",data);
     useEffect(() => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
@@ -89,6 +89,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === e
             );
+            if(selData?.[0]?.slug)
             router.push(
                 "/influencers/category/" + selData[0].slug
             );
@@ -130,7 +131,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
 
     useEffect(() => {
         if (displayData && category) {
-            setSortBy("Sort by");
+            // setSortBy("Sort by");
             if (category.toLowerCase() !== defaultCategoryName.toLowerCase()) {
                 const selData = displayData.filter(
                     (cat) => cat.name.toLowerCase() === category.toLowerCase()
@@ -143,24 +144,24 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
         }
     }, [category, displayData]);
 
-    useEffect(() => {
-        if (selectedCategory) return;
-        if (sortBy.toLowerCase() === "alphabetical") {
-            const newCatData = selCategoriesData.map((cat) => {
-                cat.influencers.data?.sort((a, b) =>
-                    a.name > b.name ? 1 : -1
-                );
-                return cat;
-            });
-            setSelCategoriesData(newCatData);
-        } else {
-            const newCatData = selCategoriesData.map((cat) => {
-                cat.influencers.data?.sort((a, b) => (a.id > b.id ? 1 : -1));
-                return cat;
-            });
-            setSelCategoriesData(newCatData);
-        }
-    }, [sortBy]);
+    // useEffect(() => {
+    //     if (selectedCategory) return;
+    //     if (sortBy.toLowerCase() === "alphabetical") {
+    //         const newCatData = selCategoriesData.map((cat) => {
+    //             cat.influencers.data?.sort((a, b) =>
+    //                 a.name > b.name ? 1 : -1
+    //             );
+    //             return cat;
+    //         });
+    //         setSelCategoriesData(newCatData);
+    //     } else {
+    //         const newCatData = selCategoriesData.map((cat) => {
+    //             cat.influencers.data?.sort((a, b) => (a.id > b.id ? 1 : -1));
+    //             return cat;
+    //         });
+    //         setSelCategoriesData(newCatData);
+    //     }
+    // }, [sortBy]);
 
     useEffect(() => {
         if (selCategoriesData) {

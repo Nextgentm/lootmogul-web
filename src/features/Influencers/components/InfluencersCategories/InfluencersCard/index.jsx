@@ -36,8 +36,8 @@ const InfluencersCard = ({ influencer, slug, style, wid, margin }) => {
         <Link
             href={"/influencer/" + slug}
             passHref={true}
-            mx="auto"
             width="280px"
+            mx="auto"
             _focus={{ border: "none" }}
             key={`infCatCard-${influencer.contestmasters?.data[0]?.id}`}
         >

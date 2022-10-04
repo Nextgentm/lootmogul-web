@@ -40,7 +40,7 @@ module.exports = {
     // passHref: true,
     padding:"13px 20px",
     fontFamily: "Blanch",
-    fontSize: ["13px", "30px"],
+    fontSize: ["30px", "30px"],
     textDecoration:"none!important",
     mt: ["16px","16px", 0],
     color: isActive ? "primary" : "secondary",
