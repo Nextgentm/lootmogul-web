@@ -180,7 +180,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     }, [selCategoriesData]);
 
     const getBannerImage = () => {
-        if (category.toLowerCase()!== defaultCategoryName.toLowerCase() && selCategoriesData) {
+        if (selectedCategory &&  category!== defaultCategoryName.toLowerCase() && selCategoriesData) {
             if (selCategoriesData[0] && selCategoriesData[0].banner?.data) {
                 return !isTabletOrDesktop
                     ? selCategoriesData[0].banner?.data[1].url
@@ -213,24 +213,22 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             )}
 
             <Box w="100% " overflow="hidden">
-                {category.toLowerCase() !== defaultCategoryName.toLowerCase() ? (
+                {selectedCategory && category !== defaultCategoryName.toLowerCase() ? (
                     <InfluencerDetailBanner getBannerImage={getBannerImage} />
                 ) : (
                     <InfluencerBanner getBannerImage={getBannerImage} />
                 )}
             </Box>
-            <Box>
-
-                <Explore
-                    data={data}
-                    defaultCategoryName={defaultCategoryName}
-                    handleCategoryChange={handleCategoryChange}
-                />
-                <NewInfluencers
-                    newInfluencers={newInfluencers}
-                    LeftArrow={LeftArrow}
-                    RightArrow={RightArrow}
-                />
+            <Explore
+                data={data}
+                defaultCategoryName={defaultCategoryName}
+                handleCategoryChange={handleCategoryChange}
+            />
+            <NewInfluencers
+                newInfluencers={newInfluencers}
+                LeftArrow={LeftArrow}
+                RightArrow={RightArrow}
+            />
              <AllInfluencers
                     displayInfluencers={displayInfluencers}
                     category={category}
@@ -244,8 +242,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                     handleCategoryChange={handleFilterChange}
                     setFilterValue={setFilterValue}
                 />
-
-            </Box>
+           
         </Box>
     );
 };

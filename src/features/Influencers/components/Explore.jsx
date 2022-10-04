@@ -54,12 +54,8 @@ const Explore = ({data,defaultCategoryName, handleCategoryChange}) => {
                            {defaultCategoryName}
                         </Text>
                     </Button>
-        {data?.sort((a, b) => a.priority - b.priority).map((influencerCat, index) => (
-            // <Box
-            //     w={["100%", "100%", 200, 200, 200]}
-            //     // mx={["10px", "5px", "5px", "5px",]}
-            //     my={["10px", "5px", "5px", "5px", "20px"]}
-            // >
+        {data?.map((influencerCat, index) => (
+          
                     <Button
                         w={["100%","auto"]}
                         mr={["0px","15px"]}
@@ -85,7 +81,6 @@ const Explore = ({data,defaultCategoryName, handleCategoryChange}) => {
                         </Text>
                     </Button>
              
-            // </Box>
         ))}
     </Flex>
 </Box>

@@ -43,11 +43,11 @@ const routes = [
         label: "Games",
         path: "/games"
     },
+    
     {
         label: "Explore",
         path: "https://metaverse.lootmogul.com/meta-map/"
     }
-
 ];
 
 const Header = () => {

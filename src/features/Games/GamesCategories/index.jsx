@@ -6,6 +6,7 @@ import {
   Wrap,
   WrapItem,
   useMediaQuery,
+  Heading,
 } from "@chakra-ui/react";
 import GamesCard from "../../InfluencerDetails/InfluencerGames/InfluencerGameCard";
 import { useRef, useState } from "react";
@@ -19,32 +20,20 @@ const GamesCategories = ({ isMobileDevice, section }) => {
   const [isLargerScreen] = useMediaQuery("(min-width: 2200px)");
   const arrowTrashhold = isMobileDevice ? 2 :isLargerScreen ? 7: 5;
   const [showAll, setShowAll] = useState(false);
-  const [isLargerThan768] = useMediaQuery("(min-width: 768px)");
   console.log(section?.contestmasters?.data.length);
   return (
     <Box>
       <Flex justify="space-between" my="40px" align="center" w="100%">
-        <Text
-          w="100%"
-          color="white"
-          fontFamily="Blanch"
-          fontSize={[
-              "4rem",
-              "4rem",
-              "4rem",
-              "5rem",
-              "5rem"
-          ]}
-          my="10px"
-        >
-          {section.name}
-        </Text>
-        {isLargerThan768 ? (
-          <>
+      <Heading variant="sectionTitle">
+      {section.name}
+      </Heading>
             {section?.contestmasters?.data.length > arrowTrashhold ? (
-              <Box
+              <Box 
+              display={{
+                base: "none",
+                md: "flex",
+              }}
                 onClick={() => setShowAll(!showAll)}
-                w="100%"
                 pos="relative"
                 right="0"
               >
@@ -53,10 +42,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
             ) : (
               ""
             )}
-          </>
-        ) : (
-          ""
-        )}
+          
       </Flex>
       {showAll ? (
         <Wrap m="auto !important">
@@ -74,12 +60,13 @@ const GamesCategories = ({ isMobileDevice, section }) => {
             ))}
         </Wrap>
       ) : (
-        <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} apiRef={ref}>
+        <Box mx={[2.5,0]}>
+        <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow} apiRef={ref} >
           {section?.contestmasters?.data
             ?.sort((a, b) => a.priority - b.priority)
             .map((cm, index) => (
               <GamesCard
-                style={{ mr:isMobileDevice? "15px":"30px" }}
+                style={{ w:["75vw","75vw","370px","370px"], mx:3}}
                 itemId={`item-${index}`}
                 key={`item-${index}`}
                 contestmaster={cm}
@@ -87,6 +74,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
               />
             ))}
         </ScrollMenu>
+        </Box>
       )}
     </Box>
   );

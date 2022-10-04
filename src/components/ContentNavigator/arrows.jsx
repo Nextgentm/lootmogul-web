@@ -32,7 +32,8 @@ export function LeftArrow() {
         isFirstItemVisible,
         scrollToItem,
         visibleItemsWithoutSeparators,
-        initComplete
+        initComplete,
+        scrollPrev
     } = React.useContext(VisibilityContext);
 
     const [disabled, setDisabled] = React.useState(
@@ -47,8 +48,9 @@ export function LeftArrow() {
 
     // NOTE: for scroll 1 item
     const clickHandler = () => {
-        const prevItem = getPrevItem();
-        scrollToItem(prevItem?.entry?.target, "smooth", "start");
+        scrollPrev();
+        // const prevItem = getPrevItem();
+        // scrollToItem(prevItem?.entry?.target, "smooth", "start");
         // OR
         // scrollToItem(
         //   getItemById(visibleItemsWithoutSeparators.slice(-2)[0]),
@@ -82,7 +84,9 @@ export function RightArrow() {
         getNextItem,
         isLastItemVisible,
         scrollToItem,
+        scrollNext,
         visibleItemsWithoutSeparators
+
     } = React.useContext(VisibilityContext);
 
     const [disabled, setDisabled] = React.useState(
@@ -95,9 +99,9 @@ export function RightArrow() {
     }, [isLastItemVisible, visibleItemsWithoutSeparators]);
 
     const clickHandler = () => {
-        const nextItem = getNextItem();
-        scrollToItem(nextItem?.entry?.target, "smooth", "end");
-        
+        // const nextItem = getNextItem();
+        // scrollToItem(nextItem?.entry?.target, "smooth", "end");
+        scrollNext();
     };
 
     return (

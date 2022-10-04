@@ -16,17 +16,22 @@ const InfluencerBanner = ({getBannerImage}) => {
                             width={["100%", "100%", "100%", "55%"]}
                         >
                             <Text
-                                    color="white"
-                                    fontSize={[
-                                        "2rem",
-                                        "3.2em",
-                                        "3.5rem",
-                                        "4rem",
-                                        "4rem"
-                                    ]}
-                                    fontFamily="CNN"
-                                    variant="headText"
-                                >
+                                variant="headText"
+                                fontSize={[
+                                    "2.3rem",
+                                    "2.5rem",
+                                    "3.2rem",
+                                    "2.7rem",
+                                    "4rem"
+                                ]}
+                                lineHeight={[
+                                    "44px",
+                                    "48px",
+                                    "72px",
+                                    "50px",
+                                    "80px"
+                                ]}
+                            >
                                 Play your favorite Influencer Tournament and win
                                 NFT
                             </Text>

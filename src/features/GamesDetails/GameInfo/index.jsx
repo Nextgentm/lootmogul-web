@@ -14,7 +14,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
       overflow={"hidden"}
     >
       <Image
-        src="/assets/designupdate1/gamecard_landscape.svg"
+        src="/assets/designupdate1/gamecard_landscape.png"
         objectFit={"contain"}
         h={["260px", "260px", "260px", "260px", "410px"]}
         pos="absolute"

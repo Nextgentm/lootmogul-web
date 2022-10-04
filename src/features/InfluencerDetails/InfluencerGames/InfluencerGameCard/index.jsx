@@ -66,47 +66,39 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
             _hover={{ border: "none", textDecoration: "none" }}
             _focus={{ border: "none", textDecoration: "none" }}
             key={`igc-${contestmaster?.id}`}
+            
         >
-            <Box
-                overflow={"hidden"}
-                w={"300px"}
-                {...style}
-            >
-                <VStack>
-                    <Flex
-                        backgroundImage={
-                            "/assets/designupdate1/gamecard_portrait.svg"
+                <VStack {...style} >
+                    <Flex flexDir={"column"} textAlign="center" 
+                        bgImage= {
+                            "/assets/designupdate1/gamecard_portrait.png"
                         }
-                        backgroundPosition="center"
-                        backgroundRepeat="no-repeat"
-                        backgroundSize={"auto"}
-                        borderRadius={"md"}
+                        bgPosition="center"
+                        bgRepeat="no-repeat"
+                        bgSize="100% 100%"
                         cursor="pointer"
-                        w={"full"}
-                        h={["360px"]}
-                        flexDir={"column"}
+                        width={"100%"} 
+                        height={["360px","500px","400px"]}
+                        
                     >
                         <Text
-                            mt={"30px"}
+                            mt={10}
                             color="#FDFFE5"
                             fontSize="19px"
                             fontWeight={"600"}
                             textAlign="center"
-                            mx="auto"
+                            mx="10"
                             noOfLines={2}
-                            w="70%"
-                            h="90px"
+                            overflow="visible"
                         >
                             {sectionName}
                         </Text>
 
                         {imgUrl && (
-                            <Box
+                            <Flex
                                 m="auto"
-                                pos="relative"
-                                w="65%"
-                                h="100%"
-                                pt="20px"
+                                w="50%"
+                                height={["260px","400px","300px"]}
                                 className="influencerdiv"
                             >
                                 <Image
@@ -115,20 +107,18 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                     layout="fill"
                                     src={getStrapiMedia(imgUrl)}
                                 />
-                            </Box>
+                            </Flex>
                         )}
 
                         <Text
+                            mb={10}
                             color="#FDFFE5"
-                            fontSize={["20px"]}
+                            fontSize={["1.2rem"]}
                             fontWeight={"600"}
                             align={"center"}
-                            mb={"30px"}
-                            ml="25px"
-                            w="80%"
-                            h="50px"
+                            mx={10}
                             textOverflow="ellipsis"
-                            overflow="hidden"
+                            overflow="visible"
                         >
                             {contestmaster.name}
                         </Text>
@@ -136,19 +126,20 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
 
                     <Flex
                         w={"full"}
-                        align="flex-end"
+                        align="center"
                         justify={"space-between"}
                         px="1rem"
+                        mt={1}
                     >
-                        <Box>
-                            <Flex>
+                            <VStack>
+                                
+
+                                <Flex >
                                 <Image
                                     alt="tag"
                                     boxSize={["25px", "30px"]}
                                     src="/assets/designupdate1/cash_icon.svg"
                                 />
-
-                                <Box mt="2px">
                                     <Text
                                         ml="6px"
                                         color="#FFF"
@@ -160,12 +151,13 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                               contestmaster.entryFee
                                             : "Free"}
                                     </Text>
-                                    <Text
-                                        mt="-3px"
-                                        ml={"6px"}
+                                    
+                                </Flex>
+                                <Text   
                                         color="#FFF"
-                                        fontSize={["12px", "14px"]}
+                                        fontSize={["0.75rem", "0.9rem"]}
                                         fontWeight="200"
+                                        mt={0}
                                     >
                                         {nFormatter(
                                             contestmaster.roomsCount,
@@ -173,10 +165,8 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                         )}{" "}
                                         Plays
                                     </Text>
-                                </Box>
-                            </Flex>
-                        </Box>
-
+                            </VStack>
+                        
                         <SocialActions
                             onHeartClick={onHeartClick}
                             isHeartClick={isHeartClick}
@@ -196,7 +186,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                 mt="12px"
                                 textTransform="uppercase"
                                 _hover={{ textDecoration: "none !important" }}
-                                w="full"
+                                w="90%"
                                 onClick={(e) => {
                                     e.preventDefault();
                                     setShowLoading({
@@ -222,7 +212,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                 mt="12px"
                                 opacity="1!important"
                                 color="primary"
-                                w="full"
+                                w="90%"
                                 variant="outline"
                                 disabled
                             >
@@ -238,7 +228,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             <Button
                                 h={["34px", "28px"]}
                                 mt="12px"
-                                w="full"
+                                w="90%"
                                 m="auto"
                                 variant="outline"
                                 disabled
@@ -281,7 +271,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                         }
                     ></LMNonCloseALert>
                 </VStack>
-            </Box>
+            
         </Link>
     );
 };
