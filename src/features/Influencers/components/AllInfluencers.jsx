@@ -38,16 +38,14 @@ const AllInfluencers = ({
     const router = useRouter();
     return (
         <Box
-            mt="20"
-            ml={["20px", "20px", "20px", "60px"]}
-            mr={["20px", "20px", "20px", "60px"]}
+            mt={10}
+            mx={[10,10,16]}
         >
             <Flex
                 flexDir={["column", "column", "column", "row"]}
                 justify="space-between"
                 align="center"
                 textAlign="center"
-                mt={["2em", "2.5em"]}
             >
             <Heading variant="sectionTitle">{category ? category.toUpperCase() : "ALL IN INFLUENCERS"}
             </Heading>
@@ -109,19 +107,20 @@ const AllInfluencers = ({
             ) : (
                 ""
             )}
-            <Box>
+            <Box mt={5}>
                 <Grid
                     flexWrap="wrap"
-                    rowGap={10}
-                    mt="10px"
+                    gap={10}
+                    
                     templateColumns={[
                         "repeat(1, 1fr)",
                         "repeat(1, 1fr)",
                         "repeat(2, 1fr)",
                         "repeat(3, 1fr)",
-                        "repeat(4, 1fr)"
+                        "repeat(4, 1fr)",
+                        "repeat(5, 1fr)"
                     ]}
-                    gap={"30px"}
+                    // gap={"30px"}
                 >
                     {displayInfluencers?.length &&
                         displayInfluencers.sort((a, b) => a.order - b.order)
@@ -133,7 +132,7 @@ const AllInfluencers = ({
 
                             ?.map((influencer, index) => (
                                 <InfluencersCard
-                                    style={{ w: "100%", px: "15px" }}
+                                    style={{ w: "100%", px:4 }}
                                     colSpan={4}
                                     itemId={`item-${index}`}
                                     key={`item-${index}`}

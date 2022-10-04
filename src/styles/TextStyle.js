@@ -55,12 +55,11 @@ export const TextStyle = {
                 color: "#C7C7C7"
             },
             footerText: {
-                fontSize: ["11px", "13px"],
+                fontSize: ["11px", "14px"],
                 fontFamily: "Sora",
                 textAlign: "center",
-                lineHeight: ["14px", "16px"],
                 fontWeight: "normal",
-                color: "#9E9E9E"
+                color: "#fff"
             },
             walletCardHeader: {
                 fontSize: "40px",
@@ -217,6 +216,28 @@ export const TextStyle = {
                 fontWeight:"bold",
                
             },
+            BoldWhiteText:{
+                fontFamily: "Blanch",
+                fontWeight: "600",
+                marginTop: "10px",
+                marginBottom: "0.5rem",
+                color: "#FFF",
+                fontSize: ["25px", "30px", "40px", "35px"],
+
+            },
+             LightWhiteText : {
+                fontFamily: "Sora",
+                color: "#FFF",
+                fontSize: ["11px","14px","17px","16px"],
+                marginBottom: "0.5rem",
+                
+                _hover: {
+              
+                    color: " #E90A63 "
+                },
+                cursor:"pointer"
+            },
+            
             
            
         }
