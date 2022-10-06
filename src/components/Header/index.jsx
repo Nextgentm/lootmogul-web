@@ -108,12 +108,12 @@ const Header = () => {
         <>
             {!isHideHeader && (
                 <Box
-                    bg="transparent"
+                    bg="#100526"
                     w="100%"
-                    h="65px"
+                    h="100px"
                     display="flex"
-                    pl={["16px", "60px"]}
-                    pr={["16px", "20px"]}
+                    pl={["16px", "5%"]}
+                    pr={["16px", "5%"]}
                     py="2.5em"
                     alignItems="center"
                     top="0"
@@ -129,16 +129,18 @@ const Header = () => {
                             onClick={onOpen}
                         />
                     )}
-
-                    <Image
-                        style={{ cursor: "pointer" }}
-                        width={["200px", "180px", "250px"]}
-                        height={["80px", "70px"]}
-                        objectFit="contain"
-                        onClick={() => router.push("/")}
-                        alt="logo"
-                        src="/assets/lm_logo.png"
-                    />
+                    
+                    <Flex w="20%">
+                        <Image
+                            style={{ cursor: "pointer" }}
+                            width={["250px", "180px", "255px"]}
+                            height={["80px", "80px"]}
+                            objectFit="contain"
+                            onClick={() => router.push("/")}
+                            alt="logo"
+                            src="/assets/lm_logo.png"
+                        />
+                    </Flex>
 
                     {isMobileDevice ? (
                         <NavDrawer
@@ -147,7 +149,7 @@ const Header = () => {
                             renderMobileRoutes={renderMobileRoutes()}
                         />
                     ) : (
-                        <Flex direction="row" justifyContent="center" w="60%">
+                        <Flex direction="row" justifyContent="center" w="50%">
                             {routes.map(({ label, path, queryPath }, index) => (
                                 <Link
                                     _focus={{ border: "none", textDecor:"none" }}
@@ -172,6 +174,8 @@ const Header = () => {
                     <Flex
                         {...loginStyle(isMobileDevice, user)}
                         alignItems="center"
+                        justifyContent="flex-end"
+                        w="30%"
                     >
                         {!isMobileDevice && (
                             <>
@@ -216,15 +220,15 @@ const Header = () => {
                                 <Button
                                     {...loginBtnStyle}
                                     fontFamily="Sora !important "
-                                    fontWeight="200"
+                                    fontWeight="500"
                                     onClick={() => toggleLoginModal()}
                                     padding={[
                                         "0px 30px",
                                         "0px 36px",
-                                        "25px 57px"
+                                        "20px 50px"
                                     ]}
                                     boxShadow="0px 0px 30px 10px #e90a6355"
-                                    fontSize={["0.7rem", "0.8rem", "1rem"]}
+                                    fontSize={["0.7rem", "0.8rem", "15px"]}
                                     height="35px"
                                 >
                                     LOGIN
@@ -232,11 +236,15 @@ const Header = () => {
                                 {/* )} */}
                             </>
                         )}
+
+                        {user && (
+                            <UserInfo user={user} isMobileDevice={isMobileDevice} />
+                        )}
                     </Flex>
 
-                    {user && (
+                    {/* {user && (
                         <UserInfo user={user} isMobileDevice={isMobileDevice} />
-                    )}
+                    )} */}
                 </Box>
             )}
 

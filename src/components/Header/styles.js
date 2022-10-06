@@ -22,12 +22,12 @@ module.exports = {
   }),
 
   loginBtnStyle: {
-    ml: "auto",
-    w: "80px",
+    ml: "10px",
+    w: "100px",
     h: "35px"
   },
   loginStyle: (isMobile, user) => ({
-    position: "absolute",
+    position: "unset",
 
     ...((!user || isMobile) && { width: "15%" }),
     ...((user && !isMobile) && { width: "23%" }),

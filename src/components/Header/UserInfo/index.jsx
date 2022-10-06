@@ -62,9 +62,9 @@ const UserInfo = ({ user, isMobileDevice }) => {
             ref={ref}
             onClick={() => togglePopupMenu(!isPopupMenuShowing)}
             position="absolute"
-            top="52px"
+            top="65px"
             zIndex={999}
-            right="8px"
+            right="5%"
             bg="#303030"
             direction={"column"}
             boxShadow={"4px"}
@@ -126,7 +126,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
     }, [user, user?.wallets]);
 
     return (
-        <Flex ml="auto" align="center" h="100%" pl="20px">
+        <Flex ml="0" align="center" h="100%" pl="20px">
             {isTabletOrDesktop && (
                 <>
                     {user?.wallets?.length > 0 && (
