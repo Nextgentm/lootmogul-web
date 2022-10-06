@@ -13,20 +13,19 @@ const Explore = ({ data, defaultCategoryName, handleCategoryChange }) => {
     return (
         <Box
             mt={5}
-            ml={["20px", "20px", "20px", "60px"]}
-            mr={["20px", "20px", "20px", "60px"]}
+            mx={[10,10,16]}
+            
         >
             <Heading variant="sectionTitle">EXPLORE</Heading>
             <Flex
                 mt={10}
                 mx="auto"
                 flexWrap="wrap"
-
-                // justifyContent={["center", "center", "space-between"]}
+                alignContent={"center"}
             >
                 <Button
-                    w={["100%", "auto"]}
-                    mr={["0px", "15px"]}
+                    w={["95vw","95vw", "auto"]}
+                    mr={["0px","0px", "15px"]}
                     mt="20px"
                     // p="0px"
                     fontSize={[
@@ -44,8 +43,8 @@ const Explore = ({ data, defaultCategoryName, handleCategoryChange }) => {
                 </Button>
                 {data?.map((influencerCat, index) => (
                     <Button
-                        w={["100%", "auto"]}
-                        mr={["0px", "15px"]}
+                    w={["90vw","90vw", "auto"]}
+                        mr={["0px","0px", "15px"]}
                         mt="20px"
                         // p="0px"
                         fontSize={[

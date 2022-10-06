@@ -6,12 +6,11 @@ const InfluencerBanner = ({getBannerImage}) => {
     <Flex
                         flexDir={["column", "column", "column", "row"]}
                         w="100%"
+                        alignItems={"center"}
                     >
                         <Box
-                            px={10}
-                            pb={12}
-                            pt="2em"
-                            mt={[0, 0, 10]}
+                            pl={10}
+                            mt={[0, 0, 10,30]}
                             ml={["0em", "0em", "2em", "2em"]}
                             width={["100%", "100%", "100%", "55%"]}
                         >
@@ -20,17 +19,10 @@ const InfluencerBanner = ({getBannerImage}) => {
                                 fontSize={[
                                     "2.3rem",
                                     "2.5rem",
-                                    "3.2rem",
                                     "2.7rem",
                                     "4rem"
                                 ]}
-                                lineHeight={[
-                                    "44px",
-                                    "48px",
-                                    "72px",
-                                    "50px",
-                                    "80px"
-                                ]}
+                                
                             >
                                 Play your favorite Influencer Tournament and win
                                 NFT
@@ -60,7 +52,7 @@ const InfluencerBanner = ({getBannerImage}) => {
                             textAlign={"center"}
                             px={[0, 0, 0, 10]}
                             pb={[0, 0, 0, 12]}
-                            pt={[5, 5, 0, 12]}
+                            pt={[10, 10, 0, 12]}
                             width={["120%", "120%", "120%", "50%"]}
                         >
                             {getBannerImage() && (
@@ -71,7 +63,6 @@ const InfluencerBanner = ({getBannerImage}) => {
                                     <Flex
                                         position="relative"
                                         mt={["-35px", "-11px", "50px"]}
-                                        h={["200px", "200px", "390px"]}
                                     >
                                         <Image
                                             m={"auto"}
