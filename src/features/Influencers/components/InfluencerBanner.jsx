@@ -24,7 +24,7 @@ const InfluencerBanner = ({getBannerImage}) => {
                                 ]}
                                 
                             >
-                                Play your favorite Influencer Tournament and win
+                                Play your favorite Ambassador Tournament and win
                                 NFT
                             </Text>
 

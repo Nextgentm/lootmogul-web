@@ -81,7 +81,7 @@ export async function getStaticProps() {
      return { props: { data, contestSectionsData, banners , seoData} ,
      revalidate: 300};
   } catch (error) {
-    //console.log(error);
+    
     }
     return { props: { data } ,
     revalidate: 300, // In seconds

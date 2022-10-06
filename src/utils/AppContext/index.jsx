@@ -158,7 +158,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
           }
         } else {
          
-        //console.log("error tickets data");
+        
         }
       };
     }
@@ -231,7 +231,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                 return data;
             }
         } catch (error) {
-            //console.log(error);
+            
             return null;
         }
     };
@@ -308,7 +308,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                             {'data': { 'utm_source':provider || utm_source , 'utm_medium': utm_medium || "",'utm_campaign': utm_campaign || "",'utm_term': utm_term || "",'utm_content': utm_content || "", 'trackingCode': trackingCode|| ""}} );
                         }
                         catch (error) {
-                            //console.log(error);
+                            
                         }
 
                        window.localStorage?.removeItem("utm_source");
@@ -328,7 +328,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                             updateUser();
                         }
                         catch (error) {
-                            //console.log(error);
+                            
                         }
 
                        window.localStorage?.removeItem("utm_source");
@@ -396,7 +396,7 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                     }
                     strapi.logout();
                     setUser(null);
-                    //console.log("logout");
+                    
                 }
             }}
         >

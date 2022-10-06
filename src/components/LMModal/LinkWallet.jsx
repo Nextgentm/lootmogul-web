@@ -50,7 +50,7 @@ const LinkWallet = () => {
                 });
             }
         } catch (error) {
-            //console.log(error);
+            
         }
     };
 
