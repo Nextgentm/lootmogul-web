@@ -36,7 +36,7 @@ export async function getStaticProps() {
 
   const newNfts = await strapi.find("nft-kreds", {
     sort:"createdAt:DESC",
-    pagination:{limit:5},
+    pagination:{limit:7},
     fields:["slug","marketURL","front_image","back_image", "name", "isAuction", "market_price", "sale_price"]
     }
   );

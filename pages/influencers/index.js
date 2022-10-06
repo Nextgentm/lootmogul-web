@@ -30,7 +30,7 @@ export async function getStaticProps() {
   const newInfluencers = await strapi.find("influencers", {
     sort:"createdAt:DESC",
     fields: ["name", "slug","tagline","order"],
-    pagination:{limit:5},
+    pagination:{limit:7},
     populate: {
       icon: {
           fields: ["name", "url"],
