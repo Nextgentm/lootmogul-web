@@ -22,7 +22,7 @@ const BottomAboutText = () => {
         Player Association in collaboration with Andreessen Horowitz
         (a16z) cultural leadership fund and Patricof co.{" "}
     </Text>
-    <Text mx="auto" w="85%" variant="footerText" my="50px">
+    <Text mx="auto" w="85%" variant="footerText" my="40px" fontSize="14px">
         LootMogul is NOT AFFILIATED, AUTHORIZED, LICENSED OR
         ENDORSED by NBA (National Basketball Association), NFL
         (National Football League), MLB (Major League Baseball), NHL

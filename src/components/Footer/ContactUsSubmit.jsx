@@ -3,12 +3,16 @@ import { Flex, Box, Text, Link, Input, Button } from "@chakra-ui/react";
 
 const ContactUsSubmit = () => {
   return (
-    <Box>
+    <Box w={["100%", "100%", "60%", "auto"]} mr={["20px", "20px", "20px", "unset"]}>
     <Box mb="30px">
         <Text
-        textAlign={["center","center","center","left"]}
+        textAlign={["center","center","left","left"]}
             variant="BoldWhiteText"
-            fontWeight="500 !important"
+            fontWeight="400 !important"
+            mt="0"
+            mb="20px"
+            lineHeight="1"
+            fontSize="35px"
             // fontSize={[
             //     "18px",
             //     "25px",
@@ -24,45 +28,61 @@ const ContactUsSubmit = () => {
                 border: "none",
                 boxShadow: "none"
             }}
+            _hover={{ textDecoration: "none" }}
             href="mailto:support@lootmogul.com"
         >
-            <Text  textAlign={["center","center","center","left"]}  variant="LightWhiteText">
+            <Text  textAlign={["center","center","left","left"]}  variant="LightWhiteText" fontSize="17px" mb="0">
                 support@lootmogul.com
             </Text>
         </Link>
     </Box>
     <Text
-     textAlign={["center","center","center","left"]}
-        fontWeight="500 !important"
+     textAlign={["center","center","left","left"]}
+        fontWeight="400 !important"
         variant="BoldWhiteText"
-        fontSize={["18px", "25px", "30px", "35px"]}
+        mt="50px"
+        mb="20px"
+        lineHeight="1"
+        fontSize={["30px", "30px", "30px", "30px"]}
     >
-        Get The latest Updates
+        Subscribe to get the updates
     </Text>
-    <Flex ml={["15px","15px","15px","0px"]} >
+    <Flex ml={["0","0","0","0px"]} >
         <Input
             bg="#FFF"
             w={[
+                "70%",
+                "70%",
+                "235px",
                 "200px",
-                "250px",
-                "250px",
-                "200px",
-                "250px",
+                "235px",
 
                 
             ]}
-            padding="24px 0px"
+            padding="6px 16px"
+            height="47px"
+            borderRadius="10px 0 0 10px"
+            fontWeight="400"
         />
         <Button
             className="influencer-card-btn"
             // width="20%"
             fontSize={"15px"}
             pos="relative"
-            right="1rem"
-            padding="25px 20px"
-            fontWeight="200"
+            right="0"
+            padding="20px 20px"
+            height="47px"
+            fontWeight="400"
             bg="#e90a63 !important"
-            borderRadius="0px 5px 5px 0px"
+            borderRadius="0 10px 10px 0"
+            boxShadow="unset"
+            w={[
+                "30%",
+                "30%",
+                "auto",
+                "auto",
+                "auto",
+            ]}
         >
             Submit
         </Button>

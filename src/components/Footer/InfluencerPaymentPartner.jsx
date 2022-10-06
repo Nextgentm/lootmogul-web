@@ -4,26 +4,31 @@ import { Box, Text, Link, Image } from "@chakra-ui/react";
 const InfluencerPaymentPartner = () => {
     const payments = ["stripe.webp", "paypal.webp"];
     return (
-        <Box>
+        <Box width={["50%", "50%", "100%", "100%"]}>
             <Text
                 variant="BoldWhiteText"
-                // fontSize={["18px", "25px", "30px", "35px", "35px"]}
+                fontSize={["30px", "30px", "35px", "35px"]}
+                mt="0"
+                mb="20px"
+                lineHeight="1"
             >
                 Influencer
             </Text>
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
+                _hover={{ textDecoration: "none" }}
                 href="/influencers/signup"
             >
-                <Text variant="LightWhiteText">Influencer Signup</Text>
+                <Text variant="LightWhiteText" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Ambassador Signup</Text>
             </Link>
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
+                _hover={{ textDecoration: "none" }}
                 href="/influencers/earning"
             >
-                <Text variant="LightWhiteText">Influencer Earning</Text>
+                <Text variant="LightWhiteText" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Ambassador Earning</Text>
             </Link>
-            <Box mt="40px">
+            <Box mt="30px">
                 <Box
                     justify={["center"]}
                     wrap="wrap"
@@ -33,12 +38,12 @@ const InfluencerPaymentPartner = () => {
                     <Text
                         color="white"
                         fontFamily="Blanch"
-                        fontSize="35px"
+                        fontSize={["30px", "30px", "35px", "35px"]}
                         fontWeight={500}
                         lineHeight="35px"
-                        // mb="35px"
+                        mb="25px"
                     >
-                        Our Payment <br /> Partners
+                        Our Payment Partners
                     </Text>
                     {payments.map((img, index) => (
                         <Box

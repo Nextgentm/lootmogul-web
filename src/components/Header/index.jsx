@@ -67,18 +67,22 @@ const Header = () => {
     const { toggleLoginModal } = useContext(AppContext);
 
     const renderMobileRoutes = () => (
-        <Flex direction="column" mt="50">
+        <Flex direction="column" mt="30">
             {routes.map(({ label, path, queryPath }, index) => (
                 <Link
                     href={path}
                     passHref={true}
                     _focus={{ border: "none" }}
                     key={`route-${index}`}
+                    _hover={{ textDecoration: "none" }}
                 >
                     <a onClick={onClose}>
                         <Text
                             cursor="pointer"
                             {...navLinksStyle(isActiveLink(path, queryPath))}
+                            p="10px 0"
+                            lineHeight="1"
+                            _hover={{ transform: "scale(1)", textDecoration: "none", color: "#e90a63" }}
                         >
                             {label}
                         </Text>
@@ -86,16 +90,21 @@ const Header = () => {
                 </Link>
             ))}
             <Button
-                mt={"10%"}
-                ml={["7%", "25%"]}
-                w="100px"
+                mt={"30px"}
+                w="auto"
                 h="35px"
                 fontSize={["12px"]}
                 onClick={() =>
                     window.open("https://discord.gg/mHUqAm8fsh", "_blank")
                 }
             >
-                Join Discord
+                <Image
+                    marginRight="20px"
+                    alt="social"
+                    boxSize={["30px", "38px"]}
+                    src="/assets/designupdate1/discordicon.png"
+                />
+                <span>Join Discord</span>
             </Button>
         </Flex>
     );
@@ -176,7 +185,7 @@ const Header = () => {
                     <Flex
                         {...loginStyle(isMobileDevice, user)}
                         alignItems="center"
-                        justifyContent="flex-end"
+                        justifyContent="center"
                         w={isMobileDevice ? "35%" : "30%" }
                     >
                         {!isMobileDevice && (
