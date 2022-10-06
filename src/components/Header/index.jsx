@@ -31,7 +31,7 @@ const routes = [
         path: "https://metaverse.lootmogul.com/metaverse/"
     },
     {
-        label: "INFLUENCER",
+        label: "AMBASSADOR",
         path: "/influencers",
         queryPath: "/influencer/[id]"
     },

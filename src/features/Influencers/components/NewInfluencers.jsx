@@ -12,7 +12,7 @@ const NewInfluencers = ({newInfluencers,LeftArrow,RightArrow}) => {
         <>
                   <Heading mx={[5, 10]} my={10}
                     variant="sectionTitle">
-                    NEW INFLUENCERS
+                    NEW AMBASSADORS
                 </Heading>
             <Box px={7} mt={10}>
                 <ScrollMenu
