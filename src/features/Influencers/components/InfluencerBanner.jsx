@@ -9,7 +9,7 @@ const InfluencerBanner = ({getBannerImage}) => {
                         alignItems={"center"}
                     >
                         <Box
-                            pl={10}
+                            px={10}
                             mt={[0, 0, 10,30]}
                             ml={["0em", "0em", "2em", "2em"]}
                             width={["100%", "100%", "100%", "55%"]}
@@ -57,8 +57,8 @@ const InfluencerBanner = ({getBannerImage}) => {
                         >
                             {getBannerImage() && (
                                 <Box
-                                    ml={["20px", "20px", "20px", "-100px"]}
-                                    mr={["20px", "20px", "20px", "-100px"]}
+                                    ml={["40px", "60px", "100px", "-100px"]}
+                                    mr={["-20px", "-20px", "-20px", "-100px"]}
                                 >
                                     <Flex
                                         position="relative"

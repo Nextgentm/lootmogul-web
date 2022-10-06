@@ -142,7 +142,7 @@ const Page = () => {
         values.email !== ""
       ) {
         const resp = await strapi.create("influencer-signups", values);
-        
+        // //console.log(resp);
         if (resp.data) {
           setAlertMsg({
             isOpen: true,

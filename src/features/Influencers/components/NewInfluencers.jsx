@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import React,{useRef} from 'react'
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import InfluencersCard from './InfluencersCategories/InfluencersCard'
@@ -12,7 +12,7 @@ const NewInfluencers = ({newInfluencers,LeftArrow,RightArrow}) => {
         <>
                   <Heading mx={[5, 10]} my={10}
                     variant="sectionTitle">
-                    NEW INFLUENCERS
+                    NEW IN INFLUENCERS
                 </Heading>
             <Box px={7} mt={10}>
                 <ScrollMenu

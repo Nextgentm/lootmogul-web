@@ -85,8 +85,8 @@ const NftCardInCollection = ({
   cardWidth
 }) => {
   
-  const cardHeight = ["500px","500px","540px"];
-  const imageHeight = ["420px","420px","460px"];
+  const cardHeight = ["440px","500px","540px"];
+  const imageHeight = ["360px","420px","460px"];
   const [isFlipped, setIsFlipped] = useState(false);
 
   const { ref, inView } = useInView({
@@ -131,6 +131,7 @@ const NftCardInCollection = ({
         cursor="pointer"
         quality={50}
         lazyRoot={lazyRoot}
+        borderRadius={20}
       />
     );
   };
@@ -147,14 +148,13 @@ const NftCardInCollection = ({
         mr={["10px", "30px", "30px"]}
         w={cardWidth}
         h={showInfo ? cardHeight : imageHeight}
-        minH={showInfo ? cardHeight : imageHeight}
       >
         <Box
           textAlign="center"
           onMouseEnter={() => setIsFlipped(true)}
           onMouseLeave={() => setIsFlipped(false)}
          >
-          <Box h={cardHeight} minH={cardHeight} ref={ref}>
+          <Box h={showInfo ? cardHeight : imageHeight} ref={ref}>
             {inView && (
               <ReactCardFlip
                 isFlipped={
@@ -163,7 +163,7 @@ const NftCardInCollection = ({
                 flipDirection={"horizontal"}
                 infinite={true}
               >
-                <Box cursor="pointer">
+                <Box cursor="pointer" >
                   <Box
                     _focus={{
                       border: "none",
@@ -172,6 +172,7 @@ const NftCardInCollection = ({
                     height={imageHeight}
                     padding={"3%"}
                     width={cardWidth}
+                    
                   >
                     {nft?.front_image?.indexOf(".mp4") > 0 && (
                       <video
@@ -186,6 +187,7 @@ const NftCardInCollection = ({
                           height: "100%",
                           width: "100%" ,
                           objectFit: "fill",
+                          borderRadius:"20px",
                         }}
                       >
                         <source src={nft?.front_image} type="video/mp4" />

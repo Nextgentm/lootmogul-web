@@ -9,9 +9,9 @@ const breakpoints =  {
     base:'320px',
     sm: '420px',
     md: '768px',
-    lg: '960px',
-    xl: '1200px',
-    '2xl': '1536px',
+    lg: '1024px',
+    xl: '1440px',
+    '2xl': '2500px',
   }
 const override = {
     styles: {
