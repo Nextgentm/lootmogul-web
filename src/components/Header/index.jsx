@@ -23,7 +23,7 @@ import NavDrawer from "./NavDrawer/index";
 const routes = [
     {
         label: "Home",
-        path: "https://metaverse.lootmogul.com/"
+        path: "https://metaverse.lootmogul.com/home"
     },
 
     {

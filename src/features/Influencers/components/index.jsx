@@ -34,7 +34,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
 
     const router = useRouter();
-    console.log("data",data);
+    
     useEffect(() => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
@@ -174,8 +174,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             });
             setDisplayInfluencers(inf);
             const tp = parseInt((inf?.length / 12).toFixed() || 1);
-            // console.log("tp", tp);
-            // console.log("inf", inf.length);
+            
             setTotalPages(tp);
         }
     }, [selCategoriesData]);
