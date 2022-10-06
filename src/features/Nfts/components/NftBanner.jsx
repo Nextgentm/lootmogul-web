@@ -9,7 +9,6 @@ const NftBanner = ({getBannerImage}) => {
                             columns={[1, 1, 1, 2]}
                             spacing={10}
                             pt={[10, 10, 10, 20, 20]}
-                            pb={12}
                         >
                             <Box order="1">
                                 <Text
@@ -47,7 +46,7 @@ const NftBanner = ({getBannerImage}) => {
                                 </Text>
                             </Box>
                             <Box
-                                mt={["20px", "20px", "0px"]}
+                                mt={5}
                                 order="2"
                                 bgSize="cover"
                                 textAlign={"center"}
@@ -61,7 +60,7 @@ const NftBanner = ({getBannerImage}) => {
                                             className="custom-img"
                                             layout="fill"
                                             width={"100%"}
-                                            height={"400px"}
+                                            height={["300px","300px","400px","400px"]}
                                         />
                                     </Flex>
                                 )}

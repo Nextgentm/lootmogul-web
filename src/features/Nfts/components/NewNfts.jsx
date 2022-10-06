@@ -55,7 +55,7 @@ const NewNfts = ({
     };
 
     return (
-        <Box mt="30px" mb="30px">
+        <Box mt={5}>
             {newNfts?.length && (
                 <>
                     <Flex
@@ -74,7 +74,7 @@ const NewNfts = ({
                         </Text>
                     </Flex>
 
-                    <Box px={["1rem", "0rem"]} >
+                    <Box px={1} >
                         <ScrollMenu
                             className="no-scrollbar"
                             apiRef={ref}
@@ -94,7 +94,7 @@ const NewNfts = ({
                                     defaultInView={
                                         isMobileDevice ? index < 2 : index < 4
                                     }
-                                    cardWidth={["79vw","81vw","370px","370px"]}
+                                    cardWidth={["84vw","83vw","370px","370px"]}
                                 />
                             ))}
                         </ScrollMenu>
@@ -299,8 +299,8 @@ const NewNfts = ({
                           flexWrap="wrap"
                     >
                            <Button
-                                         w={["100%","auto"]}
-                                         mr={["0px","15px"]}
+                                        w={["90vw","90vw", "auto"]}
+                                        mr={["0px","0px", "15px"]}
                                          mt="20px"
                                        
                                          // p="0px"
@@ -328,8 +328,8 @@ const NewNfts = ({
                             
                                
                                     <Button
-                                         w={["100%","auto"]}
-                                         mr={["0px","15px"]}
+                                    w={["90vw","90vw", "auto"]}
+                                    mr={["0px","0px", "15px"]}
                                          mt="20px"
                                          key={index}
                                          // p="0px"
@@ -360,7 +360,7 @@ const NewNfts = ({
                 </>
             )}
 
-            <Flex m="auto" w="100%" flexDir={"column"} px="1rem">
+            <Flex w="100%" flexDir={"column"} px="1">
                 {selCategoriesData?.sort((a, b) => a.priority - b.priority).map((nfts, index) => (
                     <NftsCategories
                         isMobileDevice={isMobileDevice}

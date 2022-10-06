@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react'
+import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import React,{useRef} from 'react'
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import InfluencersCard from './InfluencersCategories/InfluencersCard'

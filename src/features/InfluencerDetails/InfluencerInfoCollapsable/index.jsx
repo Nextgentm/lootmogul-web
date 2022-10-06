@@ -24,6 +24,7 @@ const InfluencerInfoCollapsable = ({ influencer }) => {
             border="solid 2px"
             borderColor={"#421d7a"}
             borderRadius={["4px", "8px"]}
+            mt={[10,10,0]}
         >
             <CollapsableRow title="About" isOpen={true}>
                 <Box maxH="390px" overflowY={"auto"} textAlign="left">

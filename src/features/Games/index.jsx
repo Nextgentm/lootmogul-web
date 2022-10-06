@@ -54,7 +54,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
         if (contestmasters) {
             const fg = [];
             const cs = [];
-            
+            // //console.log("contestmasters",contestmasters);
             contestmasters.map((cm) => {
                 if (cm.isFeatured) fg.push(cm);
 

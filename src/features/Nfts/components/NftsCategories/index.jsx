@@ -138,14 +138,14 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                 "repeat(12, 1fr)",
               ]}
               w={"100%"}
-              mt={["2em", "2em", "2em", "3em", "5em"]}
+              my={[10,10,10, 10, 20]}
             >
               <GridItem colSpan={5} order={[2, 2, 2, index % 2 == 0 ? 1 : 3]}>
                 <Box
                   pl={["0", "0", "20%"]}
                   pr="10%"
                   w="100%"
-                  mt={["1em", "5em"]}
+                  mt={[0,0,0,20]}
                 >
                   <Box
                     w="100%"
@@ -158,7 +158,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                       color="white"
                       fontFamily="Sora"
                       fontSize={["24px", "27px"]}
-                      mt={["0px", "20px"]}
+                      mt={[1,1,1,5]}
                       fontWeight="bold"
                     >
                       {NFTS.name}
@@ -223,7 +223,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                 <Center>
                   <Box
                   width={["100%", "100%","420px", "450px", "450px"]}
-                    mx={["0px", "0px", "-40px"]}
+                    mx={[0,0,0, "-40px"]}
                   >
                     <ScrollMenu
                       // options={{
@@ -250,7 +250,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                           nft={item?.nft_kred?.data}
                           lazyRoot={lazyRootColl}
                           defaultInView={isMobileDevice ? index < 2 : index < 5}
-                          cardWidth={["79vw","81vw","370px","370px"]}
+                          cardWidth={["84vw","82vw","370px","370px"]}
                           />
                       ))}
                     </ScrollMenu>

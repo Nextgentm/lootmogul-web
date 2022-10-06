@@ -6,7 +6,7 @@ import {
     Heading,
     Text
 } from "@chakra-ui/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 import ReadMoreLess from "../ReadMoreLess";
 import CategoryComponent from "./categoryComp";
@@ -14,6 +14,7 @@ import InfluencersCard from "./InfluencersCategories/InfluencersCard";
 import { useRouter } from "next/router";
 import { CloseIcon } from "@chakra-ui/icons";
 import Pagination from "./Pagination";
+import AppContext from "../../../utils/AppContext";
 
 const AllInfluencers = ({
     displayInfluencers,
@@ -29,6 +30,7 @@ const AllInfluencers = ({
     setFilterValue
 }) => {
     const [isActive, setActive] = useState(true);
+    const  {isMobileDevice} = useContext(AppContext);
     const handleToggle = () => {
         setActive(!isActive);
     };
@@ -115,10 +117,10 @@ const AllInfluencers = ({
                     templateColumns={[
                         "repeat(1, 1fr)",
                         "repeat(1, 1fr)",
-                        "repeat(2, 1fr)",
-                        "repeat(3, 1fr)",
-                        "repeat(4, 1fr)",
-                        "repeat(5, 1fr)"
+                        "repeat(2, 1fr)",                       
+                        "repeat(3, 1fr)",    
+                        "repeat(4, 1fr)",    
+                        "repeat(6, 1fr)"
                     ]}
                     // gap={"30px"}
                 >

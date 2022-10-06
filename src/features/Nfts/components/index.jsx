@@ -180,7 +180,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
             (banner ||
                 categories.toLowerCase() === defaultCategories.toLowerCase())
         ) {
-            return !isTabletOrDesktop ? banner[1]?.url : banner[0]?.url;
+            return !isTabletOrDesktop ? banner?.[1]?.url || banner?.[0]?.url  : banner[0]?.url;
         } else {
             return null;
         }

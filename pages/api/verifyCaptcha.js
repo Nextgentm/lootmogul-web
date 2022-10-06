@@ -42,7 +42,7 @@ export default async function handler(req, res) {
        *  "error-codes": [...]        // optional
         }
        */
-        
+        // //console.log(captcha,captchaValidation );
       if (captchaValidation.success) {
         // Replace this with the API that will save the data received
         // to your backend
@@ -55,7 +55,7 @@ export default async function handler(req, res) {
         message: "Unproccesable request, Invalid captcha code",
       });
     } catch (error) {
-      
+      //console.log(error);
       return res.status(422).json({ message: "Something went wrong" });
     }
   }

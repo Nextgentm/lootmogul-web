@@ -158,7 +158,7 @@ const InfluencerDetail = ({ influencer }) => {
     };
 
     return (
-        <Box mr={[0, "50px"]} ml={[0, "50px"]} mb={["10vw"]}>
+        <Box mb={["10vw"]}>
             <SEOContainer
                 seoData={influencer.sharedSeo}
                 content={influencer}
@@ -167,17 +167,18 @@ const InfluencerDetail = ({ influencer }) => {
             <Box
                 position="relative"
                 align="center"
-                width="100%"
-                height={"350px"}
+                width="100vw"
+                height={["340px","370px","240px","380px"]}
             >
                 <Image
                     alt={`influencer-banner`}
-                    m={"auto"}
+                    objectFit="contain"
                     className="custom-img"
                     layout="fill"
                     src={getBannerImage()}
                 />
             </Box>
+            <Box mr={[0, "50px"]} ml={[0, "50px"]} mb={["10vw"]}>
 
             {!isTabletOrDesktop ? (
                 <Box position="relative" align="center" mt="20px" zIndex={10}>
@@ -218,6 +219,7 @@ const InfluencerDetail = ({ influencer }) => {
                 {tabsData && (
                     <LMSectionTabs variant={"categoryList"} data={tabsData} />
                 )}
+            </Box>
             </Box>
         </Box>
     );
