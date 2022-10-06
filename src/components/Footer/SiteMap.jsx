@@ -6,47 +6,58 @@ const SiteMap = () => {
         <Box>
             <Text
                 variant="BoldWhiteText"
-                // fontSize={["18px", "25px", "30px", "35px", "35px"]}
+                fontSize={["30px", "30px", "35px", "35px"]}
+                mt="0"
+                mb="20px"
+                lineHeight="1.2"
             >
                 Site Map
             </Text>
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
+                _hover={{ textDecoration: "none" }}
                 href="https://metaverse.lootmogul.com/what-is-metaverse/"
             >
-                <Text variant="LightWhiteText">What is Metaverse ?</Text>
+                <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>What is Metaverse ?</Text>
             </Link>
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
+                _hover={{ textDecoration: "none" }}
                 href="https://metaverse.lootmogul.com/what-is-nft/"
             >
-                <Text variant="LightWhiteText">What is NFT ?</Text>
+                <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>What is NFT ?</Text>
             </Link>
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
+                _hover={{ textDecoration: "none" }}
                 href="https://lootmogul.wpengine.com/about-us/"
                 isExternal
             >
-                <Text variant="LightWhiteText">About us</Text>
+                <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>About us</Text>
             </Link>
-            <Link _focus={{ border: "none", boxShadow: "none" }} href="/faq">
-                <Text variant="LightWhiteText">FAQ</Text>
+            <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href="/faq">
+                <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>FAQ</Text>
+            </Link>
+            <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href="https://lootmogul.wpengine.com/news/" isExternal>
+                <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>News</Text>
             </Link>
             <Link
                 _focus={{ boxShadow: "none" }}
+                _hover={{ textDecoration: "none" }}
                 href="https://lootmogul.wpengine.com/privacy-policy/"
                 isExternal
             >
-                <Text variant="LightWhiteText">Privacy Policy</Text>
+                <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Privacy Policy</Text>
             </Link>
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
+                _hover={{ textDecoration: "none" }}
                 href="https://lootmogul.wpengine.com/terms-conditions/"
                 isExternal
             >
-                <Text variant="LightWhiteText">Terms & Services</Text>
+                <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Terms of Services</Text>
             </Link>
-            <Text variant="LightWhiteText">Blog</Text>
+            {/* <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2">Blog</Text> */}
         </Box>
     );
 };

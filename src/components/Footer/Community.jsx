@@ -34,11 +34,15 @@ const socialLinks = [
 ];
 const Community = () => {
   return (
-    <Box>
+    <Box py="20px">
     <Text
          variant="BoldWhiteText"
         //  fontSize={["18px", "25px", "30px", "40px"]}
          textAlign="center"
+         fontSize="40px"
+         mt="0"
+         mb="20px"
+         lineHeight="1"
      >
          Community
      </Text>
