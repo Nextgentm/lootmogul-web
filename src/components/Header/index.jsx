@@ -110,7 +110,7 @@ const Header = () => {
                 <Box
                     bg="#100526"
                     w="100%"
-                    h="100px"
+                    h={isMobileDevice ? "70px" : "100px" }
                     display="flex"
                     pl={["16px", "5%"]}
                     pr={["16px", "5%"]}
@@ -121,19 +121,21 @@ const Header = () => {
                     as="nav"
                 >
                     {isMobileDevice && (
-                        <HamburgerIcon
-                            color="white"
-                            h="22px"
-                            w="22px"
-                            mr={["16px", "26px", "36px"]}
-                            onClick={onOpen}
-                        />
+                        <Flex w="10%">
+                            <HamburgerIcon
+                                color="white"
+                                h="32px"
+                                w="32px"
+                                mr={["16px", "26px", "36px"]}
+                                onClick={onOpen}
+                            />
+                        </Flex>
                     )}
                     
-                    <Flex w="20%">
+                    <Flex w={isMobileDevice ? "55%" : "20%" } justify={isMobileDevice ? "center" : "unset" }>
                         <Image
                             style={{ cursor: "pointer" }}
-                            width={["250px", "180px", "255px"]}
+                            width={["250px", "auto", "255px"]}
                             height={["80px", "80px"]}
                             objectFit="contain"
                             onClick={() => router.push("/")}
@@ -175,7 +177,7 @@ const Header = () => {
                         {...loginStyle(isMobileDevice, user)}
                         alignItems="center"
                         justifyContent="flex-end"
-                        w="30%"
+                        w={isMobileDevice ? "35%" : "30%" }
                     >
                         {!isMobileDevice && (
                             <>
