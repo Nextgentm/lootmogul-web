@@ -18,7 +18,7 @@ import {
 } from "../../../components/ContentNavigator/arrows";
 
 const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
-    const defaultCategoryName = "All in Influencers";
+    const defaultCategoryName = "All Influencers";
     const { isTabletOrDesktop, user, influencerLikes, callAuthService } =
         useContext(AppContext);
     const [options, setOptions] = useState([]);
