@@ -20,7 +20,7 @@ const TrendingGamesCard = ({ contestmaster, style }) => {
     const img = contestmaster?.icon?.data?.url;
     const [contestStatus,setContestStatus]= useState(false);
     return (
-        <Link href={"/games/" + contestmaster.slug} passHref={true} _focus={{ border: "none" }} key={`tgc-${contestmaster?.id}`}>
+        <Link href={"/games/" + contestmaster.slug} passhref="true" _focus={{ border: "none" }} key={`tgc-${contestmaster?.id}`}>
             <Box {...style} overflow="hidden"
             >
                 <Box

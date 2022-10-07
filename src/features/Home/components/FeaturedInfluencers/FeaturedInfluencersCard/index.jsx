@@ -17,7 +17,7 @@ const FeaturedInfluencersCard = ({ influencer: influencerObj, style }) => {
 
   const influencer = influencerObj;
   return (
-    <Link href={"/influencer/" + influencerObj?.slug} passHref={true} _focus={{ border: "none" }}
+    <Link href={"/influencer/" + influencerObj?.slug} passhref="true" _focus={{ border: "none" }}
       key={`fic-${influencer.contestmasters?.data[0]?.id}`}
     >
       <Box

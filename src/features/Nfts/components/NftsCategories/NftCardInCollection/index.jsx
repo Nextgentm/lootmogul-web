@@ -141,7 +141,7 @@ const NftCardInCollection = ({
       <Link
         href={nft?.marketURL ? nft?.marketURL : "/"}
         target="_blank"
-        passHref={true}
+        passhref="true"
         _hover={{ textDecoration: "none" }}
         _focus={{ border: "none", textDecoration: "none" }}
         cursor="pointer"

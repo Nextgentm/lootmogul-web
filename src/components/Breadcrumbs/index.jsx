@@ -11,7 +11,7 @@ const Breadcrumbs = ({ routes, style = {} }) => {
                 <Box key={`breadcrumbs-${index}`}>
                     {index < routes.length - 1 ? (
                         <Flex align="center">
-                            <NextLink href={path} passHref={true}>
+                            <NextLink href={path} passhref="true">
                                 <Link>
                                     <Text
                                         fontSize="12px"

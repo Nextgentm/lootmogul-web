@@ -31,7 +31,7 @@ const routes = [
         path: "https://metaverse.lootmogul.com/metaverse/"
     },
     {
-        label: "AMBASSADOR",
+        label: "AMBASSADORS",
         path: "/influencers",
         queryPath: "/influencer/[id]"
     },
@@ -71,7 +71,7 @@ const Header = () => {
             {routes.map(({ label, path, queryPath }, index) => (
                 <Link
                     href={path}
-                    passHref={true}
+                    passhref="true"
                     _focus={{ border: "none" }}
                     key={`route-${index}`}
                     _hover={{ textDecoration: "none" }}
@@ -168,7 +168,7 @@ const Header = () => {
                                     _focus={{ border: "none", textDecor:"none" }}
                                     _hover={{ border: "none", textDecor:"none" }}
                                     href={path}
-                                    passHref={true}
+                                    passhref="true"
                                     key={`route-${index}`}
                                 >
                                     <Text

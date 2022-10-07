@@ -35,7 +35,7 @@ const InfluencersCard = ({ influencer, slug, style, wid, margin }) => {
     return (
         <Link
             href={"/influencer/" + slug}
-            passHref={true}
+            passhref="true"
             width={["80vw","80vw","280px"]}
             mx="auto"
             _focus={{ border: "none" }}

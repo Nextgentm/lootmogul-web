@@ -37,7 +37,7 @@ module.exports = {
   navLinksStyle: (isActive) => ({
     ml: ["8px", "0px"],
     textTransform:"uppercase",
-    // passHref: true,
+    // passhref: true,
     padding:"13px 20px",
     fontFamily: "Blanch",
     fontSize: ["30px", "30px"],

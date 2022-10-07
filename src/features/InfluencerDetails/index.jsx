@@ -23,6 +23,7 @@ const InfluencerDetail = ({ influencer }) => {
     const [isHeartClick, setHeartClick] = useState(false);
 
     const [tabsData, setTabsData] = useState();
+    const [isTabAvailable, setIsTabAvailable] = useState();
     const onHeartClick = async () => {
         if (!user) {
             toggleLoginModal();
@@ -46,9 +47,14 @@ const InfluencerDetail = ({ influencer }) => {
 
     useEffect(() => {
         if (fullInfluencer) {
-            const td =
-                fullInfluencer?.contestmasters?.data &&
-                fullInfluencer?.contestmasters?.data.length > 0
+            const isContest = fullInfluencer?.contestmasters?.data &&
+            fullInfluencer?.contestmasters?.data.length > 0;
+            const isTabAvailable = (fullInfluencer?.contestmasters?.data &&
+            fullInfluencer?.contestmasters?.data.length > 0) ||  (fullInfluencer?.nft_kreds?.data && fullInfluencer?.nft_kreds?.data
+            .length > 0)
+            console.log("isTabAvailable",isTabAvailable);
+            setIsTabAvailable(isTabAvailable)
+            const td = isContest
                     ? [
                           {
                               tab: <Text>NFTs</Text>,
@@ -88,12 +94,12 @@ const InfluencerDetail = ({ influencer }) => {
                               )
                           }
                       ]
-                    : [
+                    : [  
                           {
                               tab: <Text>NFTS</Text>,
                               tabPanel: (
                                   <>
-                                      {" "}
+                                      {" "} 
                                       {fullInfluencer?.nft_kreds?.data.length >
                                           0 && (
                                           <NftCardList
@@ -205,7 +211,7 @@ const InfluencerDetail = ({ influencer }) => {
                 </Flex>
             )}
 
-            <Box
+            {isTabAvailable && <Box
                 color="white"
                 border="solid 2px"
                 borderColor={"#421d7a"}
@@ -219,7 +225,7 @@ const InfluencerDetail = ({ influencer }) => {
                 {tabsData && (
                     <LMSectionTabs variant={"categoryList"} data={tabsData} />
                 )}
-            </Box>
+            </Box>}
             </Box>
         </Box>
     );

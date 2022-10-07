@@ -62,7 +62,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
     return (
         <Link
             href={"/games/" + contestmaster?.slug}
-            passHref={true}
+            passhref="true"
             _hover={{ border: "none", textDecoration: "none" }}
             _focus={{ border: "none", textDecoration: "none" }}
             key={`igc-${contestmaster?.id}`}

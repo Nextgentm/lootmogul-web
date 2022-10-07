@@ -144,7 +144,7 @@ const NftCard = ({ nft, isMobileDevice, showInfo = false }) => {
             >
                 <Link
                     href={"/nfts/" + nft?.slug}
-                    passHref={true}
+                    passhref="true"
                     _focus={{ border: "none" }}
                 >
                     {nft.front_image?.indexOf(".mp4") > 0 && (
@@ -175,7 +175,7 @@ const NftCard = ({ nft, isMobileDevice, showInfo = false }) => {
                 </Link>
                 <Link
                     href={"/nfts/" + nft?.slug}
-                    passHref={true}
+                    passhref="true"
                     _focus={{ border: "none" }}
                 >
                     {nft?.back_image?.indexOf(".mp4") > 0 && (
