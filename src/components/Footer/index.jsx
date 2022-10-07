@@ -86,8 +86,8 @@ const Footer = () => {
                             <Image
                                 alt=""
                                 src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1200,h_414/https://metaverse.lootmogul.com/wp-content/uploads/2022/07/1_V9-OPWpauGEi-JMp05RC_A.png"
-                                w="170px"
-                                border="1px solid #FFF"
+                                w="50%"
+                                border="3px solid #FFF"
                             />
                         </Flex>
                     </Flex>
@@ -107,7 +107,7 @@ const Footer = () => {
                         <Image
                             alt=""
                             src="/assets/lm_logo.png"
-                            width={["90%"]}
+                            width={["100%"]}
                             height="auto"
                             onClick={() => router.push("/")}
                             // {...logoStyle}
