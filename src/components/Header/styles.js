@@ -42,7 +42,7 @@ module.exports = {
     fontFamily: "Blanch",
     fontSize: ["30px", "30px"],
     textDecoration:"none!important",
-    mt: ["16px","16px", 0],
+    mt: ["0","0", 0],
     color: isActive ? "primary" : "secondary",
 
     ...(isActive && {
