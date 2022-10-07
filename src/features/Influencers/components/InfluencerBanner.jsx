@@ -17,10 +17,13 @@ const InfluencerBanner = ({getBannerImage}) => {
                             <Text
                                 variant="headText"
                                 fontSize={[
-                                    "2.3rem",
-                                    "2.5rem",
-                                    "2.7rem",
-                                    "62px"
+                                    "32px",
+                                    "52px",
+                                    "60px",
+                                    "57px",
+                                    "60px",
+                                    "94px",
+                                    "96px"
                                 ]}
                                 textShadow="unset"
                             >
