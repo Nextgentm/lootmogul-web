@@ -31,7 +31,6 @@ const SiteMap = () => {
                 _focus={{ border: "none", boxShadow: "none" }}
                 _hover={{ textDecoration: "none" }}
                 href="https://lootmogul.wpengine.com/about-us/"
-                isExternal
             >
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>About us</Text>
             </Link>
