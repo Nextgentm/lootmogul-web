@@ -18,10 +18,11 @@ const NftBanner = ({getBannerImage}) => {
                                         "3.2em",
                                         "3.5rem",
                                         "4rem",
-                                        "4rem"
+                                        "62px"
                                     ]}
                                     fontFamily="CNN"
                                     variant="headText"
+                                    textShadow="unset"
                                 >
                                     Buy and Trade <br />
                                     Your favorite <br />

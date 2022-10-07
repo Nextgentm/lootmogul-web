@@ -20,9 +20,9 @@ const InfluencerBanner = ({getBannerImage}) => {
                                     "2.3rem",
                                     "2.5rem",
                                     "2.7rem",
-                                    "4rem"
+                                    "62px"
                                 ]}
-                                
+                                textShadow="unset"
                             >
                                 Play your favorite Ambassador Tournament and win
                                 NFT
