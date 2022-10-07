@@ -119,37 +119,39 @@ const Header = () => {
                 <Box
                     bg="#100526"
                     w="100%"
-                    h={isMobileDevice ? "70px" : "100px" }
+                    h={isMobileDevice ? "66px" : "90px" }
                     display="flex"
                     pl={["16px", "5%"]}
                     pr={["16px", "5%"]}
-                    py="2.5em"
+                    py={["0", "0", "2.5em"]}
                     alignItems="center"
                     top="0"
                     justify="space-between"
                     as="nav"
+                    position="sticky"
                 >
                     {isMobileDevice && (
-                        <Flex w="10%">
+                        <Flex w="20%" justifyContent="center">
                             <HamburgerIcon
                                 color="white"
                                 h="32px"
                                 w="32px"
-                                mr={["16px", "26px", "36px"]}
+                                mr={["0", "0", "36px"]}
                                 onClick={onOpen}
                             />
                         </Flex>
                     )}
                     
-                    <Flex w={isMobileDevice ? "55%" : "20%" } justify={isMobileDevice ? "center" : "unset" }>
+                    <Flex w={isMobileDevice ? "50%" : "20%" } justify={isMobileDevice ? "center" : "unset" }>
                         <Image
                             style={{ cursor: "pointer" }}
-                            width={["250px", "auto", "255px"]}
-                            height={["80px", "80px"]}
+                            width={["250px", "auto", "270px", "270px", "460px"]}
+                            padding={["0", "0", "10px"]}
+                            height={["66px", "66px", "80px"]}
                             objectFit="contain"
                             onClick={() => router.push("/")}
                             alt="logo"
-                            src="/assets/lm_logo.png"
+                            src="/assets/LootMogul-Logo-2.webp"
                         />
                     </Flex>
 
@@ -185,8 +187,8 @@ const Header = () => {
                     <Flex
                         {...loginStyle(isMobileDevice, user)}
                         alignItems="center"
-                        justifyContent="center"
-                        w={isMobileDevice ? "35%" : "30%" }
+                        justifyContent={["flex-end", "flex-end", "center"]}
+                        w={isMobileDevice ? "30%" : "30%" }
                     >
                         {!isMobileDevice && (
                             <>
@@ -203,7 +205,7 @@ const Header = () => {
                                         // m="5%"
                                         marginRight="20px"
                                         alt="social"
-                                        boxSize={["30px", "38px"]}
+                                        boxSize={["30px", "1.5em"]}
                                         src="/assets/designupdate1/discordicon.png"
                                     />
                                 </Link>
@@ -220,7 +222,7 @@ const Header = () => {
                                         // m="5%"
                                         marginRight="20px"
                                         alt="social"
-                                        boxSize={["25px", "30px"]}
+                                        boxSize={["25px", "1.3em"]}
                                         src="/assets/telegram.svg"
                                     />
                                 </Link>
@@ -238,9 +240,9 @@ const Header = () => {
                                         "0px 36px",
                                         "20px 50px"
                                     ]}
-                                    boxShadow="0px 0px 30px 10px #e90a6355"
-                                    fontSize={["0.7rem", "0.8rem", "15px"]}
-                                    height="35px"
+                                    boxShadow="0px 0px 10px rgba(0,0,0,.3)"
+                                    fontSize="15px"
+                                    height={["39px", "39px", "35px", "35px"]}
                                 >
                                     LOGIN
                                 </Button>

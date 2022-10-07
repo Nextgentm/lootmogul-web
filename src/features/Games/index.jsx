@@ -104,10 +104,11 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
               <Box mt={!isMobileDevice ? 26 : 0}>
                 <Text
                   variant="headText"
-                  fontSize={["35px", "2.5em", "53px", "3.5em", "4em"]}
+                  fontSize={["35px", "2.5em", "53px", "3.5em", "62px"]}
                   mt={["3rem", "5rem", "5rem"]}
                   mb={0}
                   lineHeight={["50px", "45px", "80px"]}
+                  textShadow="unset"
                 >
                   Check out New releases
                   <br />

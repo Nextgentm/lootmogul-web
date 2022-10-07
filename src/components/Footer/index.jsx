@@ -19,8 +19,10 @@ const Footer = () => {
             {isTabletOrDesktop && (
                 <Flex
                     py="50px"
+                    px="20px"
                     w="100%"
-                    px="2rem"
+                    maxW="90%"
+                    m="0 auto"
                 /*direction={[
                     "column-reverse",
                     "column-reverse",
@@ -29,18 +31,18 @@ const Footer = () => {
                 ]}*/
                 >
                     <Flex
-                        w={["100%", "100%", "50%", "50%"]}
-                        justify={["center", "center", "space-around", "space-around"]}
+                        w={["100%", "100%", "50%", "54%"]}
+                        justify={["center", "center", "flex-start", "flex-start"]}
                     >
                         <ContactUsSubmit />
-                        <Box display={["block", "block", "block", "block"]} w={["100%", "100%", "40%", "auto"]}>
+                        <Box display={["block", "block", "block", "block"]} w={["100%", "100%", "40%", "40%"]}>
                             <SiteMap />
                         </Box>
                     </Flex>
                     <Box
-                        w="4px"
+                        w="5px"
                         bg="#FFF"
-                        ml={["1rem", "1rem", "2em", "2rem", "4rem"]}
+                        ml={["1rem", "1rem", "2em", "2rem", "15px"]}
                         display={["none", "none", "block", "block"]}
                     />
                     <Flex
@@ -53,7 +55,7 @@ const Footer = () => {
                             "row"
                         ]}
                     >
-                        <Flex justifyContent="space-around" width={["50%", "50%", "55%", "40%"]} pl={["0", "20px", "30px", "30px", "40px"]} pr="20px" my={["40px", "40px", "0", "0px"]}>
+                        <Flex justifyContent="space-around" width={["50%", "50%", "55%", "50%"]} pl={["0", "20px", "30px", "30px", "40px"]} pr="20px" my={["40px", "40px", "0", "0px"]}>
                             <InfluencerPaymentPartner />
                             <Box display={["none", "none", "none", "none"]}>
                                 <SiteMap />
@@ -63,12 +65,14 @@ const Footer = () => {
                         <Flex direction="column" alignItems="flex-start" width={["50%", "50%", "45%", "60%"]}>
                             <Image
                                 alt=""
-                                src="/assets/lm_logo.png"
-                                width={["90%"]}
+                                src="/assets/LootMogul-Logo-2.webp"
+                                width={["95%"]}
                                 height="auto"
                                 onClick={() => router.push("/")}
                                 // {...logoStyle}
                                 alignItem="left"
+                                mb="10px"
+                                mt="10px"
                             />
 
                             <Text
@@ -92,9 +96,11 @@ const Footer = () => {
 
             {!isTabletOrDesktop && (
                 <Flex
-                    py="50px"
+                    py="40px"
                     w="100%"
-                    px="2rem"
+                    maxW="90%"
+                    m="0 auto"
+                    px="10px"
                     direction="column"
                 >
                     <Flex direction="column" alignItems="flex-start" width="100%" mb="20px">
@@ -131,7 +137,7 @@ const Footer = () => {
                     <Flex direction="row" alignItems="flex-start" width="100%" my="20px">
                         <InfluencerPaymentPartner />
                         <Box
-                            w="25px"
+                            w="5px"
                         />
                         <SiteMap />
                     </Flex>

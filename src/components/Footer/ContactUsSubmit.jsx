@@ -3,14 +3,14 @@ import { Flex, Box, Text, Link, Input, Button } from "@chakra-ui/react";
 
 const ContactUsSubmit = () => {
   return (
-    <Box w={["100%", "100%", "60%", "auto"]} mr={["20px", "20px", "20px", "unset"]}>
-    <Box mb="30px">
+    <Box w={["100%", "100%", "60%", "70%"]} mr={["20px", "20px", "20px", "20px"]}>
+    <Box mb="30px" pt="10px">
         <Text
         textAlign={["center","center","left","left"]}
             variant="BoldWhiteText"
             fontWeight="400 !important"
-            mt="0"
-            mb="20px"
+            mt="10px"
+            mb="15px"
             lineHeight="1"
             fontSize="35px"
             // fontSize={[
@@ -40,22 +40,18 @@ const ContactUsSubmit = () => {
      textAlign={["center","center","left","left"]}
         fontWeight="400 !important"
         variant="BoldWhiteText"
-        mt="50px"
+        mt="70px"
         mb="20px"
         lineHeight="1"
         fontSize={["30px", "30px", "30px", "30px"]}
     >
         Subscribe to get the updates
     </Text>
-    <Flex ml={["0","0","0","0px"]} >
+    <Flex ml={["0","0","0","0px"]} maxW="85%" >
         <Input
             bg="#FFF"
             w={[
                 "70%",
-                "70%",
-                "235px",
-                "200px",
-                "235px",
 
                 
             ]}
@@ -78,10 +74,6 @@ const ContactUsSubmit = () => {
             boxShadow="unset"
             w={[
                 "30%",
-                "30%",
-                "auto",
-                "auto",
-                "auto",
             ]}
         >
             Submit

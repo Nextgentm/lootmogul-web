@@ -7,11 +7,11 @@ const SiteMap = () => {
             <Text
                 variant="BoldWhiteText"
                 fontSize={["30px", "30px", "35px", "35px"]}
-                mt="0"
+                mt="10px"
                 mb="20px"
                 lineHeight="1.2"
             >
-                Site Map
+                SiteMap
             </Text>
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
