@@ -67,7 +67,7 @@ const Header = () => {
     const { toggleLoginModal } = useContext(AppContext);
 
     const renderMobileRoutes = () => (
-        <Flex direction="column" mt="30">
+        <Flex direction="column" mt={["20px", "20px", "30px"]}>
             {routes.map(({ label, path, queryPath }, index) => (
                 <Link
                     href={path}
@@ -91,7 +91,7 @@ const Header = () => {
             ))}
             <Button
                 mt={"30px"}
-                w="auto"
+                w="220px"
                 h="35px"
                 fontSize={["12px"]}
                 onClick={() =>
