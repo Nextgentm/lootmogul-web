@@ -9,12 +9,12 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const Explore = ({ data, defaultCategoryName, handleCategoryChange }) => {
+const Explore = ({ data, defaultCategoryName, handleCategoryChange, activeCategory }) => {
     return (
         <Box
             mt={5}
-            mx={[10,10,16]}
-            
+            mx={[10, 10, 16]}
+
         >
             <Heading variant="sectionTitle">EXPLORE</Heading>
             <Flex
@@ -24,8 +24,8 @@ const Explore = ({ data, defaultCategoryName, handleCategoryChange }) => {
                 alignContent={"center"}
             >
                 <Button
-                    w={["95vw","95vw", "auto"]}
-                    mr={["0px","0px", "15px"]}
+                    w={["95vw", "95vw", "auto"]}
+                    mr={["0px", "0px", "15px"]}
                     mt="20px"
                     // p="0px"
                     fontSize={[
@@ -38,13 +38,15 @@ const Explore = ({ data, defaultCategoryName, handleCategoryChange }) => {
                     onClick={() => {
                         handleCategoryChange(defaultCategoryName.toLowerCase());
                     }}
+                    _focus={{ bgImage: "linear-gradient(90deg, #E90A63 0%, #481A7F 100%)" }}
+                    bgImage={activeCategory == defaultCategoryName && 'linear-gradient(90deg, #E90A63 0%, #481A7F 100%);'}
                 >
-                    <Text fontWeight={500}>{defaultCategoryName}</Text>
+                    <Text fontWeight={500}>{defaultCategoryName} </Text>
                 </Button>
                 {data?.map((influencerCat, index) => (
                     <Button
-                    w={["90vw","90vw", "auto"]}
-                        mr={["0px","0px", "15px"]}
+                        w={["90vw", "90vw", "auto"]}
+                        mr={["0px", "0px", "15px"]}
                         mt="20px"
                         // p="0px"
                         fontSize={[
@@ -59,6 +61,8 @@ const Explore = ({ data, defaultCategoryName, handleCategoryChange }) => {
                                 influencerCat.name.toLowerCase()
                             );
                         }}
+                        _focus={{ bgImage: "linear-gradient(90deg, #E90A63 0%, #481A7F 100%)" }}
+                        bgImage={activeCategory == influencerCat.name.toLowerCase() && 'linear-gradient(90deg, #E90A63 0%, #481A7F 100%);'}
                     >
                         <Text>{influencerCat.name}</Text>
                     </Button>
