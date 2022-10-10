@@ -63,17 +63,23 @@ const Footer = () => {
                         </Flex>
 
                         <Flex direction="column" alignItems="flex-start" width={["50%", "50%", "45%", "60%"]}>
-                            <Image
-                                alt=""
-                                src="/assets/LootMogul-Logo-2.webp"
-                                width={["95%"]}
-                                height="auto"
-                                onClick={() => router.push("/")}
-                                // {...logoStyle}
-                                alignItem="left"
-                                mb="10px"
-                                mt="10px"
-                            />
+                            <Link
+                                _focus={{ border: "none", boxShadow: "none" }}
+                                _hover={{ textDecoration: "none" }}
+                                href="https://lootmogul.com"
+                            >
+                                <Image
+                                    alt=""
+                                    src="/assets/LootMogul-Logo-2.webp"
+                                    width={["95%"]}
+                                    height="auto"
+                                    onClick={() => router.push("/")}
+                                    // {...logoStyle}
+                                    alignItem="left"
+                                    mb="10px"
+                                    mt="10px"
+                                />
+                            </Link>
 
                             <Text
                                 variant="BoldWhiteText"
@@ -83,12 +89,19 @@ const Footer = () => {
                             >
                                 Try our App
                             </Text>
-                            <Image
-                                alt=""
-                                src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1200,h_414/https://metaverse.lootmogul.com/wp-content/uploads/2022/07/1_V9-OPWpauGEi-JMp05RC_A.png"
-                                w="50%"
-                                border="3px solid #FFF"
-                            />
+                            <Link
+                                _focus={{ border: "none", boxShadow: "none" }}
+                                _hover={{ textDecoration: "none" }}
+                                href="https://apps.apple.com/in/app/lootmogul/id1619785065"
+                                isExternal
+                            >
+                                <Image
+                                    alt=""
+                                    src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1200,h_414/https://metaverse.lootmogul.com/wp-content/uploads/2022/07/1_V9-OPWpauGEi-JMp05RC_A.png"
+                                    w="50%"
+                                    border="3px solid #FFF"
+                                />
+                            </Link>
                         </Flex>
                     </Flex>
                 </Flex>
@@ -104,16 +117,22 @@ const Footer = () => {
                     direction="column"
                 >
                     <Flex direction="column" alignItems="flex-start" width="100%" mb="20px">
-                        <Image
-                            alt=""
-                            src="/assets/lm_logo.png"
-                            width={["100%"]}
-                            height="auto"
-                            onClick={() => router.push("/")}
-                            // {...logoStyle}
-                            alignItem="center"
-                            m="0 auto"
-                        />
+                        <Link
+                            _focus={{ border: "none", boxShadow: "none" }}
+                            _hover={{ textDecoration: "none" }}
+                            href="https://lootmogul.com"
+                        >
+                            <Image
+                                alt=""
+                                src="/assets/LootMogul-Logo-2.webp"
+                                width={["100%"]}
+                                height="auto"
+                                onClick={() => router.push("/")}
+                                // {...logoStyle}
+                                alignItem="center"
+                                m="10px auto"
+                            />
+                        </Link>
 
                         <Text
                             variant="BoldWhiteText"
@@ -126,12 +145,20 @@ const Footer = () => {
                         >
                             Try our App
                         </Text>
-                        <Image
-                            alt=""
-                            src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1200,h_414/https://metaverse.lootmogul.com/wp-content/uploads/2022/07/1_V9-OPWpauGEi-JMp05RC_A.png"
-                            w="50%"
-                            border="1px solid #FFF"
-                        />
+                        <Link
+                            _focus={{ border: "none", boxShadow: "none" }}
+                            _hover={{ textDecoration: "none" }}
+                            href="https://apps.apple.com/in/app/lootmogul/id1619785065"
+                            isExternal
+                        >
+                            <Image
+                                alt=""
+                                src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1200,h_414/https://metaverse.lootmogul.com/wp-content/uploads/2022/07/1_V9-OPWpauGEi-JMp05RC_A.png"
+                                w="50%"
+                                m="0 auto"
+                                border="3px solid #FFF"
+                            />
+                        </Link>
                     </Flex>
 
                     <Flex direction="row" alignItems="flex-start" width="100%" my="20px">
