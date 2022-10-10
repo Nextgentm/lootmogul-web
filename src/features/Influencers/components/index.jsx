@@ -223,6 +223,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 data={data}
                 defaultCategoryName={defaultCategoryName}
                 handleCategoryChange={handleCategoryChange}
+                activeCategory={category}
             />
             <NewInfluencers
                 newInfluencers={newInfluencers}

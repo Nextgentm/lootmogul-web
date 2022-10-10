@@ -53,7 +53,7 @@ const AllInfluencers = ({
             </Heading>
 
                 
-                <Flex alignItems="center" pos="relative">
+                {/* <Flex alignItems="center" pos="relative">
                     <Button
                         variant={!isActive ? "filterBtnSegment" : "filterBtn"}
                         onClick={() => {
@@ -86,7 +86,7 @@ const AllInfluencers = ({
                     ) : (
                         ""
                     )}
-                </Flex>
+                </Flex> */}
             </Flex>
             {!isActive ? (
                 <Flex
