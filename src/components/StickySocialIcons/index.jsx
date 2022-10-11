@@ -1,12 +1,14 @@
-import { useState, useContext } from "react";
+ ;import { useState, useContext, useEffect } from "react";
 import { Box, Image, Link, Tooltip } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 const SpinBtn = dynamic(() => import("../Header/SpinBtn"));
 import AppContext from "../../utils/AppContext";
+import strapi from "../../utils/strapi";
 
 const StickySocialIcons = () => {
     const { user, toggleLoginModal } = useContext(AppContext);
     const [openSpin, setOpenSpin] = useState(false);
+    const [showSpin, setShowSpin] = useState(false);
     const spinClick = () => {
         if (user) {
             setOpenSpin(true);
@@ -15,6 +17,12 @@ const StickySocialIcons = () => {
     const onClose = () => {
         setOpenSpin(false);
     };
+    useEffect(async()=>{
+         const data = await strapi.find("bucketgamemasters", {
+            filters: { status: "active", type: "spin" },
+        });
+        if(data?.data?.length) setShowSpin(true);
+    },[])
     return (
         <Box
             pos="fixed"
@@ -22,7 +30,7 @@ const StickySocialIcons = () => {
             right="0px"
             zIndex={9999}
         >
-            <Tooltip
+         {showSpin &&(   <Tooltip
                 placement="auto"
                 label="Spin the Wheel"
                 bg="#383838"
@@ -42,7 +50,7 @@ const StickySocialIcons = () => {
                         spinClick();
                     }}
                 />
-            </Tooltip>
+            </Tooltip>) }
             <Tooltip
                 placement="auto"
                 label="Join Discord"
