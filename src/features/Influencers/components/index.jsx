@@ -38,10 +38,9 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const [noSearchInfluencers, setNoSearchInfluencers] = useState([]);
     const [allSearchInfluencers, setAllSearchInfluencers] = useState([]);
     const [searchByName, setSearchByName] = useState("");
+    const [perPage, setPerPage] = useState(16);
 
     const router = useRouter();
-
-    let perPage = 16;
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -182,13 +181,12 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             });
             setDisplayInfluencers(inf);
 
-            // const tp =inf?.length >12 && inf?.length %12 === 0? inf?.length / 12:inf?.length >12?parseInt((inf?.length / 12))+1:1;
             setAllSearchInfluencers(inf);
             setSearchInfluencers("");
             setNoSearchInfluencers("");
             setSearchByName("");
 
-            const tp = parseInt((inf?.length / perPage).toFixed() || 1);
+            const tp = inf?.length > perPage && inf?.length % perPage === 0 ? inf?.length / perPage : inf?.length > perPage ? parseInt((inf?.length / perPage)) + 1 : 1;
 
             setTotalPages(tp);
         }
@@ -222,15 +220,15 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
         }
         // console.log(allSearchInfluencers)
 
-        if (name == "") {
+        if (name == "" || name.length < 3) {
             // if (searchInfluencers != "" && noSearchInfluencers != "") {
-                setPageNo(0);
+            setPageNo(0);
 
-                const disInfList = [...searchInfluencers, ...noSearchInfluencers];
-                setDisplayInfluencers(disInfList);
+            const disInfList = [...searchInfluencers, ...noSearchInfluencers];
+            setDisplayInfluencers(disInfList);
 
-                const tp = parseInt((disInfList?.length / perPage).toFixed() || 1);
-                setTotalPages(tp);
+            const tp = disInfList?.length > perPage && disInfList?.length % perPage === 0 ? disInfList?.length / perPage : disInfList?.length > perPage ? parseInt((disInfList?.length / perPage)) + 1 : 1;
+            setTotalPages(tp);
             // }
         }
         else {
@@ -255,9 +253,18 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
 
             setDisplayInfluencers(searchInfList);
 
-            const tp = parseInt((searchInfList?.length / perPage).toFixed() || 1);
+            const tp = searchInfList?.length > perPage && searchInfList?.length % perPage === 0 ? searchInfList?.length / perPage : searchInfList?.length > perPage ? parseInt((searchInfList?.length / perPage)) + 1 : 1;
             setTotalPages(tp);
         }
+    }
+
+    const getPagination = (per_page) => {
+        setPerPage(per_page)
+        setPageNo(0);
+        // console.log(perPage, displayInfluencers?.length)
+        const tp = displayInfluencers?.length > per_page && displayInfluencers?.length % per_page === 0 ? displayInfluencers?.length / per_page : displayInfluencers?.length > per_page ? parseInt((displayInfluencers?.length / per_page)) + 1 : 1;
+        console.log(tp)
+        setTotalPages(tp);
     }
 
     return (
@@ -295,6 +302,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 displayInfluencers={displayInfluencers}
                 category={category}
                 perPage={perPage}
+                setPerPage={setPerPage}
                 totalPages={totalPages}
                 pageNo={pageNo}
                 setPageNo={setPageNo}
@@ -307,6 +315,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 getSearchByName={getSearchByName}
                 searchByName={searchByName}
                 setSearchByName={setSearchByName}
+                getPagination={getPagination}
             />
 
         </Box>

@@ -23,6 +23,7 @@ const AllInfluencers = ({
     displayInfluencers,
     category,
     perPage,
+    setPerPage,
     totalPages,
     pageNo,
     setPageNo,
@@ -34,7 +35,8 @@ const AllInfluencers = ({
     setFilterValue,
     getSearchByName,
     searchByName,
-    setSearchByName
+    setSearchByName,
+    getPagination
 }) => {
     const [isActive, setActive] = useState(true);
     const [isGridActive, setGridActive] = useState(false);
@@ -60,8 +62,8 @@ const AllInfluencers = ({
                 <Heading variant="sectionTitle">{category ? category.toUpperCase() : "ALL AMBASSADORS"}
                 </Heading>
 
-                <Flex alignItems="center" justify="flex-end" w="50%" maxW="575px">
-                    <Flex alignItems="center" w="70%">
+                <Flex className="ambassadors_search" alignItems="center" justify="flex-end" w="50%" maxW="575px">
+                    <Flex className="ambassadors_fc" alignItems="center" w="70%">
                         <FormControl w="100%" mb="0">
                             <Input
                                 id="search_by_name"
@@ -69,11 +71,7 @@ const AllInfluencers = ({
                                 placeholder="Search by name..."
                                 value={searchByName}
                                 onChange={(e) => setSearchByName(e.target.value)}
-                                onKeyPress={e => {
-                                    if (e.key === 'Enter') {
-                                        getSearchByName(e.target.value)
-                                    }
-                                }}
+                                onKeyUp={e => {getSearchByName(e.target.value) }}
                                 color="#fff"
                                 _placeholder={{ color: "#fff" }}
                             />
@@ -87,7 +85,7 @@ const AllInfluencers = ({
                             width="auto"
                             height="35px"
                             borderRadius="5px 0 0 5px"
-                            onClick={() => {setGridActive(false)}}
+                            onClick={() => {setGridActive(false); getPagination(16);}}
                             className={`chakra-image ${isGridActive ? "" : "active"}`}
                         />
 
@@ -97,7 +95,7 @@ const AllInfluencers = ({
                             width="auto"
                             height="35px"
                             borderRadius="0 5px 5px 0"
-                            onClick={() => {setGridActive(true)}}
+                            onClick={() => {setGridActive(true); getPagination(18);}}
                             className={`chakra-image ${isGridActive ? "active" : ""}`}
                         />
                     </Flex>
@@ -168,7 +166,7 @@ const AllInfluencers = ({
                         "repeat(1, 1fr)",
                         "repeat(1, 1fr)",
                         "repeat(2, 1fr)",
-                        "repeat(3, 1fr)",
+                        "repeat(4, 1fr)",
                         "repeat(4, 1fr)",
                         "repeat(6, 1fr)"
                     ]}
