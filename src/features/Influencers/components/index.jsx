@@ -173,7 +173,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 });
             });
             setDisplayInfluencers(inf);
-            const tp = parseInt((inf?.length / 12).toFixed() || 1);
+            const tp =inf?.length >12 && inf?.length %12 === 0? inf?.length / 12:inf?.length >12?parseInt((inf?.length / 12))+1:1;
             
             setTotalPages(tp);
         }

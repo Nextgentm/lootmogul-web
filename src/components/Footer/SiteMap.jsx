@@ -37,14 +37,14 @@ const SiteMap = () => {
             <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href="/faq">
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>FAQ</Text>
             </Link>
-            <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href="https://lootmogul.wpengine.com/news/" isExternal>
+            <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href="https://lootmogul.wpengine.com/news/">
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>News</Text>
             </Link>
             <Link
                 _focus={{ boxShadow: "none" }}
                 _hover={{ textDecoration: "none" }}
                 href="https://lootmogul.wpengine.com/privacy-policy/"
-                isExternal
+                
             >
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Privacy Policy</Text>
             </Link>
@@ -52,7 +52,7 @@ const SiteMap = () => {
                 _focus={{ border: "none", boxShadow: "none" }}
                 _hover={{ textDecoration: "none" }}
                 href="https://lootmogul.wpengine.com/terms-conditions/"
-                isExternal
+                
             >
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Terms of Services</Text>
             </Link>
