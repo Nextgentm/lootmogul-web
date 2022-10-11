@@ -4,7 +4,10 @@ import {
     Flex,
     Grid,
     Heading,
-    Text
+    Text,
+    Input,
+    FormControl,
+    Image,
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useContext } from "react";
 import { BiFilterAlt } from "react-icons/bi";
@@ -19,6 +22,7 @@ import AppContext from "../../../utils/AppContext";
 const AllInfluencers = ({
     displayInfluencers,
     category,
+    perPage,
     totalPages,
     pageNo,
     setPageNo,
@@ -27,21 +31,25 @@ const AllInfluencers = ({
     selCategoriesData,
     catData,
     handleCategoryChange,
-    setFilterValue
+    setFilterValue,
+    getSearchByName,
+    searchByName,
+    setSearchByName
 }) => {
     const [isActive, setActive] = useState(true);
-    const  {isMobileDevice} = useContext(AppContext);
+    const [isGridActive, setGridActive] = useState(false);
+    const { isMobileDevice } = useContext(AppContext);
     const handleToggle = () => {
         setActive(!isActive);
     };
-    useEffect(()=>{
+    useEffect(() => {
         setActive(true);
-    },[category])
+    }, [category])
     const router = useRouter();
     return (
         <Box
             mt={10}
-            mx={[10,10,16]}
+            mx={[10, 10, 16]}
         >
             <Flex
                 flexDir={["column", "column", "column", "row"]}
@@ -49,10 +57,48 @@ const AllInfluencers = ({
                 align="center"
                 textAlign="center"
             >
-            <Heading variant="sectionTitle">{category ? category.toUpperCase() : "ALL AMBASSADORS"}
-            </Heading>
+                <Heading variant="sectionTitle">{category ? category.toUpperCase() : "ALL AMBASSADORS"}
+                </Heading>
 
-                
+                <Flex alignItems="center" justify="flex-end" w="50%" maxW="575px">
+                    <Flex alignItems="center" w="70%">
+                        <FormControl w="100%" mb="0">
+                            <Input
+                                id="search_by_name"
+                                type="text"
+                                placeholder="Search by name..."
+                                value={searchByName}
+                                onChange={(e) => setSearchByName(e.target.value)}
+                                onKeyPress={e => {
+                                    if (e.key === 'Enter') {
+                                        getSearchByName(e.target.value)
+                                    }
+                                }}
+                                color="#fff"
+                                _placeholder={{ color: "#fff" }}
+                            />
+                        </FormControl>
+                    </Flex>
+
+                    <Flex alignItems="center" ml="20px" border="1px solid #fff" borderRadius="5px" p="5px 10px" h="40px">
+                        <Image
+                            alt="Grid 2"
+                            src="/assets/grid-2.png"
+                            width="25px"
+                            height="25px"
+                            onClick={() => {setGridActive(false)}}
+                        />
+
+                        <Image
+                            alt="Grid 5"
+                            src="/assets/grid-5.png"
+                            width="25px"
+                            height="25px"
+                            ml="10px"
+                        />
+                    </Flex>
+                </Flex>
+
                 {/* <Flex alignItems="center" pos="relative">
                     <Button
                         variant={!isActive ? "filterBtnSegment" : "filterBtn"}
@@ -102,7 +148,7 @@ const AllInfluencers = ({
                         setFilterValue={setFilterValue}
                     ></CategoryComponent>
 
-                    <Button mt={["7","7","7", "0"]} variant="searchBtn" onClick = {handleCategoryChange}>
+                    <Button mt={["7", "7", "7", "0"]} variant="searchBtn" onClick={handleCategoryChange}>
                         Search
                     </Button>
                 </Flex>
@@ -113,28 +159,28 @@ const AllInfluencers = ({
                 <Grid
                     flexWrap="wrap"
                     gap={10}
-                    
+                    className={`ambassadors_list ${isGridActive ? "grid_6" : ""}`}
                     templateColumns={[
                         "repeat(1, 1fr)",
                         "repeat(1, 1fr)",
-                        "repeat(2, 1fr)",                       
-                        "repeat(3, 1fr)",    
-                        "repeat(4, 1fr)",    
+                        "repeat(2, 1fr)",
+                        "repeat(3, 1fr)",
+                        "repeat(4, 1fr)",
                         "repeat(6, 1fr)"
                     ]}
-                    // gap={"30px"}
+                // gap={"30px"}
                 >
                     {displayInfluencers?.length &&
                         displayInfluencers.sort((a, b) => a.order - b.order)
                             .filter(
                                 (_, index) =>
-                                    index < (pageNo + 1) * 12 &&
-                                    index >= pageNo * 12
+                                    index < (pageNo + 1) * perPage &&
+                                    index >= pageNo * perPage
                             )
 
                             ?.map((influencer, index) => (
                                 <InfluencersCard
-                                    style={{ w: "100%", px:4 }}
+                                    style={{ w: "100%", px: 4 }}
                                     colSpan={4}
                                     itemId={`item-${index}`}
                                     key={`item-${index}`}
@@ -142,11 +188,11 @@ const AllInfluencers = ({
                                     influencer={influencer}
                                 />
                             ))}
-                  
+
                 </Grid>
             </Box>
 
-           < Pagination totalPages={totalPages} pageNo={pageNo} setPageNo={setPageNo}/> 
+            < Pagination totalPages={totalPages} pageNo={pageNo} setPageNo={setPageNo} />
             {category.toLowerCase() !== defaultCategoryName.toLowerCase() &&
                 selectedCategory &&
                 selCategoriesData[0] &&

@@ -1,0 +1,5 @@
+@media (min-width: 2500px) {
+    .ambassadors_list {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
