@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import { CloseIcon } from "@chakra-ui/icons";
 import Pagination from "./Pagination";
 import AppContext from "../../../utils/AppContext";
-
+ 
 const AllInfluencers = ({
     displayInfluencers,
     category,

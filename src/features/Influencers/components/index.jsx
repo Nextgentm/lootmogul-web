@@ -182,6 +182,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             });
             setDisplayInfluencers(inf);
 
+            // const tp =inf?.length >12 && inf?.length %12 === 0? inf?.length / 12:inf?.length >12?parseInt((inf?.length / 12))+1:1;
             setAllSearchInfluencers(inf);
             setSearchInfluencers("");
             setNoSearchInfluencers("");

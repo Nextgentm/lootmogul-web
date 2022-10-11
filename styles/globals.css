@@ -231,6 +231,7 @@ nav {
   border-radius: 4px;
 }
 
+
 .ambassadors_grid_icon .chakra-image { cursor: pointer; padding: 6px 8px;}
 .ambassadors_grid_icon .chakra-image.active { background-color: rgba(229, 232, 235, 0.5);}
 
