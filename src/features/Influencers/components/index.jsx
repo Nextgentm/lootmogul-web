@@ -27,14 +27,22 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const [displayData, setDisplayData] = useState(data);
     const [pageNo, setPageNo] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [ filterValue, setFilterValue] = useState(defaultCategoryName);
+    const [filterValue, setFilterValue] = useState(defaultCategoryName);
+    const [filterByName, setFilterByName] = useState("");
 
     const [displayInfluencers, setDisplayInfluencers] = useState([]);
 
     const [selCategoriesData, setSelCategoriesData] = useState(data);
 
+    const [searchInfluencers, setSearchInfluencers] = useState([]);
+    const [noSearchInfluencers, setNoSearchInfluencers] = useState([]);
+    const [allSearchInfluencers, setAllSearchInfluencers] = useState([]);
+    const [searchByName, setSearchByName] = useState("");
+
     const router = useRouter();
-    
+
+    let perPage = 16;
+
     useEffect(() => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
@@ -63,17 +71,17 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             setDisplayData(data);
         }
     }, [data, user]);
-    
+
     const handleFilterChange = () => {
         const newCategory = filterValue;
         if (newCategory === defaultCategoryName.toLowerCase()) {
             history.pushState({}, null, "/influencers");
-            
+
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === newCategory
             );
-            
+
             history.pushState({}, null, "/influencers/category/" + selData[0].slug);
         }
 
@@ -89,10 +97,10 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === e
             );
-            if(selData?.[0]?.slug)
-            router.push(
-                "/influencers/category/" + selData[0].slug
-            );
+            if (selData?.[0]?.slug)
+                router.push(
+                    "/influencers/category/" + selData[0].slug
+                );
         }
 
         setCategory(newCategory);
@@ -173,14 +181,20 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 });
             });
             setDisplayInfluencers(inf);
-            const tp = parseInt((inf?.length / 12).toFixed() || 1);
-            
+
+            setAllSearchInfluencers(inf);
+            setSearchInfluencers("");
+            setNoSearchInfluencers("");
+            setSearchByName("");
+
+            const tp = parseInt((inf?.length / perPage).toFixed() || 1);
+
             setTotalPages(tp);
         }
     }, [selCategoriesData]);
 
     const getBannerImage = () => {
-        if (selectedCategory &&  category!== defaultCategoryName.toLowerCase() && selCategoriesData) {
+        if (selectedCategory && category !== defaultCategoryName.toLowerCase() && selCategoriesData) {
             if (selCategoriesData[0] && selCategoriesData[0].banner?.data) {
                 return !isTabletOrDesktop
                     ? selCategoriesData[0].banner?.data[1].url
@@ -193,12 +207,58 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             (banner ||
                 category.toLowerCase() === defaultCategoryName.toLowerCase())
         ) {
-           // return "/assets/designupdate1/influencer_banner.png";
-             return !isTabletOrDesktop ? banner[1]?.url || banner[0]?.url : banner[0]?.url;
+            // return "/assets/designupdate1/influencer_banner.png";
+            return !isTabletOrDesktop ? banner[1]?.url || banner[0]?.url : banner[0]?.url;
         } else {
             return null;
         }
     };
+
+    const getSearchByName = (name) => {
+        if (searchInfluencers != "" && noSearchInfluencers != "") {
+            const disInfList = [...searchInfluencers, ...noSearchInfluencers];
+            setAllSearchInfluencers(disInfList);
+        }
+        // console.log(allSearchInfluencers)
+
+        if (name == "") {
+            // if (searchInfluencers != "" && noSearchInfluencers != "") {
+                setPageNo(0);
+
+                const disInfList = [...searchInfluencers, ...noSearchInfluencers];
+                setDisplayInfluencers(disInfList);
+
+                const tp = parseInt((disInfList?.length / perPage).toFixed() || 1);
+                setTotalPages(tp);
+            // }
+        }
+        else {
+            setPageNo(0);
+
+            let searchInfList = [];
+            let noSerachInfList = [];
+            console.log(allSearchInfluencers)
+            allSearchInfluencers?.map((influencer) => {
+                if ((influencer.name.toLowerCase().includes(name.toLowerCase()))) {
+                    searchInfList.push(influencer);
+                }
+                else {
+                    noSerachInfList.push(influencer);
+                }
+            });
+
+            // if( searchInfluencers=="" && noSearchInfluencers=="" ) {
+            setSearchInfluencers(searchInfList);
+            setNoSearchInfluencers(noSerachInfList);
+            // }
+
+            setDisplayInfluencers(searchInfList);
+
+            const tp = parseInt((searchInfList?.length / perPage).toFixed() || 1);
+            setTotalPages(tp);
+        }
+    }
+
     return (
         <Box>
             {selectedCategory && selCategoriesData && selCategoriesData[0] && (
@@ -230,20 +290,24 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 LeftArrow={LeftArrow}
                 RightArrow={RightArrow}
             />
-             <AllInfluencers
-                    displayInfluencers={displayInfluencers}
-                    category={category}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                    defaultCategoryName={defaultCategoryName}
-                    selectedCategory={selectedCategory}
-                    selCategoriesData={selCategoriesData}
-                    catData = {data}
-                    handleCategoryChange={handleFilterChange}
-                    setFilterValue={setFilterValue}
-                />
-           
+            <AllInfluencers
+                displayInfluencers={displayInfluencers}
+                category={category}
+                perPage={perPage}
+                totalPages={totalPages}
+                pageNo={pageNo}
+                setPageNo={setPageNo}
+                defaultCategoryName={defaultCategoryName}
+                selectedCategory={selectedCategory}
+                selCategoriesData={selCategoriesData}
+                catData={data}
+                handleCategoryChange={handleFilterChange}
+                setFilterValue={setFilterValue}
+                getSearchByName={getSearchByName}
+                searchByName={searchByName}
+                setSearchByName={setSearchByName}
+            />
+
         </Box>
     );
 };

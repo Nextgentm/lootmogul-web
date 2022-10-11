@@ -230,3 +230,23 @@ nav {
   width:8px;
   border-radius: 4px;
 }
+
+@media only screen and (min-width: 1440px) and (max-width: 2499px) {
+  .ambassadors_list.grid_6 {
+    grid-template-columns: repeat(6, 1fr)  !important;
+    grid-gap: 10px !important;
+  }
+  .ambassadors_list.grid_6 .chakra-link { width: 220px !important;}
+}
+
+
+@media (min-width: 2500px) {
+  .ambassadors_list {
+    grid-template-columns: repeat(8, 1fr)  !important;
+    grid-gap: 10px !important;
+  }
+  .ambassadors_list.grid_6 {
+    grid-template-columns: repeat(6, 1fr)  !important;
+  }
+  .ambassadors_list.grid_6 .chakra-link { width: 370px !important;}
+}
