@@ -265,7 +265,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
         const tp = displayInfluencers?.length > per_page && displayInfluencers?.length % per_page === 0 ? displayInfluencers?.length / per_page : displayInfluencers?.length > per_page ? parseInt((displayInfluencers?.length / per_page)) + 1 : 1;
         console.log(tp)
         setTotalPages(tp);
-    }
+    } 
 
     return (
         <Box>

@@ -245,7 +245,7 @@ nav {
     grid-template-columns: repeat(3, 1fr)  !important;
     grid-gap: 10px !important;
   }
-} */
+} */ 
 
 @media only screen and (max-width: 420px) {
   .ambassadors_search { max-width: 100% !important; }

@@ -62,7 +62,7 @@ const AllInfluencers = ({
                 <Heading variant="sectionTitle">{category ? category.toUpperCase() : "ALL AMBASSADORS"}
                 </Heading>
 
-                <Flex className="ambassadors_search" alignItems="center" justify="flex-end" w="50%" maxW="575px">
+                <Flex className="ambassadors_search" alignItems="center" justify="flex-end" w="50%" maxW="575px"> 
                     <Flex className="ambassadors_fc" alignItems="center" w="70%">
                         <FormControl w="100%" mb="0">
                             <Input
