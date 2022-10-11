@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import { CloseIcon } from "@chakra-ui/icons";
 import Pagination from "./Pagination";
 import AppContext from "../../../utils/AppContext";
-
+ 
 const AllInfluencers = ({
     displayInfluencers,
     category,
@@ -80,21 +80,25 @@ const AllInfluencers = ({
                         </FormControl>
                     </Flex>
 
-                    <Flex alignItems="center" ml="20px" border="1px solid #fff" borderRadius="5px" p="5px 10px" h="40px">
+                    <Flex className="ambassadors_grid_icon" alignItems="center" ml="20px" border="1px solid #fff" borderRadius="5px" h="37px">
                         <Image
                             alt="Grid 2"
                             src="/assets/grid-2.png"
-                            width="25px"
-                            height="25px"
+                            width="auto"
+                            height="35px"
+                            borderRadius="5px 0 0 5px"
                             onClick={() => {setGridActive(false)}}
+                            className={`chakra-image ${isGridActive ? "" : "active"}`}
                         />
 
                         <Image
                             alt="Grid 5"
                             src="/assets/grid-5.png"
-                            width="25px"
-                            height="25px"
-                            ml="10px"
+                            width="auto"
+                            height="35px"
+                            borderRadius="0 5px 5px 0"
+                            onClick={() => {setGridActive(true)}}
+                            className={`chakra-image ${isGridActive ? "active" : ""}`}
                         />
                     </Flex>
                 </Flex>
