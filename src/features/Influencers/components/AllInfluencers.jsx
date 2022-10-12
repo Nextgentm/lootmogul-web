@@ -98,7 +98,7 @@ const AllInfluencers = ({
                             onClick={() => {setGridActive(true); getPagination(18);}}
                             className={`chakra-image ${isGridActive ? "active" : ""}`}
                         />
-                    </Flex>
+                    </Flex> 
                 </Flex>
 
                 {/* <Flex alignItems="center" pos="relative">

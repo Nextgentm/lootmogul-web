@@ -272,7 +272,7 @@ nav {
 @media only screen and (min-width: 1280px) and (max-width: 1370px) {
   .ambassadors_list .chakra-link { width: 250px !important;}
   .ambassadors_list .influencerdiv { height: 350px;}
-}
+} 
 
 
 @media only screen and (min-width: 1024px) and (max-width: 1439px) {

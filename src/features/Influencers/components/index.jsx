@@ -69,7 +69,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             setCategory(defaultCategoryName);
             setDisplayData(data);
         }
-    }, [data, user]);
+    }, [data, user]); 
 
     const handleFilterChange = () => {
         const newCategory = filterValue;
