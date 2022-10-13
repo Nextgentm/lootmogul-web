@@ -15,6 +15,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { DatePicker } from "chakra-ui-date-input";
+import { useRouter } from "next/router";
 
 function keyInsertSpaces(string) {
   string = string.replace(/([a-z])([A-Z])/g, "$1 $2");
@@ -26,7 +27,8 @@ function keyInsertSpaces(string) {
 
 const InfluencerSummary = () => {
   const [data, setData] = useState(null);
-  const { user } = useContext(AppContext);
+  const { user, callAuthService } = useContext(AppContext);
+  const router = useRouter();
 
   useEffect(async () => {
     const resp = await strapi.request(
@@ -52,6 +54,19 @@ const InfluencerSummary = () => {
     }
 
   }, [user]);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const access_token = router.query.access_token;
+    const provider = router.query.provider;
+    if (access_token) {
+      if (provider == "facebook") {
+        callAuthService("facebook", access_token);
+      } else {
+        callAuthService("google", access_token);
+      }
+    }
+  }, [router.isReady]);
 
   return (
     <Box

@@ -5,14 +5,15 @@ import dynamic from 'next/dynamic'
 import MyPageLoader from "../src/components/MyPageLoader";
 import { useRouter } from 'next/router';
 
-const WalletPage = dynamic(() => import("../src/components/WalletPage"),  { loading: () => 
-  <MyPageLoader/>
- })
+const WalletPage = dynamic(() => import("../src/components/WalletPage"), {
+  loading: () =>
+    <MyPageLoader />
+})
 
 
 
 const Wallet = () => {
-  const { user,updateUser } = useContext(AppContext);
+  const { user, updateUser, callAuthService } = useContext(AppContext);
   const { jwt } = useContext(AppContext);
   const router = useRouter();
 
@@ -22,9 +23,22 @@ const Wallet = () => {
   )?.toFixed(2);
 
   useEffect(() => {
-    if (!user && !updateUser()) 
-        router.push("/");
+    if (!user && !updateUser())
+      router.push("/");
   }, [user]);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const access_token = router.query.access_token;
+    const provider = router.query.provider;
+    if (access_token) {
+      if (provider == "facebook") {
+        callAuthService("facebook", access_token);
+      } else {
+        callAuthService("google", access_token);
+      }
+    }
+  }, [router.isReady]);
 
   return (
     <WalletPage
