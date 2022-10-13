@@ -24,7 +24,7 @@ const InfluencerPaymentPartner = () => {
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
                 _hover={{ textDecoration: "none" }}
-                href="/influencers/earning"
+                href="https://metaverse.lootmogul.com/influencer-earnings/"
             >
                 <Text variant="LightWhiteText" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Ambassador Earning</Text>
             </Link>
