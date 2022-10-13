@@ -38,7 +38,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const [noSearchInfluencers, setNoSearchInfluencers] = useState([]);
     const [allSearchInfluencers, setAllSearchInfluencers] = useState([]);
     const [searchByName, setSearchByName] = useState("");
-    const [perPage, setPerPage] = useState(16);
+    const [perPage, setPerPage] = useState(18);
 
     const router = useRouter();
 

@@ -58,6 +58,7 @@ const AllInfluencers = ({
                 justify="space-between"
                 align="center"
                 textAlign="center"
+                className="ambassadors_title_search"
             >
                 <Heading variant="sectionTitle">{category ? category.toUpperCase() : "ALL AMBASSADORS"}
                 </Heading>
@@ -85,7 +86,7 @@ const AllInfluencers = ({
                             width="auto"
                             height="35px"
                             borderRadius="5px 0 0 5px"
-                            onClick={() => {setGridActive(false); getPagination(16);}}
+                            onClick={() => {setGridActive(false); getPagination(18);}}
                             className={`chakra-image ${isGridActive ? "" : "active"}`}
                         />
 
@@ -95,7 +96,7 @@ const AllInfluencers = ({
                             width="auto"
                             height="35px"
                             borderRadius="0 5px 5px 0"
-                            onClick={() => {setGridActive(true); getPagination(18);}}
+                            onClick={() => {setGridActive(true); getPagination(16);}}
                             className={`chakra-image ${isGridActive ? "active" : ""}`}
                         />
                     </Flex> 
@@ -161,13 +162,13 @@ const AllInfluencers = ({
                 <Grid
                     flexWrap="wrap"
                     gap={10}
-                    className={`ambassadors_list ${isGridActive ? "grid_6" : ""}`}
+                    className={`ambassadors_list ${isGridActive ? "grid_midum" : ""}`}
                     templateColumns={[
                         "repeat(1, 1fr)",
                         "repeat(1, 1fr)",
                         "repeat(2, 1fr)",
-                        "repeat(4, 1fr)",
-                        "repeat(4, 1fr)",
+                        "repeat(2, 1fr)",
+                        "repeat(3, 1fr)",
                         "repeat(6, 1fr)"
                     ]}
                 // gap={"30px"}
