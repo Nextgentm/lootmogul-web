@@ -19,10 +19,10 @@ const InfluencerBanner = ({ getBannerImage }) => {
                     fontSize={[
                         "70px",
                         "70px",
-                        "100px",
+                        "90px",
                     ]}
                     textShadow="unset"
-                    fontFamily="Blanch Caps"
+                    fontFamily="var(--chakra-fonts-Blanch)"
                     lineHeight="1"
                 >
                     Play your favorite Ambassador Tournament and win
