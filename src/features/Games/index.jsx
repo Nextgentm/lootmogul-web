@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { Box,  Button, Text, Link, Flex } from "@chakra-ui/react";
+import { Box, Button, Text, Link, Flex } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 import { useContext, useEffect, useState } from "react";
 import BottomBanners from "../Home/components/BottomBanners";
@@ -10,104 +10,109 @@ import LMThumbnailCarousel from "../../components/LMCarousel/LMThumbnailCarousel
 import React from "react";
 
 const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
-    const { isMobileDevice } = useContext(AppContext);
+  const { isMobileDevice } = useContext(AppContext);
 
-    const [itemRefs, setItemRefs] = useState([]);
-    
-    useEffect(() => {
-      let irs = [];
-      for(let i=0;i<10;i++){
-          irs[i]= React.createRef() ;
+  const [itemRefs, setItemRefs] = useState([]);
+
+  useEffect(() => {
+    let irs = [];
+    for (let i = 0; i < 10; i++) {
+      irs[i] = React.createRef();
+    }
+    setItemRefs(irs);
+  }, []);
+
+  const router = useRouter();
+  const [contestSections, setContestSections] = useState([]);
+
+  const [featuredGames, setFeaturedGames] = useState([]);
+  const [carouselItem, setCarouselItem] = useState();
+
+  const bottomBanners = banners.filter(
+    ({ position }) => position === "promotion_top"
+  );
+
+  const executeScroll = (id) => {
+    itemRefs[id].current.scrollIntoView({ block: "start", behavior: "smooth" });
+  };
+  const { callAuthService } = useContext(AppContext);
+
+  useEffect(() => {
+    if (!router.isReady) return;
+    const access_token = router.query.access_token;
+    const provider = router.query.provider;
+    if (access_token) {
+      if (provider == "facebook") {
+        callAuthService("facebook", access_token);
+      } else {
+        callAuthService("google", access_token);
       }
-      setItemRefs(irs);
-    }, []);
-    
-    const router = useRouter();
-    const [contestSections, setContestSections] = useState([]);
+    }
+  }, [router.isReady]);
 
-    const [featuredGames, setFeaturedGames] = useState([]);
-    const [carouselItem, setCarouselItem] = useState();
+  useEffect(() => {
+    if (contestmasters) {
+      const fg = [];
+      const cs = [];
 
-    const bottomBanners = banners.filter(
-        ({ position }) => position === "promotion_top"
-    );
+      contestmasters.map((cm) => {
+        if (cm.isFeatured) fg.push(cm);
 
-    const executeScroll = (id) => {
-        itemRefs[id].current.scrollIntoView({ block: "start", behavior: "smooth" });
-    };
-    const { callAuthService } = useContext(AppContext);
-
-    useEffect(() => {
-        if (!router.isReady) return;
-        const access_token = router.query.access_token;
-        const provider = router.query.provider;
-        if (access_token) {
-            if (provider == "facebook") {
-                callAuthService("facebook", access_token);
-            } else {
-                callAuthService("google", access_token);
-            }
+        let section = contestSectionsData?.find(
+          (sec) => sec.id == cm.contest_section?.data?.id
+        );
+        if (section) {
+          if (section?.contestmasters?.data)
+            section.contestmasters.data?.push(cm);
+          else {
+            section.contestmasters = {
+              data: [cm]
+            };
+          }
         }
-    }, [router.isReady]);
+      });
+      setFeaturedGames(fg);
 
-    useEffect(() => {
-        if (contestmasters) {
-            const fg = [];
-            const cs = [];
-            
-            contestmasters.map((cm) => {
-                if (cm.isFeatured) fg.push(cm);
+      setContestSections(contestSectionsData);
+      const ci = fg.map((item, index) => {
+        return (
+          <Link
+            _hover={{ textDecoration: "none" }}
+            _focus={{ border: "none", boxShadow: "none" }}
+            href={"/games/" + item.slug}
+            width="100%"
+            height={"100%"}
+            key={"gameCar" + index}
+          >
+            <GameCarouselCard
+              sectionName={item.contest_section?.name}
+              contestmaster={item}
+            />
+          </Link>
+        );
+      });
+      setCarouselItem(ci.slice(0, 1));
+    }
+  }, [contestmasters, contestSectionsData]);
 
-                let section = contestSectionsData?.find(
-                    (sec) => sec.id == cm.contest_section?.data?.id
-                );
-                if (section) {
-                    if (section?.contestmasters?.data)
-                        section.contestmasters.data?.push(cm);
-                    else {
-                        section.contestmasters = {
-                            data: [cm]
-                        };
-                    }
-                }
-            });
-            setFeaturedGames(fg);
-
-            setContestSections(contestSectionsData);
-            const ci = fg.map((item, index) => {
-                return (
-                    <Link
-                        _hover={{ textDecoration: "none" }}
-                        _focus={{ border: "none", boxShadow: "none" }}
-                        href={"/games/" + item.slug}
-                        width="100%"
-                        height={"100%"}
-                        key={"gameCar" + index}
-                    >
-                        <GameCarouselCard
-                            sectionName={item.contest_section?.name}
-                            contestmaster={item}
-                        />
-                    </Link>
-                );
-            });
-            setCarouselItem(ci.slice(0, 1));
-        }
-    }, [contestmasters, contestSectionsData]);
-
-    return (
-      <Box mx={[4,8]}>
-            <Box mb={"10vw"}>
-                <Box>
-                <Flex direction={["column", "column", "column", "row"]}>
+  return (
+    <Box mx={[4, 8]}>
+      <Box mb={"10vw"}>
+        <Box>
+          <Flex direction={["column", "column", "column", "row"]}>
             <Box pb={[5, 5, 12]} w={["100%", "100%", "100%", "70%"]}>
               <Box mt={!isMobileDevice ? 26 : 0}>
                 <Text
                   variant="headText"
-                  fontSize={["35px", "2.5em", "53px", "3.5em", "62px"]}
+                  fontSize={[
+                    "70px",
+                    "70px",
+                    "90px",
+                  ]}
                   mt={["3rem", "5rem", "5rem"]}
                   mb={0}
-                  lineHeight={["50px", "45px", "80px"]}
+                  fontFamily="Blanch Caps"
+                  lineHeight="1"
                   textShadow="unset"
                 >
                   Check out New releases
@@ -170,12 +175,12 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
             contestSections.map((section, index) => (
               <Box
                 key={"sec-index-" + index}
-                ref = {itemRefs[index]}
-                // ref={(el) => {
-                //   let iR = itemRefs;
-                //   iR[index] = el;
-                //   setItemRefs(iR);
-                // }}
+                ref={itemRefs[index]}
+              // ref={(el) => {
+              //   let iR = itemRefs;
+              //   iR[index] = el;
+              //   setItemRefs(iR);
+              // }}
               >
                 {section?.contestmasters?.data &&
                   section?.contestmasters?.data.length > 0 && (
