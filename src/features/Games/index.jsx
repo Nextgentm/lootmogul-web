@@ -111,7 +111,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   ]}
                   mt={["3rem", "5rem", "5rem"]}
                   mb={0}
-                  fontFamily="Blanch Caps"
+                  fontFamily="var(--chakra-fonts-Blanch)"
                   lineHeight="1"
                   textShadow="unset"
                 >
