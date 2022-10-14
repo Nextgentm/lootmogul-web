@@ -16,7 +16,7 @@ const NftBanner = ({ getBannerImage }) => {
                         fontSize={[
                             "70px",
                             "70px",
-                            "100px",
+                            "90px",
                         ]}
                         fontFamily="Blanch Caps"
                         lineHeight="1"

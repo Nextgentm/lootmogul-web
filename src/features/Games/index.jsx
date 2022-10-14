@@ -107,7 +107,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   fontSize={[
                     "70px",
                     "70px",
-                    "100px",
+                    "90px",
                   ]}
                   mt={["3rem", "5rem", "5rem"]}
                   mb={0}

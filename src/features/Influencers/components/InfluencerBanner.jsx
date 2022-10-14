@@ -19,7 +19,7 @@ const InfluencerBanner = ({ getBannerImage }) => {
                     fontSize={[
                         "70px",
                         "70px",
-                        "100px",
+                        "90px",
                     ]}
                     textShadow="unset"
                     fontFamily="Blanch Caps"
