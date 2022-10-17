@@ -39,6 +39,7 @@ export const AppContextContainer = ({ children }) => {
     const [showCaptcha, setShowCaptcha] = useState({});
     const [coupon,setCoupon] = useState("");
     const [joiningData, setJoiningData] = useState(null);
+    const [msgSignupLogin, setMsgSignupLogin] = useState(null);
 
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
@@ -280,8 +281,42 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
         const il = await apiLikeRequests(user);
         setInfluencerLikes(il);
     }
-    const callAuthService = async (provider, token) => {
-        const data = await strapi.authenticateProvider(provider, token);
+    const callAuthService = async (provider, token, manually="") => {
+        let data;
+        if( manually==="signup" || manually==="login" )
+        {
+            // console.log(manually);
+            if( manually==="signup" )
+            {
+                // console.log('singup if')
+                const apiValues = {
+                    username: provider,
+                    email: provider,
+                    password: token,
+                }
+                data = await strapi.register(apiValues);
+                // console.log('signup ', data)
+                // if( data.error )
+                // {
+                //     setMsgSignupLogin(data.error.message);
+                // }
+            }
+
+            if( manually==="login" )
+            {
+                const apiValues = {
+                    identifier: provider,
+                    password: token,
+                }
+                data = await strapi.login(apiValues);
+            }
+            
+            await updateUser(data.user);
+        }
+        else
+        {
+            data = await strapi.authenticateProvider(provider, token);
+        }
       
         defaultDataSettings();
         
@@ -397,7 +432,8 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                     strapi.logout();
                     setUser(null);
                     
-                }
+                },
+                msgSignupLogin
             }}
         >
             {children}

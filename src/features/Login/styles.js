@@ -6,7 +6,7 @@ module.exports = {
   },
   loginTitleStyle: {
     color: "white",
-    fontFamily: " Sora"
+    fontFamily: "var(--chakra-fonts-Blanch)"
   },
   toggleStyle: {
     mt: "10px",
