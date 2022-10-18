@@ -34,7 +34,7 @@ const Login = ({ isOpen, OnLoginClose }) => {
     const [inputEmailId, setInputEmailId] = useState();
     const [inputPassword, setInputPassword] = useState();
 
-    const { callAuthService, msgSignupLogin, setLoginModalActive, toggleForgotPasswordModal } = useContext(AppContext);
+    const { callAuthService, callCustomAuthService, setLoginModalActive, toggleForgotPasswordModal } = useContext(AppContext);
 
     const { signIn } = useGoogleLogin({
         clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
@@ -44,9 +44,8 @@ const Login = ({ isOpen, OnLoginClose }) => {
         }
     });
 
-    const togglePassword =()=>{
-        if(passwordType==="password")
-        {
+    const togglePassword = () => {
+        if (passwordType === "password") {
             setPasswordType("text")
             return;
         }
@@ -54,52 +53,21 @@ const Login = ({ isOpen, OnLoginClose }) => {
     }
 
     function handleSubmit() {
-        // console.log(inputEmailId, inputPassword)
-        if( inputEmailId && inputPassword )
-        {
-            callAuthService(inputEmailId, inputPassword, selectedOption);
-            
-            /*const apiValues = {
+        if (inputEmailId==='' && inputPassword==='') {
+            return;
+        }
+            const formData = {
                 username: inputEmailId,
                 email: inputEmailId,
                 password: inputPassword,
             }
-
-            /*if( resp.data )
-            {
-                setAlertMsg({
-                    isOpen: true,
-                    title: "Success",
-                    message: "Signup successfully!",
-                });
+            callCustomAuthService(formData, selectedOption);
+            if (selectedOption === 'signup') {
+                setSelectedOption('login');
             }
-            else
-            {
-                setAlertMsg({
-                    isOpen: true,
-                    title: "Error",
-                    message: "There is an error while signup!",
-                });
-            }*/
-        }
-        else
-        {
-            setAlertMsg({
-                isOpen: true,
-                title: "Error",
-                message: "Email ID and password is required",
-            });
-        }
     }
 
-    if( msgSignupLogin )
-    {
-        setAlertMsg({
-            isOpen: true,
-            title: "Error",
-            message: msgSignupLogin,
-        });
-    }
+
 
     const [alertMsg, setAlertMsg] = useState({});
     const ShowAlert = () => {
@@ -119,15 +87,15 @@ const Login = ({ isOpen, OnLoginClose }) => {
                 <AlertDialogOverlay />
 
                 <AlertDialogContent p="10px" bg="background">
-                <Box border="2.7033px dashed #515151">
-                    <AlertDialogHeader>
-                    <Heading color="white">{alertMsg?.title}</Heading>
-                    </AlertDialogHeader>
+                    <Box border="2.7033px dashed #515151">
+                        <AlertDialogHeader>
+                            <Heading color="white">{alertMsg?.title}</Heading>
+                        </AlertDialogHeader>
 
-                    <AlertDialogBody>
-                    <Text variant="hint">{alertMsg?.message}</Text>
-                    </AlertDialogBody>
-                </Box>
+                        <AlertDialogBody>
+                            <Text variant="hint">{alertMsg?.message}</Text>
+                        </AlertDialogBody>
+                    </Box>
                 </AlertDialogContent>
             </AlertDialog>
         );
@@ -240,7 +208,7 @@ const Login = ({ isOpen, OnLoginClose }) => {
                                         </Button>
                                     )}
                                 />
-                                
+
                                 <Box>
                                     <Image
                                         alt="or"
@@ -313,22 +281,22 @@ const Login = ({ isOpen, OnLoginClose }) => {
                                         </Box>
                                         {
                                             selectedOption === "login" &&
-                                                <Text
-                                                    color="#fff"
-                                                    fontFamily="Open Sans,Sans-serif"
-                                                    fontWeight="500"
-                                                    fontSize={["10px"]}
-                                                    mt="5px"
-                                                    cursor="pointer"
-                                                    textDecoration="underline"
-                                                    textAlign="right"
-                                                    onClick={() => { setLoginModalActive(false); toggleForgotPasswordModal(); } }
-                                                >
-                                                    Forgot Password?
-                                                </Text>
+                                            <Text
+                                                color="#fff"
+                                                fontFamily="Open Sans,Sans-serif"
+                                                fontWeight="500"
+                                                fontSize={["10px"]}
+                                                mt="5px"
+                                                cursor="pointer"
+                                                textDecoration="underline"
+                                                textAlign="right"
+                                                onClick={() => { setLoginModalActive(false); toggleForgotPasswordModal(); }}
+                                            >
+                                                Forgot Password?
+                                            </Text>
                                         }
                                     </FormControl>
-                                     
+
                                     <Button
                                         width="100%"
                                         h="30px"
