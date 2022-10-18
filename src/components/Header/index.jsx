@@ -19,6 +19,10 @@ import {
 } from "./styles";
 import { HamburgerIcon } from "@chakra-ui/icons";
 const Login = dynamic(() => import("../../features/Login"));
+const ForgotPassword = dynamic(() => import("../../features/ForgotPassword"));
+const CheckYourMail = dynamic(() => import("../../features/CheckYourMail"));
+const ChangePassword = dynamic(() => import("../../features/ChangePassword"));
+const PasswordChanged = dynamic(() => import("../../features/PasswordChanged"));
 import NavDrawer from "./NavDrawer/index";
 const routes = [
     {
@@ -51,7 +55,7 @@ const routes = [
 ];
 
 const Header = () => {
-    const { user, isMobileDevice, isLoginModalActive } = useContext(AppContext);
+    const { user, isMobileDevice, isLoginModalActive, isForgotPasswordModalActive, isCheckYourMailModalActive, isChangePasswordModalActive, isPasswordChangedModalActive } = useContext(AppContext);
     const { isHideHeader } = useContext(AppContext);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -64,7 +68,7 @@ const Header = () => {
         return path == router.pathname.split("/[id]")[0];
     };
 
-    const { toggleLoginModal } = useContext(AppContext);
+    const { toggleLoginModal, toggleForgotPasswordModal, toggleCheckYourMailModal, toggleChangePasswordModal, togglePasswordChangedModal } = useContext(AppContext);
 
     const renderMobileRoutes = () => (
         <Flex direction="column" mt={["20px", "20px", "30px"]}>
@@ -111,6 +115,22 @@ const Header = () => {
 
     const OnLoginClose = async () => {
         toggleLoginModal();
+    };
+
+    const OnForgotPasswordClose = async () => {
+        toggleForgotPasswordModal();
+    };
+
+    const OnCheckYourMailClose = async () => {
+        toggleCheckYourMailModal();
+    };
+
+    const OnChangePasswordClose = async () => {
+        toggleChangePasswordModal();
+    };
+
+    const OnPasswordChangedClose = async () => {
+        togglePasswordChangedModal();
     };
 
     return (
@@ -265,6 +285,34 @@ const Header = () => {
                 <Login
                     isOpen={isLoginModalActive}
                     OnLoginClose={OnLoginClose}
+                />
+            </Box>
+
+            <Box>
+                <ForgotPassword
+                    isOpen={isForgotPasswordModalActive}
+                    OnForgotPasswordClose={OnForgotPasswordClose}
+                />
+            </Box>
+
+            <Box>
+                <CheckYourMail
+                    isOpen={isCheckYourMailModalActive}
+                    OnCheckYourMailClose={OnCheckYourMailClose}
+                />
+            </Box>
+
+            <Box>
+                <ChangePassword
+                    isOpen={isChangePasswordModalActive}
+                    OnChangePasswordClose={OnChangePasswordClose}
+                />
+            </Box>
+
+            <Box>
+                <PasswordChanged
+                    isOpen={isPasswordChangedModalActive}
+                    OnPasswordChangedClose={OnPasswordChangedClose}
                 />
             </Box>
         </>

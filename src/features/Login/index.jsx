@@ -11,16 +11,30 @@ import {
     ModalBody,
     ModalContent,
     ModalOverlay,
-    Image
+    Image,
+    FormControl,
+    Input,
+    FormHelperText,
+    AlertDialog,
+    AlertDialogBody,
+    Heading,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
 } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
+import strapi from "../../../src/utils/strapi";
+import axios from 'axios';
 
 const Login = ({ isOpen, OnLoginClose }) => {
     const [selectedOption, setSelectedOption] = useState("signup");
+    const [passwordType, setPasswordType] = useState("password");
+    const [inputEmailId, setInputEmailId] = useState();
+    const [inputPassword, setInputPassword] = useState();
 
-    const { callAuthService } = useContext(AppContext);
+    const { callAuthService, msgSignupLogin, setLoginModalActive, toggleForgotPasswordModal } = useContext(AppContext);
 
     const { signIn } = useGoogleLogin({
         clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
@@ -29,6 +43,95 @@ const Login = ({ isOpen, OnLoginClose }) => {
             callAuthService("google", data.accessToken);
         }
     });
+
+    const togglePassword =()=>{
+        if(passwordType==="password")
+        {
+            setPasswordType("text")
+            return;
+        }
+        setPasswordType("password")
+    }
+
+    function handleSubmit() {
+        // console.log(inputEmailId, inputPassword)
+        if( inputEmailId && inputPassword )
+        {
+            callAuthService(inputEmailId, inputPassword, selectedOption);
+            
+            /*const apiValues = {
+                username: inputEmailId,
+                email: inputEmailId,
+                password: inputPassword,
+            }
+
+            /*if( resp.data )
+            {
+                setAlertMsg({
+                    isOpen: true,
+                    title: "Success",
+                    message: "Signup successfully!",
+                });
+            }
+            else
+            {
+                setAlertMsg({
+                    isOpen: true,
+                    title: "Error",
+                    message: "There is an error while signup!",
+                });
+            }*/
+        }
+        else
+        {
+            setAlertMsg({
+                isOpen: true,
+                title: "Error",
+                message: "Email ID and password is required",
+            });
+        }
+    }
+
+    if( msgSignupLogin )
+    {
+        setAlertMsg({
+            isOpen: true,
+            title: "Error",
+            message: msgSignupLogin,
+        });
+    }
+
+    const [alertMsg, setAlertMsg] = useState({});
+    const ShowAlert = () => {
+        return (
+            <AlertDialog
+                isOpen={alertMsg?.isOpen}
+                motionPreset="slideInBottom"
+                isCentered
+                size={"xl"}
+                bg="background"
+                closeOnOverlayClick={true}
+                closeOnEsc={true}
+                onClose={() => {
+                    setAlertMsg({});
+                }}
+            >
+                <AlertDialogOverlay />
+
+                <AlertDialogContent p="10px" bg="background">
+                <Box border="2.7033px dashed #515151">
+                    <AlertDialogHeader>
+                    <Heading color="white">{alertMsg?.title}</Heading>
+                    </AlertDialogHeader>
+
+                    <AlertDialogBody>
+                    <Text variant="hint">{alertMsg?.message}</Text>
+                    </AlertDialogBody>
+                </Box>
+                </AlertDialogContent>
+            </AlertDialog>
+        );
+    };
 
     return (
         <Modal isOpen={isOpen} onClose={OnLoginClose} scrollBehavior="inside">
@@ -66,7 +169,7 @@ const Login = ({ isOpen, OnLoginClose }) => {
                                 align="center"
                             >
                                 <Text
-                                    fontSize={["15px", "35px"]}
+                                    fontSize={["38px", "38px"]}
                                     fontWeight="bold"
                                     my="5%"
                                     {...loginTitleStyle}
@@ -137,14 +240,124 @@ const Login = ({ isOpen, OnLoginClose }) => {
                                         </Button>
                                     )}
                                 />
+                                
+                                <Box>
+                                    <Image
+                                        alt="or"
+                                        src="/assets/or-icon.webp"
+                                        width={["100%"]}
+                                        height="auto"
+                                        alignItems="center"
+                                        margin="20px 0"
+                                    />
+                                </Box>
+
+                                <Box w="100%">
+                                    <FormControl mb="15px">
+                                        <Input
+                                            id="emailid"
+                                            name="emailid"
+                                            type="email"
+                                            placeholder="Email ID"
+                                            bgColor="#fff"
+                                            color="#707070"
+                                            _placeholder={{ color: "#707070" }}
+                                            required
+                                            boxShadow="unset"
+                                            p="6px 10px"
+                                            border="1px solid #707070 !important"
+                                            height="35px"
+                                            _focus={{ outline: "0" }}
+                                            value={inputEmailId}
+                                            onChange={(e) => setInputEmailId(e.target.value)}
+                                        />
+                                    </FormControl>
+
+                                    <FormControl mb="15px">
+                                        <Box position="relative">
+                                            <Input
+                                                id="password"
+                                                name="password"
+                                                type={passwordType}
+                                                placeholder="Password"
+                                                bgColor="#fff"
+                                                color="#707070"
+                                                _placeholder={{ color: "#707070" }}
+                                                required
+                                                boxShadow="unset"
+                                                p="6px 10px"
+                                                border="1px solid #707070 !important"
+                                                height="35px"
+                                                _focus={{ outline: "0" }}
+                                                value={inputPassword}
+                                                onChange={(e) => setInputPassword(e.target.value)}
+                                            />
+                                            <Text
+                                                position="absolute"
+                                                top="0"
+                                                right="0"
+                                                height="100%"
+                                                cursor="pointer"
+                                                p="7px 10px"
+                                                display="flex"
+                                                alignItems="center"
+                                                onClick={togglePassword}
+                                            >
+                                                <Image
+                                                    alt="toggle password"
+                                                    src="/assets/toggle-password.png"
+                                                    width="13px"
+                                                    height="auto"
+                                                />
+                                            </Text>
+                                        </Box>
+                                        {
+                                            selectedOption === "login" &&
+                                                <Text
+                                                    color="#fff"
+                                                    fontFamily="Open Sans,Sans-serif"
+                                                    fontWeight="500"
+                                                    fontSize={["10px"]}
+                                                    mt="5px"
+                                                    cursor="pointer"
+                                                    textDecoration="underline"
+                                                    textAlign="right"
+                                                    onClick={() => { setLoginModalActive(false); toggleForgotPasswordModal(); } }
+                                                >
+                                                    Forgot Password?
+                                                </Text>
+                                        }
+                                    </FormControl>
+                                     
+                                    <Button
+                                        width="100%"
+                                        h="30px"
+                                        bgImage="linear-gradient(90deg,#e90a63 0%,#481a7f 100%)"
+                                        boxShadow="0px 0px 20px 0px #481a7f"
+                                        fontSize="12px"
+                                        p="10px"
+                                        lineHeight="1"
+                                        fontWeight="500"
+                                        textTransform="uppercase"
+                                        outline="0"
+                                        fontFamily="Open Sans,Sans-serif !important"
+                                        onClick={handleSubmit}
+                                    >
+                                        {
+                                            selectedOption === "login"
+                                                ? "Login"
+                                                : "SignUp"
+                                        }
+                                    </Button>
+                                </Box>
 
                                 <Text
-                                    color="primary"
-                                    mt="17px"
+                                    color="#fff"
+                                    mt="15px"
                                     cursor="pointer"
-                                    fontFamily="Sora"
-                                    fontWeight="normal"
-                                    fontSize={["12px", "14px"]}
+                                    fontFamily="var(--chakra-fonts-Blanch)"
+                                    fontWeight="500"
+                                    fontSize={["24px", "24px"]}
                                     onClick={() =>
                                         setSelectedOption(
                                             selectedOption === "login"
@@ -154,24 +367,24 @@ const Login = ({ isOpen, OnLoginClose }) => {
                                     }
                                 >
                                     {selectedOption === "login"
-                                        ? "New to LootMogul? Sign Up now"
-                                        : "Already user? Login"}
+                                        ? <Flex>New to LootMogul? <Text color="primary" ml="5px">Sign Up</Text></Flex>
+                                        : <Flex>Already user? <Text color="primary" ml="5px">Login</Text></Flex>}
                                 </Text>
                                 <Text
                                     my="12px"
                                     textAlign="center"
-                                    fontFamily="Sora"
+                                    fontFamily="Open Sans,Sans-serif"
                                     color="white"
-                                    fontWeight="normal"
-                                    fontSize={["12px", "14px"]}
+                                    fontWeight="500"
+                                    fontSize={["12px", "12px"]}
                                 >
                                     By registering, you accept you are 18+ &
                                     agree to our{" "}
                                     <Link
                                         color="primary"
-                                        fontFamily="Sora"
-                                        fontWeight="normal"
-                                        fontSize={["12px", "14px"]}
+                                        fontFamily="Open Sans,Sans-serif"
+                                        fontWeight="500"
+                                        fontSize={["12px", "12px"]}
                                     >
                                         T&C
                                     </Link>{" "}
@@ -180,9 +393,9 @@ const Login = ({ isOpen, OnLoginClose }) => {
                                         href="/privacy-policy"
                                         isExternal
                                         color="primary"
-                                        fontFamily="Sora"
-                                        fontWeight="normal"
-                                        fontSize={["12px", "14px"]}
+                                        fontFamily="Open Sans,Sans-serif"
+                                        fontWeight="500"
+                                        fontSize={["12px", "12px"]}
                                     >
                                         Privacy Policy
                                     </Link>
@@ -190,6 +403,9 @@ const Login = ({ isOpen, OnLoginClose }) => {
                             </Flex>
                         </Box>
                     </Flex>
+
+                    {ShowAlert()}
+
                 </ModalBody>
             </ModalContent>
         </Modal>

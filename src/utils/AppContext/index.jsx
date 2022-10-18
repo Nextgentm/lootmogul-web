@@ -17,6 +17,10 @@ export const AppContextContainer = ({ children }) => {
     const router = useRouter();
 
     const [isLoginModalActive, setLoginModalActive] = useState(false);
+    const [isForgotPasswordModalActive, setForgotPasswordModalActive] = useState(false);
+    const [isCheckYourMailModalActive, setCheckYourMailModalActive] = useState(false);
+    const [isChangePasswordModalActive, setChangePasswordModalActive] = useState(false);
+    const [isPasswordChangedModalActive, setPasswordChangedModalActive] = useState(false);
     const [isMobileDevice, setMobileDevice] = useState(false);
 
     const [isTabletOrDesktop, setIsTabletOrDesktop] = useState(false);
@@ -39,9 +43,26 @@ export const AppContextContainer = ({ children }) => {
     const [showCaptcha, setShowCaptcha] = useState({});
     const [coupon,setCoupon] = useState("");
     const [joiningData, setJoiningData] = useState(null);
+    const [msgSignupLogin, setMsgSignupLogin] = useState(null);
 
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
+    };
+
+    const toggleForgotPasswordModal = () => {
+        setForgotPasswordModalActive(!isForgotPasswordModalActive);
+    };
+
+    const toggleCheckYourMailModal = () => {
+        setCheckYourMailModalActive(!isCheckYourMailModalActive);
+    };
+
+    const toggleChangePasswordModal = () => {
+        setChangePasswordModalActive(!isChangePasswordModalActive);
+    };
+
+    const togglePasswordChangedModal = () => {
+        setPasswordChangedModalActive(!isPasswordChangedModalActive);
     };
 
     
@@ -211,7 +232,10 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
         if(!data) return null;
         setUser(data);
         setLoginModalActive(false);
-
+        setForgotPasswordModalActive(false);
+        setCheckYourMailModalActive(false);
+        setChangePasswordModalActive(false);
+        setPasswordChangedModalActive(false);
         
         try {
             if (data?.id) {
@@ -280,8 +304,42 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
         const il = await apiLikeRequests(user);
         setInfluencerLikes(il);
     }
-    const callAuthService = async (provider, token) => {
-        const data = await strapi.authenticateProvider(provider, token);
+    const callAuthService = async (provider, token, manually="") => {
+        let data;
+        if( manually==="signup" || manually==="login" )
+        {
+            // console.log(manually);
+            if( manually==="signup" )
+            {
+                // console.log('singup if')
+                const apiValues = {
+                    username: provider,
+                    email: provider,
+                    password: token,
+                }
+                data = await strapi.register(apiValues);
+                // console.log('signup ', data)
+                // if( data.error )
+                // {
+                //     setMsgSignupLogin(data.error.message);
+                // }
+            }
+
+            if( manually==="login" )
+            {
+                const apiValues = {
+                    identifier: provider,
+                    password: token,
+                }
+                data = await strapi.login(apiValues);
+            }
+            
+            await updateUser(data.user);
+        }
+        else
+        {
+            data = await strapi.authenticateProvider(provider, token);
+        }
       
         defaultDataSettings();
         
@@ -356,7 +414,20 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
         <AppContext.Provider
             value={{
                 toggleLoginModal,
+                setLoginModalActive,
                 isLoginModalActive,
+                toggleForgotPasswordModal,
+                setForgotPasswordModalActive,
+                isForgotPasswordModalActive,
+                toggleCheckYourMailModal,
+                setCheckYourMailModalActive,
+                isCheckYourMailModalActive,
+                toggleChangePasswordModal,
+                setChangePasswordModalActive,
+                isChangePasswordModalActive,
+                togglePasswordChangedModal,
+                setPasswordChangedModalActive,
+                isPasswordChangedModalActive,
                 callAuthService,
                 isMobileDevice,
                 getSocket,
@@ -397,7 +468,8 @@ const onPlayAgain= async (contestmaster = currentContest,callerKey=`CheckRetry-$
                     strapi.logout();
                     setUser(null);
                     
-                }
+                },
+                msgSignupLogin
             }}
         >
             {children}
