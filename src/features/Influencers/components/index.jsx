@@ -225,11 +225,11 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 handleCategoryChange={handleCategoryChange}
                 activeCategory={category}
             />
-            <NewInfluencers
+            {/* <NewInfluencers
                 newInfluencers={newInfluencers}
                 LeftArrow={LeftArrow}
                 RightArrow={RightArrow}
-            />
+            /> */}
              <AllInfluencers
                     displayInfluencers={displayInfluencers}
                     category={category}
