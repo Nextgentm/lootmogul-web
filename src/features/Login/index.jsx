@@ -34,7 +34,7 @@ const Login = ({ isOpen, OnLoginClose }) => {
     const [inputEmailId, setInputEmailId] = useState();
     const [inputPassword, setInputPassword] = useState();
 
-    const { callAuthService, msgSignupLogin } = useContext(AppContext);
+    const { callAuthService, msgSignupLogin, setLoginModalActive, toggleForgotPasswordModal } = useContext(AppContext);
 
     const { signIn } = useGoogleLogin({
         clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
@@ -322,6 +322,7 @@ const Login = ({ isOpen, OnLoginClose }) => {
                                                     cursor="pointer"
                                                     textDecoration="underline"
                                                     textAlign="right"
+                                                    onClick={() => { setLoginModalActive(false); toggleForgotPasswordModal(); } }
                                                 >
                                                     Forgot Password?
                                                 </Text>
