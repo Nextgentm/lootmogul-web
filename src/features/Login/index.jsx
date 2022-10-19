@@ -49,7 +49,7 @@ const Login = ({ isOpen, OnLoginClose }) => {
         setPasswordType("password")
     }
 
-    function handleSubmit() {
+    const  handleSubmit =() => {
         if (inputEmailId==='' && inputPassword==='') {
             return;
         }

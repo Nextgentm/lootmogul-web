@@ -32,7 +32,7 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
 
     const { setChangePasswordModalActive, togglePasswordChangedModal } = useContext(AppContext);
 
-    async function handleSubmit() {
+    const handleSubmit = async() => {
         if( inputNewPwd && inputConfirmPwd )
         {
             if( inputNewPwd !== inputConfirmPwd )
@@ -53,8 +53,9 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                     })
                     setInputNewPwd('');
                     setInputConfirmPwd('');
-                    setChangePasswordModalActive(false);
                     togglePasswordChangedModal();
+                    setChangePasswordModalActive(false);
+                    
                 } catch ({error}) {
                     setAlertMsg({
                         isOpen: true,
