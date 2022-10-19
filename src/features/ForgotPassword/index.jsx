@@ -23,6 +23,7 @@ import {
 import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
+import strapi from "../../../src/utils/strapi";
 
 function isValidEmail(email) {
     return /\S+@\S+\.\S+/.test(email);
@@ -46,6 +47,9 @@ const ForgotPassword = ({ isOpen, OnForgotPasswordClose }) => {
             }
             else
             {
+                strapi.forgotPassword({
+                    email:inputEmailId
+                });
                 setInputEmailId('');
                 setForgotPasswordModalActive(false);
                 toggleCheckYourMailModal();

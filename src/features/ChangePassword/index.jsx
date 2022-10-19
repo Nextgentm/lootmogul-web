@@ -23,14 +23,16 @@ import {
 import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
+import strapi from "../../utils/strapi";
 
 const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
     const [inputNewPwd, setInputNewPwd] = useState();
     const [inputConfirmPwd, setInputConfirmPwd] = useState();
+    const [inputCode,setInputCode] = useState('');
 
     const { setChangePasswordModalActive, togglePasswordChangedModal } = useContext(AppContext);
 
-    function handleSubmit() {
+    async function handleSubmit() {
         if( inputNewPwd && inputConfirmPwd )
         {
             if( inputNewPwd !== inputConfirmPwd )
@@ -43,10 +45,23 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
             }
             else
             {
-                setInputNewPwd('');
-                setInputConfirmPwd('');
-                setChangePasswordModalActive(false);
-                togglePasswordChangedModal();
+                try {
+                    await strapi.resetPassword({
+                        code: inputCode,
+                        password: inputNewPwd,
+                        passwordConfirmation: inputConfirmPwd
+                    })
+                    setInputNewPwd('');
+                    setInputConfirmPwd('');
+                    setChangePasswordModalActive(false);
+                    togglePasswordChangedModal();
+                } catch ({error}) {
+                    setAlertMsg({
+                        isOpen: true,
+                        title: "Error",
+                        message: error.message,
+                    });
+                }
             }
         }
         else
@@ -147,6 +162,27 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                                 </Text>
 
                                 <Box w="100%">
+
+                                <FormControl mb="15px">
+                                        <Input
+                                            id="code"
+                                            name="code"
+                                            type="text"
+                                            placeholder="Please Enter Code"
+                                            bgColor="#fff"
+                                            color="#707070"
+                                            _placeholder={{ color: "#707070" }}
+                                            required
+                                            boxShadow="unset"
+                                            p="6px 10px"
+                                            border="1px solid #707070 !important"
+                                            height="35px"
+                                            _focus={{ outline: "0" }}
+                                            value={inputCode}
+                                            onChange={(e) => setInputCode(e.target.value)}
+                                        />
+                                    </FormControl>
+
                                     <FormControl mb="15px">
                                         <Input
                                             id="new_password"

@@ -86,7 +86,7 @@ const CheckYourMail = ({ isOpen, OnCheckYourMailClose }) => {
                                         fontFamily="Open Sans,Sans-serif !important"
                                         onClick={()=> { setCheckYourMailModalActive(false); toggleChangePasswordModal(); }}
                                     >
-                                        OPEN EMAIL
+                                        Enter the code
                                     </Button>
                                 </Box>
 

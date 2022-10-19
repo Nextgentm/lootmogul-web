@@ -14,7 +14,6 @@ import {
     Image,
     FormControl,
     Input,
-    FormHelperText,
     AlertDialog,
     AlertDialogBody,
     Heading,
@@ -25,8 +24,6 @@ import {
 import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
-import strapi from "../../../src/utils/strapi";
-import axios from 'axios';
 
 const Login = ({ isOpen, OnLoginClose }) => {
     const [selectedOption, setSelectedOption] = useState("signup");
