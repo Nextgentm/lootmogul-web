@@ -9,7 +9,7 @@ import { apiLikeRequests } from "../../features/Home/api";
 import * as ga from "../../services/googleAnalytics";
 import LMNonCloseALert from "../../components/LMNonCloseALert";
 import moment from "moment";
-
+import axios from 'axios';
 
 export const AppContext = createContext({});
 
@@ -490,6 +490,32 @@ export const AppContextContainer = ({ children }) => {
             }
         }
     };
+
+    useEffect(async () => {
+        if( router.query.jwt )
+        {
+            setJwt(router.query.jwt);
+            window.localStorage.setItem("strapi_jwt", router.query.jwt);
+
+            await axios
+                .get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/users/me`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": "Bearer "+router.query.jwt,
+                    }
+                })
+                .then(response => {
+                    updateUser(response.data);
+                    setUser(response.data);
+                })
+                .catch(error => {
+                    // Handle error.
+                    console.log('An error occurred:', error.response);
+                });
+        }
+        if (!router.isReady) return;
+    }, [router.isReady]);
 
     return (
         <AppContext.Provider
