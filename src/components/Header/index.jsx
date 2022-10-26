@@ -27,35 +27,42 @@ import NavDrawer from "./NavDrawer/index";
 const routes = [
     {
         label: "Home",
-        path: "https://metaverse.lootmogul.com/home"
+        path: "https://metaverse.lootmogul.com/home",
+        isExternalLink: true
     },
 
     {
         label: "Metaverse",
-        path: "https://metaverse.lootmogul.com/metaverse/"
+        path: "https://metaverse.lootmogul.com/metaverse/",
+        isExternalLink: true
     },
     {
         label: "AMBASSADORS",
         path: "/influencers",
-        queryPath: "/influencer/[id]"
+        queryPath: "/influencer/[id]",
+        isExternalLink: false
     },
     {
         label: "NFT",
-        path: "/nfts"
+        path: "/nfts",
+        isExternalLink: false
     },
     {
         label: "Games",
-        path: "/games"
+        path: "/games",
+        isExternalLink: false
     },
     
     {
         label: "Explore",
-        path: "https://metaverse.lootmogul.com/meta-map/"
+        path: "https://metaverse.lootmogul.com/meta-map/",
+        isExternalLink: true
     }
 ];
+let paramsLogin = '';
 
 const Header = () => {
-    const { user, isMobileDevice, isLoginModalActive, isForgotPasswordModalActive, isCheckYourMailModalActive, isChangePasswordModalActive, isPasswordChangedModalActive } = useContext(AppContext);
+    const { user, isMobileDevice, isLoginModalActive, isForgotPasswordModalActive, isCheckYourMailModalActive, isChangePasswordModalActive, isPasswordChangedModalActive, jwt } = useContext(AppContext);
     const { isHideHeader } = useContext(AppContext);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -70,11 +77,15 @@ const Header = () => {
 
     const { toggleLoginModal, toggleForgotPasswordModal, toggleCheckYourMailModal, toggleChangePasswordModal, togglePasswordChangedModal } = useContext(AppContext);
 
+    if (typeof window !== 'undefined') {
+        paramsLogin = '?jwt='+window.localStorage?.getItem("strapi_jwt");
+    }
+
     const renderMobileRoutes = () => (
         <Flex direction="column" mt={["20px", "20px", "30px"]}>
-            {routes.map(({ label, path, queryPath }, index) => (
+            {routes.map(({ label, path, queryPath, isExternalLink }, index) => (
                 <Link
-                    href={path}
+                    href={isExternalLink===true ? path+paramsLogin : path}
                     passhref="true"
                     _focus={{ border: "none" }}
                     key={`route-${index}`}
@@ -183,11 +194,11 @@ const Header = () => {
                         />
                     ) : (
                         <Flex direction="row" justifyContent="center" w="50%">
-                            {routes.map(({ label, path, queryPath }, index) => (
+                            {routes.map(({ label, path, queryPath, isExternalLink }, index) => (
                                 <Link
                                     _focus={{ border: "none", textDecor:"none" }}
                                     _hover={{ border: "none", textDecor:"none" }}
-                                    href={path}
+                                    href={isExternalLink===true ? path+paramsLogin : path}
                                     passhref="true"
                                     key={`route-${index}`}
                                 >
