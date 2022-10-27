@@ -199,7 +199,17 @@ export const AppContextContainer = ({ children }) => {
     const [gameInProgress, setGameInProgress] = useState(false);
 
 
-
+useEffect(()=> {
+    debugger;
+    if (!router.isReady) return;
+    if( router.query.jwt ){
+        strapi.setToken(router.query.jwt);
+                setJwt(router.query.jwt);
+                console.log('jwt',jwt);
+                console.log('router jwty',router.query.jwt);
+                window.localStorage.setItem("strapi_jwt", router.query.jwt);
+    }           
+},[router.isReady]);
 
     useEffect(() => {
         setMobileDevice(!isDesktopDevice);
@@ -281,6 +291,7 @@ export const AppContextContainer = ({ children }) => {
         }
 
     }, []);
+
     useEffect(() => {
         if (typeof window !== 'undefined' && window.localStorage?.getItem("sssPage") === null) {
             game();
@@ -494,25 +505,21 @@ export const AppContextContainer = ({ children }) => {
     useEffect(async () => {
         if( router.query.jwt )
         {
-            setJwt(router.query.jwt);
-            window.localStorage.setItem("strapi_jwt", router.query.jwt);
-
-            await axios
+            try {
+            const response = await axios
                 .get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/users/me`, {
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json",
                         "Authorization": "Bearer "+router.query.jwt,
                     }
-                })
-                .then(response => {
-                    updateUser(response.data);
-                    setUser(response.data);
-                })
-                .catch(error => {
-                    // Handle error.
-                    console.log('An error occurred:', error.response);
                 });
+                console.log(response.data);
+                updateUser(response.data);
+                setUser(response.data);
+            } catch (error) {
+                console.log('error occured',error);
+            }
         }
         if (!router.isReady) return;
     }, [router.isReady]);
@@ -541,6 +548,7 @@ export const AppContextContainer = ({ children }) => {
                 getSocket,
                 user,
                 jwt,
+                setJwt,
                 matchResult,
                 setMatchResult,
                 isHideHeader,
@@ -575,7 +583,7 @@ export const AppContextContainer = ({ children }) => {
                     }
                     strapi.logout();
                     setUser(null);
-
+                    router.push("/");
                 },
             }}
         >
