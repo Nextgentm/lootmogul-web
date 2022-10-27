@@ -84,6 +84,7 @@ const TransactionHistory = () => {
                         pageSize: 60
                     }
                 });
+                console.log(res);
                 if (res?.meta) {
                     data.push(res.data);
                     if (pageCount == 1) {
@@ -95,7 +96,10 @@ const TransactionHistory = () => {
             data = data.flat();
             setLoading(false);
             setData(data);
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
     };
 
     const handleChangeKeyword = (e) => {
@@ -118,7 +122,7 @@ const TransactionHistory = () => {
         <Box mt="40px">
             <Heading color="white">TRANSACTION HISTORY</Heading>
 
-            <Grid
+           <Grid
                 templateColumns={`repeat(${
                     currentSize === "base" ? 1 : 4
                 }, 1fr)`}
