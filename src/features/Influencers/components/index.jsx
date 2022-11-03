@@ -3,21 +3,13 @@ import { useRouter } from "next/router";
 import { Box } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
-
-import FAQ from "../../Home/components/FAQ";
 import SEOContainer from "../../SEOContainer";
 import Explore from "./Explore";
-import NewInfluencers from "./NewInfluencers";
 import AllInfluencers from "./AllInfluencers";
 import InfluencerBanner from "./InfluencerBanner";
 import InfluencerDetailBanner from "./InfluencerDetailBanner";
 
-import {
-    LeftArrow,
-    RightArrow
-} from "../../../components/ContentNavigator/arrows";
-
-const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
+const Influencers = ({ data, selectedCategory, banner }) => {
     const defaultCategoryName = "All Ambassadors";
     const { isTabletOrDesktop, user, influencerLikes, callAuthService } =
         useContext(AppContext);
@@ -27,14 +19,12 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const [displayData, setDisplayData] = useState(data);
     const [pageNo, setPageNo] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [ filterValue, setFilterValue] = useState(defaultCategoryName);
-
+    const [filterValue, setFilterValue] = useState(defaultCategoryName);
     const [displayInfluencers, setDisplayInfluencers] = useState([]);
-
     const [selCategoriesData, setSelCategoriesData] = useState(data);
-
+    const [displayInfluencersBkup, setDisplayInfluencersBkup] = useState([]);
     const router = useRouter();
-    
+
     useEffect(() => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
@@ -63,18 +53,21 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             setDisplayData(data);
         }
     }, [data, user]);
-    
+
     const handleFilterChange = () => {
         const newCategory = filterValue;
         if (newCategory === defaultCategoryName.toLowerCase()) {
             history.pushState({}, null, "/influencers");
-            
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === newCategory
             );
-            
-            history.pushState({}, null, "/influencers/category/" + selData[0].slug);
+
+            history.pushState(
+                {},
+                null,
+                "/influencers/category/" + selData[0].slug
+            );
         }
 
         setCategory(newCategory);
@@ -82,17 +75,13 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const handleCategoryChange = (e) => {
         const newCategory = e;
         if (e === defaultCategoryName.toLowerCase()) {
-            router.push(
-                "/influencers"
-            );
+            router.push("/influencers");
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === e
             );
-            if(selData?.[0]?.slug)
-            router.push(
-                "/influencers/category/" + selData[0].slug
-            );
+            if (selData?.[0]?.slug)
+                router.push("/influencers/category/" + selData[0].slug);
         }
 
         setCategory(newCategory);
@@ -173,14 +162,24 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 });
             });
             setDisplayInfluencers(inf);
-            const tp =inf?.length >12 && inf?.length %12 === 0? inf?.length / 12:inf?.length >12?parseInt((inf?.length / 12))+1:1;
-            
+            setDisplayInfluencersBkup(inf);
+            const tp =
+                inf?.length > 12 && inf?.length % 12 === 0
+                    ? inf?.length / 12
+                    : inf?.length > 12
+                    ? parseInt(inf?.length / 12) + 1
+                    : 1;
+
             setTotalPages(tp);
         }
     }, [selCategoriesData]);
 
     const getBannerImage = () => {
-        if (selectedCategory &&  category!== defaultCategoryName.toLowerCase() && selCategoriesData) {
+        if (
+            selectedCategory &&
+            category !== defaultCategoryName.toLowerCase() &&
+            selCategoriesData
+        ) {
             if (selCategoriesData[0] && selCategoriesData[0].banner?.data) {
                 return !isTabletOrDesktop
                     ? selCategoriesData[0].banner?.data[1].url
@@ -193,10 +192,23 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             (banner ||
                 category.toLowerCase() === defaultCategoryName.toLowerCase())
         ) {
-           // return "/assets/designupdate1/influencer_banner.png";
-             return !isTabletOrDesktop ? banner[1]?.url || banner[0]?.url : banner[0]?.url;
+            // return "/assets/designupdate1/influencer_banner.png";
+            return !isTabletOrDesktop
+                ? banner[1]?.url || banner[0]?.url
+                : banner[0]?.url;
         } else {
             return null;
+        }
+    };
+
+    const searchText = (e) => {
+        if (e.length > 3) {
+            const filteredData = displayInfluencers.filter((x) =>
+                x.name.toLowerCase().includes(e)
+            );
+            setDisplayInfluencers(filteredData);
+        } else {
+            setDisplayInfluencers(displayInfluencersBkup);
         }
     };
     return (
@@ -213,7 +225,8 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             )}
 
             <Box w="100% " overflow="hidden">
-                {selectedCategory && category !== defaultCategoryName.toLowerCase() ? (
+                {selectedCategory &&
+                category !== defaultCategoryName.toLowerCase() ? (
                     <InfluencerDetailBanner getBannerImage={getBannerImage} />
                 ) : (
                     <InfluencerBanner getBannerImage={getBannerImage} />
@@ -224,26 +237,26 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 defaultCategoryName={defaultCategoryName}
                 handleCategoryChange={handleCategoryChange}
                 activeCategory={category}
+                searchText={searchText}
             />
             {/* <NewInfluencers
                 newInfluencers={newInfluencers}
                 LeftArrow={LeftArrow}
                 RightArrow={RightArrow}
             /> */}
-             <AllInfluencers
-                    displayInfluencers={displayInfluencers}
-                    category={category}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                    defaultCategoryName={defaultCategoryName}
-                    selectedCategory={selectedCategory}
-                    selCategoriesData={selCategoriesData}
-                    catData = {data}
-                    handleCategoryChange={handleFilterChange}
-                    setFilterValue={setFilterValue}
-                />
-           
+            <AllInfluencers
+                displayInfluencers={displayInfluencers}
+                category={category}
+                totalPages={totalPages}
+                pageNo={pageNo}
+                setPageNo={setPageNo}
+                defaultCategoryName={defaultCategoryName}
+                selectedCategory={selectedCategory}
+                selCategoriesData={selCategoriesData}
+                catData={data}
+                handleCategoryChange={handleFilterChange}
+                setFilterValue={setFilterValue}
+            />
         </Box>
     );
 };
