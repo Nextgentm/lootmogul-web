@@ -11,10 +11,11 @@ const Explore = ({
 }) => {
     return (
         <Box mt={5} mx={[10, 10, 16]}>
-            <SimpleGrid columns={2} spacing={40}>
+            <SimpleGrid columns={3} spacing={100}>
                 <box height='80px'>
                     <Heading variant="sectionTitle">EXPLORE</Heading>
                 </box>
+                <box></box>
                 <box height='80px'>
                     <Search searchText={searchText}></Search>
                 </box>

@@ -72,6 +72,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
 
         setCategory(newCategory);
     };
+
     const handleCategoryChange = (e) => {
         const newCategory = e;
         if (e === defaultCategoryName.toLowerCase()) {
@@ -110,6 +111,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             }
         }
     }, [influencerLikes]);
+
     useEffect(() => {
         if (data && selectedCategory) {
             let selData = data.filter((item) => item.slug === selectedCategory);
@@ -202,15 +204,29 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     };
 
     const searchText = (e) => {
+        let totalRecords = [];
         if (e.length > 3) {
             const filteredData = displayInfluencers.filter((x) =>
-                x.name.toLowerCase().includes(e)
+                x.name.toLowerCase().includes(e.toLowerCase())
             );
+            totalRecords = filteredData;
             setDisplayInfluencers(filteredData);
         } else {
+            totalRecords = displayInfluencersBkup;
             setDisplayInfluencers(displayInfluencersBkup);
         }
+
+        setPageNo(0);
+        const tp =
+            totalRecords?.length > 12 && totalRecords?.length % 12 === 0
+                ? totalRecords?.length / 12
+                : totalRecords?.length > 12
+                ? parseInt(totalRecords?.length / 12) + 1
+                : 1;
+
+        setTotalPages(tp);
     };
+
     return (
         <Box>
             {selectedCategory && selCategoriesData && selCategoriesData[0] && (
