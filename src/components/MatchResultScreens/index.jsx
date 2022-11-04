@@ -15,7 +15,7 @@ import strapi from "../../utils/strapi";
 
 import dynamic from "next/dynamic";
 
-const AutoPlay = dynamic(() => import("./components/AutoPlay"));
+const AutoPlay = dynamic(() => import("./components/Autoplay"));
 const UserAvatar = dynamic(() => import("./components/UserAvatar"));
 const CaptchaPopup = dynamic(() => import("../LMModal/CaptchaPopup"));
 const Lottie = dynamic(() => import("react-lottie"));

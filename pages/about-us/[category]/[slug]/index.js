@@ -1,7 +1,5 @@
 import { Text } from "@chakra-ui/react";
-
-import AmbassadorsProfile from "../../../../src/features/AboutUs/AmbassadorsProfile"
-
+import AmbassadorsProfile from "../../../../src/features/AboutUS/AmbassadorsProfile";
 
 
 export default function AmbassadorsDetails({slug, aboutUsData, error }) {
