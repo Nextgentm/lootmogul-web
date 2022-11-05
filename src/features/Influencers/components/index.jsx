@@ -8,6 +8,7 @@ import Explore from "./Explore";
 import AllInfluencers from "./AllInfluencers";
 import InfluencerBanner from "./InfluencerBanner";
 import InfluencerDetailBanner from "./InfluencerDetailBanner";
+import Breadcumb from "./Breadcumb";
 
 const Influencers = ({ data, selectedCategory, banner }) => {
     const defaultCategoryName = "All Ambassadors";
@@ -23,6 +24,10 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     const [displayInfluencers, setDisplayInfluencers] = useState([]);
     const [selCategoriesData, setSelCategoriesData] = useState(data);
     const [displayInfluencersBkup, setDisplayInfluencersBkup] = useState([]);
+    const [breadcumbData, setBreadcumbData] = useState([
+        { text: "Home", url: "/influencers", isCurrentPage: false },
+        { text: "Ambassadors", url: "/influencers", isCurrentPage: true }
+    ]);
     const router = useRouter();
 
     useEffect(() => {
@@ -75,7 +80,12 @@ const Influencers = ({ data, selectedCategory, banner }) => {
 
     const handleCategoryChange = (e) => {
         const newCategory = e;
+        let routes = breadcumbData;
+        routes = routes.splice(0, 2);
+
         if (e === defaultCategoryName.toLowerCase()) {
+            routes[1].isCurrentPage = true;
+            setBreadcumbData(routes);
             router.push("/influencers");
         } else if (displayData) {
             let selData = displayData.filter(
@@ -83,6 +93,14 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             );
             if (selData?.[0]?.slug)
                 router.push("/influencers/category/" + selData[0].slug);
+
+            routes.map((x) => (x.isCurrentPage = false));
+            routes.push({
+                text: selData[0].name,
+                url: "/influencers/category/" + selData[0].slug,
+                isCurrentPage: true
+            });
+            setBreadcumbData(routes);
         }
 
         setCategory(newCategory);
@@ -255,6 +273,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 activeCategory={category}
                 searchText={searchText}
             />
+            <Breadcumb data={breadcumbData}></Breadcumb>
             {/* <NewInfluencers
                 newInfluencers={newInfluencers}
                 LeftArrow={LeftArrow}

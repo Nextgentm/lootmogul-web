@@ -57,5 +57,8 @@ module.exports = {
     _focus:{
       textDecoration:"none!important"
     }
+  }),
+  breabCrumbStyle: (isActive) => ({
+    color: isActive ? "primary" : "white",
   })
 };
