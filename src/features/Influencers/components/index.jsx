@@ -46,16 +46,25 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     useEffect(async () => {
         if (data && data?.length > 0 && options.length == 0) {
             options.push(defaultCategoryName);
-            // if(catData){
-
-            // }else {
-
-            // }
             data.map((cat) => {
                 options.push(cat.name);
             });
             setCategory(defaultCategoryName);
             setDisplayData(data);
+
+            if (window.location.pathname.includes('category')){
+                let routes = breadcumbData;
+                let cData = JSON.parse(window.localStorage.getItem('changedSlugDetails'));
+                routes = routes.splice(0, 2);
+                routes.map((x) => (x.isCurrentPage = false));
+
+                routes.push({
+                    text: cData?.name,
+                    url: "/influencers/category/" + cData?.slug,
+                    isCurrentPage: true
+                });
+                setBreadcumbData(routes);
+            }
         }
     }, [data, user]);
 
@@ -100,6 +109,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 url: "/influencers/category/" + selData[0].slug,
                 isCurrentPage: true
             });
+            localStorage.setItem("changedSlugDetails", JSON.stringify(selData[0]));
             setBreadcumbData(routes);
         }
 
