@@ -4,30 +4,19 @@ import {
     Center,
     Flex,
     Image,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
     RangeSlider,
     RangeSliderFilledTrack,
     RangeSliderThumb,
     RangeSliderTrack,
-    Select,
     Text,
-    Tooltip
 } from "@chakra-ui/react";
 import React from "react";
-import { GrFilter } from "react-icons/gr";
 import CategoryComponent from "../categoryComp";
 import NftsCategories from "./NftsCategories";
 import NftCardInCollection from "./NftsCategories/NftCardInCollection";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { MdArrowDropDown } from "react-icons/md";
-import { ChevronDownIcon, CloseIcon } from "@chakra-ui/icons";
-import { CategoryIcon } from "../../../components/Icons";
-import { useEffect } from "react";
 import { BiFilterAlt } from "react-icons/bi";
-import { ImCross } from "react-icons/im";
+import Breadcumb from "../../Influencers/components/Breadcumb";
 
 const NewNfts = ({
     newNfts,
@@ -43,12 +32,16 @@ const NewNfts = ({
     LeftArrow,
     RightArrow,
     priceRange,
-    setPriceRange,setTempFilterValue,nftFilterCategory
+    setPriceRange,
+    setTempFilterValue,
+    nftFilterCategory,
+    breadcumbData
 }) => {
     const ref = React.useRef();
     const lazyRootNew = React.useRef(null);
     const [showFilters, setShowFilters] = React.useState(data);
     const [isActive, setActive] = React.useState("false");
+
 
     const handleToggle = () => {
         setActive(!isActive);
@@ -74,29 +67,37 @@ const NewNfts = ({
                         </Text>
                     </Flex>
 
-                    <Box px={1} >
+                    <Box px={1}>
                         <ScrollMenu
                             className="no-scrollbar"
                             apiRef={ref}
                             ref={lazyRootNew}
                             LeftArrow={LeftArrow}
                             RightArrow={RightArrow}
-                            
                         >
-                            {newNfts?.sort((a, b) => a.priority - b.priority).map((item, index) => (
-                                <NftCardInCollection
-                                    itemId={`nftcard-${index}`}
-                                    key={`nftcard-${index}`}
-                                    slug={item.slug}
-                                    showInfo={true}
-                                    nft={item}
-                                    lazyRoot={lazyRootNew}
-                                    defaultInView={
-                                        isMobileDevice ? index < 2 : index < 4
-                                    }
-                                    cardWidth={["84vw","83vw","370px","370px"]}
-                                />
-                            ))}
+                            {newNfts
+                                ?.sort((a, b) => a.priority - b.priority)
+                                .map((item, index) => (
+                                    <NftCardInCollection
+                                        itemId={`nftcard-${index}`}
+                                        key={`nftcard-${index}`}
+                                        slug={item.slug}
+                                        showInfo={true}
+                                        nft={item}
+                                        lazyRoot={lazyRootNew}
+                                        defaultInView={
+                                            isMobileDevice
+                                                ? index < 2
+                                                : index < 4
+                                        }
+                                        cardWidth={[
+                                            "84vw",
+                                            "83vw",
+                                            "370px",
+                                            "370px"
+                                        ]}
+                                    />
+                                ))}
                         </ScrollMenu>
                     </Box>
                 </>
@@ -154,7 +155,6 @@ const NewNfts = ({
                                 pt="0 !important"
                                 cursor="pointer"
                                 borderRadius="3px"
-                                
                                 onClick={() => {
                                     handleToggle();
                                 }}
@@ -177,7 +177,7 @@ const NewNfts = ({
                     flexDirection={["column", "column", "column", "row"]}
                 >
                     <CategoryComponent
-                    defaultCategory = {defaultCategories}
+                        defaultCategory={defaultCategories}
                         displayData={displayData}
                         selectedCategory={selectedCategory}
                         setTempFilterValue={setTempFilterValue}
@@ -247,9 +247,7 @@ const NewNfts = ({
                         </Text>
                     </Box>
                     <Button
-                      
                         mt={["7", "0"]}
-                        
                         variant="searchBtn"
                         onClick={nftFilterCategory}
                     >
@@ -293,83 +291,70 @@ const NewNfts = ({
             )}
             {!isNewest && !selectedCategory && (
                 <>
-                    <Flex
-                          mt={10}
-                          mx="auto"
-                          flexWrap="wrap"
-                    >
-                           <Button
-                                        w={["90vw","90vw", "auto"]}
-                                        mr={["0px","0px", "15px"]}
-                                         mt="20px"
-                                       
-                                         // p="0px"
-                                         fontSize={[
-                                             "20px !important",
-                                             "20px !important",
-                                             "16px !important"
-                                         ]}
-                                         fontWeight={500}
-                                         variant={"segment"}
-                                        onClick={() => {
-                                            nftSelectCategory(
-                                                defaultCategories.toLowerCase()
-                                            );
-                                        }}
-                                    >
-                                        {" "}
-                                        <Text w="100%" whiteSpace={"pre-wrap"}
-                                            
-                                        >
-                                       {defaultCategories}
-                                        </Text>
-                                    </Button>
+                    <Flex mt={10} mx="auto" flexWrap="wrap">
+                        <Button
+                            w={["90vw", "90vw", "auto"]}
+                            mr={["0px", "0px", "15px"]}
+                            mt="20px"
+                            fontSize={[
+                                "20px !important",
+                                "20px !important",
+                                "16px !important"
+                            ]}
+                            fontWeight={500}
+                            variant={"segment"}
+                            onClick={() => {
+                                nftSelectCategory(
+                                    defaultCategories.toLowerCase()
+                                );
+                            }}
+                        >
+                            {" "}
+                            <Text w="100%" whiteSpace={"pre-wrap"}>
+                                {defaultCategories}
+                            </Text>
+                        </Button>
                         {displayData?.map((nfts, index) => (
-                            
-                               
-                                    <Button
-                                    w={["90vw","90vw", "auto"]}
-                                    mr={["0px","0px", "15px"]}
-                                         mt="20px"
-                                         key={index}
-                                         // p="0px"
-                                         fontSize={[
-                                             "20px !important",
-                                             "20px !important",
-                                             "16px !important"
-                                         ]}
-                                         fontWeight={500}
-                                         variant={"segment"}
-                                        onClick={() => {
-                                            nftSelectCategory(
-                                                nfts.name.toLowerCase()
-                                            );
-                                        }}
-                                    >
-                                        {" "}
-                                        <Text w="100%" whiteSpace={"pre-wrap"}
-                                            
-                                        >
-                                            {nfts.name}
-                                        </Text>
-                                    </Button>
-                             
-                        
+                            <Button
+                                w={["90vw", "90vw", "auto"]}
+                                mr={["0px", "0px", "15px"]}
+                                mt="20px"
+                                key={index}
+                                fontSize={[
+                                    "20px !important",
+                                    "20px !important",
+                                    "16px !important"
+                                ]}
+                                fontWeight={500}
+                                variant={"segment"}
+                                onClick={() => {
+                                    nftSelectCategory(nfts.name.toLowerCase());
+                                }}
+                            >
+                                {" "}
+                                <Text w="100%" whiteSpace={"pre-wrap"}>
+                                    {nfts.name}
+                                </Text>
+                            </Button>
                         ))}
                     </Flex>
                 </>
             )}
 
+             <Breadcumb data={breadcumbData}></Breadcumb>
+
             <Flex w="100%" flexDir={"column"} px="1">
-                {selCategoriesData?.sort((a, b) => a.priority - b.priority).map((nfts, index) => (
-                    <NftsCategories
-                        isMobileDevice={isMobileDevice}
-                        key={`nftcategories-${index}`}
-                        NFTS={nfts}
-                        isSelectedCat={isToShowAll()}
-                        index={index}
-                    />
-                ))}
+                {selCategoriesData
+                    ?.sort((a, b) => a.priority - b.priority)
+                    .map((nfts, index) => (
+                        <NftsCategories
+                            isMobileDevice={isMobileDevice}
+                            key={`nftcategories-${index}`}
+                            NFTS={nfts}
+                            isSelectedCat={isToShowAll()}
+                            index={index}
+                        />
+                    ))}
             </Flex>
         </Box>
     );
