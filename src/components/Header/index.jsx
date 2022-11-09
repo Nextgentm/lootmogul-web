@@ -6,7 +6,7 @@ import {
     Text,
     Flex,
     useDisclosure,
-    Image,
+    Image
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { AppContext } from "../../utils/AppContext";
@@ -30,52 +30,61 @@ const routes = [
         label: "Home",
         path: "https://metaverse.lootmogul.com/home",
         isExternalLink: true,
-        imageUrl:"/assets/MobileMenuIcons/Home-icon.png",
-        activeImageUrl:"/assets/MobileMenuIcons/Home-icon-active.png",
+        imageUrl: "/assets/MobileMenuIcons/Home-icon.png",
+        activeImageUrl: "/assets/MobileMenuIcons/Home-icon-active.png"
     },
 
     {
         label: "Metaverse",
         path: "https://metaverse.lootmogul.com/metaverse/",
         isExternalLink: true,
-        imageUrl:"/assets/MobileMenuIcons/Metaverse-icon.png",
-        activeImageUrl:"/assets/MobileMenuIcons/Metaverse-icon-active.png",
+        imageUrl: "/assets/MobileMenuIcons/Metaverse-icon.png",
+        activeImageUrl: "/assets/MobileMenuIcons/Metaverse-icon-active.png"
     },
     {
         label: "AMBASSADORS",
         path: "/influencers",
         queryPath: "/influencer/[id]",
         isExternalLink: false,
-        imageUrl:"/assets/MobileMenuIcons/Ambassadors-icon.png",
-        activeImageUrl:"/assets/MobileMenuIcons/Ambassadors-icon-active.png",
+        imageUrl: "/assets/MobileMenuIcons/Ambassadors-icon.png",
+        activeImageUrl: "/assets/MobileMenuIcons/Ambassadors-icon-active.png"
     },
     {
         label: "NFT",
         path: "/nfts",
         isExternalLink: false,
-        imageUrl:"/assets/MobileMenuIcons/NFTs-icon.png",
-        activeImageUrl:"/assets/MobileMenuIcons/NFTs-icon-active.png",
+        imageUrl: "/assets/MobileMenuIcons/NFTs-icon.png",
+        activeImageUrl: "/assets/MobileMenuIcons/NFTs-icon-active.png"
     },
     {
         label: "Games",
         path: "/games",
         isExternalLink: false,
-        imageUrl:"/assets/MobileMenuIcons/Games-icon.png",
-        activeImageUrl:"/assets/MobileMenuIcons/Games-icon-active.png",
+        imageUrl: "/assets/MobileMenuIcons/Games-icon.png",
+        activeImageUrl: "/assets/MobileMenuIcons/Games-icon-active.png"
     },
-    
+
     {
         label: "Explore",
         path: "https://metaverse.lootmogul.com/meta-map/",
         isExternalLink: true,
-        imageUrl:"/assets/MobileMenuIcons/Explore-icon.png",
-        activeImageUrl:"/assets/MobileMenuIcons/Explore-icon-active.png",
+        imageUrl: "/assets/MobileMenuIcons/Explore-icon.png",
+        activeImageUrl: "/assets/MobileMenuIcons/Explore-icon-active.png"
     }
 ];
-let paramsLogin = '';
+let paramsLogin = "";
 
 const Header = () => {
-    const { user, isMobileDevice, isLoginModalActive, isForgotPasswordModalActive, isCheckYourMailModalActive, isChangePasswordModalActive, isPasswordChangedModalActive, jwt } = useContext(AppContext);
+    const {
+        user,
+        isMobileDevice,
+        isLoginModalActive,
+        isForgotPasswordModalActive,
+        isCheckYourMailModalActive,
+        isChangePasswordModalActive,
+        isPasswordChangedModalActive,
+        jwt
+    } = useContext(AppContext);
     const { isHideHeader } = useContext(AppContext);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -88,92 +97,125 @@ const Header = () => {
         return path == router.pathname.split("/[id]")[0];
     };
 
-    const { toggleLoginModal, toggleForgotPasswordModal, toggleCheckYourMailModal, toggleChangePasswordModal, togglePasswordChangedModal } = useContext(AppContext);
+    const {
+        toggleLoginModal,
+        toggleForgotPasswordModal,
+        toggleCheckYourMailModal,
+        toggleChangePasswordModal,
+        togglePasswordChangedModal
+    } = useContext(AppContext);
 
-    if (typeof window !== 'undefined') {
-        paramsLogin = '?jwt='+window.localStorage?.getItem("strapi_jwt");
+    if (typeof window !== "undefined") {
+        paramsLogin = "?jwt=" + window.localStorage?.getItem("strapi_jwt");
     }
 
     const setMobileIcons = (isActiveLink, imageUrl, activeImageUrl) => {
         return isActiveLink ? activeImageUrl : imageUrl;
-    }
+    };
 
     const renderMobileRoutes = () => (
         <Flex direction="column" mt={["20px", "20px", "30px"]}>
-            {routes.map(({ label, path, queryPath, isExternalLink, imageUrl, activeImageUrl }, index) => (
-                
-                <Link
-                    href={isExternalLink===true ? path+paramsLogin : path}
-                    passhref="true"
-                    _focus={{ border: "none" }}
-                    key={`route-${index}`}
-                    _hover={{ textDecoration: "none" }}
-                >
-                    <Flex>
-                    <Image
-                        marginRight="15px"
-                        marginTop="18px"
-                        alt="social"
-                        boxSize={["20px", "20px"]}
-                        src={setMobileIcons(isActiveLink(path, queryPath), imageUrl, activeImageUrl)}
-                    />
-                    <a onClick={onClose}>
-                        <Text
-                            cursor="pointer"
-                            {...navLinksStyle(isActiveLink(path, queryPath))}
-                            p="10px 0"
-                            lineHeight="1"
-                            _hover={{ transform: "scale(1)", textDecoration: "none", color: "#e90a63" }}
-                        >
-                            {label}
-                        </Text>
-                    </a>
-                    </Flex>
-                </Link>
-            ))}
+            {routes.map(
+                (
+                    {
+                        label,
+                        path,
+                        queryPath,
+                        isExternalLink,
+                        imageUrl,
+                        activeImageUrl
+                    },
+                    index
+                ) => (
+                    <Link
+                        href={
+                            isExternalLink === true ? path + paramsLogin : path
+                        }
+                        passhref="true"
+                        _focus={{ border: "none" }}
+                        key={`route-${index}`}
+                        _hover={{ textDecoration: "none" }}
+                    >
+                        <Flex>
+                            <Image
+                                marginRight="15px"
+                                marginTop="18px"
+                                alt="social"
+                                boxSize={["20px", "20px"]}
+                                src={setMobileIcons(
+                                    isActiveLink(path, queryPath),
+                                    imageUrl,
+                                    activeImageUrl
+                                )}
+                            />
+                            <a onClick={onClose}>
+                                <Text
+                                    cursor="pointer"
+                                    {...navLinksStyle(
+                                        isActiveLink(path, queryPath)
+                                    )}
+                                    p="10px 0"
+                                    lineHeight="1"
+                                    _hover={{
+                                        transform: "scale(1)",
+                                        textDecoration: "none",
+                                        color: "#e90a63"
+                                    }}
+                                >
+                                    {label}
+                                </Text>
+                            </a>
+                        </Flex>
+                    </Link>
+                )
+            )}
             <Text
                 {...communityStyle(false)}
-                _hover={{ transform: "scale(1)", textDecoration: "none", color: "#e90a63" }}
+                _hover={{
+                    transform: "scale(1)",
+                    textDecoration: "none",
+                    color: "#e90a63"
+                }}
             >
                 COMMUNITY
             </Text>
             <Flex>
                 <Image
-                        marginRight="15px"
-                        alt="discord"
-                        boxSize={["20px", "20px"]}
-                        src="/assets/CommunityIcons/discord-white.svg"
-                    />
+                    marginRight="15px"
+                    alt="discord"
+                    boxSize={["20px", "20px"]}
+                    src="/assets/CommunityIcons/discord-white.svg"
+                />
                 <Image
-                        marginRight="15px"
-                        alt="telegram"
-                        boxSize={["20px", "20px"]}
-                        src="/assets/CommunityIcons/telegram-white.svg"
-                    />
+                    marginRight="15px"
+                    alt="telegram"
+                    boxSize={["20px", "20px"]}
+                    src="/assets/CommunityIcons/telegram-white.svg"
+                />
                 <Image
-                        marginRight="15px"
-                        alt="instagram"
-                        boxSize={["20px", "20px"]}
-                        src="/assets/CommunityIcons/instagram-white.svg"
-                    />
+                    marginRight="15px"
+                    alt="instagram"
+                    boxSize={["20px", "20px"]}
+                    src="/assets/CommunityIcons/instagram-white.svg"
+                />
                 <Image
-                        marginRight="15px"
-                        alt="facebook"
-                        boxSize={["20px", "20px"]}
-                        src="/assets/CommunityIcons/facebook-white.svg"
-                    />
+                    marginRight="15px"
+                    alt="facebook"
+                    boxSize={["20px", "20px"]}
+                    src="/assets/CommunityIcons/facebook-white.svg"
+                />
                 <Image
-                        marginRight="15px"
-                        alt="twitter"
-                        boxSize={["20px", "20px"]}
-                        src="/assets/CommunityIcons/twitter-white.svg"
-                    />
+                    marginRight="15px"
+                    alt="twitter"
+                    boxSize={["20px", "20px"]}
+                    src="/assets/CommunityIcons/twitter-white.svg"
+                />
                 <Image
-                        marginRight="15px"
-                        alt="youtube"
-                        boxSize={["20px", "20px"]}
-                        src="/assets/CommunityIcons/youtube-white.svg"
-                    />
+                    marginRight="15px"
+                    alt="youtube"
+                    boxSize={["20px", "20px"]}
+                    src="/assets/CommunityIcons/youtube-white.svg"
+                />
             </Flex>
             <Button
                 mt={"30px"}
@@ -221,7 +263,7 @@ const Header = () => {
                 <Box
                     bg="#100526"
                     w="100%"
-                    h={isMobileDevice ? "66px" : "90px" }
+                    h={isMobileDevice ? "66px" : "90px"}
                     display="flex"
                     pl={["16px", "5%"]}
                     pr={["16px", "5%"]}
@@ -243,8 +285,11 @@ const Header = () => {
                             />
                         </Flex>
                     )}
-                    
-                    <Flex w={isMobileDevice ? "50%" : "20%" } justify={isMobileDevice ? "center" : "unset" }>
+
+                    <Flex
+                        w={isMobileDevice ? "50%" : "20%"}
+                        justify={isMobileDevice ? "center" : "unset"}
+                    >
                         <Image
                             style={{ cursor: "pointer" }}
                             width={["250px", "auto", "270px", "270px", "460px"]}
@@ -265,24 +310,39 @@ const Header = () => {
                         />
                     ) : (
                         <Flex direction="row" justifyContent="center" w="50%">
-                            {routes.map(({ label, path, queryPath, isExternalLink }, index) => (
-                                <Link
-                                    _focus={{ border: "none", textDecor:"none" }}
-                                    _hover={{ border: "none", textDecor:"none" }}
-                                    href={isExternalLink===true ? path+paramsLogin : path}
-                                    passhref="true"
-                                    key={`route-${index}`}
-                                >
-                                    <Text
-                                        cursor="pointer"
-                                        {...navLinksStyle(
-                                            isActiveLink(path, queryPath)
-                                        )}
+                            {routes.map(
+                                (
+                                    { label, path, queryPath, isExternalLink },
+                                    index
+                                ) => (
+                                    <Link
+                                        _focus={{
+                                            border: "none",
+                                            textDecor: "none"
+                                        }}
+                                        _hover={{
+                                            border: "none",
+                                            textDecor: "none"
+                                        }}
+                                        href={
+                                            isExternalLink === true
+                                                ? path + paramsLogin
+                                                : path
+                                        }
+                                        passhref="true"
+                                        key={`route-${index}`}
                                     >
-                                        {label}
-                                    </Text>
-                                </Link>
-                            ))}
+                                        <Text
+                                            cursor="pointer"
+                                            {...navLinksStyle(
+                                                isActiveLink(path, queryPath)
+                                            )}
+                                        >
+                                            {label}
+                                        </Text>
+                                    </Link>
+                                )
+                            )}
                         </Flex>
                     )}
 
@@ -290,7 +350,7 @@ const Header = () => {
                         {...loginStyle(isMobileDevice, user)}
                         alignItems="center"
                         justifyContent={["flex-end", "flex-end", "center"]}
-                        w={isMobileDevice ? "30%" : "30%" }
+                        w={isMobileDevice ? "30%" : "30%"}
                     >
                         {!isMobileDevice && (
                             <>
@@ -353,7 +413,10 @@ const Header = () => {
                         )}
 
                         {user && (
-                            <UserInfo user={user} isMobileDevice={isMobileDevice} />
+                            <UserInfo
+                                user={user}
+                                isMobileDevice={isMobileDevice}
+                            />
                         )}
                     </Flex>
 
