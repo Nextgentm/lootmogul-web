@@ -15,7 +15,8 @@ import dynamic from "next/dynamic";
 import {
     loginBtnStyle,
     loginStyle,
-    navLinksStyle
+    navLinksStyle,
+    communityStyle
 } from "./styles";
 import { HamburgerIcon } from "@chakra-ui/icons";
 const Login = dynamic(() => import("../../features/Login"));
@@ -28,35 +29,47 @@ const routes = [
     {
         label: "Home",
         path: "https://metaverse.lootmogul.com/home",
-        isExternalLink: true
+        isExternalLink: true,
+        imageUrl:"/assets/MobileMenuIcons/Home-icon.png",
+        activeImageUrl:"/assets/MobileMenuIcons/Home-icon-active.png",
     },
 
     {
         label: "Metaverse",
         path: "https://metaverse.lootmogul.com/metaverse/",
-        isExternalLink: true
+        isExternalLink: true,
+        imageUrl:"/assets/MobileMenuIcons/Metaverse-icon.png",
+        activeImageUrl:"/assets/MobileMenuIcons/Metaverse-icon-active.png",
     },
     {
         label: "AMBASSADORS",
         path: "/influencers",
         queryPath: "/influencer/[id]",
-        isExternalLink: false
+        isExternalLink: false,
+        imageUrl:"/assets/MobileMenuIcons/Ambassadors-icon.png",
+        activeImageUrl:"/assets/MobileMenuIcons/Ambassadors-icon-active.png",
     },
     {
         label: "NFT",
         path: "/nfts",
-        isExternalLink: false
+        isExternalLink: false,
+        imageUrl:"/assets/MobileMenuIcons/NFTs-icon.png",
+        activeImageUrl:"/assets/MobileMenuIcons/NFTs-icon-active.png",
     },
     {
         label: "Games",
         path: "/games",
-        isExternalLink: false
+        isExternalLink: false,
+        imageUrl:"/assets/MobileMenuIcons/Games-icon.png",
+        activeImageUrl:"/assets/MobileMenuIcons/Games-icon-active.png",
     },
     
     {
         label: "Explore",
         path: "https://metaverse.lootmogul.com/meta-map/",
-        isExternalLink: true
+        isExternalLink: true,
+        imageUrl:"/assets/MobileMenuIcons/Explore-icon.png",
+        activeImageUrl:"/assets/MobileMenuIcons/Explore-icon-active.png",
     }
 ];
 let paramsLogin = '';
@@ -81,9 +94,14 @@ const Header = () => {
         paramsLogin = '?jwt='+window.localStorage?.getItem("strapi_jwt");
     }
 
+    const setMobileIcons = (isActiveLink, imageUrl, activeImageUrl) => {
+        return isActiveLink ? activeImageUrl : imageUrl;
+    }
+
     const renderMobileRoutes = () => (
         <Flex direction="column" mt={["20px", "20px", "30px"]}>
-            {routes.map(({ label, path, queryPath, isExternalLink }, index) => (
+            {routes.map(({ label, path, queryPath, isExternalLink, imageUrl, activeImageUrl }, index) => (
+                
                 <Link
                     href={isExternalLink===true ? path+paramsLogin : path}
                     passhref="true"
@@ -91,6 +109,14 @@ const Header = () => {
                     key={`route-${index}`}
                     _hover={{ textDecoration: "none" }}
                 >
+                    <Flex>
+                    <Image
+                        marginRight="15px"
+                        marginTop="18px"
+                        alt="social"
+                        boxSize={["20px", "20px"]}
+                        src={setMobileIcons(isActiveLink(path, queryPath), imageUrl, activeImageUrl)}
+                    />
                     <a onClick={onClose}>
                         <Text
                             cursor="pointer"
@@ -102,8 +128,53 @@ const Header = () => {
                             {label}
                         </Text>
                     </a>
+                    </Flex>
                 </Link>
             ))}
+            <Text
+                {...communityStyle(false)}
+                _hover={{ transform: "scale(1)", textDecoration: "none", color: "#e90a63" }}
+            >
+                COMMUNITY
+            </Text>
+            <Flex>
+                <Image
+                        marginRight="15px"
+                        alt="discord"
+                        boxSize={["20px", "20px"]}
+                        src="/assets/CommunityIcons/discord-white.svg"
+                    />
+                <Image
+                        marginRight="15px"
+                        alt="telegram"
+                        boxSize={["20px", "20px"]}
+                        src="/assets/CommunityIcons/telegram-white.svg"
+                    />
+                <Image
+                        marginRight="15px"
+                        alt="instagram"
+                        boxSize={["20px", "20px"]}
+                        src="/assets/CommunityIcons/instagram-white.svg"
+                    />
+                <Image
+                        marginRight="15px"
+                        alt="facebook"
+                        boxSize={["20px", "20px"]}
+                        src="/assets/CommunityIcons/facebook-white.svg"
+                    />
+                <Image
+                        marginRight="15px"
+                        alt="twitter"
+                        boxSize={["20px", "20px"]}
+                        src="/assets/CommunityIcons/twitter-white.svg"
+                    />
+                <Image
+                        marginRight="15px"
+                        alt="youtube"
+                        boxSize={["20px", "20px"]}
+                        src="/assets/CommunityIcons/youtube-white.svg"
+                    />
+            </Flex>
             <Button
                 mt={"30px"}
                 w="220px"

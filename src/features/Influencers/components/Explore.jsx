@@ -11,15 +11,14 @@ const Explore = ({
 }) => {
     return (
         <Box mt={5} mx={[10, 10, 16]}>
-            <SimpleGrid columns={3} spacing={100}>
-                <box height='80px'>
+            <Flex mt={10} mx="auto" flexWrap="wrap" alignContent={"center"} justify={"space-between"}>
+                <Box height='80px'>
                     <Heading variant="sectionTitle">EXPLORE</Heading>
-                </box>
-                <box></box>
-                <box height='80px'>
+                </Box>
+                <Box height='80px' maxW='sm'>
                     <Search searchText={searchText}></Search>
-                </box>
-            </SimpleGrid>
+                </Box>
+            </Flex>
             <Flex mt={10} mx="auto" flexWrap="wrap" alignContent={"center"}>
                 <Button
                     w={["95vw", "95vw", "auto"]}
