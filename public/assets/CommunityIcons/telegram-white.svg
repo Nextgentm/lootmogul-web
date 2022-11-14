@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.4.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Telegram_Logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 30 30" style="enable-background:new 0 0 30 30;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#C8DAEA;}
+	.st1{fill:#A9C9DD;}
+	.st2{fill:url(#Trazado_117_00000149363280775743546070000003646187436132617648_);}
+</style>
+<g>
+	<path id="Trazado_115" class="st0" d="M11.4,25.3c-0.9,0-0.7-0.3-1-1l-2.6-8.1L27.2,5"/>
+	<path id="Trazado_116" class="st1" d="M11.4,25.3c0.5,0,1-0.2,1.4-0.7l3.4-3.3l-4.3-2.6"/>
+	
+		<linearGradient id="Trazado_117_00000173851869263182956870000017741798914258080923_" gradientUnits="userSpaceOnUse" x1="-544.3455" y1="56.2927" x2="-544.0174" y2="56.9195" gradientTransform="matrix(16.6191 0 0 13.5917 9064.6426 -751.0019)">
+		<stop  offset="0" style="stop-color:#EFF7FC"/>
+		<stop  offset="1" style="stop-color:#FFFFFF"/>
+	</linearGradient>
+	<path id="Trazado_117" style="fill:url(#Trazado_117_00000173851869263182956870000017741798914258080923_);" d="M11.9,18.8
+		l10.6,7.6c1.2,0.7,2.1,0.3,2.4-1l4.3-19.7c0.5-1.7-0.7-2.6-1.9-2.1L2,12.9c-1.7,0.7-1.7,1.5-0.3,2.1L8.1,17l14.9-9.3
+		c0.7-0.3,1.4-0.2,0.9,0.3"/>
+</g>
+</svg>

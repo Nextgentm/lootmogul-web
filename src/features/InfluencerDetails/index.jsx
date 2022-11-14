@@ -10,8 +10,9 @@ import LMSectionTabs from "../../components/LMSectionTabs";
 import NftCardList from "../Nfts/components/NftCardList";
 import InfluencerGame from "./InfluencerGames";
 import InfluencerInfoCollapsable from "./InfluencerInfoCollapsable";
+import Breadcumb from "../Influencers/components/Breadcumb";
 
-const InfluencerDetail = ({ influencer }) => {
+const InfluencerDetail = ({ influencer, breadcumbData }) => {
     const {
         isTabletOrDesktop,
         user,
@@ -21,9 +22,9 @@ const InfluencerDetail = ({ influencer }) => {
     } = useContext(AppContext);
     const [fullInfluencer, setFullInfluencer] = useState(influencer);
     const [isHeartClick, setHeartClick] = useState(false);
-
     const [tabsData, setTabsData] = useState();
     const [isTabAvailable, setIsTabAvailable] = useState();
+
     const onHeartClick = async () => {
         if (!user) {
             toggleLoginModal();
@@ -39,6 +40,7 @@ const InfluencerDetail = ({ influencer }) => {
             setHeartClick(!isHeartClick);
         }
     };
+
     useEffect(() => {
         if (influencerLikes?.includes(influencer.id)) {
             setHeartClick(true);
@@ -47,83 +49,83 @@ const InfluencerDetail = ({ influencer }) => {
 
     useEffect(() => {
         if (fullInfluencer) {
-            const isContest = fullInfluencer?.contestmasters?.data &&
-            fullInfluencer?.contestmasters?.data.length > 0;
-            const isTabAvailable = (fullInfluencer?.contestmasters?.data &&
-            fullInfluencer?.contestmasters?.data.length > 0) ||  (fullInfluencer?.nft_kreds?.data && fullInfluencer?.nft_kreds?.data
-            .length > 0)
-            console.log("isTabAvailable",isTabAvailable);
-            setIsTabAvailable(isTabAvailable)
+            const isContest =
+                fullInfluencer?.contestmasters?.data &&
+                fullInfluencer?.contestmasters?.data.length > 0;
+            const isTabAvailable =
+                (fullInfluencer?.contestmasters?.data &&
+                    fullInfluencer?.contestmasters?.data.length > 0) ||
+                (fullInfluencer?.nft_kreds?.data &&
+                    fullInfluencer?.nft_kreds?.data.length > 0);
+            console.log("isTabAvailable", isTabAvailable);
+            setIsTabAvailable(isTabAvailable);
             const td = isContest
-                    ? [
-                          {
-                              tab: <Text>NFTs</Text>,
-                              tabPanel: (
-                                  <>
-                                      {" "}
-                                      {fullInfluencer?.nft_kreds?.data.length >
-                                          0 && (
-                                          <NftCardList
-                                              data={
-                                                  fullInfluencer?.nft_kreds?.data?.reverse() ||
-                                                  []
-                                              }
-                                              isSale={false}
-                                          />
-                                      )}
-                                      {fullInfluencer?.nft_kreds?.data
-                                          .length === 0 && (
-                                          <Text color="white">
-                                              Coming soon..{" "}
-                                          </Text>
-                                      )}
-                                  </>
-                              )
-                          },
-                          {
-                              tab: <Text>GAMES</Text>,
-                              tabPanel: fullInfluencer && (
-                                  <InfluencerGame
+                ? [
+                      {
+                          tab: <Text>NFTs</Text>,
+                          tabPanel: (
+                              <>
+                                  {" "}
+                                  {fullInfluencer?.nft_kreds?.data.length >
+                                      0 && (
+                                      <NftCardList
+                                          data={
+                                              fullInfluencer?.nft_kreds?.data?.reverse() ||
+                                              []
+                                          }
+                                          isSale={false}
+                                      />
+                                  )}
+                                  {fullInfluencer?.nft_kreds?.data.length ===
+                                      0 && (
+                                      <Text color="white">Coming soon.. </Text>
+                                  )}
+                              </>
+                          )
+                      },
+                      {
+                          tab: <Text>GAMES</Text>,
+                          tabPanel: fullInfluencer && (
+                              <InfluencerGame
                                   showAllDefault={true}
-                                      contestmasters={
-                                          fullInfluencer?.contestmasters
-                                              ? fullInfluencer?.contestmasters
-                                              : influencer?.contestmasters
-                                      }
-                                  />
-                              )
-                          }
-                      ]
-                    : [  
-                          {
-                              tab: <Text>NFTS</Text>,
-                              tabPanel: (
-                                  <>
-                                      {" "} 
-                                      {fullInfluencer?.nft_kreds?.data.length >
-                                          0 && (
-                                          <NftCardList
-                                              data={
-                                                  fullInfluencer?.nft_kreds?.data?.reverse() ||
-                                                  []
-                                              }
-                                              isSale={false}
-                                              showAll={true}
-                                          />
-                                      )}
-                                      {fullInfluencer?.nft_kreds?.data
-                                          .length === 0 && (
-                                          <Text color="white">
-                                              Coming soon..{" "}
-                                          </Text>
-                                      )}
-                                  </>
-                              )
-                          }
-                      ];
+                                  contestmasters={
+                                      fullInfluencer?.contestmasters
+                                          ? fullInfluencer?.contestmasters
+                                          : influencer?.contestmasters
+                                  }
+                              />
+                          )
+                      }
+                  ]
+                : [
+                      {
+                          tab: <Text>NFTS</Text>,
+                          tabPanel: (
+                              <>
+                                  {" "}
+                                  {fullInfluencer?.nft_kreds?.data.length >
+                                      0 && (
+                                      <NftCardList
+                                          data={
+                                              fullInfluencer?.nft_kreds?.data?.reverse() ||
+                                              []
+                                          }
+                                          isSale={false}
+                                          showAll={true}
+                                      />
+                                  )}
+                                  {fullInfluencer?.nft_kreds?.data.length ===
+                                      0 && (
+                                      <Text color="white">Coming soon.. </Text>
+                                  )}
+                              </>
+                          )
+                      }
+                  ];
             setTabsData(td);
         }
     }, [fullInfluencer]);
+
     const getBannerImage = () => {
         if (fullInfluencer) {
             if (fullInfluencer?.banner && fullInfluencer?.banner?.data) {
@@ -174,7 +176,7 @@ const InfluencerDetail = ({ influencer }) => {
                 position="relative"
                 align="center"
                 width="100vw"
-                height={["340px","370px","240px","380px"]}
+                height={["340px", "370px", "240px", "380px"]}
             >
                 <Image
                     alt={`influencer-banner`}
@@ -185,47 +187,62 @@ const InfluencerDetail = ({ influencer }) => {
                 />
             </Box>
             <Box mr={[0, "50px"]} ml={[0, "50px"]} mb={["10vw"]}>
+                <Breadcumb data={breadcumbData}></Breadcumb>
 
-            {!isTabletOrDesktop ? (
-                <Box position="relative" align="center" mt="20px" zIndex={10}>
-                    <InfluencerInfo influencer={fullInfluencer || influencer} />
-
-                    <InfluencerInfoCollapsable
-                        influencer={fullInfluencer || influencer}
-                    />
-                </Box>
-            ) : (
-                <Flex mt="30px">
-                    <InfluencerInfo influencer={fullInfluencer || influencer} />
-
-                    <Flex
-                        direction={"column"}
-                        flex={1}
-                        ml="20px"
-                        align={"flex-end"}
+                {!isTabletOrDesktop ? (
+                    <Box
+                        position="relative"
+                        align="center"
+                        mt="20px"
+                        zIndex={10}
                     >
+                        <InfluencerInfo
+                            influencer={fullInfluencer || influencer}
+                        />
+
                         <InfluencerInfoCollapsable
                             influencer={fullInfluencer || influencer}
                         />
-                    </Flex>
-                </Flex>
-            )}
+                    </Box>
+                ) : (
+                    <Flex mt="30px">
+                        <InfluencerInfo
+                            influencer={fullInfluencer || influencer}
+                        />
 
-            {isTabAvailable && <Box
-                color="white"
-                border="solid 2px"
-                borderColor={"#421d7a"}
-                bg="#270e4699"
-                borderRadius={["4px", "8px"]}
-                p="30px"
-                w="100%"
-                id="nftCardList"
-                mt="30px"
-            >
-                {tabsData && (
-                    <LMSectionTabs variant={"categoryList"} data={tabsData} />
+                        <Flex
+                            direction={"column"}
+                            flex={1}
+                            ml="20px"
+                            align={"flex-end"}
+                        >
+                            <InfluencerInfoCollapsable
+                                influencer={fullInfluencer || influencer}
+                            />
+                        </Flex>
+                    </Flex>
                 )}
-            </Box>}
+
+                {isTabAvailable && (
+                    <Box
+                        color="white"
+                        border="solid 2px"
+                        borderColor={"#421d7a"}
+                        bg="#270e4699"
+                        borderRadius={["4px", "8px"]}
+                        p="30px"
+                        w="100%"
+                        id="nftCardList"
+                        mt="30px"
+                    >
+                        {tabsData && (
+                            <LMSectionTabs
+                                variant={"categoryList"}
+                                data={tabsData}
+                            />
+                        )}
+                    </Box>
+                )}
             </Box>
         </Box>
     );
