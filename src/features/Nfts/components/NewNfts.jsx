@@ -18,6 +18,8 @@ import NftsCategories from "./NftsCategories";
 import NftCardInCollection from "./NftsCategories/NftCardInCollection";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { BiFilterAlt } from "react-icons/bi";
+import { useContext } from "react";
+import { AppContext } from "../../../utils/AppContext/index";
 import Breadcumb from "../../Influencers/components/Breadcumb";
 
 const NewNfts = ({
@@ -27,7 +29,6 @@ const NewNfts = ({
     selCategoriesData,
     data,
     isNewest,
-    isMobileDevice,
     isToShowAll,
     nftSelectCategory,
     displayData,
@@ -41,6 +42,7 @@ const NewNfts = ({
 }) => {
     const ref = React.useRef();
     const lazyRootNew = React.useRef(null);
+    const { isMobileDevice } = useContext(AppContext);
     const [showFilters, setShowFilters] = React.useState(data);
     const [isActive, setActive] = React.useState("false");
 
@@ -291,61 +293,14 @@ const NewNfts = ({
                     )}
                 </Flex>
             )}
-            {!isNewest && !selectedCategory && isMobileDevice &&(
-                <>
-                    <Flex mt={10} mx="auto" flexWrap="wrap">
-                        <Button
-                            w={["90vw", "90vw", "auto"]}
-                            mr={["0px", "0px", "15px"]}
-                            mt="20px"
-                            fontSize={[
-                                "20px !important",
-                                "20px !important",
-                                "16px !important"
-                            ]}
-                            fontWeight={500}
-                            variant={"segment"}
-                            onClick={() => {
-                                nftSelectCategory(
-                                    defaultCategories.toLowerCase()
-                                );
-                            }}
-                        >
-                            {" "}
-                            <Text w="100%" whiteSpace={"pre-wrap"}>
-                                {defaultCategories}
-                            </Text>
-                        </Button>
-                        {displayData?.map((nfts, index) => (
-                            
-                            <Button
-                                w={["90vw", "90vw", "auto"]}
-                                mr={["0px", "0px", "15px"]}
-                                mt="20px"
-                                key={index}
-                                fontSize={[
-                                    "20px !important",
-                                    "20px !important",
-                                    "16px !important"
-                                ]}
-                                fontWeight={500}
-                                variant={"segment"}
-                                onClick={() => {
-                                    nftSelectCategory(nfts.name.toLowerCase());
-                                }}
-                            >
-                                {" "}
-                                <Text w="100%" whiteSpace={"pre-wrap"}>
-                                    {nfts.name}
-                                </Text>
-                            </Button>
-                        ))}
-                    </Flex>
-                </>
-            )}
-            {isMobileDevice ? (<><Input placeholder="Search" /><Select placeholder='Select option'>
+           
+            {isMobileDevice ? (<><Input placeholder="Search" /><Select placeholder='All NFTS'>
             {selCategoriesData.map((e, key) => {
-        return <option key={key} value={e.value}>{e.name}</option>;
+        return <option key={key} value={e.value} style={{backgroundColor:"transparent"}}>{e.name}</option>;
+    })}
+            </Select><Select placeholder='Price Low to High'>
+            {selCategoriesData.map((e, key) => {
+        return <option key={key} value={e.value} style={{backgroundColor:"transparent"}}>{e.name}</option>;
     })}
             </Select></>) : (<>
                     <Flex mt={10} mx="auto" flexWrap="wrap">
