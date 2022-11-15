@@ -9,6 +9,8 @@ import {
     RangeSliderThumb,
     RangeSliderTrack,
     Text,
+    Input,
+    Select
 } from "@chakra-ui/react";
 import React from "react";
 import CategoryComponent from "../categoryComp";
@@ -289,7 +291,7 @@ const NewNfts = ({
                     )}
                 </Flex>
             )}
-            {!isNewest && !selectedCategory && (
+            {!isNewest && !selectedCategory && isMobileDevice &&(
                 <>
                     <Flex mt={10} mx="auto" flexWrap="wrap">
                         <Button
@@ -315,6 +317,7 @@ const NewNfts = ({
                             </Text>
                         </Button>
                         {displayData?.map((nfts, index) => (
+                            
                             <Button
                                 w={["90vw", "90vw", "auto"]}
                                 mr={["0px", "0px", "15px"]}
@@ -340,6 +343,60 @@ const NewNfts = ({
                     </Flex>
                 </>
             )}
+            {isMobileDevice ? (<><Input placeholder="Search" /><Select placeholder='Select option'>
+            {selCategoriesData.map((e, key) => {
+        return <option key={key} value={e.value}>{e.name}</option>;
+    })}
+            </Select></>) : (<>
+                    <Flex mt={10} mx="auto" flexWrap="wrap">
+                        <Button
+                            w={["90vw", "90vw", "auto"]}
+                            mr={["0px", "0px", "15px"]}
+                            mt="20px"
+                            fontSize={[
+                                "20px !important",
+                                "20px !important",
+                                "16px !important"
+                            ]}
+                            fontWeight={500}
+                            variant={"segment"}
+                            onClick={() => {
+                                nftSelectCategory(
+                                    defaultCategories.toLowerCase()
+                                );
+                            }}
+                        >
+                            {" "}
+                            <Text w="100%" whiteSpace={"pre-wrap"}>
+                                {defaultCategories}
+                            </Text>
+                        </Button>
+                        {displayData?.map((nfts, index) => (
+                            
+                            <Button
+                                w={["90vw", "90vw", "auto"]}
+                                mr={["0px", "0px", "15px"]}
+                                mt="20px"
+                                key={index}
+                                fontSize={[
+                                    "20px !important",
+                                    "20px !important",
+                                    "16px !important"
+                                ]}
+                                fontWeight={500}
+                                variant={"segment"}
+                                onClick={() => {
+                                    nftSelectCategory(nfts.name.toLowerCase());
+                                }}
+                            >
+                                {" "}
+                                <Text w="100%" whiteSpace={"pre-wrap"}>
+                                    {nfts.name}
+                                </Text>
+                            </Button>
+                        ))}
+                    </Flex>
+                </>)}
 
              <Breadcumb data={breadcumbData}></Breadcumb>
 
