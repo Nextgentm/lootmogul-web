@@ -45,7 +45,7 @@ const NewNfts = ({
     const { isMobileDevice } = useContext(AppContext);
     const [showFilters, setShowFilters] = React.useState(data);
     const [isActive, setActive] = React.useState("false");
-
+    const priceData = ["Price Low To High", "Price High To Low","Price greater than 10000"];
 
     const handleToggle = () => {
         setActive(!isActive);
@@ -294,13 +294,13 @@ const NewNfts = ({
                 </Flex>
             )}
            
-            {isMobileDevice ? (<><Input placeholder="Search" /><Select placeholder='All NFTS'>
+            {isMobileDevice ? (<><Input placeholder="Search" /><Select placeholder='All NFTS' style={{color:"white"}}>
             {selCategoriesData.map((e, key) => {
-        return <option key={key} value={e.value} style={{backgroundColor:"transparent"}}>{e.name}</option>;
+        return <option key={key} value={e.value} style={{background:"black"}}>{e.name}</option>;
     })}
-            </Select><Select placeholder='Price Low to High'>
-            {selCategoriesData.map((e, key) => {
-        return <option key={key} value={e.value} style={{backgroundColor:"transparent"}}>{e.name}</option>;
+            </Select><Select placeholder='Price Low to High' style={{color:"white"}}>
+            {priceData.map((e) => {
+        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
     })}
             </Select></>) : (<>
                     <Flex mt={10} mx="auto" flexWrap="wrap">
