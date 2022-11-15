@@ -44,6 +44,10 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
    
 
     const { callAuthService } = useContext(AppContext);
+    const [breadcumbData, setBreadcumbData] = useState([
+        { text: "Home", url: "/nfts", isCurrentPage: false },
+        { text: "All NFTs", url: "/nfts", isCurrentPage: true }
+    ]);
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -68,6 +72,10 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
             setTempFilterValue(defaultCategories);
             setDisplayData(data);
         }
+        if (window.location.pathname.includes('/nfts/')){
+            let routes = JSON.parse(window.localStorage.getItem('changedNftBreadCrumbData'));
+            setBreadcumbData(routes);
+        }
     }, [data]);
     const nftFilterCategory = () => {        
         const newCategory = tempFilterValue;
@@ -86,7 +94,6 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
         
     };
     const nftSelectCategory = (e) => {
-          
         const newCategory = e.target?.value || e;
         if (newCategory === defaultCategories.toString().toLowerCase()) {
             router.push(
@@ -111,6 +118,22 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
         }
         setTempFilterValue(newCategory);
         setCategories(newCategory);
+
+        let selData = displayData.filter(
+            (data) => data.name.toLowerCase() === newCategory
+        );
+
+        let routes = breadcumbData;
+        routes = routes.splice(0, 2);
+        routes.map((x) => (x.isCurrentPage = false));
+        routes.push({
+            text: selData[0].name,
+            url: "/nfts/" + selData[0].slug,
+            isCurrentPage: true
+        });
+        
+        setBreadcumbData(routes);
+        localStorage.setItem("changedNftBreadCrumbData", JSON.stringify(routes));
     };
     useEffect(() => {
         if (data && selectedCategory) {
@@ -258,7 +281,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
                 tempPriceRange={tempPriceRange}
                 setTempFilterValue={setTempFilterValue}
                 nftFilterCategory={nftFilterCategory}
-            
+                breadcumbData={breadcumbData}
             />
 
         </Box>

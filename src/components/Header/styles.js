@@ -57,5 +57,16 @@ module.exports = {
     _focus:{
       textDecoration:"none!important"
     }
+  }),
+  breabCrumbStyle: (isActive) => ({
+    color: isActive ? "primary" : "white",
+  }),
+  communityStyle: () => ({
+    ml: ["8px", "0px"],
+    textTransform:"uppercase",
+    fontFamily: "Blanch",
+    fontSize: ["30px", "30px"],
+    mt: ["0","20px","0"],
+    color: "secondary",
   })
 };

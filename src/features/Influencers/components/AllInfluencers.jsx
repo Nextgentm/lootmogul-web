@@ -1,11 +1,4 @@
-import {
-    Box,
-    Button,
-    Flex,
-    Grid,
-    Heading,
-    Text
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Heading, Text } from "@chakra-ui/react";
 import React, { useState, useEffect, useContext } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 import ReadMoreLess from "../ReadMoreLess";
@@ -30,29 +23,26 @@ const AllInfluencers = ({
     setFilterValue
 }) => {
     const [isActive, setActive] = useState(true);
-    const  {isMobileDevice} = useContext(AppContext);
+    const { isMobileDevice } = useContext(AppContext);
     const handleToggle = () => {
         setActive(!isActive);
     };
-    useEffect(()=>{
+    useEffect(() => {
         setActive(true);
-    },[category])
+    }, [category]);
     const router = useRouter();
     return (
-        <Box
-            mt={10}
-            mx={[10,10,16]}
-        >
+        <Box mt={10} mx={[10, 10, 16]}>
             <Flex
                 flexDir={["column", "column", "column", "row"]}
                 justify="space-between"
                 align="center"
                 textAlign="center"
             >
-            <Heading variant="sectionTitle">{category ? category.toUpperCase() : "ALL AMBASSADORS"}
-            </Heading>
+                <Heading variant="sectionTitle">
+                    {category ? category.toUpperCase() : "ALL AMBASSADORS"}
+                </Heading>
 
-                
                 {/* <Flex alignItems="center" pos="relative">
                     <Button
                         variant={!isActive ? "filterBtnSegment" : "filterBtn"}
@@ -102,7 +92,11 @@ const AllInfluencers = ({
                         setFilterValue={setFilterValue}
                     ></CategoryComponent>
 
-                    <Button mt={["7","7","7", "0"]} variant="searchBtn" onClick = {handleCategoryChange}>
+                    <Button
+                        mt={["7", "7", "7", "0"]}
+                        variant="searchBtn"
+                        onClick={handleCategoryChange}
+                    >
                         Search
                     </Button>
                 </Flex>
@@ -113,19 +107,19 @@ const AllInfluencers = ({
                 <Grid
                     flexWrap="wrap"
                     gap={10}
-                    
                     templateColumns={[
                         "repeat(1, 1fr)",
                         "repeat(1, 1fr)",
-                        "repeat(2, 1fr)",                       
-                        "repeat(3, 1fr)",    
-                        "repeat(4, 1fr)",    
+                        "repeat(2, 1fr)",
+                        "repeat(3, 1fr)",
+                        "repeat(4, 1fr)",
                         "repeat(6, 1fr)"
                     ]}
                     // gap={"30px"}
                 >
                     {displayInfluencers?.length &&
-                        displayInfluencers.sort((a, b) => a.order - b.order)
+                        displayInfluencers
+                            .sort((a, b) => a.order - b.order)
                             .filter(
                                 (_, index) =>
                                     index < (pageNo + 1) * 12 &&
@@ -134,7 +128,7 @@ const AllInfluencers = ({
 
                             ?.map((influencer, index) => (
                                 <InfluencersCard
-                                    style={{ w: "100%", px:4 }}
+                                    style={{ w: "100%", px: 4 }}
                                     colSpan={4}
                                     itemId={`item-${index}`}
                                     key={`item-${index}`}
@@ -142,11 +136,19 @@ const AllInfluencers = ({
                                     influencer={influencer}
                                 />
                             ))}
-                  
                 </Grid>
             </Box>
-
-           < Pagination totalPages={totalPages} pageNo={pageNo} setPageNo={setPageNo}/> 
+            {displayInfluencers?.length && displayInfluencers?.length > 0 ? (
+                <Pagination
+                    totalPages={totalPages}
+                    pageNo={pageNo}
+                    setPageNo={setPageNo}
+                />
+            ) : (
+                <Box>
+                  <Text fontSize='1xl' color={'white'} fontFamily={"Sora"}>No Record found</Text>
+                </Box>
+            )}
             {category.toLowerCase() !== defaultCategoryName.toLowerCase() &&
                 selectedCategory &&
                 selCategoriesData[0] &&

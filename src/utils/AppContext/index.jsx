@@ -200,7 +200,6 @@ export const AppContextContainer = ({ children }) => {
 
 
 useEffect(()=> {
-    debugger;
     if (!router.isReady) return;
     if( router.query.jwt ){
         strapi.setToken(router.query.jwt);
@@ -435,7 +434,6 @@ useEffect(()=> {
                 }
             }
         }
-        debugger;
         if (data?.user) {
             if (data.user.is_new) {
                 if (typeof window !== 'undefined') {
