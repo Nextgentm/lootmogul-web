@@ -36,26 +36,25 @@ const InfluencersCard = ({ influencer, slug, style, wid, margin }) => {
         <Link
             href={"/influencer/" + slug}
             passhref="true"
-            width={["80vw","80vw","280px"]}
+            width={["80vw","80vw","200px"]}
             mx="auto"
             _focus={{ border: "none" }}
             key={`infCatCard-${influencer.contestmasters?.data[0]?.id}`}
         >
-            <Box width={wid} mx={margin} mb="30px">
+            <Box width={wid} mx={margin} mb="30px" >
                 <Box
                     cursor="pointer"
                     w="100%"
-                    
                     position="relative"
                     overflow={"hidden"}
-                    border="1px solid #A8A8A8"
-                    borderRadius="8px"
+                    
                 >
                     <Box
-                        className="influencerdiv"
+                        className="influencerdiv influencerFrame"
                         pos="relative"
                         w="100%"
-                        h="400px"
+                        h="auto"
+                        minHeight="300px"
                         overflow={"hidden"}
                     >
                         <Image
@@ -63,6 +62,11 @@ const InfluencersCard = ({ influencer, slug, style, wid, margin }) => {
                             layout="fill"
                             src={getStrapiMedia(influencer.icon?.data?.url)}
                         />
+                        <Image
+                            alt={influencer.icon?.data?.url}
+                            layout="fill"
+                            src="/assets/About_Ambassadors_side_frame2.png"
+                        /> 
                     </Box>
                 </Box>
                 <Text

@@ -20,7 +20,8 @@ const AllInfluencers = ({
     selCategoriesData,
     catData,
     handleCategoryChange,
-    setFilterValue
+    setFilterValue,
+    dataPrePage
 }) => {
     const [isActive, setActive] = useState(true);
     const { isMobileDevice } = useContext(AppContext);
@@ -112,18 +113,17 @@ const AllInfluencers = ({
                         "repeat(1, 1fr)",
                         "repeat(2, 1fr)",
                         "repeat(3, 1fr)",
-                        "repeat(4, 1fr)",
-                        "repeat(6, 1fr)"
+                        "repeat(5, 1fr)",
+                        "repeat(8, 1fr)"
                     ]}
-                    // gap={"30px"}
                 >
                     {displayInfluencers?.length &&
                         displayInfluencers
                             .sort((a, b) => a.order - b.order)
                             .filter(
                                 (_, index) =>
-                                    index < (pageNo + 1) * 12 &&
-                                    index >= pageNo * 12
+                                    index < (pageNo + 1) * dataPrePage &&
+                                    index >= pageNo * dataPrePage
                             )
 
                             ?.map((influencer, index) => (
