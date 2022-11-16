@@ -13,6 +13,7 @@ import {
   Button,
   GridItem,
   Center,
+  color,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../../../../utils/AppContext/index";
@@ -23,6 +24,30 @@ import {
 } from "../../../../components/ContentNavigator/arrows";
 import NftCardInCollection from "./NftCardInCollection";
 
+const ReadMore = ({ children }) => {
+  const text = children;
+  const [isReadMore, setIsReadMore] = useState(true);
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
+  if (text){
+    return (
+      <p className="text" style={{color:"white",fontSize:"18px",fontFamily:"Sora"
+      }}>
+        {isReadMore ? text?.slice(0, 50) : text}
+        
+           <span onClick={toggleReadMore} className="read-or-hide" style={{color:"orange",fontSize:"15px",fontFamily:"Sora"
+      }}>
+           {isReadMore ? "...read more" : " show less"}
+         </span>
+        
+       
+      </p>
+    );
+  }
+  return null;
+  
+};
 const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
   const ref = useRef();
   const refColl = useRef();
@@ -85,7 +110,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
       ) : (
         <>
           {isSelectedCat ? (
-            <Box ml={{ base: "-15px", sm: "10px", md: "15px" }}>
+            <Box ml={{ base: "-15px", sm: "10px", md: "15px" }} style={{backgroundColor:"white"}}>
               {isMobileDevice ? (
                 <ScrollMenu
                   className="no-scrollbar"
@@ -189,7 +214,8 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                       fontSize={["18px","20px"]}
                       mt="30px!important"
                     >
-                      {NFTS.description}
+                     <ReadMore
+                    children={NFTS.description}></ReadMore>
                     </Text>
                     <Button
                       mt={[

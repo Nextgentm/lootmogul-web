@@ -263,7 +263,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
             ) : (
                 <NftBanner getBannerImage={getBannerImage} />
             )}
-
+            
             <NewNfts
                 newNfts={newNfts}
                 defaultCategories={defaultCategories}
@@ -283,6 +283,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
                 nftFilterCategory={nftFilterCategory}
                 breadcumbData={breadcumbData}
             />
+           
 
         </Box>
     );
