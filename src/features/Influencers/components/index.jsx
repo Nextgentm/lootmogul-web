@@ -9,6 +9,11 @@ import AllInfluencers from "./AllInfluencers";
 import InfluencerBanner from "./InfluencerBanner";
 import InfluencerDetailBanner from "./InfluencerDetailBanner";
 import Breadcumb from "./Breadcumb";
+import {
+    useWindowSize,
+    useWindowWidth,
+    useWindowHeight,
+  } from '@react-hook/window-size'
 
 const Influencers = ({ data, selectedCategory, banner }) => {
     const defaultCategoryName = "All Ambassadors";
@@ -29,6 +34,8 @@ const Influencers = ({ data, selectedCategory, banner }) => {
         { text: "Ambassadors", url: "/influencers", isCurrentPage: true }
     ]);
     const router = useRouter();
+    const onlyWidth = useWindowWidth();
+    const [dataPrePage, setDataPrePage] = useState(16);
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -183,6 +190,10 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     // }, [sortBy]);
 
     useEffect(() => {
+        onlyWidth === 1440 || onlyWidth === 1024 ? setDataPrePage(15):  setDataPrePage(16);
+    }, [onlyWidth]);
+
+    useEffect(() => {
         if (selCategoriesData) {
             setPageNo(0);
             let inf = [];
@@ -194,12 +205,11 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             setDisplayInfluencers(inf);
             setDisplayInfluencersBkup(inf);
             const tp =
-                inf?.length > 12 && inf?.length % 12 === 0
-                    ? inf?.length / 12
-                    : inf?.length > 12
-                    ? parseInt(inf?.length / 12) + 1
+                inf?.length > 16 && inf?.length % 16 === 0
+                    ? inf?.length / 16
+                    : inf?.length > 16
+                    ? parseInt(inf?.length / 16) + 1
                     : 1;
-
             setTotalPages(tp);
         }
     }, [selCategoriesData]);
@@ -246,10 +256,10 @@ const Influencers = ({ data, selectedCategory, banner }) => {
 
         setPageNo(0);
         const tp =
-            totalRecords?.length > 12 && totalRecords?.length % 12 === 0
-                ? totalRecords?.length / 12
-                : totalRecords?.length > 12
-                ? parseInt(totalRecords?.length / 12) + 1
+            totalRecords?.length > 16 && totalRecords?.length % 16 === 0
+                ? totalRecords?.length / 16
+                : totalRecords?.length > 16
+                ? parseInt(totalRecords?.length / 16) + 1
                 : 1;
 
         setTotalPages(tp);
@@ -301,6 +311,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 catData={data}
                 handleCategoryChange={handleFilterChange}
                 setFilterValue={setFilterValue}
+                dataPrePage={dataPrePage}
             />
         </Box>
     );
