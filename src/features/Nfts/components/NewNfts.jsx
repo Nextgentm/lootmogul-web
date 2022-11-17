@@ -229,7 +229,7 @@ const NewNfts = ({
     })}
             </Select>)}</>) : (<>
                 {selectedCategory && (<Input type="search" placeholder="Search" onChange={(e) => {
-            nftSearch(e.value
+            nftSearch(e.target.value
             );
         }}/>)}{selectedCategory && (<Select placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
             nftPriceSorting(e.target.value
