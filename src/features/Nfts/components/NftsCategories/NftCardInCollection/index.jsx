@@ -132,114 +132,123 @@ const NftCardInCollection = ({
         quality={50}
         lazyRoot={lazyRoot}
         borderRadius={20}
+        style={{
+          backgroundImage:`url("/assets/nft_background.png")`,backgroundSize:"cover", backgroundPosition:"center"}}
       />
     );
   };
 
   return (
     nft && (
-      <Link
-        href={nft?.marketURL ? nft?.marketURL : "/"}
-        target="_blank"
-        passhref="true"
-        _hover={{ textDecoration: "none" }}
-        _focus={{ border: "none", textDecoration: "none" }}
-        cursor="pointer"
-        mr={["10px", "30px", "30px"]}
-        w={cardWidth}
-        h={showInfo ? cardHeight : imageHeight}
+      <><Flex style={{
+        backgroundImage: `url("/assets/nft_background.png")`, backgroundSize: "cover", backgroundPosition: "center"
+      }}><Link
+      href={nft?.marketURL ? nft?.marketURL : "/"}
+      target="_blank"
+      passhref="true"
+      _hover={{ textDecoration: "none" }}
+      _focus={{ border: "none", textDecoration: "none" }}
+      cursor="pointer"
+      w="90%"
+      h="400px"
+    >
+      <Box
+        textAlign="center"
+        onMouseEnter={() => setIsFlipped(true)}
+        onMouseLeave={() => setIsFlipped(false)}
       >
-        <Box
-          textAlign="center"
-          onMouseEnter={() => setIsFlipped(true)}
-          onMouseLeave={() => setIsFlipped(false)}
-          style={{backgroundImage:"/assets/nft_background.png"}}
-         >
-          <Box h={showInfo ? cardHeight : imageHeight} ref={ref}>
-            {inView && (
-              <ReactCardFlip
-                isFlipped={
-                  nft?.back_image && nft?.back_image.length ? isFlipped : false
-                }
-                flipDirection={"horizontal"}
-                infinite={true}
+        <Box h={showInfo ? cardHeight : imageHeight} ref={ref} >
+          {inView && (
+            <ReactCardFlip
+              isFlipped={nft?.back_image && nft?.back_image.length ? isFlipped : false}
+              flipDirection={"horizontal"}
+              infinite={true}
+            >
+              <Box cursor="pointer"
               >
-                <Box cursor="pointer" >
-                  <Box
-                    _focus={{
-                      border: "none",
-                      textDecoration: "none",
-                    }}
-                    height={imageHeight}
-                    padding={"3%"}
-                    width={cardWidth}
-                    
-                  >
-                    {nft?.front_image?.indexOf(".mp4") > 0 && (
-                      <video
-                        className="lazy"
-                        playsinline
-                        key={nft?.id}
-                        id={"background-video" + nft.id}
-                        loop
-                        autoPlay
-                        muted
-                        style={{
-                          height: "100%",
-                          width: "100%" ,
-                          objectFit: "fill",
-                          borderRadius:"20px",
-                        }}
-                      >
-                        <source src={nft?.front_image} type="video/mp4" />
-                        Your browser does not support the Video NFT.
-                      </video>
-                    )}
-                    {nft?.front_image?.indexOf(".mp4") < 0 &&
-                      nftImage(nft.front_image)}
-                  </Box>
+                <Box
+                  _focus={{
+                    border: "none",
+                    textDecoration: "none",
+                  }}
+                  height={imageHeight}
+                  width={cardWidth}
+                >
+                  {nft?.front_image?.indexOf(".mp4") > 0 && (
+                    <video
+                      className="lazy"
+                      playsinline
+                      key={nft?.id}
+                      id={"background-video" + nft.id}
+                      loop
+                      autoPlay
+                      muted
+                      bottom={"0px"}
+                      style={{
+                        height: "380px",
+                        width: "79%",
+                        borderRadius: "20px",
+                        objectFit: "fill",
+                        marginLeft: "37px",
+                        marginTop: "8px",
+                        marginBottom:"18px"
+                      }}
+                    >
+                      <source src={nft?.front_image} type="video/mp4" />
+                      Your browser does not support the Video NFT.
+                    </video>
+                  )}
+                  {nft?.front_image?.indexOf(".mp4") < 0 &&
+                    nftImage(nft.front_image)}
                 </Box>
-                <Box cursor="pointer">
-                  <Box
-                    _focus={{
-                      border: "none",
-                      textDecoration: "none",
-                    }}
-                    padding="3%"
-                    height={imageHeight}
-                    width={cardWidth}
-                  >
-                    {nft?.back_image?.indexOf(".mp4") > 0 && (
-                      <video
-                        className="lazy"
-                        playsinline
-                        key={nft.id}
-                        id={"background-video" + nft.id}
-                        loop
-                        autoPlay
-                        muted
-                        style={{
-                          height: "100%",
-                          width: "100%" ,
-                          objectFit: "fill",
-                          backgroundImage:"/assets/nft_background.png",
-                        }}
-                      >
-                        <source src={nft?.back_image} type="video/mp4" />
-                        Your browser does not support the Video NFT.
-                      </video>
-                    )}
-                    {nft?.back_image?.indexOf(".mp4") < 0 &&
-                      isFlipped &&
-                      nftImage(nft.back_image)}
-                  </Box>
+              </Box>
+              <Box cursor="pointer">
+                <Box
+                  _focus={{
+                    border: "none",
+                    textDecoration: "none",
+                  }}
+                  height={imageHeight}
+                  width={cardWidth}
+
+                >
+                  {nft?.back_image?.indexOf(".mp4") > 0 && (
+                    <video
+                      className="lazy"
+                      playsinline
+                      key={nft?.id}
+                      id={"background-video" + nft.id}
+                      loop
+                      autoPlay
+                      muted
+                      p={"15px"}
+                      mx={"8%"}
+                      bottom={"0px"}
+                      style={{
+                        height: "400px",
+                        width: "79%",
+                        borderRadius: "20px",
+                        objectFit: "fill",
+                        marginLeft: "37px",
+                        marginTop:"20px"
+                      }}
+                    >
+                      <source src={nft?.back_image} type="video/mp4" />
+                      Your browser does not support the Video NFT.
+                    </video>
+                  )}
+                  {nft?.back_image?.indexOf(".mp4") < 0 &&
+                    isFlipped &&
+                    nftImage(nft.back_image)}
                 </Box>
-              </ReactCardFlip>
-            )}
-            {showInfo && <CardInfo nft={nft}/>}
-          </Box>
+              </Box>
+            </ReactCardFlip>
+          )}
+          {showInfo && <CardInfo nft={nft} />}
         </Box>
-      </Link>
+      </Box>
+    </Link></Flex>
+      </>
     )
   );
 };
