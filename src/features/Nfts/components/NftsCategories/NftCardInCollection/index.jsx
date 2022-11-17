@@ -153,7 +153,6 @@ const NftCardInCollection = ({
           textAlign="center"
           onMouseEnter={() => setIsFlipped(true)}
           onMouseLeave={() => setIsFlipped(false)}
-          style={{backgroundImage:"../../../../../../public/assets/nft_background.png"}}
          >
           <Box h={showInfo ? cardHeight : imageHeight} ref={ref}>
             {inView && (

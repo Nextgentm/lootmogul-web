@@ -9,8 +9,6 @@ import {
     RangeSliderThumb,
     RangeSliderTrack,
     Text,
-    Input,
-    Select
 } from "@chakra-ui/react";
 import React from "react";
 import CategoryComponent from "../categoryComp";
@@ -18,8 +16,6 @@ import NftsCategories from "./NftsCategories";
 import NftCardInCollection from "./NftsCategories/NftCardInCollection";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { BiFilterAlt } from "react-icons/bi";
-import { useContext } from "react";
-import { AppContext } from "../../../utils/AppContext/index";
 import Breadcumb from "../../Influencers/components/Breadcumb";
 
 const NewNfts = ({
@@ -29,6 +25,7 @@ const NewNfts = ({
     selCategoriesData,
     data,
     isNewest,
+    isMobileDevice,
     isToShowAll,
     nftSelectCategory,
     displayData,
@@ -42,10 +39,9 @@ const NewNfts = ({
 }) => {
     const ref = React.useRef();
     const lazyRootNew = React.useRef(null);
-    const { isMobileDevice } = useContext(AppContext);
     const [showFilters, setShowFilters] = React.useState(data);
     const [isActive, setActive] = React.useState("false");
-    const priceData = ["Price Low To High", "Price High To Low","Price greater than 10000"];
+
 
     const handleToggle = () => {
         setActive(!isActive);
@@ -293,16 +289,8 @@ const NewNfts = ({
                     )}
                 </Flex>
             )}
-           
-            {isMobileDevice ? (<><Input placeholder="Search" /><Select placeholder='All NFTS' style={{color:"white"}}>
-            {selCategoriesData.map((e, key) => {
-        return <option key={key} value={e.value} style={{background:"black"}}>{e.name}</option>;
-    })}
-            </Select><Select placeholder='Price Low to High' style={{color:"white"}}>
-            {priceData.map((e) => {
-        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
-    })}
-            </Select></>) : (<>
+            {!isNewest && !selectedCategory && (
+                <>
                     <Flex mt={10} mx="auto" flexWrap="wrap">
                         <Button
                             w={["90vw", "90vw", "auto"]}
@@ -327,7 +315,6 @@ const NewNfts = ({
                             </Text>
                         </Button>
                         {displayData?.map((nfts, index) => (
-                            
                             <Button
                                 w={["90vw", "90vw", "auto"]}
                                 mr={["0px", "0px", "15px"]}
@@ -351,7 +338,8 @@ const NewNfts = ({
                             </Button>
                         ))}
                     </Flex>
-                </>)}
+                </>
+            )}
 
              <Breadcumb data={breadcumbData}></Breadcumb>
 
