@@ -153,7 +153,7 @@ const NftCardInCollection = ({
           textAlign="center"
           onMouseEnter={() => setIsFlipped(true)}
           onMouseLeave={() => setIsFlipped(false)}
-          style={{backgroundImage:"../../../../../../public/assets/nft_background.png"}}
+          style={{backgroundImage:"/assets/nft_background.png"}}
          >
           <Box h={showInfo ? cardHeight : imageHeight} ref={ref}>
             {inView && (
@@ -222,6 +222,7 @@ const NftCardInCollection = ({
                           height: "100%",
                           width: "100%" ,
                           objectFit: "fill",
+                          backgroundImage:"/assets/nft_background.png",
                         }}
                       >
                         <source src={nft?.back_image} type="video/mp4" />

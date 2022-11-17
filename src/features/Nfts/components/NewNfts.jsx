@@ -53,59 +53,6 @@ const NewNfts = ({
 
     return (
         <Box mt={5}>
-            {newNfts?.length && (
-                <>
-                    <Flex
-                        justify={["center", "center", "space-between"]}
-                        mt="20px"
-                        align="center"
-                        mb="20px"
-                        textAlign={"center"}
-                    >
-                        <Text
-                            color="white"
-                            fontFamily="Blanch"
-                            fontSize={["4rem", "4rem", "4rem", "5rem", "5rem"]}
-                        >
-                            NEWEST NFTS
-                        </Text>
-                    </Flex>
-
-                    <Box px={1}>
-                        <ScrollMenu
-                            className="no-scrollbar"
-                            apiRef={ref}
-                            ref={lazyRootNew}
-                            LeftArrow={LeftArrow}
-                            RightArrow={RightArrow}
-                        >
-                            {newNfts
-                                ?.sort((a, b) => a.priority - b.priority)
-                                .map((item, index) => (
-                                    <NftCardInCollection
-                                        itemId={`nftcard-${index}`}
-                                        key={`nftcard-${index}`}
-                                        slug={item.slug}
-                                        showInfo={true}
-                                        nft={item}
-                                        lazyRoot={lazyRootNew}
-                                        defaultInView={
-                                            isMobileDevice
-                                                ? index < 2
-                                                : index < 4
-                                        }
-                                        cardWidth={[
-                                            "84vw",
-                                            "83vw",
-                                            "370px",
-                                            "370px"
-                                        ]}
-                                    />
-                                ))}
-                        </ScrollMenu>
-                    </Box>
-                </>
-            )}
 
             {!selectedCategory ? (
                 <Center>
@@ -294,15 +241,16 @@ const NewNfts = ({
                 </Flex>
             )}
            
-            {isMobileDevice ? (<><Input placeholder="Search" /><Select placeholder='All NFTS' style={{color:"white"}}>
+            {isMobileDevice ? (<>
+            {selCategoriesData.length=1 && (<Input type="search" placeholder="Search" />)}<Select placeholder='All NFTS' style={{color:"white"}}>
             {selCategoriesData.map((e, key) => {
         return <option key={key} value={e.value} style={{background:"black"}}>{e.name}</option>;
     })}
-            </Select><Select placeholder='Price Low to High' style={{color:"white"}}>
+            </Select>{selCategoriesData.length=1 && (<Select placeholder='Price Low to High' style={{color:"white"}}>
             {priceData.map((e) => {
         return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
     })}
-            </Select></>) : (<>
+            </Select>)}</>) : (<>
                     <Flex mt={10} mx="auto" flexWrap="wrap">
                         <Button
                             w={["90vw", "90vw", "auto"]}

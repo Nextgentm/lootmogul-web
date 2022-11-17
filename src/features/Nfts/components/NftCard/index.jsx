@@ -187,6 +187,7 @@ const NftCard = ({
                           height: "100%",
                           width: "100%" ,
                           objectFit: "fill",
+                          backgroundImage:"/assets/nft_background.png",
                         }}
                       >
                         <source src={nft?.front_image} type="video/mp4" />
