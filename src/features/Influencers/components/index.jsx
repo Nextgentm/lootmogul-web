@@ -12,8 +12,8 @@ import Breadcumb from "./Breadcumb";
 import {
     useWindowSize,
     useWindowWidth,
-    useWindowHeight,
-  } from '@react-hook/window-size'
+    useWindowHeight
+} from "@react-hook/window-size";
 
 const Influencers = ({ data, selectedCategory, banner }) => {
     const defaultCategoryName = "All Ambassadors";
@@ -36,6 +36,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     const router = useRouter();
     const onlyWidth = useWindowWidth();
     const [dataPrePage, setDataPrePage] = useState(16);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -59,9 +60,11 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             setCategory(defaultCategoryName);
             setDisplayData(data);
 
-            if (window.location.pathname.includes('category')){
+            if (window.location.pathname.includes("category")) {
                 let routes = breadcumbData;
-                let cData = JSON.parse(window.localStorage.getItem('changedSlugDetails'));
+                let cData = JSON.parse(
+                    window.localStorage.getItem("changedSlugDetails")
+                );
                 routes = routes.splice(0, 2);
                 routes.map((x) => (x.isCurrentPage = false));
 
@@ -99,9 +102,11 @@ const Influencers = ({ data, selectedCategory, banner }) => {
         let routes = breadcumbData;
         routes = routes.splice(0, 2);
 
-        if (e === defaultCategoryName.toLowerCase()) {
-            routes[1].isCurrentPage = true;
-            setBreadcumbData(routes);
+        if (e === defaultCategoryName.toLowerCase() || e === "") {
+            if (!isMobile) {
+                routes[1].isCurrentPage = true;
+                setBreadcumbData(routes);
+            }
             router.push("/influencers");
         } else if (displayData) {
             let selData = displayData.filter(
@@ -116,7 +121,10 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 url: "/influencers/category/" + selData[0].slug,
                 isCurrentPage: true
             });
-            localStorage.setItem("changedSlugDetails", JSON.stringify(selData[0]));
+            localStorage.setItem(
+                "changedSlugDetails",
+                JSON.stringify(selData[0])
+            );
             setBreadcumbData(routes);
         }
 
@@ -190,7 +198,11 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     // }, [sortBy]);
 
     useEffect(() => {
-        onlyWidth === 1440 || onlyWidth === 1024 ? setDataPrePage(15):  setDataPrePage(16);
+        onlyWidth === 1440 || onlyWidth === 1024
+            ? setDataPrePage(15)
+            : setDataPrePage(16);
+
+        onlyWidth <= 425 ? setIsMobile(true) : setIsMobile(false);
     }, [onlyWidth]);
 
     useEffect(() => {
@@ -292,8 +304,9 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 handleCategoryChange={handleCategoryChange}
                 activeCategory={category}
                 searchText={searchText}
+                isMobile={isMobile}
             />
-            <Breadcumb data={breadcumbData}></Breadcumb>
+            {!isMobile && <Breadcumb data={breadcumbData}></Breadcumb>}
             {/* <NewInfluencers
                 newInfluencers={newInfluencers}
                 LeftArrow={LeftArrow}
