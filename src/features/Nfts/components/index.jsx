@@ -93,7 +93,43 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
         ChangePriceRange(tempPriceRange);
         
     };
+    const nftSearch = (e) => {
+        console.log(e)
+        var newCat = [];
+        selCategoriesData?.map((cat) => {
+            var data = cat.nftSet;
+            for (var element in data){
+                var subElements = element.nft_kred;
+                for (var subElement in subElements){
+                    if(subElement.name.includes(e)){
+                        newCat = [...newCat,...cat]
+                    }
+                }
+            }
+        });
+        
+        setSelCategoriesData(newCat);
+    }
+    const nftPriceSorting = (e)=>{
+        if(e==="Price Low To High"){
+            const newCatData = selCategoriesData?.map((cat) => {
+                cat.nfts?.data?.sort((a, b) => (a.market_price > b.market_price ? 1 : -1));
+                return cat;
+            });
+            setSelCategoriesData(newCatData);
+        }
+        else {
+            const newCatData = selCategoriesData?.map((cat) => {
+                cat.nfts?.data?.sort((a, b) => (a.market_price > b.market_price ? 1 : -1));
+                return cat;
+            });
+            setSelCategoriesData(newCatData);
+        }
+        
+        
+    }
     const nftSelectCategory = (e) => {
+        console.log(e)
         const newCategory = e.target?.value || e;
         if (newCategory === defaultCategories.toString().toLowerCase()) {
             router.push(
@@ -107,7 +143,6 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === newCategory
             );
-
             router.push(
                 {
                     pathname: "/nfts/" + selData[0].slug
@@ -274,6 +309,8 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
                 isToShowAll={isToShowAll}
                 displayData={displayData}
                 nftSelectCategory={nftSelectCategory}
+                nftPriceSorting={nftPriceSorting}
+                nftSearch={nftSearch}
                 LeftArrow={LeftArrow}
                 RightArrow={RightArrow}
                 priceRange={priceRange}

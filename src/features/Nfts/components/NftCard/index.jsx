@@ -2,83 +2,17 @@ import { Text, Button, Flex, Box, Image, Link } from "@chakra-ui/react";
 import ReactCardFlip from "react-card-flip";
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
+import { NextURL } from "next/dist/server/web/next-url";
 const cardWidth = "290px";
 const cardHeight ="440px";
 const infoboxWidth = "260px";
 const imageHeight = "370px";
 
-const CardInfo = ({ nft }) => {
-  return (
-    <Box
-      key={`nftItem-${nft?.id}`}
-      bg="#00000088"
-      border="1px"
-      borderColor="gray.600"
-      position={"relative"}
-      bottom={"0px"}
-      width={infoboxWidth}
-     mt="-120px"
-      p={"15px"}
-      mx={"15px"}
-    >
-      <Text
-        noOfLines={2}
-        fontWeight="bold"
-        minH="50px"
-        color="white"
-        fontFamily="Sora"
-      >
-        {nft?.name}
-      </Text>
-
-      { nft?.market_price && (    <Flex
-        mt={"3%!important"}
-        justifyContent="center"
-        m={0}
-        p={0}
-        color="white"
-        fontSize={20}
-      >
-        <Box textAlign={"left"}>
-          <Text>{nft?.isAuction ? "Last Bid" : "PRICE: "}</Text>
-          {"    "}
-        </Box>
-
-      <Text ml="15px" mr="6px" fontWeight="bold">
-          {nft?.market_price
-            ? " " + nft?.market_price
-            : "US $" + nft?.sale_price}
-        </Text>
-        <Image
-          alt="Remaining Time"
-          objectFit="contain"
-          mt="5px"
-          src={
-            "https://gamificationv2.s3.us-west-2.amazonaws.com/eth_icon_c0b1871b9b.svg"
-          }
-          height="22px"
-          width="22px"
-        />
-      </Flex>
-      )}
-      <Link
-        href={nft?.marketURL ? nft?.marketURL : "/"}
-        target="_blank"
-        _focus={{ border: "none", textDecoration: "none" }}
-        _hover={{ textDecoration: "none" }}
-      >
-        <Button
-          className="influencer-card-btn"
-          fontSize={20}
-          width="90%"
-          mt="10px"
-        >
-          BUY NOW
-        </Button>
-      </Link>
-    </Box>
-  );
-};
+// const CardInfo = ({ nft }) => {
+//   return (
+    
+//   );
+// };
 
 const NftCard = ({
   nft,
@@ -163,6 +97,7 @@ const NftCard = ({
                 }
                 flipDirection={"horizontal"}
                 infinite={true}
+                style={{backgroundImage:`url("/assets/nft_background.png")`}}
               >
                 <Box cursor="pointer">
                   <Box
@@ -170,9 +105,9 @@ const NftCard = ({
                       border: "none",
                       textDecoration: "none",
                     }}
-                    height={imageHeight}
-                    padding={"3%"}
+                    height="50%"
                     width={cardWidth}
+                    style={{backgroundImage:`url("/assets/nft_background.png")`,}}
                   >
                     {nft?.front_image?.indexOf(".mp4") > 0 && (
                       <video
@@ -184,9 +119,10 @@ const NftCard = ({
                         autoPlay
                         muted
                         style={{
-                          height: "100%",
+                          height: "50%",
                           width: "100%" ,
                           objectFit: "fill",
+                          backgroundImage:`url("/assets/nft_background.png")`,
                         }}
                       >
                         <source src={nft?.front_image} type="video/mp4" />
@@ -203,8 +139,7 @@ const NftCard = ({
                       border: "none",
                       textDecoration: "none",
                     }}
-                    padding="3%"
-                    height={imageHeight}
+                    height="50%"
                     width={cardWidth}
                   >
                     {nft?.back_image?.indexOf(".mp4") > 0 && (
@@ -217,9 +152,11 @@ const NftCard = ({
                         autoPlay
                         muted
                         style={{
-                          height: "100%",
+                          height: "50%",
                           width: "100%" ,
                           objectFit: "fill",
+                          backgroundImage:`url("/assets/nft_background.png")`,
+                          backgroundSize: "500px 500px"
                         }}
                       >
                         <source src={nft?.back_image} type="video/mp4" />
@@ -230,12 +167,65 @@ const NftCard = ({
                       isFlipped &&
                       nftImage(nft.back_image)}
                   </Box>
+                  
                 </Box>
+                
               </ReactCardFlip>
             )}
-            {showInfo && <CardInfo nft={nft} />}
-          </Box>
+            {showInfo && <Box
+      key={`nftItem-${nft?.id}`}
+    >
+      <Text
+        fontWeight="bold"
+        color="white"
+        fontFamily="Sora"
+      >
+        {nft?.name}
+      </Text>
+
+      { nft?.market_price && (    <Flex
+        justifyContent="center"
+        color="white"
+        fontSize={13}
+      >
+        <Box textAlign={"left"}>
+          <Text>{nft?.isAuction ? "Last Bid" : "PRICE: "}</Text>
+          {"    "}
         </Box>
+
+      <Text fontWeight="bold">
+          {nft?.market_price
+            ? " " + nft?.market_price
+            : "US $" + nft?.sale_price}
+        </Text>
+        <Image
+          alt="Remaining Time"
+          objectFit="contain"
+          src={
+            "https://gamificationv2.s3.us-west-2.amazonaws.com/eth_icon_c0b1871b9b.svg"
+          }
+          height="22px"
+          width="22px"
+        />
+      </Flex>
+      )}
+      <Link
+        href={nft?.marketURL ? nft?.marketURL : "/"}
+        target="_blank"
+        _focus={{ border: "none", textDecoration: "none" }}
+        _hover={{ textDecoration: "none" }}
+      >
+        <Button
+          fontSize={12}
+        >
+          BUY NOW
+        </Button>
+      </Link>
+    </Box>}
+          </Box>
+          
+        </Box>
+        
       </Link>
     )
   );
