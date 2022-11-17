@@ -28,6 +28,8 @@ const NewNfts = ({
     defaultCategories,
     selCategoriesData,
     data,
+    nftPriceSorting,
+    nftSearch,
     isNewest,
     isToShowAll,
     nftSelectCategory,
@@ -45,8 +47,8 @@ const NewNfts = ({
     const { isMobileDevice } = useContext(AppContext);
     const [showFilters, setShowFilters] = React.useState(data);
     const [isActive, setActive] = React.useState("false");
-    const priceData = ["Price Low To High", "Price High To Low","Price greater than 10000"];
-
+    const priceData = ["Price Low To High", "Price High To Low"];
+   
     const handleToggle = () => {
         setActive(!isActive);
     };
@@ -206,51 +208,37 @@ const NewNfts = ({
                     </Button>
                 </Flex>
             )}
-            {isNewest && (
-                <Flex
-                    justify={"flex-end"}
-                    mt="20px"
-                    align="center"
-                    mb="20px"
-                    textAlign={"center"}
-                >
-                    {!isMobileDevice && (
-                        <Flex
-                            alignItems="center"
-                            cursor="pointer"
-                            onClick={() =>
-                                router.push({
-                                    pathname: "/nfts"
-                                })
-                            }
-                        >
-                            <Text
-                                color="white"
-                                fontFamily="Blanch"
-                                fontSize={["1em", "1em", "1.5em", "2em", "2em"]}
-                            >
-                                VIEW ALL
-                            </Text>
-                            <Image
-                                alt=""
-                                src="/assets/rightArrow.png"
-                                ml="0.5em"
-                            />
-                        </Flex>
-                    )}
-                </Flex>
-            )}
            
             {isMobileDevice ? (<>
-            {selCategoriesData.length=1 && (<Input type="search" placeholder="Search" />)}<Select placeholder='All NFTS' style={{color:"white"}}>
-            {selCategoriesData.map((e, key) => {
-        return <option key={key} value={e.value} style={{background:"black"}}>{e.name}</option>;
+            {selectedCategory && (<Input type="search" placeholder="Search" onChange={(e) => {
+            nftSearch(e.target.value
+            );
+        }}/>)}<Select placeholder='All NFTS' style={{color:"white"}} onChange={(e) => {
+            nftSelectCategory(e.target.value.toLowerCase()
+            );
+        }}>
+            {displayData.map((e, key) => {
+        return <option key={key} value={e.name} style={{background:"black"}} >{e.name}</option>;
     })}
-            </Select>{selCategoriesData.length=1 && (<Select placeholder='Price Low to High' style={{color:"white"}}>
+            </Select>{selectedCategory && (<Select placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
+            nftPriceSorting(e.target.value
+            );
+        }}>
             {priceData.map((e) => {
         return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
     })}
             </Select>)}</>) : (<>
+                {selectedCategory && (<Input type="search" placeholder="Search" onChange={(e) => {
+            nftSearch(e.value
+            );
+        }}/>)}{selectedCategory && (<Select placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
+            nftPriceSorting(e.target.value
+            );
+        }}>
+            {priceData.map((e) => {
+        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
+    })}
+            </Select>)}
                     <Flex mt={10} mx="auto" flexWrap="wrap">
                         <Button
                             w={["90vw", "90vw", "auto"]}
