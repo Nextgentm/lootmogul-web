@@ -98,9 +98,9 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
         var newCat = [];
         selCategoriesData?.map((cat) => {
             var data = cat.nftSet;
-            for (element in data){
+            for (var element in data){
                 var subElements = element.nft_kred;
-                for (subElement in subElements){
+                for (var subElement in subElements){
                     if(subElement.name.includes(e)){
                         newCat = [...newCat,...cat]
                     }

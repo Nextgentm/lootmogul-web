@@ -10,6 +10,8 @@ import {
     RangeSliderTrack,
     Text,
     Input,
+    InputGroup,
+    InputLeftElement,
     Select
 } from "@chakra-ui/react";
 import React from "react";
@@ -21,6 +23,7 @@ import { BiFilterAlt } from "react-icons/bi";
 import { useContext } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
 import Breadcumb from "../../Influencers/components/Breadcumb";
+import { SearchIcon } from "@chakra-ui/icons";
 
 const NewNfts = ({
     newNfts,
@@ -210,10 +213,10 @@ const NewNfts = ({
             )}
            
             {isMobileDevice ? (<>
-            {selectedCategory && (<Input type="search" placeholder="Search" onChange={(e) => {
-            nftSearch(e.target.value
-            );
-        }}/>)}<Select placeholder='All NFTS' style={{color:"white"}} onChange={(e) => {
+            {selectedCategory && (<><Input type="search" placeholder="Search" SearchIcon onChange={(e) => {
+                    nftSearch(e.target.value
+                    );
+                } } /></>)}<Select placeholder='All NFTS' style={{color:"white"}} onChange={(e) => {
             nftSelectCategory(e.target.value.toLowerCase()
             );
         }}>
@@ -228,10 +231,18 @@ const NewNfts = ({
         return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
     })}
             </Select>)}</>) : (<>
-                {selectedCategory && (<Input type="search" placeholder="Search" onChange={(e) => {
+                {selectedCategory && (<><InputGroup>
+      <InputLeftElement
+        className="InputLeft"
+        pointerEvents="none"
+        children={<SearchIcon className="SearchIcon" color="gray.300" />}
+        size="xs"
+      />
+      <Input type="search" placeholder="Search" SearchIcon onChange={(e) => {
             nftSearch(e.target.value
             );
-        }}/>)}{selectedCategory && (<Select placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
+        }}/>
+    </InputGroup></>)}{selectedCategory && (<Select placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
             nftPriceSorting(e.target.value
             );
         }}>
