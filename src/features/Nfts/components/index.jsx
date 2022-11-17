@@ -95,20 +95,18 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
     };
     const nftSearch = (e) => {
         console.log(e)
-        var newCat = [];
-        selCategoriesData?.map((cat) => {
-            var data = cat.nftSet;
-            for (var element in data){
-                var subElements = element.nft_kred;
-                for (var subElement in subElements){
-                    if(subElement.name.includes(e)){
-                        newCat = [...newCat,...cat]
-                    }
-                }
-            }
-        });
+        if(e.length>0){
+            const newCatData = selCategoriesData?.filter(
+                item => item.nftSet.find(
+                  element => element.nft_kred.data.slug.includes(e)
+                )
+              );
+            setSelCategoriesData(newCatData);
+        }
+        else{
+            setSelCategoriesData(selCategoriesData);
+        }
         
-        setSelCategoriesData(newCat);
     }
     const nftPriceSorting = (e)=>{
         if(e==="Price Low To High"){

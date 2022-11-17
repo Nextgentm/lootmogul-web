@@ -139,6 +139,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                   templateColumns="repeat(4, 1fr)"
                   gap={6}
                   width="100%"
+                  
                 >
                   {displayCards?.sort((a, b) => a.priority - b.priority).map((item, index) => (
                     <NftCard
