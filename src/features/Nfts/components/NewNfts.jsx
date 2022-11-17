@@ -85,41 +85,25 @@ const NewNfts = ({
                     </Text>
 
                     <Flex alignItems="center" pos="relative">
-                        <Button
-                            variant={
-                                !isActive ? "filterBtnSegment" : "filterBtn"
-                            }
-                            onClick={() => {
-                                setShowFilters(true);
-                                handleToggle();
-                                //  nftSelectCategory(influencerCat.name.toLowerCase());
-                            }}
-                        >
-                            FILTER
-                            <Box ml="1em">
-                                <BiFilterAlt color="#FFF" />
-                            </Box>
-                        </Button>
-                        {!isActive ? (
-                            <Box
-                                pos="relative"
-                                top="-8"
-                                right="15px"
-                                bg="#817688"
-                                py="0.5"
-                                px="1"
-                                pt="0 !important"
-                                cursor="pointer"
-                                borderRadius="3px"
-                                onClick={() => {
-                                    handleToggle();
-                                }}
-                            >
-                                <CloseIcon h="12px" color="#0f0625" />
-                            </Box>
-                        ) : (
-                            ""
-                        )}
+                    {selectedCategory && !isMobileDevice && (<><InputGroup>
+      <InputLeftElement
+        className="InputLeft"
+        pointerEvents="none"
+        children={<SearchIcon className="SearchIcon" color="gray.300" />}
+        size="xs"
+      />
+      <Input type="search" placeholder="Search" SearchIcon onChange={(e) => {
+            nftSearch(e.target.value
+            );
+        }}/>
+    </InputGroup></>)}{selectedCategory && !isMobileDevice && (<Select placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
+            nftPriceSorting(e.target.value
+            );
+        }}>
+            {priceData.map((e) => {
+        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
+    })}
+            </Select>)}
                     </Flex>
                 </Flex>
             )}
@@ -230,26 +214,9 @@ const NewNfts = ({
             {priceData.map((e) => {
         return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
     })}
-            </Select>)}</>) : (<>
-                {selectedCategory && (<><InputGroup>
-      <InputLeftElement
-        className="InputLeft"
-        pointerEvents="none"
-        children={<SearchIcon className="SearchIcon" color="gray.300" />}
-        size="xs"
-      />
-      <Input type="search" placeholder="Search" SearchIcon onChange={(e) => {
-            nftSearch(e.target.value
-            );
-        }}/>
-    </InputGroup></>)}{selectedCategory && (<Select placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
-            nftPriceSorting(e.target.value
-            );
-        }}>
-            {priceData.map((e) => {
-        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
-    })}
-            </Select>)}
+            </Select>)}</>) : (
+            <>
+                
                     <Flex mt={10} mx="auto" flexWrap="wrap">
                         <Button
                             w={["90vw", "90vw", "auto"]}

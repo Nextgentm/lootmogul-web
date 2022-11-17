@@ -123,8 +123,8 @@ const NftCardInCollection = ({
           convertImage(300, 400)
         )}`}
         placeholder="blur"
-        height={imageHeight}
-        width={cardWidth}
+        height={"380px"}
+        width={"79%"}
         alt={"nft_front" + nft?.id}
         title={nft?.name}
         src={img}
@@ -133,7 +133,7 @@ const NftCardInCollection = ({
         lazyRoot={lazyRoot}
         borderRadius={20}
         style={{
-          backgroundImage:`url("/assets/nft_background.png")`,backgroundSize:"cover", backgroundPosition:"center"}}
+          backgroundImage:`url("/assets/nft_background.png")`,backgroundSize:"cover", backgroundPosition:"center",marginLeft:"37px",marginTop:"10px"}}
       />
     );
   };
@@ -185,13 +185,13 @@ const NftCardInCollection = ({
                       muted
                       bottom={"0px"}
                       style={{
-                        height: "380px",
+                        height: "360px",
                         width: "79%",
                         borderRadius: "20px",
                         objectFit: "fill",
                         marginLeft: "37px",
-                        marginTop: "8px",
-                        marginBottom:"18px"
+                        marginTop: "25px",
+                        marginBottom:"28px"
                       }}
                     >
                       <source src={nft?.front_image} type="video/mp4" />
@@ -221,8 +221,6 @@ const NftCardInCollection = ({
                       loop
                       autoPlay
                       muted
-                      p={"15px"}
-                      mx={"8%"}
                       bottom={"0px"}
                       style={{
                         height: "400px",
