@@ -19,7 +19,7 @@ const NftCard = ({ NFTS, showInfo = false }) => {
             m="auto"
             textAlign="center"
             w={"300px"}
-            style={{backgroundImage:`url("/assets/nft_background.png")`,}}
+            h={showInfo ? "520px" : "420px"}
             onMouseEnter={() => setIsFlipped(true)}
             onMouseLeave={() => setIsFlipped(false)}
         >
@@ -37,7 +37,7 @@ const NftCard = ({ NFTS, showInfo = false }) => {
                             loop
                             autoPlay
                             muted
-                            style={{ height: "400px", width: "full" , backgroundImage:`url("/assets/nft_background.png")`}}
+                            style={{ height: "400px", width: "full" }}
                         >
                             <source src={NFTS.front_image} type="video/mp4" />
                             Your browser does not support the Video NFT.
@@ -52,7 +52,6 @@ const NftCard = ({ NFTS, showInfo = false }) => {
                             title={NFTS.name}
                             src={NFTS.front_image}
                             cursor="pointer"
-                            style={{backgroundImage:`url("/assets/nft_background.png")`,}}
                         />
                     )}
                 </Box>
@@ -64,7 +63,7 @@ const NftCard = ({ NFTS, showInfo = false }) => {
                             loop
                             autoPlay
                             muted
-                            style={{ height: "400px", width: "full", backgroundImage:`url("/assets/nft_background.png")` }}
+                            style={{ height: "400px", width: "full" }}
                         >
                             <source src={NFTS.back_image} type="video/mp4" />
                             Your browser does not support the Video NFT.
@@ -79,7 +78,6 @@ const NftCard = ({ NFTS, showInfo = false }) => {
                             title={NFTS.name}
                             src={NFTS.back_image}
                             cursor="pointer"
-                            style={{backgroundImage:`url("/assets/nft_background.png")`,backgroundSize:"1000px 1000px"}}
                         />
                     )}
                 </Box>

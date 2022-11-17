@@ -36,9 +36,9 @@ const ReadMore = ({ children }) => {
       }}>
         {isReadMore ? text?.slice(0, 50) : text}
         
-           <span onClick={toggleReadMore} className="read-or-hide" style={{color:"#e00493",fontSize:"18px",fontFamily:"Sora"
+           <span onClick={toggleReadMore} className="read-or-hide" style={{color:"orange",fontSize:"15px",fontFamily:"Sora"
       }}>
-           {isReadMore ? "...Read more" : " Show less"}
+           {isReadMore ? "...read more" : " show less"}
          </span>
         
        
