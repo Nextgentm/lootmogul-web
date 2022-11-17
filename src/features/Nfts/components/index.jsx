@@ -95,11 +95,20 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest,nft }) => {
     };
     const nftSearch = (e) => {
         console.log(e)
-        const newCatData = selCategoriesData?.map((cat) => {
-            cat.nfts?.data?.filter((a) => (a.name.includes(e)));
-            return cat;
+        var newCat = [];
+        selCategoriesData?.map((cat) => {
+            var data = cat.nftSet;
+            for (element in data){
+                var subElements = element.nft_kred;
+                for (subElement in subElements){
+                    if(subElement.name.includes(e)){
+                        newCat = [...newCat,...cat]
+                    }
+                }
+            }
         });
-        setSelCategoriesData(newCatData);
+        
+        setSelCategoriesData(newCat);
     }
     const nftPriceSorting = (e)=>{
         if(e==="Price Low To High"){
