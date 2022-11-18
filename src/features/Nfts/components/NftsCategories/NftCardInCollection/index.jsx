@@ -123,8 +123,9 @@ const NftCardInCollection = ({
           convertImage(300, 400)
         )}`}
         placeholder="blur"
-        height={"380px"}
-        width={"79%"}
+        height={"310px"}
+        width={"240px"}
+        marginTop={"20px"}
         alt={"nft_front" + nft?.id}
         title={nft?.name}
         src={img}
@@ -133,16 +134,14 @@ const NftCardInCollection = ({
         lazyRoot={lazyRoot}
         borderRadius={20}
         style={{
-          backgroundImage:`url("/assets/nft_background.png")`,backgroundSize:"cover", backgroundPosition:"center",marginLeft:"37px",marginTop:"10px"}}
+          backgroundImage:`url("/assets/nft_background.png")`,backgroundSize:"cover", backgroundPosition:"center",marginLeft:"37px",marginTop:"35px"}}
       />
     );
   };
 
   return (
     nft && (
-      <><Flex style={{
-        backgroundImage: `url("/assets/nft_background.png")`, backgroundSize: "cover", backgroundPosition: "center"
-      }}><Link
+      <><Flex backgroundImage={'url("/assets/nft_background.png")'} backgroundSize={'contain'}><Link
       href={nft?.marketURL ? nft?.marketURL : "/"}
       target="_blank"
       passhref="true"
@@ -156,6 +155,7 @@ const NftCardInCollection = ({
         textAlign="center"
         onMouseEnter={() => setIsFlipped(true)}
         onMouseLeave={() => setIsFlipped(false)}
+        
       >
         <Box h={showInfo ? cardHeight : imageHeight} ref={ref} >
           {inView && (
@@ -164,13 +164,14 @@ const NftCardInCollection = ({
               flipDirection={"horizontal"}
               infinite={true}
             >
-              <Box cursor="pointer"
+              <Box cursor="pointer" 
               >
                 <Box
                   _focus={{
                     border: "none",
                     textDecoration: "none",
                   }}
+                  
                   height={imageHeight}
                   width={cardWidth}
                 >
@@ -185,13 +186,12 @@ const NftCardInCollection = ({
                       muted
                       bottom={"0px"}
                       style={{
-                        height: "360px",
-                        width: "79%",
+                        height: "310px",
+                        width: "240px",
                         borderRadius: "20px",
                         objectFit: "fill",
                         marginLeft: "37px",
-                        marginTop: "25px",
-                        marginBottom:"28px"
+                        marginTop: "30px",
                       }}
                     >
                       <source src={nft?.front_image} type="video/mp4" />
