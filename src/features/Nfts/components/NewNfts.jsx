@@ -80,6 +80,8 @@ const NewNfts = ({
                         color="white"
                         fontSize={["3em", "4em"]}
                         fontFamily="Blanch"
+                        inlineSize={"100"}
+
                     >
                         {selCategoriesData?.[0]?.name}
                     </Text>
@@ -96,7 +98,7 @@ const NewNfts = ({
             nftSearch(e.target.value
             );
         }}/>
-    </InputGroup></>)}{selectedCategory && !isMobileDevice && (<Select placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
+    </InputGroup></>)}{selectedCategory && !isMobileDevice && (<Select iconColor="white" placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
             nftPriceSorting(e.target.value
             );
         }}>
@@ -197,17 +199,25 @@ const NewNfts = ({
             )}
            
             {isMobileDevice ? (<>
-            {selectedCategory && (<><Input type="search" placeholder="Search" SearchIcon onChange={(e) => {
-                    nftSearch(e.target.value
-                    );
-                } } /></>)}<Select placeholder='All NFTS' style={{color:"white"}} onChange={(e) => {
+            {selectedCategory && (<><InputGroup>
+      <InputLeftElement
+        className="InputLeft"
+        pointerEvents="none"
+        children={<SearchIcon className="SearchIcon" color="gray.300" />}
+        size="xs"
+      />
+      <Input type="search" placeholder="Search" SearchIcon onChange={(e) => {
+            nftSearch(e.target.value
+            );
+        }}/>
+    </InputGroup></>)}<Select iconColor="white" style={{color:"white"}} defaultValue={defaultCategories} onChange={(e) => {
             nftSelectCategory(e.target.value.toLowerCase()
             );
         }}>
             {displayData.map((e, key) => {
         return <option key={key} value={e.name} style={{background:"black"}} >{e.name}</option>;
     })}
-            </Select>{selectedCategory && (<Select placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
+            </Select>{selectedCategory && (<Select iconColor="white" placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
             nftPriceSorting(e.target.value
             );
         }}>
