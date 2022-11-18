@@ -206,7 +206,7 @@ const NewNfts = ({
         children={<SearchIcon className="SearchIcon" color="gray.300" />}
         size="xs"
       />
-      <Input type="search" placeholder="Search" SearchIcon onChange={(e) => {
+      <Input type="search" placeholder="Search" color={"white"} SearchIcon onChange={(e) => {
             nftSearch(e.target.value
             );
         }}/>

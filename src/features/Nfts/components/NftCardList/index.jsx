@@ -15,6 +15,7 @@ const NftCardList = ({ data, isSale = true }) => {
   const [showAll, setShowAll] = useState(true);
 
   const { isMobileDevice } = useContext(AppContext);
+  console.log(data)
   return (
     <Box width="100%">
       {data.length === 0 ? (
