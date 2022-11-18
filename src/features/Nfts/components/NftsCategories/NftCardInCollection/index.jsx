@@ -123,9 +123,8 @@ const NftCardInCollection = ({
           convertImage(300, 400)
         )}`}
         placeholder="blur"
-        height={"310px"}
-        width={"240px"}
-        marginTop={"20px"}
+        height={"380px"}
+        width={"79%"}
         alt={"nft_front" + nft?.id}
         title={nft?.name}
         src={img}
@@ -134,14 +133,14 @@ const NftCardInCollection = ({
         lazyRoot={lazyRoot}
         borderRadius={20}
         style={{
-          backgroundImage:`url("/assets/nft_background.png")`,backgroundSize:"cover", backgroundPosition:"center",marginLeft:"37px",marginTop:"35px"}}
+          backgroundImage:`url("/assets/nft_background.png")`,backgroundSize:"cover", backgroundPosition:"center"}}
       />
     );
   };
 
   return (
     nft && (
-      <><Flex backgroundImage={'url("/assets/nft_background.png")'} backgroundSize={'contain'}><Link
+      <><Flex backgroundImage={'url("/assets/nft_background.png")'} backgroundSize= {"contain"}><Link
       href={nft?.marketURL ? nft?.marketURL : "/"}
       target="_blank"
       passhref="true"
@@ -155,7 +154,6 @@ const NftCardInCollection = ({
         textAlign="center"
         onMouseEnter={() => setIsFlipped(true)}
         onMouseLeave={() => setIsFlipped(false)}
-        
       >
         <Box h={showInfo ? cardHeight : imageHeight} ref={ref} >
           {inView && (
@@ -164,14 +162,13 @@ const NftCardInCollection = ({
               flipDirection={"horizontal"}
               infinite={true}
             >
-              <Box cursor="pointer" 
+              <Box cursor="pointer"
               >
                 <Box
                   _focus={{
                     border: "none",
                     textDecoration: "none",
                   }}
-                  
                   height={imageHeight}
                   width={cardWidth}
                 >
@@ -187,11 +184,12 @@ const NftCardInCollection = ({
                       bottom={"0px"}
                       style={{
                         height: "310px",
-                        width: "240px",
+                        width: "69%",
                         borderRadius: "20px",
                         objectFit: "fill",
                         marginLeft: "37px",
-                        marginTop: "30px",
+                        marginTop: "38px",
+                        marginBottom:"18px"
                       }}
                     >
                       <source src={nft?.front_image} type="video/mp4" />
@@ -221,6 +219,8 @@ const NftCardInCollection = ({
                       loop
                       autoPlay
                       muted
+                      p={"15px"}
+                      mx={"8%"}
                       bottom={"0px"}
                       style={{
                         height: "400px",

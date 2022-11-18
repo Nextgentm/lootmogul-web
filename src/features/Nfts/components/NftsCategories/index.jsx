@@ -13,6 +13,7 @@ import {
   Button,
   GridItem,
   Center,
+  color,
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../../../../utils/AppContext/index";
@@ -23,6 +24,30 @@ import {
 } from "../../../../components/ContentNavigator/arrows";
 import NftCardInCollection from "./NftCardInCollection";
 
+const ReadMore = ({ children }) => {
+  const text = children;
+  const [isReadMore, setIsReadMore] = useState(true);
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
+  if (text){
+    return (
+      <p className="text" style={{color:"white",fontSize:"18px",fontFamily:"Sora"
+      }}>
+        {isReadMore ? text?.slice(0, 50) : text}
+        
+           <span onClick={toggleReadMore} className="read-or-hide" style={{color:"#e00493",fontSize:"18px",fontFamily:"Sora"
+      }}>
+           {isReadMore ? "...Read more" : " Show less"}
+         </span>
+        
+       
+      </p>
+    );
+  }
+  return null;
+  
+};
 const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
   const ref = useRef();
   const refColl = useRef();
@@ -85,7 +110,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
       ) : (
         <>
           {isSelectedCat ? (
-            <Box ml={{ base: "-15px", sm: "10px", md: "15px" }}>
+            <Box ml={{ base: "-15px", sm: "10px", md: "15px" }} style={{backgroundColor:"white"}}>
               {isMobileDevice ? (
                 <ScrollMenu
                   className="no-scrollbar"
@@ -189,7 +214,8 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                       fontSize={["18px","20px"]}
                       mt="30px!important"
                     >
-                      {NFTS.description}
+                     <ReadMore
+                    children={NFTS.description}></ReadMore>
                     </Text>
                     <Button
                       mt={[
@@ -219,10 +245,10 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                 />
               </GridItem>
 
-              <GridItem order={[1, 1, 1, index % 2 == 0 ? 3 : 1]} colSpan={6} width={"300px"}>
+              <GridItem order={[1, 1, 1, index % 2 == 0 ? 3 : 1]} colSpan={6}>
                 <Center>
                   <Box
-                  width={["100%", "100%","400px", "400px", "380px"]}
+                  width={["100%", "100%","420px", "450px", "450px"]}
                     mx={[0,0,0, "-40px"]}
                   >
                     <ScrollMenu
@@ -236,7 +262,6 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                       ref={lazyRootColl}
                       LeftArrow={LeftArrow}
                       RightArrow={RightArrow}
-                      width={"200px"}
                     >
                       {displayCards?.sort((a, b) => a.priority - b.priority).map((item, index) => (
                         <NftCardInCollection
@@ -251,7 +276,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                           nft={item?.nft_kred?.data}
                           lazyRoot={lazyRootColl}
                           defaultInView={isMobileDevice ? index < 2 : index < 5}
-                          cardWidth={["89vw","89vw","400px","400px"]}
+                          cardWidth={["84vw","82vw","370px","370px"]}
                           />
                       ))}
                     </ScrollMenu>

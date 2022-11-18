@@ -122,14 +122,14 @@ const NftCard = ({
                  height="80%"
                  width="80%"
                  style={{
-                   height: "310px",
+                   height: "300px",
                    width: "240px",
                    borderRadius: "20px",
                    objectFit: "fill",
                    position:"cover",
-                   marginLeft:"50px",
+                   marginLeft:"40px",
                    marginTop: "42px",
-                   marginBottom:"0px"
+                   marginBottom:"10px"
                  }}
                >
                  {nft?.front_image?.indexOf(".mp4") > 0 && (
@@ -171,7 +171,7 @@ const NftCard = ({
                    borderRadius: "20px",
                    objectFit: "fill",
                    position:"cover",
-                   marginLeft:"10px",
+                   marginLeft:"30px",
                    marginTop: "48px",
                    marginBottom:"0px"
                  }}
