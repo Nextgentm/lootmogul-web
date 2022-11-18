@@ -202,7 +202,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             ? setDataPrePage(15)
             : setDataPrePage(16);
 
-        onlyWidth <= 425 ? setIsMobile(true) : setIsMobile(false);
+        onlyWidth <= 720 ? setIsMobile(true) : setIsMobile(false);
     }, [onlyWidth]);
 
     useEffect(() => {

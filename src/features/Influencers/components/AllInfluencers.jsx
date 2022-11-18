@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Grid, Heading, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Grid, Heading, Text, useMediaQuery } from "@chakra-ui/react";
 import React, { useState, useEffect, useContext } from "react";
 import { BiFilterAlt } from "react-icons/bi";
 import ReadMoreLess from "../ReadMoreLess";
@@ -32,6 +32,31 @@ const AllInfluencers = ({
         setActive(true);
     }, [category]);
     const router = useRouter();
+
+    const [isMobile] = useMediaQuery("(max-width:768px)");
+    const [isLargeMobile] = useMediaQuery("(max-width: 720px)");
+    const [isAvgLaptopDevice] = useMediaQuery("(max-width: 1366px)");
+    const [isAvgDeskDevice] = useMediaQuery("(max-width: 1440px)");
+    const [isLargeAndAbove] = useMediaQuery("(max-width: 2560px)");
+    
+    const [columnValues, setColumnValues] = useState('repeat(8, 1fr)');
+
+    useEffect(() => {
+        if (isMobile) {
+            setColumnValues('repeat(1, 1fr)');
+        } else if (isLargeMobile) {
+            setColumnValues('repeat(2, 1fr)');
+        } else if (isAvgLaptopDevice) {
+            setColumnValues('repeat(5, 1fr)');
+        } else if (isAvgDeskDevice) {
+            setColumnValues('repeat(5, 1fr)');
+        } else if (isLargeAndAbove) {
+            setColumnValues('repeat(8, 1fr)');
+        } else  {
+            setColumnValues('repeat(8, 1fr)');
+        }
+    });
+    
     return (
         <Box mt={10} mx={[10, 10, 16]}>
             <Flex
@@ -108,14 +133,7 @@ const AllInfluencers = ({
                 <Grid
                     flexWrap="wrap"
                     gap={10}
-                    templateColumns={[
-                        "repeat(1, 1fr)",
-                        "repeat(1, 1fr)",
-                        "repeat(2, 1fr)",
-                        "repeat(3, 1fr)",
-                        "repeat(5, 1fr)",
-                        "repeat(8, 1fr)"
-                    ]}
+                    templateColumns={columnValues}
                 >
                     {displayInfluencers?.length &&
                         displayInfluencers
@@ -129,7 +147,7 @@ const AllInfluencers = ({
                             ?.map((influencer, index) => (
                                 <InfluencersCard
                                     style={{ w: "100%", px: 4 }}
-                                    colSpan={4}
+                                    colSpan={5}
                                     itemId={`item-${index}`}
                                     key={`item-${index}`}
                                     slug={influencer.slug}

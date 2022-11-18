@@ -90,6 +90,14 @@ nav {
   position: relative;
 }
 
+.cardInfoClass {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
   .promoClass >.slick-arrows {
     display:none!important;
   }
