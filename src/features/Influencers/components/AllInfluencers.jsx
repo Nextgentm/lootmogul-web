@@ -1,13 +1,21 @@
-import { Box, Button, Flex, Grid, Heading, Text, useMediaQuery } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Flex,
+    Grid,
+    Heading,
+    Text,
+    useMediaQuery,
+    Image
+} from "@chakra-ui/react";
 import React, { useState, useEffect, useContext } from "react";
-import { BiFilterAlt } from "react-icons/bi";
 import ReadMoreLess from "../ReadMoreLess";
 import CategoryComponent from "./categoryComp";
 import InfluencersCard from "./InfluencersCategories/InfluencersCard";
 import { useRouter } from "next/router";
-import { CloseIcon } from "@chakra-ui/icons";
 import Pagination from "./Pagination";
 import AppContext from "../../../utils/AppContext";
+import { useWindowWidth } from "@react-hook/window-size";
 
 const AllInfluencers = ({
     displayInfluencers,
@@ -34,29 +42,58 @@ const AllInfluencers = ({
     const router = useRouter();
 
     const [isMobile] = useMediaQuery("(max-width:768px)");
-    const [isLargeMobile] = useMediaQuery("(max-width: 720px)");
     const [isAvgLaptopDevice] = useMediaQuery("(max-width: 1366px)");
     const [isAvgDeskDevice] = useMediaQuery("(max-width: 1440px)");
+    const [isLargeDesk] = useMediaQuery("(max-width: 1920px)");
     const [isLargeAndAbove] = useMediaQuery("(max-width: 2560px)");
-    
-    const [columnValues, setColumnValues] = useState('repeat(8, 1fr)');
+
+    const [columnValues, setColumnValues] = useState("repeat(8, 1fr)");
+    const onlyWidth = useWindowWidth();
+    const [width, setWidth] = useState("");
+    const [hight, setHight] = useState("");
+    const [marLeft, setMarLeft] = useState("");
 
     useEffect(() => {
         if (isMobile) {
-            setColumnValues('repeat(1, 1fr)');
-        } else if (isLargeMobile) {
-            setColumnValues('repeat(2, 1fr)');
+            if (onlyWidth === 720) {
+                setColumnValues("repeat(2, 1fr)");
+                setHight("285px");
+                setWidth("330px");
+                setMarLeft("-10px");
+            } else {
+                setColumnValues("repeat(1, 1fr)");
+                setHight("285px");
+                setWidth("328px");
+                setMarLeft("-18px");
+            }
         } else if (isAvgLaptopDevice) {
-            setColumnValues('repeat(5, 1fr)');
+            setColumnValues("repeat(5, 1fr)");
+            setHight("285px");
+            setWidth("240px");
+            setMarLeft("3px");
         } else if (isAvgDeskDevice) {
-            setColumnValues('repeat(5, 1fr)');
+            setColumnValues("repeat(5, 1fr)");
+            setHight("285px");
+            setWidth("240px");
+            setMarLeft("3px");
+        } else if (isLargeDesk) {
+            setColumnValues("repeat(8, 1fr)");
+            setHight("285px");
+            setWidth("230px");
+            setMarLeft("-13px");
         } else if (isLargeAndAbove) {
-            setColumnValues('repeat(8, 1fr)');
-        } else  {
-            setColumnValues('repeat(8, 1fr)');
+            setColumnValues("repeat(8, 1fr)");
+            setHight("285px");
+            setWidth("238px");
+            setMarLeft("24px");
+        } else {
+            setColumnValues("repeat(8, 1fr)");
+            setHight("285px");
+            setWidth("330px");
+            setMarLeft("-10px");
         }
     });
-    
+
     return (
         <Box mt={10} mx={[10, 10, 16]}>
             <Flex
@@ -130,11 +167,7 @@ const AllInfluencers = ({
                 ""
             )}
             <Box mt={5}>
-                <Grid
-                    flexWrap="wrap"
-                    gap={10}
-                    templateColumns={columnValues}
-                >
+                <Grid flexWrap="wrap" gap={5} templateColumns={columnValues}>
                     {displayInfluencers?.length &&
                         displayInfluencers
                             .sort((a, b) => a.order - b.order)
@@ -145,14 +178,23 @@ const AllInfluencers = ({
                             )
 
                             ?.map((influencer, index) => (
-                                <InfluencersCard
-                                    style={{ w: "100%", px: 4 }}
-                                    colSpan={5}
-                                    itemId={`item-${index}`}
-                                    key={`item-${index}`}
-                                    slug={influencer.slug}
-                                    influencer={influencer}
-                                />
+                                <Flex>
+                                    <InfluencersCard
+                                        style={{ w: "100%", px: 4 }}
+                                        colSpan={2}
+                                        itemId={`item-${index}`}
+                                        key={`item-${index}`}
+                                        slug={influencer.slug}
+                                        influencer={influencer}
+                                    />
+                                    <Image
+                                        height={hight}
+                                        width={width}
+                                        pos="absolute"
+                                        src="/assets/side_Frame.png"
+                                        ml={marLeft}
+                                    />
+                                </Flex>
                             ))}
                 </Grid>
             </Box>
@@ -164,7 +206,9 @@ const AllInfluencers = ({
                 />
             ) : (
                 <Box>
-                  <Text fontSize='1xl' color={'white'} fontFamily={"Sora"}>No Record found</Text>
+                    <Text fontSize="1xl" color={"white"} fontFamily={"Sora"}>
+                        No Record found
+                    </Text>
                 </Box>
             )}
             {category.toLowerCase() !== defaultCategoryName.toLowerCase() &&
