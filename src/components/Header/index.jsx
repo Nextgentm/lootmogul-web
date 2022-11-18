@@ -16,7 +16,8 @@ import {
     loginBtnStyle,
     loginStyle,
     navLinksStyle,
-    communityStyle
+    communityStyle,
+    versionStyle
 } from "./styles";
 import { HamburgerIcon } from "@chakra-ui/icons";
 const Login = dynamic(() => import("../../features/Login"));
@@ -141,7 +142,8 @@ const Header = () => {
                                 marginRight="15px"
                                 marginTop="18px"
                                 alt="social"
-                                boxSize={["20px", "20px"]}
+                                width={["28px"]}
+                                height={["23px"]}
                                 src={setMobileIcons(
                                     isActiveLink(path, queryPath),
                                     imageUrl,
@@ -154,8 +156,9 @@ const Header = () => {
                                     {...navLinksStyle(
                                         isActiveLink(path, queryPath)
                                     )}
-                                    p="10px 0"
-                                    lineHeight="1"
+                                    p="5px 0"
+                                    fontSize="42px"
+                                    lineHeight="42px"
                                     _hover={{
                                         transform: "scale(1)",
                                         textDecoration: "none",
@@ -176,6 +179,9 @@ const Header = () => {
                     textDecoration: "none",
                     color: "#e90a63"
                 }}
+                fontSize="42px"
+                lineHeight="42px"
+                marginBottom="10px"
             >
                 COMMUNITY
             </Text>
@@ -197,7 +203,7 @@ const Header = () => {
                     alt="instagram"
                     boxSize={["20px", "20px"]}
                     src="/assets/CommunityIcons/instagram-white.svg"
-                />
+                />              
                 <Image
                     marginRight="15px"
                     alt="facebook"
@@ -216,24 +222,27 @@ const Header = () => {
                     boxSize={["20px", "20px"]}
                     src="/assets/CommunityIcons/youtube-white.svg"
                 />
-            </Flex>
-            <Button
-                mt={"30px"}
-                w="220px"
-                h="35px"
-                fontSize={["12px"]}
-                onClick={() =>
-                    window.open("https://discord.gg/mHUqAm8fsh", "_blank")
-                }
-            >
                 <Image
-                    marginRight="20px"
-                    alt="social"
-                    boxSize={["30px", "38px"]}
-                    src="/assets/designupdate1/discordicon.png"
+                    marginRight="15px"
+                    alt="youtube"
+                    boxSize={["20px", "20px"]}
+                    src="/assets/CommunityIcons/medium-icon-white.svg"
                 />
-                <span>Join Discord</span>
-            </Button>
+            </Flex>
+            <Text
+            {...versionStyle(false)}
+            _hover={{
+                transform: "scale(1)",
+                textDecoration: "none",
+                color: "#e90a63"
+            }}
+            fontSize="32px"
+            lineHeight="32px"
+            marginTop="35px"
+            >
+                Version 2.0.6
+            </Text>
+            
         </Flex>
     );
 
