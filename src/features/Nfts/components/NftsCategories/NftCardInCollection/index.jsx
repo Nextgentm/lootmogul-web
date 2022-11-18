@@ -210,6 +210,7 @@ const NftCardInCollection = ({
                   >
                     {nft?.front_image?.indexOf(".mp4") > 0 && (
                       <video
+                      className="lazy"
                         playsinline
                         key={nft?.id}
                         id={"background-video" + nft.id}
