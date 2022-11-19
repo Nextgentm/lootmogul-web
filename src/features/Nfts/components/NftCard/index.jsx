@@ -311,6 +311,38 @@ const NftCard = ({
                                                 height="22px"
                                                 width="22px"
                                             />
+                                            <Box
+                                                w="24px"
+                                                h="24px"
+                                                border={"1px"}
+                                                borderColor="#ffffff44"
+                                                mt={"5px"}
+                                                mr={"6px"}
+                                                ml={"2px"}
+                                            >
+                                                <Image
+                                                    m="auto"
+                                                    h="100%"
+                                                    w="100%"
+                                                    alt="like"
+                                                    src="/assets/designupdate1/games_like_icon.svg"
+                                                />
+                                            </Box>
+                                            <Box
+                                                w="24px"
+                                                h="24px"
+                                                border={"1px"}
+                                                borderColor="#ffffff44"
+                                                mt={"5px"}
+                                            >
+                                                <Image
+                                                    m="auto"
+                                                    h="100%"
+                                                    w="100%"
+                                                    alt="share"
+                                                    src="/assets/designupdate1/games_share_icon.svg"
+                                                />
+                                                </Box>
                                         </Flex>
                                     )}
                                     <Link
