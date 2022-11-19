@@ -1,5 +1,4 @@
 import { Box, Text } from "@chakra-ui/react";
-import { YouTubeIcon, ReviewStarsIcon } from "../../../components/Icons";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import CollapsableRow from "./CollapsableRow";
@@ -26,7 +25,7 @@ const InfluencerInfoCollapsable = ({ influencer }) => {
             borderRadius={["4px", "8px"]}
             mt={[10,10,0]}
         >
-            <CollapsableRow title="About" isOpen={true}>
+            <CollapsableRow title="About" isOpen={true} icon={"/assets/About.svg"}>
                 <Box maxH="390px" overflowY={"auto"} textAlign="left">
                     <ReactMarkdown
                         rehypePlugins={[rehypeRaw]}
@@ -42,7 +41,7 @@ const InfluencerInfoCollapsable = ({ influencer }) => {
             {influencer.Video && (
                 <CollapsableRow
                     title="Videos"
-                    icon={<YouTubeIcon color="#CFBF8A" mt="6px" />}
+                    icon={"/assets/Video.svg"}
                 >
                     <Text fontWeight={600} color="#C7C7C7" fontSize="10px">
                         Videos
@@ -53,7 +52,7 @@ const InfluencerInfoCollapsable = ({ influencer }) => {
             {influencer.reviews && (
                 <CollapsableRow
                     title="Reviewes"
-                    icon={<ReviewStarsIcon color="#CFBF8A" mt="6px" />}
+                    icon={"/assets/Reviews.svg"}
                 >
                     <Text fontWeight={600} color="#C7C7C7" fontSize="10px">
                         Reviews

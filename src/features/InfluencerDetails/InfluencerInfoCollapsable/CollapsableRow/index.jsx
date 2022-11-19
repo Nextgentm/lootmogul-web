@@ -1,26 +1,33 @@
 import Collapsible from "react-collapsible";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, Image } from "@chakra-ui/react";
 import { useState } from "react";
-import Image from "next/image";
-const CollapsableRow = ({ title, children, icon,isOpen }) => {
+const CollapsableRow = ({ title, children, icon, isOpen }) => {
     const [isExpanded, setExpanded] = useState(false);
 
     return (
-        <Box bg="#270e4699" p="10px" pl="20px" mt="2px" >
+        <Box bg="#270e4699" p="10px" pl="20px" mt="2px">
             <Collapsible
-            open = {isOpen}
+                open={isOpen}
                 transitionTime={200}
                 onOpen={() => setExpanded(true)}
                 onClose={() => setExpanded(false)}
                 trigger={
                     <Flex align="center" w="100%">
-                        {icon}
+                        {!isExpanded && (
+                            <Image
+                                w={["40px"]}
+                                h={["32px"]}
+                                ml={"10px"}
+                                mt={"-8px"}
+                                mr={"10px"}
+                                src={[icon]}
+                            />
+                        )}
                         <Text
                             fontSize="2rem"
                             fontFamily="Sora"
                             color="white"
                             fontWeight={"600"}
-                            
                         >
                             {title}
                         </Text>

@@ -9,6 +9,11 @@ import AllInfluencers from "./AllInfluencers";
 import InfluencerBanner from "./InfluencerBanner";
 import InfluencerDetailBanner from "./InfluencerDetailBanner";
 import Breadcumb from "./Breadcumb";
+import {
+    useWindowSize,
+    useWindowWidth,
+    useWindowHeight
+} from "@react-hook/window-size";
 
 const Influencers = ({ data, selectedCategory, banner }) => {
     const defaultCategoryName = "All Ambassadors";
@@ -29,6 +34,9 @@ const Influencers = ({ data, selectedCategory, banner }) => {
         { text: "Ambassadors", url: "/influencers", isCurrentPage: true }
     ]);
     const router = useRouter();
+    const onlyWidth = useWindowWidth();
+    const [dataPrePage, setDataPrePage] = useState(16);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -52,9 +60,11 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             setCategory(defaultCategoryName);
             setDisplayData(data);
 
-            if (window.location.pathname.includes('category')){
+            if (window.location.pathname.includes("category")) {
                 let routes = breadcumbData;
-                let cData = JSON.parse(window.localStorage.getItem('changedSlugDetails'));
+                let cData = JSON.parse(
+                    window.localStorage.getItem("changedSlugDetails")
+                );
                 routes = routes.splice(0, 2);
                 routes.map((x) => (x.isCurrentPage = false));
 
@@ -92,9 +102,11 @@ const Influencers = ({ data, selectedCategory, banner }) => {
         let routes = breadcumbData;
         routes = routes.splice(0, 2);
 
-        if (e === defaultCategoryName.toLowerCase()) {
-            routes[1].isCurrentPage = true;
-            setBreadcumbData(routes);
+        if (e === defaultCategoryName.toLowerCase() || e === "") {
+            if (!isMobile) {
+                routes[1].isCurrentPage = true;
+                setBreadcumbData(routes);
+            }
             router.push("/influencers");
         } else if (displayData) {
             let selData = displayData.filter(
@@ -109,7 +121,10 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 url: "/influencers/category/" + selData[0].slug,
                 isCurrentPage: true
             });
-            localStorage.setItem("changedSlugDetails", JSON.stringify(selData[0]));
+            localStorage.setItem(
+                "changedSlugDetails",
+                JSON.stringify(selData[0])
+            );
             setBreadcumbData(routes);
         }
 
@@ -183,6 +198,15 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     // }, [sortBy]);
 
     useEffect(() => {
+        onlyWidth === 1440 || onlyWidth === 1024
+            ? setDataPrePage(15)
+            : setDataPrePage(16);
+
+        onlyWidth <= 720 ? setIsMobile(true) : setIsMobile(false);
+        onlyWidth === 1366 ? setDataPrePage(15) : "";
+    }, [onlyWidth]);
+
+    useEffect(() => {
         if (selCategoriesData) {
             setPageNo(0);
             let inf = [];
@@ -194,12 +218,11 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             setDisplayInfluencers(inf);
             setDisplayInfluencersBkup(inf);
             const tp =
-                inf?.length > 12 && inf?.length % 12 === 0
-                    ? inf?.length / 12
-                    : inf?.length > 12
-                    ? parseInt(inf?.length / 12) + 1
+                inf?.length > 16 && inf?.length % 16 === 0
+                    ? inf?.length / 16
+                    : inf?.length > 16
+                    ? parseInt(inf?.length / 16) + 1
                     : 1;
-
             setTotalPages(tp);
         }
     }, [selCategoriesData]);
@@ -246,10 +269,10 @@ const Influencers = ({ data, selectedCategory, banner }) => {
 
         setPageNo(0);
         const tp =
-            totalRecords?.length > 12 && totalRecords?.length % 12 === 0
-                ? totalRecords?.length / 12
-                : totalRecords?.length > 12
-                ? parseInt(totalRecords?.length / 12) + 1
+            totalRecords?.length > 16 && totalRecords?.length % 16 === 0
+                ? totalRecords?.length / 16
+                : totalRecords?.length > 16
+                ? parseInt(totalRecords?.length / 16) + 1
                 : 1;
 
         setTotalPages(tp);
@@ -282,8 +305,9 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 handleCategoryChange={handleCategoryChange}
                 activeCategory={category}
                 searchText={searchText}
+                isMobile={isMobile}
             />
-            <Breadcumb data={breadcumbData}></Breadcumb>
+            {!isMobile && <Breadcumb data={breadcumbData}></Breadcumb>}
             {/* <NewInfluencers
                 newInfluencers={newInfluencers}
                 LeftArrow={LeftArrow}
@@ -301,6 +325,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 catData={data}
                 handleCategoryChange={handleFilterChange}
                 setFilterValue={setFilterValue}
+                dataPrePage={dataPrePage}
             />
         </Box>
     );
