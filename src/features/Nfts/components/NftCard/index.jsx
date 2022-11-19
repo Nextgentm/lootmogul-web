@@ -17,6 +17,7 @@ const Div = styled.div`
   --c: #E90A63;   /* color of the border */
   --w: 60px;  /* width of border */
   
+
   padding: var(--b); /* space for the border */
   
   position:relative;

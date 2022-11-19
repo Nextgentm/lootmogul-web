@@ -9,6 +9,10 @@ import {
     RangeSliderThumb,
     RangeSliderTrack,
     Text,
+    Input,
+    InputGroup,
+    InputLeftElement,
+    Select,
 } from "@chakra-ui/react";
 import React from "react";
 import CategoryComponent from "../categoryComp";
@@ -16,7 +20,10 @@ import NftsCategories from "./NftsCategories";
 import NftCardInCollection from "./NftsCategories/NftCardInCollection";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { BiFilterAlt } from "react-icons/bi";
+import { useContext } from "react";
+import { AppContext } from "../../../utils/AppContext/index";
 import Breadcumb from "../../Influencers/components/Breadcumb";
+import { SearchIcon } from "@chakra-ui/icons";
 
 const NewNfts = ({
     newNfts,
@@ -24,8 +31,9 @@ const NewNfts = ({
     defaultCategories,
     selCategoriesData,
     data,
+    nftPriceSorting,
+    nftSearch,
     isNewest,
-    isMobileDevice,
     isToShowAll,
     nftSelectCategory,
     displayData,
@@ -39,69 +47,17 @@ const NewNfts = ({
 }) => {
     const ref = React.useRef();
     const lazyRootNew = React.useRef(null);
+    const { isMobileDevice } = useContext(AppContext);
     const [showFilters, setShowFilters] = React.useState(data);
     const [isActive, setActive] = React.useState("false");
-
-
+    const priceData = ["Price Low To High", "Price High To Low"];
+   
     const handleToggle = () => {
         setActive(!isActive);
     };
 
     return (
         <Box mt={5}>
-            {newNfts?.length && (
-                <>
-                    <Flex
-                        justify={["center", "center", "space-between"]}
-                        mt="20px"
-                        align="center"
-                        mb="20px"
-                        textAlign={"center"}
-                    >
-                        <Text
-                            color="white"
-                            fontFamily="Blanch"
-                            fontSize={["4rem", "4rem", "4rem", "5rem", "5rem"]}
-                        >
-                            NEWEST NFTS
-                        </Text>
-                    </Flex>
-
-                    <Box px={1}>
-                        <ScrollMenu
-                            className="no-scrollbar"
-                            apiRef={ref}
-                            ref={lazyRootNew}
-                            LeftArrow={LeftArrow}
-                            RightArrow={RightArrow}
-                        >
-                            {newNfts
-                                ?.sort((a, b) => a.priority - b.priority)
-                                .map((item, index) => (
-                                    <NftCardInCollection
-                                        itemId={`nftcard-${index}`}
-                                        key={`nftcard-${index}`}
-                                        slug={item.slug}
-                                        showInfo={true}
-                                        nft={item}
-                                        lazyRoot={lazyRootNew}
-                                        defaultInView={
-                                            isMobileDevice
-                                                ? index < 2
-                                                : index < 4
-                                        }
-                                        cardWidth={[
-                                            "84vw",
-                                            "83vw",
-                                            "370px",
-                                            "370px"
-                                        ]}
-                                    />
-                                ))}
-                        </ScrollMenu>
-                    </Box>
-                </>
-            )}
 
             {!selectedCategory ? (
                 <Center>
@@ -124,46 +80,32 @@ const NewNfts = ({
                         color="white"
                         fontSize={["3em", "4em"]}
                         fontFamily="Blanch"
+                        inlineSize={"100"}
+
                     >
                         {selCategoriesData?.[0]?.name}
                     </Text>
 
                     <Flex alignItems="center" pos="relative">
-                        <Button
-                            variant={
-                                !isActive ? "filterBtnSegment" : "filterBtn"
-                            }
-                            onClick={() => {
-                                setShowFilters(true);
-                                handleToggle();
-                                //  nftSelectCategory(influencerCat.name.toLowerCase());
-                            }}
-                        >
-                            FILTER
-                            <Box ml="1em">
-                                <BiFilterAlt color="#FFF" />
-                            </Box>
-                        </Button>
-                        {!isActive ? (
-                            <Box
-                                pos="relative"
-                                top="-8"
-                                right="15px"
-                                bg="#817688"
-                                py="0.5"
-                                px="1"
-                                pt="0 !important"
-                                cursor="pointer"
-                                borderRadius="3px"
-                                onClick={() => {
-                                    handleToggle();
-                                }}
-                            >
-                                <CloseIcon h="12px" color="#0f0625" />
-                            </Box>
-                        ) : (
-                            ""
-                        )}
+                    {selectedCategory && !isMobileDevice && (<><InputGroup marginRight={"20px"}>
+      <InputLeftElement
+        className="InputLeft"
+        pointerEvents="none"
+        children={<SearchIcon className="SearchIcon" color="gray.300" />}
+        size="xs"
+      />
+      <Input type="search" placeholder="Search" SearchIcon onChange={(e) => {
+            nftSearch(e.target.value
+            );
+        }}/>
+    </InputGroup></>)}{selectedCategory && !isMobileDevice && (<Select iconColor="white" placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
+            nftPriceSorting(e.target.value
+            );
+        }}>
+            {priceData.map((e) => {
+        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
+    })}
+            </Select>)}
                     </Flex>
                 </Flex>
             )}
@@ -255,42 +197,36 @@ const NewNfts = ({
                     </Button>
                 </Flex>
             )}
-            {isNewest && (
-                <Flex
-                    justify={"flex-end"}
-                    mt="20px"
-                    align="center"
-                    mb="20px"
-                    textAlign={"center"}
-                >
-                    {!isMobileDevice && (
-                        <Flex
-                            alignItems="center"
-                            cursor="pointer"
-                            onClick={() =>
-                                router.push({
-                                    pathname: "/nfts"
-                                })
-                            }
-                        >
-                            <Text
-                                color="white"
-                                fontFamily="Blanch"
-                                fontSize={["1em", "1em", "1.5em", "2em", "2em"]}
-                            >
-                                VIEW ALL
-                            </Text>
-                            <Image
-                                alt=""
-                                src="/assets/rightArrow.png"
-                                ml="0.5em"
-                            />
-                        </Flex>
-                    )}
-                </Flex>
-            )}
-            {!isNewest && !selectedCategory && (
-                <>
+           
+            {isMobileDevice ? (<>
+            {selectedCategory && (<><InputGroup>
+      <InputLeftElement
+        className="InputLeft"
+        pointerEvents="none"
+        children={<SearchIcon className="SearchIcon" color="gray.300" />}
+        size="xs"
+      />
+      <Input type="search" placeholder="Search" color={"white"} SearchIcon onChange={(e) => {
+            nftSearch(e.target.value
+            );
+        }}/>
+    </InputGroup></>)}<Select iconColor="white" style={{color:"white"}} defaultValue={defaultCategories} onChange={(e) => {
+            nftSelectCategory(e.target.value.toLowerCase()
+            );
+        }}>
+            {displayData.map((e, key) => {
+        return <option key={key} value={e.name} style={{background:"black"}} >{e.name}</option>;
+    })}
+            </Select>{selectedCategory && (<Select iconColor="white" placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
+            nftPriceSorting(e.target.value
+            );
+        }}>
+            {priceData.map((e) => {
+        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
+    })}
+            </Select>)}</>) : (
+            <>
+                
                     <Flex mt={10} mx="auto" flexWrap="wrap">
                         <Button
                             w={["90vw", "90vw", "auto"]}
@@ -315,6 +251,7 @@ const NewNfts = ({
                             </Text>
                         </Button>
                         {displayData?.map((nfts, index) => (
+                            
                             <Button
                                 w={["90vw", "90vw", "auto"]}
                                 mr={["0px", "0px", "15px"]}
@@ -338,8 +275,7 @@ const NewNfts = ({
                             </Button>
                         ))}
                     </Flex>
-                </>
-            )}
+                </>)}
 
              <Breadcumb data={breadcumbData}></Breadcumb>
 
