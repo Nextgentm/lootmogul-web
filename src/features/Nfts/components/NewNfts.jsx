@@ -6,12 +6,12 @@ import {
     Heading,
     Search,
     Image,
-    TriangleDownIcon,
     RangeSlider,
     RangeSliderFilledTrack,
     RangeSliderThumb,
     RangeSliderTrack,
     Text,
+    MdArrowDropDown,
     Input,
     InputGroup,
     InputLeftElement,
@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import CategoryComponent from "../categoryComp";
+import CategoryPriceComponent from "../CategoryPriceComponent";
 import NftsCategories from "./NftsCategories";
 import NftCardInCollection from "./NftsCategories/NftCardInCollection";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
@@ -101,14 +102,8 @@ const NewNfts = ({
             nftSearch(e.target.value
             );
         }}/>
-    </InputGroup></>)}{selectedCategory && !isMobileDevice && (<Select iconColor="white" placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
-            nftPriceSorting(e.target.value
-            );
-        }}>
-            {priceData.map((e) => {
-        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
-    })}
-            </Select>)}
+    </InputGroup></>)}{selectedCategory && !isMobileDevice && (<CategoryPriceComponent
+    priceData={priceData} nftPriceSorting={nftPriceSorting}></CategoryPriceComponent>)}
                     </Flex>
                 </Flex>
             )}
@@ -126,6 +121,7 @@ const NewNfts = ({
                         displayData={displayData}
                         selectedCategory={selectedCategory}
                         setTempFilterValue={setTempFilterValue}
+                        nftSelectCategory={nftSelectCategory}
                     ></CategoryComponent>
 
                     <Box w="250px" my={[8, 8, 8, 0]}>
@@ -213,22 +209,14 @@ const NewNfts = ({
             nftSearch(e.target.value
             );
         }}/>
-    </InputGroup></>)}<Select iconColor="white" style={{color:"white"}} defaultValue={defaultCategories} onChange={(e) => {
-            nftSelectCategory(e.target.value.toLowerCase()
-            );
-        }}>
-            <option value={defaultCategories} style={{background:"black"}} >{defaultCategories}</option>;
-            {displayData.map((e, key) => {
-        return <option key={key} value={e.name} style={{background:"black"}} >{e.name}</option>;
-    })}
-            </Select>{selectedCategory && (<Select iconColor="white" placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
-            nftPriceSorting(e.target.value
-            );
-        }}>
-            {priceData.map((e) => {
-        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
-    })}
-            </Select>)}</>) : (
+    </InputGroup></>)}<CategoryComponent
+                        defaultCategory={defaultCategories}
+                        displayData={displayData}
+                        selectedCategory={selectedCategory}
+                        setTempFilterValue={setTempFilterValue}
+                        nftSelectCategory={nftSelectCategory}
+                    ></CategoryComponent>{selectedCategory && (<CategoryPriceComponent
+                        priceData={priceData} nftPriceSorting={nftPriceSorting}></CategoryPriceComponent>)}</>) : (
             <>
                 
                 <Flex
