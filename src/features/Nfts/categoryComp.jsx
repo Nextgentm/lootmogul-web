@@ -100,7 +100,7 @@ const CategoryComponent = ({ displayData,defaultCategory, setTempFilterValue,sel
                             fontFamily="Sora"
                             _focus={{bg:"transparent"}}
                             fontSize={"22px"}
-                                onClick={()=>{
+                                onChange={()=>{
                                     setActiveCategory(cate.name);
                                     setTempFilterValue(cate.name.toLowerCase());
                                 }}

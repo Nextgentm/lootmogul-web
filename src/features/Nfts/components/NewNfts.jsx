@@ -3,7 +3,10 @@ import {
     Button,
     Center,
     Flex,
+    Heading,
+    Search,
     Image,
+    TriangleDownIcon,
     RangeSlider,
     RangeSliderFilledTrack,
     RangeSliderThumb,
@@ -94,7 +97,7 @@ const NewNfts = ({
         children={<SearchIcon className="SearchIcon" color="gray.300" />}
         size="xs"
       />
-      <Input type="search" placeholder="Search" SearchIcon onChange={(e) => {
+      <Input type="search" placeholder="Search" color={"white"} SearchIcon onChange={(e) => {
             nftSearch(e.target.value
             );
         }}/>
@@ -214,6 +217,7 @@ const NewNfts = ({
             nftSelectCategory(e.target.value.toLowerCase()
             );
         }}>
+            <option value={defaultCategories} style={{background:"black"}} >{defaultCategories}</option>;
             {displayData.map((e, key) => {
         return <option key={key} value={e.name} style={{background:"black"}} >{e.name}</option>;
     })}
@@ -227,11 +231,17 @@ const NewNfts = ({
             </Select>)}</>) : (
             <>
                 
-                    <Flex mt={10} mx="auto" flexWrap="wrap">
+                <Flex
+                        mt={10}
+                        mx="auto"
+                        flexWrap="wrap"
+                        alignContent={"center"}
+                    >
                         <Button
-                            w={["90vw", "90vw", "auto"]}
+                            w={["95vw", "95vw", "auto"]}
                             mr={["0px", "0px", "15px"]}
                             mt="20px"
+                            // p="0px"
                             fontSize={[
                                 "20px !important",
                                 "20px !important",
@@ -244,19 +254,23 @@ const NewNfts = ({
                                     defaultCategories.toLowerCase()
                                 );
                             }}
+                            _focus={{
+                                bgImage:
+                                    "linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                            }}
+                            bgImage={
+                                selectedCategory == defaultCategories &&
+                                "linear-gradient(90deg, #E90A63 0%, #481A7F 100%);"
+                            }
                         >
-                            {" "}
-                            <Text w="100%" whiteSpace={"pre-wrap"}>
-                                {defaultCategories}
-                            </Text>
+                            <Text fontWeight={500}>{defaultCategories} </Text>
                         </Button>
-                        {displayData?.map((nfts, index) => (
-                            
+                        {displayData?.map((cat, index) => (
                             <Button
                                 w={["90vw", "90vw", "auto"]}
                                 mr={["0px", "0px", "15px"]}
                                 mt="20px"
-                                key={index}
+                                // p="0px"
                                 fontSize={[
                                     "20px !important",
                                     "20px !important",
@@ -265,13 +279,21 @@ const NewNfts = ({
                                 fontWeight={500}
                                 variant={"segment"}
                                 onClick={() => {
-                                    nftSelectCategory(nfts.name.toLowerCase());
+                                    nftSelectCategory(
+                                        cat.name.toLowerCase()
+                                    );
                                 }}
+                                _focus={{
+                                    bgImage:
+                                        "linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                                }}
+                                bgImage={
+                                    selectedCategory ===
+                                        cat.name.toLowerCase() &&
+                                    "linear-gradient(90deg, #E90A63 0%, #481A7F 100%);"
+                                }
                             >
-                                {" "}
-                                <Text w="100%" whiteSpace={"pre-wrap"}>
-                                    {nfts.name}
-                                </Text>
+                                <Text>{cat.name}</Text>
                             </Button>
                         ))}
                     </Flex>
