@@ -70,6 +70,7 @@
     "socket.io-client": "^4.4.1",
     "strapi-sdk-js": "^2.2.0",
     "stripe": "^8.204.0",
+    "styled-components": "^5.3.6",
     "yup": "^0.28.5"
   },
   "devDependencies": {
