@@ -103,7 +103,13 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 setSelCategoriesData(selData);
             }
             else {
-                nftSelectCategory(selectedCategory);
+                router.push(
+                    {
+                        pathname: "/nfts/" + selectedCategory.toLowerCase()
+                    },
+                    undefined,
+                    { shallow: true }
+                );
             }
         }
 
