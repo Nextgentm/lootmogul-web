@@ -6,7 +6,8 @@ import {
     Heading,
     Text,
     useMediaQuery,
-    Image
+    Image,
+    Link
 } from "@chakra-ui/react";
 import React, { useState, useEffect, useContext } from "react";
 import ReadMoreLess from "../ReadMoreLess";
@@ -57,38 +58,38 @@ const AllInfluencers = ({
         if (isMobile) {
             if (onlyWidth === 720) {
                 setColumnValues("repeat(2, 1fr)");
-                setHight("285px");
+                setHight("308px");
                 setWidth("330px");
                 setMarLeft("-10px");
             } else {
                 setColumnValues("repeat(1, 1fr)");
-                setHight("285px");
-                setWidth("328px");
+                setHight("308px");
+                setWidth("334px");
                 setMarLeft("-18px");
             }
         } else if (isAvgLaptopDevice) {
             setColumnValues("repeat(5, 1fr)");
-            setHight("285px");
+            setHight("308px");
             setWidth("240px");
             setMarLeft("3px");
         } else if (isAvgDeskDevice) {
             setColumnValues("repeat(5, 1fr)");
-            setHight("285px");
+            setHight("308px");
             setWidth("240px");
             setMarLeft("3px");
         } else if (isLargeDesk) {
             setColumnValues("repeat(8, 1fr)");
-            setHight("285px");
+            setHight("308px");
             setWidth("230px");
             setMarLeft("-13px");
         } else if (isLargeAndAbove) {
             setColumnValues("repeat(8, 1fr)");
-            setHight("285px");
+            setHight("308px");
             setWidth("238px");
             setMarLeft("24px");
         } else {
             setColumnValues("repeat(8, 1fr)");
-            setHight("285px");
+            setHight("308px");
             setWidth("330px");
             setMarLeft("-10px");
         }
@@ -178,23 +179,26 @@ const AllInfluencers = ({
                             )
 
                             ?.map((influencer, index) => (
-                                <Flex>
-                                    <InfluencersCard
-                                        style={{ w: "100%", px: 4 }}
-                                        colSpan={2}
-                                        itemId={`item-${index}`}
-                                        key={`item-${index}`}
-                                        slug={influencer.slug}
-                                        influencer={influencer}
-                                    />
-                                    <Image
-                                        height={hight}
-                                        width={width}
-                                        pos="absolute"
-                                        src="/assets/side_Frame.png"
-                                        ml={marLeft}
-                                    />
-                                </Flex>
+                                <Link href={"/influencer/" + influencer.slug}>
+                                    <Flex>
+                                        <InfluencersCard
+                                            style={{ w: "100%", px: 4 }}
+                                            colSpan={2}
+                                            itemId={`item-${index}`}
+                                            key={`item-${index}`}
+                                            slug={influencer.slug}
+                                            influencer={influencer}
+                                        />
+                                        <Image
+                                            height={hight}
+                                            width={width}
+                                            pos="absolute"
+                                            src="/assets/side_Frame.png"
+                                            ml={marLeft}
+                                            mt={"-18px"}
+                                        />
+                                    </Flex>
+                                </Link>
                             ))}
                 </Grid>
             </Box>
