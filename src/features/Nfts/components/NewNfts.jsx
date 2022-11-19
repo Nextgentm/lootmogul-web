@@ -12,7 +12,7 @@ import {
     Input,
     InputGroup,
     InputLeftElement,
-    Select
+    Select,
 } from "@chakra-ui/react";
 import React from "react";
 import CategoryComponent from "../categoryComp";
@@ -87,7 +87,7 @@ const NewNfts = ({
                     </Text>
 
                     <Flex alignItems="center" pos="relative">
-                    {selectedCategory && !isMobileDevice && (<><InputGroup>
+                    {selectedCategory && !isMobileDevice && (<><InputGroup marginRight={"20px"}>
       <InputLeftElement
         className="InputLeft"
         pointerEvents="none"
