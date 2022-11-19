@@ -110,6 +110,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === newCategory
             );
+            setSelCategoriesData(selData);
 
             router.push(
                 {
@@ -120,7 +121,6 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             );
         }
         setTempFilterValue(newCategory);
-        setCategories(newCategory);
 
         let selData = displayData.filter(
             (data) => data.name.toLowerCase() === newCategory
@@ -211,6 +211,24 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
         }
     }, [sortBy]);
 
+    const nftPriceSorting = (e) =>{
+        if (e==="Price Low To High"){
+            const selData = data.filter((item) => item.slug === selectedCategory)
+                selData[0].nftSet.sort((a,b) => (a.nft_kred.data.sale_price - b.nft_kred.data.sale_price ));
+                
+                console.log(selData)
+                setSelCategoriesData(selData);
+
+        }
+        else {
+            const selData = data.filter((item) => item.slug === selectedCategory)
+                selData.forEach(function (nft) {
+                    nft.nftSet = nft.nftSet.sort((a,b) => (a.nft_kred.data.market_price - b.nft_kred.data.market_price ));
+                });
+                console.log(selData)
+                setSelCategoriesData(selData);
+        }
+    }
 
     const getBannerImage = () => {
         if (selectedCategory && selCategoriesData) {
@@ -298,6 +316,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 displayData={displayData}
                 nftSelectCategory={nftSelectCategory}
                 nftSearch={nftSearch}
+                nftPriceSorting={nftPriceSorting}
                 LeftArrow={LeftArrow}
                 RightArrow={RightArrow}
                 priceRange={priceRange}
