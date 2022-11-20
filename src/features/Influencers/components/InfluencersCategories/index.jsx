@@ -1,4 +1,4 @@
-import { Grid } from "@chakra-ui/react";
+import { Box, Grid, Image } from "@chakra-ui/react";
 import InfluencersCard from "./InfluencersCard";
 const InfluencersCategories = ({ influencer }) => {
     return (
@@ -11,20 +11,29 @@ const InfluencersCategories = ({ influencer }) => {
                     "repeat(1, 1fr)",
                     "repeat(1, 1fr)",
                     "repeat(2, 1fr)",
-                    "repeat(4, 1fr)"
+                    "repeat(5, 1fr)"
                 ]}
                 gap={5}
             >
-                {influencer.influencers.data.sort((a, b) => a.order - b.order).map((influencer, index) => (
-                    <InfluencersCard
-                        style={{ w: "100%", px: "15px" }}
-                        colSpan={4}
-                        itemId={`item-${index}`}
-                        key={`item-${index}`}
-                        slug={influencer.slug}
-                        influencer={influencer}
-                    />
-                ))}
+                {influencer.influencers.data
+                    .sort((a, b) => a.order - b.order)
+                    .map((influencer, index) => (
+                        <Box>
+                            <InfluencersCard
+                                style={{ w: "100%", px: "15px" }}
+                                colSpan={4}
+                                itemId={`item-${index}`}
+                                key={`item-${index}`}
+                                slug={influencer.slug}
+                                influencer={influencer}
+                            />
+                            <Image
+                                height={"390px"}
+                                width={"400px"}
+                                src="/assets/side_Frame.png"
+                            />
+                        </Box>
+                    ))}
             </Grid>
         </>
     );
