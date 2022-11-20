@@ -3,12 +3,15 @@ import {
     Button,
     Center,
     Flex,
+    Heading,
+    Search,
     Image,
     RangeSlider,
     RangeSliderFilledTrack,
     RangeSliderThumb,
     RangeSliderTrack,
     Text,
+    MdArrowDropDown,
     Input,
     InputGroup,
     InputLeftElement,
@@ -16,6 +19,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import CategoryComponent from "../categoryComp";
+import CategoryPriceComponent from "../CategoryPriceComponent";
 import NftsCategories from "./NftsCategories";
 import NftCardInCollection from "./NftsCategories/NftCardInCollection";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
@@ -94,18 +98,12 @@ const NewNfts = ({
         children={<SearchIcon className="SearchIcon" color="gray.300" />}
         size="xs"
       />
-      <Input type="search" placeholder="Search" SearchIcon onChange={(e) => {
+      <Input type="search" placeholder="Search" color={"white"} SearchIcon onChange={(e) => {
             nftSearch(e.target.value
             );
         }}/>
-    </InputGroup></>)}{selectedCategory && !isMobileDevice && (<Select iconColor="white" placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
-            nftPriceSorting(e.target.value
-            );
-        }}>
-            {priceData.map((e) => {
-        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
-    })}
-            </Select>)}
+    </InputGroup></>)}{selectedCategory && !isMobileDevice && (<CategoryPriceComponent
+    priceData={priceData} nftPriceSorting={nftPriceSorting}></CategoryPriceComponent>)}
                     </Flex>
                 </Flex>
             )}
@@ -123,6 +121,7 @@ const NewNfts = ({
                         displayData={displayData}
                         selectedCategory={selectedCategory}
                         setTempFilterValue={setTempFilterValue}
+                        nftSelectCategory={nftSelectCategory}
                     ></CategoryComponent>
 
                     <Box w="250px" my={[8, 8, 8, 0]}>
@@ -210,28 +209,27 @@ const NewNfts = ({
             nftSearch(e.target.value
             );
         }}/>
-    </InputGroup></>)}<Select iconColor="white" style={{color:"white"}} defaultValue={defaultCategories} onChange={(e) => {
-            nftSelectCategory(e.target.value.toLowerCase()
-            );
-        }}>
-            {displayData.map((e, key) => {
-        return <option key={key} value={e.name} style={{background:"black"}} >{e.name}</option>;
-    })}
-            </Select>{selectedCategory && (<Select iconColor="white" placeholder='Price Low to High' style={{color:"white"}} onChange={(e) => {
-            nftPriceSorting(e.target.value
-            );
-        }}>
-            {priceData.map((e) => {
-        return <option key={e} value={e} style={{background:"black"}}>{e}</option>;
-    })}
-            </Select>)}</>) : (
+    </InputGroup></>)}<CategoryComponent
+                        defaultCategory={defaultCategories}
+                        displayData={displayData}
+                        selectedCategory={selectedCategory}
+                        setTempFilterValue={setTempFilterValue}
+                        nftSelectCategory={nftSelectCategory}
+                    ></CategoryComponent>{selectedCategory && (<CategoryPriceComponent
+                        priceData={priceData} nftPriceSorting={nftPriceSorting}></CategoryPriceComponent>)}</>) : (
             <>
                 
-                    <Flex mt={10} mx="auto" flexWrap="wrap">
+                <Flex
+                        mt={10}
+                        mx="auto"
+                        flexWrap="wrap"
+                        alignContent={"center"}
+                    >
                         <Button
-                            w={["90vw", "90vw", "auto"]}
+                            w={["95vw", "95vw", "auto"]}
                             mr={["0px", "0px", "15px"]}
                             mt="20px"
+                            // p="0px"
                             fontSize={[
                                 "20px !important",
                                 "20px !important",
@@ -244,19 +242,23 @@ const NewNfts = ({
                                     defaultCategories.toLowerCase()
                                 );
                             }}
+                            _focus={{
+                                bgImage:
+                                    "linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                            }}
+                            bgImage={
+                                selectedCategory == defaultCategories &&
+                                "linear-gradient(90deg, #E90A63 0%, #481A7F 100%);"
+                            }
                         >
-                            {" "}
-                            <Text w="100%" whiteSpace={"pre-wrap"}>
-                                {defaultCategories}
-                            </Text>
+                            <Text fontWeight={500}>{defaultCategories} </Text>
                         </Button>
-                        {displayData?.map((nfts, index) => (
-                            
+                        {displayData?.map((cat, index) => (
                             <Button
                                 w={["90vw", "90vw", "auto"]}
                                 mr={["0px", "0px", "15px"]}
                                 mt="20px"
-                                key={index}
+                                // p="0px"
                                 fontSize={[
                                     "20px !important",
                                     "20px !important",
@@ -265,13 +267,21 @@ const NewNfts = ({
                                 fontWeight={500}
                                 variant={"segment"}
                                 onClick={() => {
-                                    nftSelectCategory(nfts.name.toLowerCase());
+                                    nftSelectCategory(
+                                        cat.name.toLowerCase()
+                                    );
                                 }}
+                                _focus={{
+                                    bgImage:
+                                        "linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                                }}
+                                bgImage={
+                                    selectedCategory ===
+                                        cat.name.toLowerCase() &&
+                                    "linear-gradient(90deg, #E90A63 0%, #481A7F 100%);"
+                                }
                             >
-                                {" "}
-                                <Text w="100%" whiteSpace={"pre-wrap"}>
-                                    {nfts.name}
-                                </Text>
+                                <Text>{cat.name}</Text>
                             </Button>
                         ))}
                     </Flex>

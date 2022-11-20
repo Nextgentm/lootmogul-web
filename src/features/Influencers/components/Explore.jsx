@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Heading, Text, Select } from "@chakra-ui/react";
 import React from "react";
-import Search from "./search";
+import Search from "./Search";
 
 const Explore = ({
     data,
