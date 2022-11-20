@@ -105,7 +105,7 @@ const NftCard = ({
 
   return (
     nft && (
-      <><Grid>
+      <> <Grid>
         <GridItem> <Link
         href={nft?.marketURL ? nft?.marketURL : "/"}
         target="_blank"

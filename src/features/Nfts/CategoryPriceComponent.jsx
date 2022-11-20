@@ -12,9 +12,11 @@ import { useRouter } from "next/router";
 
 import { AiFillCaretDown } from "react-icons/ai";
 
-const CategoryComponent = ({ displayData,nftSelectCategory,defaultCategory, setTempFilterValue,selectedCategory }) => {
+const CategoryPriceComponent = ({ priceData,nftPriceSorting }) => {
     const router = useRouter();
-    const [ activeCategory, setActiveCategory] = useState(selectedCategory);
+    const defaultPrice = "Price Low To High"
+    const [ priceCategory, setPriceCategory] = useState(defaultPrice);
+    
 
     return (
         <Flex border="1px solid #C7C7C7" bg="#0f0625" h="55px">
@@ -37,7 +39,7 @@ const CategoryComponent = ({ displayData,nftSelectCategory,defaultCategory, setT
                         
                     >
                    <Text h="100%" w="100%" borderRightWidth="1px" 
-                        pl={3} pr={6}noOfLines={1}>{activeCategory}</Text>
+                        pl={3} pr={6}noOfLines={1}>{priceCategory}</Text>
 
                         <Box h={"full"}   p={3}borderColor={"white"} >
                             <AiFillCaretDown
@@ -60,41 +62,8 @@ const CategoryComponent = ({ displayData,nftSelectCategory,defaultCategory, setT
                         // onClick={() => router.push("/influencers/")}
                         // {...selectedCategory.path}
                     >
-                         <MenuItem
-                                color="#C7C7C7"
-                                _hover={{ bg: "#E90A63" }}
-                                
-                                fontFamily="Sora"
-                                _focus={{bg:"transparent"}}
-                                fontSize={"22px"}
-                               
-                                onClick={()=>{
-                                    setActiveCategory(defaultCategory);
-                                    setTempFilterValue(defaultCategory.toLowerCase());
-                                    nftSelectCategory(defaultCategory.toLowerCase());
-                                }}
-                              
-                            >
-                                <Flex
-                                    ml={["6px", 0]}
-                                 
-                                    my="6px"
-                                >
-                                   
-                                    <Text
-                                        // ml="10px"
-                                        color="#FFF"
-                                        fontFamily="Sora"
-                                        fontSize={"20px"}
-                                        fontWeight={200}
-                                       
-                                    >
-                                       {defaultCategory}
-                                    </Text>
-                                </Flex>
-                            </MenuItem>
                        
-                        {displayData.map((cate, index) => (
+                        {priceData.map((price, index) => (
                             <MenuItem
                             color="#C7C7C7"
                             _hover={{ bg: "#E90A63" }}
@@ -103,9 +72,8 @@ const CategoryComponent = ({ displayData,nftSelectCategory,defaultCategory, setT
                             _focus={{bg:"transparent"}}
                             fontSize={"22px"}
                                 onClick={()=>{
-                                    setActiveCategory(cate.name);
-                                    setTempFilterValue(cate.name.toLowerCase());
-                                    nftSelectCategory(cate.name.toLowerCase());
+                                    setPriceCategory(price)
+                                    nftPriceSorting(price);
                                 }}
                                
                             >
@@ -129,7 +97,7 @@ const CategoryComponent = ({ displayData,nftSelectCategory,defaultCategory, setT
                                         fontWeight={200}
                                        
                                     >
-                                        {cate.name}
+                                        {price}
                                     </Text>
                                 </Flex>
                             </MenuItem>
@@ -140,4 +108,4 @@ const CategoryComponent = ({ displayData,nftSelectCategory,defaultCategory, setT
         </Flex>
     );
 };
-export default CategoryComponent;
+export default CategoryPriceComponent;
