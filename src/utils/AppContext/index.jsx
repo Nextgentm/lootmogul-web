@@ -199,16 +199,25 @@ export const AppContextContainer = ({ children }) => {
     const [gameInProgress, setGameInProgress] = useState(false);
 
 
-useEffect(()=> {
+useEffect(() => {
     if (!router.isReady) return;
-    if( router.query.jwt ){
-        strapi.setToken(router.query.jwt);
-                setJwt(router.query.jwt);
-                console.log('jwt',jwt);
-                console.log('router jwty',router.query.jwt);
-                window.localStorage.setItem("strapi_jwt", router.query.jwt);
-    }           
-},[router.isReady]);
+    const access_token = router.query.access_token;
+    const provider = router.query.provider;
+    if (access_token) {
+      if (provider == "facebook") {
+        callAuthService("facebook", access_token);
+      } else {
+        callAuthService("google", access_token);
+      }
+    }else if(router.query.jwt)
+    {
+      strapi.setToken(router.query.jwt);
+              setJwt(router.query.jwt);
+              console.log('jwt',jwt);
+              console.log('router jwty',router.query.jwt);
+              window.localStorage.setItem("strapi_jwt", router.query.jwt);
+    }
+  }, [router.isReady]);
 
     useEffect(() => {
         setMobileDevice(!isDesktopDevice);

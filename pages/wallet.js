@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 import { AppContext } from "../src/utils/AppContext";
 
 import dynamic from 'next/dynamic'
@@ -6,15 +6,17 @@ import MyPageLoader from "../src/components/MyPageLoader";
 import { useRouter } from 'next/router';
 import strapi from "../src/utils/strapi";
 
-const WalletPage = dynamic(() => import("../src/components/WalletPage"),  { loading: () => 
-  <MyPageLoader/>
- })
+const WalletPage = dynamic(() => import("../src/components/WalletPage"), {
+  loading: () =>
+    <MyPageLoader />
+})
 
 
 
 const Wallet = () => {
-  const { user,updateUser } = useContext(AppContext);
+  const { user, updateUser, callAuthService } = useContext(AppContext);
   const { jwt, setJwt } = useContext(AppContext);
+  const [isData, setIsData] = useState(true)
   const router = useRouter();
 
   const totalAmount = user?.wallets?.reduce(
@@ -22,28 +24,21 @@ const Wallet = () => {
     0
   )?.toFixed(2);
 
-  useEffect(()=> {
-    if (!router.isReady) return;
-    if( router.query.jwt ){
-        strapi.setToken(router.query.jwt);
-        setJwt(router.query.jwt);
-        console.log('jwt',jwt);
-        console.log('router jwty',router.query.jwt);
-        window.localStorage.setItem("strapi_jwt", router.query.jwt);
-    }       
-},[router.isReady]);
-
-  // useEffect(() => {
-  //   if (!user && !updateUser()) 
-  //   router.push("/");
-  // }, [user]);
+  useEffect(() => {
+    if (!user && !updateUser()) 
+    router.push("/");
+  }, [user]);
 
   return (
-    <WalletPage
-      totalAmount={totalAmount}
-      user={user}
-      jwt={jwt}
-    ></WalletPage>
+    <>
+      {
+        isData && <WalletPage
+          totalAmount={totalAmount}
+          user={user}
+          jwt={jwt}
+        ></WalletPage>
+      }
+    </>
   );
 };
 
