@@ -102,8 +102,11 @@ const NewNfts = ({
             nftSearch(e.target.value
             );
         }}/>
-    </InputGroup></>)}{selectedCategory && !isMobileDevice && (<CategoryPriceComponent
-    priceData={priceData} nftPriceSorting={nftPriceSorting}></CategoryPriceComponent>)}
+    </InputGroup></>)}{selectedCategory && !isMobileDevice && (
+        <></>
+        // <CategoryPriceComponent
+        // priceData={priceData} nftPriceSorting={nftPriceSorting}></CategoryPriceComponent>
+    )}
                     </Flex>
                 </Flex>
             )}
@@ -215,8 +218,12 @@ const NewNfts = ({
                         selectedCategory={selectedCategory}
                         setTempFilterValue={setTempFilterValue}
                         nftSelectCategory={nftSelectCategory}
-                    ></CategoryComponent>{selectedCategory && (<CategoryPriceComponent
-                        priceData={priceData} nftPriceSorting={nftPriceSorting}></CategoryPriceComponent>)}</>) : (
+                    ></CategoryComponent>{selectedCategory && (
+                        <>
+                        {/* <CategoryPriceComponent
+                        priceData={priceData} nftPriceSorting={nftPriceSorting}></CategoryPriceComponent> */}
+                         </>
+                    )}</>) : (
             <>
                 
                 <Flex
