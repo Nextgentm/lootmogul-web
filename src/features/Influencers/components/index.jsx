@@ -198,12 +198,31 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     // }, [sortBy]);
 
     useEffect(() => {
-        onlyWidth === 1440 || onlyWidth === 1024
-            ? setDataPrePage(15)
-            : setDataPrePage(16);
-
-        onlyWidth <= 720 ? setIsMobile(true) : setIsMobile(false);
-        onlyWidth === 1366 ? setDataPrePage(15) : "";
+        switch (true) {
+            //mobile
+            case (onlyWidth < 720):
+                setIsMobile(true);
+                setDataPrePage(16);
+                break;
+            //tablet devices
+            case (onlyWidth >= 720 && onlyWidth < 1366):
+                setIsMobile(false);
+                setDataPrePage(16);
+                break;
+            //desktop
+            case (onlyWidth >= 1366 && onlyWidth < 1920):
+                setIsMobile(false);
+                setDataPrePage(15);
+                break;
+            //large devices
+            case (onlyWidth >= 1920):
+                setIsMobile(false);
+                setDataPrePage(16);
+                break;
+            default:
+                break;
+        }
+        
     }, [onlyWidth]);
 
     useEffect(() => {
@@ -221,8 +240,8 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 inf?.length > 16 && inf?.length % 16 === 0
                     ? inf?.length / 16
                     : inf?.length > 16
-                    ? parseInt(inf?.length / 16) + 1
-                    : 1;
+                        ? parseInt(inf?.length / 16) + 1
+                        : 1;
             setTotalPages(tp);
         }
     }, [selCategoriesData]);
@@ -272,8 +291,8 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             totalRecords?.length > 16 && totalRecords?.length % 16 === 0
                 ? totalRecords?.length / 16
                 : totalRecords?.length > 16
-                ? parseInt(totalRecords?.length / 16) + 1
-                : 1;
+                    ? parseInt(totalRecords?.length / 16) + 1
+                    : 1;
 
         setTotalPages(tp);
     };
@@ -293,7 +312,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
 
             <Box w="100% " overflow="hidden">
                 {selectedCategory &&
-                category !== defaultCategoryName.toLowerCase() ? (
+                    category !== defaultCategoryName.toLowerCase() ? (
                     <InfluencerDetailBanner getBannerImage={getBannerImage} />
                 ) : (
                     <InfluencerBanner getBannerImage={getBannerImage} />

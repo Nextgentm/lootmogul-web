@@ -44,7 +44,7 @@ const AllInfluencers = ({
 
     const [isMobile] = useMediaQuery("(max-width:768px)");
     const [isAvgLaptopDevice] = useMediaQuery("(max-width: 1366px)");
-    const [isAvgDeskDevice] = useMediaQuery("(max-width: 1440px)");
+    const [isAvgDeskDevice] = useMediaQuery("(max-width: 1600px)");
     const [isLargeDesk] = useMediaQuery("(max-width: 1920px)");
     const [isLargeAndAbove] = useMediaQuery("(max-width: 2560px)");
 
