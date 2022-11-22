@@ -115,7 +115,10 @@ const TransactionHistory = () => {
     };
 
     React.useEffect(() => {
-        fetchData();
+        if (user) {
+            console.log(user);
+            fetchData();
+        }
     }, [user, amounts]);
 
     return (
