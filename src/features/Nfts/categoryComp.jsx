@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 
 import { AiFillCaretDown } from "react-icons/ai";
 
-const CategoryComponent = ({ displayData,defaultCategory, setTempFilterValue,selectedCategory }) => {
+const CategoryComponent = ({ displayData,nftSelectCategory,defaultCategory, setTempFilterValue,selectedCategory }) => {
     const router = useRouter();
     const [ activeCategory, setActiveCategory] = useState(selectedCategory);
 
@@ -25,7 +25,8 @@ const CategoryComponent = ({ displayData,defaultCategory, setTempFilterValue,sel
                     _focus={{ borderColor: "transparent", boxShadow: "none" }}
                     fontFamily="Sora"
                     fontSize={"20px"}
-                   lineHeight="40px"
+                    position={"relative"}
+                   lineHeight="45px"
                    h="100%"
                 
                 >
@@ -35,7 +36,7 @@ const CategoryComponent = ({ displayData,defaultCategory, setTempFilterValue,sel
                        h="100%" 
                         
                     >
-                   <Text h="100%" borderRightWidth="1px" 
+                   <Text h="100%" w="100%" borderRightWidth="1px" 
                         pl={3} pr={6}noOfLines={1}>{activeCategory}</Text>
 
                         <Box h={"full"}   p={3}borderColor={"white"} >
@@ -70,6 +71,7 @@ const CategoryComponent = ({ displayData,defaultCategory, setTempFilterValue,sel
                                 onClick={()=>{
                                     setActiveCategory(defaultCategory);
                                     setTempFilterValue(defaultCategory.toLowerCase());
+                                    nftSelectCategory(defaultCategory.toLowerCase());
                                 }}
                               
                             >
@@ -103,6 +105,7 @@ const CategoryComponent = ({ displayData,defaultCategory, setTempFilterValue,sel
                                 onClick={()=>{
                                     setActiveCategory(cate.name);
                                     setTempFilterValue(cate.name.toLowerCase());
+                                    nftSelectCategory(cate.name.toLowerCase());
                                 }}
                                
                             >

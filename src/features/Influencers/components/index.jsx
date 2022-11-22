@@ -3,21 +3,19 @@ import { useRouter } from "next/router";
 import { Box } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
-
-import FAQ from "../../Home/components/FAQ";
 import SEOContainer from "../../SEOContainer";
 import Explore from "./Explore";
-import NewInfluencers from "./NewInfluencers";
 import AllInfluencers from "./AllInfluencers";
 import InfluencerBanner from "./InfluencerBanner";
 import InfluencerDetailBanner from "./InfluencerDetailBanner";
-
+import Breadcumb from "./Breadcumb";
 import {
-    LeftArrow,
-    RightArrow
-} from "../../../components/ContentNavigator/arrows";
+    useWindowSize,
+    useWindowWidth,
+    useWindowHeight
+} from "@react-hook/window-size";
 
-const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
+const Influencers = ({ data, selectedCategory, banner }) => {
     const defaultCategoryName = "All Ambassadors";
     const { isTabletOrDesktop, user, influencerLikes, callAuthService } =
         useContext(AppContext);
@@ -27,14 +25,19 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     const [displayData, setDisplayData] = useState(data);
     const [pageNo, setPageNo] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
-    const [ filterValue, setFilterValue] = useState(defaultCategoryName);
-
+    const [filterValue, setFilterValue] = useState(defaultCategoryName);
     const [displayInfluencers, setDisplayInfluencers] = useState([]);
-
     const [selCategoriesData, setSelCategoriesData] = useState(data);
-
+    const [displayInfluencersBkup, setDisplayInfluencersBkup] = useState([]);
+    const [breadcumbData, setBreadcumbData] = useState([
+        { text: "Home", url: "/influencers", isCurrentPage: false },
+        { text: "Ambassadors", url: "/influencers", isCurrentPage: true }
+    ]);
     const router = useRouter();
-    
+    const onlyWidth = useWindowWidth();
+    const [dataPrePage, setDataPrePage] = useState(16);
+    const [isMobile, setIsMobile] = useState(false);
+
     useEffect(() => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
@@ -51,48 +54,78 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     useEffect(async () => {
         if (data && data?.length > 0 && options.length == 0) {
             options.push(defaultCategoryName);
-            // if(catData){
-
-            // }else {
-
-            // }
             data.map((cat) => {
                 options.push(cat.name);
             });
             setCategory(defaultCategoryName);
             setDisplayData(data);
+
+            if (window.location.pathname.includes("category")) {
+                let routes = breadcumbData;
+                let cData = JSON.parse(
+                    window.localStorage.getItem("changedSlugDetails")
+                );
+                routes = routes.splice(0, 2);
+                routes.map((x) => (x.isCurrentPage = false));
+
+                routes.push({
+                    text: cData?.name,
+                    url: "/influencers/category/" + cData?.slug,
+                    isCurrentPage: true
+                });
+                setBreadcumbData(routes);
+            }
         }
     }, [data, user]);
-    
+
     const handleFilterChange = () => {
         const newCategory = filterValue;
         if (newCategory === defaultCategoryName.toLowerCase()) {
             history.pushState({}, null, "/influencers");
-            
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === newCategory
             );
-            
-            history.pushState({}, null, "/influencers/category/" + selData[0].slug);
+
+            history.pushState(
+                {},
+                null,
+                "/influencers/category/" + selData[0].slug
+            );
         }
 
         setCategory(newCategory);
     };
+
     const handleCategoryChange = (e) => {
         const newCategory = e;
-        if (e === defaultCategoryName.toLowerCase()) {
-            router.push(
-                "/influencers"
-            );
+        let routes = breadcumbData;
+        routes = routes.splice(0, 2);
+
+        if (e === defaultCategoryName.toLowerCase() || e === "") {
+            if (!isMobile) {
+                routes[1].isCurrentPage = true;
+                setBreadcumbData(routes);
+            }
+            router.push("/influencers");
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === e
             );
-            if(selData?.[0]?.slug)
-            router.push(
-                "/influencers/category/" + selData[0].slug
+            if (selData?.[0]?.slug)
+                router.push("/influencers/category/" + selData[0].slug);
+
+            routes.map((x) => (x.isCurrentPage = false));
+            routes.push({
+                text: selData[0].name,
+                url: "/influencers/category/" + selData[0].slug,
+                isCurrentPage: true
+            });
+            localStorage.setItem(
+                "changedSlugDetails",
+                JSON.stringify(selData[0])
             );
+            setBreadcumbData(routes);
         }
 
         setCategory(newCategory);
@@ -121,6 +154,7 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             }
         }
     }, [influencerLikes]);
+
     useEffect(() => {
         if (data && selectedCategory) {
             let selData = data.filter((item) => item.slug === selectedCategory);
@@ -164,6 +198,15 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
     // }, [sortBy]);
 
     useEffect(() => {
+        onlyWidth === 1440 || onlyWidth === 1024
+            ? setDataPrePage(15)
+            : setDataPrePage(16);
+
+        onlyWidth <= 720 ? setIsMobile(true) : setIsMobile(false);
+        onlyWidth === 1366 ? setDataPrePage(15) : "";
+    }, [onlyWidth]);
+
+    useEffect(() => {
         if (selCategoriesData) {
             setPageNo(0);
             let inf = [];
@@ -173,14 +216,23 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 });
             });
             setDisplayInfluencers(inf);
-            const tp =inf?.length >12 && inf?.length %12 === 0? inf?.length / 12:inf?.length >12?parseInt((inf?.length / 12))+1:1;
-            
+            setDisplayInfluencersBkup(inf);
+            const tp =
+                inf?.length > 16 && inf?.length % 16 === 0
+                    ? inf?.length / 16
+                    : inf?.length > 16
+                    ? parseInt(inf?.length / 16) + 1
+                    : 1;
             setTotalPages(tp);
         }
     }, [selCategoriesData]);
 
     const getBannerImage = () => {
-        if (selectedCategory &&  category!== defaultCategoryName.toLowerCase() && selCategoriesData) {
+        if (
+            selectedCategory &&
+            category !== defaultCategoryName.toLowerCase() &&
+            selCategoriesData
+        ) {
             if (selCategoriesData[0] && selCategoriesData[0].banner?.data) {
                 return !isTabletOrDesktop
                     ? selCategoriesData[0].banner?.data[1].url
@@ -193,12 +245,39 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             (banner ||
                 category.toLowerCase() === defaultCategoryName.toLowerCase())
         ) {
-           // return "/assets/designupdate1/influencer_banner.png";
-             return !isTabletOrDesktop ? banner[1]?.url || banner[0]?.url : banner[0]?.url;
+            // return "/assets/designupdate1/influencer_banner.png";
+            return !isTabletOrDesktop
+                ? banner[1]?.url || banner[0]?.url
+                : banner[0]?.url;
         } else {
             return null;
         }
     };
+
+    const searchText = (e) => {
+        let totalRecords = [];
+        if (e.length > 3) {
+            const filteredData = displayInfluencers.filter((x) =>
+                x.name.toLowerCase().includes(e.toLowerCase())
+            );
+            totalRecords = filteredData;
+            setDisplayInfluencers(filteredData);
+        } else {
+            totalRecords = displayInfluencersBkup;
+            setDisplayInfluencers(displayInfluencersBkup);
+        }
+
+        setPageNo(0);
+        const tp =
+            totalRecords?.length > 16 && totalRecords?.length % 16 === 0
+                ? totalRecords?.length / 16
+                : totalRecords?.length > 16
+                ? parseInt(totalRecords?.length / 16) + 1
+                : 1;
+
+        setTotalPages(tp);
+    };
+
     return (
         <Box>
             {selectedCategory && selCategoriesData && selCategoriesData[0] && (
@@ -213,7 +292,8 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
             )}
 
             <Box w="100% " overflow="hidden">
-                {selectedCategory && category !== defaultCategoryName.toLowerCase() ? (
+                {selectedCategory &&
+                category !== defaultCategoryName.toLowerCase() ? (
                     <InfluencerDetailBanner getBannerImage={getBannerImage} />
                 ) : (
                     <InfluencerBanner getBannerImage={getBannerImage} />
@@ -224,26 +304,29 @@ const Influencers = ({ data, selectedCategory, banner, newInfluencers }) => {
                 defaultCategoryName={defaultCategoryName}
                 handleCategoryChange={handleCategoryChange}
                 activeCategory={category}
+                searchText={searchText}
+                isMobile={isMobile}
             />
+            {!isMobile && <Breadcumb data={breadcumbData}></Breadcumb>}
             {/* <NewInfluencers
                 newInfluencers={newInfluencers}
                 LeftArrow={LeftArrow}
                 RightArrow={RightArrow}
             /> */}
-             <AllInfluencers
-                    displayInfluencers={displayInfluencers}
-                    category={category}
-                    totalPages={totalPages}
-                    pageNo={pageNo}
-                    setPageNo={setPageNo}
-                    defaultCategoryName={defaultCategoryName}
-                    selectedCategory={selectedCategory}
-                    selCategoriesData={selCategoriesData}
-                    catData = {data}
-                    handleCategoryChange={handleFilterChange}
-                    setFilterValue={setFilterValue}
-                />
-           
+            <AllInfluencers
+                displayInfluencers={displayInfluencers}
+                category={category}
+                totalPages={totalPages}
+                pageNo={pageNo}
+                setPageNo={setPageNo}
+                defaultCategoryName={defaultCategoryName}
+                selectedCategory={selectedCategory}
+                selCategoriesData={selCategoriesData}
+                catData={data}
+                handleCategoryChange={handleFilterChange}
+                setFilterValue={setFilterValue}
+                dataPrePage={dataPrePage}
+            />
         </Box>
     );
 };

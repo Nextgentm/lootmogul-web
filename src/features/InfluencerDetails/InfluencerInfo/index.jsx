@@ -38,14 +38,23 @@ const InfluencerInfo = ({ influencer }) => {
         >
             <Center>
                 {influencer.icon?.data?.url && (
-                    <Image
-                        w={["290px"]}
-                        h={["340px"]}
-                        border="1px solid gray"
-                        alt={`influencer-dp`}
-                        borderRadius={["4px", "8px"]}
-                        src={getStrapiMedia(influencer.icon?.data?.url)}
-                    />
+                    <Box>
+                        <Image
+                            w={["290px"]}
+                            h={["340px"]}
+                            alt={`influencer-dp`}
+                            src={getStrapiMedia(influencer.icon?.data?.url)}
+                        />
+                        <Image
+                            alt={influencer.icon?.data?.url}
+                            layout="fill"
+                            w={["370px"]}
+                            h={["383px"]}
+                            mt={"-361px"}
+                            ml={"-27px"}
+                            src="/assets/side_Frame.png"
+                        />
+                    </Box>
                 )}
             </Center>
             <Box px={["40px", "23px", "0px", "0px", "0px"]}>
@@ -78,7 +87,11 @@ const InfluencerInfo = ({ influencer }) => {
                 </Flex>
                 <Flex justifyContent={"flex-start"} w="100%" mt="8px">
                     <Box align="center" mr="20px" key={`info-like`}>
-                        <Text fontSize={"1rem"} color="white" fontWeight={700}>
+                        <Text
+                            fontSize={"1rem"}
+                            color="#E90A63"
+                            fontWeight={700}
+                        >
                             {influencer.likeCount || 0}
                         </Text>
                         <Text fontSize={"17px"} color="#FFF" fontWeight="200">
@@ -87,7 +100,11 @@ const InfluencerInfo = ({ influencer }) => {
                     </Box>
 
                     <Box align="center" mr="20px" key={`info-shared`}>
-                        <Text fontSize={"1rem"} color="white" fontWeight={700}>
+                        <Text
+                            fontSize={"1rem"}
+                            color="#E90A63"
+                            fontWeight={700}
+                        >
                             {influencer.shareCount || 0}
                         </Text>
                         <Text fontSize={"17px"} color="#FFF" fontWeight="200">
@@ -96,7 +113,11 @@ const InfluencerInfo = ({ influencer }) => {
                     </Box>
 
                     <Box align="center" mr="20px" key={`info-reviews`}>
-                        <Text fontSize={"1rem"} color="white" fontWeight={700}>
+                        <Text
+                            fontSize={"1rem"}
+                            color="#E90A63"
+                            fontWeight={700}
+                        >
                             {influencer.reviewCount || 0}
                         </Text>
                         <Text fontSize={"17px"} color="#FFF" fontWeight="200">
