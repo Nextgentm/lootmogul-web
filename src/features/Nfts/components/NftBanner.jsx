@@ -7,8 +7,6 @@ const NftBanner = ({ getBannerImage }) => {
             <SimpleGrid
                 direction={"column-reverse"}
                 columns={[1, 1, 1, 2]}
-                spacing={10}
-                pt={[10, 10, 10, 20, 20]}
             >
                 <Box order="1">
                     <Text
