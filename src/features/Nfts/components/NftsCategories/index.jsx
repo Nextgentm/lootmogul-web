@@ -48,7 +48,7 @@ const ReadMore = ({ children }) => {
   return null;
   
 };
-const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
+const NftsCategories = ({ NFTS, isSelectedCat, index, nftSelectCategory }) => {
   const ref = useRef();
   const refColl = useRef();
 
@@ -59,17 +59,16 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
   const [displayCards, setDisplayCards] = useState([]);
 
   useEffect(() => {
-
     const allNfts = NFTS.nftSet?.sort((a, b) => a.priority - b.priority);
     setDisplayCards(allNfts);
 
   }, [NFTS?.nftSet]);
 
   const handleClick = (e) => {
-    router.push({
-      pathname: "/nfts/[id]",
-      query: { id: NFTS.slug },
-    });
+    // router.push({
+    //   pathname: "/nfts/[id]",
+    //   query: { id: NFTS.slug.toLowerCase() },
+    // });
   };
 
   
@@ -88,7 +87,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
             "repeat(4, 1fr)",
           ]}
           rowGap={10}
-          mt="10px"
+          mt="40px"
           mx="auto"
           gap={6}
           width="100%"
@@ -229,6 +228,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                       width={["250px"]}
                       onClick={() => {
                         handleClick();
+                        nftSelectCategory(NFTS.name);
                       }}
                     >
                       VIEW COLLECTION

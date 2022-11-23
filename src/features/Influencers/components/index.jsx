@@ -326,7 +326,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 searchText={searchText}
                 isMobile={isMobile}
             />
-            {!isMobile && <Breadcumb data={breadcumbData}></Breadcumb>}
+            {!isMobile && <Breadcumb data={breadcumbData} mxValue={[10, 10, 16]}></Breadcumb>}
             {/* <NewInfluencers
                 newInfluencers={newInfluencers}
                 LeftArrow={LeftArrow}
