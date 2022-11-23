@@ -55,8 +55,6 @@ const InfluencerBanner = ({ getBannerImage }) => {
             >
                 {getBannerImage() && (
                     <Box
-                        ml={["40px", "60px", "100px", "-100px"]}
-                        mr={["-20px", "-20px", "-20px", "-100px"]}
                     >
                         <Flex
                             position="relative"
