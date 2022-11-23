@@ -133,6 +133,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
 
                 <Button
                   mt={6}
+                  mb={6}
                   fontSize={["20px", "20px", "24px"]}
                   fontWeight="normal"
                   onClick={() => {
@@ -150,7 +151,6 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
               textAlign={"center"}
               px={10}
               pb={12}
-              mt={[]}
             >
               {carouselItem && (
                 <LMThumbnailCarousel
