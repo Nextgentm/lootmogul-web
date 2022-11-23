@@ -100,7 +100,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
       <Box mb={"10vw"}>
         <Box>
           <Flex direction={["column", "column", "column", "row"]}>
-            <Box pb={[5, 5, 12]} w={["100%", "100%", "100%", "70%"]}>
+            <Box w={["100%", "100%", "100%", "70%"]}>
               <Box mt={!isMobileDevice ? 26 : 0}>
                 <Text
                   variant="headText"
@@ -109,7 +109,6 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                     "70px",
                     "100px",
                   ]}
-                  mt={["3rem", "5rem", "5rem"]}
                   mb={0}
                   fontFamily="var(--chakra-fonts-Blanch)"
                   lineHeight="1"
@@ -134,6 +133,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
 
                 <Button
                   mt={6}
+                  mb={6}
                   fontSize={["20px", "20px", "24px"]}
                   fontWeight="normal"
                   onClick={() => {
@@ -151,8 +151,6 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
               textAlign={"center"}
               px={10}
               pb={12}
-              pt={[0, 0, 0, 8, 12]}
-              mt={[]}
             >
               {carouselItem && (
                 <LMThumbnailCarousel
