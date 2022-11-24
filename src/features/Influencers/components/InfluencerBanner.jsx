@@ -24,7 +24,7 @@ const InfluencerBanner = ({ getBannerImage }) => {
                     lineHeight="1"
                 >
                     Play your favorite Ambassador Tournament and win
-                    NFT
+                    Prizes
                 </Text>
 
                 <Text
