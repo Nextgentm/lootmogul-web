@@ -13,6 +13,7 @@ import SEOContainer from "../src/features/SEOContainer";
 import { useContext, useEffect } from "react";
 import LMVideoPlayer from "../src/components/LMVideoPlayer";
 import { Box } from "@chakra-ui/react";
+import { Router } from "react-router-dom";
 import AppContext from "../src/utils/AppContext";
 const defaultSEOData = {
   metaTitle: "Buy And Trade Your Favorite Influencers NFTs",
