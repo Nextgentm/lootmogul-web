@@ -36,6 +36,7 @@
     "next-share": "^0.13.0",
     "node-fetch": "^3.2.3",
     "node-sass": "^7.0.1",
+    "query-string": "^7.1.1",
     "react": "17.0.2",
     "react-card-flip": "^1.1.5",
     "react-collapsible": "^2.8.4",
