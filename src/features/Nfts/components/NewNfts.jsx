@@ -71,7 +71,7 @@ const NewNfts = ({
                         fontFamily="Blanch"
                         mt={6}
                     >
-                        EXPLORE NFT'S
+                        EXPLORE
                     </Text>
                 </Center>
             ) : (
