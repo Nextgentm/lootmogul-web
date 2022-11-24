@@ -1,28 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-    Box,
-    Button,
-    Center,
-    Flex,
-    SimpleGrid,
-    Text,
-    Image,
-    Tooltip
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
 import SEOContainer from "../../SEOContainer";
 import { useRouter } from "next/router";
-import NftsCategories from "./NftsCategories";
-import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import NftCard from "./NftCard";
 import {
     LeftArrow,
     RightArrow
 } from "../../../components/ContentNavigator/arrows";
-import NftCardInCollection from "./NftsCategories/NftCardInCollection";
-import { GrFilter } from "react-icons/gr";
-import CategoryComponent from "../categoryComp";
 import NftDetailBanner from "./NftDetailBanner";
 import NftBanner from "./NftBanner";
 import NewNfts from "./NewNfts";
@@ -47,10 +32,15 @@ const Nfts = ({ data, banner, newNfts, isNewest, nft }) => {
 
     const { callAuthService } = useContext(AppContext);
     const [breadcumbData, setBreadcumbData] = useState([
-        { text: "Home", url: "https://metaverse.lootmogul.com/home", isCurrentPage: false },
+        {
+            text: "Home",
+            url: "https://metaverse.lootmogul.com/home",
+            isCurrentPage: false
+        },
         { text: "All NFT", url: "/nfts", isCurrentPage: true }
     ]);
     let initialState = selCategoriesData;
+    const [subHeader, setSubHeader] = useState('');
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -82,7 +72,7 @@ const Nfts = ({ data, banner, newNfts, isNewest, nft }) => {
             setBreadcumbData(routes);
         }
         setSelCategoriesDataBkup(selCategoriesData);
-        if(!window.location.pathname.includes("/nfts/")) {
+        if (!window.location.pathname.includes("/nfts/")) {
             setSelectedCategory(defaultCategories);
         }
     }, [data]);
@@ -125,6 +115,7 @@ const Nfts = ({ data, banner, newNfts, isNewest, nft }) => {
                 { shallow: true }
             );
         } else if (displayData) {
+            console.log(newCategory);
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === newCategory.toLowerCase()
             );
@@ -159,6 +150,7 @@ const Nfts = ({ data, banner, newNfts, isNewest, nft }) => {
             "changedNftBreadCrumbData",
             JSON.stringify(routes)
         );
+        setSubHeader(selData[0]?.name.toString().toUpperCase());
     };
 
     useEffect(() => {
@@ -242,20 +234,17 @@ const Nfts = ({ data, banner, newNfts, isNewest, nft }) => {
     }, [sortBy]);
 
     const nftPriceSorting = (e) => {
+        let clonedData = structuredClone(data);
+        let selData = clonedData.filter(
+            (item) => item.name.toLowerCase() === selectedCategory.toLowerCase()
+        );
         if (e === "Price Low To High") {
-            const selData = data.filter(
-                (item) => item.slug === selectedCategory
-            );
             selData[0].nftSet.sort(
                 (a, b) =>
                     a.nft_kred.data.sale_price - b.nft_kred.data.sale_price
             );
-
             setSelCategoriesData(selData);
         } else {
-            const selData = data.filter(
-                (item) => item.slug === selectedCategory
-            );
             selData.forEach(function (nft) {
                 nft.nftSet = nft.nftSet.sort(
                     (a, b) =>
@@ -372,6 +361,7 @@ const Nfts = ({ data, banner, newNfts, isNewest, nft }) => {
                 setTempFilterValue={setTempFilterValue}
                 nftFilterCategory={nftFilterCategory}
                 breadcumbData={breadcumbData}
+                subHeader={subHeader}
             />
         </Box>
     );

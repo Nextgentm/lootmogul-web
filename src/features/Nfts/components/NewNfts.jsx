@@ -47,7 +47,8 @@ const NewNfts = ({
     setPriceRange,
     setTempFilterValue,
     nftFilterCategory,
-    breadcumbData
+    breadcumbData,
+    subHeader
 }) => {
     const ref = React.useRef();
     const lazyRootNew = React.useRef(null);
@@ -62,165 +63,24 @@ const NewNfts = ({
 
     return (
         <Box mt={5}>
-            {!selectedCategory ? (
-                <Center>
-                    <Text
-                        color="white"
-                        fontSize={["3em", "4em"]}
-                        fontFamily="Blanch"
-                        mt={6}
-                    >
-                        EXPLORE NFT'S
-                    </Text>
-                </Center>
-            ) : (
-                <Flex
-                    justifyContent={["space-between"]}
-                    alignItems="center"
-                    flexDirection={["column", "column", "row"]}
+            <Flex
+                justifyContent={["space-between"]}
+                alignItems="center"
+                flexDirection={["column", "column", "row"]}
+            >
+                <Text
+                    color="white"
+                    fontSize={["3em", "4em"]}
+                    fontFamily="Blanch"
+                    inlineSize={"100"}
                 >
-                    <Text
-                        color="white"
-                        fontSize={["3em", "4em"]}
-                        fontFamily="Blanch"
-                        inlineSize={"100"}
-                    >
-                        {selCategoriesData?.[0]?.name}
-                    </Text>
+                    EXPLORE
+                </Text>
 
-                    <Flex alignItems="center" pos="relative">
-                        {selectedCategory && !isMobileDevice && (
-                            <>
-                                <InputGroup marginRight={"20px"}>
-                                    <InputLeftElement
-                                        className="InputLeft"
-                                        pointerEvents="none"
-                                        children={
-                                            <SearchIcon
-                                                className="SearchIcon"
-                                                color="gray.300"
-                                            />
-                                        }
-                                        size="xs"
-                                    />
-                                    <Input
-                                        type="search"
-                                        placeholder="Search by name or attributes"
-                                        color={"white"}
-                                        SearchIcon
-                                        onChange={(e) => {
-                                            nftSearch(e.target.value);
-                                        }}
-                                    />
-                                </InputGroup>
-                            </>
-                        )}
-                        {selectedCategory && !isMobileDevice && (
-                            <>
-                                {/* <CategoryPriceComponent
-                                    priceData={priceData}
-                                    nftPriceSorting={nftPriceSorting}
-                                ></CategoryPriceComponent> */}
-                            </>
-                        )}
-                    </Flex>
-                </Flex>
-            )}
-            {selectedCategory && showFilters && !isActive && (
-                <Flex
-                    justifyContent={"space-around"}
-                    w="100%"
-                    h="100%"
-                    mb="60px"
-                    alignItems="center"
-                    flexDirection={["column", "column", "column", "row"]}
-                >
-                    <CategoryComponent
-                        defaultCategory={defaultCategories}
-                        displayData={displayData}
-                        selectedCategory={selectedCategory}
-                        setTempFilterValue={setTempFilterValue}
-                        nftSelectCategory={nftSelectCategory}
-                    ></CategoryComponent>
-
-                    <Box w="250px" my={[8, 8, 8, 0]}>
-                        <Text
-                            color="#fff"
-                            fontSize="16px"
-                            fontWeight="600"
-                            mb="-1"
-                        >
-                            PRICE RANGE
-                        </Text>
-                        <RangeSlider
-                            defaultValue={[
-                                priceRange?.min || 0.1,
-                                priceRange?.max || 1
-                            ]}
-                            min={priceRange?.min || 0.1}
-                            max={priceRange?.max || 1}
-                            step={0.1}
-                            onChangeEnd={(val) => {
-                                let newPR = priceRange;
-                                newPR.minSel = val[0];
-                                newPR.maxSel = val[1];
-                                setPriceRange(newPR);
-                            }}
-                        >
-                            <RangeSliderTrack bg="#481A7F">
-                                <RangeSliderFilledTrack bg="#E90A63" />
-                            </RangeSliderTrack>
-                            <RangeSliderThumb boxSize={2.5} index={0} />
-                            <RangeSliderThumb boxSize={2.5} index={1} />
-                        </RangeSlider>
-                        <Text
-                            color="#fff"
-                            fontSize="16px"
-                            fontWeight="600"
-                            mt="-1"
-                        >
-                            {" "}
-                            <Flex>
-                                {" "}
-                                PRICE : {priceRange?.minSel}
-                                {/* <Image
-                                    alt="Remaining Time"
-                                    objectFit="contain"
-                                    
-                                    src={
-                                        "https://gamificationv2.s3.us-west-2.amazonaws.com/eth_icon_c0b1871b9b.svg"
-                                    }
-                                    height="22px"
-                                    width="22px"
-                                /> */}{" "}
-                                - {priceRange?.maxSel}{" "}
-                                <Image
-                                    alt="Remaining Time"
-                                    objectFit="contain"
-                                    src={
-                                        "https://gamificationv2.s3.us-west-2.amazonaws.com/eth_icon_c0b1871b9b.svg"
-                                    }
-                                    height="22px"
-                                    width="22px"
-                                />
-                            </Flex>
-                        </Text>
-                    </Box>
-                    <Button
-                        mt={["7", "0"]}
-                        variant="searchBtn"
-                        onClick={nftFilterCategory}
-                    >
-                        Search
-                    </Button>
-                </Flex>
-            )}
-
-            {isMobileDevice ? (
-                <>
-                    {selectedCategory && (
+                <Flex alignItems="center" pos="relative">
+                    {selectedCategory && !isMobileDevice && (
                         <>
-                            <InputGroup>
+                            <InputGroup marginRight={"20px"}>
                                 <InputLeftElement
                                     className="InputLeft"
                                     pointerEvents="none"
@@ -234,7 +94,7 @@ const NewNfts = ({
                                 />
                                 <Input
                                     type="search"
-                                    placeholder="Search"
+                                    placeholder="Search by name or attributes"
                                     color={"white"}
                                     SearchIcon
                                     onChange={(e) => {
@@ -242,8 +102,42 @@ const NewNfts = ({
                                     }}
                                 />
                             </InputGroup>
+
+                            <CategoryPriceComponent
+                                priceData={priceData}
+                                nftPriceSorting={nftPriceSorting}
+                            ></CategoryPriceComponent>
                         </>
                     )}
+                </Flex>
+            </Flex>
+
+
+            {isMobileDevice && selectedCategory ? (
+                <>
+                    <InputGroup>
+                        <InputLeftElement
+                            className="InputLeft"
+                            pointerEvents="none"
+                            children={
+                                <SearchIcon
+                                    className="SearchIcon"
+                                    color="gray.300"
+                                />
+                            }
+                            size="xs"
+                        />
+                        <Input
+                            type="search"
+                            placeholder="Search"
+                            color={"white"}
+                            SearchIcon
+                            onChange={(e) => {
+                                nftSearch(e.target.value);
+                            }}
+                        />
+                    </InputGroup>
+
                     <CategoryComponent
                         defaultCategory={defaultCategories}
                         displayData={displayData}
@@ -251,14 +145,11 @@ const NewNfts = ({
                         setTempFilterValue={setTempFilterValue}
                         nftSelectCategory={nftSelectCategory}
                     ></CategoryComponent>
-                    {selectedCategory && (
-                        <>
-                            {/* <CategoryPriceComponent
-                                priceData={priceData}
-                                nftPriceSorting={nftPriceSorting}
-                            ></CategoryPriceComponent> */}
-                        </>
-                    )}
+
+                    <CategoryPriceComponent
+                        priceData={priceData}
+                        nftPriceSorting={nftPriceSorting}
+                    ></CategoryPriceComponent>
                 </>
             ) : (
                 <>
@@ -329,7 +220,25 @@ const NewNfts = ({
                 </>
             )}
 
+
             <Breadcumb data={breadcumbData} mxValue={[]}></Breadcumb>
+
+
+            <Flex
+                justifyContent={["space-between"]}
+                alignItems="center"
+                flexDirection={["column", "column", "row"]}
+            >
+                <Text
+                    color="white"
+                    fontSize={["3em", "4em"]}
+                    fontFamily="Blanch"
+                    inlineSize={"100"}
+                >
+                    {subHeader}
+                </Text>
+            </Flex>
+
 
             <Flex w="100%" flexDir={"column"} px="1">
                 {selCategoriesData
@@ -345,6 +254,98 @@ const NewNfts = ({
                         />
                     ))}
             </Flex>
+
+            
+            {/* These are Uunwanted filters for now
+            {selectedCategory && showFilters && !isActive && (
+                <Flex
+                    justifyContent={"space-around"}
+                    w="100%"
+                    h="100%"
+                    mb="60px"
+                    alignItems="center"
+                    flexDirection={["column", "column", "column", "row"]}
+                >
+                    <CategoryComponent
+                        defaultCategory={defaultCategories}
+                        displayData={displayData}
+                        selectedCategory={selectedCategory}
+                        setTempFilterValue={setTempFilterValue}
+                        nftSelectCategory={nftSelectCategory}
+                    ></CategoryComponent>
+
+                    <Box w="250px" my={[8, 8, 8, 0]}>
+                        <Text
+                            color="#fff"
+                            fontSize="16px"
+                            fontWeight="600"
+                            mb="-1"
+                        >
+                            PRICE RANGE
+                        </Text>
+                        <RangeSlider
+                            defaultValue={[
+                                priceRange?.min || 0.1,
+                                priceRange?.max || 1
+                            ]}
+                            min={priceRange?.min || 0.1}
+                            max={priceRange?.max || 1}
+                            step={0.1}
+                            onChangeEnd={(val) => {
+                                let newPR = priceRange;
+                                newPR.minSel = val[0];
+                                newPR.maxSel = val[1];
+                                setPriceRange(newPR);
+                            }}
+                        >
+                            <RangeSliderTrack bg="#481A7F">
+                                <RangeSliderFilledTrack bg="#E90A63" />
+                            </RangeSliderTrack>
+                            <RangeSliderThumb boxSize={2.5} index={0} />
+                            <RangeSliderThumb boxSize={2.5} index={1} />
+                        </RangeSlider>
+                        <Text
+                            color="#fff"
+                            fontSize="16px"
+                            fontWeight="600"
+                            mt="-1"
+                        >
+                            {" "}
+                            <Flex>
+                                {" "}
+                                PRICE : {priceRange?.minSel}
+                                {/* <Image
+                                    alt="Remaining Time"
+                                    objectFit="contain"
+                                    
+                                    src={
+                                        "https://gamificationv2.s3.us-west-2.amazonaws.com/eth_icon_c0b1871b9b.svg"
+                                    }
+                                    height="22px"
+                                    width="22px"
+                                /> */}{" "}
+            {/* - {priceRange?.maxSel}{" "}
+                                <Image
+                                    alt="Remaining Time"
+                                    objectFit="contain"
+                                    src={
+                                        "https://gamificationv2.s3.us-west-2.amazonaws.com/eth_icon_c0b1871b9b.svg"
+                                    }
+                                    height="22px"
+                                    width="22px"
+                                />
+                            </Flex>
+                        </Text>
+                    </Box>
+                    <Button
+                        mt={["7", "0"]}
+                        variant="searchBtn"
+                        onClick={nftFilterCategory}
+                    >
+                        Search
+                    </Button>
+                </Flex>
+            )} */}
         </Box>
     );
 };
