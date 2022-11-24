@@ -59,7 +59,8 @@ const NftsCategories = ({ NFTS, isSelectedCat, index, nftSelectCategory }) => {
   const [displayCards, setDisplayCards] = useState([]);
 
   useEffect(() => {
-    const allNfts = NFTS.nftSet?.sort((a, b) => a.priority - b.priority);
+    let allNfts = NFTS.nftSet?.sort((a, b) => a.priority - b.priority);
+    allNfts.length <= 6 ? allNfts = allNfts : allNfts = allNfts.splice(0, 6);
     setDisplayCards(allNfts);
 
   }, [NFTS?.nftSet]);
