@@ -11,7 +11,7 @@ import { breabCrumbStyle } from "../../../components/Header/styles";
 
 const Breadcumb = ({ data, mxValue }) => {
     return (
-        <Box mt={5} mx={mxValue}>
+        <Box mt={5} mx={mxValue} fontWeight={"bold"}>
             <Flex mt={10}>
                 <Breadcrumb
                     spacing="3px"
