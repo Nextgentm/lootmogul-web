@@ -590,7 +590,11 @@ useEffect(() => {
                     }
                     strapi.logout();
                     setUser(null);
-                    router.push("/");
+                    if (router.route === '/influencers' || router.route === '/nfts' || router.route === '/games') {
+                        router.push(router.route);
+                    }else {
+                        router.push("/");
+                    }
                 },
             }}
         >

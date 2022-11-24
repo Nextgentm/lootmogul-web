@@ -10,8 +10,6 @@ const InfluencerBanner = ({ getBannerImage }) => {
         >
             <Box
                 px={10}
-                mt={[0, 0, 10, 30]}
-                ml={["0em", "0em", "2em", "2em"]}
                 width={["100%", "100%", "100%", "55%"]}
             >
                 <Text
@@ -53,17 +51,13 @@ const InfluencerBanner = ({ getBannerImage }) => {
                 textAlign={"center"}
                 px={[0, 0, 0, 10]}
                 pb={[0, 0, 0, 12]}
-                pt={[10, 10, 0, 12]}
                 width={["120%", "120%", "120%", "50%"]}
             >
                 {getBannerImage() && (
                     <Box
-                        ml={["40px", "60px", "100px", "-100px"]}
-                        mr={["-20px", "-20px", "-20px", "-100px"]}
                     >
                         <Flex
                             position="relative"
-                            mt={["-35px", "-11px", "50px"]}
                         >
                             <Image
                                 m={"auto"}
