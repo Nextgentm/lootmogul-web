@@ -23,8 +23,7 @@ const InfluencerBanner = ({ getBannerImage }) => {
                     fontFamily="var(--chakra-fonts-Blanch)"
                     lineHeight="1"
                 >
-                    Play your favorite Ambassador Tournament and win
-                    Prizes
+                    Own digital collectibles of your favorite athletes
                 </Text>
 
                 <Text
@@ -42,8 +41,7 @@ const InfluencerBanner = ({ getBannerImage }) => {
                     lineHeight={["30px", "30px", "36px"]}
                     width={["100%", "100%", "80%"]}
                 >
-                    Become a virtual landlord to some of the largest
-                    projects in crypto
+                    LootMogul has designed a range of unique digital assets of inspiring sports stars. Collect them today!
                 </Text>
             </Box>
             <Box
