@@ -30,7 +30,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
     const [displayInfluencersBkup, setDisplayInfluencersBkup] = useState([]);
     const [breadcumbData, setBreadcumbData] = useState([
-        { text: "Home", url: "/influencers", isCurrentPage: false },
+        { text: "Home", url: "https://metaverse.lootmogul.com/home", isCurrentPage: false },
         { text: "Ambassadors", url: "/influencers", isCurrentPage: true }
     ]);
     const router = useRouter();

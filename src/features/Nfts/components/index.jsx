@@ -47,8 +47,8 @@ const Nfts = ({ data, banner, newNfts, isNewest, nft }) => {
 
     const { callAuthService } = useContext(AppContext);
     const [breadcumbData, setBreadcumbData] = useState([
-        { text: "Home", url: "/nfts", isCurrentPage: false },
-        { text: "All NFTs", url: "/nfts", isCurrentPage: true }
+        { text: "Home", url: "https://metaverse.lootmogul.com/home", isCurrentPage: false },
+        { text: "All NFT", url: "/nfts", isCurrentPage: true }
     ]);
     let initialState = selCategoriesData;
 
