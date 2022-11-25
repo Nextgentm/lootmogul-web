@@ -48,7 +48,8 @@ const NewNfts = ({
     setTempFilterValue,
     nftFilterCategory,
     breadcumbData,
-    subHeader
+    subHeader,
+    hideFilters
 }) => {
     const ref = React.useRef();
     const lazyRootNew = React.useRef(null);
@@ -78,7 +79,8 @@ const NewNfts = ({
                 </Text>
 
                 <Flex alignItems="center" pos="relative">
-                    {selectedCategory && !isMobileDevice && (
+                    {selectedCategory && !isMobileDevice && !hideFilters && (
+                        
                         <>
                             <InputGroup marginRight={"20px"}>
                                 <InputLeftElement
@@ -108,12 +110,13 @@ const NewNfts = ({
                                 nftPriceSorting={nftPriceSorting}
                             ></CategoryPriceComponent>
                         </>
+                                
                     )}
                 </Flex>
             </Flex>
 
 
-            {isMobileDevice && selectedCategory ? (
+            {isMobileDevice && selectedCategory && !hideFilters ? (
                 <>
                     <InputGroup>
                         <InputLeftElement
