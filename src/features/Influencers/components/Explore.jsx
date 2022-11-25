@@ -69,7 +69,7 @@ const Explore = ({
                         flexWrap="wrap"
                         alignContent={"center"}
                     >
-                       <Link><Button
+                       <Button
                             w={["95vw", "95vw", "auto"]}
                             mr={["0px", "0px", "15px"]}
                             mt="20px"
@@ -96,9 +96,9 @@ const Explore = ({
                             }
                         >
                             <Text fontWeight={500}>{defaultCategoryName} </Text>
-                        </Button></Link> 
+                        </Button> 
                         {data?.map((influencerCat, index) => (
-                           <Link><Button
+                           <Button
                            w={["90vw", "90vw", "auto"]}
                            mr={["0px", "0px", "15px"]}
                            mt="20px"
@@ -126,7 +126,7 @@ const Explore = ({
                            }
                        >
                            <Text>{influencerCat.name}</Text>
-                       </Button></Link> 
+                       </Button>
                         ))}
                     </Flex>
                 </Box>
