@@ -23,7 +23,7 @@ const Explore = ({
                     <Box height="80px" width={"100%"} textAlign={"center"}>
                         <Heading variant="sectionTitle">EXPLORE</Heading>
                     </Box>
-                    <Box height="80px" width={"100%"}>
+                    <Box height="80px" width={"100%"} >
                         <Search searchText={searchText}></Search>
                     </Box>
 
@@ -58,7 +58,7 @@ const Explore = ({
                         <Box height="80px">
                             <Heading variant="sectionTitle">EXPLORE</Heading>
                         </Box>
-                        <Box height="80px" maxW={"md"}>
+                        <Box height="100px" maxW={"lg"} marginRight={"100px"}>
                             <Search searchText={searchText}></Search>
                         </Box>
                     </Flex>
