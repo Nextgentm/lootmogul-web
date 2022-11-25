@@ -13,8 +13,7 @@ const CollapsableRow = ({ title, children, icon, isOpen }) => {
                 onClose={() => setExpanded(false)}
                 trigger={
                     <Flex align="center" w="100%">
-                        {!isExpanded && (
-                            <Image
+                        <Image
                                 w={["40px"]}
                                 h={["32px"]}
                                 ml={"10px"}
@@ -22,7 +21,6 @@ const CollapsableRow = ({ title, children, icon, isOpen }) => {
                                 mr={"10px"}
                                 src={[icon]}
                             />
-                        )}
                         <Text
                             fontSize="2rem"
                             fontFamily="Sora"

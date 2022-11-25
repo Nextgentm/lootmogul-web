@@ -25,7 +25,7 @@ const InfluencerInfoCollapsable = ({ influencer }) => {
             borderRadius={["4px", "8px"]}
             mt={[10,10,0]}
         >
-            <CollapsableRow title="About" isOpen={true} icon={"/assets/About.svg"}>
+            <CollapsableRow title="About" isOpen={true} icon={"/assets/About.svg"} >
                 <Box maxH="390px" overflowY={"auto"} textAlign="left">
                     <ReactMarkdown
                         rehypePlugins={[rehypeRaw]}
