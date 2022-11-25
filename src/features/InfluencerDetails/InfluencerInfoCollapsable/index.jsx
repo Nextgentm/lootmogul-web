@@ -18,14 +18,14 @@ const newMarkDownTheme = {
 
 const InfluencerInfoCollapsable = ({ influencer }) => {
     return (
-        <Box
+        <><Box
             color="white"
             border="solid 2px"
             borderColor={"#421d7a"}
             borderRadius={["4px", "8px"]}
-            mt={[10,10,0]}
+            mt={[0, 10, 0]}
         >
-            <CollapsableRow title="About" isOpen={true} icon={"/assets/About.svg"}>
+            <CollapsableRow title="About" isOpen={true} icon={"/assets/About.svg"} mt={"10px"}>
                 <Box maxH="390px" overflowY={"auto"} textAlign="left">
                     <ReactMarkdown
                         rehypePlugins={[rehypeRaw]}
@@ -38,28 +38,52 @@ const InfluencerInfoCollapsable = ({ influencer }) => {
                 </Box>
             </CollapsableRow>
 
-            {influencer.Video && (
-                <CollapsableRow
-                    title="Videos"
-                    icon={"/assets/Video.svg"}
-                >
-                    <Text fontWeight={600} color="#C7C7C7" fontSize="10px">
-                        Videos
-                    </Text>
-                </CollapsableRow>
-            )}
 
-            {influencer.reviews && (
-                <CollapsableRow
-                    title="Reviewes"
-                    icon={"/assets/Reviews.svg"}
-                >
-                    <Text fontWeight={600} color="#C7C7C7" fontSize="10px">
-                        Reviews
-                    </Text>
-                </CollapsableRow>
-            )}
-        </Box>
+
+
+        </Box><Box
+            color="white"
+            border="solid 2px"
+            borderColor={"#421d7a"}
+            borderRadius={["4px", "8px"]}
+            mt={"25px"}
+        >
+                {influencer.Video && (
+                    <CollapsableRow title="Videos" isOpen={true} icon={"/assets/Video.svg"} mt={"10px"}>
+                        <Box maxH="390px" overflowY={"auto"} textAlign="left">
+                        <ReactMarkdown
+                        rehypePlugins={[rehypeRaw]}
+                        components={ChakraUIRenderer(newMarkDownTheme)}
+                        remarkPlugins={[remarkGfm]}
+                        skipHtml
+                    >
+                        {influencer.Video}
+                    </ReactMarkdown>
+                        </Box>
+                    </CollapsableRow>
+                )}</Box>
+                <Box
+            color="white"
+            border="solid 2px"
+            borderColor={"#421d7a"}
+            borderRadius={["4px", "8px"]}
+            mt={"25px"}
+        >
+                {influencer.reviews && (
+                    <CollapsableRow title="Reviews" isOpen={true} icon={"/assets/Reviews.svg"} mt={"10px"}>
+                        <Box maxH="390px" overflowY={"auto"} textAlign="left">
+                        <ReactMarkdown
+                        rehypePlugins={[rehypeRaw]}
+                        components={ChakraUIRenderer(newMarkDownTheme)}
+                        remarkPlugins={[remarkGfm]}
+                        skipHtml
+                    >
+                        {influencer.reviews}
+                    </ReactMarkdown>
+                        </Box>
+                    </CollapsableRow>
+                )}</Box></>
+        
     );
 };
 
