@@ -1,4 +1,7 @@
 import { useState, useContext } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import queryString from "query-string";
+import { useRouter } from "next/router";
 import {
     Flex,
     Text,
@@ -29,6 +32,9 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
     const [inputNewPwd, setInputNewPwd] = useState();
     const [inputConfirmPwd, setInputConfirmPwd] = useState();
     const [inputCode,setInputCode] = useState('');
+    const router = useRouter();
+    const secCode = router.asPath.replace("/reset-password?code=",'');
+    console.log(secCode);
 
     const { setChangePasswordModalActive, togglePasswordChangedModal } = useContext(AppContext);
 
@@ -179,7 +185,7 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                                             border="1px solid #707070 !important"
                                             height="35px"
                                             _focus={{ outline: "0" }}
-                                            value={inputCode}
+                                            value={secCode}
                                             onChange={(e) => setInputCode(e.target.value)}
                                         />
                                     </FormControl>

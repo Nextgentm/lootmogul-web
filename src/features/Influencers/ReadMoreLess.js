@@ -24,7 +24,7 @@ const ReadMoreLess = ({ read, lines }) => {
                 <Text
                     textDecoration={"underline"}
                     cursor="pointer"
-                    color={"#f2b01c"}
+                    color={"#e00493"}
                     fontSize="14px"
                     onClick={() => {
                         setReadMoreShown(!isReadMoreShown);

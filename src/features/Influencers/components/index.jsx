@@ -107,13 +107,25 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 routes[1].isCurrentPage = true;
                 setBreadcumbData(routes);
             }
-            router.push("/influencers");
+            router.push(
+                {
+                    pathname: "/influencers"
+                },
+                undefined,
+                { shallow: true }
+            );
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === e
             );
             if (selData?.[0]?.slug)
-                router.push("/influencers/category/" + selData[0].slug);
+                router.push(
+                    {
+                        pathname: "/influencers/category/" + selData[0].slug
+                    },
+                    undefined,
+                    { shallow: true }
+                );
 
             routes.map((x) => (x.isCurrentPage = false));
             routes.push({

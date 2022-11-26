@@ -21,9 +21,9 @@ const NftBanner = ({ getBannerImage }) => {
                         variant="headText"
                         textShadow="unset"
                     >
-                        Buy and Trade <br />
-                        Your favorite <br />
-                        Influencers NFT
+                        Discover, Buy, & Trade <br />
+                        Digital Collectibles <br />
+                        Of Your Favorite Sportstar
                     </Text>
 
                     <Text
@@ -39,8 +39,7 @@ const NftBanner = ({ getBannerImage }) => {
                         mt="1rem"
                         width={"90%"}
                     >
-                        Become a virtual landlord to some of the
-                        largest projects in crypto
+                        Unlock rare digital assets of inspiring sports star with true in real-life utilities
                     </Text>
                 </Box>
                 <Box
