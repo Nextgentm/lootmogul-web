@@ -47,6 +47,7 @@ const AllInfluencers = ({
     const [isAvgDeskDevice] = useMediaQuery("(max-width: 1600px)");
     const [isLargeDesk] = useMediaQuery("(max-width: 1920px)");
     const [isLargeAndAbove] = useMediaQuery("(max-width: 2560px)");
+    const [isNormalDesktop] = useMediaQuery("(max-width: 1440px)");
 
     const [columnValues, setColumnValues] = useState("repeat(8, 1fr)");
     const onlyWidth = useWindowWidth();
@@ -81,14 +82,15 @@ const AllInfluencers = ({
         } else if (isAvgDeskDevice) {
             setColumnValues("repeat(5, 1fr)");
             setHight("328px");
-            setWidth("248px");
-            setMarLeft("-3px");
+            setWidth("265px");
+            setMarLeft("-5px");
         } else if (isLargeDesk) {
             setColumnValues("repeat(8, 1fr)");
             setHight("328px");
             setWidth("252px");
             setMarLeft("-23px");
-        } else if (isLargeAndAbove) {
+        } 
+         else if (isLargeAndAbove) {
             setColumnValues("repeat(8, 1fr)");
             setHight("328px");
             setWidth("250px");
@@ -96,8 +98,8 @@ const AllInfluencers = ({
         } else {
             setColumnValues("repeat(8, 1fr)");
             setHight("338px");
-            setWidth("330px");
-            setMarLeft("-10px");
+            setWidth("350px");
+            setMarLeft("0px");
         }
     });
 
