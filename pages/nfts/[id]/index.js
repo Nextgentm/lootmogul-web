@@ -14,6 +14,7 @@ export async function getStaticProps(context) {
   // Fetch data from external API
 
   const { id = "" } = context.params;
+  console.log(id)
   const filter = isNaN(id) ? { slug: id } : { id: id };
   let pageNo = 1;
   let pageCount = 1;
