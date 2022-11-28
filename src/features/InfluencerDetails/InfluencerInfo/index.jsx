@@ -1,7 +1,8 @@
-import { Box, Image, Flex, Text, Button, Center, Link } from "@chakra-ui/react";
+import { Box, Image, Flex, Text, Button, Center, Link,  useMediaQuery } from "@chakra-ui/react";
 import { getStrapiMedia } from "../../../utils/medias";
 import AppContext from "../../../utils/AppContext";
 import { useContext } from "react";
+import { useWindowWidth } from "@react-hook/window-size";
 
 import SocialActions from "../SocialActions";
 import { useState, useEffect } from "react";
@@ -31,6 +32,64 @@ const InfluencerInfo = ({ influencer }) => {
             setHeartClick(true);
         }
     }, [influencer, influencerLikes]);
+    const [isMobile] = useMediaQuery("(max-width:768px)");
+    const [isAvgLaptopDevice] = useMediaQuery("(max-width: 1366px)");
+    const [isAvgDeskDevice] = useMediaQuery("(max-width: 1600px)");
+    const [isLargeDesk] = useMediaQuery("(max-width: 1920px)");
+    const [isLargeAndAbove] = useMediaQuery("(max-width: 2560px)");
+
+    const [columnValues, setColumnValues] = useState("repeat(8, 1fr)");
+    const onlyWidth = useWindowWidth();
+    const [width, setWidth] = useState("");
+    const [hight, setHight] = useState("");
+    const [marLeft, setMarLeft] = useState("");
+
+    useEffect(() => {
+        if (isMobile) {
+            if (onlyWidth === 720) {
+                setColumnValues("repeat(2, 1fr)");
+                setHight("420px");
+                setWidth("375px");
+                setMarLeft("-5px");
+            } else if (onlyWidth === 375){
+                setColumnValues("repeat(1, 1fr)");
+                setHight("420px");
+                setWidth("370px");
+                setMarLeft("-4px");
+            }
+            else {
+                setColumnValues("repeat(1, 1fr)");
+                setHight("420px");
+                setWidth("380px");
+                setMarLeft("-03px");
+            }
+        } else if (isAvgLaptopDevice) {
+            setColumnValues("repeat(5, 1fr)");
+            setHight("415px");
+            setWidth("390px");
+            setMarLeft("-36px");
+        } else if (isAvgDeskDevice) {
+            setColumnValues("repeat(5, 1fr)");
+            setHight("415px");
+            setWidth("385px");
+            setMarLeft("-35px");
+        } else if (isLargeDesk) {
+            setColumnValues("repeat(8, 1fr)");
+            setHight("410px");
+            setWidth("390px");
+            setMarLeft("-36px");
+        } else if (isLargeAndAbove) {
+            setColumnValues("repeat(8, 1fr)");
+            setHight("410px");
+            setWidth("390px");
+            setMarLeft("-37px");
+        } else {
+            setColumnValues("repeat(8, 1fr)");
+            setHight("338px");
+            setWidth("330px");
+            setMarLeft("-10px");
+        }
+    });
     return (
         <Flex
             direction="column"
@@ -40,18 +99,19 @@ const InfluencerInfo = ({ influencer }) => {
                 {influencer.icon?.data?.url && (
                     <Box>
                         <Image
-                            w={["290px"]}
+                            w={["280px"]}
                             h={["340px"]}
                             alt={`influencer-dp`}
                             src={getStrapiMedia(influencer.icon?.data?.url)}
+                            style={{borderRadius:"35px"}}
                         />
                         <Image
                             alt={influencer.icon?.data?.url}
                             layout="fill"
-                            w={["370px"]}
-                            h={["383px"]}
-                            mt={"-361px"}
-                            ml={"-27px"}
+                            w={width}
+                            h={hight}
+                            ml={marLeft}
+                            mt={"-376px"}
                             src="/assets/side_Frame.png"
                         />
                     </Box>
