@@ -61,7 +61,7 @@ const InfluencersCard = ({ influencer, slug, style, wid, margin }) => {
                             alt={influencer.icon?.data?.url}
                             layout="fill"
                             src={getStrapiMedia(influencer.icon?.data?.url)}
-                            style={{borderRadius:"25px"}}
+                            style={{borderRadius:"33px"}}
                         />
                         
                     </Box>
