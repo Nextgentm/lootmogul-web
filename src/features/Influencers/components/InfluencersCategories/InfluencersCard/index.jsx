@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../../../../../utils/AppContext";
 import strapi from "../../../../../utils/strapi";
+import { faBorderTopLeft } from "@fortawesome/free-solid-svg-icons";
 
 const InfluencersCard = ({ influencer, slug, style, wid, margin }) => {
     const [isHeartClick, setHeartClick] = useState(false);
@@ -60,6 +61,7 @@ const InfluencersCard = ({ influencer, slug, style, wid, margin }) => {
                             alt={influencer.icon?.data?.url}
                             layout="fill"
                             src={getStrapiMedia(influencer.icon?.data?.url)}
+                            style={{borderRadius:"25px"}}
                         />
                         
                     </Box>
