@@ -94,6 +94,7 @@ const Header = () => {
 
     const isActiveLink = (path, queryPath) => {
         if (queryPath)
+            console.log(path.split("/")[1], router.pathname.split("/")[1])
             return path.split("/")[1] === router.pathname.split("/")[1] || queryPath === router.pathname;
         return path == router.pathname.split("/")[1];
     };
