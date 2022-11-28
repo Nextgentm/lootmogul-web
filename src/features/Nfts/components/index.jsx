@@ -121,6 +121,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             );
         }
         setTempFilterValue(newCategory);
+        setCategories(newCategory);
 
         let selData = displayData.filter(
             (data) => data.name.toLowerCase() === newCategory.toLowerCase()
@@ -315,7 +316,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             <NewNfts
                 newNfts={newNfts}
                 defaultCategories={defaultCategories}
-                selectedCategory={selectedCategory}
+                selectedCategory={categories}
                 selCategoriesData={selCategoriesData}
                 data={data}
                 isNewest={isNewest}
