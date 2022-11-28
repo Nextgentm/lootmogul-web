@@ -37,6 +37,7 @@ const InfluencerInfo = ({ influencer }) => {
     const [isAvgDeskDevice] = useMediaQuery("(max-width: 1600px)");
     const [isLargeDesk] = useMediaQuery("(max-width: 1920px)");
     const [isLargeAndAbove] = useMediaQuery("(max-width: 2560px)");
+    const [isNormalDesktop] = useMediaQuery("(max-width: 1536px)");
 
     const [columnValues, setColumnValues] = useState("repeat(8, 1fr)");
     const onlyWidth = useWindowWidth();
@@ -83,11 +84,17 @@ const InfluencerInfo = ({ influencer }) => {
             setHight("410px");
             setWidth("390px");
             setMarLeft("-37px");
-        } else {
+        }else if (isNormalDesktop) {
+            setColumnValues("repeat(8, 1fr)");
+            setHight("410px");
+            setWidth("380px");
+            setMarLeft("-58px");
+        }
+         else {
             setColumnValues("repeat(8, 1fr)");
             setHight("338px");
             setWidth("330px");
-            setMarLeft("-10px");
+            setMarLeft("-40px");
         }
     });
     return (
