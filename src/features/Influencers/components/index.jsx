@@ -30,7 +30,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
     const [displayInfluencersBkup, setDisplayInfluencersBkup] = useState([]);
     const [breadcumbData, setBreadcumbData] = useState([
-        { text: "Home", url: "/influencers", isCurrentPage: false },
+        { text: "Home", url: "https://metaverse.lootmogul.com/home", isCurrentPage: false },
         { text: "Ambassadors", url: "/influencers", isCurrentPage: true }
     ]);
     const router = useRouter();
@@ -338,7 +338,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 searchText={searchText}
                 isMobile={isMobile}
             />
-            {!isMobile && <Breadcumb data={breadcumbData}></Breadcumb>}
+            {!isMobile && <Breadcumb data={breadcumbData} mxValue={[10, 10, 16]}></Breadcumb>}
             {/* <NewInfluencers
                 newInfluencers={newInfluencers}
                 LeftArrow={LeftArrow}

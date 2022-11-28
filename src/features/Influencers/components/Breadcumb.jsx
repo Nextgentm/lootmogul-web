@@ -9,9 +9,9 @@ import React from "react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { breabCrumbStyle } from "../../../components/Header/styles";
 
-const Breadcumb = ({ data }) => {
+const Breadcumb = ({ data, mxValue }) => {
     return (
-        <Box mt={5} mx={[10, 10, 16]}>
+        <Box mt={5} mx={mxValue} fontWeight={"bold"}>
             <Flex mt={10}>
                 <Breadcrumb
                     spacing="3px"

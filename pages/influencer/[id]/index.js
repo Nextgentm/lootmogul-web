@@ -7,7 +7,7 @@ import strapi from "../../../src/utils/strapi";
 export default function InfluencerById({ data, error }) {
   const router = useRouter();
   const breadcumbData = [
-    { text: "Home", url: "/influencers", isCurrentPage: false },
+    { text: "Home", url: "https://metaverse.lootmogul.com/home", isCurrentPage: false },
     {
       text: data.data[0].influencer_category.data.name,
       url: "/influencers/category/" + data.data[0].influencer_category.data.slug,
