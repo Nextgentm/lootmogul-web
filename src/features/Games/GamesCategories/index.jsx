@@ -6,7 +6,7 @@ import {
     Wrap,
     WrapItem,
     useMediaQuery,
-    Heading
+    Heading, Spacer, ButtonGroup, Button
 } from "@chakra-ui/react";
 import GamesCard from "../../InfluencerDetails/InfluencerGames/InfluencerGameCard";
 import { useRef, useState, useEffect } from "react";
@@ -28,7 +28,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
     const [contentBackUp, setContentBackUp] = useState({});
 
     useEffect(() => {
-        if (searchText.length > 3) {
+        if (searchText.length >= 3) {
             const clonedData = structuredClone(content);
             clonedData.contestmasters.data =
                 content?.contestmasters?.data.filter((x) =>
@@ -48,7 +48,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
 
     return (
         <Box>
-            <Flex justify="space-between" my="40px" align="center" w="100%">
+            {/* <Flex justify="space-between" my="40px" align="center" w="100%">
                 <Heading variant="sectionTitle">{content.name}</Heading>
                 {content.name !== "Trending Tournament" ? (
                     <Box width={"250px"} right="0">
@@ -72,7 +72,38 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                 ) : (
                     ""
                 )}
+            </Flex> */}
+            <Flex my="40px" minWidth='max-content' alignItems='center' gap='2'>
+                <Box p='2'>
+                    <Heading variant="sectionTitle">{content.name}</Heading>
+                </Box>
+                <Spacer />
+                <ButtonGroup gap='2'>
+                    {content.name !== "Trending Tournament" ? (
+                        <Box width={"250px"} right="0">
+                            <Search searchText={setSearchText}></Search>
+                        </Box>
+                    ) : (
+                        ""
+                    )}
+                    {content?.contestmasters?.data.length > arrowTrashhold ? (
+                        <Box
+                            display={{
+                                base: "none",
+                                md: "flex"
+                            }}
+                            onClick={() => setShowAll(!showAll)}
+                            pos="relative"
+                            right="0"
+                        >
+                            <ViewAllBtn />
+                        </Box>
+                    ) : (
+                        ""
+                    )}
+                </ButtonGroup>
             </Flex>
+
             {showAll ? (
                 <Wrap m="auto !important">
                     {content?.contestmasters?.data
