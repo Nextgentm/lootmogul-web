@@ -5,17 +5,26 @@ import InfluencerDetail from "../../../src/features/InfluencerDetails";
 import strapi from "../../../src/utils/strapi";
 
 export default function InfluencerById({ data, error }) {
+  
+  useEffect(()=>{
+    // if (!data.data[0]) {
+    //  router.push('/influencers');
+    // };
+  },[])
+
   const router = useRouter();
+  const isData = data.data[0];
   const breadcumbData = [
     { text: "Home", url: "https://metaverse.lootmogul.com/home", isCurrentPage: false },
     {
-      text: data.data[0].influencer_category.data.name,
-      url: "/influencers/category/" + data.data[0].influencer_category.data.slug,
+      text: isData ? data.data[0].influencer_category.data.name : '',
+      url: isData ? "/influencers/category/" + data.data[0].influencer_category.data.slug : '',
       isCurrentPage: false,
     },
-    { text: data.data[0].name, url: "#", isCurrentPage: true },
+    { text: isData ? data.data[0].name : '', url: "#", isCurrentPage: true },
   ];
   useEffect(() => {
+    
     if (data && data.data.length === 0) router.replace("/");
   }, [data]);
 
