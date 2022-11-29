@@ -57,14 +57,21 @@ const NftsCategories = ({ NFTS, isSelectedCat, index, nftSelectCategory }) => {
   const [isSubPage, setIsSubPage] = useState(false);
 
   useEffect(() => {
-    console.log('11111');
+    updateNft();
+  }, [NFTS?.nftSet]);
+
+  useEffect(() => {
+    updateNft();
+  });
+
+  const updateNft = () => {
     let allNfts = NFTS.nftSet?.sort((a, b) => a.priority - b.priority);
     setIsSubPage(window.location.pathname.includes("/nfts/"));
-    if (isSubPage) {
+    if (!isSubPage) {
       allNfts.length <= 6 ? allNfts = allNfts : allNfts = allNfts.splice(0, 6);
     }
     setDisplayCards(allNfts);
-  }, [NFTS?.nftSet]);
+  };
 
   return (
     <>
