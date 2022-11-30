@@ -6,7 +6,10 @@ import {
     Wrap,
     WrapItem,
     useMediaQuery,
-    Heading, Spacer, ButtonGroup, Button
+    Heading,
+    Spacer,
+    ButtonGroup,
+    Button
 } from "@chakra-ui/react";
 import GamesCard from "../../InfluencerDetails/InfluencerGames/InfluencerGameCard";
 import { useRef, useState, useEffect } from "react";
@@ -36,7 +39,6 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                 );
             setContent(clonedData);
         } else {
-            console.log(contentBackUp);
             setContent(contentBackUp);
         }
     }, [searchText]);
@@ -73,12 +75,12 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                     ""
                 )}
             </Flex> */}
-            <Flex my="40px" minWidth='max-content' alignItems='center' gap='2'>
-                <Box p='2'>
+            <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
+                <Box p="2">
                     <Heading variant="sectionTitle">{content.name}</Heading>
                 </Box>
                 <Spacer />
-                <ButtonGroup gap='2'>
+                <ButtonGroup gap="2">
                     {content.name !== "Trending Tournament" ? (
                         <Box width={"250px"} right="0">
                             <Search searchText={setSearchText}></Search>
@@ -120,28 +122,48 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                         ))}
                 </Wrap>
             ) : (
-                <Box mx={[2.5, 0]}>
-                    <ScrollMenu
-                        LeftArrow={LeftArrow}
-                        RightArrow={RightArrow}
-                        apiRef={ref}
-                    >
-                        {content?.contestmasters?.data
-                            ?.sort((a, b) => a.priority - b.priority)
-                            .map((cm, index) => (
-                                <GamesCard
-                                    style={{
-                                        w: ["75vw", "75vw", "370px", "370px"],
-                                        mx: 3
-                                    }}
-                                    itemId={`item-${index}`}
-                                    key={`item-${index}`}
-                                    contestmaster={cm}
-                                    sectionName={content.name}
-                                />
-                            ))}
-                    </ScrollMenu>
-                </Box>
+                <>
+                    {content?.contestmasters?.data?.length &&
+                    content?.contestmasters?.data?.length > 0 ? (
+                        <Box mx={[2.5, 0]}>
+                            <ScrollMenu
+                                LeftArrow={LeftArrow}
+                                RightArrow={RightArrow}
+                                apiRef={ref}
+                            >
+                                {content?.contestmasters?.data
+                                    ?.sort((a, b) => a.priority - b.priority)
+                                    .map((cm, index) => (
+                                        <GamesCard
+                                            style={{
+                                                w: [
+                                                    "75vw",
+                                                    "75vw",
+                                                    "370px",
+                                                    "370px"
+                                                ],
+                                                mx: 3
+                                            }}
+                                            itemId={`item-${index}`}
+                                            key={`item-${index}`}
+                                            contestmaster={cm}
+                                            sectionName={content.name}
+                                        />
+                                    ))}
+                            </ScrollMenu>
+                        </Box>
+                    ) : (
+                        <Box>
+                            <Text
+                                fontSize="1xl"
+                                color={"white"}
+                                fontFamily={"Sora"}
+                            >
+                                No Record found
+                            </Text>
+                        </Box>
+                    )}
+                </>
             )}
         </Box>
     );
