@@ -108,7 +108,14 @@ const Header = () => {
     } = useContext(AppContext);
 
     if (typeof window !== "undefined") {
-        paramsLogin = "?jwt=" + window.localStorage?.getItem("strapi_jwt");
+        const jwt_token = window.localStorage?.getItem("strapi_jwt");
+        if(jwt_token !== null){
+            paramsLogin = "?jwt=" +jwt_token;
+        }
+        else{
+            paramsLogin = '';
+        }
+         
     }
 
     const setMobileIcons = (isActiveLink, imageUrl, activeImageUrl) => {
