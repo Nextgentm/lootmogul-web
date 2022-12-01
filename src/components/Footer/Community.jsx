@@ -3,32 +3,31 @@ import { Flex, Box, Text, Link,  Image} from "@chakra-ui/react";
 
 const socialLinks = [
     {
-        Image: "twitter.png",
-        link: "https://twitter.com/LootMogul"
-    },
-    {
-        Image: "facebook.png",
-        link: "https://www.facebook.com/LootMogul/"
-    },
-    {
-        Image: "youtube.png",
-        link: "https://www.youtube.com/channel/UCsooAZi-4pYR7MXTJMVRFPg/videos"
-    },
-    {
-        Image: "instagram.png",
-        link: "https://www.instagram.com/lootmogul/?hl=en"
-    },
-
-    {
-        Image: "discord.png",
+        Image: "discord-white.svg",
         link: "https://discord.gg/mHUqAm8fsh"
     },
     {
-        Image: "telegram.png",
+        Image: "telegram-white.svg",
         link: "https://t.me/lootmogulchat"
     },
     {
-        Image: "twitch.png",
+        Image: "twitter-white.svg",
+        link: "https://twitter.com/LootMogul"
+    },
+    {
+        Image: "instagram-white.svg",
+        link: "https://www.instagram.com/lootmogul/?hl=en"
+    },
+    {
+        Image: "facebook-white.svg",
+        link: "https://www.facebook.com/LootMogul/"
+    },
+    {
+        Image: "youtube-white.svg",
+        link: "https://www.youtube.com/channel/UCsooAZi-4pYR7MXTJMVRFPg/videos"
+    },
+    {
+        Image: "medium-icon-white.svg",
         link: "https://www.twitch.tv/lootmogul"
     }
 ];
@@ -54,7 +53,7 @@ const Community = () => {
          py="1rem"
      >
          {socialLinks.map((img, index) => (
-             <Box key={`cimg-${index}`} mt={["5px", 0, 0, 0]} mr="20px">
+             <Box key={`cimg-${index}`} mt={["5px", 0, 0, 0]} mr="25px">
                  <Link
                      _focus={{
                          border: "none",
@@ -71,15 +70,15 @@ const Community = () => {
                  >
                      <Image
                          alt={img.Image}
-                         width={["20px", "18px", "25px", "22px", "22px"]}
+                         width={["20px", "18px", "25px", "22px", "23px"]}
                          height={[
                              "20px",
                              "18px",
                              "25px",
                              "22px",
-                             "22px"
+                             "23px"
                          ]}
-                         src={`/assets/${img.Image}`}
+                         src={`/assets/CommunityIcons/${img.Image}`}
                          color="#FFF"
                      />
                  </Link>
