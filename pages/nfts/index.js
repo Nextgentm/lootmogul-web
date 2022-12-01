@@ -4,7 +4,6 @@ import MyPageLoader from "../../src/components/MyPageLoader";
 import SEOContainer from "../../src/features/SEOContainer";
 import { getSeoData } from "../../src/queries/strapiQueries";
 
-
 const defaultSEOData = {
   metaTitle:
     "Buy & Trade Exclusive Limited Edition NFTs Of Your Favorite Influencers",
@@ -23,7 +22,11 @@ export default function NFTPage({ nftCollections, newNftSet, seoData }) {
       <SEOContainer
         seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData}
       />
-      <NftsComponent data={nftCollections || []} newNfts={newNftSet} banner={seoData[0]?.banner?.data} />
+      <NftsComponent
+        data={nftCollections || []}
+        newNfts={newNftSet}
+        banner={seoData[0]?.banner?.data}
+      />
     </>
   );
 }
@@ -35,31 +38,46 @@ export async function getStaticProps() {
   let data = [];
 
   const newNfts = await strapi.find("nft-kreds", {
-    sort:"createdAt:DESC",
-    pagination:{limit:7},
-    fields:["slug","marketURL","front_image","back_image", "name", "isAuction", "market_price", "sale_price"]
-    }
-  );
-
+    sort: "createdAt:DESC",
+    pagination: { limit: 7 },
+    fields: [
+      "slug",
+      "marketURL",
+      "front_image",
+      "back_image",
+      "name",
+      "isAuction",
+      "market_price",
+      "sale_price",
+    ],
+  });
 
   do {
     const res = await strapi.find("nft-collections", {
-      sort:"priority",
-      
-      populate:{
-       
-        nftSet:{
-          filters:{
-            isFeatured:true
+      sort: "priority",
+
+      populate: {
+        nftSet: {
+          filters: {
+            isFeatured: true,
           },
-          populate:{
-            nft_kred:{             
-              fields:["slug","marketURL","front_image","back_image", "name", "isAuction", "market_price", "sale_price"]
-            }
-          }
+          populate: {
+            nft_kred: {
+              fields: [
+                "slug",
+                "marketURL",
+                "front_image",
+                "back_image",
+                "name",
+                "isAuction",
+                "market_price",
+                "sale_price",
+              ],
+            },
+          },
         },
-        banner:{fields:["url"]}
-      } ,
+        banner: { fields: ["url"] },
+      },
       pagination: {
         page: pageNo,
         pageSize: 25,

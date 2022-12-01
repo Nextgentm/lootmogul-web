@@ -94,8 +94,9 @@ const Header = () => {
 
     const isActiveLink = (path, queryPath) => {
         if (queryPath)
-            return path === router.pathname || queryPath === router.pathname;
-        return path == router.pathname.split("/[id]")[0];
+            console.log(path.split("/")[1], router.pathname.split("/")[1])
+            return path.split("/")[1] === router.pathname.split("/")[1] || queryPath === router.pathname;
+        return path == router.pathname.split("/")[1];
     };
 
     const {
@@ -107,7 +108,14 @@ const Header = () => {
     } = useContext(AppContext);
 
     if (typeof window !== "undefined") {
-        paramsLogin = "?jwt=" + window.localStorage?.getItem("strapi_jwt");
+        const jwt_token = window.localStorage?.getItem("strapi_jwt");
+        if(jwt_token !== null){
+            paramsLogin = "?jwt=" +jwt_token;
+        }
+        else{
+            paramsLogin = '';
+        }
+         
     }
 
     const setMobileIcons = (isActiveLink, imageUrl, activeImageUrl) => {

@@ -108,7 +108,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             );
         } else if (displayData) {
             let selData = displayData.filter(
-                (data) => data.name.toLowerCase() === newCategory
+                (data) => data.name.toLowerCase() === newCategory.toLowerCase()
             );
             setSelCategoriesData(selData);
 
@@ -121,9 +121,10 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             );
         }
         setTempFilterValue(newCategory);
+        setCategories(newCategory);
 
         let selData = displayData.filter(
-            (data) => data.name.toLowerCase() === newCategory
+            (data) => data.name.toLowerCase() === newCategory.toLowerCase()
         );
         let routes = breadcumbData;
         routes = routes.splice(0, 2);
@@ -157,20 +158,27 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     }, [selectedCategory]);
 
     const nftSearch = (e) => {
-        let totalRecords = selCategoriesData;
         if (data && selectedCategory) {
             if (e.length > 3) {
-                const selData = selCategoriesData.filter((item) => item.slug === selectedCategory)
+                const clonedData = structuredClone(displayData);
+                const selData = clonedData.filter(
+                    (item) => item.slug === selectedCategory
+                );
+
                 selData.forEach(function (nft) {
-                    nft.nftSet = nft.nftSet.filter(s => s.nft_kred.data.slug.includes(e));
+                    nft.nftSet = nft.nftSet.filter((s) =>
+                        s.nft_kred.data.slug.includes(e)
+                    );
                 });
-                setSelCategoriesData(selData)
-            }
-            else {
-                console.log(displayData)
-                setSelCategoriesData(totalRecords)
-                
-                
+                setSelCategoriesData(selData);
+            } else {
+                const selData = selCategoriesDataBkup.filter(
+                    (item) =>
+                        item.name.toLowerCase() ===
+                        tempFilterValue.toLowerCase()
+                );
+
+                setSelCategoriesData(selData);
             }
         }
 
@@ -308,7 +316,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             <NewNfts
                 newNfts={newNfts}
                 defaultCategories={defaultCategories}
-                selectedCategory={selectedCategory}
+                selectedCategory={categories}
                 selCategoriesData={selCategoriesData}
                 data={data}
                 isNewest={isNewest}

@@ -30,7 +30,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
     const [displayInfluencersBkup, setDisplayInfluencersBkup] = useState([]);
     const [breadcumbData, setBreadcumbData] = useState([
-        { text: "Home", url: "/influencers", isCurrentPage: false },
+        { text: "Home", url: "https://metaverse.lootmogul.com/home", isCurrentPage: false },
         { text: "Ambassadors", url: "/influencers", isCurrentPage: true }
     ]);
     const router = useRouter();
@@ -107,13 +107,25 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 routes[1].isCurrentPage = true;
                 setBreadcumbData(routes);
             }
-            router.push("/influencers");
+            router.push(
+                {
+                    pathname: "/influencers"
+                },
+                undefined,
+                { shallow: true }
+            );
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === e
             );
             if (selData?.[0]?.slug)
-                router.push("/influencers/category/" + selData[0].slug);
+                router.push(
+                    {
+                        pathname: "/influencers/category/" + selData[0].slug
+                    },
+                    undefined,
+                    { shallow: true }
+                );
 
             routes.map((x) => (x.isCurrentPage = false));
             routes.push({
@@ -326,7 +338,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 searchText={searchText}
                 isMobile={isMobile}
             />
-            {!isMobile && <Breadcumb data={breadcumbData}></Breadcumb>}
+            {!isMobile && <Breadcumb data={breadcumbData} mxValue={[10, 10, 16]}></Breadcumb>}
             {/* <NewInfluencers
                 newInfluencers={newInfluencers}
                 LeftArrow={LeftArrow}
