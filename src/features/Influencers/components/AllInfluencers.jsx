@@ -47,6 +47,7 @@ const AllInfluencers = ({
     const [isAvgDeskDevice] = useMediaQuery("(max-width: 1600px)");
     const [isLargeDesk] = useMediaQuery("(max-width: 1920px)");
     const [isLargeAndAbove] = useMediaQuery("(max-width: 2560px)");
+    const [isNormalDesktop] = useMediaQuery("(max-width: 1440px)");
 
     const [columnValues, setColumnValues] = useState("repeat(8, 1fr)");
     const onlyWidth = useWindowWidth();
@@ -58,40 +59,47 @@ const AllInfluencers = ({
         if (isMobile) {
             if (onlyWidth === 720) {
                 setColumnValues("repeat(2, 1fr)");
-                setHight("308px");
-                setWidth("330px");
-                setMarLeft("-10px");
-            } else {
+                setHight("320px");
+                setWidth("365px");
+                setMarLeft("-25px");
+            } else if (onlyWidth === 375){
                 setColumnValues("repeat(1, 1fr)");
-                setHight("308px");
-                setWidth("334px");
-                setMarLeft("-18px");
+                setHight("325px");
+                setWidth("378px");
+                setMarLeft("-37px");
+            }
+            else {
+                setColumnValues("repeat(1, 1fr)");
+                setHight("325px");
+                setWidth("368px");
+                setMarLeft("-37px");
             }
         } else if (isAvgLaptopDevice) {
             setColumnValues("repeat(5, 1fr)");
-            setHight("308px");
-            setWidth("240px");
-            setMarLeft("3px");
+            setHight("328px");
+            setWidth("248px");
+            setMarLeft("-10px");
         } else if (isAvgDeskDevice) {
             setColumnValues("repeat(5, 1fr)");
-            setHight("308px");
-            setWidth("240px");
-            setMarLeft("3px");
+            setHight("328px");
+            setWidth("265px");
+            setMarLeft("-5px");
         } else if (isLargeDesk) {
             setColumnValues("repeat(8, 1fr)");
-            setHight("308px");
-            setWidth("230px");
-            setMarLeft("-13px");
-        } else if (isLargeAndAbove) {
+            setHight("328px");
+            setWidth("252px");
+            setMarLeft("-23px");
+        } 
+         else if (isLargeAndAbove) {
             setColumnValues("repeat(8, 1fr)");
-            setHight("308px");
-            setWidth("238px");
-            setMarLeft("24px");
+            setHight("328px");
+            setWidth("250px");
+            setMarLeft("18px");
         } else {
             setColumnValues("repeat(8, 1fr)");
-            setHight("308px");
-            setWidth("330px");
-            setMarLeft("-10px");
+            setHight("338px");
+            setWidth("350px");
+            setMarLeft("0px");
         }
     });
 
@@ -182,7 +190,7 @@ const AllInfluencers = ({
                                 <Link href={"/influencer/" + influencer.slug}>
                                     <Flex>
                                         <InfluencersCard
-                                            style={{ w: "100%", px: 4 }}
+                                            style={{ w: "100%" }}
                                             colSpan={2}
                                             itemId={`item-${index}`}
                                             key={`item-${index}`}
@@ -195,7 +203,7 @@ const AllInfluencers = ({
                                             pos="absolute"
                                             src="/assets/side_Frame.png"
                                             ml={marLeft}
-                                            mt={"-18px"}
+                                            mt={"-28px"}
                                         />
                                     </Flex>
                                 </Link>

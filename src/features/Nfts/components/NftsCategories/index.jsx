@@ -35,20 +35,17 @@ const ReadMore = ({ children }) => {
       <p className="text" style={{color:"white",fontSize:"18px",fontFamily:"Sora"
       }}>
         {isReadMore ? text?.slice(0, 50) : text}
-        
            <span onClick={toggleReadMore} className="read-or-hide" style={{color:"#e00493",fontSize:"18px",fontFamily:"Sora"
       }}>
            {isReadMore ? "...Read more" : " Show less"}
          </span>
-        
-       
       </p>
     );
   }
   return null;
   
 };
-const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
+const NftsCategories = ({ NFTS, isSelectedCat, index, nftSelectCategory }) => {
   const ref = useRef();
   const refColl = useRef();
 
@@ -57,28 +54,21 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
   const lazyRoot = useRef(null);
   const lazyRootColl = useRef(null);
   const [displayCards, setDisplayCards] = useState([]);
+  const [isSubPage, setIsSubPage] = useState(false);
 
   useEffect(() => {
-
-    const allNfts = NFTS.nftSet?.sort((a, b) => a.priority - b.priority);
+    console.log('11111');
+    let allNfts = NFTS.nftSet?.sort((a, b) => a.priority - b.priority);
+    setIsSubPage(window.location.pathname.includes("/nfts/"));
+    if (isSubPage) {
+      allNfts.length <= 6 ? allNfts = allNfts : allNfts = allNfts.splice(0, 6);
+    }
     setDisplayCards(allNfts);
-
   }, [NFTS?.nftSet]);
 
-  const handleClick = (e) => {
-    router.push({
-      pathname: "/nfts/[id]",
-      query: { id: NFTS.slug },
-    });
-  };
-
-  
   return (
     <>
-     
-      {router.pathname === "/nfts/[id]" ||
-      router.pathname === "/nfts/newest" ? (
-       
+      {isSubPage ? (
         <Grid
           templateColumns={[
             "repeat(1, 1fr)",
@@ -88,13 +78,12 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
             "repeat(4, 1fr)",
           ]}
           rowGap={10}
-          mt="10px"
+          mt="40px"
           mx="auto"
           gap={6}
           width="100%"
           justifyContent="center"
         >
-         
           {displayCards?.sort((a, b) => a.priority - b.priority).map((item, index) => (
             <NftCard
             itemId={`nftcard-${index}`}
@@ -228,7 +217,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                       fontSize={["1rem", "1.2rem"]}
                       width={["250px"]}
                       onClick={() => {
-                        handleClick();
+                        nftSelectCategory(NFTS.name);
                       }}
                     >
                       VIEW COLLECTION
@@ -236,6 +225,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index }) => {
                   </VStack>
                 </Box>
               </GridItem>
+
               <GridItem order={2} colSpan={1} mr="-2rem">
                 <Box
                   w="1px"
