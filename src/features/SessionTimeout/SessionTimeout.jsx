@@ -51,7 +51,7 @@ import React, {
       clearTimeout(startTimerInterval.current);
   
       warningInactiveInterval.current = setInterval(() => {
-        const maxTime = 30;
+        const maxTime = process.env.SESSION_TIMEOUT || 30;
         const popTime = 1;
   
         const diff = moment.duration(moment().diff(moment(timeString)));
