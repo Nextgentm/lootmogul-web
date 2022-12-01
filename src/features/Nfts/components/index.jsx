@@ -19,7 +19,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     const [sortBy, setSortBy] = useState("Sort By");
     const [displayData, setDisplayData] = useState(data);
     const [selCategoriesData, setSelCategoriesData] = useState(data);
-    const [selCategoriesDataBkup,  setSelCategoriesDataBkup ] = useState(data);
+    const [selCategoriesDataBkup,  setSelCategoriesDataBkup ] = useState();
     const [selAllData, setselAllData] = useState(data);
     const [priceRange, setPriceRange] = useState(null);
     const [tempPriceRange, setTempPriceRange] = useState(null);
@@ -28,6 +28,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     const [options, setOptions] = useState([]);
     const [categories, setCategories] = useState(defaultCategories);
     const [tempFilterValue, setTempFilterValue] = useState(defaultCategories);
+    //const [selectedCategory, setSelectedCategory] = useState(defaultCategories);
 
     const { callAuthService } = useContext(AppContext);
     const [breadcumbData, setBreadcumbData] = useState([
@@ -73,7 +74,18 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             );
             setBreadcumbData(routes);
         }
+        setSelCategoriesDataBkup(selCategoriesData);
+        if (!window.location.pathname.includes("/nfts/")) {
+            //setSelectedCategory(defaultCategories);
+        }
     }, [data]);
+
+    useEffect(() => {
+        if (displayData) {
+            setSelCategoriesData(displayData);
+            setSelCategoriesDataBkup(displayData);
+        }
+    }, [displayData]);
 
     const nftFilterCategory = () => {
         const newCategory = tempFilterValue;
@@ -132,7 +144,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 (data) => data.name.toLowerCase() === newCategory.toLowerCase()
             );
             setSelCategoriesData(selData);
-
+            setSelCategoriesDataBkup(selData);
             router.push(
                 // {
                 //     pathname: "/nfts/" + selData[0].slug
