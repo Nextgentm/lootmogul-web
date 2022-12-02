@@ -122,10 +122,10 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             setCategories(newCategory);
             setShowAllData(true);
 
-            let routes = breadcumbData;
-            routes = routes.splice(0, 2);
-            routes[1].isCurrentPage = true;
-            setBreadcumbData(routes);
+            setBreadcumbData([
+                { text: "Home", url: "/nfts", isCurrentPage: false },
+                { text: "All NFTs", url: "/nfts", isCurrentPage: true }
+            ]);
             setSubHeader("All NFTs");
             return;
         }
@@ -139,6 +139,10 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             );
             setSelCategoriesData(displayData);
             setSelCategoriesDataBkup(displayData);
+            setBreadcumbData([
+                { text: "Home", url: "/nfts", isCurrentPage: false },
+                { text: "All NFTs", url: "/nfts", isCurrentPage: true }
+            ]);
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === newCategory.toLowerCase()
