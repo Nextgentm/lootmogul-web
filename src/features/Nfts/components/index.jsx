@@ -43,6 +43,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     const [hideFilters, setHideFilters] = useState(false);
 
     useEffect(() => {
+        
         if (!router.isReady) return;
         const access_token = router.query.access_token;
         const provider = router.query.provider;
@@ -362,16 +363,13 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     }, [priceRange]);
 
     return (
-        <Box mx={["6vw"]}>
+        <><Box mx={["6vw"]}>
             {selectedCategory && selCategoriesData && selCategoriesData[0] && (
                 <SEOContainer
-                    seoData={
-                        selCategoriesData[0]?.seo
-                            ? selCategoriesData[0]?.seo
-                            : selCategoriesData[0]
-                    }
-                    content={selCategoriesData[0]}
-                />
+                    seoData={selCategoriesData[0]?.seo
+                        ? selCategoriesData[0]?.seo
+                        : selCategoriesData[0]}
+                    content={selCategoriesData[0]} />
             )}
             {categories.toLowerCase() !== defaultCategories.toLowerCase() ? (
                 <NftDetailBanner getBannerImage={getBannerImage} />
@@ -405,7 +403,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 showAllData={showAllData}
                 displayAllData={displayAllData}
             />
-        </Box>
+        </Box></>
     );
 };
 
