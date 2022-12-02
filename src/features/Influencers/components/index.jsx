@@ -212,7 +212,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     useEffect(() => {
         switch (true) {
             //mobile
-            case (onlyWidth < 720):
+            case (onlyWidth <= 720):
                 setIsMobile(true);
                 setDataPrePage(16);
                 break;
