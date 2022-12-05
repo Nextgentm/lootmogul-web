@@ -31,16 +31,19 @@ const GamesCategories = ({ isMobileDevice, section }) => {
     const [contentBackUp, setContentBackUp] = useState({});
 
     useEffect(() => {
-        if (searchText.length >= 3) {
-            const clonedData = structuredClone(content);
-            clonedData.contestmasters.data =
-                content?.contestmasters?.data.filter((x) =>
-                    x.name.toLowerCase().includes(searchText.toLowerCase())
-                );
-            setContent(clonedData);
-        } else {
-            setContent(contentBackUp);
-        }
+        setTimeout(() => {
+            if (searchText.length >= 3) {
+                const clonedData = structuredClone(content);
+                clonedData.contestmasters.data =
+                    content?.contestmasters?.data.filter((x) =>
+                        x.name.toLowerCase().includes(searchText.toLowerCase())
+                    );
+                setContent(clonedData);
+            } else {
+                setContent(contentBackUp);
+            }
+        }, 1000);
+        
     }, [searchText]);
 
     useEffect(() => {

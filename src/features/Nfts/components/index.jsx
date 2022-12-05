@@ -1,33 +1,17 @@
 import React, { useEffect, useState } from "react";
-import moment from 'moment'
-import {
-    Box,
-    Button,
-    Center,
-    Flex,
-    SimpleGrid,
-    Text,
-    Image,
-    Tooltip
-} from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
 import SEOContainer from "../../SEOContainer";
 import { useRouter } from "next/router";
-import NftsCategories from "./NftsCategories";
-import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import NftCard from "./NftCard";
 import {
     LeftArrow,
     RightArrow
 } from "../../../components/ContentNavigator/arrows";
-import NftCardInCollection from "./NftsCategories/NftCardInCollection";
-import { GrFilter } from "react-icons/gr";
-import CategoryComponent from "../categoryComp";
 import NftDetailBanner from "./NftDetailBanner";
 import NftBanner from "./NftBanner";
 import NewNfts from "./NewNfts";
-import structuredClone from '@ungap/structured-clone';
+import structuredClone from "@ungap/structured-clone";
 
 const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     const router = useRouter();
@@ -35,15 +19,16 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     const [sortBy, setSortBy] = useState("Sort By");
     const [displayData, setDisplayData] = useState(data);
     const [selCategoriesData, setSelCategoriesData] = useState(data);
+    const [selCategoriesDataBkup,  setSelCategoriesDataBkup ] = useState();
     const [selAllData, setselAllData] = useState(data);
     const [priceRange, setPriceRange] = useState(null);
     const [tempPriceRange, setTempPriceRange] = useState(null);
 
-    const defaultCategories = "All NFTs";
+    const defaultCategories = "Overview";
     const [options, setOptions] = useState([]);
     const [categories, setCategories] = useState(defaultCategories);
     const [tempFilterValue, setTempFilterValue] = useState(defaultCategories);
-
+    //const [selectedCategory, setSelectedCategory] = useState(defaultCategories);
 
     const { callAuthService } = useContext(AppContext);
     const [breadcumbData, setBreadcumbData] = useState([
@@ -51,7 +36,11 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
         { text: "All NFTs", url: "/nfts", isCurrentPage: true }
     ]);
     let initialState = selCategoriesData;
-  
+    const secondDefaultCategories = "All NFTs";
+    const [showAllData, setShowAllData] = useState(false);
+    const [displayAllData, setDisplayAllData] = useState([]);
+    const [subHeader, setSubHeader] = useState('');
+    const [hideFilters, setHideFilters] = useState(false);
 
     useEffect(() => {
         
@@ -65,6 +54,9 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 callAuthService("google", access_token);
             }
         }
+        if (window.location.pathname === '/nfts') {
+            setHideFilters(true);
+        }
     }, [router.isReady]);
 
     useEffect(async () => {
@@ -77,30 +69,67 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             setTempFilterValue(defaultCategories);
             setDisplayData(data);
         }
-        if (window.location.pathname.includes('/nfts/')) {
-            let routes = JSON.parse(window.localStorage.getItem('changedNftBreadCrumbData'));
+        if (window.location.pathname.includes("/nfts/")) {
+            let routes = JSON.parse(
+                window.localStorage.getItem("changedNftBreadCrumbData")
+            );
             setBreadcumbData(routes);
         }
+        setSelCategoriesDataBkup(selCategoriesData);
+        if (!window.location.pathname.includes("/nfts/")) {
+            //setSelectedCategory(defaultCategories);
+        }
     }, [data]);
+
+    useEffect(() => {
+        if (displayData) {
+            setSelCategoriesData(displayData);
+            setSelCategoriesDataBkup(displayData);
+        }
+    }, [displayData]);
+
     const nftFilterCategory = () => {
         const newCategory = tempFilterValue;
-        if (newCategory.toString().toLowerCase() === defaultCategories.toString().toLowerCase()) {
+        if (
+            newCategory.toString().toLowerCase() ===
+            defaultCategories.toString().toLowerCase()
+        ) {
             router.push("/nfts");
         } else if (displayData) {
             let selData = displayData.filter(
-                (data) => data.name.toLowerCase() === newCategory.toString().toLowerCase()
+                (data) =>
+                    data.name.toLowerCase() ===
+                    newCategory.toString().toLowerCase()
             );
 
             history.pushState({}, null, "/nfts/" + selData[0].slug);
-
         }
         setCategories(newCategory);
         ChangePriceRange(tempPriceRange);
-
     };
-    
+
     const nftSelectCategory = (e) => {
         const newCategory = e.target?.value || e;
+        if (newCategory === secondDefaultCategories) {
+            let allDisplayData = [];
+            displayData.forEach(x => {
+                x.nftSet.forEach(y => {
+                    allDisplayData.push(y);
+                });
+            })
+            allDisplayData = allDisplayData?.sort((a, b) => a.priority - b.priority);
+            setDisplayAllData(allDisplayData);
+            setTempFilterValue(newCategory);
+            setCategories(newCategory);
+            setShowAllData(true);
+
+            setBreadcumbData([
+                { text: "Home", url: "/nfts", isCurrentPage: false },
+                { text: "All NFTs", url: "/nfts", isCurrentPage: true }
+            ]);
+            setSubHeader("All NFTs");
+            return;
+        }
         if (newCategory === defaultCategories.toString().toLowerCase()) {
             router.push(
                 {
@@ -109,22 +138,31 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 undefined,
                 { shallow: true }
             );
+            setSelCategoriesData(displayData);
+            setSelCategoriesDataBkup(displayData);
+            setBreadcumbData([
+                { text: "Home", url: "/nfts", isCurrentPage: false },
+                { text: "All NFTs", url: "/nfts", isCurrentPage: true }
+            ]);
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === newCategory.toLowerCase()
             );
             setSelCategoriesData(selData);
-
+            setSelCategoriesDataBkup(selData);
             router.push(
-                {
-                    pathname: "/nfts/" + selData[0].slug
-                },
-                undefined,
+                // {
+                //     pathname: "/nfts/" + selData[0].slug
+                // },
+                // undefined,
+                "/nfts/",
+                "/nfts/" + selData[0]?.slug,
                 { shallow: true }
             );
         }
         setTempFilterValue(newCategory);
         setCategories(newCategory);
+        setShowAllData(false);
 
         let selData = displayData.filter(
             (data) => data.name.toLowerCase() === newCategory.toLowerCase()
@@ -139,8 +177,16 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
         });
 
         setBreadcumbData(routes);
-        localStorage.setItem("changedNftBreadCrumbData", JSON.stringify(routes));
+        localStorage.setItem(
+            "changedNftBreadCrumbData",
+            JSON.stringify(routes)
+        );
+        setSubHeader(selData[0]?.name.toString().toUpperCase());
+        if (window.location.pathname !== '/nfts') {
+            setHideFilters(false);
+        }
     };
+
     useEffect(() => {
         if (data && selectedCategory) {
             let selData = data.filter((item) => item.slug === selectedCategory);
@@ -148,8 +194,10 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             setCategories(selData[0].name.toLowerCase());
             let pr = { min: 1000, max: 0 };
             selData[0]?.nftSet?.map((nft) => {
-                if (pr.min > nft?.nft_kred?.data?.market_price) pr.min = nft.nft_kred?.data?.market_price;
-                if (pr.max < nft?.nft_kred?.data?.market_price) pr.max = nft.nft_kred?.data?.market_price;
+                if (pr.min > nft?.nft_kred?.data?.market_price)
+                    pr.min = nft.nft_kred?.data?.market_price;
+                if (pr.max < nft?.nft_kred?.data?.market_price)
+                    pr.max = nft.nft_kred?.data?.market_price;
             });
             if (pr.min === pr.max) {
                 pr.min = 0;
@@ -184,9 +232,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 setSelCategoriesData(selData);
             }
         }
-
-
-    }
+    };
 
     useEffect(() => {
         if (displayData && categories) {
@@ -201,7 +247,6 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             } else {
                 setSelCategoriesData(displayData);
             }
-
         }
     }, [categories, displayData]);
 
@@ -222,24 +267,33 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
         }
     }, [sortBy]);
 
-    const nftPriceSorting = (e) =>{
-        if (e==="Price Low To High"){
-            const selData = data.filter((item) => item.slug === selectedCategory)
-                selData[0].nftSet.sort((a,b) => (a.nft_kred.data.sale_price - b.nft_kred.data.sale_price ));
-                
-                console.log(selData)
-                setSelCategoriesData(selData);
+    const nftPriceSorting = (e) => {
+        if (e === "Price Low To High") {
+            const selData = data.filter(
+                (item) => item.slug === selectedCategory
+            );
+            selData[0].nftSet.sort(
+                (a, b) =>
+                    a.nft_kred.data.sale_price - b.nft_kred.data.sale_price
+            );
 
+            console.log(selData);
+            setSelCategoriesData(selData);
+        } else {
+            const selData = data.filter(
+                (item) => item.slug === selectedCategory
+            );
+            selData.forEach(function (nft) {
+                nft.nftSet = nft.nftSet.sort(
+                    (a, b) =>
+                        a.nft_kred.data.market_price -
+                        b.nft_kred.data.market_price
+                );
+            });
+            console.log(selData);
+            setSelCategoriesData(selData);
         }
-        else {
-            const selData = data.filter((item) => item.slug === selectedCategory)
-                selData.forEach(function (nft) {
-                    nft.nftSet = nft.nftSet.sort((a,b) => (a.nft_kred.data.market_price - b.nft_kred.data.market_price ));
-                });
-                console.log(selData)
-                setSelCategoriesData(selData);
-        }
-    }
+    };
 
     const getBannerImage = () => {
         if (selectedCategory && selCategoriesData) {
@@ -255,11 +309,14 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             (banner ||
                 categories.toLowerCase() === defaultCategories.toLowerCase())
         ) {
-            return !isTabletOrDesktop ? banner?.[1]?.url || banner?.[0]?.url : banner[0]?.url;
+            return !isTabletOrDesktop
+                ? banner?.[1]?.url || banner?.[0]?.url
+                : banner[0]?.url;
         } else {
             return null;
         }
     };
+
     const isToShowAll = () => {
         return (
             selectedCategory ||
@@ -267,27 +324,36 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 categories.toLowerCase() !== defaultCategories.toLowerCase())
         );
     };
-    const ChangePriceRange = (pr) => {
-        setPriceRange((pr) => ({ ...priceRange, minSel: pr.minSel, maxSel: pr.maxSel }));
 
-    }
+    const ChangePriceRange = (pr) => {
+        setPriceRange((pr) => ({
+            ...priceRange,
+            minSel: pr.minSel,
+            maxSel: pr.maxSel
+        }));
+    };
 
     useEffect(() => {
-
-
-        if (displayData && selCategoriesData && selCategoriesData.length <= 1 && priceRange) {
+        if (
+            displayData &&
+            selCategoriesData &&
+            selCategoriesData.length <= 1 &&
+            priceRange
+        ) {
             const clonedData = structuredClone(displayData);
 
             let selData = clonedData.filter(
-                cat => cat.name.toLowerCase() === categories.toLowerCase()
+                (cat) => cat.name.toLowerCase() === categories.toLowerCase()
             );
 
             let nftSet = selData.length ? selData?.[0]?.nftSet : [];
             if (nftSet.length) {
-                const newCatNftSet = nftSet.filter(nft =>
-                    parseFloat(nft?.nft_kred?.data?.market_price) >= parseFloat(priceRange.minSel) &&
-                    parseFloat(nft?.nft_kred?.data?.market_price) <= parseFloat(priceRange.maxSel)
-
+                const newCatNftSet = nftSet.filter(
+                    (nft) =>
+                        parseFloat(nft?.nft_kred?.data?.market_price) >=
+                            parseFloat(priceRange.minSel) &&
+                        parseFloat(nft?.nft_kred?.data?.market_price) <=
+                            parseFloat(priceRange.maxSel)
                 );
                 let newCatData = selData;
                 newCatData[0].nftSet = newCatNftSet;
@@ -295,8 +361,6 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             } else setSelCategoriesData([]);
         }
     }, [priceRange]);
-
-
 
     return (
         <><Box mx={["6vw"]}>
@@ -332,8 +396,13 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 tempPriceRange={tempPriceRange}
                 setTempFilterValue={setTempFilterValue}
                 nftFilterCategory={nftFilterCategory}
-                breadcumbData={breadcumbData} />
-
+                breadcumbData={breadcumbData}
+                subHeader={subHeader}
+                hideFilters={hideFilters}
+                secondDefaultCategories={secondDefaultCategories}
+                showAllData={showAllData}
+                displayAllData={displayAllData}
+            />
         </Box></>
     );
 };
