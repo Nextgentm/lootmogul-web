@@ -68,11 +68,6 @@ const Community = () => {
                          border: "none",
                          boxShadow: "none"
                      }}
-                     _hover={{
-                        transform: "translateY(-8px)",
-                        transition:"all .3s",
-                        display: 'block'
-                    }}
                      href={img.link}
                      target="_blank"
                  >
