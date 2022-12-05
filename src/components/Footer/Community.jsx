@@ -4,7 +4,7 @@ import { Flex, Box, Text, Link,  Image} from "@chakra-ui/react";
 const socialLinks = [
     {
         Image: "discord-white.svg",
-        active_Image: "Discord-pink-icon.svg",
+        active_Image: "Discord-Pinki-icon1.svg",
         link: "https://discord.gg/mHUqAm8fsh"
     },
     {
@@ -68,6 +68,11 @@ const Community = () => {
                          border: "none",
                          boxShadow: "none"
                      }}
+                     _hover={{
+                        transform: "translateY(-8px)",
+                        transition:"all .3s",
+                        display: 'block'
+                    }}
                      href={img.link}
                      target="_blank"
                  >
@@ -81,12 +86,7 @@ const Community = () => {
                              "22px",
                              "23px"
                          ]}
-                         _hover={{
-                            transform: "translateY(-8px)",
-                            transitionDuration: ".3s",
-                            transitionProperty: " transform",
-                            transitionTimingFunction: "ease-out"
-                        }}
+                         
                          src={`/assets/CommunityIcons/${img.Image}`}
                          onMouseOver={e => (e.currentTarget.src = `/assets/CommunityIcons/${img.active_Image}`)}
                          onMouseOut={e => (e.currentTarget.src = `/assets/CommunityIcons/${img.Image}`)}
