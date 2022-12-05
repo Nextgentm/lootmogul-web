@@ -3,35 +3,43 @@ import { Flex, Box, Text, Link,  Image} from "@chakra-ui/react";
 
 const socialLinks = [
     {
-        Image: "twitter.png",
-        link: "https://twitter.com/LootMogul"
-    },
-    {
-        Image: "facebook.png",
-        link: "https://www.facebook.com/LootMogul/"
-    },
-    {
-        Image: "youtube.png",
-        link: "https://www.youtube.com/channel/UCsooAZi-4pYR7MXTJMVRFPg/videos"
-    },
-    {
-        Image: "instagram.png",
-        link: "https://www.instagram.com/lootmogul/?hl=en"
-    },
-
-    {
-        Image: "discord.png",
+        Image: "discord-white.svg",
+        active_Image: "Discord-pink-icon.svg",
         link: "https://discord.gg/mHUqAm8fsh"
     },
     {
-        Image: "telegram.png",
+        Image: "telegram-white.svg",
+        active_Image: "Telegram-pink-icon.svg",
         link: "https://t.me/lootmogulchat"
     },
     {
-        Image: "twitch.png",
+        Image: "twitter-white.svg",
+        active_Image: "Twitter-pink-icon.svg",
+        link: "https://twitter.com/LootMogul"
+    },
+    {
+        Image: "instagram-white.svg",
+        active_Image: "Instagram-pink-icon.svg",
+        link: "https://www.instagram.com/lootmogul/?hl=en"
+    },
+    {
+        Image: "facebook-white.svg",
+        active_Image: "Facebook-pink-icon.svg",
+        link: "https://www.facebook.com/LootMogul/"
+    },
+    {
+        Image: "youtube-white.svg",
+        active_Image: "Youtube-pink-icon.svg",
+        link: "https://www.youtube.com/channel/UCsooAZi-4pYR7MXTJMVRFPg/videos"
+    },
+    {
+        Image: "medium-icon-white.svg",
+        active_Image: "Medium-pink-icon.svg",
         link: "https://www.twitch.tv/lootmogul"
     }
 ];
+
+
 const Community = () => {
   return (
     <Box py="20px">
@@ -54,7 +62,7 @@ const Community = () => {
          py="1rem"
      >
          {socialLinks.map((img, index) => (
-             <Box key={`cimg-${index}`} mt={["5px", 0, 0, 0]} mr="20px">
+             <Box key={`cimg-${index}`} mt={["5px", 0, 0, 0]} mr="25px">
                  <Link
                      _focus={{
                          border: "none",
@@ -62,24 +70,26 @@ const Community = () => {
                      }}
                      href={img.link}
                      target="_blank"
-                     _hover={{
-                         transform: "translateY(-8px)",
-                         transitionDuration: ".3s",
-                         transitionProperty: " transform",
-                         transitionTimingFunction: "ease-out"
-                     }}
                  >
                      <Image
                          alt={img.Image}
-                         width={["20px", "18px", "25px", "22px", "22px"]}
+                         width={["20px", "18px", "25px", "22px", "23px"]}
                          height={[
                              "20px",
                              "18px",
                              "25px",
                              "22px",
-                             "22px"
+                             "23px"
                          ]}
-                         src={`/assets/${img.Image}`}
+                         _hover={{
+                            transform: "translateY(-8px)",
+                            transitionDuration: ".3s",
+                            transitionProperty: " transform",
+                            transitionTimingFunction: "ease-out"
+                        }}
+                         src={`/assets/CommunityIcons/${img.Image}`}
+                         onMouseOver={e => (e.currentTarget.src = `/assets/CommunityIcons/${img.active_Image}`)}
+                         onMouseOut={e => (e.currentTarget.src = `/assets/CommunityIcons/${img.Image}`)}
                          color="#FFF"
                      />
                  </Link>

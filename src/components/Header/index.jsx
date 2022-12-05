@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { AppContext } from "../../utils/AppContext";
 import UserInfo from "./UserInfo";
 import dynamic from "next/dynamic";
+import SessionTimeout from "../../features/SessionTimeout/SessionTimeout";
 import {
     loginBtnStyle,
     loginStyle,
@@ -477,7 +478,7 @@ const Header = () => {
                     OnPasswordChangedClose={OnPasswordChangedClose}
                 />
             </Box>
-        </>
+            <SessionTimeout /></>
     );
 };
 

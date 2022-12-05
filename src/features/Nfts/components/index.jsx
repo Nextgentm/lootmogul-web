@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import moment from 'moment'
 import {
     Box,
     Button,
@@ -50,8 +51,10 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
         { text: "All NFTs", url: "/nfts", isCurrentPage: true }
     ]);
     let initialState = selCategoriesData;
+  
 
     useEffect(() => {
+        
         if (!router.isReady) return;
         const access_token = router.query.access_token;
         const provider = router.query.provider;
@@ -296,16 +299,13 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
 
 
     return (
-        <Box mx={["6vw"]}>
+        <><Box mx={["6vw"]}>
             {selectedCategory && selCategoriesData && selCategoriesData[0] && (
                 <SEOContainer
-                    seoData={
-                        selCategoriesData[0]?.seo
-                            ? selCategoriesData[0]?.seo
-                            : selCategoriesData[0]
-                    }
-                    content={selCategoriesData[0]}
-                />
+                    seoData={selCategoriesData[0]?.seo
+                        ? selCategoriesData[0]?.seo
+                        : selCategoriesData[0]}
+                    content={selCategoriesData[0]} />
             )}
             {categories.toLowerCase() !== defaultCategories.toLowerCase() ? (
                 <NftDetailBanner getBannerImage={getBannerImage} />
@@ -332,10 +332,9 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 tempPriceRange={tempPriceRange}
                 setTempFilterValue={setTempFilterValue}
                 nftFilterCategory={nftFilterCategory}
-                breadcumbData={breadcumbData}
-            />
+                breadcumbData={breadcumbData} />
 
-        </Box>
+        </Box></>
     );
 };
 
