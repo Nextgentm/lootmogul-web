@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { AppContext } from "../../utils/AppContext";
 import UserInfo from "./UserInfo";
 import dynamic from "next/dynamic";
+import SessionTimeout from "../../features/SessionTimeout/SessionTimeout";
 import {
     loginBtnStyle,
     loginStyle,
@@ -290,6 +291,7 @@ const Header = () => {
                     justify="space-between"
                     as="nav"
                     position="sticky"
+                    zIndex={"101"}
                 >
                     {isMobileDevice && (
                         <Flex w="20%" justifyContent="center">
@@ -477,7 +479,7 @@ const Header = () => {
                     OnPasswordChangedClose={OnPasswordChangedClose}
                 />
             </Box>
-        </>
+            <SessionTimeout /></>
     );
 };
 
