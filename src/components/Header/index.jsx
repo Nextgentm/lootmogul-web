@@ -291,6 +291,7 @@ const Header = () => {
                     justify="space-between"
                     as="nav"
                     position="sticky"
+                    zIndex={"101"}
                 >
                     {isMobileDevice && (
                         <Flex w="20%" justifyContent="center">

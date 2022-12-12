@@ -33,7 +33,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     const { callAuthService } = useContext(AppContext);
     const [breadcumbData, setBreadcumbData] = useState([
         { text: "Home", url: "/nfts", isCurrentPage: false },
-        { text: "All NFTs", url: "/nfts", isCurrentPage: true }
+        { text: "Overview", url: "/nfts", isCurrentPage: true }
     ]);
     let initialState = selCategoriesData;
     const secondDefaultCategories = "All NFTs";
@@ -78,6 +78,9 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
         setSelCategoriesDataBkup(selCategoriesData);
         if (!window.location.pathname.includes("/nfts/")) {
             //setSelectedCategory(defaultCategories);
+        }
+        if (window.location.pathname !== '/nfts') {
+            setHideFilters(false);
         }
     }, [data]);
 
@@ -125,9 +128,11 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
 
             setBreadcumbData([
                 { text: "Home", url: "/nfts", isCurrentPage: false },
+                { text: "Overview", url: "/nfts", isCurrentPage: false },
                 { text: "All NFTs", url: "/nfts", isCurrentPage: true }
             ]);
             setSubHeader("All NFTs");
+            setHideFilters(false);
             return;
         }
         if (newCategory === defaultCategories.toString().toLowerCase()) {
@@ -142,8 +147,9 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             setSelCategoriesDataBkup(displayData);
             setBreadcumbData([
                 { text: "Home", url: "/nfts", isCurrentPage: false },
-                { text: "All NFTs", url: "/nfts", isCurrentPage: true }
+                { text: "Overview", url: "/nfts", isCurrentPage: true }
             ]);
+            setHideFilters(true);
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === newCategory.toLowerCase()
@@ -159,29 +165,27 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 "/nfts/" + selData[0]?.slug,
                 { shallow: true }
             );
+            let routes = breadcumbData;
+            routes = routes.splice(0, 2);
+            routes.map((x) => (x.isCurrentPage = false));
+            routes.push({
+                text: selData[0]?.name,
+                url: "/nfts/" + selData[0]?.slug,
+                isCurrentPage: true
+            });
+    
+            setBreadcumbData(routes);
+            localStorage.setItem(
+                "changedNftBreadCrumbData",
+                JSON.stringify(routes)
+            );
+            setSubHeader(selData[0]?.name.toString().toUpperCase());
+            setHideFilters(false);
         }
         setTempFilterValue(newCategory);
         setCategories(newCategory);
         setShowAllData(false);
 
-        let selData = displayData.filter(
-            (data) => data.name.toLowerCase() === newCategory.toLowerCase()
-        );
-        let routes = breadcumbData;
-        routes = routes.splice(0, 2);
-        routes.map((x) => (x.isCurrentPage = false));
-        routes.push({
-            text: selData[0]?.name,
-            url: "/nfts/" + selData[0]?.slug,
-            isCurrentPage: true
-        });
-
-        setBreadcumbData(routes);
-        localStorage.setItem(
-            "changedNftBreadCrumbData",
-            JSON.stringify(routes)
-        );
-        setSubHeader(selData[0]?.name.toString().toUpperCase());
         if (window.location.pathname !== '/nfts') {
             setHideFilters(false);
         }
