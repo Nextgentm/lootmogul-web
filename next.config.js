@@ -16,9 +16,8 @@ const moduleExports = {
   },
   reactStrictMode: true,
   images: {
-    domains: ["media-content.lootmogul.com","1.bp.blogspot.com","drive.google.com","lootmogalimages.s3.ap-south-1.amazonaws.com","s3-qunami.s3-us-west-2.amazonaws.com","gamification.tpix.in","localhost",
-    "gpcms-prod.lootmogul.com","gamificationv2.s3.us-west-2.amazonaws.com","gamificationv2.s3.amazonaws.com","imgcdn.socialos.io",
-    "s3-us-west-2.amazonaws.com"],
+    domains: ["media-content.lootmogul.com","drive.google.com","lootmogalimages.s3.ap-south-1.amazonaws.com","s3-qunami.s3-us-west-2.amazonaws.com","gamification.tpix.in","localhost",
+    "gpcms-prod.lootmogul.com","gamificationv2.s3.us-west-2.amazonaws.com","gamificationv2.s3.amazonaws.com","s3-us-west-2.amazonaws.com"],
     minimumCacheTTL: 3600,
   },
   experimental: { images: { allowFutureImage: true } },
