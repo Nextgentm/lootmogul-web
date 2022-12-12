@@ -28,7 +28,7 @@ const moduleExports = {
   },
   async redirects() {
     return [
-      {
+      { 
         source: '/influencers/category/basketball-player-influencer',
         destination: '/influencers/category/basketball',
         permanent: true,
@@ -1786,7 +1786,7 @@ const sentryWebpackPluginOptions = {
   //   urlPrefix, include, ignore
 
   silent: true, // Suppresses all logs
-  authToken: process.env.NEXT_PUBLIC_SENTRY_AUTH_TOKEN
+  authToken: process.env.NEXT_PUBLIC_SENTRY_AUTH_TOKEN,
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
