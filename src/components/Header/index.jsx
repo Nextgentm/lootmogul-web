@@ -27,6 +27,8 @@ const CheckYourMail = dynamic(() => import("../../features/CheckYourMail"));
 const ChangePassword = dynamic(() => import("../../features/ChangePassword"));
 const PasswordChanged = dynamic(() => import("../../features/PasswordChanged"));
 import NavDrawer from "./NavDrawer/index";
+import AutoLogout from "../AutoLogout";
+
 const routes = [
     {
         label: "Home",
@@ -479,7 +481,9 @@ const Header = () => {
                     OnPasswordChangedClose={OnPasswordChangedClose}
                 />
             </Box>
-            <SessionTimeout /></>
+            <SessionTimeout />
+            <AutoLogout />
+            </>
     );
 };
 
