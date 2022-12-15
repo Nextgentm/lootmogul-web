@@ -67,7 +67,7 @@ const routes = [
     },
 
     {
-        label: "Explore",
+        label: "Explore NFT",
         path: "https://metaverse.lootmogul.com/meta-map/",
         isExternalLink: true,
         imageUrl: "/assets/MobileMenuIcons/Explore-icon.png",
