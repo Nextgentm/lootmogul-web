@@ -42,7 +42,8 @@ const NewNfts = ({
     hideFilters,
     secondDefaultCategories,
     showAllData,
-    displayAllData
+    displayAllData,
+    isSubPage
 }) => {
     const ref = React.useRef();
     const lazyRootNew = React.useRef(null);
@@ -301,6 +302,7 @@ const NewNfts = ({
                                 nftSelectCategory={nftSelectCategory}
                                 showAllData={showAllData}
                                 displayAllData={displayAllData}
+                                isSubPage={isSubPage}
                             />
                         ))}
                 </Flex>

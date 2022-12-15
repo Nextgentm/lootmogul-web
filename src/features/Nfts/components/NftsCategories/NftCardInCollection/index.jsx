@@ -211,7 +211,7 @@ const NftCardInCollection = ({
                     {nft?.front_image?.indexOf(".mp4") > 0 && (
                       <video
                       className="lazy"
-                        playsinline
+                        playsInline
                         key={nft?.id}
                         id={"background-video" + nft.id}
                         loop
@@ -246,7 +246,7 @@ const NftCardInCollection = ({
                     {nft?.back_image?.indexOf(".mp4") > 0 && (
                       <video
                         className="lazy"
-                        playsinline
+                        playsInline
                         key={nft?.id}
                         id={"background-video" + nft.id}
                         loop

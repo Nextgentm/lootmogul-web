@@ -41,6 +41,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     const [displayAllData, setDisplayAllData] = useState([]);
     const [subHeader, setSubHeader] = useState('');
     const [hideFilters, setHideFilters] = useState(false);
+    const [isSubPage, setIsSubPage] = useState(false);
 
     useEffect(() => {
         
@@ -133,9 +134,17 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             ]);
             setSubHeader("All NFTs");
             setHideFilters(false);
+            setIsSubPage(false);
             return;
         }
         if (newCategory === defaultCategories.toString().toLowerCase()) {
+            const clonedData = structuredClone(displayData);
+            
+            clonedData.forEach(ele => {
+                if (ele.nftSet.length > 6) {
+                    ele.nftSet = ele.nftSet.splice(0, 6);
+                }
+            });
             router.push(
                 {
                     pathname: "/nfts"
@@ -143,13 +152,14 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 undefined,
                 { shallow: true }
             );
-            setSelCategoriesData(displayData);
-            setSelCategoriesDataBkup(displayData);
+            setSelCategoriesData(clonedData);
+            setSelCategoriesDataBkup(clonedData);
             setBreadcumbData([
                 { text: "Home", url: "/nfts", isCurrentPage: false },
                 { text: "Overview", url: "/nfts", isCurrentPage: true }
             ]);
             setHideFilters(true);
+            setIsSubPage(false);
         } else if (displayData) {
             let selData = displayData.filter(
                 (data) => data.name.toLowerCase() === newCategory.toLowerCase()
@@ -181,6 +191,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             );
             setSubHeader(selData[0]?.name.toString().toUpperCase());
             setHideFilters(false);
+            setIsSubPage(true);
         }
         setTempFilterValue(newCategory);
         setCategories(newCategory);
@@ -406,6 +417,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 secondDefaultCategories={secondDefaultCategories}
                 showAllData={showAllData}
                 displayAllData={displayAllData}
+                isSubPage={isSubPage}
             />
         </Box></>
     );

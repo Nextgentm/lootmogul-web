@@ -220,7 +220,7 @@ const NftCard = ({
                                                         ) > 0 && (
                                                             <video
                                                                 className="lazy"
-                                                                playsinline
+                                                                playsInline
                                                                 key={nft.id}
                                                                 id={
                                                                     "background-video" +
