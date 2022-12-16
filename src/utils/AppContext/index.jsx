@@ -328,6 +328,7 @@ useEffect(() => {
         data = await strapi.authenticateProvider(provider, token);
 
         if (data?.user) {
+            window.localStorage.setItem("token", data.jwt);
             if (data.user.is_new) {
 
                 if (typeof window !== 'undefined') {
