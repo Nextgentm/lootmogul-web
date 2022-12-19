@@ -20,9 +20,14 @@ const AutoLogout = ({ openPopup }) => {
     const { user, setUser } = useContext(AppContext);
     const [isOpen, setOpen] = useState(openPopup);
     const router = useRouter();
+    var timer = null;
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const clearTimer = () => {
+        clearInterval(timer);
     };
 
     const parseJwt = (token) => {
@@ -34,31 +39,44 @@ const AutoLogout = ({ openPopup }) => {
     };
 
     useEffect(() => {
-        if (user) {
-            console.log("Session Tracking started.");
-            const jwt_token = window.localStorage?.getItem("token");
-            const decodedJwt = parseJwt(jwt_token);
-            let clearInt = setInterval(() => {
-                if (decodedJwt.exp * 1000 < Date.now()) {
-                    if (typeof window !== "undefined" && window.localStorage) {
-                        localStorage.clear();
-                    }
-                    strapi.logout();
-                    setUser(null);
+        try {
+            if (user) {
+                console.log("Session Tracking started.");
+                const jwt_token = window.localStorage?.getItem("token");
+                const decodedJwt = parseJwt(jwt_token);
+                timer = setInterval(() => {
                     if (
-                        router.route === "/influencers" ||
-                        router.route === "/nfts" ||
-                        router.route === "/games"
+                        decodedJwt.exp * 1000 < Date.now() &&
+                        window.localStorage.getItem("strapi_jwt") !== null
                     ) {
-                        router.push(router.route);
-                    } else {
-                        router.push("/");
+                        if (
+                            typeof window !== "undefined" &&
+                            window.localStorage
+                        ) {
+                            localStorage.clear();
+                        }
+                        strapi.logout();
+                        setUser(null);
+                        if (
+                            router.route === "/influencers" ||
+                            router.route === "/nfts" ||
+                            router.route === "/games"
+                        ) {
+                            router.push(router.route);
+                        } else {
+                            router.push("/");
+                        }
+                        clearTimer();
+                        console.log("Session Tracking ended.");
                     }
-                    clearInterval(clearInt);
-                    setOpen(true);
-                    console.log("Session Tracking ended.");
-                }
-            }, 30000);
+
+                    if (window.localStorage.getItem("strapi_jwt") === null) {
+                        clearTimer();
+                    }
+                }, 30000);
+            }
+        } catch (error) {
+            console.log(error);
         }
     }, [user]);
 

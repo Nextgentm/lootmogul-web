@@ -12,6 +12,7 @@ import NftDetailBanner from "./NftDetailBanner";
 import NftBanner from "./NftBanner";
 import NewNfts from "./NewNfts";
 import structuredClone from "@ungap/structured-clone";
+import MultipleLoggedInUser from "../../../components/MultipleLoggedInUser";
 
 const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     const router = useRouter();
@@ -224,11 +225,11 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     }, [selectedCategory]);
 
     const nftSearch = (e) => {
-        if (data && selectedCategory) {
+        if (data && categories) {
             if (e.length > 3) {
                 const clonedData = structuredClone(displayData);
                 const selData = clonedData.filter(
-                    (item) => item.slug === selectedCategory
+                    (item) => item.name.toLowerCase() === categories.toLowerCase()
                 );
 
                 selData.forEach(function (nft) {
@@ -419,6 +420,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 displayAllData={displayAllData}
                 isSubPage={isSubPage}
             />
+            <MultipleLoggedInUser />
         </Box></>
     );
 };
