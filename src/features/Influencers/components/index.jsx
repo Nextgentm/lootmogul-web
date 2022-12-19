@@ -14,6 +14,7 @@ import {
     useWindowWidth,
     useWindowHeight
 } from "@react-hook/window-size";
+import MultipleLoggedInUser from "../../../components/MultipleLoggedInUser";
 
 const Influencers = ({ data, selectedCategory, banner }) => {
     const defaultCategoryName = "All Ambassadors";
@@ -359,6 +360,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 setFilterValue={setFilterValue}
                 dataPrePage={dataPrePage}
             />
+            <MultipleLoggedInUser />
         </Box>
     );
 };
