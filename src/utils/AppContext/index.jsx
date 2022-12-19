@@ -43,7 +43,6 @@ export const AppContextContainer = ({ children }) => {
     const [showCaptcha, setShowCaptcha] = useState({});
     const [coupon, setCoupon] = useState("");
     const [joiningData, setJoiningData] = useState(null);
-    
 
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
@@ -329,6 +328,9 @@ useEffect(() => {
 
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
+
+            insertLoggedInUserInDB(data);
+
             if (data.user.is_new) {
 
                 if (typeof window !== 'undefined') {
@@ -394,6 +396,26 @@ useEffect(() => {
             }
         }
     };
+
+    const insertLoggedInUserInDB = async (value) => {
+        try {
+            const resp = await axios.post(
+                `https://metaverse.lootmogul.com/wp-json/strapi/v1/setCurrentUser/`,
+                {
+                    user_email: value.user.email,
+                    strapi_jwt: value.jwt,
+                    provider: value.user.provider
+                }
+            );
+
+            const data = resp.data;
+            if (data.success) {
+                console.log('User Data saved successfully to DB');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     const callCustomAuthService = async (formData, formType) => {
         let data;
