@@ -10,7 +10,7 @@ const socialLinks = [
     {
         Image: "telegram-white.svg",
         active_Image: "Telegram-pink-icon.svg",
-        link: "https://t.me/lootmogulchat"
+        link: "https://t.me/LootMogulcommunitychat"
     },
     {
         Image: "twitter-white.svg",
