@@ -8,7 +8,7 @@ const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
 const SENTRY_ENV = process.env.SENTRY_ENV || process.env.NEXT_PUBLIC_SENTRY_ENV;
 
 Sentry.init({
-  dsn: SENTRY_DSN || 'https://12600968317b46e8ae982ccfdced50ab@o4504293426397184.ingest.sentry.io/4504293427904512',
+  dsn: SENTRY_DSN || 'https://3314cb62253549e3b37e7875c76f263f@o4504314615300096.ingest.sentry.io/4504314860339200',
   tracesSampleRate: 1.0,
   environment: SENTRY_ENV,
   // ...
