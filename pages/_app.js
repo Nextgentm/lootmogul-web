@@ -11,7 +11,7 @@ import MyPageLoader from "../src/components/MyPageLoader";
 
 import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons/faTelegramPlane';
 
-import {library} from '@fortawesome/fontawesome-svg-core'
+import { library } from '@fortawesome/fontawesome-svg-core'
 
 const StickySocialIcons = dynamic(() => import("../src/components/StickySocialIcons"));
 
@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import "../styles/globals.css";
 import * as ga from '../src/services/googleAnalytics';
 import LMNonCloseALert from '../src/components/LMNonCloseALert';
+import MaintenancePage from '../src/features/MaintenancePage';
 
 library.add(faTelegramPlane);
 
@@ -49,7 +50,7 @@ export function reportWebVitals({ id, name, label, value }) {
 
 
 function MyApp({ Component, pageProps }) {
-  
+
   const router = useRouter();
   const { provider, trackingCode, utm_medium, utm_source, referral_code, utm_term, utm_campaign, utm_content } = router.query
 
@@ -103,15 +104,6 @@ function MyApp({ Component, pageProps }) {
 
   }, [router.events]);
 
-useEffect(()=>{
-  if(router){
-  // if(router.route === "/terms-of-services") setLoadParticles(false);
-  // else setLoadParticles(true);
-  // if(router.route === "/terms-and-conditions-ios" || router.route === "/quizPage" || router.route === "/joining" ) setStickyBtn(false);
-  // else setStickyBtn(true);
-}
-}, [loadParticles, router])
-
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraUIContainer>
@@ -121,33 +113,33 @@ useEffect(()=>{
               name="viewport"
               content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
             />
-
           </Head>
-          {router.route === "/" ? '' : <Header />}
-          {/* {loadParticles &&  <ParticlesPage/>} */}
-          {stickyBtn && router.route !== "/" ? <StickySocialIcons /> : ''}
-          <Component
-            {...pageProps}
-            loading={loading}
-            setLoading={setLoading}
-            setGameLoading={setGameLoading}
-          />
-          {loading && <MyPageLoader />}
-
-
-          {gameLoading && <LMNonCloseALert
-            header={""}
-            canClose={false}
-            data="loading...."
-            isOpen={gameLoading}
-            onClose={() => {
-              setGameLoading(false);
+          {process.env.NEXT_PUBLIC_MAINTENANCE === 'true' ? <MaintenancePage></MaintenancePage> : <>
+            {router.route === "/" ? '' : <Header />}
+            {stickyBtn && router.route !== "/" ? <StickySocialIcons /> : ''}
+            <Component
+              {...pageProps}
+              loading={loading}
+              setLoading={setLoading}
+              setGameLoading={setGameLoading}
+            />
+            {loading && <MyPageLoader />}
+            {gameLoading && <LMNonCloseALert
+              header={""}
+              canClose={false}
+              data="loading...."
+              isOpen={gameLoading}
+              onClose={() => {
+                setGameLoading(false);
+              }
+              }
+            />
             }
-            }
-          />
-          }
-        
-          {router.route === "/" ? '' : <Footer />}
+
+            {router.route === "/" ? '' : <Footer />}
+
+          </>}
+
         </AppContextContainer>
       </ChakraUIContainer>
     </QueryClientProvider>
