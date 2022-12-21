@@ -176,7 +176,6 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             // });
 
             setBreadcumbData([
-                { text: "Home", url: "/nfts", isCurrentPage: false },
                 { text: "Overview", url: "/nfts", isCurrentPage: false },
                 { text: selData[0]?.name, url: "/nfts/" + selData[0]?.slug, isCurrentPage: true }
             ]);
