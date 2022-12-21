@@ -138,6 +138,7 @@ const NftCard = ({
                                 textAlign="center"
                                 onMouseEnter={() => setIsFlipped(true)}
                                 onMouseLeave={() => setIsFlipped(false)}
+                                marginBottom="-25px"
                             >
                                 <Box h={cardHeight} minH={cardHeight} ref={ref}>
                                     {inView && (
@@ -219,7 +220,7 @@ const NftCard = ({
                                                         ) > 0 && (
                                                             <video
                                                                 className="lazy"
-                                                                playsinline
+                                                                playsInline
                                                                 key={nft.id}
                                                                 id={
                                                                     "background-video" +
@@ -267,17 +268,19 @@ const NftCard = ({
                                     display={["none", "none", "none", "block"]}
                                 />
                                 <VStack>
+                                    
                                     <div
                                         style={{
-                                            width: cardWidth,
-                                            height: "48px",
-                                            fontWeight: "bold",
-                                            color: "white",
-                                            fontFamily: "Sora"
-                                        }}
-                                    >
-                                        <span>{nft?.name}</span>
-                                    </div>
+                                        width: cardWidth,
+                                        height: "48px",
+                                        fontWeight: "bold",
+                                        color: "white",
+                                        fontFamily: "Sora",
+                                        textAlign: isMobileDevice ? "center" : ""
+                                    }}
+                                >
+                                    <span>{nft?.name}</span>
+                                </div>
 
                                     {nft?.market_price && (
                                         <Flex

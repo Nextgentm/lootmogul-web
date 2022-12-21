@@ -23,7 +23,7 @@ const Home = ({
 }) => {
     useEffect(() => {
         setTimeout(() => {
-            window.location.replace('https://lootmogul.wpengine.com/home')
+            window.location.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL+'/home')
           }, 5000);
     }, []);
 

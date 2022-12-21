@@ -23,19 +23,19 @@ const defaultSEOData = {
 
 export default function Home({ seoData }) {
   const { isMobileDevice } = useContext(AppContext);
-  useEffect(()=>{
+  useEffect(() => {
     setTimeout(() => {
-      window.location.replace('https://lootmogul.wpengine.com/home')
+      window.location.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL + '/home')
     }, 5000);
-  },[]); 
+  }, []);
 
   return (
     <>
       <SEOContainer seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData} />
-      <Box  height={isMobileDevice ? "600px" : '850px'}>
+      <Box height={isMobileDevice ? "600px" : '850px'}>
         <LMVideoPlayer mute={true} url={isMobileDevice ? '/assets/videos/nextgenerationmobile.mp4' : '/assets/videos/nextgenerationweb.mp4'} play={true} loop={true} />
       </Box>
-     
+
     </>
   );
 }
@@ -59,7 +59,7 @@ export async function getStaticProps() {
       revalidate: 300, // In seconds
     };
   } catch (error) {
-    
+
   }
   return { props: {} };
 }

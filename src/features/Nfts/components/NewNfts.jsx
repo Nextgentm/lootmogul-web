@@ -1,33 +1,23 @@
 import {
     Box,
     Button,
-    Center,
     Flex,
-    Heading,
-    Search,
-    Image,
-    RangeSlider,
-    RangeSliderFilledTrack,
-    RangeSliderThumb,
-    RangeSliderTrack,
     Text,
-    MdArrowDropDown,
     Input,
     InputGroup,
     InputLeftElement,
-    Select
+    Grid
 } from "@chakra-ui/react";
 import React from "react";
 import CategoryComponent from "../categoryComp";
 import CategoryPriceComponent from "../CategoryPriceComponent";
 import NftsCategories from "./NftsCategories";
-import NftCardInCollection from "./NftsCategories/NftCardInCollection";
-import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { BiFilterAlt } from "react-icons/bi";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
 import Breadcumb from "../../Influencers/components/Breadcumb";
 import { SearchIcon } from "@chakra-ui/icons";
+import dynamic from "next/dynamic";
+const NftCard = dynamic(() => import("./NftCard"));
 
 const NewNfts = ({
     newNfts,
@@ -49,7 +39,11 @@ const NewNfts = ({
     nftFilterCategory,
     breadcumbData,
     subHeader,
-    hideFilters
+    hideFilters,
+    secondDefaultCategories,
+    showAllData,
+    displayAllData,
+    isSubPage
 }) => {
     const ref = React.useRef();
     const lazyRootNew = React.useRef(null);
@@ -57,6 +51,7 @@ const NewNfts = ({
     const [showFilters, setShowFilters] = React.useState(data);
     const [isActive, setActive] = React.useState("false");
     const priceData = ["Price Low To High", "Price High To Low"];
+    const lazyRoot = useRef(null);
 
     const handleToggle = () => {
         setActive(!isActive);
@@ -80,7 +75,6 @@ const NewNfts = ({
 
                 <Flex alignItems="center" pos="relative">
                     {selectedCategory && !isMobileDevice && !hideFilters && (
-                        
                         <>
                             <InputGroup marginRight={"20px"}>
                                 <InputLeftElement
@@ -110,7 +104,6 @@ const NewNfts = ({
                                 nftPriceSorting={nftPriceSorting}
                             ></CategoryPriceComponent>
                         </>
-                                
                     )}
                 </Flex>
             </Flex>
@@ -118,7 +111,7 @@ const NewNfts = ({
 
             {isMobileDevice && selectedCategory && !hideFilters ? (
                 <>
-                    <InputGroup>
+                    <InputGroup marginBottom={"45px"}>
                         <InputLeftElement
                             className="InputLeft"
                             pointerEvents="none"
@@ -166,7 +159,6 @@ const NewNfts = ({
                             w={["95vw", "95vw", "auto"]}
                             mr={["0px", "0px", "15px"]}
                             mt="20px"
-                            // p="0px"
                             fontSize={[
                                 "20px !important",
                                 "20px !important",
@@ -188,14 +180,42 @@ const NewNfts = ({
                                 "linear-gradient(90deg, #E90A63 0%, #481A7F 100%);"
                             }
                         >
-                            <Text fontWeight={500}>{defaultCategories} </Text>
+                            <Text fontWeight={500}>{defaultCategories}</Text>
                         </Button>
+
+                        <Button
+                            w={["95vw", "95vw", "auto"]}
+                            mr={["0px", "0px", "15px"]}
+                            mt="20px"
+                            fontSize={[
+                                "20px !important",
+                                "20px !important",
+                                "16px !important"
+                            ]}
+                            fontWeight={500}
+                            variant={"segment"}
+                            onClick={() => {
+                                nftSelectCategory(
+                                    secondDefaultCategories
+                                );
+                            }}
+                            _focus={{
+                                bgImage:
+                                    "linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                            }}
+                            bgImage={
+                                selectedCategory == secondDefaultCategories &&
+                                "linear-gradient(90deg, #E90A63 0%, #481A7F 100%);"
+                            }
+                        >
+                            <Text fontWeight={500}>All NFTs</Text>
+                        </Button>
+
                         {displayData?.map((cat, index) => (
                             <Button
                                 w={["90vw", "90vw", "auto"]}
                                 mr={["0px", "0px", "15px"]}
                                 mt="20px"
-                                // p="0px"
                                 fontSize={[
                                     "20px !important",
                                     "20px !important",
@@ -223,9 +243,7 @@ const NewNfts = ({
                 </>
             )}
 
-
             <Breadcumb data={breadcumbData} mxValue={[]}></Breadcumb>
-
 
             <Flex
                 justifyContent={["space-between"]}
@@ -242,21 +260,54 @@ const NewNfts = ({
                 </Text>
             </Flex>
 
-
-            <Flex w="100%" flexDir={"column"} px="1">
-                {selCategoriesData
-                    ?.sort((a, b) => a.priority - b.priority)
-                    .map((nfts, index) => (
-                        <NftsCategories
-                            isMobileDevice={isMobileDevice}
-                            key={`nftcategories-${index}`}
-                            NFTS={nfts}
-                            isSelectedCat={false}
-                            index={index}
-                            nftSelectCategory={nftSelectCategory}
+            {showAllData ? (
+                <Grid
+                    templateColumns={[
+                    "repeat(1, 1fr)",
+                    "repeat(1, 1fr)",
+                    "repeat(2, 1fr)",
+                    "repeat(4, 1fr)",
+                    "repeat(4, 1fr)",
+                    ]}
+                    rowGap={10}
+                    mt="40px"
+                    mx="auto"
+                    gap={6}
+                    width="100%"
+                    justifyContent="center"
+                >
+                    {displayAllData?.map((item, index) => (
+                        <NftCard
+                        itemId={`nftcard-${index}`}
+                        key={`nftcard-${index}`}
+                        slug={item?.nft_kred?.data.slug}
+                        showInfo={true}
+                        nft={item?.nft_kred?.data}
+                        defaultInView={isMobileDevice ? index < 2 : index < 5}
+                        lazyRoot={lazyRoot}
                         />
                     ))}
-            </Flex>
+                </Grid>
+            ) : (
+                <Flex w="100%" flexDir={"column"} px="1">
+                    {selCategoriesData
+                        ?.sort((a, b) => a.priority - b.priority)
+                        .map((nfts, index) => (
+                            <NftsCategories
+                                isMobileDevice={isMobileDevice}
+                                key={`nftcategories-${index}`}
+                                NFTS={nfts}
+                                isSelectedCat={false}
+                                index={index}
+                                nftSelectCategory={nftSelectCategory}
+                                showAllData={showAllData}
+                                displayAllData={displayAllData}
+                                isSubPage={isSubPage}
+                            />
+                        ))}
+                </Flex>
+            )}
+            
 
             
             {/* These are Uunwanted filters for now

@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { AppContext } from "../../utils/AppContext";
 import UserInfo from "./UserInfo";
 import dynamic from "next/dynamic";
+import SessionTimeout from "../../features/SessionTimeout/SessionTimeout";
 import {
     loginBtnStyle,
     loginStyle,
@@ -26,6 +27,8 @@ const CheckYourMail = dynamic(() => import("../../features/CheckYourMail"));
 const ChangePassword = dynamic(() => import("../../features/ChangePassword"));
 const PasswordChanged = dynamic(() => import("../../features/PasswordChanged"));
 import NavDrawer from "./NavDrawer/index";
+import AutoLogout from "../AutoLogout";
+
 const routes = [
     {
         label: "Home",
@@ -66,7 +69,7 @@ const routes = [
     },
 
     {
-        label: "Explore NFTs",
+        label: "Explore NFT",
         path: "https://metaverse.lootmogul.com/meta-map/",
         isExternalLink: true,
         imageUrl: "/assets/MobileMenuIcons/Explore-icon.png",
@@ -290,6 +293,7 @@ const Header = () => {
                     justify="space-between"
                     as="nav"
                     position="sticky"
+                    zIndex={"101"}
                 >
                     {isMobileDevice && (
                         <Flex w="20%" justifyContent="center">
@@ -477,7 +481,9 @@ const Header = () => {
                     OnPasswordChangedClose={OnPasswordChangedClose}
                 />
             </Box>
-        </>
+            <SessionTimeout />
+            <AutoLogout />
+            </>
     );
 };
 

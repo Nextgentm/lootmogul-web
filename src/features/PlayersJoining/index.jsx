@@ -7,6 +7,7 @@ import JoiningHeader from "./components/JoiningHeader";
 import AppContext from "../../utils/AppContext";
 import LMNonCloseALert from "../../components/LMNonCloseALert";
 import { getMatchCount,setMatchCount ,getCountForCaptcha,setCountForCaptcha } from "../../services/dataService";
+import MultipleLoggedInUser from "../../components/MultipleLoggedInUser";
 
 const PlayersJoining = ({ timeLeft, users }) => {
     const { user } = useContext(AppContext);
@@ -86,6 +87,7 @@ const PlayersJoining = ({ timeLeft, users }) => {
                 }
                 }
             />
+            <MultipleLoggedInUser />
         </Box>
     );
 };

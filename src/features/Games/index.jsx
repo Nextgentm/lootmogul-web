@@ -8,6 +8,7 @@ import ExploreTrivia from "./ExploreTrivia";
 import GameCarouselCard from "./GameCarouselCard";
 import LMThumbnailCarousel from "../../components/LMCarousel/LMThumbnailCarousel";
 import React from "react";
+import MultipleLoggedInUser from "../../components/MultipleLoggedInUser";
 
 const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
   const { isMobileDevice } = useContext(AppContext);
@@ -193,6 +194,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
         </Box>
 
         {bottomBanners && <BottomBanners bannersList={bottomBanners} />}
+        <MultipleLoggedInUser />
       </Box>
     </Box>
   );

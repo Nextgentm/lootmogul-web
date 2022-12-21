@@ -14,6 +14,7 @@ import {
     useWindowWidth,
     useWindowHeight
 } from "@react-hook/window-size";
+import MultipleLoggedInUser from "../../../components/MultipleLoggedInUser";
 
 const Influencers = ({ data, selectedCategory, banner }) => {
     const defaultCategoryName = "All Ambassadors";
@@ -120,10 +121,11 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             );
             if (selData?.[0]?.slug)
                 router.push(
-                    {
-                        pathname: "/influencers/category/" + selData[0].slug
-                    },
-                    undefined,
+                    // {
+                    //     pathname: "/influencers/category/" + selData[0].slug
+                    // },
+                    "/influencers/",
+                    "/influencers/category/" + selData[0].slug,
                     { shallow: true }
                 );
 
@@ -212,7 +214,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     useEffect(() => {
         switch (true) {
             //mobile
-            case (onlyWidth < 720):
+            case (onlyWidth <= 720):
                 setIsMobile(true);
                 setDataPrePage(16);
                 break;
@@ -358,6 +360,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 setFilterValue={setFilterValue}
                 dataPrePage={dataPrePage}
             />
+            <MultipleLoggedInUser />
         </Box>
     );
 };

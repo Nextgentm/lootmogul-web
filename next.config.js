@@ -1,12 +1,23 @@
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
-module.exports =withBundleAnalyzer( {
+const withPlugins = require("next-compose-plugins");
+const { withSentryConfig } = require('@sentry/nextjs');
+
+const moduleExports = {
+  sentry: {
+    // Use `hidden-source-map` rather than `source-map` as the Webpack `devtool`
+    // for client-side builds. (This will be the default starting in
+    // `@sentry/nextjs` version 8.0.0.) See
+    // https://webpack.js.org/configuration/devtool/ and
+    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#use-hidden-source-map
+    // for more information.
+    hideSourceMaps: true,
+  },
   reactStrictMode: true,
   images: {
-    domains: ["media-content.lootmogul.com","1.bp.blogspot.com","drive.google.com","lootmogalimages.s3.ap-south-1.amazonaws.com","s3-qunami.s3-us-west-2.amazonaws.com","gamification.tpix.in","localhost",
-    "gpcms-prod.lootmogul.com","gamificationv2.s3.us-west-2.amazonaws.com","gamificationv2.s3.amazonaws.com","imgcdn.socialos.io",
-    "s3-us-west-2.amazonaws.com"],
+    domains: ["media-content.lootmogul.com","drive.google.com","lootmogalimages.s3.ap-south-1.amazonaws.com","s3-qunami.s3-us-west-2.amazonaws.com","gamification.tpix.in","localhost",
+    "gpcms-prod.lootmogul.com","gamificationv2.s3.us-west-2.amazonaws.com","gamificationv2.s3.amazonaws.com","s3-us-west-2.amazonaws.com"],
     minimumCacheTTL: 3600,
   },
   experimental: { images: { allowFutureImage: true } },
@@ -17,7 +28,7 @@ module.exports =withBundleAnalyzer( {
   },
   async redirects() {
     return [
-      {
+      { 
         source: '/influencers/category/basketball-player-influencer',
         destination: '/influencers/category/basketball',
         permanent: true,
@@ -1764,6 +1775,25 @@ module.exports =withBundleAnalyzer( {
        }
       
     ]
-  },
-  
-});
+  }
+};
+
+const sentryWebpackPluginOptions = {
+  // Additional config options for the Sentry Webpack plugin. Keep in mind that
+  // the following options are set automatically, and overriding them is not
+  // recommended:
+  //   release, url, org, project, authToken, configFile, stripPrefix,
+  //   urlPrefix, include, ignore
+
+  silent: true, // Suppresses all logs
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+};
+
+// module.exports = withPlugins([withBundleAnalyzer], 
+//   withSentryConfig(moduleExports, sentryWebpackPluginOptions));
+
+module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
+
+// module.exports =withBundleAnalyzer( {// });
