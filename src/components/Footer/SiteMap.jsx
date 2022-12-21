@@ -30,14 +30,14 @@ const SiteMap = () => {
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
                 _hover={{ textDecoration: "none" }}
-                href="https://lootmogul.wpengine.com/about-us/"
+                href={process.env.NEXT_PUBLIC_WORDPRESS_URL+'/about-us/'}
             >
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>About us</Text>
             </Link>
             <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href="/faq">
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>FAQ</Text>
             </Link>
-            <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href="https://lootmogul.wpengine.com/press-releases/">
+            <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href={process.env.NEXT_PUBLIC_WORDPRESS_URL+"/press-releases/"}>
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Press Releases</Text>
             </Link>
             <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} isExternal href="https://metaverse.lootmogul.com/wp-content/uploads/2022/10/Litepaper.pdf">
@@ -46,7 +46,7 @@ const SiteMap = () => {
             <Link
                 _focus={{ boxShadow: "none" }}
                 _hover={{ textDecoration: "none" }}
-                href="https://lootmogul.wpengine.com/privacy-policy/"
+                href={process.env.NEXT_PUBLIC_WORDPRESS_URL+"/privacy-policy/"}
                 
             >
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Privacy Policy</Text>
@@ -54,7 +54,7 @@ const SiteMap = () => {
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
                 _hover={{ textDecoration: "none" }}
-                href="https://lootmogul.wpengine.com/terms-conditions/"
+                href={process.env.NEXT_PUBLIC_WORDPRESS_URL+"/terms-conditions/"}
                 
             >
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Terms of Services</Text>
