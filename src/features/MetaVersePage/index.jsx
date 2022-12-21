@@ -14,7 +14,7 @@ const MetaVersePage = ({ type }) => {
     useEffect(() => {
         let pathname = window.location.pathname;
         if (pathname === "/metaverse") {
-            window.location.replace("https://lootmogul.wpengine.com/metaverse");
+            window.location.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL+"/metaverse");
         }
     }, []);
 

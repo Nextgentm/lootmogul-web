@@ -23,6 +23,7 @@ import "../styles/globals.css";
 import * as ga from '../src/services/googleAnalytics';
 import LMNonCloseALert from '../src/components/LMNonCloseALert';
 import MaintenancePage from '../src/features/MaintenancePage';
+import Snowfall from 'react-snowfall';
 
 library.add(faTelegramPlane);
 
@@ -117,6 +118,15 @@ function MyApp({ Component, pageProps }) {
           {process.env.NEXT_PUBLIC_MAINTENANCE === 'true' ? <MaintenancePage></MaintenancePage> : <>
             {router.route === "/" ? '' : <Header />}
             {stickyBtn && router.route !== "/" ? <StickySocialIcons /> : ''}
+            <Snowfall
+              // The color of the snowflake, can be any valid CSS color.
+              color="#dee4fd"
+              speed={[1.0,1.0]}
+              wind={[-0.5,-0.5]}
+              // Controls the number of snowflakes that are created (defaults to 150).
+              snowflakeCount={150}
+              radius={[0.5,3]}
+            />
             <Component
               {...pageProps}
               loading={loading}
