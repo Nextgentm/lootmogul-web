@@ -333,7 +333,7 @@ const Header = () => {
                             objectFit="contain"
                             onClick={() => router.push("/")}
                             alt="logo"
-                            src="/assets/LootMogul-Logo-2.webp"
+                            src="/assets/LootMogul-Logo-2.png"
                         />
                     </Flex>
 
