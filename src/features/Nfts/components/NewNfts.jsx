@@ -323,7 +323,7 @@ const NewNfts = ({
                             <NftCard
                                 itemId={`nftcard-${index}`}
                                 key={`nftcard-${index}`}
-                                slug={item?.nft_kred?.data.slug}
+                                slug={item?.nft_kred?.data?.slug}
                                 showInfo={true}
                                 nft={item?.nft_kred?.data}
                                 defaultInView={
