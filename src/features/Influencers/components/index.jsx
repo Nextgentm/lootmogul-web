@@ -30,10 +30,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     const [displayInfluencers, setDisplayInfluencers] = useState([]);
     const [selCategoriesData, setSelCategoriesData] = useState(data);
     const [displayInfluencersBkup, setDisplayInfluencersBkup] = useState([]);
-    const [breadcumbData, setBreadcumbData] = useState([
-        { text: "Home", url: "https://metaverse.lootmogul.com/home", isCurrentPage: false },
-        { text: "Ambassadors", url: "/influencers", isCurrentPage: true }
-    ]);
+    const [breadcumbData, setBreadcumbData] = useState([]);
     const router = useRouter();
     const onlyWidth = useWindowWidth();
     const [dataPrePage, setDataPrePage] = useState(16);
@@ -62,19 +59,22 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             setDisplayData(data);
 
             if (window.location.pathname.includes("category")) {
-                let routes = breadcumbData;
-                let cData = JSON.parse(
-                    window.localStorage.getItem("changedSlugDetails")
-                );
-                routes = routes.splice(0, 2);
-                routes.map((x) => (x.isCurrentPage = false));
+                // let routes = breadcumbData;
+                // let cData = JSON.parse(
+                //     window.localStorage.getItem("changedSlugDetails")
+                // );
+                // routes = routes.splice(0, 2);
+                // routes.map((x) => (x.isCurrentPage = false));
 
-                routes.push({
-                    text: cData?.name,
-                    url: "/influencers/category/" + cData?.slug,
-                    isCurrentPage: true
-                });
-                setBreadcumbData(routes);
+                // routes.push({
+                //     text: cData?.name,
+                //     url: "/influencers/category/" + cData?.slug,
+                //     isCurrentPage: true
+                // });
+                setBreadcumbData([
+                    { text: "Ambassadors", url: "/influencers", isCurrentPage: false },
+                    { text: cData?.name, url: "/influencers/category/" + cData?.slug, isCurrentPage: true }
+                ]);
             }
         }
     }, [data, user]);
@@ -100,13 +100,13 @@ const Influencers = ({ data, selectedCategory, banner }) => {
 
     const handleCategoryChange = (e) => {
         const newCategory = e;
-        let routes = breadcumbData;
-        routes = routes.splice(0, 2);
+        // let routes = breadcumbData;
+        // routes = routes.splice(0, 2);
 
         if (e === defaultCategoryName.toLowerCase() || e === "") {
             if (!isMobile) {
-                routes[1].isCurrentPage = true;
-                setBreadcumbData(routes);
+                //routes[1].isCurrentPage = true;
+                setBreadcumbData([]);
             }
             router.push(
                 {
@@ -129,17 +129,20 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                     { shallow: true }
                 );
 
-            routes.map((x) => (x.isCurrentPage = false));
-            routes.push({
-                text: selData[0].name,
-                url: "/influencers/category/" + selData[0].slug,
-                isCurrentPage: true
-            });
+            // routes.map((x) => (x.isCurrentPage = false));
+            // routes.push({
+            //     text: selData[0].name,
+            //     url: "/influencers/category/" + selData[0].slug,
+            //     isCurrentPage: true
+            // });
             localStorage.setItem(
                 "changedSlugDetails",
                 JSON.stringify(selData[0])
             );
-            setBreadcumbData(routes);
+            setBreadcumbData([
+                { text: "Ambassadors", url: "/influencers", isCurrentPage: false },
+                { text: selData[0].name, url: "/influencers/category/" + selData[0].slug, isCurrentPage: true }
+            ]);
         }
 
         setCategory(newCategory);
