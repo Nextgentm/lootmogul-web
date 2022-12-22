@@ -197,48 +197,62 @@ const Header = () => {
                 COMMUNITY
             </Text>
             <Flex>
+                <Link href='https://discord.gg/mHUqAm8fsh' isExternal _focus={{boxShadow:"none"}}>
                 <Image
                     marginRight="15px"
                     alt="discord"
                     boxSize={["20px", "20px"]}
                     src="/assets/CommunityIcons/discord-white.svg"
                 />
+                </Link>
+                <Link href='https://t.me/LootMogulcommunitychat' isExternal _focus={{boxShadow:"none"}}>
                 <Image
                     marginRight="15px"
                     alt="telegram"
                     boxSize={["20px", "20px"]}
                     src="/assets/CommunityIcons/telegram-white.svg"
                 />
-                <Image
-                    marginRight="15px"
-                    alt="instagram"
-                    boxSize={["20px", "20px"]}
-                    src="/assets/CommunityIcons/instagram-white.svg"
-                />              
-                <Image
-                    marginRight="15px"
-                    alt="facebook"
-                    boxSize={["20px", "20px"]}
-                    src="/assets/CommunityIcons/facebook-white.svg"
-                />
+                </Link>
+                <Link href='https://twitter.com/LootMogul' isExternal _focus={{boxShadow:"none"}}>
                 <Image
                     marginRight="15px"
                     alt="twitter"
                     boxSize={["20px", "20px"]}
                     src="/assets/CommunityIcons/twitter-white.svg"
                 />
+                </Link>
+                <Link href='https://www.instagram.com/lootmogul/?hl=en' isExternal _focus={{boxShadow:"none"}}>
+                <Image
+                    marginRight="15px"
+                    alt="instagram"
+                    boxSize={["20px", "20px"]}
+                    src="/assets/CommunityIcons/instagram-white.svg"
+                />
+                </Link>   
+                <Link href='https://www.facebook.com/LootMogul/' isExternal _focus={{boxShadow:"none"}}>           
+                <Image
+                    marginRight="15px"
+                    alt="facebook"
+                    boxSize={["20px", "20px"]}
+                    src="/assets/CommunityIcons/facebook-white.svg"
+                />
+                </Link>
+                <Link href='https://www.youtube.com/channel/UCsooAZi-4pYR7MXTJMVRFPg/videos' isExternal _focus={{boxShadow:"none"}}>
                 <Image
                     marginRight="15px"
                     alt="youtube"
                     boxSize={["20px", "20px"]}
                     src="/assets/CommunityIcons/youtube-white.svg"
                 />
+                </Link>
+                <Link href='https://lootmogul.medium.com/' isExternal _focus={{boxShadow:"none"}}>
                 <Image
                     marginRight="15px"
                     alt="youtube"
                     boxSize={["20px", "20px"]}
                     src="/assets/CommunityIcons/medium-icon-white.svg"
                 />
+                </Link>
             </Flex>
             <Text
             {...versionStyle(false)}
