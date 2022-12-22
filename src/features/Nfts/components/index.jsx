@@ -42,7 +42,6 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     const [isSubPage, setIsSubPage] = useState(false);
 
     useEffect(() => {
-        
         if (!router.isReady) return;
         const access_token = router.query.access_token;
         const provider = router.query.provider;
@@ -53,8 +52,16 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 callAuthService("google", access_token);
             }
         }
-        if (window.location.pathname === '/nfts') {
+        if (router.pathname === '/nfts') {
             setHideFilters(true);
+        }
+        if (router.pathname !== "/nfts") {
+            setIsSubPage(true);
+            let routes = JSON.parse(
+                window.localStorage.getItem("changedNftBreadCrumbData")
+            );
+            setBreadcumbData(routes);
+            setSubHeader(window.localStorage.getItem("headerValue"));
         }
     }, [router.isReady]);
 
@@ -68,16 +75,10 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             setTempFilterValue(defaultCategories);
             setDisplayData(data);
         }
-        if (window.location.pathname.includes("/nfts/")) {
-            let routes = JSON.parse(
-                window.localStorage.getItem("changedNftBreadCrumbData")
-            );
-            setBreadcumbData(routes);
-        }
         setSelCategoriesDataBkup(selCategoriesData);
-        if (!window.location.pathname.includes("/nfts/")) {
-            //setSelectedCategory(defaultCategories);
-        }
+        // if (!window.location.pathname.includes("/nfts/")) {
+        //     //setSelectedCategory(defaultCategories);
+        // }
         if (window.location.pathname !== '/nfts') {
             setHideFilters(false);
         }
@@ -133,7 +134,6 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
         }
         if (newCategory === defaultCategories.toString().toLowerCase()) {
             const clonedData = structuredClone(displayData);
-            
             clonedData.forEach(ele => {
                 if (ele.nftSet.length > 6) {
                     ele.nftSet = ele.nftSet.splice(0, 6);
@@ -158,12 +158,12 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             setSelCategoriesData(selData);
             setSelCategoriesDataBkup(selData);
             router.push(
-                // {
-                //     pathname: "/nfts/" + selData[0].slug
-                // },
-                // undefined,
-                "/nfts/",
-                "/nfts/" + selData[0]?.slug,
+                {
+                    pathname: "/nfts/" + selData[0].slug
+                },
+                undefined,
+                // "/nfts/",
+                // "/nfts/" + selData[0]?.slug,
                 { shallow: true }
             );
             // let routes = breadcumbData;
@@ -174,17 +174,23 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             //     url: "/nfts/" + selData[0]?.slug,
             //     isCurrentPage: true
             // });
+            // localStorage.setItem(
+            //     "changedNftBreadCrumbData",
+            //     JSON.stringify(routes)
+            // );
 
             setBreadcumbData([
                 { text: "Overview", url: "/nfts", isCurrentPage: false },
                 { text: selData[0]?.name, url: "/nfts/" + selData[0]?.slug, isCurrentPage: true }
             ]);
-    
-            
-            // localStorage.setItem(
-            //     "changedNftBreadCrumbData",
-            //     JSON.stringify(routes)
-            // );
+
+            window.localStorage.setItem("changedNftBreadCrumbData", JSON.stringify([
+                { text: "Overview", url: "/nfts", isCurrentPage: false },
+                { text: selData[0]?.name, url: "/nfts/" + selData[0]?.slug, isCurrentPage: true }
+            ]));
+
+            window.localStorage.setItem("headerValue", selData[0]?.name.toString().toUpperCase());
+
             setSubHeader(selData[0]?.name.toString().toUpperCase());
             setHideFilters(false);
             setIsSubPage(true);

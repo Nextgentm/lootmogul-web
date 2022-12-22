@@ -60,7 +60,7 @@ const NftsCategories = ({ NFTS, isSelectedCat, index, nftSelectCategory, isSubPa
   }, [NFTS?.nftSet]);
 
   useEffect(() => {
-    updateNft();
+    //updateNft();
   });
 
   const updateNft = () => {
@@ -69,41 +69,40 @@ const NftsCategories = ({ NFTS, isSelectedCat, index, nftSelectCategory, isSubPa
     //   console.log('reducing it');
     //   // allNfts.length <= 6 ? allNfts = allNfts : allNfts = allNfts.splice(0, 6);
     // }
-    // console.log(NFTS.name);
-    // console.log(allNfts);
     setDisplayCards(allNfts);
   };
 
   return (
     <>
       {isSubPage ? (
-        <Grid
-          templateColumns={[
-            "repeat(1, 1fr)",
-            "repeat(1, 1fr)",
-            "repeat(2, 1fr)",
-            "repeat(4, 1fr)",
-            "repeat(4, 1fr)",
-          ]}
-          rowGap={10}
-          mt="40px"
-          mx="auto"
-          gap={6}
-          width="100%"
-          justifyContent="center"
-        >
-          {displayCards?.sort((a, b) => a.priority - b.priority).map((item, index) => (
-            <NftCard
-            itemId={`nftcard-${index}`}
-            key={`nftcard-${index}`}
-            slug={item.slug}
-            showInfo={true}
-            nft={item?.nft_kred?.data}
-            defaultInView={isMobileDevice ? index < 2 : index < 5}
-            lazyRoot={lazyRoot}
-            />
-          ))}
-        </Grid>
+        <></>
+        // <Grid
+        //   templateColumns={[
+        //     "repeat(1, 1fr)",
+        //     "repeat(1, 1fr)",
+        //     "repeat(2, 1fr)",
+        //     "repeat(4, 1fr)",
+        //     "repeat(4, 1fr)",
+        //   ]}
+        //   rowGap={10}
+        //   mt="40px"
+        //   mx="auto"
+        //   gap={6}
+        //   width="100%"
+        //   justifyContent="center"
+        // >
+        //   {displayCards?.sort((a, b) => a.priority - b.priority).map((item, index) => (
+        //     <NftCard
+        //     itemId={`nftcard-${index}`}
+        //     key={`nftcard-${index}`}
+        //     slug={item.slug}
+        //     showInfo={true}
+        //     nft={item?.nft_kred?.data}
+        //     defaultInView={isMobileDevice ? index < 2 : index < 5}
+        //     lazyRoot={lazyRoot}
+        //     />
+        //   ))}
+        // </Grid>
       ) : (
         <>
           {isSelectedCat ? (

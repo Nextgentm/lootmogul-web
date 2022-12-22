@@ -10,9 +10,7 @@ import InfluencerBanner from "./InfluencerBanner";
 import InfluencerDetailBanner from "./InfluencerDetailBanner";
 import Breadcumb from "./Breadcumb";
 import {
-    useWindowSize,
-    useWindowWidth,
-    useWindowHeight
+    useWindowWidth
 } from "@react-hook/window-size";
 import MultipleLoggedInUser from "../../../components/MultipleLoggedInUser";
 
@@ -59,18 +57,9 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             setDisplayData(data);
 
             if (window.location.pathname.includes("category")) {
-                // let routes = breadcumbData;
-                // let cData = JSON.parse(
-                //     window.localStorage.getItem("changedSlugDetails")
-                // );
-                // routes = routes.splice(0, 2);
-                // routes.map((x) => (x.isCurrentPage = false));
-
-                // routes.push({
-                //     text: cData?.name,
-                //     url: "/influencers/category/" + cData?.slug,
-                //     isCurrentPage: true
-                // });
+                let cData = JSON.parse(
+                    window.localStorage.getItem("changedSlugDetails")
+                );
                 setBreadcumbData([
                     { text: "Ambassadors", url: "/influencers", isCurrentPage: false },
                     { text: cData?.name, url: "/influencers/category/" + cData?.slug, isCurrentPage: true }
@@ -100,12 +89,9 @@ const Influencers = ({ data, selectedCategory, banner }) => {
 
     const handleCategoryChange = (e) => {
         const newCategory = e;
-        // let routes = breadcumbData;
-        // routes = routes.splice(0, 2);
 
         if (e === defaultCategoryName.toLowerCase() || e === "") {
             if (!isMobile) {
-                //routes[1].isCurrentPage = true;
                 setBreadcumbData([]);
             }
             router.push(
@@ -121,20 +107,14 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             );
             if (selData?.[0]?.slug)
                 router.push(
-                    // {
-                    //     pathname: "/influencers/category/" + selData[0].slug
-                    // },
-                    "/influencers/",
-                    "/influencers/category/" + selData[0].slug,
+                    {
+                        pathname: "/influencers/category/" + selData[0].slug
+                    },
+                    undefined,
+                    // "/influencers/",
+                    // "/influencers/category/" + selData[0].slug,
                     { shallow: true }
                 );
-
-            // routes.map((x) => (x.isCurrentPage = false));
-            // routes.push({
-            //     text: selData[0].name,
-            //     url: "/influencers/category/" + selData[0].slug,
-            //     isCurrentPage: true
-            // });
             localStorage.setItem(
                 "changedSlugDetails",
                 JSON.stringify(selData[0])
@@ -281,7 +261,6 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             (banner ||
                 category.toLowerCase() === defaultCategoryName.toLowerCase())
         ) {
-            // return "/assets/designupdate1/influencer_banner.png";
             return !isTabletOrDesktop
                 ? banner[1]?.url || banner[0]?.url
                 : banner[0]?.url;

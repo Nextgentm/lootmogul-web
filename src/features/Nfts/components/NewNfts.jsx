@@ -107,8 +107,6 @@ const NewNfts = ({
                     )}
                 </Flex>
             </Flex>
-
-
             {isMobileDevice && selectedCategory && !hideFilters ? (
                 <>
                     <InputGroup marginBottom={"45px"}>
@@ -195,9 +193,7 @@ const NewNfts = ({
                             fontWeight={500}
                             variant={"segment"}
                             onClick={() => {
-                                nftSelectCategory(
-                                    secondDefaultCategories
-                                );
+                                nftSelectCategory(secondDefaultCategories);
                             }}
                             _focus={{
                                 bgImage:
@@ -242,9 +238,7 @@ const NewNfts = ({
                     </Flex>
                 </>
             )}
-
             <Breadcumb data={breadcumbData} mxValue={[]}></Breadcumb>
-
             <Flex
                 justifyContent={["space-between"]}
                 alignItems="center"
@@ -259,15 +253,14 @@ const NewNfts = ({
                     {subHeader}
                 </Text>
             </Flex>
-
             {showAllData ? (
                 <Grid
                     templateColumns={[
-                    "repeat(1, 1fr)",
-                    "repeat(1, 1fr)",
-                    "repeat(2, 1fr)",
-                    "repeat(4, 1fr)",
-                    "repeat(4, 1fr)",
+                        "repeat(1, 1fr)",
+                        "repeat(1, 1fr)",
+                        "repeat(2, 1fr)",
+                        "repeat(4, 1fr)",
+                        "repeat(4, 1fr)"
                     ]}
                     rowGap={10}
                     mt="40px"
@@ -278,13 +271,15 @@ const NewNfts = ({
                 >
                     {displayAllData?.map((item, index) => (
                         <NftCard
-                        itemId={`nftcard-${index}`}
-                        key={`nftcard-${index}`}
-                        slug={item?.nft_kred?.data.slug}
-                        showInfo={true}
-                        nft={item?.nft_kred?.data}
-                        defaultInView={isMobileDevice ? index < 2 : index < 5}
-                        lazyRoot={lazyRoot}
+                            itemId={`nftcard-${index}`}
+                            key={`nftcard-${index}`}
+                            slug={item?.nft_kred?.data?.slug}
+                            showInfo={true}
+                            nft={item?.nft_kred?.data}
+                            defaultInView={
+                                isMobileDevice ? index < 2 : index < 5
+                            }
+                            lazyRoot={lazyRoot}
                         />
                     ))}
                 </Grid>
@@ -307,9 +302,41 @@ const NewNfts = ({
                         ))}
                 </Flex>
             )}
-            
-
-            
+            {isSubPage ? (
+                <>
+                    <Grid
+                        templateColumns={[
+                            "repeat(1, 1fr)",
+                            "repeat(1, 1fr)",
+                            "repeat(2, 1fr)",
+                            "repeat(4, 1fr)",
+                            "repeat(4, 1fr)"
+                        ]}
+                        rowGap={10}
+                        mt="40px"
+                        mx="auto"
+                        gap={6}
+                        width="100%"
+                        justifyContent="center"
+                    >
+                        {selCategoriesData[0]?.nftSet?.map((item, index) => (
+                            <NftCard
+                                itemId={`nftcard-${index}`}
+                                key={`nftcard-${index}`}
+                                slug={item?.nft_kred?.data.slug}
+                                showInfo={true}
+                                nft={item?.nft_kred?.data}
+                                defaultInView={
+                                    isMobileDevice ? index < 2 : index < 5
+                                }
+                                lazyRoot={lazyRoot}
+                            />
+                        ))}
+                    </Grid>
+                </>
+            ) : (
+                <></>
+            )}
             {/* These are Uunwanted filters for now
             {selectedCategory && showFilters && !isActive && (
                 <Flex
