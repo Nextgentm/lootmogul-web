@@ -181,7 +181,7 @@ const NewNfts = ({
                             <Text fontWeight={500}>{defaultCategories}</Text>
                         </Button>
 
-                        <Button
+                        {/* <Button
                             w={["95vw", "95vw", "auto"]}
                             mr={["0px", "0px", "15px"]}
                             mt="20px"
@@ -205,7 +205,7 @@ const NewNfts = ({
                             }
                         >
                             <Text fontWeight={500}>All NFTs</Text>
-                        </Button>
+                        </Button> */}
 
                         {displayData?.map((cat, index) => (
                             <Button

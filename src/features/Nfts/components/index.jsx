@@ -389,7 +389,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                     content={selCategoriesData[0]} />
             )}
             {categories.toLowerCase() !== defaultCategories.toLowerCase() ? (
-                <NftDetailBanner getBannerImage={getBannerImage} />
+                <NftDetailBanner getBannerImage={getBannerImage} selectedCategory={categories}/>
             ) : (
                 <NftBanner getBannerImage={getBannerImage} />
             )}
