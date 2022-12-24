@@ -31,6 +31,7 @@ const CollectibleView = ({ NFTS, index, nftSelectCategory, isSubPage }) => {
   const lazyRoot = useRef(null);
   const lazyRootColl = useRef(null);
   const [displayCards, setDisplayCards] = useState([]);
+  const router = useRouter();
 
 
   const ReadMore = ({ children }) => {
@@ -220,6 +221,7 @@ const CollectibleView = ({ NFTS, index, nftSelectCategory, isSubPage }) => {
   }
 
   useEffect(() => {
+    
     let allNfts = NFTS.nftSet?.sort((a, b) => a.priority - b.priority);
     setDisplayCards(allNfts);
   }, [NFTS?.nftSet]);

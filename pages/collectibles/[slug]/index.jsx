@@ -1,8 +1,8 @@
-import strapi from "../../src/utils/strapi";
+import strapi from "../../../src/utils/strapi";
 import dynamic from "next/dynamic";
-import MyPageLoader from "../../src/components/MyPageLoader";
-import SEOContainer from "../../src/features/SEOContainer";
-import { getSeoData } from "../../src/queries/strapiQueries";
+import MyPageLoader from "../../../src/components/MyPageLoader";
+import SEOContainer from "../../../src/features/SEOContainer";
+import { getSeoData } from "../../../src/queries/strapiQueries";
 
 const defaultSEOData = {
     metaTitle:
@@ -13,11 +13,11 @@ const defaultSEOData = {
 };
 
 const CollectiblesComponent = dynamic(
-    () => import("../../src/features/Collectibles"),
+    () => import("../../../src/features/Collectibles"),
     { loading: () => <MyPageLoader /> }
 );
 
-export default function CollectiblePage({ nftCollections, seoData }) {
+export default function CollectibleDetails({ nftCollections, seoData }) {
     return (
         <>
             <SEOContainer
@@ -75,3 +75,52 @@ export async function getStaticProps() {
         revalidate: 600, // In seconds
     };
 }
+
+export async function getStaticPaths() {
+
+    // Fetch data from external API
+    let pageNo = 1;
+    let data = [];
+    const res = await strapi.find("nft-collections", {
+        sort: "priority",
+        populate: {
+            nftSet: {
+                filters: {
+                    isFeatured: true,
+                },
+                populate: {
+                    nft_kred: {
+                        fields: [
+                            "slug",
+                            "marketURL",
+                            "front_image",
+                            "back_image",
+                            "name",
+                            "isAuction",
+                            "market_price",
+                            "sale_price",
+                        ],
+                    },
+                },
+            },
+            banner: { fields: ["url"] },
+        },
+        pagination: {
+            page: pageNo,
+            pageSize: 25,
+        },
+    });
+    if (res?.meta) {
+        data.push(res.data);
+    }
+
+    data = data.flat();
+    console.log(data);
+    const paths = data?.map((nft) => ({
+        params: { slug: nft.slug || nft.id.toString() },
+    }));
+
+    return { paths, fallback: "blocking" };
+}
+
+

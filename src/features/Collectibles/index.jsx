@@ -19,6 +19,7 @@ import PriceFilter from "../../components/PriceFilter";
 import Categories from "./Categories";
 import CollectibleView from "./CollectibleView";
 import MyPageLoader from "../../components/MyPageLoader";
+import { useRouter } from "next/router";
 
 const Collectibles = ({ data, banner }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
@@ -32,11 +33,10 @@ const Collectibles = ({ data, banner }) => {
     const [subHeader, setSubHeader] = useState('');
     const [isSubPage, setIsSubPage] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
-        try {
-            // setIsLoading(true);
-            // isParent Overview page
+        try {            
             if (selectedCategory.toLocaleLowerCase() !== 'overview') {
                 const selectedData = data.filter(c => c.name.toLowerCase() === selectedCategory.toLowerCase())
                 setSelCategoriesData(selectedData);
@@ -63,6 +63,7 @@ const Collectibles = ({ data, banner }) => {
     const nftPriceSorting = () => { };
 
     const nftSelectCategory = (value) => {
+        // window.location.href = '/collectibles/'+selCategoriesData[0]?.slug;
         setIsLoading(true);
         setIsSubPage(value.toLowerCase() === defaultCategories.toLowerCase() ? false : true);
         setSelectedCategory(value);
