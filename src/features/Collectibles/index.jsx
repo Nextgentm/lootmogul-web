@@ -7,7 +7,8 @@ import {
     Text,
     Input,
     InputGroup,
-    InputLeftElement} from "@chakra-ui/react";
+    InputLeftElement
+} from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 import MultipleLoggedInUser from "../../components/MultipleLoggedInUser";
 import Banner from "./Banner";
@@ -17,6 +18,7 @@ import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
 import PriceFilter from "../../components/PriceFilter";
 import Categories from "./Categories";
 import CollectibleView from "./CollectibleView";
+import MyPageLoader from "../../components/MyPageLoader";
 
 const Collectibles = ({ data, banner }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
@@ -29,9 +31,11 @@ const Collectibles = ({ data, banner }) => {
     const [breadcumbData, setBreadcumbData] = useState([]);
     const [subHeader, setSubHeader] = useState('');
     const [isSubPage, setIsSubPage] = useState(false);
-    
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
         try {
+            // setIsLoading(true);
             // isParent Overview page
             if (selectedCategory.toLocaleLowerCase() !== 'overview') {
                 const selectedData = data.filter(c => c.name.toLowerCase() === selectedCategory.toLowerCase())
@@ -59,8 +63,15 @@ const Collectibles = ({ data, banner }) => {
     const nftPriceSorting = () => { };
 
     const nftSelectCategory = (value) => {
+        setIsLoading(true);
         setIsSubPage(value.toLowerCase() === defaultCategories.toLowerCase() ? false : true);
         setSelectedCategory(value);
+        setBreadcumbData([
+            { text: "Overview", url: "/nfts", isCurrentPage: false },
+            { text: value, url: "/nfts/" + selCategoriesData[0]?.slug, isCurrentPage: true }
+        ]);
+        setSubHeader(value.toString().toUpperCase());
+        setIsLoading(false);
     };
 
     return (
@@ -70,6 +81,8 @@ const Collectibles = ({ data, banner }) => {
                     ? selCategoriesData[0]?.seo
                     : selCategoriesData[0]}
                 content={selCategoriesData[0]} />
+            
+           {isLoading &&  <MyPageLoader></MyPageLoader>}
 
             <Banner isSubPage={isSubPage} banner={bannerImage} />
 
@@ -89,8 +102,8 @@ const Collectibles = ({ data, banner }) => {
                         EXPLORE
                     </Text>
                     {/* desktop Filters */}
-                   
-                   {!isMobileDevice &&  <Flex alignItems="center" pos="relative">
+
+                    {!isMobileDevice && <Flex alignItems="center" pos="relative">
                         <>
                             <InputGroup marginRight={"20px"}>
                                 <InputLeftElement
@@ -164,7 +177,7 @@ const Collectibles = ({ data, banner }) => {
                 </>}
 
                 {/* // Desktop Categories */}
-                <>
+                {!isMobileDevice && <>
                     <Flex
                         mt={10}
                         mx="auto"
@@ -229,51 +242,49 @@ const Collectibles = ({ data, banner }) => {
                                 <Text>{cat.name}</Text>
                             </Button>
                         ))}
-
-                        {/* desktop bredcrumb */}
-                        <BreadCrumb data={breadcumbData} mxValue={[]}></BreadCrumb>
-
-                        {/* // Category subheader */}
-
-                        <Flex
-                            justifyContent={["space-between"]}
-                            alignItems="center"
-                            flexDirection={["column", "column", "row"]}
-                        >
-                            <Text
-                                color="white"
-                                fontSize={["3em", "4em"]}
-                                fontFamily="Blanch"
-                                inlineSize={"100"}
-                            >
-                                {subHeader}
-                            </Text>
-                        </Flex>
-
-                        {/* Overview Data and ALL Data */}
-                        {/* isSubPage will toggle between overview and other pages */}
-                        <Flex w="100%" flexDir={"column"} px="1">
-                            {selCategoriesData
-                                ?.sort((a, b) => a.priority - b.priority)
-                                .map((nfts, index) => (
-                                    <CollectibleView
-                                        isMobileDevice={isMobileDevice}
-                                        key={`nftcategories-${index}`}
-                                        NFTS={nfts}
-                                        isSelectedCat={false}
-                                        index={index}
-                                        nftSelectCategory={nftSelectCategory}
-                                        showAllData={true}
-                                        displayAllData={true}
-                                        isSubPage={isSubPage}
-                                    />
-                                ))}
-                        </Flex>
-
-
-
                     </Flex>
-                </>
+                </>}
+
+                {/* desktop bredcrumb */}
+                {!isMobileDevice && <BreadCrumb data={breadcumbData} mxValue={[]}></BreadCrumb>}
+
+                {/* // Category subheader */}
+
+                <Flex
+                    justifyContent={["space-between"]}
+                    alignItems="center"
+                    flexDirection={["column", "column", "row"]}
+                >
+                    <Text
+                        color="white"
+                        fontSize={["3em", "4em"]}
+                        fontFamily="Blanch"
+                        inlineSize={"100"}
+                    >
+                        {subHeader}
+                    </Text>
+                </Flex>
+
+                {/* Overview Data and ALL Data */}
+                {/* isSubPage will toggle between overview and other pages */}
+
+                <Flex w="100%" flexDir={"column"} px="1">
+                    {selCategoriesData
+                        ?.sort((a, b) => a.priority - b.priority)
+                        .map((nfts, index) => (
+                            <CollectibleView
+                                isMobileDevice={isMobileDevice}
+                                key={`nftcategories-${index}`}
+                                NFTS={nfts}
+                                isSelectedCat={false}
+                                index={index}
+                                nftSelectCategory={nftSelectCategory}
+                                showAllData={true}
+                                displayAllData={true}
+                                isSubPage={isSubPage}
+                            />
+                        ))}
+                </Flex>
             </Box>
 
             <MultipleLoggedInUser></MultipleLoggedInUser>

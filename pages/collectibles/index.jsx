@@ -35,7 +35,6 @@ export default function CollectiblePage({ nftCollections, seoData }) {
 export async function getStaticProps() {
     // Fetch data from external API
     let pageNo = 1;
-    let pageCount = 1;
     let data = [];
     const res = await strapi.find("nft-collections", {
         sort: "priority",
