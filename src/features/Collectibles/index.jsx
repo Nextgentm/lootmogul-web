@@ -1,7 +1,4 @@
-
-import NftBanner from "../../Nfts/components/NftBanner";
-import NftDetailBanner from "../../Nfts/components/NftDetailBanner";
-import SEOContainer from "../../SEOContainer";
+import SEOContainer from "../SEOContainer";
 import React, { useContext, useState } from "react";
 import {
     Box,
@@ -10,18 +7,16 @@ import {
     Text,
     Input,
     InputGroup,
-    InputLeftElement,
-    Grid
-} from "@chakra-ui/react";
-import { AppContext } from "../../../utils/AppContext/index";
-import MultipleLoggedInUser from "../../../components/MultipleLoggedInUser";
+    InputLeftElement} from "@chakra-ui/react";
+import { AppContext } from "../../utils/AppContext/index";
+import MultipleLoggedInUser from "../../components/MultipleLoggedInUser";
 import Banner from "./Banner";
 import { useEffect } from "react";
 import { SearchIcon } from "@chakra-ui/icons";
-import CategoryComponent from "../../Nfts/categoryComp";
-import CategoryPriceComponent from "../../Nfts/CategoryPriceComponent";
-import BreadCrumb from "../../../components/BredCrumb/BredCrumb";
-import NftsCategories from "../../Nfts/components/NftsCategories";
+import BreadCrumb from "../../components/BreadCrumb/BreadCrumb";
+import PriceFilter from "../../components/PriceFilter";
+import Categories from "./Categories";
+import CollectibleView from "./CollectibleView";
 
 const Collectibles = ({ data, banner }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
@@ -57,7 +52,7 @@ const Collectibles = ({ data, banner }) => {
         }
     }, [selectedCategory]);
 
-    const nftSearch = (e) => {
+    const nftSearch = () => {
 
     };
 
@@ -120,10 +115,10 @@ const Collectibles = ({ data, banner }) => {
                                 />
                             </InputGroup>
 
-                            <CategoryPriceComponent
+                            <PriceFilter
                                 priceData={priceData}
                                 nftPriceSorting={nftPriceSorting}
-                            ></CategoryPriceComponent>
+                            ></PriceFilter>
                         </>
                     </Flex>}
                 </Flex>
@@ -154,18 +149,18 @@ const Collectibles = ({ data, banner }) => {
                         />
                     </InputGroup>
 
-                    <CategoryComponent
+                    <Categories
                         defaultCategory={defaultCategories}
                         displayData={selCategoriesData}
                         selectedCategory={selectedCategory}
                         setTempFilterValue={''}
                         nftSelectCategory={nftSelectCategory}
-                    ></CategoryComponent>
+                    ></Categories>
 
-                    {/* <CategoryPriceComponent
+                    <PriceFilter
                         priceData={priceData}
                         nftPriceSorting={nftPriceSorting}
-                    ></CategoryPriceComponent> */}
+                    ></PriceFilter>
                 </>}
 
                 {/* // Desktop Categories */}
@@ -206,37 +201,7 @@ const Collectibles = ({ data, banner }) => {
                             <Text fontWeight={500}>{defaultCategories}</Text>
                         </Button>
 
-                        {/* ALl NFTS Button */}
-
-                        {/* <Button
-                            w={["95vw", "95vw", "auto"]}
-                            mr={["0px", "0px", "15px"]}
-                            mt="20px"
-                            fontSize={[
-                                "20px !important",
-                                "20px !important",
-                                "16px !important"
-                            ]}
-                            fontWeight={500}
-                            variant={"segment"}
-                            onClick={() => {
-                                nftSelectCategory(
-                                    defaultCategories
-                                );
-                            }}
-                            _focus={{
-                                bgImage:
-                                    "linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
-                            }}
-                            bgImage={
-                                selectedCategory == defaultCategories &&
-                                "linear-gradient(90deg, #E90A63 0%, #481A7F 100%);"
-                            }
-                        >
-                            <Text fontWeight={500}>All NFTs</Text>
-                        </Button> */}
-
-                        {data?.map((cat, index) => (
+                        {data?.map((cat) => (
                             <Button
                                 w={["90vw", "90vw", "auto"]}
                                 mr={["0px", "0px", "15px"]}
@@ -291,7 +256,7 @@ const Collectibles = ({ data, banner }) => {
                             {selCategoriesData
                                 ?.sort((a, b) => a.priority - b.priority)
                                 .map((nfts, index) => (
-                                    <NftsCategories
+                                    <CollectibleView
                                         isMobileDevice={isMobileDevice}
                                         key={`nftcategories-${index}`}
                                         NFTS={nfts}
@@ -300,8 +265,6 @@ const Collectibles = ({ data, banner }) => {
                                         nftSelectCategory={nftSelectCategory}
                                         showAllData={true}
                                         displayAllData={true}
-
-
                                         isSubPage={isSubPage}
                                     />
                                 ))}

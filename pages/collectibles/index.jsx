@@ -13,11 +13,12 @@ const defaultSEOData = {
 };
 
 const CollectiblesComponent = dynamic(
-    () => import("../../src/features/Collectibles/components"),
+    () => import("../../src/features/Collectibles"),
     { loading: () => <MyPageLoader /> }
 );
 
 export default function CollectiblePage({ nftCollections, seoData }) {
+    debugger;
     return (
         <>
             <SEOContainer
