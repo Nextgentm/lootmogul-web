@@ -132,7 +132,6 @@ const Collectibles = ({ data, banner }) => {
                                     type="search"
                                     placeholder="Search by name or attributes"
                                     color={"white"}
-                                    SearchIcon
                                     onChange={(e) => {
                                         nftSearch(e.target.value);
                                     }}
@@ -225,8 +224,9 @@ const Collectibles = ({ data, banner }) => {
                             <Text fontWeight={500}>{defaultCategories}</Text>
                         </Button>
 
-                        {data?.map((cat) => (
+                        {data?.map((cat,index) => (
                             <Button
+                                key={index}
                                 w={["90vw", "90vw", "auto"]}
                                 mr={["0px", "0px", "15px"]}
                                 mt="20px"

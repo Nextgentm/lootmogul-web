@@ -20,7 +20,7 @@ const PriceFilter = ({ priceData, nftPriceSorting }) => {
                 }}
             >
                 {priceData?.map((price, index) => (
-                    <option value={price.toLowerCase()}>{price}</option>
+                    <option key={index} value={price.toLowerCase()}>{price}</option>
                 ))}
             </Select>
         </Box>
