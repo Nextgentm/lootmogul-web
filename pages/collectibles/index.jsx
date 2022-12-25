@@ -24,7 +24,7 @@ export default function CollectiblePage({ nftCollections, seoData }) {
                 seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData}
             />
             <CollectiblesComponent
-                data={nftCollections || []}
+                data={nftCollections || []} 
                 banner={seoData[0]?.banner?.data}
             />
         </>

@@ -36,7 +36,8 @@ const Collectibles = ({ data, banner }) => {
     const router = useRouter();
 
     useEffect(() => {
-        try {            
+        try {
+            debugger;
             if (selectedCategory.toLocaleLowerCase() !== 'overview') {
                 const selectedData = data.filter(c => c.name.toLowerCase() === selectedCategory.toLowerCase())
                 setSelCategoriesData(selectedData);
@@ -44,17 +45,25 @@ const Collectibles = ({ data, banner }) => {
                     ? selectedData[0].banner?.data[1].url
                     : selectedData[0].banner?.data[0].url;
                 setBannerImage(image);
+
+
             } else {
                 setSelCategoriesData(data);
                 const image = !isTabletOrDesktop
                     ? banner?.[1]?.url || banner?.[0]?.url
                     : banner[0]?.url;
                 setBannerImage(image);
+
+
             }
         } catch (error) {
             setBannerImage(null);
         }
     }, [selectedCategory]);
+    // this effect is to chnage the url after selectedCategoryData is updated
+    useEffect(() => {
+        window.history.replaceState(selectedCategory, selectedCategory, "/collectibles/" + selCategoriesData[0].slug);
+    }, [selCategoriesData]);
 
     const nftSearch = () => {
 
@@ -63,7 +72,8 @@ const Collectibles = ({ data, banner }) => {
     const nftPriceSorting = () => { };
 
     const nftSelectCategory = (value) => {
-        // window.location.href = '/collectibles/'+selCategoriesData[0]?.slug;
+
+
         setIsLoading(true);
         setIsSubPage(value.toLowerCase() === defaultCategories.toLowerCase() ? false : true);
         setSelectedCategory(value);
@@ -82,8 +92,8 @@ const Collectibles = ({ data, banner }) => {
                     ? selCategoriesData[0]?.seo
                     : selCategoriesData[0]}
                 content={selCategoriesData[0]} />
-            
-           {isLoading &&  <MyPageLoader></MyPageLoader>}
+
+            {isLoading && <MyPageLoader></MyPageLoader>}
 
             <Banner isSubPage={isSubPage} banner={bannerImage} />
 

@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import MyPageLoader from "../../../src/components/MyPageLoader";
 import SEOContainer from "../../../src/features/SEOContainer";
 import { getSeoData } from "../../../src/queries/strapiQueries";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const defaultSEOData = {
     metaTitle:
@@ -17,7 +19,14 @@ const CollectiblesComponent = dynamic(
     { loading: () => <MyPageLoader /> }
 );
 
-export default function CollectibleDetails({ nftCollections, seoData }) {
+export default function CollectibleDetailsPage({ nftCollections, seoData }) {
+
+    const router = useRouter();
+    
+    useEffect(()=>{
+        console.log('name of the router',router.query.slug);
+    });
+
     return (
         <>
             <SEOContainer
