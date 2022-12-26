@@ -17,7 +17,7 @@ const CollectiblesComponent = dynamic(
     { loading: () => <MyPageLoader /> }
 );
 
-export default function CollectiblePage({ nftCollections, seoData }) {
+export default function ColleNFTctiblePage({ nftCollections, seoData }) {
     return (
         <>
             <SEOContainer
