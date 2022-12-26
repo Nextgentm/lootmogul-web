@@ -24,7 +24,8 @@ export default function CollectibleDetailsPage({ nftCollections, seoData }) {
     const router = useRouter();
     
     useEffect(()=>{
-        console.log('name of the router',router.query.slug);
+        // debugger;
+        // console.log('name of the router',router.query.slug);
     });
 
     return (
