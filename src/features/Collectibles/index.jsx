@@ -173,28 +173,29 @@ const Collectibles = ({ data, banner }) => {
                 {/* // Mobile Filter with categories */}
 
                 {isMobileDevice && <>
+                    {selectedCategory.toLowerCase() !== defaultCategories.toLowerCase() &&
                     <InputGroup marginBottom={"45px"}>
-                        <InputLeftElement
-                            className="InputLeft"
-                            pointerEvents="none"
-                            children={
-                                <SearchIcon
-                                    className="SearchIcon"
-                                    color="gray.300"
-                                />
-                            }
-                            size="xs"
-                        />
-                        <Input
-                            type="search"
-                            placeholder="Search"
-                            color={"white"}
-                            SearchIcon
-                            onChange={(e) => {
-                                nftSearch(e.target.value);
-                            }}
-                        />
-                    </InputGroup>
+                    <InputLeftElement
+                        className="InputLeft"
+                        pointerEvents="none"
+                        children={
+                            <SearchIcon
+                                className="SearchIcon"
+                                color="gray.300"
+                            />
+                        }
+                        size="xs"
+                    />
+                    <Input
+                        type="search"
+                        placeholder="Search"
+                        color={"white"}
+                        SearchIcon
+                        onChange={(e) => {
+                            nftSearch(e.target.value);
+                        }}
+                    />
+                </InputGroup>}
 
                     <Categories
                         defaultCategory={defaultCategories}
@@ -285,7 +286,7 @@ const Collectibles = ({ data, banner }) => {
 
                 {/* // Category subheader */}
 
-                <Flex
+                {selectedCategory.toLowerCase() !== defaultCategories.toLowerCase() && <Flex
                     justifyContent={["space-between"]}
                     alignItems="center"
                     flexDirection={["column", "column", "row"]}
@@ -298,7 +299,7 @@ const Collectibles = ({ data, banner }) => {
                     >
                         {subHeader}
                     </Text>
-                </Flex>
+                </Flex>}
 
                 {/* Overview Data and ALL Data */}
                 {/* isSubPage will toggle between overview and other pages */}
