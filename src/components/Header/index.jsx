@@ -237,7 +237,7 @@ const Header = () => {
                     src="/assets/CommunityIcons/facebook-white.svg"
                 />
                 </Link>
-                <Link href='https://www.youtube.com/channel/UCsooAZi-4pYR7MXTJMVRFPg/videos' isExternal _focus={{boxShadow:"none"}}>
+                <Link href='https://www.youtube.com/@lootmogul' isExternal _focus={{boxShadow:"none"}}>
                 <Image
                     marginRight="15px"
                     alt="youtube"
