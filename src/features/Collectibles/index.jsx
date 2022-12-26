@@ -138,7 +138,7 @@ const Collectibles = ({ data, banner }) => {
                     </Text>
                     {/* desktop Filters */}
 
-                    {!isMobileDevice && <Flex alignItems="center" pos="relative">
+                    {(!isMobileDevice && selectedCategory.toLowerCase() !== defaultCategories.toLowerCase()) && <Flex alignItems="center" pos="relative">
                         <>
                             <InputGroup marginRight={"20px"}>
                                 <InputLeftElement
@@ -281,7 +281,7 @@ const Collectibles = ({ data, banner }) => {
                 </>}
 
                 {/* desktop bredcrumb */}
-                {!isMobileDevice && <BreadCrumb data={breadcumbData} mxValue={[]}></BreadCrumb>}
+                {(!isMobileDevice && selectedCategory.toLowerCase() !== defaultCategories.toLowerCase()) && <BreadCrumb data={breadcumbData} mxValue={[]}></BreadCrumb>}
 
                 {/* // Category subheader */}
 
