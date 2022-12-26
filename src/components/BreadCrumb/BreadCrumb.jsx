@@ -21,8 +21,8 @@ const BreadCrumb = ({ data, mxValue }) => {
                     color={"white"}
                     separator={<ChevronRightIcon color="gray.500" />}
                 >
-                    {data?.map((route) => (
-                        <BreadcrumbItem>
+                    {data?.map((route,index) => (
+                        <BreadcrumbItem key={index}>
                             <BreadcrumbLink
                                 href={route.url}
                                 {...breabCrumbStyle(route.isCurrentPage)}

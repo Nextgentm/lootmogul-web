@@ -33,6 +33,20 @@ const Collectibles = ({ data, banner }) => {
     const [subHeader, setSubHeader] = useState('');
     const [isSubPage, setIsSubPage] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+
+    // this is to handle refresh scnerio 
+    useEffect(() => {
+        debugger;
+        if (JSON.stringify(router.query) !== '{}') {
+            const category = data.find(c => c.slug.toLowerCase() === router.query.slug.toLowerCase());
+            setSelectedCategory(category.name);
+            setIsSubPage(true);
+        } else {
+            setSelectedCategory(defaultCategories);
+            setIsSubPage(false);
+        }
+    }, []);
 
     useEffect(() => {
         try {
@@ -49,24 +63,36 @@ const Collectibles = ({ data, banner }) => {
                     ? banner?.[1]?.url || banner?.[0]?.url
                     : banner[0]?.url;
                 setBannerImage(image);
-
-
             }
         } catch (error) {
             setBannerImage(null);
         }
     }, [selectedCategory]);
+
     // this effect is to chnage the url after selectedCategoryData is updated
     useEffect(() => {
         if (selectedCategory.toLocaleLowerCase() !== 'overview') {
             window.history.replaceState(selectedCategory, selectedCategory, "/collectibles/" + selCategoriesData[0].slug);
-        }else {
+        } else {
             window.history.replaceState(selectedCategory, selectedCategory, "/collectibles");
         }
     }, [selCategoriesData]);
 
-    const nftSearch = () => {
-        
+    const nftSearch = (value) => {
+        // if (value !== '') {
+        //     debugger;
+        //     if (selectedCategory.toLocaleLowerCase() !== 'overview') {
+        //        selCategoriesData.forEach(nft => {
+        //             nft.nftSet = nft.nftSet.filter((s) =>
+        //                 s.nft_kred.data.slug.includes(value)
+        //             );
+        //         });
+        //         setSelCategoriesData(selCategoriesData);
+        //     }
+        // } else {
+        //     const selectedData = data.filter(c => c.name.toLowerCase() === selectedCategory.toLowerCase())
+        //     setSelCategoriesData(selectedData);
+        // }
     };
 
     const nftPriceSorting = () => { };
@@ -136,10 +162,10 @@ const Collectibles = ({ data, banner }) => {
                                 />
                             </InputGroup>
 
-                            <PriceFilter
+                            {/* <PriceFilter
                                 priceData={priceData}
                                 nftPriceSorting={nftPriceSorting}
-                            ></PriceFilter>
+                            ></PriceFilter> */}
                         </>
                     </Flex>}
                 </Flex>
@@ -178,10 +204,10 @@ const Collectibles = ({ data, banner }) => {
                         nftSelectCategory={nftSelectCategory}
                     ></Categories>
 
-                    <PriceFilter
+                    {/* <PriceFilter
                         priceData={priceData}
                         nftPriceSorting={nftPriceSorting}
-                    ></PriceFilter>
+                    ></PriceFilter> */}
                 </>}
 
                 {/* // Desktop Categories */}
@@ -222,7 +248,7 @@ const Collectibles = ({ data, banner }) => {
                             <Text fontWeight={500}>{defaultCategories}</Text>
                         </Button>
 
-                        {data?.map((cat,index) => (
+                        {data?.map((cat, index) => (
                             <Button
                                 key={index}
                                 w={["90vw", "90vw", "auto"]}
@@ -243,7 +269,7 @@ const Collectibles = ({ data, banner }) => {
                                         "linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
                                 }}
                                 bgImage={
-                                    selectedCategory ===
+                                    selectedCategory.toLowerCase() ===
                                     cat.name.toLowerCase() &&
                                     "linear-gradient(90deg, #E90A63 0%, #481A7F 100%);"
                                 }
