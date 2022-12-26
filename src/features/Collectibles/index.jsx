@@ -33,7 +33,6 @@ const Collectibles = ({ data, banner }) => {
     const [subHeader, setSubHeader] = useState('');
     const [isSubPage, setIsSubPage] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const router = useRouter();
 
     useEffect(() => {
         try {
@@ -66,7 +65,7 @@ const Collectibles = ({ data, banner }) => {
         }
     }, [selCategoriesData]);
 
-    const nftSearch = (value) => {
+    const nftSearch = () => {
         
     };
 
@@ -86,12 +85,12 @@ const Collectibles = ({ data, banner }) => {
 
     return (
         <><Box mx={["6vw"]}>
-            <SEOContainer
+            {/* Need to recheck the details */}
+            {/* <SEOContainer
                 seoData={selCategoriesData[0]?.seo
                     ? selCategoriesData[0]?.seo
                     : selCategoriesData[0]}
-                content={selCategoriesData[0]} />
-
+                content={selCategoriesData[0]} /> */}
             {isLoading && <MyPageLoader></MyPageLoader>}
 
             <Banner isSubPage={isSubPage} banner={bannerImage} />
