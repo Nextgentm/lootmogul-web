@@ -89,14 +89,12 @@ export async function getStaticProps() {
         // pageCount = res.meta.pagination.pageCount;
       }
     }
-
     pageNo++;
   } while (pageNo <= pageCount);
   // Pass data to the page via props
   const nftCollections = data.flat();
   const seoData = await getSeoData("nfts");
   const newNftSet = newNfts?.data;
-
   return {
     props: { nftCollections, newNftSet, seoData },
     revalidate: 600, // In seconds

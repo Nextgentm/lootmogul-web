@@ -80,7 +80,10 @@ const MultipleLoggedInUser = ({ openPopup }) => {
                                 router.push("/");
                             }
                             clearTimer();
-                            setOpen(true);
+                            if(data.strapi_jwt !== 'logout'){
+                                setOpen(true);
+                            }
+                            
                             console.log("Multiple Device Tracking ended.");
                         }
                     }
@@ -89,7 +92,7 @@ const MultipleLoggedInUser = ({ openPopup }) => {
                 if (window.localStorage.getItem("strapi_jwt") === null) {
                     clearTimer();
                 }
-            }, 30000);
+            }, 2000);
         } catch (error) {
             console.log(error);
         }
