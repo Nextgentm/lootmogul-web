@@ -121,10 +121,10 @@ function MyApp({ Component, pageProps }) {
             <Snowfall
               // The color of the snowflake, can be any valid CSS color.
               color="#dee4fd"
-              speed={[1.0,1.0]}
+              speed={[1.2,1.3]}
               wind={[-0.5,-0.5]}
               // Controls the number of snowflakes that are created (defaults to 150).
-              snowflakeCount={150}
+              snowflakeCount={300}
               radius={[0.5,3]}
             />
             <Component
