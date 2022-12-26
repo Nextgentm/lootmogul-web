@@ -20,7 +20,7 @@ const CollectiblesComponent = dynamic(
 );
 
 export default function CollectibleDetailsPage({ nftCollections, seoData }) {
-
+    
     const router = useRouter();
     
     useEffect(()=>{

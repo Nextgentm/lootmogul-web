@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 
 import { AiFillCaretDown } from "react-icons/ai";
 
-const Categories = ({ displayData, nftSelectCategory, defaultCategory, setTempFilterValue, selectedCategory }) => {
+const Categories = ({ displayData, nftSelectCategory, defaultCategory, selectedCategory }) => {
     const router = useRouter();
     const [activeCategory, setActiveCategory] = useState(selectedCategory);
 
@@ -68,7 +68,7 @@ const Categories = ({ displayData, nftSelectCategory, defaultCategory, setTempFi
 
                             onClick={() => {
                                 setActiveCategory(defaultCategory);
-                                setTempFilterValue(defaultCategory.toLowerCase());
+                                // setTempFilterValue(defaultCategory.toLowerCase());
                                 nftSelectCategory(defaultCategory.toLowerCase());
                             }}
 
@@ -102,7 +102,7 @@ const Categories = ({ displayData, nftSelectCategory, defaultCategory, setTempFi
                                 fontSize={"22px"}
                                 onClick={() => {
                                     setActiveCategory(cate.name);
-                                    setTempFilterValue(cate.name.toLowerCase());
+                                    // setTempFilterValue(cate.name.toLowerCase());
                                     nftSelectCategory(cate.name.toLowerCase());
                                 }}
 

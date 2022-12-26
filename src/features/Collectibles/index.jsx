@@ -37,7 +37,6 @@ const Collectibles = ({ data, banner }) => {
 
     useEffect(() => {
         try {
-            debugger;
             if (selectedCategory.toLocaleLowerCase() !== 'overview') {
                 const selectedData = data.filter(c => c.name.toLowerCase() === selectedCategory.toLowerCase())
                 setSelCategoriesData(selectedData);
@@ -45,8 +44,6 @@ const Collectibles = ({ data, banner }) => {
                     ? selectedData[0].banner?.data[1].url
                     : selectedData[0].banner?.data[0].url;
                 setBannerImage(image);
-
-
             } else {
                 setSelCategoriesData(data);
                 const image = !isTabletOrDesktop
@@ -62,18 +59,20 @@ const Collectibles = ({ data, banner }) => {
     }, [selectedCategory]);
     // this effect is to chnage the url after selectedCategoryData is updated
     useEffect(() => {
-        window.history.replaceState(selectedCategory, selectedCategory, "/collectibles/" + selCategoriesData[0].slug);
+        if (selectedCategory.toLocaleLowerCase() !== 'overview') {
+            window.history.replaceState(selectedCategory, selectedCategory, "/collectibles/" + selCategoriesData[0].slug);
+        }else {
+            window.history.replaceState(selectedCategory, selectedCategory, "/collectibles");
+        }
     }, [selCategoriesData]);
 
-    const nftSearch = () => {
-
+    const nftSearch = (value) => {
+        
     };
 
     const nftPriceSorting = () => { };
 
     const nftSelectCategory = (value) => {
-
-
         setIsLoading(true);
         setIsSubPage(value.toLowerCase() === defaultCategories.toLowerCase() ? false : true);
         setSelectedCategory(value);
@@ -174,9 +173,9 @@ const Collectibles = ({ data, banner }) => {
 
                     <Categories
                         defaultCategory={defaultCategories}
-                        displayData={selCategoriesData}
+                        displayData={data}
                         selectedCategory={selectedCategory}
-                        setTempFilterValue={''}
+                        // setTempFilterValue={''}
                         nftSelectCategory={nftSelectCategory}
                     ></Categories>
 
