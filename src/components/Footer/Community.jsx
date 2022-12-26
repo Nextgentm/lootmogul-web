@@ -30,12 +30,12 @@ const socialLinks = [
     {
         Image: "youtube-white.svg",
         active_Image: "Youtube-pink-icon.svg",
-        link: "https://www.youtube.com/channel/UCsooAZi-4pYR7MXTJMVRFPg/videos"
+        link: "https://www.youtube.com/@lootmogul"
     },
     {
         Image: "medium-icon-white.svg",
         active_Image: "Medium-pink-icon.svg",
-        link: "https://www.twitch.tv/lootmogul"
+        link: "https://lootmogul.medium.com/"
     }
 ];
 
