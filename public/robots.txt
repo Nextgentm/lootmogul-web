@@ -1,0 +1,9 @@
+# *
+User-agent: *
+disallow: /
+
+# Host
+Host: https://lootmogul.com
+
+# Sitemaps
+Sitemap: https://lootmogul.com/sitemap.xml
