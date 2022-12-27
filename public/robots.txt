@@ -1,6 +1,6 @@
 # *
 User-agent: *
-Allow: /
+disallow: /
 
 # Host
 Host: https://lootmogul.com
