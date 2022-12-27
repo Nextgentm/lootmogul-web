@@ -72,9 +72,9 @@ const Collectibles = ({ data, banner }) => {
     // this effect is to chnage the url after selectedCategoryData is updated
     useEffect(() => {
         if (selectedCategory.toLocaleLowerCase() !== 'overview') {
-            window.history.replaceState(selectedCategory, selectedCategory, "/collectibles/" + selCategoriesData[0].slug);
+            window.history.replaceState(selectedCategory, selectedCategory, "/nfts/" + selCategoriesData[0].slug);
         } else {
-            window.history.replaceState(selectedCategory, selectedCategory, "/collectibles");
+            window.history.replaceState(selectedCategory, selectedCategory, "/nfts");
         }
     }, [selCategoriesData]);
 
