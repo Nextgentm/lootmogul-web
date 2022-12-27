@@ -2,7 +2,7 @@
 
 module.exports = {
     siteUrl: process.env.SITE_URL || 'https://lootmogul.com',
-    generateRobotsTxt: true, // (optional)
+    generateRobotsTxt: false, // (optional)
     // ...other options
   }
   
