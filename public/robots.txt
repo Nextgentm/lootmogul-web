@@ -7,3 +7,5 @@ Host: https://lootmogul.com
 
 # Sitemaps
 Sitemap: https://lootmogul.com/sitemap.xml
+
+
