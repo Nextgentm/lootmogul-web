@@ -135,6 +135,40 @@ export const AppContextContainer = ({ children }) => {
         } else fetchGameJoiningData();
 
     }
+    const logout = async () => {
+        console.log('Im Logout to..');
+        const value = await strapi.fetchUser();
+        console.log(value);
+        try {
+            const resp = await axios.post(
+                process.env.NEXT_PUBLIC_WORDPRESS_URL+`/wp-json/strapi/v1/setCurrentUser/`,
+                {
+                    user_email: value.email,
+                    strapi_jwt: 'logout',
+                    provider: value.provider
+                }
+            );
+            const data = resp.data;
+            if (data.success) {
+                console.log(data);
+                console.log('User Data Update to logout...');
+                if (typeof window !== 'undefined' && window.localStorage) {
+                    localStorage.clear();
+                }
+                strapi.logout();
+                setUser(null);
+                if (router.route === '/influencers' || router.route === '/nfts' || router.route === '/games') {
+                    router.push(router.route);
+                }else {
+                    router.push("/");
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+        
+    }
+
     const fetchGameJoiningData = async (contestmaster = currentContest) => {
         if (contestmaster) {
             const { data } = await strapi.find("contests", {
@@ -451,6 +485,7 @@ useEffect(() => {
                         password: formData.password,
                     }
                     data = await strapi.login(apiValues);
+                    insertLoggedInUserInDB(data);
                     setJwt(data.jwt);
                     console.log(data);
                 } catch ({error}) {
@@ -607,18 +642,7 @@ useEffect(() => {
                 setShowLoading,
                 onPlayAgain,
                 setCoupon,
-                logout: () => {
-                    if (typeof window !== 'undefined' && window.localStorage) {
-                        localStorage.clear();
-                    }
-                    strapi.logout();
-                    setUser(null);
-                    if (router.route === '/influencers' || router.route === '/nfts' || router.route === '/games') {
-                        router.push(router.route);
-                    }else {
-                        router.push("/");
-                    }
-                },
+                logout
             }}
         >
             {children}
