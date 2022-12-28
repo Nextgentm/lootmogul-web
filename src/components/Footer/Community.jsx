@@ -1,40 +1,35 @@
 import React from 'react'
-import { Flex, Box, Text, Link,  Image} from "@chakra-ui/react";
+import { Flex, Box, Text, Link,  Image, Icon} from "@chakra-ui/react";
+import { FaDiscord, FaTelegramPlane,FaTwitter,FaInstagram,FaFacebookF,FaYoutube } from 'react-icons/fa'
+import { SiMedium } from "react-icons/si";
 
 const socialLinks = [
     {
-        Image: "discord-white.svg",
-        active_Image: "Discord-Pinki-icon1.svg",
+        Image: FaDiscord,
         link: "https://discord.gg/mHUqAm8fsh"
     },
     {
-        Image: "telegram-white.svg",
-        active_Image: "Telegram-pink-icon.svg",
+        Image: FaTelegramPlane,
         link: "https://t.me/LootMogulcommunitychat"
     },
     {
-        Image: "twitter-white.svg",
-        active_Image: "Twitter-pink-icon.svg",
+        Image: FaTwitter,
         link: "https://twitter.com/LootMogul"
     },
     {
-        Image: "instagram-white.svg",
-        active_Image: "Instagram-pink-icon.svg",
+        Image: FaInstagram,
         link: "https://www.instagram.com/lootmogul/?hl=en"
     },
     {
-        Image: "facebook-white.svg",
-        active_Image: "Facebook-pink-icon.svg",
+        Image: FaFacebookF,
         link: "https://www.facebook.com/LootMogul/"
     },
     {
-        Image: "youtube-white.svg",
-        active_Image: "Youtube-pink-icon.svg",
+        Image: FaYoutube,
         link: "https://www.youtube.com/@lootmogul"
     },
     {
-        Image: "medium-icon-white.svg",
-        active_Image: "Medium-pink-icon.svg",
+        Image: SiMedium,
         link: "https://lootmogul.medium.com/"
     }
 ];
@@ -43,13 +38,14 @@ const socialLinks = [
 const Community = () => {
   return (
     <Box py="20px">
+        
     <Text
          variant="BoldWhiteText"
         //  fontSize={["18px", "25px", "30px", "40px"]}
          textAlign="center"
          fontSize="40px"
          mt="0"
-         mb="20px"
+         mb="10px"
          lineHeight="1"
      >
          Community
@@ -62,7 +58,7 @@ const Community = () => {
          py="1rem"
      >
          {socialLinks.map((img, index) => (
-             <Box key={`cimg-${index}`} mt={["5px", 0, 0, 0]} mr="25px">
+             <Box key={`cimg-${index}`} mt={["5px", 0, 0, 0]} mr={["15px", "25px", "25px", "25px"]}>
                  <Link
                      _focus={{
                          border: "none",
@@ -71,22 +67,9 @@ const Community = () => {
                      href={img.link}
                      target="_blank"
                  >
-                     <Image
-                         alt={img.Image}
-                         width={["20px", "18px", "25px", "22px", "23px"]}
-                         height={[
-                             "20px",
-                             "18px",
-                             "25px",
-                             "22px",
-                             "23px"
-                         ]}
-                         
-                         src={`/assets/CommunityIcons/${img.Image}`}
-                         onMouseOver={e => (e.currentTarget.src = `/assets/CommunityIcons/${img.active_Image}`)}
-                         onMouseOut={e => (e.currentTarget.src = `/assets/CommunityIcons/${img.Image}`)}
-                         color="#FFF"
-                     />
+                  
+                  <Icon as={img.Image} w={[5,6,6,6]} h={[5,6,6,6]} color='#fff' _hover={{ color: "#F60C67" }} />
+                    
                  </Link>
              </Box>
          ))}
