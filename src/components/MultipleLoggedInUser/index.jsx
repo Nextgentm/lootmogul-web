@@ -47,7 +47,7 @@ const MultipleLoggedInUser = ({ openPopup }) => {
                 ) {
                     console.log("Multiple Device Tracking started.");
                     const resp = await axios.post(
-                        `https://metaverse.lootmogul.com/wp-json/strapi/v1/getCurrentUser/`,
+                        process.env.NEXT_PUBLIC_WORDPRESS_URL+`/wp-json/strapi/v1/getCurrentUser/`,
                         {
                             user_email: value.email,
                             provider: value.provider

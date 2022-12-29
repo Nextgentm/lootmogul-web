@@ -2,9 +2,11 @@ import strapi from "../../../src/utils/strapi";
 import dynamic from "next/dynamic";
 import MyPageLoader from "../../../src/components/MyPageLoader";
 import SEOContainer from "../../../src/features/SEOContainer";
+import NotFoundPage from "../../../src/features/404Page";
 import { getSeoData } from "../../../src/queries/strapiQueries";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 const defaultSEOData = {
     metaTitle:
@@ -22,10 +24,13 @@ const CollectiblesComponent = dynamic(
 export default function CollectibleDetailsPage({ nftCollections, seoData }) {
     
     const router = useRouter();
-    
+    const [IsValidCollection,setIsValidCollection] = useState(null);
+
     useEffect(()=>{
-        // debugger;
-        // console.log('name of the router',router.query.slug);
+        //debugger;
+        //console.log('name of the router',router.query.slug);
+        const isValid = nftCollections.find(c => c.slug.toLowerCase() === router.query.slug.toLowerCase());
+        setIsValidCollection(isValid);
     });
 
     return (
@@ -33,10 +38,10 @@ export default function CollectibleDetailsPage({ nftCollections, seoData }) {
             <SEOContainer
                 seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData}
             />
-            <CollectiblesComponent
+            {IsValidCollection != undefined ?  <CollectiblesComponent
                 data={nftCollections || []}
                 banner={seoData[0]?.banner?.data}
-            />
+            /> : <NotFoundPage />}
         </>
     )
 }
