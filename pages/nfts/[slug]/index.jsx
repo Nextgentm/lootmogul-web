@@ -2,7 +2,7 @@ import strapi from "../../../src/utils/strapi";
 import dynamic from "next/dynamic";
 import MyPageLoader from "../../../src/components/MyPageLoader";
 import SEOContainer from "../../../src/features/SEOContainer";
-import NotFoundPage from "../../../src/features/404Page";
+import NotFound from "../../../src/features/404";
 import { getSeoData } from "../../../src/queries/strapiQueries";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -43,7 +43,7 @@ export default function CollectibleDetailsPage({ nftCollections, seoData }) {
             {isValidCollection != undefined ?  <CollectiblesComponent
                 data={nftCollections || []}
                 banner={seoData[0]?.banner?.data}
-            /> : 'hello world'}
+            /> : <NotFound></NotFound>}
         </>
     )
 }
