@@ -24,11 +24,12 @@ const CollectiblesComponent = dynamic(
 export default function CollectibleDetailsPage({ nftCollections, seoData }) {
     
     const router = useRouter();
-    const [IsValidCollection,setIsValidCollection] = useState(null);
-
+    const [isValidCollection, setIsValidCollection] = useState(null);
+    
+    
     useEffect(()=>{
-        //debugger;
-        //console.log('name of the router',router.query.slug);
+        debugger;
+        console.log('name of the router',router.query.slug);
         const isValid = nftCollections.find(c => c.slug.toLowerCase() === router.query.slug.toLowerCase());
         setIsValidCollection(isValid);
     });
@@ -38,10 +39,11 @@ export default function CollectibleDetailsPage({ nftCollections, seoData }) {
             <SEOContainer
                 seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData}
             />
-            {IsValidCollection != undefined ?  <CollectiblesComponent
+            
+            {isValidCollection != undefined ?  <CollectiblesComponent
                 data={nftCollections || []}
                 banner={seoData[0]?.banner?.data}
-            /> : <NotFoundPage />}
+            /> : 'hello world'}
         </>
     )
 }
