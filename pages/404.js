@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import MyPageLoader from "../src/components/MyPageLoader";
 
-export default function Custom404() {
-  const router = useRouter();
+const NotFoundPage = dynamic(
+    () =>
+    import ("../src/features/404Page"), { loading: () => < MyPageLoader / > }
+);
 
-  useEffect(() => {
-    router.replace("/");
-  });
-
-  return null;
+function NotFoundPage_fun() {
+    return <NotFoundPage / > ;
 }
+
+export default NotFoundPage_fun;
