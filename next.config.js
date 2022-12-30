@@ -279,11 +279,6 @@ const moduleExports = {
         "permanent": true
        },
        {
-        "source": "\/nfts\/mystery-box",
-        "destination": "\/nfts",
-        "permanent": true
-       },
-       {
         "source": "\/nfts\/Mat-Robson-Gold",
         "destination": "\/nfts",
         "permanent": true
