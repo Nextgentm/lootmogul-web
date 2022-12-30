@@ -434,7 +434,7 @@ useEffect(() => {
     const insertLoggedInUserInDB = async (value) => {
         try {
             const resp = await axios.post(
-                `https://metaverse.lootmogul.com/wp-json/strapi/v1/setCurrentUser/`,
+                process.env.NEXT_PUBLIC_WORDPRESS_URL+`/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.user.email,
                     strapi_jwt: value.jwt,
