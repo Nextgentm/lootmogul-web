@@ -43,7 +43,7 @@ export default function CollectibleDetailsPage({ nftCollections, seoData }) {
             {isValidCollection != undefined ?  <CollectiblesComponent
                 data={nftCollections || []}
                 banner={seoData[0]?.banner?.data}
-            /> : <NotFound></NotFound>}
+            /> : <NotFound isNfts={true}></NotFound>}
         </>
     )
 }

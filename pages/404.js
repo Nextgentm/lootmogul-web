@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import MyPageLoader from "../src/components/MyPageLoader";
 
-const NotFoundPage = dynamic(
+const NotFound = dynamic(
     () =>
-    import ("../src/features/404Page"), { loading: () => < MyPageLoader / > }
+    import ("../src/features/404"), { loading: () => < MyPageLoader / > }
 );
 
-function NotFoundPage_fun() {
-    return <NotFoundPage / > ;
+function NotFoundPage() {
+    return <NotFound / > ;
 }
 
-export default NotFoundPage_fun;
+export default NotFoundPage;
