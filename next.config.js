@@ -29,54 +29,89 @@ const moduleExports = {
   async redirects() {
     return [
       { 
-        source: '/influencers/category/basketball-player-influencer',
-        destination: '/influencers/category/basketball',
-        permanent: true,
+        "source": '/terms-and-conditions-ios',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/terms-and-conditions-ios',
+        "permanent": true,
+      },
+      { 
+        "source": '/',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL,
+        "permanent": true,
+      },
+      { 
+        "source": '/home',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL,
+        "permanent": true,
+      },
+      { 
+        "source": '/about-us',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/about-us',
+        "permanent": true,
+      },
+      { 
+        "source": '/privacy-policy',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/privacy-policy',
+        "permanent": true,
+      },
+      { 
+        "source": '/terms-conditions',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/terms-conditions',
+        "permanent": true,
+      },
+      { 
+        "source": '/metaverse',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/metaverse',
+        "permanent": true,
+      },
+      { 
+        "source": '/influencers/category/basketball-player-influencer',
+        "destination": '/influencers/category/basketball',
+        "permanent": true,
       },
       {
-        source: '/influencers/category/hockey-player-influencers',
-        destination: '/influencers/category/hockey',
-        permanent: true,
+        "source": '/influencers/category/hockey-player-influencers',
+        "destination": '/influencers/category/hockey',
+        "permanent": true,
       },
       {
-        source: '/influencers/category/mma-player-influencers',
-        destination: '/influencers/category/mma',
-        permanent: true,
+        "source": '/influencers/category/mma-player-influencers',
+        "destination": '/influencers/category/mma',
+        "permanent": true,
       },
       {
-        source: '/influencers/category/baseball-player-influencer',
-        destination: '/influencers/category/baseball',
-        permanent: true,
+        "source": '/influencers/category/baseball-player-influencer',
+        "destination": '/influencers/category/baseball',
+        "permanent": true,
       },
       {
-        source: '/influencers/category/cricket-influencers',
-        destination: '/influencers/category/cricket',
-        permanent: true,
+        "source": '/influencers/category/cricket-influencers',
+        "destination": '/influencers/category/cricket',
+        "permanent": true,
       },
       {
-        source: '/influencers/category/food-influencers',
-        destination: '/influencers/category/food',
-        permanent: true,
+        "source": '/influencers/category/food-influencers',
+        "destination": '/influencers/category/food',
+        "permanent": true,
       },
       {
-        source: '/influencers/category/football-influencers',
-        destination: '/influencers/category/football',
-        permanent: true,
+        "source": '/influencers/category/football-influencers',
+        "destination": '/influencers/category/football',
+        "permanent": true,
       },
       {
-        source: '/influencers/category/general-influencers',
-        destination: '/influencers/category/general',
-        permanent: true,
+        "source": '/influencers/category/general-influencers',
+        "destination": '/influencers/category/general',
+        "permanent": true,
       },
       {
-        source: '/influencers/category/soccer-player-influencer',
-        destination: '/influencers/category/soccer',
-        permanent: true,
+        "source": '/influencers/category/soccer-player-influencer',
+        "destination": '/influencers/category/soccer',
+        "permanent": true,
       },
       {
-        source: '/influencers/category/lacrosse-player-influencer',
-        destination: '/influencers/category/lacrosse',
-        permanent: true,
+        "source": '/influencers/category/lacrosse-player-influencer',
+        "destination": '/influencers/category/lacrosse',
+        "permanent": true,
       },
       {
         "source": "\/influencer\/ahmad-thomas-4",
@@ -124,14 +159,14 @@ const moduleExports = {
         "permanent": true
        },
       {
-        source: '/influencers/earning',
-        destination: 'https://metaverse.lootmogul.com/influencer-earnings',
-        permanent: true,
+        "source": '/influencers/earning',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/influencer-earnings',
+        "permanent": true,
       },
       {
-        source: '/influencers/signup',
-        destination: 'https://metaverse.lootmogul.com/ambassador-onboarding-form/',
-        permanent: true,
+        "source": '/influencers/signup',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/ambassador-onboarding-form/',
+        "permanent": true,
       },
       {
         "source": "\/promotions\/welcome-bonus",
@@ -1773,7 +1808,6 @@ const moduleExports = {
         "destination": "\/games",
         "permanent": true
        }
-      
     ]
   }
 };
