@@ -29,8 +29,33 @@ const moduleExports = {
   async redirects() {
     return [
       { 
+        "source": '/',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL,
+        "permanent": true,
+      },
+      { 
+        "source": '/home',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL,
+        "permanent": true,
+      },
+      { 
         "source": '/about-us',
         "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/about-us',
+        "permanent": true,
+      },
+      { 
+        "source": '/privacy-policy',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/privacy-policy',
+        "permanent": true,
+      },
+      { 
+        "source": '/terms-conditions',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/terms-conditions',
+        "permanent": true,
+      },
+      { 
+        "source": '/metaverse',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/metaverse',
         "permanent": true,
       },
       { 
