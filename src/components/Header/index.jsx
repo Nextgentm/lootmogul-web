@@ -32,7 +32,7 @@ import AutoLogout from "../AutoLogout";
 const routes = [
     {
         label: "Home",
-        path: "https://metaverse.lootmogul.com/home",
+        path: process.env.NEXT_PUBLIC_WORDPRESS_URL+"/home",
         isExternalLink: true,
         imageUrl: "/assets/MobileMenuIcons/Home-icon.png",
         activeImageUrl: "/assets/MobileMenuIcons/Home-icon-active.png"
@@ -40,7 +40,7 @@ const routes = [
 
     {
         label: "Metaverse",
-        path: "https://metaverse.lootmogul.com/metaverse/",
+        path: process.env.NEXT_PUBLIC_WORDPRESS_URL+"/metaverse/",
         isExternalLink: true,
         imageUrl: "/assets/MobileMenuIcons/Metaverse-icon.png",
         activeImageUrl: "/assets/MobileMenuIcons/Metaverse-icon-active.png"
@@ -67,10 +67,9 @@ const routes = [
         imageUrl: "/assets/MobileMenuIcons/Games-icon.png",
         activeImageUrl: "/assets/MobileMenuIcons/Games-icon-active.png"
     },
-
     {
         label: "Explore",
-        path: "https://metaverse.lootmogul.com/meta-map/",
+        path: process.env.NEXT_PUBLIC_WORDPRESS_URL+"/meta-map/",
         isExternalLink: true,
         imageUrl: "/assets/MobileMenuIcons/Explore-icon.png",
         activeImageUrl: "/assets/MobileMenuIcons/Explore-icon-active.png"
@@ -333,7 +332,7 @@ const Header = () => {
                             objectFit="contain"
                             onClick={() => router.push("/")}
                             alt="logo"
-                            src="/assets/LootMogul-Logo-2.png"
+                            src="/assets/LootMogul-Logo-2.webp"
                         />
                     </Flex>
 
