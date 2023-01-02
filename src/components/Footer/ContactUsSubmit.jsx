@@ -47,7 +47,7 @@ const ContactUsSubmit = () => {
     >
         Subscribe to get the updates
     </Text>
-    <Flex ml={["0","0","0","0px"]} maxW="85%" >
+    <Flex ml={["0","0","0","0px"]} maxW={["100%",'100%','100%','85%']} >
         <Input
             bg="#FFF"
             w={[

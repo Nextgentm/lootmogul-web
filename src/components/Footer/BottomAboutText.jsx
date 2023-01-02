@@ -14,7 +14,7 @@ const BottomAboutText = () => {
         w="85%"
         mx="auto"
     >
-        © 2022 LootMogul. All Rights Reserved. HQ: 3301 Ocean Park
+        © 2023 LootMogul. All Rights Reserved. HQ: 3301 Ocean Park
         Blvd, Unit 205, Santa Monica, CA 90405
     </Text>
     <Text variant="footerText" w="85%" fontWeight="400" fontSize="14px" mx="auto">
