@@ -64,10 +64,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 const { id } = user;
                 const resp = await axios.post(
                     `${
-                        process.env.NEXT_PUBLIC_STRAPI_API_URL ||
-                        "https://gamification.tpix.in"
-                    }/api/payment/stripe`,
-
+                        process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
                     {
                         user_id: id,
                         redirect_url:

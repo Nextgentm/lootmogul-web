@@ -16,7 +16,7 @@ const moduleExports = {
   },
   reactStrictMode: true,
   images: {
-    domains: ["media-content.lootmogul.com","drive.google.com","lootmogalimages.s3.ap-south-1.amazonaws.com","s3-qunami.s3-us-west-2.amazonaws.com","gamification.tpix.in","localhost",
+    domains: ["media-content.lootmogul.com","drive.google.com","lootmogalimages.s3.ap-south-1.amazonaws.com","s3-qunami.s3-us-west-2.amazonaws.com","localhost",
     "gpcms-prod.lootmogul.com","gamificationv2.s3.us-west-2.amazonaws.com","gamificationv2.s3.amazonaws.com","s3-us-west-2.amazonaws.com"],
     minimumCacheTTL: 3600,
   },
@@ -35,11 +35,6 @@ const moduleExports = {
       },
       { 
         "source": '/',
-        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL,
-        "permanent": true,
-      },
-      { 
-        "source": '/home',
         "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL,
         "permanent": true,
       },
