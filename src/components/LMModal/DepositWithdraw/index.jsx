@@ -11,22 +11,24 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
     });
 
     return (
-        <Flex width="100%" h={["50px", "65px"]}>
+        <Flex width="100%" h={["50px", "65px"]} bg="#1d052b"  borderBottom="0">
             <Flex w="100%">
                 {currentSize !== "base" && (
                     <Flex width={["50%", "58%"]}>
                         <Box
-                            width="50%"
+                            width="70%"
                             paddingTop="5%"
                             borderTopLeftRadius="8px"
                             paddingBottom="6%"
                             paddingLeft={"2%"}
-                            bg="#3F3F3F"
+                            bg="#1d052b"
                         >
                             <Heading
                                 ml="10%"
+                                mt="10px"
                                 fontWeight="600"
                                 variant="modalHeader"
+                                fontSize={["12px","12px", "22px"]}
                             >
                                 {isDeposit ? "DEPOSIT" : "WITHDRAW"}
                             </Heading>
@@ -41,7 +43,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         marginRight="16px"
                         borderTopLeftRadius="8px"
                         paddingLeft="1%"
-                        bg="#3F3F3F"
+                        bg="#1d052b"
                     >
                         <Heading
                             ml="10%"
@@ -92,7 +94,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
 
 const WalletFooter = () => {
     return (
-        <Flex m="auto" width="100%" p="2%" justifyContent="center">
+        <Flex m="auto" width="100%" justifyContent="center">
             <Text
                 textAlign="center"
                 width="auto"
@@ -137,7 +139,7 @@ const WalletBody = ({ isDeposit }) => {
     });
 
     return (
-        <Flex>
+        <Flex bg="#1d052b">
             <LMTabs
                 data={isDeposit ? data : withDrawData}
                 isDeposit={isDeposit}
@@ -149,7 +151,7 @@ const WalletBody = ({ isDeposit }) => {
 
 const DepostWithdraw = ({ totalAmount, isDeposit, winAmount }) => {
     return (
-        <Box width="100%" bg="#303030" borderRadius="8px">
+        <Box width="100%" bg="#1d052b" borderRadius="12px" border="4px solid #672099" boxShadow="0px 6px 40px #090014">
             <WalletHeader
                 isDeposit={isDeposit}
                 totalAmount={totalAmount}

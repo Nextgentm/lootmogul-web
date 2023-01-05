@@ -38,7 +38,7 @@ const LMModal = ({
             <ModalContent
                 minW={
                     mode === "add" || mode === "deposit"|| mode ==="sub"
-                        ? ["375px", "760px"]
+                        ? ["375px","400px", "760px"]
                         : ""
                 }
                 style={style}
@@ -46,10 +46,11 @@ const LMModal = ({
                 background="transparent"
             >
                 <ModalCloseButton
-                    color="black"
-                    background="#303030"
+                    color="#fff"
+                    background="transparent linear-gradient(90deg, #E90A63 0%, #481A7F 100%) 0% 0% no-repeat padding-box"
                     borderRadius="full"
                     outline="#303030"
+                    boxShadow="inset 0px 3px 18px #481A7F73, 0px 0px 20px #FF0080CF"
                 />
                 <ModalBody>{children}</ModalBody>
             </ModalContent>

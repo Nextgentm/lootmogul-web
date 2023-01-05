@@ -13,7 +13,7 @@ const TabLabel = ({ data }) => {
               
             />
             )}
-            <Text  m="auto" color="white" fontSize={["10px","20px"]}>
+            <Text  m="auto" color="white" fontSize={["10px","10px","18px"]}>
                 {data.name}
             </Text>
         </Flex>

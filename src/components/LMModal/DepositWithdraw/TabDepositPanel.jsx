@@ -99,10 +99,20 @@ const TabDepositPanel = ({ isDeposit }) => {
     };
 
     return (
-        <Flex h="100%" w="100%" bg="#3F3F3F" direction={"column"}>
-            <Flex w="100%" justifyContent={"space-evenly"} bg="#505050" p="2%">
+        <Flex h="100%" w="100%" bg="#1d052b" direction={"column"} pr="30px">
+            <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="3%" borderRadius="10px">
+                <Select
+                    w={currentSize === "base" ? "40%" : "40%"}
+                    h="42px"
+                    color="white"
+                    backgroundColor="#1d052b"
+                >
+                    <option default>USD</option>
+                </Select>
+
                 <Input
-                    w={currentSize === "base" ? "30%" : "30%"}
+                    w={currentSize === "base" ? "40%" : "40%"}
+                    h="42px"
                     color="white"
                     defaultValue={amount}
                     value={amount}
@@ -110,19 +120,26 @@ const TabDepositPanel = ({ isDeposit }) => {
                         setAmount(Number(e.target.value));
                     }}
                     placeholder="Amount"
-                    fontSize={["12px", "14px"]}
+                    fontSize={["12px", "18px"]}
                     fontWeight="400"
                     fontFamily="Sora"
+                    backgroundColor="#1d052b"
                 ></Input>
-
-                <Select
-                    w={currentSize === "base" ? "25%" : "25%"}
-                    color="white"
-                >
-                    <option default>USD</option>
-                </Select>
             </Flex>
-
+            
+            <Flex>
+                <Text
+                 display="inline-flex"
+                 color="white"
+                 fontFamily={"Sora"}
+                 fontSize={["12px","12px", "18px"]}
+                 alignContent={"center"}
+                 m="auto"
+                 mt="15px"
+            >
+                    USD 100.00 = 1000.00
+                </Text>
+            </Flex>
             {isDeposit && (
                 <Flex w="100%" mt="3%" justifyContent={"space-between"}>
                     <AddInputBox value={5} onClick={() => handleIncrease(5)} />
@@ -141,7 +158,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 </Flex>
             )}
 
-            <Flex mt="3%" w="100%">
+            <Flex mt="3%" ml={["10px","10px", "15%"]} w="100%">
                 <Checkbox
                     w="100%"
                     onChange={(e) => setAccepted(e.target.checked)}
@@ -150,13 +167,13 @@ const TabDepositPanel = ({ isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize="12px"
+                        fontSize={["12px","12px", "18px"]}
                     >
                         I hereby accept the{" "}
                         <Text
                             color="primary"
                             fontFamily={"Sora"}
-                            fontSize="12px"
+                            fontSize={["12px","12px", "18px"]}
                             onClick={(e) => {
                                 e.preventDefault();
                                 window.open(
@@ -190,30 +207,36 @@ const AddInputBox = ({ value, onClick }) => {
     return (
         <Button
             w={["20%", "23%"]}
-            h={["10%", "50px"]}
+            h={["10%","20px", "50px"]}
+            p={["20px 30px","20px 30px","auto"]}
             onClick={onClick}
             style={{
                 border: "1px solid #505050",
-                background: "transparent",
+                background: "#481A7F",
                 display: "flex",
                 justifyContent: "space-around",
-                fontFamily: "Sora"
+                fontFamily: "Sora",
+                boxShadow:"none",
             }}
         >
-            <Box pointerEvents="none">
-                <AddIcon
-                    color="rgba(81, 227, 110, 1)"
-                    boxSize={["10px", "20px"]}
-                />
-            </Box>
-
             <Box
                 border="none"
                 ml="3px"
                 color="white"
-                fontSize={["12px", "20px"]}
+                fontSize={["12px","12px", "20px"]}
             >
                 {value}
+            </Box>
+            
+            <Box pointerEvents="none">
+                <AddIcon
+                    color="#481A7F"
+                    boxSize={["10px","15px", "25px"]}
+                    backgroundColor="#fff"
+                    borderRadius="50%"
+                    p={"5px"}
+                    ml={"5px"}
+                />
             </Box>
         </Button>
     );
