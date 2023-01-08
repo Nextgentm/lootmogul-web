@@ -119,7 +119,7 @@ const WalletPage = ({ totalAmount }) => {
                     width="35px"
                     height="35px"
                     objectFit="contain"
-                    src="/assets/bonus1.png"
+                    src="/assets/Doller.png"
                     alt="bonus"
                 />
                 <Flex
@@ -129,16 +129,16 @@ const WalletPage = ({ totalAmount }) => {
                 >
                     <Text
                         variant="hint"
-                        fontSize={["10px", "14px"]}
+                        fontSize={["10px", "16px"]}
                         lineHeight={["13px", "35px"]}
                         ml={["0%", "2%"]}
+                        color="#fff"
                     >
-                        Maximum usable Bonus per match is 10% of the contest
-                        entry fee
+                        Maximum usable Bonus per match is 10% of the contest entry fee
                     </Text>
                     <Text
                         variant="hint"
-                        fontSize={["10px", "14px"]}
+                        fontSize={["10px", "16px"]}
                         lineHeight={["13px", "35px"]}
                         ml={["0%", "2%"]}
                         cursor="pointer"

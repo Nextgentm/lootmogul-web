@@ -123,7 +123,7 @@ const TransactionHistory = () => {
 
     return (
         <Box mt="40px">
-            <Heading color="white">TRANSACTION HISTORY</Heading>
+            <Heading color="white" fontFamily="Sora" variant="hint" fontSize={["22px","22px","31px"]} >TRANSACTION HISTORY</Heading>
 
            <Grid
                 templateColumns={`repeat(${
