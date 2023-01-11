@@ -1,7 +1,7 @@
 import Strapi from "strapi-sdk-js";
 
 const strapi = new Strapi({
-  url: `${process.env.NEXT_PUBLIC_STRAPI_API_URL|| "https://gamification.tpix.in"}/api`,
+  url: `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api`,
   store: {
     key: "strapi_jwt",
     useLocalStorage: true,

@@ -75,7 +75,7 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_STRAPI_API_URL|| "https://gamification.tpix.in" }/api/influencer-categories?populate=[0]=*&populate[1]=influencers.icon&populate[2]=influencers.contestmasters.feeWallet.currency`
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/influencer-categories?populate=[0]=*&populate[1]=influencers.icon&populate[2]=influencers.contestmasters.feeWallet.currency`
       );
       const data = await res.json();
   
