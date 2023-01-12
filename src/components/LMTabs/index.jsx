@@ -33,7 +33,7 @@ const LMTabs = ({ orientation, data, isDeposit }) => {
                 {data &&
                     data.map((item, index) => {
                         return (
-                            <TabPanel pl="30px" bg="#1d052b" key={"tab2" + index}>
+                            <TabPanel pl={['10px','10px','30px']} bg="#1d052b" key={"tab2" + index}>
                                 {isDeposit ? (
                                     <TabDepositPanel
                                         data={item}

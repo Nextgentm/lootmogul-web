@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
 import { WalletIcon } from "../../Icons";
 import LMTabs from "../../LMTabs";
 import { useBreakpointValue } from "@chakra-ui/react";
@@ -11,7 +11,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
     });
 
     return (
-        <Flex width="100%" h={["50px", "65px"]} bg="#1d052b"  borderBottom="0">
+        <Flex width="100%" h={["40px","40px", "65px"]} bg="#1d052b"  borderBottom="0">
             <Flex w="100%">
                 {currentSize !== "base" && (
                     <Flex width={["50%", "58%"]}>
@@ -39,7 +39,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                 {currentSize === "base" && (
                     <Box
                         width="35%"
-                        paddingTop="10%"
+                        paddingTop={["15px","15px","10%"]}
                         marginRight="16px"
                         borderTopLeftRadius="8px"
                         paddingLeft="1%"
@@ -58,23 +58,25 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
 
                 <Flex w="100%" justifyContent="flex-end" mr="3%">
                     <Flex m="auto 0px" justifyContent="flex-end">
-                        <WalletIcon
-                            mt="auto"
-                            mb="auto"
-                            boxSize={"35px"}
-                            color="primary"
-                        />
+                        
 
                         <Heading
                             fontWeight="400"
                             fontFamily="Blanch"
-                            fontSize={["24px", "28px", "38px"]}
+                            fontSize={["20px", "20px", "31px"]}
                             ml={["6px!important", "15px!important"]}
                             m="auto"
                             color="white"
                         >
-                            {isDeposit ? "WALLET BALANCE" : "WIN BALANCE"}
+                            {isDeposit ? "WALLET BALANCE IN CHIPS" : "WIN BALANCE"}
                         </Heading>
+
+                        <Image
+                            alt="tag"
+                            boxSize={["25px","25px", "30px"]}
+                            src="/assets/Icon.png"
+                            ml="5px"
+                        />
                     </Flex>
 
                     <Heading
@@ -84,7 +86,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         mb="auto"
                         color="primary"
                     >
-                        ${isDeposit ? totalAmount : winAmount}
+                        {isDeposit ? totalAmount : winAmount}
                     </Heading>
                 </Flex>
             </Flex>

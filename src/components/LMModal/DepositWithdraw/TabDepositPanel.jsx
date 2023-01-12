@@ -116,10 +116,10 @@ const TabDepositPanel = ({ isDeposit }) => {
                             process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL +
                             asPath,
                         type: "DEPOSIT",
-                        value: amount,
+                        value: numberOfAmount,
                         couponCode: couponCode ? couponCode : "",
                         currency:currency,
-                        calculated_chips:numberOfAmount
+                        calculated_chips:amount
                     },
                     {
                         headers: {
@@ -147,18 +147,36 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     return (
         
-        <Flex h="100%" w="100%" bg="#1d052b" direction={"column"} pr="30px">
+        <Flex h="100%" w="100%" bg="#1d052b" direction={"column"} pr={['5px','5px','30px']}>
             <Heading as='h5' size={['10px', '10px','sm']} variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
             SELECT PAYMENT METHOD
             </Heading>
             <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="3%" borderRadius="10px">
             <RadioGroup defaultValue='1'>
-            <Stack spacing={20} direction='row' color='white' bg="#1D052B" p="10px 25px" borderRadius="10px">
-                <Radio size='lg' colorScheme='pink' defaultChecked="true" value='1'>
-                    FIAT CURRENCY
+            <Stack spacing={[2,2,20]}  direction={['row','row','row']} color='white' bg="#1D052B" p={["5px 10px","5px 10px","10px 25px"]} borderRadius="10px">
+                <Radio size='md' colorScheme='pink' defaultChecked="true" value='1' style={{fontSize:"10px"}}>
+                    <Text
+                    display="inline-flex"
+                    color="white"
+                    fontFamily={"Sora"}
+                    fontSize={["9px","9px", "18px"]}
+                    alignContent={"center"}
+                    m="auto"
+                    >
+                        FIAT CURRENCY
+                    </Text>
                 </Radio>
-                <Radio size='lg' colorScheme='pink' value='2'>
+                <Radio size='md' colorScheme='pink' value='2'>
+                    <Text
+                    display="inline-flex"
+                    color="white"
+                    fontFamily={"Sora"}
+                    fontSize={["10px","10px", "18px"]}
+                    alignContent={"center"}
+                    m="auto"
+                    >
                     CRYPTO CURRENCY
+                    </Text>
                 </Radio>
             </Stack>
             </RadioGroup>
@@ -300,7 +318,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 onClick={deposit}
                 disabled={!accepted || amount <= 0}
             >
-                {isDeposit ? "Deposit" : "Withdraw"}
+                {isDeposit ? "PROCEED" : "Withdraw"}
             </Button>
         </Flex>
     );
@@ -311,9 +329,9 @@ export default TabDepositPanel;
 const AddInputBox = ({ value, onClick }) => {
     return (
         <Button
-            w={["25%", "23%"]}
+            w={["25%","25%", "23%"]}
             h={["8%","15px", "50px"]}
-            p={["0px 17px","20px 30px","auto"]}
+            p={["0px 10px","15px 30px","auto"]}
             m="2px"
             mt="20px"
             onClick={onClick}
@@ -330,6 +348,7 @@ const AddInputBox = ({ value, onClick }) => {
                 border="none"
                 ml="1px"
                 color="white"
+                fontFamily={"Sora"}
                 fontSize={["8px","8px", "16px"]}
             >
                 {value}
@@ -343,7 +362,8 @@ const AddInputBox = ({ value, onClick }) => {
                         fontSize={["8px","8px", "16px"]}
                         alignContent={"center"}
                         m="auto"
-                        ml="0px"
+                        ml="2px"
+                        mb="4px"
                     >
                         CHIPS
                 </Text>

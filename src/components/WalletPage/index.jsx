@@ -66,7 +66,7 @@ const WalletPage = ({ totalAmount }) => {
                             WALLET BALANCE
                         </Heading>
                         <Heading ml="10px" color="primary" fontSize={["36px","36px","62px"]}>
-                            ${totalAmount}
+                            {totalAmount}
                         </Heading>
                     </Flex>
                 </Flex>

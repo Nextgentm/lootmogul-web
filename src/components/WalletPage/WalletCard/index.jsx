@@ -29,12 +29,11 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
     const input = getInputProps({ isReadOnly: false });
     return (
         <Box
-            width={["100%", "31%"]}
+            width={["100%","100%", "31%"]}
             boxShadow="0px 50px 50px -30px rgba(187, 187, 187, 0.1)"
             bg="transparent linear-gradient(0deg, #481A7F00 0%, #481A7F 100%) 0% 0% no-repeat padding-box"
             minHeight="240px"
             pos="relative"
-
         >
             <Box
                 key="box_1"
