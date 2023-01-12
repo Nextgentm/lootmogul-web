@@ -62,9 +62,18 @@ const WalletPage = ({ totalAmount }) => {
                 <Flex width={["100%"]} justifyContent={"flex-start"}>
                     
                     <Flex mt="auto" mb={"auto"}>
-                        <Heading ml="15px" color="white" fontSize={["36px","36px","62px"]}>
+                        <Heading ml="15px" mr="15px" color="white" fontSize={["36px","36px","62px"]}>
                             WALLET BALANCE
                         </Heading>
+                        <Image
+                            ml="20px"
+                            mt="5px"
+                            width="35px"
+                            height="35px"
+                            objectFit="contain"
+                            src="/assets/Icon.png"
+                            alt="bonus"
+                        />
                         <Heading ml="10px" color="primary" fontSize={["36px","36px","62px"]}>
                             {totalAmount}
                         </Heading>
@@ -72,7 +81,7 @@ const WalletPage = ({ totalAmount }) => {
                 </Flex>
             </Flex>
             <Text fontSize={["12px", "17px"]} ml="15px" mt="10px" variant="hint" color="white">
-                Balance : Deposit + Winnings + Bonus = ${totalAmount}
+                Balance : Deposit + Winnings + Bonus = {totalAmount} Chips
             </Text>
             <Flex
                 mt="30px"

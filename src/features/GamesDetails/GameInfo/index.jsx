@@ -102,13 +102,20 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
               >
                 Winning prize
               </Text>
+              <Image
+                  alt="tag"
+                  boxSize={["25px", "35px"]}
+                  src="/assets/Icon.png"
+                  mt="12px"
+                  ml="10px"
+              />
               <Text
                 fontWeight={600}
                 fontSize={["17px", "17px", "17px", "25px", "36px"]}
                 ml="10px"
                 color="#d63065"
               >
-                {gameData?.reward?.data?.description}
+                {gameData?.reward?.data?.description} CHIPS
               </Text>
             </Flex>
           ) : (

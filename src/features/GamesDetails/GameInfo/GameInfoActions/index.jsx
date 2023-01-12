@@ -97,11 +97,18 @@ import {
         key={`GameDetail-${gameData?.id}`}
       >
         <Flex>
+        <Image
+            alt="tag"
+            boxSize={["15px", "25px"]}
+            src="/assets/Icon.png"
+            mt="5px"
+            mr="5px"
+        />
           <Text fontWeight={500} fontSize="19px" color="white">
-            Entry
+            Entry Fee -
           </Text>
           <Text fontWeight={700} fontSize="19px" ml="5px" color="#d63065">
-            {gameData?.entryFee ? "$ " + gameData?.entryFee : " Free"}
+            {gameData?.entryFee ? gameData?.entryFee + " CHIPS" : " Free"}
           </Text>
         </Flex>
   

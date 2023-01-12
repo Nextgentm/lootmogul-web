@@ -5,7 +5,8 @@ import {
     InputGroup,
     useNumberInput,
     InputRightElement,
-    Tooltip
+    Tooltip,
+    Image
 } from "@chakra-ui/react";
 import { InfoIcon } from "../../Icons";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
@@ -56,6 +57,7 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
                             p="10px"
                         >
                             <Text>
+                            
                                 <InfoIcon
                                     color="white"
                                     float="right"
