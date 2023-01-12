@@ -138,7 +138,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                 <Image
                                     alt="tag"
                                     boxSize={["25px", "30px"]}
-                                    src="/assets/designupdate1/cash_icon.svg"
+                                    src="/assets/Icon.png"
                                 />
                                     <Text
                                         ml="6px"
@@ -147,9 +147,10 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                         fontWeight="400"
                                     >
                                         {contestmaster.entryFee != 0
-                                            ? "Entry Fee - $" +
-                                              contestmaster.entryFee
+                                            ? "Entry Fee - " +
+                                              contestmaster.entryFee + " CHIPS"
                                             : "Free"}
+                                            
                                     </Text>
                                     
                                 </Flex>

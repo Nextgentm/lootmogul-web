@@ -47,10 +47,11 @@ function CustomTable({ columns, data }) {
                 mt="5%"
                 width="100%"
                 tableLayout="fixed"
-                bg="#1C1C1C"
+                bg="rgb(72 26 127 / 10%)"
                 variant="striped"
                 color="#C7C7C7"
                 colorScheme="stripedTable"
+                
                 {...getTableProps()}
             >
                 <Thead key="thead_1">
@@ -63,6 +64,8 @@ function CustomTable({ columns, data }) {
                                 px={[4, 6]}
                                 textAlign="center"
                                 color="white"
+                                bg="transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box"
+                                boxShadow="inset 0px 3px 18px #481A7F73"
                                 key={index}
                                 {...column.getHeaderProps()}
                             >

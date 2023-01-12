@@ -19,7 +19,7 @@ const WalletPage = ({ totalAmount }) => {
     const depositData = {
         title: "Deposit",
         desc: "Total amount you have available to play with",
-        inputColor: "#51E36E",
+        inputColor: "#432864",
         icon: true,
         iconName: "add",
         btnText: "Deposit",
@@ -30,7 +30,7 @@ const WalletPage = ({ totalAmount }) => {
     const withdrawData = {
         title: "Winnings",
         desc: "Total amount you are able to withdraw",
-        inputColor: "#43C8FF",
+        inputColor: "#432864",
         icon: true,
         iconName: "sub",
         btnText: "Withdraw",
@@ -41,7 +41,7 @@ const WalletPage = ({ totalAmount }) => {
     const bonusData = {
         title: "Bonus",
         desc: "Total amount got as a bonus/reward",
-        inputColor: "#3A3A3A",
+        inputColor: "#432864",
         icon: false,
         btnText: "Learn more",
         showMore: false,
@@ -57,22 +57,31 @@ const WalletPage = ({ totalAmount }) => {
     };
 
     return (
-        <Box m={["10px", "60px"]} bg="black" width={["auto", "auto"]}>
+        <Box p={["10px", "20px"]} m={["10px", "60px"]} bg="transparent linear-gradient(90deg, #070623 0%, #1F052C 100%) 0% 0% no-repeat padding-box" width={["auto", "auto"]}>
             <Flex justifyContent={"flex-start"} direction={["column", "row"]}>
                 <Flex width={["100%"]} justifyContent={"flex-start"}>
-                    <WalletIcon mt="2%" boxSize={"40px"} color="primary" />
+                    
                     <Flex mt="auto" mb={"auto"}>
-                        <Heading ml="15px" color="white">
+                        <Heading ml="15px" mr="15px" color="white" fontSize={["36px","36px","62px"]}>
                             WALLET BALANCE
                         </Heading>
-                        <Heading ml="10px" color="primary">
-                            ${totalAmount}
+                        <Image
+                            ml="20px"
+                            mt="5px"
+                            width="35px"
+                            height="35px"
+                            objectFit="contain"
+                            src="/assets/Icon.png"
+                            alt="bonus"
+                        />
+                        <Heading ml="10px" color="primary" fontSize={["36px","36px","62px"]}>
+                            {totalAmount}
                         </Heading>
                     </Flex>
                 </Flex>
             </Flex>
-            <Text fontSize={["12px", "16px"]} mt="10px" variant="hint">
-                Balance : Deposit + Winnings + Bonus = ${totalAmount}
+            <Text fontSize={["12px", "17px"]} ml="15px" mt="10px" variant="hint" color="white">
+                Balance : Deposit + Winnings + Bonus = {totalAmount} Chips
             </Text>
             <Flex
                 mt="30px"
@@ -105,20 +114,21 @@ const WalletPage = ({ totalAmount }) => {
             <Flex
                 mt="40px!important"
                 m="auto"
-                bg="linear-gradient(180deg, #383838 0%, rgba(57, 57, 57, 0) 100%)"
+                bg="transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box"
                 justifyContent="center"
                 pt="15px"
                 pb="15px"
                 boxShadow="0px 50px 50px -30px rgba(187, 187, 187, 0.1)"
                 borderRadius="20px"
                 border="1px solid #3C3C3C"
+                
             >
                 <Image
                     mr="10px"
                     width="35px"
                     height="35px"
                     objectFit="contain"
-                    src="/assets/bonus1.png"
+                    src="/assets/Doller.png"
                     alt="bonus"
                 />
                 <Flex
@@ -128,16 +138,16 @@ const WalletPage = ({ totalAmount }) => {
                 >
                     <Text
                         variant="hint"
-                        fontSize={["10px", "14px"]}
+                        fontSize={["10px", "16px"]}
                         lineHeight={["13px", "35px"]}
                         ml={["0%", "2%"]}
+                        color="#fff"
                     >
-                        Maximum usable Bonus per match is 10% of the contest
-                        entry fee
+                        Maximum usable Bonus per match is 10% of the contest entry fee
                     </Text>
                     <Text
                         variant="hint"
-                        fontSize={["10px", "14px"]}
+                        fontSize={["10px", "16px"]}
                         lineHeight={["13px", "35px"]}
                         ml={["0%", "2%"]}
                         cursor="pointer"
