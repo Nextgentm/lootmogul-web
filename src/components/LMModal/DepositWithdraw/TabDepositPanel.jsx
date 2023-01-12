@@ -12,7 +12,7 @@ import AppContext from "../../../utils/AppContext";
 import { AddIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import strapi from "../../../utils/strapi";
-import { useBreakpointValue } from "@chakra-ui/react";
+import { useBreakpointValue, Heading,Radio, RadioGroup,Stack } from "@chakra-ui/react";
 
 import { useRouter } from "next/router";
 
@@ -24,6 +24,7 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     const ref = useRef();
     const [amount, setAmount] = useState(0);
+   
     const [accepted, setAccepted] = useState(false);
     const currentSize = useBreakpointValue({
         base: "base",
@@ -32,11 +33,55 @@ const TabDepositPanel = ({ isDeposit }) => {
     });
     const [couponCode, setCouponCode] = useState("");
     const [couponList, setCouponList] = useState([]);
-
+    
     const handleIncrease = (addedAmount) => {
-        const newAmount = amount + addedAmount;
+        /*const newAmount = amount + addedAmount;*/
+        let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
+        setNumberOfAmount((addedAmount/numberOfAmount).toFixed(2));
+        setAmount(addedAmount);
+    };
+    
+    const getInitialState = () => {
+        const value = "USD";
+        return value;
+    };
+    
+    const [currency, setCurrency] = useState(getInitialState);
+    const [minimumDeposit, setMinimumDeposit] = useState(5);
+    const [numberOfChips, setNumberOfChips] = useState(35);
+    const [numberOfAmount, setNumberOfAmount] = useState(0);
+    const [currencyoptions, setCurrencyOptions] = useState([]);
 
-        setAmount(newAmount);
+    useEffect(() => {
+        async function fetchData() {
+          // Fetch data
+          const { data } = await axios.get(`${
+            process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+          const results = []
+          // Store results in the results array
+          data.data.forEach((value) => {
+            results.push({
+                currency: value.currency,
+                minimumDeposit: value.minimumDeposit,
+                numberOfChips: value.numberOfChips,
+            });
+          });
+          setCurrencyOptions(results);
+        }
+        // Trigger the fetch
+        fetchData();
+      }, []);
+
+    const handleChange = (e) => {
+        setCurrency(e.target.value);
+        setMinimumDeposit(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
+        setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
+        setTotalAmount(amount);
+    };
+    const setTotalAmount = (addedAmount) =>{
+        let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
+        setNumberOfAmount((addedAmount/numberOfAmount).toFixed(2));
+        setAmount(addedAmount);
     };
 
     useEffect(() => {
@@ -72,7 +117,9 @@ const TabDepositPanel = ({ isDeposit }) => {
                             asPath,
                         type: "DEPOSIT",
                         value: amount,
-                        couponCode: couponCode ? couponCode : ""
+                        couponCode: couponCode ? couponCode : "",
+                        currency:currency,
+                        calculated_chips:numberOfAmount
                     },
                     {
                         headers: {
@@ -99,35 +146,43 @@ const TabDepositPanel = ({ isDeposit }) => {
     };
 
     return (
+        
         <Flex h="100%" w="100%" bg="#1d052b" direction={"column"} pr="30px">
+            <Heading as='h5' size={['10px', '10px','sm']} variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
+            SELECT PAYMENT METHOD
+            </Heading>
+            <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="3%" borderRadius="10px">
+            <RadioGroup defaultValue='1'>
+            <Stack spacing={20} direction='row' color='white' bg="#1D052B" p="10px 25px" borderRadius="10px">
+                <Radio size='lg' colorScheme='pink' defaultChecked="true" value='1'>
+                    FIAT CURRENCY
+                </Radio>
+                <Radio size='lg' colorScheme='pink' value='2'>
+                    CRYPTO CURRENCY
+                </Radio>
+            </Stack>
+            </RadioGroup>
+            </Flex>
+            <Heading as='h5' size='sm' variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
+            SELECT CURRENCY
+            </Heading>
             <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="3%" borderRadius="10px">
                 <Select
                     w={currentSize === "base" ? "40%" : "40%"}
                     h="42px"
                     color="white"
                     backgroundColor="#1d052b"
+                    value={currency} onChange={handleChange}
                 >
-                    <option default>USD</option>
+                    {currencyoptions.map((option) => {
+                    return (
+                        <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency}>
+                        {option.currency}
+                        </option>
+                    );
+                    })}
                 </Select>
 
-                <Input
-                    w={currentSize === "base" ? "40%" : "40%"}
-                    h="42px"
-                    color="white"
-                    defaultValue={amount}
-                    value={amount}
-                    onChange={(e) => {
-                        setAmount(Number(e.target.value));
-                    }}
-                    placeholder="Amount"
-                    fontSize={["12px", "18px"]}
-                    fontWeight="400"
-                    fontFamily="Sora"
-                    backgroundColor="#1d052b"
-                ></Input>
-            </Flex>
-            
-            <Flex>
                 <Text
                  display="inline-flex"
                  color="white"
@@ -135,29 +190,79 @@ const TabDepositPanel = ({ isDeposit }) => {
                  fontSize={["12px","12px", "18px"]}
                  alignContent={"center"}
                  m="auto"
-                 mt="15px"
-            >
-                    USD 100.00 = 1000.00
+                >
+                    {minimumDeposit} {currency} = {numberOfChips} CHIPS
                 </Text>
+                
             </Flex>
-            {isDeposit && (
-                <Flex w="100%" mt="3%" justifyContent={"space-between"}>
-                    <AddInputBox value={5} onClick={() => handleIncrease(5)} />
-                    <AddInputBox
-                        value={10}
-                        onClick={() => handleIncrease(10)}
-                    />
-                    <AddInputBox
-                        value={50}
-                        onClick={() => handleIncrease(50)}
-                    />
-                    <AddInputBox
-                        value={100}
-                        onClick={() => handleIncrease(100)}
-                    />
+            <Heading as='h5' size='sm' variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
+            SELECT NUMBER OF CHIPS 
+            <Text pl="4px" fontSize='xs'  color="white" fontFamily={"Sora"} fontWeight="400" display="inline-block">
+                 (Min Amount: {numberOfChips} CHIPS)
+            </Text>
+            </Heading>
+            
+            <Flex direction={"column"} w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="3%" borderRadius="10px">
+                <Flex>
+                    <Text
+                    display="inline-flex"
+                    color="white"
+                    fontFamily={"Sora"}
+                    fontSize={["12px","12px", "18px"]}
+                    alignContent={"center"}
+                    m="auto"
+                    >
+                        CHIP
+                    </Text>
+                    <Input
+                        w={currentSize === "base" ? "40%" : "40%"}
+                        h="42px"
+                        color="white"
+                        defaultValue={amount}
+                        value={amount}
+                        onChange={(e) => {
+                            setTotalAmount(Number(e.target.value));
+                        }}
+                        placeholder="Amount"
+                        fontSize={["12px", "18px"]}
+                        fontWeight="400"
+                        fontFamily="Sora"
+                        backgroundColor="#1d052b"
+                    ></Input>
+                    <Text
+                        display="inline-flex"
+                        color="white"
+                        fontFamily={"Sora"}
+                        fontSize={["12px","12px", "18px"]}
+                        alignContent={"center"}
+                        m="auto"
+                    >
+                        = {currency} {numberOfAmount}
+                    </Text>
                 </Flex>
-            )}
-
+                {isDeposit && (
+                    <Flex>
+                        <AddInputBox value={10} onClick={() => handleIncrease(10)} />
+                        <AddInputBox
+                            value={50}
+                            onClick={() => handleIncrease(50)}
+                        />
+                        <AddInputBox
+                            value={100}
+                            onClick={() => handleIncrease(100)}
+                        />
+                        <AddInputBox
+                            value={200}
+                            onClick={() => handleIncrease(200)}
+                        />
+                    </Flex>
+                )}
+            </Flex>
+            <Flex>
+            <Text fontSize={["12px","12px", "lg"]} pt="5px" pl="4px" textAlign="center"  color="white" fontFamily={"Sora"} fontWeight="300" display="inline-block">
+            Note - All the amount which you deposit will auto-convert into chips
+            </Text>
+            </Flex>
             <Flex mt="3%" ml={["10px","10px", "15%"]} w="100%">
                 <Checkbox
                     w="100%"
@@ -206,37 +311,42 @@ export default TabDepositPanel;
 const AddInputBox = ({ value, onClick }) => {
     return (
         <Button
-            w={["20%", "23%"]}
-            h={["10%","20px", "50px"]}
-            p={["20px 30px","20px 30px","auto"]}
+            w={["25%", "23%"]}
+            h={["8%","15px", "50px"]}
+            p={["0px 17px","20px 30px","auto"]}
+            m="2px"
+            mt="20px"
             onClick={onClick}
             style={{
                 border: "1px solid #505050",
-                background: "#481A7F",
+                background: "transparent linear-gradient(90deg, #E90A63 0%, #481A7F 100%) 0% 0% no-repeat padding-box",
                 display: "flex",
                 justifyContent: "space-around",
                 fontFamily: "Sora",
-                boxShadow:"none",
+                boxShadow:"0px 0px 0px 0px #481A7F73, 0px 0px 5px #FF0080CF",
             }}
         >
             <Box
                 border="none"
-                ml="3px"
+                ml="1px"
                 color="white"
-                fontSize={["12px","12px", "20px"]}
+                fontSize={["8px","8px", "16px"]}
             >
                 {value}
             </Box>
             
             <Box pointerEvents="none">
-                <AddIcon
-                    color="#481A7F"
-                    boxSize={["10px","15px", "25px"]}
-                    backgroundColor="#fff"
-                    borderRadius="50%"
-                    p={"5px"}
-                    ml={"5px"}
-                />
+                <Text
+                        display="inline-flex"
+                        color="white"
+                        fontFamily={"Sora"}
+                        fontSize={["8px","8px", "16px"]}
+                        alignContent={"center"}
+                        m="auto"
+                        ml="0px"
+                    >
+                        CHIPS
+                </Text>
             </Box>
         </Button>
     );
