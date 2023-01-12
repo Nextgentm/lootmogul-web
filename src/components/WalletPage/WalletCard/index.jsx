@@ -5,7 +5,8 @@ import {
     InputGroup,
     useNumberInput,
     InputRightElement,
-    Tooltip
+    Tooltip,
+    Image
 } from "@chakra-ui/react";
 import { InfoIcon } from "../../Icons";
 import { AddIcon, MinusIcon } from "@chakra-ui/icons";
@@ -29,24 +30,22 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
     const input = getInputProps({ isReadOnly: false });
     return (
         <Box
-            width={["100%", "31%"]}
+            width={["100%","100%", "31%"]}
             boxShadow="0px 50px 50px -30px rgba(187, 187, 187, 0.1)"
-            bg="linear-gradient(180deg, #383838 0%, rgba(57, 57, 57, 0) 100%)"
+            bg="transparent linear-gradient(0deg, #481A7F00 0%, #481A7F 100%) 0% 0% no-repeat padding-box"
             minHeight="240px"
-            borderRadius="20px"
             pos="relative"
         >
             <Box
                 key="box_1"
-                bgImage="url('/assets/cardbg.png')"
                 bgPosition="center"
                 bgRepeat="no-repeat"
                 w="100%"
-                p="20px"
-                pt="15px"
+                p="25px"
+                
             >
                 <>
-                    <Text variant="walletCardHeader">{displayData.title}</Text>
+                    <Text variant="hint" color="white" fontSize={["22px","22px","31px"]}>{displayData.title}</Text>
                     {displayData.tooltip && (
                         <Tooltip
                             placement="top-end"
@@ -55,8 +54,10 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
                             borderRadius="10px"
                             color="white"
                             fontSize="sm"
+                            p="10px"
                         >
                             <Text>
+                            
                                 <InfoIcon
                                     color="white"
                                     float="right"
@@ -68,9 +69,10 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
                     )}
                     <Text
                         variant="hint"
-                        fontSize="14px"
-                        lineHeight="16px"
+                        fontSize="15px"
+                        lineHeight="24px"
                         mt="15px"
+                        color="white"
                     >
                         {displayData.desc}
                     </Text>
@@ -78,7 +80,7 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
                         <Box
                             h="40px"
                             bg={displayData.inputColor}
-                            borderRadius="30px"
+                            borderRadius="21px"
                             width="100%"
                             lineHeight="40px"
                             px={3}
@@ -124,15 +126,17 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
                     {displayData?.showMore && (
                         <Button
                             mt="27px"
+                            mb="35px"
                             onClick={onClick}
                             variant={
                                 displayData.iconName === "add"
                                     ? "solid"
-                                    : "outline"
+                                    : "solid"
                             }
-                            height="19%"
+                            height="38px"
                             width="35%"
                             float="right"
+                            fontSize="16px"
                         >
                             {displayData.btnText}
                         </Button>

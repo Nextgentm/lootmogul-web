@@ -44,6 +44,7 @@ const Wallet = () => {
           totalAmount={totalAmount}
           user={user}
           jwt={jwt}
+          bg="transparent linear-gradient(90deg, #070623 0%, #1F052C 100%) 0% 0% no-repeat padding-box"
         ></WalletPage>
       )}
     </>
