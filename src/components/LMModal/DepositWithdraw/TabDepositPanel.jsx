@@ -166,7 +166,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                         FIAT CURRENCY
                     </Text>
                 </Radio>
-                <Radio size='md' colorScheme='pink' value='2'>
+                <Radio size='md' colorScheme='pink' value='2' isDisabled>
                     <Text
                     display="inline-flex"
                     color="white"
