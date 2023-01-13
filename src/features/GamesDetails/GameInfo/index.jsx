@@ -3,6 +3,9 @@ import { Box, Flex, Text, Image } from "@chakra-ui/react";
 import GameInfoActions from "./GameInfoActions";
 import GameInfoGrid from "./GameInfoGrid";
 
+
+
+
 const GameInfo = ({ gameData, isTabletOrDesktop }) => {
   const renderBanner = () => (
     <Flex
@@ -66,7 +69,8 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
       </Flex>
     </Flex>
   );
-
+  const rewardDescription = gameData?.reward?.data?.description;
+  const modifiedDescription = rewardDescription.replace("$", "");
   return (
     <>
       <Flex
@@ -115,7 +119,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                 ml="10px"
                 color="#d63065"
               >
-                {gameData?.reward?.data?.description} CHIPS
+                {modifiedDescription} CHIPS
               </Text>
             </Flex>
           ) : (

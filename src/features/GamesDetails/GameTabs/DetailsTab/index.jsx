@@ -57,7 +57,7 @@ const DetailsTab = ({ gameData }) => {
                                             <Tr key={"reward--" + index}>
                                                 <Td> {rr.name} Players</Td>
                                                 <Td textAlign="right">
-                                                    ${rr.amount}
+                                                    {rr.amount} CHIPS
                                                 </Td>
                                             </Tr>
                                         )
