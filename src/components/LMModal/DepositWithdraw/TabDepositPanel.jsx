@@ -116,7 +116,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                             process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL +
                             asPath,
                         type: "DEPOSIT",
-                        value: numberOfAmount,
+                        value: +numberOfAmount,
                         couponCode: couponCode ? couponCode : "",
                         currency:currency,
                         calculated_chips:amount
