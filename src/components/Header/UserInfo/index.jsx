@@ -146,20 +146,26 @@ const UserInfo = ({ user, isMobileDevice }) => {
                             >
                                 <Image
                                     alt="wallet"
-                                    src="/assets/wallet.svg"
+                                    src="/assets/Wallet_new.png"
                                     width={30}
                                     height={30}
                                 />
+                                <Image
+                                    alt="wallet"
+                                    src="/assets/Icon.png"
+                                    width={25}
+                                    height={25}
+                                    ml="20px"
+                                />
                                 <Text
                                     fontFamily="Sora"
-                                    ml="8px"
+                                    ml="5px"
                                     color="white"
                                     fontSize="16px"
                                 >
-                                    {`$${totalAmount}`}
+                                    {`${totalAmount}`}
                                 </Text>
 
-                                <ChevronDownIcon ml="4px" color="white" />
                             </Flex>
                         </>
                     )}
@@ -182,7 +188,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
                         alt="profile"
                         width={30}
                         height={30}
-                        src="/assets/profile.png"
+                        src="/assets/Users.png"
                     />
 
                     {isTabletOrDesktop && <ArrowIcon ml="4px" color="white" />}
