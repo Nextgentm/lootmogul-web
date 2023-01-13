@@ -70,7 +70,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
     </Flex>
   );
   const rewardDescription = gameData?.reward?.data?.description;
-  const modifiedDescription = rewardDescription.replace("$", "");
+  const modifiedDescription = rewardDescription ?  rewardDescription.replace("$", "") : '';
   return (
     <>
       <Flex
