@@ -5,6 +5,7 @@ import {
     InputGroup,
     useNumberInput,
     InputRightElement,
+    InputLeftElement,
     Tooltip,
     Image
 } from "@chakra-ui/react";
@@ -62,7 +63,7 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
                                     color="white"
                                     float="right"
                                     mt="-20px!important"
-                                    boxSize={"24px"}
+                                    boxSize={"29px"}
                                 />
                             </Text>
                         </Tooltip>
@@ -85,42 +86,19 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
                             lineHeight="40px"
                             px={3}
                         >
-                            <Text color="white">{amount || 0}</Text>
+                            <InputLeftElement
+                            pointerEvents='none'
+                            children={
+                                <Image
+                                    alt="Calender"
+                                    src="/assets/Icon.png"
+                                    width={19}
+                                    height={19}
+                                />
+                            }
+                            />
+                            <Text color="white" pl="25px">{amount || 0}</Text>
                         </Box>
-
-                        {displayData.icon && (
-                            <InputRightElement
-                                w={8}
-                                h={8}
-                                right="4px"
-                                top="4px"
-                                bg="white"
-                                borderRadius="full"
-                            >
-                                {displayData.iconName === "add" && (
-                                    <AddIcon
-                                        bg="white"
-                                        {...inc}
-                                        borderRadius="full"
-                                        color={displayData.inputColor}
-                                        w={5}
-                                        h={5}
-                                        onClick={() => {}}
-                                    />
-                                )}
-                                {displayData.iconName === "sub" && (
-                                    <MinusIcon
-                                        bg="white"
-                                        {...dec}
-                                        borderRadius="full"
-                                        color={displayData.inputColor}
-                                        w={5}
-                                        h={5}
-                                        onClick={() => {}}
-                                    />
-                                )}
-                            </InputRightElement>
-                        )}
                     </InputGroup>
 
                     {displayData?.showMore && (
