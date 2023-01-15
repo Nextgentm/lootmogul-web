@@ -131,31 +131,29 @@ const UserInfo = ({ user, isMobileDevice }) => {
                 <>
                     {user?.wallets?.length > 0 && (
                         <>
-                            <Image
-                                alt="vl"
-                                width={1}
-                                height={30}
-                                src="/assets/vertical_line.png"
-                            />
                             <Flex
                                 zIndex={99}
-                                ml="20px"
-                                mr="20px"
+                                ml="5px"
+                                mr="5px"
                                 align="center"
                                 onClick={() => router.push("/wallet")}
+                                border="1px solid #481A7F;"
+                                p="8px 10px"
+                                borderRadius="5px"
+                                gap={1}
                             >
                                 <Image
                                     alt="wallet"
                                     src="/assets/Wallet_new.png"
                                     width={30}
                                     height={30}
+                                    
                                 />
                                 <Image
                                     alt="wallet"
                                     src="/assets/Icon.png"
                                     width={25}
                                     height={25}
-                                    ml="20px"
                                 />
                                 <Text
                                     fontFamily="Sora"
@@ -169,12 +167,6 @@ const UserInfo = ({ user, isMobileDevice }) => {
                             </Flex>
                         </>
                     )}
-                    <Image
-                        alt="vl"
-                        width={1}
-                        height={30}
-                        src="/assets/vertical_line.png"
-                    />
                 </>
             )}
 

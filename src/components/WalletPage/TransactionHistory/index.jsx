@@ -9,7 +9,8 @@ import {
     Input,
     InputLeftElement,
     Select,
-    Text
+    Text,
+    Image
 } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { SearchIcon, CalendarIcon } from "@chakra-ui/icons";
@@ -136,7 +137,7 @@ const TransactionHistory = () => {
                     <SearchBox
                         style={{
                             border: "1px solid #FFFFFF",
-                            borderRadius: "30px",
+                            borderRadius: "0px",
                             outline: "none !important",
                             boxShadow: "none !important"
                         }}
@@ -149,11 +150,19 @@ const TransactionHistory = () => {
                     <SelectBox
                         style={{
                             border: "1px solid #FFFFFF",
-                            borderRadius: "30px",
+                            borderRadius: "0px",
                             alignItems: "center",
                             width: "100%"
                         }}
-                        icon={<StatusIcon />}
+                        icon={
+                            <Image
+                                alt="all"
+                                src="/assets/all.png"
+                                width={19}
+                                height={19}
+                                mr="10px"
+                            />
+                        }
                         title="Status"
                         options={statusOptions}
                         onChange={handleChangeStatus}
@@ -162,8 +171,16 @@ const TransactionHistory = () => {
 
                 <GridItem w="100%">
                     <CustomDatePicker
-                        icon={<CalendarIcon color="white" />}
-                        title={"Date Range From"}
+                        icon={
+                            <Image
+                                alt="Calender"
+                                src="/assets/Calender.png"
+                                width={19}
+                                height={19}
+                                mr="5px"
+                            />
+                            }
+                        title={"Date Range From "}
                         value={startingDate}
                         onChange={(e) => {
                             setStartingDate(new Date(e));
@@ -175,8 +192,16 @@ const TransactionHistory = () => {
                 <GridItem w="100%">
                     <CustomDatePicker
                         startingDate={startingDate}
-                        icon={<CalendarIcon color="white" />}
-                        title={"Date Range To"}
+                        icon={
+                                <Image
+                                alt="Calender"
+                                src="/assets/Calender.png"
+                                width={19}
+                                height={19}
+                                mr="5px"
+                            />
+                        }
+                        title={"Date Range To "}
                         value={endingDate}
                         onChange={(e) => {
                             setEndingDate(new Date(e));
@@ -407,7 +432,12 @@ const SearchBox = ({ style, value, onChange }) => {
     return (
         <InputGroup style={style}>
             <InputLeftElement border="none" pointerEvents="none">
-                <SearchIcon color="white" />
+                <Image
+                    alt="Search"
+                    src="/assets/search_icon.png"
+                    width={19}
+                    height={19}
+                />
             </InputLeftElement>
 
             <Input
@@ -460,7 +490,7 @@ const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
         className="example-custom-input"
         onClick={onClick}
         ref={ref}
-        style={{ color: "#43C8FF", flex: 1, fontWeight: "bold" }}
+        style={{ color: "#E90A63", flex: 1, fontWeight: "bold" }}
     >
         {value}
     </button>
@@ -473,13 +503,13 @@ const CustomDatePicker = ({ icon, title, startingDate, value, onChange }) => {
             style={{
                 border: "1px solid white",
                 padding: "8px 16px",
-                borderRadius: "50px",
+                borderRadius: "0px",
                 alignItems: "center"
             }}
         >
             <Flex justifyContent="center" alignItems="center">
                 <Box>{icon}</Box>
-                <Text color="white" ml={2} width="140px">
+                <Text color="white" ml={2} width="150px">
                     {title}
                 </Text>
             </Flex>
