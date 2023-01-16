@@ -15,7 +15,6 @@ import strapi from "../../../utils/strapi";
 import { useBreakpointValue, Heading,Radio, RadioGroup,Stack } from "@chakra-ui/react";
 
 import { useRouter } from "next/router";
-
 const stripeJs = async () => await import("@stripe/stripe-js/pure");
 const TabDepositPanel = ({ isDeposit }) => {
     const { asPath } = useRouter();
@@ -54,19 +53,40 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     useEffect(() => {
         async function fetchData() {
-          // Fetch data
-          const { data } = await axios.get(`${
-            process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
-          const results = []
-          // Store results in the results array
-          data.data.forEach((value) => {
-            results.push({
-                currency: value.currency,
-                minimumDeposit: value.minimumDeposit,
-                numberOfChips: value.numberOfChips,
+            // Fetch data
+            const { data } = await axios.get(`${
+              process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const results = []
+            // Store results in the results array
+
+           var  defaultCurrencyValue;
+            data.data.forEach((value) => {
+                if(value.currency === "USD"){
+                    defaultCurrencyValue = {
+                        currency: value.currency,
+                        minimumDeposit: value.minimumDeposit,
+                        numberOfChips: value.numberOfChips,
+                    }
+                }
+              results.push({
+                  currency: value.currency,
+                  minimumDeposit: value.minimumDeposit,
+                  numberOfChips: value.numberOfChips,
+              });
             });
-          });
-          setCurrencyOptions(results);
+            await fetch('./assets/currency.json')
+            .then(response => response.json())
+            .then(additionalCurrencies => {     
+            additionalCurrencies.forEach((jsonValue) => {
+                results.push({
+                    currency: jsonValue,
+                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
+                    numberOfChips: defaultCurrencyValue.numberOfChips,
+                });
+            })
+            })
+
+            setCurrencyOptions(results);
         }
         // Trigger the fetch
         fetchData();
@@ -192,13 +212,16 @@ const TabDepositPanel = ({ isDeposit }) => {
                     backgroundColor="#1d052b"
                     value={currency} onChange={handleChange}
                 >
-                    {currencyoptions.map((option) => {
-                    return (
-                        <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency}>
-                        {option.currency}
-                        </option>
-                    );
-                    })}
+                      {currencyoptions.map((option) => {
+                        
+                        return (
+                            <option  
+                            minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency}>
+                            {option.currency }
+                            </option>
+                        );
+                        })}
+    
                 </Select>
 
                 <Text
@@ -371,3 +394,4 @@ const AddInputBox = ({ value, onClick }) => {
         </Button>
     );
 };
+
