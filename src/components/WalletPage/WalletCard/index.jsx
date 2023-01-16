@@ -70,7 +70,7 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
                     )}
                     <Text
                         variant="hint"
-                        fontSize="15px"
+                        fontSize="14px"
                         lineHeight="24px"
                         mt="15px"
                         color="white"

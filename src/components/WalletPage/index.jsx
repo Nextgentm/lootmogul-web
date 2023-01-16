@@ -36,7 +36,7 @@ const WalletPage = ({ totalAmount }) => {
         btnText: "Withdraw",
         showMore: true,
         tooltip:
-            "Cash available to withdraw subjected to min. balance eligibility. You may also re-use it to play more games."
+            "Chips available to withdraw subjected to min. balance eligibility. You may also re-use it to play more games."
     };
     const bonusData = {
         title: "Bonus",
@@ -63,7 +63,7 @@ const WalletPage = ({ totalAmount }) => {
                     
                     <Flex mt="auto" mb={"auto"}>
                         <Heading ml="15px" mr="15px" color="white" fontSize={["36px","36px","62px"]}>
-                            WALLET BALANCE
+                            WALLET BALANCE IN CHIPS
                         </Heading>
                         <Image
                             ml="20px"
@@ -133,22 +133,22 @@ const WalletPage = ({ totalAmount }) => {
                 />
                 <Flex
                     justify="flex-start"
-                    width={["75%", "75%", "75%", "55%"]}
+                    width={["75%", "75%", "75%", "60%"]}
                     direction={["column", "column", "column", "row"]}
                 >
                     <Text
                         variant="hint"
-                        fontSize={["10px", "16px"]}
-                        lineHeight={["13px", "35px"]}
-                        ml={["0%", "2%"]}
+                        fontSize={["10px","12px", "16px"]}
+                        lineHeight={["13px","19px", "35px"]}
+                        ml={["5%","5%", "2%"]}
                         color="#fff"
                     >
                         Maximum usable Bonus per match is 10% of the contest entry fee
                     </Text>
                     <Text
                         variant="hint"
-                        fontSize={["10px", "16px"]}
-                        lineHeight={["13px", "35px"]}
+                        fontSize={["10px","12px", "16px"]}
+                        lineHeight={["13px","19px", "35px"]}
                         ml={["0%", "2%"]}
                         cursor="pointer"
                         color="primary"

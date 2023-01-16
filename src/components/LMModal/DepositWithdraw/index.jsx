@@ -46,7 +46,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                      bg="#1d052b"
                      display="flex"
                      justifyContent="center"
-                     >
+                    >
                         <Heading
                             ml="10%"
                             fontWeight="600"
@@ -130,7 +130,7 @@ const WalletBody = ({ isDeposit }) => {
             type: "crypto"
         },
         {
-            url: "/assets/images/Coinbase.png",
+            url: "/assets/images/CoinBase.png",
             name: "Coinbase wallet",
             mode: "coinbase",
             type: "crypto"
