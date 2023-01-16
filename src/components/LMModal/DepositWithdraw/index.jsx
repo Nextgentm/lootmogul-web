@@ -11,7 +11,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
     });
 
     return (
-        <Flex width="100%" h={["40px","40px", "65px"]} bg="#1d052b"  borderBottom="0">
+        <Flex width="100%" bg="#1d052b"  borderBottom="0">
             <Flex w="100%">
                 {currentSize !== "base" && (
                     <Flex width={["50%", "58%"]}>
@@ -38,13 +38,15 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
 
                 {currentSize === "base" && (
                     <Box
-                        width="35%"
-                        paddingTop={["15px","15px","10%"]}
-                        marginRight="16px"
-                        borderTopLeftRadius="8px"
-                        paddingLeft="1%"
-                        bg="#1d052b"
-                    >
+                    width="35%"
+                     paddingTop={["15px","15px","10%"]}
+                     marginRight="16px"
+                     borderTopLeftRadius="8px"
+                     paddingLeft="50%"
+                     bg="#1d052b"
+                     display="flex"
+                     justifyContent="center"
+                     >
                         <Heading
                             ml="10%"
                             fontWeight="600"
@@ -55,7 +57,8 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         </Heading>
                     </Box>
                 )}
-
+            
+                {
                 <Flex w="100%" justifyContent="flex-end" mr="3%">
                     <Flex m="auto 0px" justifyContent="flex-end">
                         
@@ -88,7 +91,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                     >
                         {isDeposit ? totalAmount : winAmount}
                     </Heading>
-                </Flex>
+                </Flex> }
             </Flex>
         </Flex>
     );
@@ -115,19 +118,19 @@ const WalletBody = ({ isDeposit }) => {
     ];
     const withDrawData = [
         {
-            //url: "/assets/images/lmwallet.png",
+            url: "/assets/images/Paypal.png",
             name: "Paypal",
             mode: "paypal",
             type: "cash"
         },
         {
-            //url: "/assets/images/metamask.png",
+            url: "/assets/images/metamask.png",
             name: "Metamask",
             mode: "metamask",
             type: "crypto"
         },
         {
-            //url: "/assets/images/coinbase.png",
+            url: "/assets/images/Coinbase.png",
             name: "Coinbase wallet",
             mode: "coinbase",
             type: "crypto"
