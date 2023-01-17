@@ -126,12 +126,12 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
 
                     <Flex
                         w={"full"}
-                        align="center"
+                        align="left"
                         justify={"space-between"}
                         px="1rem"
                         mt={1}
                     >
-                            <VStack>
+                            <VStack style={{"align-items":"flex-start"}}>
                                 
 
                                 <Flex >
@@ -159,6 +159,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                         fontSize={["0.75rem", "0.9rem"]}
                                         fontWeight="200"
                                         mt={0}
+                                        pl="6px"
                                     >
                                         {nFormatter(
                                             contestmaster.roomsCount,
