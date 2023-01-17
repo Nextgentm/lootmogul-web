@@ -6,8 +6,10 @@ import {
     Text,
     Checkbox,
     Button,
+    Tooltip,
     Box
 } from "@chakra-ui/react";
+import { InfoIcon } from "../../Icons";
 import AppContext from "../../../utils/AppContext";
 import { AddIcon } from "@chakra-ui/icons";
 import axios from "axios";
@@ -171,9 +173,9 @@ const TabDepositPanel = ({ isDeposit }) => {
             <Heading as='h5' size={['10px', '10px','sm']} variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
             SELECT PAYMENT METHOD
             </Heading>
-            <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="3%" borderRadius="10px">
+            <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px" display="block">
             <RadioGroup defaultValue='1'>
-            <Stack spacing={[2,2,20]}  direction={['row','row','row']} color='white' bg="#1D052B" p={["5px 10px","5px 10px","10px 25px"]} borderRadius="10px">
+            <Box color='white' w="48%" display="inline-table" bg="#1D052B" mr="10px" p={["5px 10px","5px 10px","10px 25px"]} borderRadius="10px">
                 <Radio size='md' colorScheme='pink' defaultChecked="true" value='1' style={{fontSize:"10px"}}>
                     <Text
                     display="inline-flex"
@@ -186,25 +188,27 @@ const TabDepositPanel = ({ isDeposit }) => {
                         FIAT CURRENCY
                     </Text>
                 </Radio>
+            </Box>
+            <Box color='white' w="48%" display="inline-table" bg="#1D052B" p={["5px 10px","5px 10px","10px 25px"]} borderRadius="10px">
                 <Radio size='md' colorScheme='pink' value='2' isDisabled>
                     <Text
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["10px","10px", "18px"]}
+                    fontSize={["9px","9px", "18px"]}
                     alignContent={"center"}
                     m="auto"
                     >
                     CRYPTO CURRENCY
                     </Text>
                 </Radio>
-            </Stack>
+            </Box>
             </RadioGroup>
             </Flex>
             <Heading as='h5' size='sm' variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
             SELECT CURRENCY
             </Heading>
-            <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="3%" borderRadius="10px">
+            <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px">
                 <Select
                     w={currentSize === "base" ? "40%" : "40%"}
                     h="42px"
@@ -240,7 +244,7 @@ const TabDepositPanel = ({ isDeposit }) => {
             </Text>
             </Heading>
             
-            <Flex direction={"column"} w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="3%" borderRadius="10px">
+            <Flex direction={"column"} w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px">
                 <Flex>
                     <Text
                     display="inline-flex"
@@ -251,7 +255,26 @@ const TabDepositPanel = ({ isDeposit }) => {
                     m="auto"
                     >
                         CHIP
+                        <Tooltip
+                            placement="top-start"
+                            label="Enter number of chip, Based on total chip showing equivalent amount."
+                            bg="#383838"
+                            borderRadius="10px"
+                            color="white"
+                            fontSize="sm"
+                            p="10px"
+                        >
+                        <Text>
+                            <InfoIcon
+                                color="white"
+                                float="right"
+                                mt="-13px!important"
+                                boxSize={"20px"}
+                            />
+                        </Text>
+                    </Tooltip>
                     </Text>
+                    
                     <Input
                         w={currentSize === "base" ? "40%" : "40%"}
                         h="42px"
@@ -349,11 +372,12 @@ export default TabDepositPanel;
 const AddInputBox = ({ value, onClick }) => {
     return (
         <Button
-            w={["25%","25%", "23%"]}
+            w={["25%","25%", "21%"]}
             h={["8%","15px", "50px"]}
             p={["0px 10px","15px 30px","auto"]}
             m="2px"
             mt="20px"
+            ml="3%"
             onClick={onClick}
             style={{
                 border: "1px solid #505050",
