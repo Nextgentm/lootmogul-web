@@ -29,6 +29,11 @@ const moduleExports = {
   async redirects() {
     return [
       { 
+        "source": '/login',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/login',
+        "permanent": true,
+      },
+      { 
         "source": '/terms-and-conditions-ios',
         "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/terms-and-conditions-ios',
         "permanent": true,
