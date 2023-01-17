@@ -14,17 +14,17 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
         <Flex width="100%" bg="#1d052b"  borderBottom="0">
             <Flex w="100%">
                 {currentSize !== "base" && (
-                    <Flex width={["50%", "58%"]}>
+                    <Flex width={["100%", "100%"]}>
                         <Box
-                            width="70%"
-                            paddingTop="5%"
+                            width="100%"
+                            paddingTop="1%"
                             borderTopLeftRadius="8px"
-                            paddingBottom="6%"
+                            paddingBottom="0%"
                             paddingLeft={"2%"}
                             bg="#1d052b"
+                            textAlign="center"
                         >
                             <Heading
-                                ml="10%"
                                 mt="10px"
                                 fontWeight="600"
                                 variant="modalHeader"
@@ -38,14 +38,13 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
 
                 {currentSize === "base" && (
                     <Box
-                    width="35%"
-                     paddingTop={["15px","15px","10%"]}
-                     marginRight="16px"
-                     borderTopLeftRadius="8px"
-                     paddingLeft="50%"
-                     bg="#1d052b"
-                     display="flex"
-                     justifyContent="center"
+                        width="100%"
+                        paddingTop={["15px","15px","10%"]}
+                        marginRight="16px"
+                        borderTopLeftRadius="8px"
+                        bg="#1d052b"
+                        display="flex"
+                        justifyContent="center"
                     >
                         <Heading
                             ml="10%"
@@ -57,12 +56,23 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         </Heading>
                     </Box>
                 )}
-            
-                {
-                <Flex w="100%" justifyContent="flex-end" mr="3%">
-                    <Flex m="auto 0px" justifyContent="flex-end">
-                        
 
+            </Flex>
+        </Flex>  
+    );
+};
+
+const WalletSubHeader = ({ totalAmount, isDeposit, winAmount }) => {
+    const currentSize = useBreakpointValue({
+        base: "base",
+        sm: "sm",
+        md: "md"
+    });
+
+    return (
+        <Flex width="100%" bg="#1d052b"  borderBottom="0">
+            <Flex w="100%">
+                    <Box m="auto" justifyContent="center">                        
                         <Heading
                             fontWeight="400"
                             fontFamily="Blanch"
@@ -70,30 +80,35 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                             ml={["6px!important", "15px!important"]}
                             m="auto"
                             color="white"
+                            textAlign="center"
+                            display="inline-flex"
                         >
-                            {isDeposit ? "WALLET BALANCE IN CHIPS" : "WIN BALANCE"}
+                            {isDeposit ? "WALLET BALANCE IN CHIPS" : "WIN BALANCE IN CHIPS"}
                         </Heading>
 
                         <Image
                             alt="tag"
-                            boxSize={["25px","25px", "30px"]}
+                            boxSize={["15px","20px", "25px"]}
                             src="/assets/Icon.png"
                             ml="5px"
+                            display="inline-flex"
+                            verticalAlign="sub"
                         />
-                    </Flex>
-
-                    <Heading
+                        <Heading
                         fontSize={["24px", "28px", "38px"]}
                         mt="auto"
                         ml="10px"
                         mb="auto"
                         color="primary"
+                        display="inline-flex"
                     >
                         {isDeposit ? totalAmount : winAmount}
                     </Heading>
-                </Flex> }
-            </Flex>
-        </Flex>
+                    </Box>
+
+                    
+                </Flex>
+        </Flex>  
     );
 };
 
@@ -158,6 +173,11 @@ const DepostWithdraw = ({ totalAmount, isDeposit, winAmount }) => {
     return (
         <Box width="100%" bg="#1d052b" borderRadius="12px" border="4px solid #672099" boxShadow="0px 6px 40px #090014">
             <WalletHeader
+                isDeposit={isDeposit}
+                totalAmount={totalAmount}
+                winAmount={winAmount}
+            />
+            <WalletSubHeader 
                 isDeposit={isDeposit}
                 totalAmount={totalAmount}
                 winAmount={winAmount}
