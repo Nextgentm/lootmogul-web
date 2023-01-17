@@ -13,7 +13,7 @@ const UserAvatar = ({ userResult }) => {
                     bgSize="contain"
                     width={["180px", "250px"]}
                     height="150px"
-                    backgroundImage={"/assets/crownwin.png"}
+                    backgroundImage={"/assets/crownwin-2.png"}
                 >
                     <Box
                         pos="relative"
@@ -53,7 +53,7 @@ const UserAvatar = ({ userResult }) => {
                         fontWeight={600}
                         textTransform={"uppercase"}
                         fontSize={["14px!important", "16px!important"]}
-                        lineHeight={["18px", "20px"]}
+                        lineHeight={["18px", "22px"]}
                     >
                         {" "}
                         {userResult?.name}
@@ -66,6 +66,10 @@ const UserAvatar = ({ userResult }) => {
                     textAlign={"center"}
                     width={"120px"}
                     height="150px"
+                    bgRepeat="no-repeat"
+                    bgPosition="center"
+                    bgSize="contain"
+                    backgroundImage={"/assets/not_win_user_bg.png"}
                 >
                     <Box
                         pos="relative"

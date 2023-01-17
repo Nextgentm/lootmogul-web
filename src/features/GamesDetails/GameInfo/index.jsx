@@ -71,6 +71,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
   );
   const rewardDescription = gameData?.reward?.data?.description;
   const modifiedDescription = rewardDescription.replace("$", "");
+  const chipStr = (!isNaN(+modifiedDescription)) ? 'CHIPS': '';
   return (
     <>
       <Flex
@@ -106,6 +107,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
               >
                 Winning prize
               </Text>
+              {chipStr && (
               <Image
                   alt="tag"
                   boxSize={["25px", "35px"]}
@@ -113,13 +115,15 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                   mt="12px"
                   ml="10px"
               />
+              )}
+
               <Text
                 fontWeight={600}
                 fontSize={["17px", "17px", "17px", "25px", "36px"]}
                 ml="10px"
                 color="#d63065"
               >
-                {modifiedDescription} CHIPS
+                {modifiedDescription} {chipStr}
               </Text>
             </Flex>
           ) : (

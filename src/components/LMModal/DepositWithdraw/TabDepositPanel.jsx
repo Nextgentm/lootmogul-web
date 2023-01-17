@@ -194,7 +194,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 >
                     {currencyoptions.map((option) => {
                     return (
-                        <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency}>
+                        <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{"background":"#1d052b"}}>
                         {option.currency}
                         </option>
                     );

@@ -93,7 +93,7 @@ const DetailsTab = ({ gameData }) => {
                                                     {rr.rankFrom} - {rr.rankTo}
                                                 </Td>
                                                 <Td textAlign="right">
-                                                    {rr.name}
+                                                    {rr.name} 
                                                 </Td>
                                             </Tr>
                                         )
