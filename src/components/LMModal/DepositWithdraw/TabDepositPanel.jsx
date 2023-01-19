@@ -357,7 +357,7 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             <Button
                 w="100%"
-                mt="1%"
+                mt="3%"
                 onClick={deposit}
                 disabled={!accepted || amount <= 0}
             >
