@@ -169,7 +169,7 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     return (
         
-        <Flex h="100%" w="100%" bg="#1d052b" direction={"column"} pr={['5px','5px','30px']}>
+        <Flex h="100%" w="100%" bg="#1d052b" direction={"column"} pr={['5px','5px','30px']} fontSize="5" marginBottom={"-1%"} marginTop="-4.4%" >
             <Heading as='h5' size={['10px', '10px','sm']} variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
             SELECT PAYMENT METHOD
             </Heading>
@@ -357,7 +357,7 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             <Button
                 w="100%"
-                mt="3%"
+                mt="1%"
                 onClick={deposit}
                 disabled={!accepted || amount <= 0}
             >
