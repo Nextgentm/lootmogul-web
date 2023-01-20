@@ -163,7 +163,19 @@ const UserInfo = ({ user, isMobileDevice }) => {
                                 >
                                     {`${totalAmount}`}
                                 </Text>
-
+                                <Text
+                                    fontFamily="Sora"
+                                    ml="5px"
+                                    color="white"
+                                    fontSize="14px"
+                                    bg="transparent linear-gradient(142deg, #E90A63 0%, #481A7F 100%) 0% 0% no-repeat padding-box;"
+                                    p="0px 5px"
+                                    borderRadius="50%"
+                                    cursor="pointer"
+                                    onClick={() => setShowModal({ show: true, mode: "sub" })}
+                                >
+                                    {`+`}
+                                </Text>
                             </Flex>
                         </>
                     )}
