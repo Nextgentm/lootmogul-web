@@ -85,10 +85,9 @@ const WalletSubHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         >
                             {isDeposit ? "WALLET BALANCE IN CHIPS" : "WIN BALANCE IN CHIPS"}
                         </Heading>
-
                         <Image
                             alt="tag"
-                            boxSize={["15px","20px", "25px"]}
+                            boxSize={["15px","20px","25px"]}
                             src="/assets/Icon.png"
                             ml="5px"
                             display="inline-flex"
@@ -145,7 +144,7 @@ const WalletBody = ({ isDeposit }) => {
             type: "crypto"
         },
         {
-            url: "/assets/images/CoinBase.png",
+            url: "/assets/images/coinbase.png",
             name: "Coinbase wallet",
             mode: "coinbase",
             type: "crypto"
