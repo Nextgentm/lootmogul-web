@@ -159,7 +159,7 @@ const WalletBody = ({ isDeposit }) => {
     });
 
     return (
-        <Flex bg="#1d052b">
+        <Flex bg="#1d052b" margin-bottom={"9"} padding-right={"8"} padding-left={"12"} margin-left={"6"} font="icon">
             <LMTabs
                 data={isDeposit ? data : withDrawData}
                 isDeposit={isDeposit}
