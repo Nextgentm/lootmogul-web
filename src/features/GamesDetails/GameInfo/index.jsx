@@ -98,7 +98,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
           m={"auto"}
         >
           {gameData?.reward?.data?.description ? (
-            <Flex>
+            <Flex align={"center"}>
               <Text
                 fontWeight={300}
                 fontSize={["17px", "17px", "17px", "25px", "36px"]}
@@ -114,6 +114,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                   src="/assets/Icon.png"
                   mt="12px"
                   ml="10px"
+                  marginBottom={"4px"}  
               />
               )}
 
