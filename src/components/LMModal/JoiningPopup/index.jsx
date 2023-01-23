@@ -91,7 +91,7 @@ const JoiningPopup = ({ retry, data }) => {
                         fontSize={["16px", "16px"]}
                         textAlign={['center','center','left']}
                     >
-                        Balance : Deposit + Winnings in Chips = <Text color="#E90A63" fontWeight="600" display="inline">{data.balance}</Text>
+                        Balance : Deposit + Winnings in Chips = <Text color="#E90A63" fontWeight="600" display="inline">{(data.balance).toFixed(2)}</Text>
                     </Text>
                     {retry && retry.retry === "exceeded" && <Text
                         color="primary"

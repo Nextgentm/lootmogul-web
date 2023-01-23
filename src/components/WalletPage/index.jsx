@@ -151,7 +151,7 @@ const WalletPage = ({ totalAmount }) => {
                         cursor="pointer"
                         color="primary"
                         onClick={() => {
-                            router.push("/terms-of-services");
+                            router.push(process.env.NEXT_PUBLIC_WORDPRESS_URL+"/terms-conditions");
                         }}
                     >
                         Know more....
