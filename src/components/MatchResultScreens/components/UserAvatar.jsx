@@ -84,6 +84,7 @@ const UserAvatar = ({ userResult }) => {
                             src={userResult.profilePic}
                             pos="relative"
                             padding="5px"
+                            mt={["30%", "18%"]}
                             border="1px solid #9A9A9A"
                             zIndex="1"
                         ></Avatar>

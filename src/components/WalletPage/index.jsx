@@ -60,7 +60,6 @@ const WalletPage = ({ totalAmount }) => {
         <Box p={["10px", "20px"]} m={["10px", "60px"]} bg="transparent linear-gradient(90deg, #070623 0%, #1F052C 100%) 0% 0% no-repeat padding-box" width={["auto", "auto"]}>
             <Flex justifyContent={"flex-start"} direction={["column", "row"]}>
                 <Flex width={["100%"]} justifyContent={"flex-start"}>
-                    
                     <Flex mt="auto" mb={"auto"}>
                         <Heading ml="15px" mr="15px" color="white" fontSize={["36px","36px","62px"]}>
                             WALLET BALANCE IN CHIPS
