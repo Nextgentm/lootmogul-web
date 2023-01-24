@@ -236,7 +236,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             onClick={(e) => {
                                 e.preventDefault();
                                 window.open(
-                                    "http://lootmogul.com/terms-of-services#payment",
+                                    process.env.NEXT_PUBLIC_WORDPRESS_URL+"/terms-conditions#payment",
                                     "_blank"
                                 );
                             }}
