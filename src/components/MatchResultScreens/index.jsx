@@ -66,7 +66,7 @@ const MatchResultScreens = (props) => {
 
     const handleCancel = () => {
         setCurrentContest(null);
-        router.push("/");
+        router.push("/games");
     };
 
     async function fetchData() {
@@ -110,8 +110,8 @@ const MatchResultScreens = (props) => {
                                 pl.rank == 1 && pl.reward
                                     ? "Congratulations You Won $ " + pl.reward
                                     : pl.rank == 1
-                                    ? "Congratulations! You won!"
-                                    : "Better luck next time!",
+                                        ? "Congratulations! You won!"
+                                        : "Better luck next time!",
                             profilePic: pl.profile_pic
                         });
                         setUserResult(usr);
@@ -191,19 +191,19 @@ const MatchResultScreens = (props) => {
                             style={
                                 userResult[0]?.rank === 1
                                     ? {
-                                          background:
-                                              "#E90A63",
-                                          "-webkit-background-clip": "text",
-                                          "-webkit-text-fill-color":
-                                              "transparent"
-                                      }
+                                        background:
+                                            "#E90A63",
+                                        "-webkit-background-clip": "text",
+                                        "-webkit-text-fill-color":
+                                            "transparent"
+                                    }
                                     : {
-                                          background:
-                                              "#E90A63",
-                                          "-webkit-background-clip": "text",
-                                          "-webkit-text-fill-color":
-                                              "transparent"
-                                      }
+                                        background:
+                                            "#E90A63",
+                                        "-webkit-background-clip": "text",
+                                        "-webkit-text-fill-color":
+                                            "transparent"
+                                    }
                             }
                             fontSize={{
                                 base: "36px",
@@ -221,10 +221,10 @@ const MatchResultScreens = (props) => {
                                         otherResults?.length === 4
                                             ? "23%"
                                             : otherResults?.length === 3
-                                            ? "30%"
-                                            : otherResults?.length === 2
-                                            ? "45%"
-                                            : "100%"
+                                                ? "30%"
+                                                : otherResults?.length === 2
+                                                    ? "45%"
+                                                    : "100%"
                                     }
                                 >
                                     <UserAvatar
