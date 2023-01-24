@@ -162,7 +162,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
                                     color="white"
                                     fontSize="16px"
                                 >
-                                    {`${totalAmount}`}
+                                    {`${Math.round(totalAmount)}`}
                                 </Text>
                                 <Text
                                     fontFamily="Sora"
