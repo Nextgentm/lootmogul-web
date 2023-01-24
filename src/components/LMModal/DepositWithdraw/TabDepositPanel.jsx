@@ -181,7 +181,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["9px","9px", "18px"]}
+                    fontSize={["9px","9px", "16px"]}
                     alignContent={"center"}
                     m="auto"
                     >
@@ -195,12 +195,24 @@ const TabDepositPanel = ({ isDeposit }) => {
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["9px","9px", "18px"]}
+                    fontSize={["9px","9px", "11px"]}
                     alignContent={"center"}
                     m="auto"
                     >
                     CRYPTO CURRENCY
                     </Text>
+                    <Text
+                    display="inline-flex"
+                    color="white"
+                    fontFamily={"Sora"}
+                    fontSize={["6px","6px", "8px"]}
+                    alignContent={"center"}
+                    m="auto"
+                    ml="5px"
+                    >
+                    ( Coming soon )
+                    </Text>
+                    
                 </Radio>
             </Box>
             </RadioGroup>
