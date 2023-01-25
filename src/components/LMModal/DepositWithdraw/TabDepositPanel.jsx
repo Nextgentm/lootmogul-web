@@ -192,7 +192,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["9px","9px", "16px"]}
+                    fontSize={["9px","9px", "14px","14px","14px","16px"]}
                     alignContent={"center"}
                     m="auto"
                     >
@@ -206,7 +206,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["9px","9px", "16px"]}
+                    fontSize={["9px","9px", "14px","14px","14px","16px"]}
                     alignContent={"center"}
                     m="auto"
                     >
@@ -240,7 +240,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                  display="inline-flex"
                  color="white"
                  fontFamily={"Sora"}
-                 fontSize={["12px","12px", "18px"]}
+                 fontSize={["12px","12px",,"14px","14px","14px","18px"]}
                  alignContent={"center"}
                  m="auto"
                 >
@@ -261,7 +261,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["12px","12px", "18px"]}
+                    fontSize={["12px","12px",,"14px","14px","14px","18px"]}
                     alignContent={"center"}
                     m="auto"
                     >
@@ -296,7 +296,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                             setTotalAmount(Number(e.target.value));
                         }}
                         placeholder="Amount"
-                        fontSize={["12px", "18px"]}
+                        fontSize={["12px","12px",,"14px","14px","14px","18px"]}
                         fontWeight="400"
                         fontFamily="Sora"
                         backgroundColor="#1d052b"
@@ -305,7 +305,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px","12px", "18px"]}
+                        fontSize={["12px","12px",,"14px","14px","14px","18px"]}
                         alignContent={"center"}
                         m="auto"
                     >
@@ -331,11 +331,11 @@ const TabDepositPanel = ({ isDeposit }) => {
                 )}
             </Flex>
             <Flex>
-            <Text fontSize={["12px","12px", "lg"]} pt="5px" pl="4px" textAlign="center"  color="white" fontFamily={"Sora"} fontWeight="300" display="inline-block">
+            <Text fontSize={["12px","12px","16px","16px","16px","lg"]} pt="5px" pl="4px" textAlign="center"  color="white" fontFamily={"Sora"} fontWeight="300" display="inline-block">
             Note - All the amount which you deposit will auto-convert into chips
             </Text>
             </Flex>
-            <Flex mt="3%" ml={["10px","10px", "15%"]} w="100%">
+            <Flex mt={["1%","1%","1%","1%","1%","3%"]} ml={["10px","10px", "15%"]} w="100%">
                 <Checkbox
                     w="100%"
                     onChange={(e) => setAccepted(e.target.checked)}
@@ -344,13 +344,13 @@ const TabDepositPanel = ({ isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px","12px", "18px"]}
+                        fontSize={["12px","12px","16px","16px","16px","18px"]}
                     >
                         I hereby accept the{" "}
                         <Text
                             color="primary"
                             fontFamily={"Sora"}
-                            fontSize={["12px","12px", "18px"]}
+                            fontSize={["12px","12px","16px","16px","16px","18px"]}
                             onClick={(e) => {
                                 e.preventDefault();
                                 window.open(
@@ -368,7 +368,9 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             <Button
                 w="100%"
-                mt="3%"
+                fontSize={['16px','22px']}
+                p={['20px 30px','25px 40px']}
+                mt={["2%","1%","1%","1%","1%","3%"]}
                 onClick={deposit}
                 disabled={!accepted || amount <= 0}
             >
@@ -394,7 +396,7 @@ const AddInputBox = ({ value, onClick }) => {
     return (
         <Button
             w={["25%","25%", "21%"]}
-            h={["8%","15px", "50px"]}
+            h={["8%","15px", "45px","45px","45px","50px"]}
             p={["0px 10px","15px 30px","auto"]}
             m="2px"
             mt="20px"
@@ -414,7 +416,7 @@ const AddInputBox = ({ value, onClick }) => {
                 ml="1px"
                 color="white"
                 fontFamily={"Sora"}
-                fontSize={["8px","8px", "16px"]}
+                fontSize={["8px","8px", "14px","14px","14px","16px"]}
             >
                 {value}
             </Box>
@@ -424,7 +426,7 @@ const AddInputBox = ({ value, onClick }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["8px","8px", "16px"]}
+                        fontSize={["8px","8px", "14px","14px","14px","16px"]}
                         alignContent={"center"}
                         m="auto"
                         ml="2px"
