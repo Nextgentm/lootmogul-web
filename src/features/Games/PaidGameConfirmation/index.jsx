@@ -39,9 +39,9 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
                 deductBal: res.deductAmount,
                 balance: res.balance,
                 bonus:
-                  contestmaster?.feeWallet?.find(
+                  (contestmaster?.feeWallet?.find(
                     (w) => w.currency?.data?.type == "bonus"
-                  )?.percent / 100 || 0,
+                  )?.percent * contestmaster?.entryFee) / 100 || 0,
               },
             });
           } else if (!res.canPlay) {
