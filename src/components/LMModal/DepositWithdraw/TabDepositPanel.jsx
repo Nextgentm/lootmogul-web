@@ -15,7 +15,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import strapi from "../../../utils/strapi";
 import { useBreakpointValue, Heading,Radio, RadioGroup,Stack } from "@chakra-ui/react";
-
+import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import { useRouter } from "next/router";
 const stripeJs = async () => await import("@stripe/stripe-js/pure");
 const TabDepositPanel = ({ isDeposit }) => {
@@ -27,6 +27,7 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [amount, setAmount] = useState(0);
    
     const [accepted, setAccepted] = useState(false);
+    const [alert, setAlertShow] = useState({ iOpen: false, msg: "" });
     const currentSize = useBreakpointValue({
         base: "base",
         sm: "sm",
@@ -98,7 +99,10 @@ const TabDepositPanel = ({ isDeposit }) => {
         setCurrency(e.target.value);
         setMinimumDeposit(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
         setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
-        setTotalAmount(amount);
+        //setTotalAmount(amount);
+        let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
+        setNumberOfAmount((amount/numberOfAmount).toFixed(2));
+        
     };
     const setTotalAmount = (addedAmount) =>{
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
@@ -123,48 +127,55 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
     }, []);
     const deposit = async () => {
-        try {
-            const user = await strapi.fetchUser();
-            const { loadStripe } = await stripeJs();
-
-            if (user) {
-                const { id } = user;
-                const resp = await axios.post(
-                    `${
-                        process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
-                    {
-                        user_id: id,
-                        redirect_url:
-                            process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL +
-                            asPath,
-                        type: "DEPOSIT",
-                        value: +numberOfAmount,
-                        couponCode: couponCode ? couponCode : "",
-                        currency:currency,
-                        calculated_chips:amount
-                    },
-                    {
-                        headers: {
-                            Authorization: `Bearer ${strapi.getToken()}`
-                        }
-                    }
-                );
-
-                const {
-                    data: { stripe_session_id }
-                } = resp.data;
-
-                const stripe = await loadStripe(
-                    process.env.NEXT_PUBLIC_STRIPE_API_KEY
-                );
-
-                stripe.redirectToCheckout({
-                    sessionId: stripe_session_id
-                });
-            }
-        } catch (error) {
-            
+        if (amount <= numberOfChips){
+            console.log('zero');
+            setAlertShow({ isOpen: true, msg: "Enter Deposit more than "+numberOfChips+ " Chips" });
         }
+        else{
+            try {
+                const user = await strapi.fetchUser();
+                const { loadStripe } = await stripeJs();
+    
+                if (user) {
+                    const { id } = user;
+                    const resp = await axios.post(
+                        `${
+                            process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
+                        {
+                            user_id: id,
+                            redirect_url:
+                                process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                asPath,
+                            type: "DEPOSIT",
+                            value: +numberOfAmount,
+                            couponCode: couponCode ? couponCode : "",
+                            currency:currency,
+                            calculated_chips:amount
+                        },
+                        {
+                            headers: {
+                                Authorization: `Bearer ${strapi.getToken()}`
+                            }
+                        }
+                    );
+    
+                    const {
+                        data: { stripe_session_id }
+                    } = resp.data;
+    
+                    const stripe = await loadStripe(
+                        process.env.NEXT_PUBLIC_STRIPE_API_KEY
+                    );
+    
+                    stripe.redirectToCheckout({
+                        sessionId: stripe_session_id
+                    });
+                }
+            } catch (error) {
+                
+            }
+        }
+        
     };
 
     return (
@@ -181,7 +192,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["9px","9px", "18px"]}
+                    fontSize={["9px","9px", "14px","14px","14px","16px"]}
                     alignContent={"center"}
                     m="auto"
                     >
@@ -189,13 +200,13 @@ const TabDepositPanel = ({ isDeposit }) => {
                     </Text>
                 </Radio>
             </Box>
-            <Box color='white' w="48%" display="inline-table" bg="#1D052B" p={["5px 10px","5px 10px","10px 25px"]} borderRadius="10px">
+            <Box color='white' w="48%" display="inline-table" bg="#1D052B" p={["5px 10px","5px 10px","10px 25px"]} borderRadius="10px" opacity="0.5">
                 <Radio size='md' colorScheme='pink' value='2' isDisabled>
                     <Text
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["9px","9px", "18px"]}
+                    fontSize={["9px","9px", "14px","14px","14px","16px"]}
                     alignContent={"center"}
                     m="auto"
                     >
@@ -229,7 +240,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                  display="inline-flex"
                  color="white"
                  fontFamily={"Sora"}
-                 fontSize={["12px","12px", "18px"]}
+                 fontSize={["12px","12px","14px","14px","14px","18px"]}
                  alignContent={"center"}
                  m="auto"
                 >
@@ -250,7 +261,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["12px","12px", "18px"]}
+                    fontSize={["12px","12px","14px","14px","14px","18px"]}
                     alignContent={"center"}
                     m="auto"
                     >
@@ -285,7 +296,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                             setTotalAmount(Number(e.target.value));
                         }}
                         placeholder="Amount"
-                        fontSize={["12px", "18px"]}
+                        fontSize={["12px","12px","14px","14px","14px","18px"]}
                         fontWeight="400"
                         fontFamily="Sora"
                         backgroundColor="#1d052b"
@@ -294,7 +305,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px","12px", "18px"]}
+                        fontSize={["12px","12px","14px","14px","14px","18px"]}
                         alignContent={"center"}
                         m="auto"
                     >
@@ -303,11 +314,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 </Flex>
                 {isDeposit && (
                     <Flex>
-                        <AddInputBox value={10} onClick={() => handleIncrease(10)} />
-                        <AddInputBox
-                            value={50}
-                            onClick={() => handleIncrease(50)}
-                        />
+                        <AddInputBox value={50} onClick={() => handleIncrease(50)} />
                         <AddInputBox
                             value={100}
                             onClick={() => handleIncrease(100)}
@@ -316,15 +323,19 @@ const TabDepositPanel = ({ isDeposit }) => {
                             value={200}
                             onClick={() => handleIncrease(200)}
                         />
+                        <AddInputBox
+                            value={300}
+                            onClick={() => handleIncrease(300)}
+                        />
                     </Flex>
                 )}
             </Flex>
             <Flex>
-            <Text fontSize={["12px","12px", "lg"]} pt="5px" pl="4px" textAlign="center"  color="white" fontFamily={"Sora"} fontWeight="300" display="inline-block">
+            <Text fontSize={["12px","12px","16px","16px","16px","lg"]} pt="5px" pl="4px" textAlign="center"  color="white" fontFamily={"Sora"} fontWeight="300" display="inline-block">
             Note - All the amount which you deposit will auto-convert into chips
             </Text>
             </Flex>
-            <Flex mt="3%" ml={["10px","10px", "15%"]} w="100%">
+            <Flex mt={["1%","1%","1%","1%","1%","3%"]} ml={["10px","10px", "15%"]} w="100%">
                 <Checkbox
                     w="100%"
                     onChange={(e) => setAccepted(e.target.checked)}
@@ -333,17 +344,17 @@ const TabDepositPanel = ({ isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px","12px", "18px"]}
+                        fontSize={["12px","12px","16px","16px","16px","18px"]}
                     >
                         I hereby accept the{" "}
                         <Text
                             color="primary"
                             fontFamily={"Sora"}
-                            fontSize={["12px","12px", "18px"]}
+                            fontSize={["12px","12px","16px","16px","16px","18px"]}
                             onClick={(e) => {
                                 e.preventDefault();
                                 window.open(
-                                    "http://lootmogul.com/terms-of-services#payment",
+                                    process.env.NEXT_PUBLIC_WORDPRESS_URL+"/terms-conditions#payment",
                                     "_blank"
                                 );
                             }}
@@ -357,12 +368,24 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             <Button
                 w="100%"
-                mt="3%"
+                fontSize={['16px','22px']}
+                p={['20px 30px','25px 40px']}
+                mt={["2%","1%","1%","1%","1%","3%"]}
                 onClick={deposit}
                 disabled={!accepted || amount <= 0}
             >
                 {isDeposit ? "PROCEED" : "Withdraw"}
             </Button>
+
+            <LMNonCloseALert
+                header={"Error!"}
+                canClose={true}
+                data={alert.msg}
+                isOpen={alert.isOpen}
+                onClose={() => {
+                    setAlertShow({ isOpen: false });
+                }}
+            />
         </Flex>
     );
 };
@@ -373,7 +396,7 @@ const AddInputBox = ({ value, onClick }) => {
     return (
         <Button
             w={["25%","25%", "21%"]}
-            h={["8%","15px", "50px"]}
+            h={["8%","15px", "45px","45px","45px","50px"]}
             p={["0px 10px","15px 30px","auto"]}
             m="2px"
             mt="20px"
@@ -393,7 +416,7 @@ const AddInputBox = ({ value, onClick }) => {
                 ml="1px"
                 color="white"
                 fontFamily={"Sora"}
-                fontSize={["8px","8px", "16px"]}
+                fontSize={["8px","8px", "14px","14px","14px","16px"]}
             >
                 {value}
             </Box>
@@ -403,7 +426,7 @@ const AddInputBox = ({ value, onClick }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["8px","8px", "16px"]}
+                        fontSize={["8px","8px", "14px","14px","14px","16px"]}
                         alignContent={"center"}
                         m="auto"
                         ml="2px"

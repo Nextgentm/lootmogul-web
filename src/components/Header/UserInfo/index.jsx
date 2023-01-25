@@ -141,6 +141,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
                                 p="8px 10px"
                                 borderRadius="5px"
                                 gap={1}
+                                cursor="pointer"
                             >
                                 <Image
                                     alt="wallet"
@@ -161,7 +162,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
                                     color="white"
                                     fontSize="16px"
                                 >
-                                    {`${totalAmount}`}
+                                    {`${Math.round(totalAmount)}`}
                                 </Text>
                                 <Text
                                     fontFamily="Sora"
