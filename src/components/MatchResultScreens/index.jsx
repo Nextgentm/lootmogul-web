@@ -66,7 +66,7 @@ const MatchResultScreens = (props) => {
 
     const handleCancel = () => {
         setCurrentContest(null);
-        router.push("/");
+        router.push("/games");
     };
 
     async function fetchData() {
@@ -110,8 +110,8 @@ const MatchResultScreens = (props) => {
                                 pl.rank == 1 && pl.reward
                                     ? "Congratulations You Won $ " + pl.reward
                                     : pl.rank == 1
-                                    ? "Congratulations! You won!"
-                                    : "Better luck next time!",
+                                        ? "Congratulations! You won!"
+                                        : "Better luck next time!",
                             profilePic: pl.profile_pic
                         });
                         setUserResult(usr);
@@ -138,7 +138,7 @@ const MatchResultScreens = (props) => {
         <>
             {userResult && (
                 <Box
-                    bgImage="url('/assets/image 132.jpg')"
+                    background="transparent radial-gradient(closest-side at 0% 0%, #481A7F 0%, #180529 70%) 0% 0% no-repeat padding-box;"
                     bgRepeat="no-repeat"
                     bgSize="cover"
                 >
@@ -164,7 +164,7 @@ const MatchResultScreens = (props) => {
                         direction="column"
                     >
                         <Text
-                            color="#F8ED1D"
+                            color="#FFFFFF"
                             fontFamily="Blanch"
                             fontSize="54px"
                             lineHeight={"59px"}
@@ -186,24 +186,24 @@ const MatchResultScreens = (props) => {
                             mt={userResult[0]?.rank === 1 ? "2%" : "1%"}
                             variant="winText"
                             color={
-                                userResult[0]?.rank === 1 ? "FFC133" : "#45E470"
+                                userResult[0]?.rank === 1 ? "#E90A63" : "#E90A63"
                             }
                             style={
                                 userResult[0]?.rank === 1
                                     ? {
-                                          background:
-                                              "-webkit-linear-gradient(#FF703B, #FFC133)",
-                                          "-webkit-background-clip": "text",
-                                          "-webkit-text-fill-color":
-                                              "transparent"
-                                      }
+                                        background:
+                                            "#E90A63",
+                                        "-webkit-background-clip": "text",
+                                        "-webkit-text-fill-color":
+                                            "transparent"
+                                    }
                                     : {
-                                          background:
-                                              "-webkit-linear-gradient(#43C8FF, #45E470)",
-                                          "-webkit-background-clip": "text",
-                                          "-webkit-text-fill-color":
-                                              "transparent"
-                                      }
+                                        background:
+                                            "#E90A63",
+                                        "-webkit-background-clip": "text",
+                                        "-webkit-text-fill-color":
+                                            "transparent"
+                                    }
                             }
                             fontSize={{
                                 base: "36px",
@@ -221,10 +221,10 @@ const MatchResultScreens = (props) => {
                                         otherResults?.length === 4
                                             ? "23%"
                                             : otherResults?.length === 3
-                                            ? "30%"
-                                            : otherResults?.length === 2
-                                            ? "45%"
-                                            : "100%"
+                                                ? "30%"
+                                                : otherResults?.length === 2
+                                                    ? "45%"
+                                                    : "100%"
                                     }
                                 >
                                     <UserAvatar

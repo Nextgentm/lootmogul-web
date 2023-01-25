@@ -8,7 +8,8 @@ import {
     InputGroup,
     InputLeftAddon,
     Checkbox,
-    Button
+    Button,
+    Box
 } from "@chakra-ui/react";
 
 import strapi from "../../../utils/strapi";
@@ -115,20 +116,25 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     };
 
     return (
-        <Flex h="100%" w="100%" bg="#3F3F3F" direction={"column"}>
+        <Flex h="100%" w="100%" direction={"column"}>
+            <Box bg="#39106A" p="20px" borderRadius="15px">
             <Flex
                 w="100%"
                 justifyContent={isDeposit ? "space-between" : "space-evenly"}
-                bg="#505050"
-                p="2%"
+                bg="#1D052B"
+                p="4%"
+                borderTopRadius="15px"
             >
                 <InputGroup>
                     <InputLeftAddon
                         w={["48%", "40%"]}
                         fontSize={["13px", "17px"]}
                         fontWeight="600"
+                        bg="#39106A"
+                        color="#fff"
+                        pr="15px"
                     >
-                        Amount:
+                        Amount
                     </InputLeftAddon>
                     <Input
                         w={currentSize === "base" ? "40%" : "50%"}
@@ -144,7 +150,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 <Select
                     w={currentSize === "base" ? "64%" : "80%"}
                     color="white"
-                    bg="#3F3F3F"
+                    bg="#1D052B"
                     onChange={(e) => {
                         setCryptoType(e.target.value);
                     }}
@@ -165,13 +171,16 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 w="100%"
                 direction="column"
                 justifyContent={"space-between"}
-                bg="#505050"
-                p="2%"
+                bg="#1D052B"
+                p="4%"
+                borderBottomRadius="15px"
             >
                 <InputGroup>
                     <InputLeftAddon
                         fontSize={["13px", "17px"]}
                         fontWeight="600"
+                        bg="#39106A"
+                        color="#fff"
                     >
                         Email Id:
                     </InputLeftAddon>
@@ -193,6 +202,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     <InputLeftAddon
                         fontSize={["13px", "17px"]}
                         fontWeight="600"
+                        bg="#39106A"
+                        color="#fff"
                     >
                         Account Id:
                     </InputLeftAddon>
@@ -206,7 +217,6 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     ></Input>
                 </InputGroup>
             </Flex>
-
             <Flex mt="3%" w="100%">
                 <Checkbox
                     w="100%"
@@ -216,17 +226,17 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize="12px"
+                        fontSize={["12px","12px", "18px"]}
                     >
                         I hereby accept the{" "}
                         <Text
                             color="primary"
                             fontFamily={"Sora"}
-                            fontSize="12px"
+                            fontSize={["12px","12px", "18px"]}
                             onClick={(e) => {
                                 e.preventDefault();
                                 window.open(
-                                    "http://lootmogul.com/terms-of-services#payment",
+                                    process.env.NEXT_PUBLIC_WORDPRESS_URL+"/terms-conditions#payment",
                                     "_blank"
                                 );
                             }}
@@ -237,7 +247,6 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     </Text>
                 </Checkbox>
             </Flex>
-
             <Button
                 w="100%"
                 mt="3%"
@@ -247,7 +256,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 }}
             >
                 {isDeposit ? "Deposit" : "Withdraw"}
-            </Button>
+            </Button>   
+            </Box>
+            
+
+            
+
+           
             <LMNonCloseALert
                 header={"Transaction!!!"}
                 canClose={true}

@@ -44,12 +44,12 @@ const transactionTableData = (transaction, isMobile) => {
                 : "transaction",
         amount:
             transaction?.type === "debit" || transaction?.type === "hold" ? (
-                <Text color="#FF6E3B" fontWeight="bold">
-                    -${transaction?.amount}
+                <Text color="#fff" fontWeight="400">
+                    -{transaction?.amount} CHIPS
                 </Text>
             ) : (
-                <Text color="#51E36E" fontWeight="bold">
-                    +${transaction?.amount}
+                <Text color="#fff" fontWeight="400">
+                    +{transaction?.amount} CHIPS
                 </Text>
             ),
         status: (

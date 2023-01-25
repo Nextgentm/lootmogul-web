@@ -15,13 +15,10 @@ const Joining = (props) => {
 
   const [users, setUsers] = useState([]);
   const [timer, setTimer] = useState(WAITING_TIME_IN_SECONDS);
-  const { joiningData, getSocket, setIsHideHeader, setIsHideFooter, currentContest } =
+  const { joiningData, getSocket, setIsHideHeader, setIsHideFooter, currentContest, user, setGameInProgress,updateUser } =
     useContext(AppContext);
   const [socket, setSocket] = useState();
   const [ticketId, setTicketId] = useState(0);
-  
-
-  const { user, gameInProgress, setGameInProgress,updateUser } = useContext(AppContext);
 
   useEffect(() => {
     if (!user || !currentContest) {
@@ -31,10 +28,9 @@ const Joining = (props) => {
       props.setLoading(true);
       setIsHideHeader(true);
       setIsHideFooter(true);
-      // fetchData();
     }
 
-    const handleRouteChange = (url, { shallow }) => {
+    const handleRouteChange = (url) => {
       
       if(!url.startsWith('/quizPage')){
 
@@ -46,7 +42,6 @@ const Joining = (props) => {
     }
 
     router.events.on('routeChangeStart', handleRouteChange)
-
     // If the component is unmounted, unsubscribe
     // from the event with the `off` method:
     return () => {
@@ -57,11 +52,10 @@ const Joining = (props) => {
    
   useEffect(() => {
     if (joiningData) {
-
       setTicketId(joiningData.ticketId);
       const sockRef = getSocket(
         process.env.NEXT_PUBLIC_SOCKET_URL || joiningData.url
-      ); //getSocket(ENDPOINT );//|| joiningData.url);
+      );
       setSocket(sockRef);
       
     }
@@ -69,6 +63,7 @@ const Joining = (props) => {
 
   useEffect(() => {
     if (socket) {
+      
       socket.on("enter_game_lobby", (data) => {
         setUsers(data.users);
 
@@ -90,18 +85,16 @@ const Joining = (props) => {
 
       socket.on("player_left", data => {
         setUsers(data.users);
-        // user left the game
         });
 
       socket.emit(
         "join",
         { jwt: strapi.getToken(), ticket: ticketId },
         (response) => {
+          console.log(response);
           props.setLoading(false);
-
           if (response.status === 0) {
             socket?.disconnect();
-            //show Error Message
             router.back();
           }
         }

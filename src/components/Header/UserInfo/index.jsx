@@ -131,44 +131,55 @@ const UserInfo = ({ user, isMobileDevice }) => {
                 <>
                     {user?.wallets?.length > 0 && (
                         <>
-                            <Image
-                                alt="vl"
-                                width={1}
-                                height={30}
-                                src="/assets/vertical_line.png"
-                            />
                             <Flex
                                 zIndex={99}
-                                ml="20px"
-                                mr="20px"
+                                ml="5px"
+                                mr="5px"
                                 align="center"
                                 onClick={() => router.push("/wallet")}
+                                border="1px solid #481A7F;"
+                                p="8px 10px"
+                                borderRadius="5px"
+                                gap={1}
+                                cursor="pointer"
                             >
                                 <Image
                                     alt="wallet"
-                                    src="/assets/wallet.svg"
+                                    src="/assets/Wallet_new.png"
                                     width={30}
                                     height={30}
+                                    
+                                />
+                                <Image
+                                    alt="wallet"
+                                    src="/assets/Icon.png"
+                                    width={25}
+                                    height={25}
                                 />
                                 <Text
                                     fontFamily="Sora"
-                                    ml="8px"
+                                    ml="5px"
                                     color="white"
                                     fontSize="16px"
                                 >
-                                    {`$${totalAmount}`}
+                                    {`${Math.round(totalAmount)}`}
                                 </Text>
-
-                                <ChevronDownIcon ml="4px" color="white" />
+                                <Text
+                                    fontFamily="Sora"
+                                    ml="5px"
+                                    color="white"
+                                    fontSize="14px"
+                                    bg="transparent linear-gradient(142deg, #E90A63 0%, #481A7F 100%) 0% 0% no-repeat padding-box;"
+                                    p="0px 5px"
+                                    borderRadius="50%"
+                                    cursor="pointer"
+                                    onClick={() => setShowModal({ show: true, mode: "sub" })}
+                                >
+                                    {`+`}
+                                </Text>
                             </Flex>
                         </>
                     )}
-                    <Image
-                        alt="vl"
-                        width={1}
-                        height={30}
-                        src="/assets/vertical_line.png"
-                    />
                 </>
             )}
 
@@ -182,7 +193,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
                         alt="profile"
                         width={30}
                         height={30}
-                        src="/assets/profile.png"
+                        src="/assets/Users.png"
                     />
 
                     {isTabletOrDesktop && <ArrowIcon ml="4px" color="white" />}

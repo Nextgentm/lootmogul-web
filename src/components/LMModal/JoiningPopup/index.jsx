@@ -55,22 +55,15 @@ const JoiningPopup = ({ retry, data }) => {
     return (
         <Box
             pos="relative"
-            bgImage="url('/assets/login-bg.png')"
+            bg="#1d052b"
             bgPosition={["right", "inherit"]}
             bgRepeat="no-repeat"
             bgSize="cover"
-            p="2%"
             height="100%"
+            border="4px solid #672099;"
+            borderRadius="12px"
         >
-            <Box
-                w="40px"
-                h="40px"
-                position="absolute"
-                top={"0px"}
-                right={"0px"}
-            >
-                <Image layout="fill" alt="cut" src="/assets/login-cut.png" />
-            </Box>
+            
             {loading &&
                 <LMNonCloseALert
                     header={"Please Wait....."}
@@ -80,25 +73,25 @@ const JoiningPopup = ({ retry, data }) => {
             }
             {!loading &&
                 <Box
-                    border="1px dashed #515151;"
                     w="100%"
                     m="auto"
-                    p="18px"
+                    p="15px"
                     textAlign="left"
                 >
                     <Heading
-                        fontWeight="600"
+                        fontWeight="500"
                         color="white"
                         fontSize={["40px", "44px"]}
+                        textAlign={['center','center','left']}
                     >
                         CONFIRMATION
                     </Heading>
                     <Text
-                        color="#C7C7C7"
-                        fontSize={["12px", "16px"]}
-                        variant="textualVal"
+                        color="#fff"
+                        fontSize={["16px", "16px"]}
+                        textAlign={['center','center','left']}
                     >
-                        Balance : Deposit + Winnings = {data.balance}
+                        Balance : Deposit + Winnings in Chips = <Text color="#E90A63" fontWeight="600" display="inline">{(data.balance).toFixed(2)}</Text>
                     </Text>
                     {retry && retry.retry === "exceeded" && <Text
                         color="primary"
@@ -108,12 +101,13 @@ const JoiningPopup = ({ retry, data }) => {
                         You have exceeded the {retry.count} retry attempts.
                     </Text>}
                     <Box mt="20px">
-                        <Flex mt="5%" justifyContent="space-between">
+                        <Flex mt="5%" justifyContent="space-between" bg="transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box" p={"17px 12px"}>
                             <Text
                                 fontWeight="600"
                                 color="white"
                                 variant="hint"
-                                fontSize={["14px", "16px"]}
+                                fontSize={["14px","16px", "20px"]}
+                                pl={"10px"}
                             >
                                 Entry
                             </Text>
@@ -121,17 +115,18 @@ const JoiningPopup = ({ retry, data }) => {
                                 fontWeight="600"
                                 color="white"
                                 variant="hint"
-                                fontSize={["14px", "16px"]}
+                                fontSize={["14px","16px", "20px"]}
                             >
-                                {data.entryFee}$
+                                {data.entryFee} CHIPS
                             </Text>
                         </Flex>
-                        <Flex mt="5%" justifyContent="space-between">
+                        <Flex justifyContent="space-between" bg="#341e41" p={"17px 12px"}>
                             <Text
                                 fontWeight="600"
                                 color="white"
                                 variant="hint"
-                                fontSize={["14px", "16px"]}
+                                fontSize={["14px", "16px", "20px"]}
+                                pl={"10px"}
                             >
                                 Usable Cash Bonus
                             </Text>
@@ -139,21 +134,21 @@ const JoiningPopup = ({ retry, data }) => {
                                 fontWeight="600"
                                 color="white"
                                 variant="hint"
-                                fontSize={["14px", "16px"]}
+                                fontSize={["14px", "16px", "20px"]}
                             >
-                                {data.bonus}$
+                                {data.bonus} CHIPS
                             </Text>
                         </Flex>
                     </Box>
                  
-                    <Divider mt="5%"></Divider>
                     <Box mt="20px">
-                        <Flex mt="5%" justifyContent="space-between">
+                        <Flex mt="5%" justifyContent="space-between" bg="transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box" p={"17px 12px"}>
                             <Text
                                 fontWeight="600"
                                 color="primary"
                                 variant="hint"
-                                fontSize={["14px", "16px"]}
+                                fontSize={["14px", "16px", "20px"]}
+                                pl={"10px"}
                             >
                                 To Pay
                             </Text>
@@ -161,22 +156,20 @@ const JoiningPopup = ({ retry, data }) => {
                                 fontWeight="600"
                                 color="white"
                                 variant="hint"
-                                fontSize={["14px", "16px"]}
+                                fontSize={["14px", "16px", "20px"]}
                             >
                                 {(data.deductBal -
                                     (couponAmount.amount + data.bonus)) > 0 ? (data.deductBal -
-                                        (couponAmount.amount + data.bonus)) : 0}
-                                $
+                                        (couponAmount.amount + data.bonus)) : 0} CHIPS
                             </Text>
                         </Flex>
                         <Text
                             mt="2%"
-                            color="#C7C7C7"
+                            color="#fff"
                             variant="textualVal"
-                            fontSize={["14px", "16px"]}
+                            fontSize={["14px", "16px", "19px"]}
                         >
-                            Amount will be deducted from your wallet when joining
-                            the game.
+                           Chips will be deducted from your wallet when joining the game.
                         </Text>
                     </Box>
                     <Button
@@ -189,7 +182,7 @@ const JoiningPopup = ({ retry, data }) => {
 
                         }}
                     >
-                        Join Contest
+                        JOIN CONTEST
                     </Button>
                 </Box>
             }

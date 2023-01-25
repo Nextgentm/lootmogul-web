@@ -115,9 +115,9 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   lineHeight="1"
                   textShadow="unset"
                 >
-                  Check out New releases
+                  Join the fun and win big 
                   <br />
-                  ARE YOU READY TO PLAY?
+                  with our exciting games!
                 </Text>
 
                 <Text
@@ -128,8 +128,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   width={["100%", "100%", "100%", "50%"]}
                   my="1em"
                 >
-                  Become a virtual landlord to some of the largest projects in
-                  crypto
+                  Get a chance to win amazing prizes
                 </Text>
 
                 <Button

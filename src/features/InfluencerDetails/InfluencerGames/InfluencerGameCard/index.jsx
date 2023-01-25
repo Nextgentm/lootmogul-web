@@ -126,19 +126,19 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
 
                     <Flex
                         w={"full"}
-                        align="center"
+                        align="left"
                         justify={"space-between"}
                         px="1rem"
                         mt={1}
                     >
-                            <VStack>
+                            <VStack style={{"align-items":"flex-start"}}>
                                 
 
                                 <Flex >
                                 <Image
                                     alt="tag"
                                     boxSize={["25px", "30px"]}
-                                    src="/assets/designupdate1/cash_icon.svg"
+                                    src="/assets/Icon.png"
                                 />
                                     <Text
                                         ml="6px"
@@ -147,9 +147,10 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                         fontWeight="400"
                                     >
                                         {contestmaster.entryFee != 0
-                                            ? "Entry Fee - $" +
-                                              contestmaster.entryFee
+                                            ? "Entry Fee - " +
+                                              contestmaster.entryFee + " CHIPS"
                                             : "Free"}
+                                            
                                     </Text>
                                     
                                 </Flex>
@@ -158,6 +159,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                         fontSize={["0.75rem", "0.9rem"]}
                                         fontWeight="200"
                                         mt={0}
+                                        pl="6px"
                                     >
                                         {nFormatter(
                                             contestmaster.roomsCount,

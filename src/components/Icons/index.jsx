@@ -299,12 +299,13 @@ export const ScoreIcon = (props) => (
     <Icon {...props}>
         <path
             d="M26 8L43.3205 18V38L26 48L8.67949 38V18L26 8Z"
-            fill="currentColor"
+            fill="#E90A63"
         />
         <path
             d="M9.67949 18.5773L26 9.1547L42.3205 18.5773V37.4226L26 46.8453L9.67949 37.4226V18.5773Z"
-            stroke="#7C54DC"
+            stroke="#E90A63"
             strokeWidth="2"
+            fill="#E90A63"
         />
         <text
             x="55%"

@@ -8,12 +8,12 @@ const TabLabel = ({ data }) => {
            {data.url && ( <Image
                 alt={data.name}
                 src={data.url}
-                width="20px"
-                height="20px"
+                width="30px"
+                height="30px"
               
             />
             )}
-            <Text  m="auto" color="white" fontSize={["10px","20px"]}>
+            <Text  m="auto" color="white" fontSize={["10px","10px","18px"]}>
                 {data.name}
             </Text>
         </Flex>

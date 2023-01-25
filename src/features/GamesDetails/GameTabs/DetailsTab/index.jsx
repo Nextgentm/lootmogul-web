@@ -57,7 +57,7 @@ const DetailsTab = ({ gameData }) => {
                                             <Tr key={"reward--" + index}>
                                                 <Td> {rr.name} Players</Td>
                                                 <Td textAlign="right">
-                                                    ${rr.amount}
+                                                    {rr.amount} CHIPS
                                                 </Td>
                                             </Tr>
                                         )
@@ -93,7 +93,7 @@ const DetailsTab = ({ gameData }) => {
                                                     {rr.rankFrom} - {rr.rankTo}
                                                 </Td>
                                                 <Td textAlign="right">
-                                                    {rr.name}
+                                                    {rr.name} 
                                                 </Td>
                                             </Tr>
                                         )

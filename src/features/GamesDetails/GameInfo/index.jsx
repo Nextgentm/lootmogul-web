@@ -3,6 +3,9 @@ import { Box, Flex, Text, Image } from "@chakra-ui/react";
 import GameInfoActions from "./GameInfoActions";
 import GameInfoGrid from "./GameInfoGrid";
 
+
+
+
 const GameInfo = ({ gameData, isTabletOrDesktop }) => {
   const renderBanner = () => (
     <Flex
@@ -66,7 +69,9 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
       </Flex>
     </Flex>
   );
-
+  const rewardDescription = gameData?.reward?.data?.description;
+  const modifiedDescription = rewardDescription ?  rewardDescription.replace("$", "") : '';
+  const chipStr = (!isNaN(+modifiedDescription)) ? 'CHIPS': '';
   return (
     <>
       <Flex
@@ -93,7 +98,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
           m={"auto"}
         >
           {gameData?.reward?.data?.description ? (
-            <Flex>
+            <Flex align={"center"}>
               <Text
                 fontWeight={300}
                 fontSize={["17px", "17px", "17px", "25px", "36px"]}
@@ -102,13 +107,24 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
               >
                 Winning prize
               </Text>
+              {chipStr && (
+              <Image
+                  alt="tag"
+                  boxSize={["25px", "35px"]}
+                  src="/assets/Icon.png"
+                  mt="12px"
+                  ml="10px"
+                  marginBottom={"4px"}  
+              />
+              )}
+
               <Text
                 fontWeight={600}
                 fontSize={["17px", "17px", "17px", "25px", "36px"]}
                 ml="10px"
                 color="#d63065"
               >
-                {gameData?.reward?.data?.description}
+                {modifiedDescription} {chipStr}
               </Text>
             </Flex>
           ) : (

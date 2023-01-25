@@ -269,7 +269,7 @@ useEffect(() => {
     };
 
     const updateUser = async (obj) => {
-
+        debugger;
         let data = obj;
         //if (!data) data = user;
 
@@ -459,7 +459,7 @@ useEffect(() => {
                 try {
                     const apiValues = {
                         username: formData.username,
-                        email: formData.email,
+                        identifier: formData.email,
                         password: formData.password,
                     }   
                     let registerResult = await strapi.register(apiValues);
