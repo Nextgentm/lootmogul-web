@@ -240,7 +240,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                  display="inline-flex"
                  color="white"
                  fontFamily={"Sora"}
-                 fontSize={["12px","12px",,"14px","14px","14px","18px"]}
+                 fontSize={["12px","12px","14px","14px","14px","18px"]}
                  alignContent={"center"}
                  m="auto"
                 >
@@ -261,7 +261,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["12px","12px",,"14px","14px","14px","18px"]}
+                    fontSize={["12px","12px","14px","14px","14px","18px"]}
                     alignContent={"center"}
                     m="auto"
                     >
@@ -296,7 +296,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                             setTotalAmount(Number(e.target.value));
                         }}
                         placeholder="Amount"
-                        fontSize={["12px","12px",,"14px","14px","14px","18px"]}
+                        fontSize={["12px","12px","14px","14px","14px","18px"]}
                         fontWeight="400"
                         fontFamily="Sora"
                         backgroundColor="#1d052b"
@@ -305,7 +305,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px","12px",,"14px","14px","14px","18px"]}
+                        fontSize={["12px","12px","14px","14px","14px","18px"]}
                         alignContent={"center"}
                         m="auto"
                     >
