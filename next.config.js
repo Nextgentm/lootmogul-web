@@ -59,6 +59,11 @@ const moduleExports = {
         "permanent": true,
       },
       { 
+        "source": '/faq',
+        "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/faq',
+        "permanent": true,
+      },
+      { 
         "source": '/metaverse',
         "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/metaverse',
         "permanent": true,
