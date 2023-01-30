@@ -14,7 +14,7 @@ import AppContext from "../../../utils/AppContext";
 import { AddIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import strapi from "../../../utils/strapi";
-import { useBreakpointValue, Heading,Radio, RadioGroup,Stack } from "@chakra-ui/react";
+import { useBreakpointValue, Heading, Radio, RadioGroup, Stack } from "@chakra-ui/react";
 import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import { useRouter } from "next/router";
 const stripeJs = async () => await import("@stripe/stripe-js/pure");
@@ -25,7 +25,7 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     const ref = useRef();
     const [amount, setAmount] = useState(0);
-   
+    const [depositType, setDepositType] = useState(1)
     const [accepted, setAccepted] = useState(false);
     const [alert, setAlertShow] = useState({ iOpen: false, msg: "" });
     const currentSize = useBreakpointValue({
@@ -35,19 +35,19 @@ const TabDepositPanel = ({ isDeposit }) => {
     });
     const [couponCode, setCouponCode] = useState("");
     const [couponList, setCouponList] = useState([]);
-    
+
     const handleIncrease = (addedAmount) => {
         /*const newAmount = amount + addedAmount;*/
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        setNumberOfAmount((addedAmount/numberOfAmount).toFixed(2));
+        setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
         setAmount(addedAmount);
     };
-    
+
     const getInitialState = () => {
         const value = "USD";
         return value;
     };
-    
+
     const [currency, setCurrency] = useState(getInitialState);
     const [minimumDeposit, setMinimumDeposit] = useState(5);
     const [numberOfChips, setNumberOfChips] = useState(35);
@@ -57,43 +57,42 @@ const TabDepositPanel = ({ isDeposit }) => {
     useEffect(() => {
         async function fetchData() {
             // Fetch data
-            const { data } = await axios.get(`${
-              process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
             const results = []
             // Store results in the results array
 
-           var  defaultCurrencyValue;
+            var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if(value.currency === "USD"){
+                if (value.currency === "USD") {
                     defaultCurrencyValue = {
                         currency: value.currency,
                         minimumDeposit: value.minimumDeposit,
                         numberOfChips: value.numberOfChips,
                     }
                 }
-              results.push({
-                  currency: value.currency,
-                  minimumDeposit: value.minimumDeposit,
-                  numberOfChips: value.numberOfChips,
-              });
+                results.push({
+                    currency: value.currency,
+                    minimumDeposit: value.minimumDeposit,
+                    numberOfChips: value.numberOfChips,
+                });
             });
             await fetch('./assets/currency.json')
-            .then(response => response.json())
-            .then(additionalCurrencies => {     
-            additionalCurrencies.forEach((jsonValue) => {
-                results.push({
-                    currency: jsonValue,
-                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
-                    numberOfChips: defaultCurrencyValue.numberOfChips,
-                });
-            })
-            })
+                .then(response => response.json())
+                .then(additionalCurrencies => {
+                    additionalCurrencies.forEach((jsonValue) => {
+                        results.push({
+                            currency: jsonValue,
+                            minimumDeposit: defaultCurrencyValue.minimumDeposit,
+                            numberOfChips: defaultCurrencyValue.numberOfChips,
+                        });
+                    })
+                })
 
             setCurrencyOptions(results);
         }
         // Trigger the fetch
         fetchData();
-      }, []);
+    }, []);
 
     const handleChange = (e) => {
         setCurrency(e.target.value);
@@ -101,12 +100,12 @@ const TabDepositPanel = ({ isDeposit }) => {
         setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
         //setTotalAmount(amount);
         let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
-        setNumberOfAmount((amount/numberOfAmount).toFixed(2));
-        
+        setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+
     };
-    const setTotalAmount = (addedAmount) =>{
+    const setTotalAmount = (addedAmount) => {
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        setNumberOfAmount((addedAmount/numberOfAmount).toFixed(2));
+        setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
         setAmount(addedAmount);
     };
 
@@ -127,97 +126,135 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
     }, []);
     const deposit = async () => {
-        if (amount <= numberOfChips){
+        if (amount <= numberOfChips) {
             console.log('zero');
-            setAlertShow({ isOpen: true, msg: "Enter Deposit more than "+numberOfChips+ " Chips" });
+            setAlertShow({ isOpen: true, msg: "Enter Deposit more than " + numberOfChips + " Chips" });
         }
-        else{
-            try {
-                const user = await strapi.fetchUser();
-                const { loadStripe } = await stripeJs();
-    
-                if (user) {
-                    const { id } = user;
-                    const resp = await axios.post(
-                        `${
-                            process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
-                        {
-                            user_id: id,
-                            redirect_url:
-                                process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL +
-                                asPath,
-                            type: "DEPOSIT",
-                            value: +numberOfAmount,
-                            couponCode: couponCode ? couponCode : "",
-                            currency:currency,
-                            calculated_chips:amount
-                        },
-                        {
-                            headers: {
-                                Authorization: `Bearer ${strapi.getToken()}`
+        else {
+            const user = await strapi.fetchUser();
+            console.log('user', user)
+            if (depositType == 1) {
+                try {
+
+                    const { loadStripe } = await stripeJs();
+
+                    if (user) {
+                        const { id } = user;
+                        const resp = await axios.post(
+                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
+                            {
+                                user_id: id,
+                                redirect_url:
+                                    process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                    asPath,
+                                type: "DEPOSIT",
+                                value: +numberOfAmount,
+                                couponCode: couponCode ? couponCode : "",
+                                currency: currency,
+                                calculated_chips: amount
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${strapi.getToken()}`
+                                }
                             }
-                        }
-                    );
-    
-                    const {
-                        data: { stripe_session_id }
-                    } = resp.data;
-    
-                    const stripe = await loadStripe(
-                        process.env.NEXT_PUBLIC_STRIPE_API_KEY
-                    );
-    
-                    stripe.redirectToCheckout({
-                        sessionId: stripe_session_id
-                    });
+                        );
+
+                        const {
+                            data: { stripe_session_id }
+                        } = resp.data;
+
+                        const stripe = await loadStripe(
+                            process.env.NEXT_PUBLIC_STRIPE_API_KEY
+                        );
+
+                        stripe.redirectToCheckout({
+                            sessionId: stripe_session_id
+                        });
+                    }
+                } catch (error) {
+
                 }
-            } catch (error) {
-                
+            }
+            else if (depositType == 2) {
+                try {
+
+                    if (user) {
+                        const { id } = user;
+                        const resp = await axios.post(
+                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/bitpay`,
+                            {
+                                user_id: id,
+                                redirect_url:
+                                    process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                    asPath,
+                                type: "DEPOSIT",
+                                value: +numberOfAmount,
+                                couponCode: couponCode ? couponCode : "",
+                                currency: currency,
+                                calculated_chips: amount
+                            },
+                            {
+                                headers: {
+                                    Authorization: `Bearer ${strapi.getToken()}`
+                                }
+                            }
+                        );
+
+                        const {
+                            data: { bitpay_url }
+                        } = resp.data;
+                        console.log('bitpay_url', bitpay_url)
+                        window.location.href = bitpay_url
+                    }
+                } catch (error) {
+
+                }
             }
         }
-        
+
     };
 
     return (
-        
-        <Flex h="100%" w="100%" bg="#1d052b" direction={"column"} pr={['5px','5px','30px']} fontSize="5" marginBottom={"-1%"} marginTop="-4.4%" >
-            <Heading as='h5' size={['10px', '10px','sm']} variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
-            SELECT PAYMENT METHOD
+
+        <Flex h="100%" w="100%" bg="#1d052b" direction={"column"} pr={['5px', '5px', '30px']} fontSize="5" marginBottom={"-1%"} marginTop="-4.4%" >
+            <Heading as='h5' size={['10px', '10px', 'sm']} variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
+                SELECT PAYMENT METHOD
             </Heading>
             <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px" display="block">
-            <RadioGroup defaultValue='1'>
-            <Box color='white' w="48%" display="inline-table" bg="#1D052B" mr="10px" p={["5px 10px","5px 10px","10px 25px"]} borderRadius="10px">
-                <Radio size='md' colorScheme='pink' defaultChecked="true" value='1' style={{fontSize:"10px"}}>
-                    <Text
-                    display="inline-flex"
-                    color="white"
-                    fontFamily={"Sora"}
-                    fontSize={["9px","9px", "14px","14px","14px","16px"]}
-                    alignContent={"center"}
-                    m="auto"
-                    >
-                        FIAT CURRENCY
-                    </Text>
-                </Radio>
-            </Box>
-            <Box color='white' w="48%" display="inline-table" bg="#1D052B" p={["5px 10px","5px 10px","10px 25px"]} borderRadius="10px" opacity="0.5">
-                <Radio size='md' colorScheme='pink' value='2' isDisabled>
-                    <Text
-                    display="inline-flex"
-                    color="white"
-                    fontFamily={"Sora"}
-                    fontSize={["9px","9px", "14px","14px","14px","16px"]}
-                    alignContent={"center"}
-                    m="auto"
-                    >
-                    CRYPTO CURRENCY
-                    </Text>
-                </Radio>
-            </Box>
-            </RadioGroup>
+                <RadioGroup defaultValue='1' onChange={setDepositType}>
+                    <Box color='white' w="48%" display="inline-table" bg="#1D052B" mr="10px" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px">
+                        <Radio size='md' colorScheme='pink' defaultChecked="true" value='1' style={{ fontSize: "10px" }}>
+                            <Text
+                                display="inline-flex"
+                                color="white"
+                                fontFamily={"Sora"}
+                                fontSize={["9px", "9px", "14px", "14px", "14px", "16px"]}
+                                alignContent={"center"}
+                                m="auto"
+                            >
+                                FIAT CURRENCY
+                            </Text>
+                        </Radio>
+                    </Box>
+                    <Box color='white' w="48%" display="inline-table" bg="#1D052B" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px" >
+                        <Radio size='md' colorScheme='pink' value='2'>
+                            <Text
+                                display="inline-flex"
+                                color="white"
+                                fontFamily={"Sora"}
+                                fontSize={["9px", "9px", "14px", "14px", "14px", "16px"]}
+                                alignContent={"center"}
+                                m="auto"
+                            >
+                                CRYPTO CURRENCY
+                            </Text>
+                        </Radio>
+                    </Box>
+                </RadioGroup>
             </Flex>
             <Heading as='h5' size='sm' variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
-            SELECT CURRENCY
+                SELECT CURRENCY
             </Heading>
             <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px">
                 <Select
@@ -228,42 +265,42 @@ const TabDepositPanel = ({ isDeposit }) => {
                     value={currency} onChange={handleChange}
                 >
                     {currencyoptions.map((option) => {
-                    return (
-                        <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{"background":"#1d052b"}}>
-                        {option.currency}
-                        </option>
-                    );
+                        return (
+                            <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                {option.currency}
+                            </option>
+                        );
                     })}
                 </Select>
 
                 <Text
-                 display="inline-flex"
-                 color="white"
-                 fontFamily={"Sora"}
-                 fontSize={["12px","12px","14px","14px","14px","18px"]}
-                 alignContent={"center"}
-                 m="auto"
-                >
-                    {minimumDeposit} {currency} = {numberOfChips} CHIPS
-                </Text>
-                
-            </Flex>
-            <Heading as='h5' size='sm' variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
-            SELECT NUMBER OF CHIPS 
-            <Text pl="4px" fontSize='xs'  color="white" fontFamily={"Sora"} fontWeight="400" display="inline-block">
-                 (Min Amount: {numberOfChips} CHIPS)
-            </Text>
-            </Heading>
-            
-            <Flex direction={"column"} w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px">
-                <Flex>
-                    <Text
                     display="inline-flex"
                     color="white"
                     fontFamily={"Sora"}
-                    fontSize={["12px","12px","14px","14px","14px","18px"]}
+                    fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
                     alignContent={"center"}
                     m="auto"
+                >
+                    {minimumDeposit} {currency} = {numberOfChips} CHIPS
+                </Text>
+
+            </Flex>
+            <Heading as='h5' size='sm' variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
+                SELECT NUMBER OF CHIPS
+                <Text pl="4px" fontSize='xs' color="white" fontFamily={"Sora"} fontWeight="400" display="inline-block">
+                    (Min Amount: {numberOfChips} CHIPS)
+                </Text>
+            </Heading>
+
+            <Flex direction={"column"} w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px">
+                <Flex>
+                    <Text
+                        display="inline-flex"
+                        color="white"
+                        fontFamily={"Sora"}
+                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
+                        alignContent={"center"}
+                        m="auto"
                     >
                         CHIP
                         <Tooltip
@@ -275,17 +312,17 @@ const TabDepositPanel = ({ isDeposit }) => {
                             fontSize="sm"
                             p="10px"
                         >
-                        <Text>
-                            <InfoIcon
-                                color="white"
-                                float="right"
-                                mt="-13px!important"
-                                boxSize={"20px"}
-                            />
-                        </Text>
-                    </Tooltip>
+                            <Text>
+                                <InfoIcon
+                                    color="white"
+                                    float="right"
+                                    mt="-13px!important"
+                                    boxSize={"20px"}
+                                />
+                            </Text>
+                        </Tooltip>
                     </Text>
-                    
+
                     <Input
                         w={currentSize === "base" ? "40%" : "40%"}
                         h="42px"
@@ -296,7 +333,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                             setTotalAmount(Number(e.target.value));
                         }}
                         placeholder="Amount"
-                        fontSize={["12px","12px","14px","14px","14px","18px"]}
+                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
                         fontWeight="400"
                         fontFamily="Sora"
                         backgroundColor="#1d052b"
@@ -305,7 +342,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px","12px","14px","14px","14px","18px"]}
+                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
                         alignContent={"center"}
                         m="auto"
                     >
@@ -331,11 +368,11 @@ const TabDepositPanel = ({ isDeposit }) => {
                 )}
             </Flex>
             <Flex>
-            <Text fontSize={["12px","12px","16px","16px","16px","lg"]} pt="5px" pl="4px" textAlign="center"  color="white" fontFamily={"Sora"} fontWeight="300" display="inline-block">
-            Note - All the amount which you deposit will auto-convert into chips
-            </Text>
+                <Text fontSize={["12px", "12px", "16px", "16px", "16px", "lg"]} pt="5px" pl="4px" textAlign="center" color="white" fontFamily={"Sora"} fontWeight="300" display="inline-block">
+                    Note - All the amount which you deposit will auto-convert into chips
+                </Text>
             </Flex>
-            <Flex mt={["1%","1%","1%","1%","1%","3%"]} ml={["10px","10px", "15%"]} w="100%">
+            <Flex mt={["1%", "1%", "1%", "1%", "1%", "3%"]} ml={["10px", "10px", "15%"]} w="100%">
                 <Checkbox
                     w="100%"
                     onChange={(e) => setAccepted(e.target.checked)}
@@ -344,17 +381,17 @@ const TabDepositPanel = ({ isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px","12px","16px","16px","16px","18px"]}
+                        fontSize={["12px", "12px", "16px", "16px", "16px", "18px"]}
                     >
                         I hereby accept the{" "}
                         <Text
                             color="primary"
                             fontFamily={"Sora"}
-                            fontSize={["12px","12px","16px","16px","16px","18px"]}
+                            fontSize={["12px", "12px", "16px", "16px", "16px", "18px"]}
                             onClick={(e) => {
                                 e.preventDefault();
                                 window.open(
-                                    process.env.NEXT_PUBLIC_WORDPRESS_URL+"/terms-conditions#payment",
+                                    process.env.NEXT_PUBLIC_WORDPRESS_URL + "/terms-conditions#payment",
                                     "_blank"
                                 );
                             }}
@@ -368,9 +405,9 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             <Button
                 w="100%"
-                fontSize={['16px','22px']}
-                p={['20px 30px','25px 40px']}
-                mt={["2%","1%","1%","1%","1%","3%"]}
+                fontSize={['16px', '22px']}
+                p={['20px 30px', '25px 40px']}
+                mt={["2%", "1%", "1%", "1%", "1%", "3%"]}
                 onClick={deposit}
                 disabled={!accepted || amount <= 0}
             >
@@ -386,7 +423,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     setAlertShow({ isOpen: false });
                 }}
             />
-        </Flex>
+        </Flex >
     );
 };
 
@@ -395,9 +432,9 @@ export default TabDepositPanel;
 const AddInputBox = ({ value, onClick }) => {
     return (
         <Button
-            w={["25%","25%", "21%"]}
-            h={["8%","15px", "45px","45px","45px","50px"]}
-            p={["0px 10px","15px 30px","auto"]}
+            w={["25%", "25%", "21%"]}
+            h={["8%", "15px", "45px", "45px", "45px", "50px"]}
+            p={["0px 10px", "15px 30px", "auto"]}
             m="2px"
             mt="20px"
             ml="3%"
@@ -408,7 +445,7 @@ const AddInputBox = ({ value, onClick }) => {
                 display: "flex",
                 justifyContent: "space-around",
                 fontFamily: "Sora",
-                boxShadow:"0px 0px 0px 0px #481A7F73, 0px 0px 5px #FF0080CF",
+                boxShadow: "0px 0px 0px 0px #481A7F73, 0px 0px 5px #FF0080CF",
             }}
         >
             <Box
@@ -416,23 +453,23 @@ const AddInputBox = ({ value, onClick }) => {
                 ml="1px"
                 color="white"
                 fontFamily={"Sora"}
-                fontSize={["8px","8px", "14px","14px","14px","16px"]}
+                fontSize={["8px", "8px", "14px", "14px", "14px", "16px"]}
             >
                 {value}
             </Box>
-            
+
             <Box pointerEvents="none">
                 <Text
-                        display="inline-flex"
-                        color="white"
-                        fontFamily={"Sora"}
-                        fontSize={["8px","8px", "14px","14px","14px","16px"]}
-                        alignContent={"center"}
-                        m="auto"
-                        ml="2px"
-                        mb="4px"
-                    >
-                        CHIPS
+                    display="inline-flex"
+                    color="white"
+                    fontFamily={"Sora"}
+                    fontSize={["8px", "8px", "14px", "14px", "14px", "16px"]}
+                    alignContent={"center"}
+                    m="auto"
+                    ml="2px"
+                    mb="4px"
+                >
+                    CHIPS
                 </Text>
             </Box>
         </Button>
