@@ -14,7 +14,7 @@ const BottomAboutText = () => {
         w="85%"
         mx="auto"
     >
-        © 2023 LootMogul. All Rights Reserved. NextGenTM, Inc 831 N Tatnall Street Suite M #275 Wilmington, DE 19801 United States
+        © 2023 LootMogul. All Rights Reserved. NextGenTM, Inc. 831 N Tatnall Street Suite M #275 Wilmington, DE 19801 United States
     </Text>
     <Text variant="footerText" w="85%" fontWeight="400" fontSize="14px" mx="auto">
         LootMogul venture is accelerated by National Basketball
