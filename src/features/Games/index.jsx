@@ -119,7 +119,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   lineHeight="1"
                   textShadow="unset"
                 >
-                  Join the fun and win big 
+                  Join the fun and win big
                   <br />
                   with our exciting games!
                 </Text>
@@ -196,7 +196,8 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
               author="Fairy Falls"
               key="Fairy Falls"
               sectionName={'Arcade'}
-              gameUrl="https://play.gamepix.com/floppy-paper/embed?sid=1"
+              gameUrl="floppy-paper"
+              gameid='1'
             />
             <GamePixCard style={{
               w: [
@@ -211,7 +212,8 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
               author="Double Plane Venture"
               key="Double Plane Venture"
               sectionName={'Arcade'}
-              gameUrl="https://play.gamepix.com/double-plane-venture/embed?sid=1"
+              gameUrl="double-plane-venture"
+              gameid='1'
             />
           </ScrollMenu>
         </Box>
