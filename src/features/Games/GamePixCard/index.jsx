@@ -79,11 +79,7 @@ export const MarketJs = ({ sectionName, imgUrl, author, key, style, gameUrl }) =
                     _hover={{ textDecoration: "none !important" }}
                     w="90%"
                     onClick={(e) => {
-                        e.preventDefault();
-                        setShowLoading({
-                            key: `igc-${contestmaster?.id}`,
-                            show: true
-                        });
+                        "https://d3vhkc3gcq7ogm.cloudfront.net/en/flick-soccer-lootmogul/index.html?tournament_id=3&game_id=4"
                         CheckAndStartGame(
                             `igc-${contestmaster?.id}`,
                             contestmaster

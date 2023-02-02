@@ -142,7 +142,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   fontSize={["20px", "20px", "24px"]}
                   fontWeight="normal"
                   onClick={() => {
-                    executeScroll(0);
+                    "https://d3vhkc3gcq7ogm.cloudfront.net/en/flick-soccer-lootmogul/index.html?tournament_id=3&game_id=4"
                   }}
                 >
                   Play Now
