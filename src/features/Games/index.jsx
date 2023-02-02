@@ -12,6 +12,7 @@ import MultipleLoggedInUser from "../../components/MultipleLoggedInUser";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import { LeftArrow, RightArrow } from "../../components/ContentNavigator/arrows";
 import { GamePixCard } from "./GamePixCard";
+import { MarketJs } from "./GamePixCard";
 
 const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
   const { isMobileDevice } = useContext(AppContext);
@@ -172,6 +173,50 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
           section={contestSections}
           executeScroll={executeScroll}
         />
+        <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
+          <Box p="2">
+            <Heading variant="sectionTitle">MarketJs Tournament</Heading>
+          </Box>
+        </Flex>
+        <Box mx={[2.5, 0]}>
+          <ScrollMenu
+            LeftArrow={LeftArrow}
+            RightArrow={RightArrow}
+            apiRef={ref}
+          >
+            <MarketJs style={{
+              w: [
+                "75vw",
+                "75vw",
+                "370px",
+                "370px"
+              ],
+              mx: 3
+            }}
+              imgUrl="./assets/FlickSoccer.png"
+              author="Flick soccer"
+              key="Flick soccer"
+              sectionName={'Arcade'}
+              gameUrl="https://d3vhkc3gcq7ogm.cloudfront.net/en/flick-soccer-lootmogul/index.html?tournament_id=3&game_id=4"
+            />
+            <MarketJs style={{
+              w: [
+                "75vw",
+                "75vw",
+                "370px",
+                "370px"
+              ],
+              mx: 3
+            }}
+              imgUrl="./assets/hoop-star.jpeg"
+              author="Hoop star"
+              key="Hoop star"
+              sectionName={'Arcade'}
+              gameUrl="https://d3vhkc3gcq7ogm.cloudfront.net/en/hoop-star-lootmogul/index.html?tournament_id=1&game_id=2"
+            />
+          </ScrollMenu>
+        </Box>
+
         <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
           <Box p="2">
             <Heading variant="sectionTitle">Gamepix Tournament</Heading>
