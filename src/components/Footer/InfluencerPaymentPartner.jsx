@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Text, Link, Image } from "@chakra-ui/react";
 
 const InfluencerPaymentPartner = () => {
-    const payments = ["stripe.webp", "paypal.webp"];
+    const payments = ["stripe.webp", "paypal.webp","bitpay-logo.png"];
     return (
         <Box width={["50%", "50%", "100%", "100%"]}>
             <Text
