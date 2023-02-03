@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
-import { Box, Button, Text, Link, Flex } from "@chakra-ui/react";
+import { Box, Button, Text, Link, Flex, Heading } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import BottomBanners from "../Home/components/BottomBanners";
 import GamesCategories from "./GamesCategories";
 import ExploreTrivia from "./ExploreTrivia";
@@ -9,6 +9,10 @@ import GameCarouselCard from "./GameCarouselCard";
 import LMThumbnailCarousel from "../../components/LMCarousel/LMThumbnailCarousel";
 import React from "react";
 import MultipleLoggedInUser from "../../components/MultipleLoggedInUser";
+import { ScrollMenu } from "react-horizontal-scrolling-menu";
+import { LeftArrow, RightArrow } from "../../components/ContentNavigator/arrows";
+import { GamePixCard } from "./GamePixCard";
+import { MarketJs } from "./GamePixCard";
 
 const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
   const { isMobileDevice } = useContext(AppContext);
@@ -32,6 +36,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
   const bottomBanners = banners.filter(
     ({ position }) => position === "promotion_top"
   );
+  const ref = useRef();
 
   const executeScroll = (id) => {
     itemRefs[id].current.scrollIntoView({ block: "start", behavior: "smooth" });
@@ -137,7 +142,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   fontSize={["20px", "20px", "24px"]}
                   fontWeight="normal"
                   onClick={() => {
-                    executeScroll(0);
+                    "https://d3vhkc3gcq7ogm.cloudfront.net/en/flick-soccer-lootmogul/index.html?tournament_id=3&game_id=4"
                   }}
                 >
                   Play Now
@@ -168,6 +173,93 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
           section={contestSections}
           executeScroll={executeScroll}
         />
+        <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
+          <Box p="2">
+            <Heading variant="sectionTitle">MarketJs Tournament</Heading>
+          </Box>
+        </Flex>
+        <Box mx={[2.5, 0]}>
+          <ScrollMenu
+            LeftArrow={LeftArrow}
+            RightArrow={RightArrow}
+            apiRef={ref}
+          >
+            <MarketJs style={{
+              w: [
+                "75vw",
+                "75vw",
+                "370px",
+                "370px"
+              ],
+              mx: 3
+            }}
+              imgUrl="./assets/FlickSoccer.png"
+              author="Flick soccer"
+              key="Flick soccer"
+              sectionName={'Arcade'}
+              gameUrl="https://d3vhkc3gcq7ogm.cloudfront.net/en/flick-soccer-lootmogul/index.html?tournament_id=3&game_id=4"
+            />
+            <MarketJs style={{
+              w: [
+                "75vw",
+                "75vw",
+                "370px",
+                "370px"
+              ],
+              mx: 3
+            }}
+              imgUrl="./assets/hoop-star.jpeg"
+              author="Hoop star"
+              key="Hoop star"
+              sectionName={'Arcade'}
+              gameUrl="https://d3vhkc3gcq7ogm.cloudfront.net/en/hoop-star-lootmogul/index.html?tournament_id=1&game_id=2"
+            />
+          </ScrollMenu>
+        </Box>
+
+        <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
+          <Box p="2">
+            <Heading variant="sectionTitle">Gamepix Tournament</Heading>
+          </Box>
+        </Flex>
+        <Box mx={[2.5, 0]}>
+          <ScrollMenu
+            LeftArrow={LeftArrow}
+            RightArrow={RightArrow}
+            apiRef={ref}
+          >
+            <GamePixCard style={{
+              w: [
+                "75vw",
+                "75vw",
+                "370px",
+                "370px"
+              ],
+              mx: 3
+            }}
+              imgUrl="https://games.assets.gamepix.com/Y28AA/thumbnail/small.png"
+              author="Fairy Falls"
+              key="Fairy Falls"
+              sectionName={'Arcade'}
+              gameUrl="https://play.gamepix.com/floppy-paper/embed?sid=1"
+            />
+            <GamePixCard style={{
+              w: [
+                "75vw",
+                "75vw",
+                "370px",
+                "370px"
+              ],
+              mx: 3
+            }}
+              imgUrl="https://games.assets.gamepix.com/E954R/thumbnail/small.png"
+              author="Double Plane Venture"
+              key="Double Plane Venture"
+              sectionName={'Arcade'}
+              gameUrl="https://play.gamepix.com/double-plane-venture/embed?sid=1"
+            />
+          </ScrollMenu>
+        </Box>
         <Box>
           {contestSections &&
             contestSections.map((section, index) => (
