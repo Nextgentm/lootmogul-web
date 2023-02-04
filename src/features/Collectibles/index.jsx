@@ -20,8 +20,11 @@ import Categories from "./Categories";
 import CollectibleView from "./CollectibleView";
 import MyPageLoader from "../../components/MyPageLoader";
 import { useRouter } from "next/router";
+import _ from "lodash";
+import { memo } from "react";
 
-const Collectibles = ({ data, banner }) => {
+
+const Collectibles = memo(({ data, banner }) => {
     const [selCategoriesData, setSelCategoriesData] = useState(data);
     const defaultCategories = "Overview";
     const { isMobileDevice, isTabletOrDesktop } = useContext(AppContext);
@@ -79,20 +82,20 @@ const Collectibles = ({ data, banner }) => {
     }, [selCategoriesData]);
 
     const nftSearch = (value) => {
-        // if (value !== '') {
-        //     debugger;
-        //     if (selectedCategory.toLocaleLowerCase() !== 'overview') {
-        //        selCategoriesData.forEach(nft => {
-        //             nft.nftSet = nft.nftSet.filter((s) =>
-        //                 s.nft_kred.data.slug.includes(value)
-        //             );
-        //         });
-        //         setSelCategoriesData(selCategoriesData);
-        //     }
-        // } else {
-        //     const selectedData = data.filter(c => c.name.toLowerCase() === selectedCategory.toLowerCase())
-        //     setSelCategoriesData(selectedData);
-        // }
+        if (value !== '') {
+            if (selectedCategory.toLocaleLowerCase() !== 'overview') {
+                let selectedCat = _.cloneDeep(selCategoriesData)
+                 selectedCat[0].nftSet =  selectedCat[0].nftSet.filter(s=>s.nft_kred.data.slug.includes(value))
+                console.log('selCategoriesData',selectedCat)
+
+                setSelCategoriesData(selectedCat);
+            }
+        } else {
+            console.log(data)
+            const selectedData = data.filter(c => c.name.toLowerCase() === selectedCategory.toLowerCase())
+            console.log("selectedData",selectedData)
+            setSelCategoriesData(selectedData);
+        }
     };
 
     const nftPriceSorting = () => { };
@@ -328,6 +331,6 @@ const Collectibles = ({ data, banner }) => {
         </>
     )
 
-}
+})
 
 export default Collectibles;
