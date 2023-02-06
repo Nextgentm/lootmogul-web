@@ -7,16 +7,16 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         init()
     }, [])
     function init() {
-        var eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
-        var eventer = window[eventMethod];
-        var messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
+
         // Listen to message from child window
-        eventer(messageEvent, function (e) {
+        window.addEventListener("message", function (e) {
+            console.log("-=-=-=-=-=-=-=-=-=", e)
             switch (e.data.type) {
                 case 'loading':
                     // this event may not arrives linear
                     // e.g. not all values from 0 to 100 may be sent
-                    loading(e.data.percentage);
+                    // loading(e.data.percentage);
+                    console.log('-=-==-=', e.data.percentage)
                     break;
                 case 'loaded':
                     playGame(e.data.url);
@@ -29,7 +29,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     });
                     break;
             }
-        }, false);
+        });
 
     }
     function soundOff() {
@@ -43,6 +43,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     }
 
     function playGame(url) {
+        console.log("-=-=-=-=-=-=-=-=-= Play game")
         globalUrl = url;
         //here's the function that tell the game starts once loaded
         //you can fire this function, for istance, after you've verified that the user is logged.

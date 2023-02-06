@@ -4,7 +4,7 @@ import CaptchaPopup from "../../../components/LMModal/CaptchaPopup";
 import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import SocialActions from "../../InfluencerDetails/SocialActions";
 import PaidGameConfirmation from "../PaidGameConfirmation";
-export const MarketJs = ({ sectionName, imgUrl, author, key, style, gameUrl }) => {
+export const MarketJs = ({ sectionName, imgUrl, author, key, style, gameUrl, }) => {
     return (
         <Link
             href={gameUrl}
@@ -93,7 +93,7 @@ export const MarketJs = ({ sectionName, imgUrl, author, key, style, gameUrl }) =
         </Link >
     )
 }
-export const GamePixCard = ({ sectionName, imgUrl, author, key, style, gameUrl }) => {
+export const GamePixCard = ({ sectionName, imgUrl, author, key, style, gameUrl, gameid }) => {
     return (
         <Link
             href={'/games/' + gameid + '/' + gameUrl}
@@ -101,7 +101,6 @@ export const GamePixCard = ({ sectionName, imgUrl, author, key, style, gameUrl }
             _hover={{ border: "none", textDecoration: "none" }}
             _focus={{ border: "none", textDecoration: "none" }}
             key={`igc-${key}`}
-            isExternal
         >
 
             <VStack {...style} >
