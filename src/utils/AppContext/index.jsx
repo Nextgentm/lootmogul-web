@@ -269,7 +269,7 @@ useEffect(() => {
     };
 
     const updateUser = async (obj) => {
-        debugger;
+        // debugger;
         let data = obj;
         //if (!data) data = user;
 

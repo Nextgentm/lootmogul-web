@@ -96,7 +96,7 @@ export const MarketJs = ({ sectionName, imgUrl, author, key, style, gameUrl }) =
 export const GamePixCard = ({ sectionName, imgUrl, author, key, style, gameUrl }) => {
     return (
         <Link
-            href={gameUrl}
+            href={'/games/' + gameid + '/' + gameUrl}
             passhref="true"
             _hover={{ border: "none", textDecoration: "none" }}
             _focus={{ border: "none", textDecoration: "none" }}
@@ -223,14 +223,7 @@ export const GamePixCard = ({ sectionName, imgUrl, author, key, style, gameUrl }
                     w="90%"
                     onClick={(e) => {
                         e.preventDefault();
-                        setShowLoading({
-                            key: `igc-${contestmaster?.id}`,
-                            show: true
-                        });
-                        CheckAndStartGame(
-                            `igc-${contestmaster?.id}`,
-                            contestmaster
-                        );
+
                     }}
                 >
                     Play Now

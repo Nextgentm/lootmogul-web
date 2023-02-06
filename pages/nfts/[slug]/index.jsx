@@ -28,7 +28,7 @@ export default function CollectibleDetailsPage({ nftCollections, seoData }) {
     
     
     useEffect(()=>{
-        debugger;
+        // debugger;
         console.log('name of the router',router.query.slug);
         const isValid = nftCollections.find(c => c.slug.toLowerCase() === router.query.slug.toLowerCase());
         setIsValidCollection(isValid);
