@@ -70,7 +70,7 @@ const Footer = () => {
                             >
                                 <Image
                                     alt=""
-                                    src="/assets/LootMogul-Logo-2.webp"
+                                    src="/assets/Final-Logo-Full.png"
                                     width={["95%"]}
                                     height="auto"
                                     onClick={() => router.push("/")}
@@ -124,7 +124,7 @@ const Footer = () => {
                         >
                             <Image
                                 alt=""
-                                src="/assets/LootMogul-Logo-2.webp"
+                                src="/assets/Final-Logo-Full.png"
                                 width={["100%"]}
                                 height="auto"
                                 onClick={() => router.push("/")}
