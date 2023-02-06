@@ -54,6 +54,7 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [numberOfAmount, setNumberOfAmount] = useState(0);
     const [currencyoptions, setCurrencyOptions] = useState([]);
 
+
     useEffect(() => {
         async function fetchData() {
             // Fetch data
@@ -125,6 +126,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 });
         }
     }, []);
+
     const deposit = async () => {
         if (amount <= numberOfChips) {
             console.log('zero');
@@ -215,6 +217,11 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     };
 
+    useEffect(() => {
+        if (depositType == 2)
+            setCurrency('USD')
+    }, [depositType])
+
     return (
 
         <Flex h="100%" w="100%" bg="#1d052b" direction={"column"} pr={['5px', '5px', '30px']} fontSize="5" marginBottom={"-1%"} marginTop="-4.4%" >
@@ -262,7 +269,9 @@ const TabDepositPanel = ({ isDeposit }) => {
                     h="42px"
                     color="white"
                     backgroundColor="#1d052b"
-                    value={currency} onChange={handleChange}
+                    value={currency}
+                    onChange={handleChange}
+                    disabled={depositType == 2}
                 >
                     {currencyoptions.map((option) => {
                         return (
