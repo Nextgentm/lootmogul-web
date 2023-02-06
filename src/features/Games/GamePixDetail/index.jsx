@@ -2,21 +2,44 @@ import { useEffect, useState } from "react"
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
+    var globalIframe, globalUrl;
+
     const [gameUrl, setGameUrl] = useState()
     useEffect(() => {
-        init()
-    }, [])
-    function init() {
+        if (gameUrl)
+            init()
+        return () => {
+            window.removeEventListener('message', (e) => {
+                console.log("Removed Listner")
+            })
+        }
+    }, [gameUrl]);
+    useEffect(() => {
+        if (gameSlug && gameid)
+            setGameUrl("https://play.gamepix.com/" + gameSlug + "/embed?sid=" + gameid)
 
-        // Listen to message from child window
-        window.addEventListener("message", function (e) {
-            console.log("-=-=-=-=-=-=-=-=-=", e)
+    }, [gameSlug, gameid])
+
+    const init = () => {
+        //////// 1) Create the iframe that will contains the game ////////
+        const iframe = document.createElement('iframe');
+        iframe.id = 'game-frame';
+        iframe.src = gameUrl;
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('name', window.location.href);
+        iframe.setAttribute('width', '100%');
+        iframe.setAttribute('height', '100%');
+        iframe.setAttribute('scrolling', 'no');
+        iframe.setAttribute('style', { height: '100vh' });
+        iframe.style.top = '0%';
+        iframe.style.left = '0%';
+        const eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
+        const eventer = window[eventMethod];
+        const messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
+        eventer(messageEvent, function (e) {
             switch (e.data.type) {
                 case 'loading':
-                    // this event may not arrives linear
-                    // e.g. not all values from 0 to 100 may be sent
-                    // loading(e.data.percentage);
-                    console.log('-=-==-=', e.data.percentage)
+                    loading(e.data.percentage);
                     break;
                 case 'loaded':
                     playGame(e.data.url);
@@ -29,34 +52,29 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     });
                     break;
             }
-        });
-
+        }, false);
+        document.getElementById('idDiv').appendChild(iframe);
+        globalIframe = iframe;
     }
-    function soundOff() {
+    const soundOff = () => {
         globalIframe.contentWindow.postMessage({
             message: 'soundOn'
         }, globalUrl);
     }
-    function sendScore(object) {
+    const sendScore = (object) => {
         // here you have access to type, level and score
         console.log("123456", object);
     }
 
-    function playGame(url) {
+    const playGame = (url) => {
         console.log("-=-=-=-=-=-=-=-=-= Play game")
         globalUrl = url;
-        //here's the function that tell the game starts once loaded
-        //you can fire this function, for istance, after you've verified that the user is logged.
         globalIframe.contentWindow.postMessage({
             message: 'callbackExecuted'
         }, url);
     }
-    useEffect(() => {
-        if (gameSlug && gameid)
-            setGameUrl("https://play.gamepix.com/" + gameSlug + "/embed?sid=" + gameid)
 
-    }, [gameSlug, gameid])
     return (
-        <iframe src={gameUrl} width="100%" height="100vh" style={{ height: '100vh' }} frameborder="0" scrolling="no" />
+        <div id="idDiv" style={{ height: '100vh' }}></div>
     )
 }

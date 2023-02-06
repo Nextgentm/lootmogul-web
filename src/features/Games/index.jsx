@@ -237,11 +237,11 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
               ],
               mx: 3
             }}
-              imgUrl="https://games.assets.gamepix.com/Y28AA/thumbnail/small.png"
-              author="Fairy Falls"
-              key="Fairy Falls"
+              imgUrl="https://games.assets.gamepix.com/2TM7A/thumbnail/small.png"
+              author="Football Masters"
+              key="Football Masters"
               sectionName={'Arcade'}
-              gameUrl="floppy-paper"
+              gameUrl="football-masters"
               gameid='1'
             />
             <GamePixCard style={{
@@ -253,11 +253,11 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
               ],
               mx: 3
             }}
-              imgUrl="https://games.assets.gamepix.com/E954R/thumbnail/small.png"
-              author="Double Plane Venture"
-              key="Double Plane Venture"
+              imgUrl="https://games.assets.gamepix.com/35LBE/thumbnail/small.png"
+              author="Basketball Stars"
+              key="Basketball Stars"
               sectionName={'Arcade'}
-              gameUrl="double-plane-venture"
+              gameUrl="basketball-stars"
               gameid='1'
             />
           </ScrollMenu>
