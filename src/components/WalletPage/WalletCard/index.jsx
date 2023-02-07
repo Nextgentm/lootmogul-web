@@ -79,11 +79,11 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
                     </Text>
                     <InputGroup mt="25px">
                         <Box
-                            h="40px"
+                            h="50px"
                             bg={displayData.inputColor}
                             borderRadius="21px"
                             width="100%"
-                            lineHeight="40px"
+                            lineHeight="50px"
                             px={3}
                         >
                             <InputLeftElement
@@ -94,10 +94,11 @@ const WalletCard = ({ displayData, amount, onClick, onChange }) => {
                                     src="/assets/Icon.png"
                                     width={19}
                                     height={19}
+                                    marginTop={2}
                                 />
                             }
                             />
-                            <Text color="white" pl="25px">{amount || 0}</Text>
+                            <Text color="white" pl="25px" fontSize={22}>{amount || 0}</Text>
                         </Box>
                     </InputGroup>
 

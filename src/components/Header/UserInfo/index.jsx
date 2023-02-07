@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Button, Text, Flex, useOutsideClick } from "@chakra-ui/react";
+import { Button, Text, Flex, useOutsideClick, Tooltip } from "@chakra-ui/react";
 import Image from "next/image";
 import {
     ChevronDownIcon,
@@ -28,7 +28,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
     const [totalAmount, setTotalAmount] = useState();
     const { logout, isTabletOrDesktop, amounts } = useContext(AppContext);
     const ref = useRef();
-    
+
 
     useOutsideClick({
         ref,
@@ -143,19 +143,44 @@ const UserInfo = ({ user, isMobileDevice }) => {
                                 gap={1}
                                 cursor="pointer"
                             >
-                                <Image
-                                    alt="wallet"
-                                    src="/assets/Wallet_new.png"
-                                    width={30}
-                                    height={30}
-                                    
-                                />
-                                <Image
-                                    alt="wallet"
-                                    src="/assets/Icon.png"
-                                    width={25}
-                                    height={25}
-                                />
+
+                                <Tooltip
+                                    placement="top-end"
+                                    label={'wallet'}
+                                    bg="#383838"
+                                    borderRadius="10px"
+                                    color="white"
+                                    fontSize="sm"
+                                    p="10px"
+                                >
+                                    <Text>
+                                        <Image
+                                            alt="wallet"
+                                            src="/assets/Wallet_new.png"
+                                            width={30}
+                                            height={30}
+
+                                        />
+                                    </Text>
+                                </Tooltip>
+                                <Tooltip
+                                    placement="top-end"
+                                    label={'chips'}
+                                    bg="#383838"
+                                    borderRadius="10px"
+                                    color="white"
+                                    fontSize="sm"
+                                    p="10px"
+                                >
+                                    <Text>
+                                        <Image
+                                            alt="wallet"
+                                            src="/assets/Icon.png"
+                                            width={25}
+                                            height={25}
+                                        />
+                                    </Text>
+                                </Tooltip>
                                 <Text
                                     fontFamily="Sora"
                                     ml="5px"
