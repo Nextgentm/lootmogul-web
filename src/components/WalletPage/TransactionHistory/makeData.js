@@ -42,7 +42,7 @@ const transactionTableData = (transaction, isMobile) => {
                 : transaction?.eventmaster?.data?.name
                 ? transaction.eventmaster.data.name
                 : "transaction",
-        amount:
+        chips:
             transaction?.type === "debit" || transaction?.type === "hold" ? (
                 <Text color="#fff" fontWeight="400">
                     -{transaction?.amount} CHIPS

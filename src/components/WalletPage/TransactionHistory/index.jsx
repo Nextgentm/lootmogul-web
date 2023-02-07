@@ -226,7 +226,7 @@ const TransactionHistory = () => {
                                 tableColumns={[
                                     "TRANSACTION ID",
                                     "ACTIVITY",
-                                    "AMOUNT",
+                                    "CHIPS",
                                     "STATUS"
                                 ]}
                             />
@@ -245,7 +245,7 @@ const TransactionHistory = () => {
                             tableColumns={[
                                 "TRANSACTION ID",
                                 "ACTIVITY",
-                                "AMOUNT",
+                                "CHIPS",
                                 "STATUS",
                                 "DATE"
                             ]}
@@ -316,7 +316,7 @@ const MobileTable = ({ data, loading }) => {
                         fontWeight="bold"
                         textAlign="center"
                     >
-                        AMOUNT
+                        CHIPS
                     </Text>
                 </GridItem>
             </Grid>

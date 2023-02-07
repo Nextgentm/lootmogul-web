@@ -128,7 +128,7 @@ const JoiningPopup = ({ retry, data }) => {
                                 fontSize={["14px", "16px", "20px"]}
                                 pl={"10px"}
                             >
-                                Usable Cash Bonus
+                                Usable chip Bonus
                             </Text>
                             <Text
                                 fontWeight="600"
