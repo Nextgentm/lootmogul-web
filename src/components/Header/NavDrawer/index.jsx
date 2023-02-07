@@ -13,7 +13,7 @@ const NavDrawer = ({ isOpen, onClose, renderMobileRoutes }) => {
                 <Box position="unset" left="16px" top="16px">
                     <Image
                         alt="logonav"
-                        src="/assets/lm_logo.png"
+                        src="/assets/Final-Logo-Full.png"
                         width={"250px"}
                         height={"54px"}
                         

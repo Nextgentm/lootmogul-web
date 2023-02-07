@@ -10,11 +10,12 @@ import {
     VStack,
 } from "@chakra-ui/react";
 import ReactCardFlip from "react-card-flip";
-import { useContext } from "react";
+import { memo, useCallback, useContext } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
 import { useState } from "react";
 import { useInView } from "react-intersection-observer";
 import styled from "styled-components";
+import { useMemo } from "react";
 
 // const cardWidth = "550px";
 const cardHeight = "440px";
@@ -54,7 +55,7 @@ const Div = styled.div`
         mask-composite: exclude;
     }
 `;
-const CollectibleCard = ({
+const CollectibleCard = memo(({
     nft,
     showInfo = false,
     lazyRoot = null,
@@ -89,7 +90,7 @@ const CollectibleCard = ({
             ? Buffer.from(str).toString("base64")
             : window.btoa(str);
 
-    const nftImage = (img) => {
+    const nftImage = useCallback((img) => {
         return (
             <>
                 <Image
@@ -110,7 +111,7 @@ const CollectibleCard = ({
                 />
             </>
         );
-    };
+    },[]);
 
     return (
         nft && (
@@ -384,6 +385,6 @@ const CollectibleCard = ({
             </>
         )
     );
-};
+});
 
 export default CollectibleCard;

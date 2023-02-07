@@ -1,5 +1,5 @@
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, memo } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import useOnScreen from "../../hooks/useOnScreen";
@@ -25,7 +25,7 @@ import {
 import OverViewCard from "./OverViewCard";
 import AppContext from "../../utils/AppContext";
 
-const CollectibleView = ({ NFTS, index, nftSelectCategory, isSubPage }) => {
+const CollectibleView =memo(({ NFTS, index, nftSelectCategory, isSubPage }) => {
   const refColl = useRef();
   const { isMobileDevice } = useContext(AppContext);
   const lazyRoot = useRef(null);
@@ -234,6 +234,6 @@ const CollectibleView = ({ NFTS, index, nftSelectCategory, isSubPage }) => {
       )}
     </>
   );
-};
+});
 
 export default CollectibleView;
