@@ -173,7 +173,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
           section={contestSections}
           executeScroll={executeScroll}
         />
-        <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
+        {/* <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
           <Box p="2">
             <Heading variant="sectionTitle">MarketJs Tournament</Heading>
           </Box>
@@ -261,7 +261,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
               gameid='1'
             />
           </ScrollMenu>
-        </Box>
+        </Box> */}
         <Box>
           {contestSections &&
             contestSections.map((section, index) => (
