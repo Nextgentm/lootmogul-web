@@ -14,7 +14,7 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
   });
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState({ show: false, mode: "" });
-  const { setCurrentContest, amounts, setShowPaidGameConfirmation } =
+  const { setCurrentContest, amounts, setShowPaidGameConfirmation, user } =
     useContext(AppContext);
   useEffect(() => {
     setLocationCheck({
@@ -28,7 +28,7 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
 
         if (!res.isBan) {
           const res = checkEligilbility(contestmaster, amounts);
-
+          let userTotalBonus = user ? user?.wallets.find(s => s.currency.type == "bonus")?.balance || 0 : 0
           if (res.canPlay) {
             setCurrentContest(contestmaster);
             setShowModal({
@@ -39,9 +39,9 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
                 deductBal: res.deductAmount,
                 balance: res.balance,
                 bonus:
-                  (contestmaster?.feeWallet?.find(
+                  userTotalBonus > 0 ? (contestmaster?.feeWallet?.find(
                     (w) => w.currency?.data?.type == "bonus"
-                  )?.percent * contestmaster?.entryFee) / 100 || 0,
+                  )?.percent * contestmaster?.entryFee) / 100 || 0 : 0,
               },
             });
           } else if (!res.canPlay) {

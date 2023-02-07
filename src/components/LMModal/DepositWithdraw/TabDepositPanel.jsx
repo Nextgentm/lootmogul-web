@@ -297,7 +297,7 @@ const TabDepositPanel = ({ isDeposit }) => {
             <Heading as='h5' size='sm' variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
                 SELECT NUMBER OF CHIPS
                 <Text pl="4px" fontSize='xs' color="white" fontFamily={"Sora"} fontWeight="400" display="inline-block">
-                    (Min Amount: {numberOfChips} CHIPS)
+                    (Min Chips: {numberOfChips} CHIPS)
                 </Text>
             </Heading>
 
