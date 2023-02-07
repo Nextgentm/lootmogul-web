@@ -18,7 +18,7 @@ const WalletPage = ({ totalAmount }) => {
     const { amounts } = useContext(AppContext);
     const depositData = {
         title: "Deposit",
-        desc: "Total amount you have available to play with",
+        desc: "Total chips you have available to play with",
         inputColor: "#432864",
         icon: true,
         iconName: "add",
@@ -29,7 +29,7 @@ const WalletPage = ({ totalAmount }) => {
     };
     const withdrawData = {
         title: "Winnings",
-        desc: "Total amount you are able to withdraw",
+        desc: "Total chips you are able to withdraw",
         inputColor: "#432864",
         icon: true,
         iconName: "sub",
@@ -40,13 +40,13 @@ const WalletPage = ({ totalAmount }) => {
     };
     const bonusData = {
         title: "Bonus",
-        desc: "Total amount got as a bonus/reward",
+        desc: "Total chips got as a bonus/reward",
         inputColor: "#432864",
         icon: false,
         btnText: "Learn more",
         showMore: false,
         tooltip:
-            "Amount accumulated through promotions. Part of it can be used to play cash games. Can't be withdrawn."
+            "chips accumulated through promotions. Part of it can be used to play cash games. Can't be withdrawn."
     };
 
     const onChangeAmount = (type, amount) => {
