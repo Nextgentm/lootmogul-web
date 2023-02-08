@@ -82,14 +82,14 @@ const JoiningPopup = ({ retry, data }) => {
                         fontWeight="500"
                         color="white"
                         fontSize={["40px", "44px"]}
-                        textAlign={['center','center','left']}
+                        textAlign={['center', 'center', 'left']}
                     >
                         CONFIRMATION
                     </Heading>
                     <Text
                         color="#fff"
                         fontSize={["16px", "16px"]}
-                        textAlign={['center','center','left']}
+                        textAlign={['center', 'center', 'left']}
                     >
                         Balance : Deposit + Winnings in Chips = <Text color="#E90A63" fontWeight="600" display="inline">{(data.balance).toFixed(2)}</Text>
                     </Text>
@@ -106,7 +106,7 @@ const JoiningPopup = ({ retry, data }) => {
                                 fontWeight="600"
                                 color="white"
                                 variant="hint"
-                                fontSize={["14px","16px", "20px"]}
+                                fontSize={["14px", "16px", "20px"]}
                                 pl={"10px"}
                             >
                                 Entry
@@ -115,32 +115,34 @@ const JoiningPopup = ({ retry, data }) => {
                                 fontWeight="600"
                                 color="white"
                                 variant="hint"
-                                fontSize={["14px","16px", "20px"]}
+                                fontSize={["14px", "16px", "20px"]}
                             >
                                 {data.entryFee} CHIPS
                             </Text>
                         </Flex>
-                        <Flex justifyContent="space-between" bg="#341e41" p={"17px 12px"}>
-                            <Text
-                                fontWeight="600"
-                                color="white"
-                                variant="hint"
-                                fontSize={["14px", "16px", "20px"]}
-                                pl={"10px"}
-                            >
-                                Usable chip Bonus
-                            </Text>
-                            <Text
-                                fontWeight="600"
-                                color="white"
-                                variant="hint"
-                                fontSize={["14px", "16px", "20px"]}
-                            >
-                                {data.bonus} CHIPS
-                            </Text>
-                        </Flex>
+                        {data?.bonus ?
+                            <Flex justifyContent="space-between" bg="#341e41" p={"17px 12px"}>
+                                <Text
+                                    fontWeight="600"
+                                    color="white"
+                                    variant="hint"
+                                    fontSize={["14px", "16px", "20px"]}
+                                    pl={"10px"}
+                                >
+                                    Usable chip Bonus
+                                </Text>
+                                <Text
+                                    fontWeight="600"
+                                    color="white"
+                                    variant="hint"
+                                    fontSize={["14px", "16px", "20px"]}
+                                >
+                                    {data.bonus} CHIPS
+                                </Text>
+                            </Flex> :
+                            <></>}
                     </Box>
-                 
+
                     <Box mt="20px">
                         <Flex mt="5%" justifyContent="space-between" bg="transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box" p={"17px 12px"}>
                             <Text
@@ -169,7 +171,7 @@ const JoiningPopup = ({ retry, data }) => {
                             variant="textualVal"
                             fontSize={["14px", "16px", "19px"]}
                         >
-                           Chips will be deducted from your wallet when joining the game.
+                            Chips will be deducted from your wallet when joining the game.
                         </Text>
                     </Box>
                     <Button
