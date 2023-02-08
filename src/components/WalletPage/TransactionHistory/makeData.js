@@ -34,14 +34,14 @@ const transactionTableData = (transaction, isMobile) => {
         ),
         activity:
             (transaction?.type === "debit" || transaction?.type === "hold") &&
-            transaction?.contest?.data?.contestmaster?.data?.name
+                transaction?.contest?.data?.contestmaster?.data?.name
                 ? "Played " + transaction.contest.data.contestmaster.data.name
                 : transaction?.type === "credit" &&
-                  transaction?.contest?.data?.contestmaster?.data?.name
-                ? "Won in " + transaction.contest.data.contestmaster.data.name
-                : transaction?.eventmaster?.data?.name
-                ? transaction.eventmaster.data.name
-                : "transaction",
+                    transaction?.contest?.data?.contestmaster?.data?.name
+                    ? "Won in " + transaction.contest.data.contestmaster.data.name
+                    : transaction?.eventmaster?.data?.name
+                        ? transaction.eventmaster.data.name
+                        : "transaction",
         chips:
             transaction?.type === "debit" || transaction?.type === "hold" ? (
                 <Text color="#fff" fontWeight="400">
@@ -52,6 +52,12 @@ const transactionTableData = (transaction, isMobile) => {
                     +{transaction?.amount} CHIPS
                 </Text>
             ),
+
+        closingbalance:
+            <Text color="#fff" fontWeight="400">
+                {transaction?.closingBalance ? transaction?.closingBalance + 'CHIPS' : '-'}
+            </Text>,
+
         status: (
             <Box>
                 <Text
@@ -69,8 +75,9 @@ const transactionTableData = (transaction, isMobile) => {
                     color="#C7C7C7"
                     textAlign="center"
                     fontFamily="Sora"
+                    textTransform='uppercase'
                 >
-                    {transaction?.currency?.data?.name}
+                    {transaction?.type}
                 </Text>
             </Box>
         ),
