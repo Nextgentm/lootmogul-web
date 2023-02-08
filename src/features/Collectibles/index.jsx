@@ -286,9 +286,8 @@ const Collectibles = memo(({ data, banner }) => {
 
                 {/* desktop bredcrumb */}
                 {(!isMobileDevice && selectedCategory.toLowerCase() !== defaultCategories.toLowerCase()) && <BreadCrumb data={breadcumbData} mxValue={[]}></BreadCrumb>}
-
                 {/* // Category subheader */}
-
+                
                 {selectedCategory.toLowerCase() !== defaultCategories.toLowerCase() && <Flex
                     justifyContent={["space-between"]}
                     alignItems="center"
