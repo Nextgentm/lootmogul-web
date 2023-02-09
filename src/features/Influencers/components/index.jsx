@@ -71,10 +71,10 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 //     url: "/influencers/category/" + cData?.slug,
                 //     isCurrentPage: true
                 // });
-                setBreadcumbData([
-                    { text: "Ambassadors", url: "/influencers", isCurrentPage: false },
-                    { text: cData?.name, url: "/influencers/category/" + cData?.slug, isCurrentPage: true }
-                ]);
+                // setBreadcumbData([
+                //     { text: "Ambassadors", url: "/influencers", isCurrentPage: false },
+                //     { text: cData?.name, url: "/influencers/category/" + cData?.slug, isCurrentPage: true }
+                // ]);
             }
         }
     }, [data, user]);
@@ -175,8 +175,13 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     useEffect(() => {
         if (data && selectedCategory) {
             let selData = data.filter((item) => item.slug === selectedCategory);
-            setCategory(selData[0].name.toLowerCase());
-            setSelCategoriesData(selData);
+            if (selData?.length) {
+                setCategory(selData[0].name.toLowerCase());
+                setSelCategoriesData(selData);
+            }
+            else {
+                router.push('/404')
+            }
         }
     }, [selectedCategory]);
 
@@ -239,7 +244,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             default:
                 break;
         }
-        
+
     }, [onlyWidth]);
 
     useEffect(() => {
