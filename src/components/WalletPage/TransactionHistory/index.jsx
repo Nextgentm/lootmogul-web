@@ -227,6 +227,7 @@ const TransactionHistory = () => {
                                     "TRANSACTION ID",
                                     "ACTIVITY",
                                     "CHIPS",
+                                    "CLOSING BALANCE",
                                     "STATUS"
                                 ]}
                             />
@@ -246,6 +247,7 @@ const TransactionHistory = () => {
                                 "TRANSACTION ID",
                                 "ACTIVITY",
                                 "CHIPS",
+                                "CLOSING BALANCE",
                                 "STATUS",
                                 "DATE"
                             ]}

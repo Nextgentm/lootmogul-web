@@ -61,7 +61,7 @@ const WalletPage = ({ totalAmount }) => {
             <Flex justifyContent={"flex-start"} direction={["column", "row"]}>
                 <Flex width={["100%"]} justifyContent={"flex-start"}>
                     <Flex mt="auto" mb={"auto"}>
-                        <Heading ml="15px" mr="15px" color="white" fontSize={["36px","36px","62px"]}>
+                        <Heading ml="15px" mr="15px" color="white" fontSize={["36px", "36px", "62px"]}>
                             WALLET BALANCE IN CHIPS
                         </Heading>
                         <Image
@@ -73,7 +73,7 @@ const WalletPage = ({ totalAmount }) => {
                             src="/assets/Icon.png"
                             alt="bonus"
                         />
-                        <Heading ml="10px" color="primary" fontSize={["36px","36px","62px"]}>
+                        <Heading ml="10px" color="primary" fontSize={["36px", "36px", "62px"]}>
                             {totalAmount}
                         </Heading>
                     </Flex>
@@ -90,21 +90,21 @@ const WalletPage = ({ totalAmount }) => {
             >
                 <WalletCard
                     displayData={depositData}
-                    amount={amounts?.deposit}
+                    amount={parseFloat(amounts?.deposit || 0).toFixed(amounts?.deposit % 1 != 0 ? 2 : 0)}
                     onClick={() => setShowModal({ show: true, mode: "add" })}
                     onChange={onChangeAmount}
                 />
 
                 <WalletCard
                     displayData={withdrawData}
-                    amount={amounts?.winnings}
+                    amount={parseFloat(amounts?.winnings || 0).toFixed(amounts?.winnings % 1 != 0 ? 2 : 0)}
                     onClick={() => setShowModal({ show: true, mode: "sub" })}
                     onChange={onChangeAmount}
                 />
 
                 <WalletCard
                     displayData={bonusData}
-                    amount={amounts?.bonus}
+                    amount={parseFloat(amounts?.bonus || 0).toFixed(amounts?.bonus % 1 != 0 ? 2 : 0)}
                     onClick={() => setShowModal({ show: true, mode: "add" })}
                     onChange={onChangeAmount}
                 />
@@ -120,7 +120,7 @@ const WalletPage = ({ totalAmount }) => {
                 boxShadow="0px 50px 50px -30px rgba(187, 187, 187, 0.1)"
                 borderRadius="20px"
                 border="1px solid #3C3C3C"
-                
+
             >
                 <Image
                     mr="7px"
@@ -137,27 +137,27 @@ const WalletPage = ({ totalAmount }) => {
                 >
                     <Text
                         variant="hint"
-                        fontSize={["10px","12px", "16px"]}
-                        lineHeight={["13px","19px", "35px"]}
-                        ml={["5%","5%", "2%"]}
+                        fontSize={["10px", "12px", "16px"]}
+                        lineHeight={["13px", "19px", "35px"]}
+                        ml={["5%", "5%", "2%"]}
                         color="#fff"
                     >
                         Maximum usable Bonus per match is 10% of the contest entry fee
                         <Text
-                        variant="hint"
-                        fontSize={["10px","12px", "16px"]}
-                        lineHeight={["13px","19px", "35px"]}
-                        ml={["0%", "2%"]}
-                        cursor="pointer"
-                        color="primary"
-                        onClick={() => {
-                            router.push(process.env.NEXT_PUBLIC_WORDPRESS_URL+"/terms-conditions");
-                        }}
-                    >
-                        Know more....
+                            variant="hint"
+                            fontSize={["10px", "12px", "16px"]}
+                            lineHeight={["13px", "19px", "35px"]}
+                            ml={["0%", "2%"]}
+                            cursor="pointer"
+                            color="primary"
+                            onClick={() => {
+                                router.push(process.env.NEXT_PUBLIC_WORDPRESS_URL + "/terms-conditions");
+                            }}
+                        >
+                            Know more....
+                        </Text>
                     </Text>
-                    </Text>
-                    
+
                 </Flex>
             </Flex>
 
