@@ -18,6 +18,9 @@ import { useBreakpointValue, Heading, Radio, RadioGroup, Stack } from "@chakra-u
 import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import { useRouter } from "next/router";
 const stripeJs = async () => await import("@stripe/stripe-js/pure");
+import jsondata from "../../../../public/assets/currency.json";
+
+
 const TabDepositPanel = ({ isDeposit }) => {
     const { asPath } = useRouter();
     const router = useRouter();
@@ -57,11 +60,10 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     useEffect(() => {
         async function fetchData() {
-            // Fetch data
+            // Fetch data   
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
             const results = []
-            // Store results in the results array
-
+                        // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
                 if (value.currency === "USD") {
@@ -77,17 +79,13 @@ const TabDepositPanel = ({ isDeposit }) => {
                     numberOfChips: value.numberOfChips,
                 });
             });
-            await fetch('./assets/currency.json')
-                .then(response => response.json())
-                .then(additionalCurrencies => {
-                    additionalCurrencies.forEach((jsonValue) => {
-                        results.push({
-                            currency: jsonValue,
-                            minimumDeposit: defaultCurrencyValue.minimumDeposit,
-                            numberOfChips: defaultCurrencyValue.numberOfChips,
-                        });
-                    })
-                })
+            jsondata.forEach((jsonValue) => {
+                results.push({
+                    currency: jsonValue,
+                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
+                    numberOfChips: defaultCurrencyValue.numberOfChips,
+                });
+            })
 
             setCurrencyOptions(results);
         }
