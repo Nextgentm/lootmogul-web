@@ -48,6 +48,7 @@ const AllInfluencers = ({
     const [isLargeDesk] = useMediaQuery("(max-width: 1920px)");
     const [isLargeAndAbove] = useMediaQuery("(max-width: 2560px)");
     const [isNormalDesktop] = useMediaQuery("(max-width: 1440px)");
+    const [isMediumMobileview] = useMediaQuery("(max-width: 414px)");
 
     const [columnValues, setColumnValues] = useState("repeat(8, 1fr)");
     const onlyWidth = useWindowWidth();

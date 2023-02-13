@@ -85,7 +85,7 @@ const CollectibleView =memo(({ NFTS, index, nftSelectCategory, isSubPage }) => {
                 bg="#e3e3e3"
                 display={["none", "none", "none", "block"]}
               />
-              <VStack align="left">
+              <VStack align="center">
                 <Text
                   color="white"
                   fontFamily="Sora"
