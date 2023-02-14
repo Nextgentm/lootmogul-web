@@ -292,7 +292,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
 
     const searchText = (e) => {
         let totalRecords = [];
-        if (e.length > 3) {
+        if (e.length > 0) {
             const filteredData = displayInfluencers.filter((x) =>
                 x.name.toLowerCase().includes(e.toLowerCase())
             );

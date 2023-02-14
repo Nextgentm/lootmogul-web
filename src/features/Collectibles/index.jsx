@@ -87,7 +87,6 @@ const Collectibles = memo(({ data, banner }) => {
                 let selectedCat = _.cloneDeep(selCategoriesData)
                  selectedCat[0].nftSet =  selectedCat[0].nftSet.filter(s=>s.nft_kred.data.slug.includes(value))
                 console.log('selCategoriesData',selectedCat)
-
                 setSelCategoriesData(selectedCat);
             }
         } else {
