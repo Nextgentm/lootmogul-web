@@ -271,11 +271,11 @@ const CollectibleCard = memo(({
                                     <div
                                         style={{
                                             width: cardWidth,
-                                            height: "48px",
+                                            height: "22px",
                                             fontWeight: "bold",
                                             color: "white",
                                             fontFamily: "Sora",
-                                            textAlign: isMobileDevice ? "center" : ""
+                                            textAlign: isMobileDevice ? "center" : "center"
                                         }}
                                     >
                                         <span>{nft?.name}</span>
