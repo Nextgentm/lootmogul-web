@@ -41,7 +41,8 @@ const transactionTableData = (transaction, isMobile) => {
                     ? "Won in " + transaction.contest.data.contestmaster.data.name
                     : transaction?.eventmaster?.data?.name
                         ? transaction.eventmaster.data.name
-                        : "transaction",
+                        : transaction?.balanceBeforeConversion ? transaction?.currency?.data?.name + " wallet amount " + transaction?.balanceBeforeConversion + 'USD is converted to ' + Math.round(transaction?.balanceBeforeConversion + 7) + ' CHIPS' : "transaction"
+        ,
         chips:
             transaction?.type === "debit" || transaction?.type === "hold" ? (
                 <Text color="#fff" fontWeight="400">
@@ -49,13 +50,13 @@ const transactionTableData = (transaction, isMobile) => {
                 </Text>
             ) : (
                 <Text color="#fff" fontWeight="400">
-                    +{transaction?.amount} CHIPS
+                    +{transaction?.amount || Math.round(transaction?.balanceBeforeConversion + 7)} CHIPS
                 </Text>
             ),
 
         closingbalance:
             <Text color="#fff" fontWeight="400">
-                {transaction?.closingBalance ? transaction?.closingBalance + 'CHIPS' : '-'}
+                {transaction?.closingBalance ? transaction?.closingBalance + ' CHIPS' : '-'}
             </Text>,
 
         status: (
@@ -67,7 +68,7 @@ const transactionTableData = (transaction, isMobile) => {
                     textAlign="center"
                     fontFamily="Sora"
                 >
-                    {transaction?.status}
+                    {transaction?.status ? transaction?.status : transaction?.balanceBeforeConversion ? "success" : ''}
                 </Text>
 
                 <Text
@@ -86,8 +87,12 @@ const transactionTableData = (transaction, isMobile) => {
     };
 };
 
-export function makeData(tableData, isMobile) {
-    tableData = tableData.map((transaction) => {
+export const makeData = (tableData, isMobile, auditLogData) => {
+
+    tableData.push(...auditLogData)
+    const sortedArray = _.uniqWith(_.orderBy(tableData, [(obj) => new Date(obj.createdAt)], ['desc']), _.isEqual);
+
+    tableData = sortedArray.map((transaction) => {
         return {
             ...transactionTableData(transaction, isMobile)
         };
