@@ -62,7 +62,7 @@ const InfluencerDetail = ({ influencer, breadcumbData }) => {
             const td = isContest
                 ? [
                       {
-                          tab: <Text>NFTs</Text>,
+                          tab: <Text>DIGITAL COLLECTIBLES</Text>,
                           tabPanel: (
                               <>
                                   {" "}
