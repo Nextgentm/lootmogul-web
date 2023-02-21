@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useContext, useEffect } from "react";
+import React, { useState, forwardRef, useContext, useEffect, memo } from "react";
 import {
     Grid,
     GridItem,
@@ -24,13 +24,15 @@ import strapi from "../../../utils/strapi";
 import AppContext from "../../../utils/AppContext";
 import TransactionTable from "./TransactionTable";
 
-const TransactionHistory = () => {
+// eslint-disable-next-line react/display-name
+const TransactionHistory = memo(() => {
     const { user, amounts } = useContext(AppContext);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const [keyword, setKeyword] = useState("");
     const [status, setStatus] = useState("all");
+    const [auditLogData, setAuditLogData] = useState([])
     const [startingDate, setStartingDate] = useState(
         moment().subtract(1, "weeks").format("YYYY-MM-DD")
     );
@@ -85,7 +87,6 @@ const TransactionHistory = () => {
                         pageSize: 60
                     }
                 });
-                console.log(res);
                 if (res?.meta) {
                     data.push(res.data);
                     if (pageCount == 1) {
@@ -95,6 +96,25 @@ const TransactionHistory = () => {
                 pageNo++;
             } while (pageNo <= pageCount);
             data = data.flat();
+            let dataBeforeConvertion = data.filter(i => new Date(i.createdAt) <= new Date('2023-01-25'))
+            let dataAfterConvertion = data.filter(i => new Date(i.createdAt) >= new Date('2023-01-25'))
+            if (dataBeforeConvertion.length && dataAfterConvertion) {
+                const auditLogs = await strapi.find("chips-coversion-histories", {
+                    filters: {
+                        users_permissions_user: {
+                            id: user.id
+                        }
+                    },
+                    populate: ['currency'],
+                    sort: "id:DESC",
+                })
+                if (auditLogs?.data?.length) {
+                    let data = auditLogs?.data.map(i => {
+                        return { ...i, createdAt: new Date('2023-01-25').toISOString() }
+                    })
+                    setAuditLogData(data)
+                }
+            }
             setLoading(false);
             setData(data);
         } catch (error) {
@@ -124,12 +144,11 @@ const TransactionHistory = () => {
 
     return (
         <Box mt="40px">
-            <Heading color="white" fontFamily="Sora" variant="hint" fontSize={["22px","22px","31px"]} >TRANSACTION HISTORY</Heading>
+            <Heading color="white" fontFamily="Sora" variant="hint" fontSize={["22px", "22px", "31px"]} >TRANSACTION HISTORY</Heading>
 
-           <Grid
-                templateColumns={`repeat(${
-                    currentSize === "base" ? 1 : 4
-                }, 1fr)`}
+            <Grid
+                templateColumns={`repeat(${currentSize === "base" ? 1 : 4
+                    }, 1fr)`}
                 gap={6}
                 mt="20px"
             >
@@ -179,7 +198,7 @@ const TransactionHistory = () => {
                                 height={19}
                                 mr="5px"
                             />
-                            }
+                        }
                         title={"Date Range From "}
                         value={startingDate}
                         onChange={(e) => {
@@ -193,7 +212,7 @@ const TransactionHistory = () => {
                     <CustomDatePicker
                         startingDate={startingDate}
                         icon={
-                                <Image
+                            <Image
                                 alt="Calender"
                                 src="/assets/Calender.png"
                                 width={19}
@@ -223,10 +242,12 @@ const TransactionHistory = () => {
                             <TransactionTable
                                 isMobile={true}
                                 tableData={data}
+                                auditLogData={auditLogData}
                                 tableColumns={[
                                     "TRANSACTION ID",
                                     "ACTIVITY",
                                     "CHIPS",
+                                    "CLOSING BALANCE",
                                     "STATUS"
                                 ]}
                             />
@@ -242,10 +263,12 @@ const TransactionHistory = () => {
                     ) : data?.length > 0 ? (
                         <TransactionTable
                             tableData={data}
+                            auditLogData={auditLogData}
                             tableColumns={[
                                 "TRANSACTION ID",
                                 "ACTIVITY",
                                 "CHIPS",
+                                "CLOSING BALANCE",
                                 "STATUS",
                                 "DATE"
                             ]}
@@ -263,7 +286,7 @@ const TransactionHistory = () => {
             )}
         </Box>
     );
-};
+});
 export default TransactionHistory;
 
 const MobileTable = ({ data, loading }) => {
@@ -367,20 +390,20 @@ const MobileTable = ({ data, loading }) => {
                                 >
                                     {(transaction?.type === "debit" ||
                                         transaction?.type === "hold") &&
-                                    transaction?.contest?.data?.contestmaster
-                                        ?.data?.name
+                                        transaction?.contest?.data?.contestmaster
+                                            ?.data?.name
                                         ? "Played " +
-                                          transaction.contest.data.contestmaster
-                                              .data.name
+                                        transaction.contest.data.contestmaster
+                                            .data.name
                                         : transaction?.type === "credit" &&
-                                          transaction?.contest?.data
-                                              ?.contestmaster?.data?.name
-                                        ? "Won in " +
-                                          transaction.contest.data.contestmaster
-                                              .data.name
-                                        : transaction?.eventmaster?.data?.name
-                                        ? transaction.eventmaster.data.name
-                                        : "transaction"}
+                                            transaction?.contest?.data
+                                                ?.contestmaster?.data?.name
+                                            ? "Won in " +
+                                            transaction.contest.data.contestmaster
+                                                .data.name
+                                            : transaction?.eventmaster?.data?.name
+                                                ? transaction.eventmaster.data.name
+                                                : "transaction"}
                                 </Text>
                             </GridItem>
 
@@ -405,7 +428,7 @@ const MobileTable = ({ data, loading }) => {
                                     fontFamily="Sora"
                                 >
                                     {transaction?.type === "debit" ||
-                                    transaction?.type === "hold" ? (
+                                        transaction?.type === "hold" ? (
                                         <Text color="#FF6E3B" fontWeight="bold">
                                             -${transaction?.amount}
                                         </Text>

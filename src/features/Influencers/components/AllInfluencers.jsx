@@ -48,6 +48,7 @@ const AllInfluencers = ({
     const [isLargeDesk] = useMediaQuery("(max-width: 1920px)");
     const [isLargeAndAbove] = useMediaQuery("(max-width: 2560px)");
     const [isNormalDesktop] = useMediaQuery("(max-width: 1440px)");
+    const [isMediumMobileview] = useMediaQuery("(max-width: 414px)");
 
     const [columnValues, setColumnValues] = useState("repeat(8, 1fr)");
     const onlyWidth = useWindowWidth();
@@ -67,6 +68,17 @@ const AllInfluencers = ({
                 setHight("325px");
                 setWidth("378px");
                 setMarLeft("-37px");
+            } else if (onlyWidth === 414){
+                setColumnValues("repeat(1, 1fr)");
+                setHight("325px");
+                setWidth("410px");
+                setMarLeft("-37px");
+            }
+            else if (onlyWidth === 721){
+                setColumnValues("repeat(1, 1fr)");
+                setHight("325px");
+                setWidth("410px");
+                setMarLeft("-37px");
             }
             else {
                 setColumnValues("repeat(1, 1fr)");
@@ -78,12 +90,12 @@ const AllInfluencers = ({
             setColumnValues("repeat(5, 1fr)");
             setHight("328px");
             setWidth("248px");
-            setMarLeft("-10px");
+            setMarLeft("-22px");
         } else if (isAvgDeskDevice) {
             setColumnValues("repeat(5, 1fr)");
             setHight("328px");
-            setWidth("265px");
-            setMarLeft("-5px");
+            setWidth("248px");
+            setMarLeft("-3px");
         } else if (isLargeDesk) {
             setColumnValues("repeat(8, 1fr)");
             setHight("328px");

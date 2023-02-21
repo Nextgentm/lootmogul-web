@@ -287,7 +287,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
         </Box>
 
         {bottomBanners && <BottomBanners bannersList={bottomBanners} />}
-        <MultipleLoggedInUser />
+      
       </Box>
     </Box>
   );

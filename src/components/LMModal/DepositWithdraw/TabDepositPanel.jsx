@@ -18,6 +18,9 @@ import { useBreakpointValue, Heading, Radio, RadioGroup, Stack } from "@chakra-u
 import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import { useRouter } from "next/router";
 const stripeJs = async () => await import("@stripe/stripe-js/pure");
+import jsondata from "../../../../public/assets/currency.json";
+
+
 const TabDepositPanel = ({ isDeposit }) => {
     const { asPath } = useRouter();
     const router = useRouter();
@@ -53,15 +56,15 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [numberOfChips, setNumberOfChips] = useState(35);
     const [numberOfAmount, setNumberOfAmount] = useState(0);
     const [currencyoptions, setCurrencyOptions] = useState([]);
+    const [bitpaycurrencyoptions, setBitpayCurrencyOptions] = useState([]);
 
 
     useEffect(() => {
         async function fetchData() {
-            // Fetch data
+            // Fetch data   
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
             const results = []
-            // Store results in the results array
-
+                        // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
                 if (value.currency === "USD") {
@@ -77,19 +80,55 @@ const TabDepositPanel = ({ isDeposit }) => {
                     numberOfChips: value.numberOfChips,
                 });
             });
-            await fetch('./assets/currency.json')
+            jsondata.forEach((jsonValue) => {
+                results.push({
+                    currency: jsonValue,
+                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
+                    numberOfChips: defaultCurrencyValue.numberOfChips,
+                });
+            })
+
+            setCurrencyOptions(results);
+        }
+        // Trigger the fetch
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            // Fetch data
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const results_bitpay = []
+            // Store results in the results array
+
+            var defaultCurrencyValue;
+            data.data.forEach((value) => {
+                if (value.currency === "USD") {
+                    defaultCurrencyValue = {
+                        currency: value.currency,
+                        minimumDeposit: value.minimumDeposit,
+                        numberOfChips: value.numberOfChips,
+                    }
+                }
+                results_bitpay.push({
+                    currency: value.currency,
+                    minimumDeposit: value.minimumDeposit,
+                    numberOfChips: value.numberOfChips,
+                });
+            });
+            await fetch('https://test.bitpay.com/currencies')
                 .then(response => response.json())
                 .then(additionalCurrencies => {
-                    additionalCurrencies.forEach((jsonValue) => {
-                        results.push({
-                            currency: jsonValue,
+                    additionalCurrencies.data.forEach((jsonValue) => {
+                        results_bitpay.push({
+                            currency: jsonValue.code,
                             minimumDeposit: defaultCurrencyValue.minimumDeposit,
                             numberOfChips: defaultCurrencyValue.numberOfChips,
                         });
                     })
                 })
 
-            setCurrencyOptions(results);
+            setBitpayCurrencyOptions(results_bitpay);
         }
         // Trigger the fetch
         fetchData();
@@ -220,6 +259,9 @@ const TabDepositPanel = ({ isDeposit }) => {
     useEffect(() => {
         if (depositType == 2)
             setCurrency('USD')
+
+        if (depositType == 1)
+            setCurrency('USD')    
     }, [depositType])
 
     return (
@@ -264,6 +306,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 SELECT CURRENCY
             </Heading>
             <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px">
+            { depositType == 1 ? (
                 <Select
                     w={currentSize === "base" ? "40%" : "40%"}
                     h="42px"
@@ -271,16 +314,35 @@ const TabDepositPanel = ({ isDeposit }) => {
                     backgroundColor="#1d052b"
                     value={currency}
                     onChange={handleChange}
-                    disabled={depositType == 2}
                 >
-                    {currencyoptions.map((option) => {
-                        return (
-                            <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
-                                {option.currency}
-                            </option>
-                        );
-                    })}
+                {currencyoptions.map((option) => {
+                    return (
+                        <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                            {option.currency}
+                        </option>
+                    );
+                })}
                 </Select>
+            ) : (
+                <Select
+                    w={currentSize === "base" ? "40%" : "40%"}
+                    h="42px"
+                    color="white"
+                    backgroundColor="#1d052b"
+                    value={currency}
+                    onChange={handleChange}
+                >
+                {bitpaycurrencyoptions.map((option) => {
+                    return (
+                        <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                            {option.currency}
+                        </option>
+                    );
+                })}
+                </Select>
+            )}
+                
+                
 
                 <Text
                     display="inline-flex"
