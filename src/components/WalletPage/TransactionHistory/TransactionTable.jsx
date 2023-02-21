@@ -42,7 +42,7 @@ function CustomTable({ columns, data }) {
     );
     return (
         <Box width="100%">
-       
+
             <Table
                 mt="5%"
                 width="100%"
@@ -51,7 +51,7 @@ function CustomTable({ columns, data }) {
                 variant="striped"
                 color="#C7C7C7"
                 colorScheme="stripedTable"
-                
+
                 {...getTableProps()}
             >
                 <Thead key="thead_1">
@@ -156,11 +156,11 @@ function CustomTable({ columns, data }) {
     );
 }
 
-function TransactionTable({ tableData, tableColumns, isMobile }) {
+function TransactionTable({ tableData, tableColumns, isMobile, auditLogData }) {
     return (
         <CustomTable
             columns={makeColumn(tableColumns)}
-            data={makeData(tableData, isMobile)}
+            data={makeData(tableData, isMobile, auditLogData)}
         />
     );
 }

@@ -87,7 +87,6 @@ const Collectibles = memo(({ data, banner }) => {
                 let selectedCat = _.cloneDeep(selCategoriesData)
                  selectedCat[0].nftSet =  selectedCat[0].nftSet.filter(s=>s.nft_kred.data.slug.includes(value))
                 console.log('selCategoriesData',selectedCat)
-
                 setSelCategoriesData(selectedCat);
             }
         } else {
@@ -286,9 +285,8 @@ const Collectibles = memo(({ data, banner }) => {
 
                 {/* desktop bredcrumb */}
                 {(!isMobileDevice && selectedCategory.toLowerCase() !== defaultCategories.toLowerCase()) && <BreadCrumb data={breadcumbData} mxValue={[]}></BreadCrumb>}
-
                 {/* // Category subheader */}
-
+                
                 {selectedCategory.toLowerCase() !== defaultCategories.toLowerCase() && <Flex
                     justifyContent={["space-between"]}
                     alignItems="center"

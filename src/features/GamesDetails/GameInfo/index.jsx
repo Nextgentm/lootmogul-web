@@ -2,6 +2,7 @@ import { Box, Flex, Text, Image } from "@chakra-ui/react";
 
 import GameInfoActions from "./GameInfoActions";
 import GameInfoGrid from "./GameInfoGrid";
+import MultipleLoggedInUser from "/src/components/MultipleLoggedInUser/index.jsx";
 
 
 
@@ -160,6 +161,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
             />
           )}
         </Box>
+        <MultipleLoggedInUser />
       </Flex>
     </>
   );
