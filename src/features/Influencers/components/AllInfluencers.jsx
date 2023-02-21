@@ -49,6 +49,8 @@ const AllInfluencers = ({
     const [isLargeAndAbove] = useMediaQuery("(max-width: 2560px)");
     const [isNormalDesktop] = useMediaQuery("(max-width: 1440px)");
     const [isMediumMobileview] = useMediaQuery("(max-width: 414px)");
+    const [isSmallDesktop] = useMediaQuery("(max-width: 1536px)");
+    const [isSmDesktop] = useMediaQuery("(max-height: 864px)");
 
     const [columnValues, setColumnValues] = useState("repeat(8, 1fr)");
     const onlyWidth = useWindowWidth();
@@ -89,13 +91,27 @@ const AllInfluencers = ({
         } else if (isAvgLaptopDevice) {
             setColumnValues("repeat(5, 1fr)");
             setHight("328px");
-            setWidth("248px");
-            setMarLeft("-22px");
+            setWidth("254px");
+            setMarLeft("-13px");
+            
+        }
+        else if (isAvgLaptopDevice) {
+            setColumnValues("repeat(5, 1fr)");
+            setHight("328px");
+            setWidth("254px");
+            setMarLeft("-13px");
+            
+        }
+        else if (isNormalDesktop) {
+            setColumnValues("repeat(5, 1fr)");
+            setHight("328px");
+            setWidth("256px");
+            setMarLeft("-9px"); 
         } else if (isAvgDeskDevice) {
             setColumnValues("repeat(5, 1fr)");
             setHight("328px");
-            setWidth("248px");
-            setMarLeft("-3px");
+            setWidth("252px");
+            setMarLeft("5px");
         } else if (isLargeDesk) {
             setColumnValues("repeat(8, 1fr)");
             setHight("328px");
@@ -216,6 +232,8 @@ const AllInfluencers = ({
                                             src="/assets/side_Frame.png"
                                             ml={marLeft}
                                             mt={"-28px"}
+                                            // left={0}
+                                            // right={0}                                          
                                         />
                                     </Flex>
                                 </Link>

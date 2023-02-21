@@ -271,18 +271,21 @@ const CollectibleCard = memo(({
                                     <div
                                         style={{
                                             width: cardWidth,
-                                            height: "22px",
+                                            height: "50px",
                                             fontWeight: "bold",
                                             color: "white",
                                             fontFamily: "Sora",
-                                            textAlign: isMobileDevice ? "center" : "center"
+                                            textAlign: isMobileDevice ? "center" : "center",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center"
                                         }}
-                                    >
-                                        <span>{nft?.name}</span>
+                                        >
+                                        <span style={{ margin: "0 3px" }}>{nft?.name}</span>
                                     </div>
 
                                     {nft?.market_price && (
-                                        <Flex
+                                        <Flex style={{ margin: "0 10px" }}
                                             mt={"3%!important"}
                                             justifyContent="center"
                                             m={0}
