@@ -99,7 +99,7 @@ const InfluencerDetail = ({ influencer, breadcumbData }) => {
                   ]
                 : [
                       {
-                          tab: <Text>NFTS</Text>,
+                          tab: <Text>DIGITAL COLLECTIBLES</Text>,
                           tabPanel: (
                               <>
                                   {" "}
