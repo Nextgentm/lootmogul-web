@@ -2,6 +2,7 @@ import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
 import { WalletIcon } from "../../Icons";
 import LMTabs from "../../LMTabs";
 import { useBreakpointValue } from "@chakra-ui/react";
+import DepostWithdrawstop from "./withdrawStop";
 
 const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
     const currentSize = useBreakpointValue({
