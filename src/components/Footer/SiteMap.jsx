@@ -34,6 +34,13 @@ const SiteMap = () => {
             >
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>About us</Text>
             </Link>
+            <Link
+                _focus={{ border: "none", boxShadow: "none" }}
+                _hover={{ textDecoration: "none" }}
+                href={process.env.NEXT_PUBLIC_WORDPRESS_URL+'/invest-in-lootmogul/'}
+            >
+                <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Invest In Lootmogul</Text>
+            </Link>
             <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href="/faq">
                 <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>FAQ</Text>
             </Link>
