@@ -2,7 +2,6 @@ import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
 import { WalletIcon } from "../../Icons";
 import LMTabs from "../../LMTabs";
 import { useBreakpointValue } from "@chakra-ui/react";
-import DepostWithdrawstop from "./withdrawStop";
 
 const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
     const currentSize = useBreakpointValue({
@@ -125,67 +124,23 @@ const WalletFooter = () => {
         </Flex>
     );
 };
-const WalletBody = ({ isDeposit }) => {
-    const data = [
-        {
-            url: "/assets/images/stripe.png",
-            name: "Stripe"
-        }
-    ];
-    const withDrawData = [
-        {
-            url: "/assets/images/Paypal.png",
-            name: "Paypal",
-            mode: "paypal",
-            type: "cash"
-        },
-        {
-            url: "/assets/images/metamask.png",
-            name: "Metamask",
-            mode: "metamask",
-            type: "crypto"
-        },
-        {
-            url: "/assets/images/coinbase.png",
-            name: "Coinbase wallet",
-            mode: "coinbase",
-            type: "crypto"
-        }
-    ];
 
-    const currentSize = useBreakpointValue({
-        base: "base",
-        sm: "sm",
-        md: "md"
-    });
-
-    return (
-        <Flex bg="#1d052b" margin-bottom={"9"} padding-right={"8"} padding-left={"12"} margin-left={"6"} font="icon">
-            <LMTabs
-                data={isDeposit ? data : withDrawData}
-                isDeposit={isDeposit}
-                orientation={currentSize === "base" ? "horizontal" : "vertical"}
-            />
-        </Flex>
-    );
-};
-
-const DepostWithdraw = ({ totalAmount, isDeposit, winAmount }) => {
+const DepostWithdrawstop = ({ totalAmount, isDeposit, winAmount }) => {
     return (
         <Box width="100%" bg="#1d052b" borderRadius="12px" border="4px solid #672099" boxShadow="0px 6px 40px #090014">
             <WalletHeader
                 isDeposit={isDeposit}
                 totalAmount={totalAmount}
                 winAmount={winAmount}
-            />
-            <WalletSubHeader 
+            /> 
+             {/* <WalletSubHeader 
                 isDeposit={isDeposit}
                 totalAmount={totalAmount}
                 winAmount={winAmount}
-            />
-            <WalletBody isDeposit={isDeposit} />
+            /> */}
+            <Text style={{color:'white', textAlign:'center', padding:'10px',fontWeight:700}}>We have paused our withdrawal till 28th Feb 2023</Text> 
             <WalletFooter />
         </Box>
     );
 };
-export default DepostWithdraw;
+export default DepostWithdrawstop;
