@@ -242,7 +242,7 @@ const TransactionHistory = memo(() => {
                             <TransactionTable
                                 isMobile={true}
                                 tableData={data}
-                                auditLogData={[]}
+                                auditLogData={auditLogData}
                                 tableColumns={[
                                     "TRANSACTION ID",
                                     "ACTIVITY",
