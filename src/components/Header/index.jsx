@@ -460,7 +460,8 @@ const Header = () => {
                 </Box>
                 
             )}
-            <Box
+            {!isHideHeader && ( 
+                <Box
                     bg="#1e052c"
                     w="100%"
                     h={isMobileDevice ? "auto" : "auto"}
@@ -497,7 +498,9 @@ const Header = () => {
                         <a target="_blank" href="https://republic.com/lootmogul">Invest Now</a></Text>
                     </Flex>
                 </Box>
-            <Box>
+                )}
+
+            <Box>                 
                 <Login
                     isOpen={isLoginModalActive}
                     OnLoginClose={OnLoginClose}
