@@ -11,6 +11,7 @@ import LinkWallet from "../LMModal/LinkWallet";
 import DepostWithdraw from "../LMModal/DepositWithdraw";
 import AppContext from "../../utils/AppContext";
 import { useRouter } from "next/router";
+import DepostWithdrawstop from "../LMModal/DepositWithdraw/withdrawStop";
 
 const WalletPage = ({ totalAmount }) => {
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
@@ -178,10 +179,11 @@ const WalletPage = ({ totalAmount }) => {
                     />
                 )}
                 {showModal.mode === "sub" && (
-                    <DepostWithdraw
-                        totalAmount={totalAmount}
-                        winAmount={amounts?.winnings}
-                    />
+                    // <DepostWithdraw
+                    //     totalAmount={totalAmount}
+                    //     winAmount={amounts?.winnings}
+                    // />
+                    <DepostWithdrawstop/>
                 )}
             </LMModal>
         </Box>

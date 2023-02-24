@@ -12,6 +12,7 @@ import { AppContext } from "../../../utils/AppContext/index";
 
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import DepostWithdrawstop from "../../LMModal/DepositWithdraw/withdrawStop";
 const DepostWithdrawModal = dynamic(
     () => import("../../LMModal/DepositWithdraw"),
     {
@@ -241,11 +242,13 @@ const UserInfo = ({ user, isMobileDevice }) => {
                     />
                 )}
                 {showModal.mode === "add" && (
-                    <DepostWithdrawModal
-                        totalAmount={totalAmount}
-                        winAmount={amounts?.winnings}
-                    />
+                    // <DepostWithdrawModal
+                    //     totalAmount={totalAmount}
+                    //     winAmount={amounts?.winnings}
+                    // />
+                    <DepostWithdrawstop/>
                 )}
+
             </LMModalComponent>
         </Flex>
     );
