@@ -487,14 +487,14 @@ const Header = () => {
                         w={isMobileDevice ? "100%" : "70%"}
                         justify={isMobileDevice ? "left" : "center"}
                     >
-                        <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}>Become a Stakeholder in LootMogul! minimum investment $100. <a style={{textDecoration:'underline'}} href="https://lootmogulstg.wpengine.com/invest-in-lootmogul/">Learn More</a></Text>
+                        <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}><a target="_blank" href="https://republic.com/lootmogul">Become a Stakeholder in LootMogul! minimum investment $100.</a> <a style={{textDecoration:'underline'}} target="_blank" href="https://republic.com/lootmogul">Learn More</a></Text>
                     </Flex>
                     <Flex
                         w={isMobileDevice ? "100%" : "30%"}
                         justify={isMobileDevice ? "left" : "end"}
                     >
                         <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["2px 10px","2px 10px","5px 20px","5px 20px"]} border="1px solid #fff" borderRadius="5px">
-                        <a href="https://lootmogulstg.wpengine.com/invest-in-lootmogul/">Invest Now</a></Text>
+                        <a target="_blank" href="https://republic.com/lootmogul">Invest Now</a></Text>
                     </Flex>
                 </Box>
             <Box>
