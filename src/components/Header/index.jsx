@@ -330,7 +330,7 @@ const Header = () => {
                             padding={["0", "0", "10px"]}
                             height={["66px", "66px", "80px"]}
                             objectFit="contain"
-                            onClick={() => router.push("/")}
+                            onClick={() => router.push(process.env.NEXT_PUBLIC_WORDPRESS_URL)}
                             alt="logo"
                             src="/assets/Final-Logo-Full.png"
                         />
