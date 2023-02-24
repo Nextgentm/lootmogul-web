@@ -317,6 +317,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 >
                 {currencyoptions.map((option) => {
                     return (
+                        // eslint-disable-next-line react/no-unknown-property
                         <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
                             {option.currency}
                         </option>
@@ -334,6 +335,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 >
                 {bitpaycurrencyoptions.map((option) => {
                     return (
+                        // eslint-disable-next-line react/no-unknown-property
                         <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
                             {option.currency}
                         </option>
