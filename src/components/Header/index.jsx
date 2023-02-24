@@ -475,7 +475,7 @@ const Header = () => {
                     zIndex={"101"}
                     backgroundImage="/assets/bg-bar.png"
                     backgroundSize="cover"
-                    display={['block','block','flex','flex']}
+                    display={['block','block','flex','flex','flex']}
                 >
                     <Flex
                         w={isMobileDevice ? "100%" : "20%"}
