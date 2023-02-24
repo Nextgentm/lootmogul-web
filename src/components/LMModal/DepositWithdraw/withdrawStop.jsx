@@ -1,7 +1,6 @@
 import { Box, Flex, Heading, Text, Image } from "@chakra-ui/react";
-import { WalletIcon } from "../../Icons";
-import LMTabs from "../../LMTabs";
 import { useBreakpointValue } from "@chakra-ui/react";
+import { Pauseicon } from "../../Icons";
 
 const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
     const currentSize = useBreakpointValue({
@@ -11,7 +10,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
     });
 
     return (
-        <Flex width="100%" bg="#1d052b"  borderBottom="0">
+        <Flex width="100%" bg="#1d052b" borderBottom="0">
             <Flex w="100%">
                 {currentSize !== "base" && (
                     <Flex width={["100%", "100%"]}>
@@ -26,10 +25,10 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         >
                             <Heading
                                 mt="10px"
-                                fontWeight="600"
                                 variant="modalHeader"
-                                fontSize={["22px","22px", "48px"]}
+                                fontSize={["32px", "32px", "98px"]}
                                 fontFamily={"blanch"}
+                                paddingBottom={12}
                             >
                                 {isDeposit ? "DEPOSIT" : "WITHDRAW"}
                             </Heading>
@@ -40,7 +39,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                 {currentSize === "base" && (
                     <Box
                         width="100%"
-                        paddingTop={["15px","15px","10%"]}
+                        paddingTop={["15px", "15px", "10%"]}
                         marginRight="16px"
                         borderTopLeftRadius="8px"
                         bg="#1d052b"
@@ -59,7 +58,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                 )}
 
             </Flex>
-        </Flex>  
+        </Flex>
     );
 };
 
@@ -83,13 +82,17 @@ const DepostWithdrawstop = ({ totalAmount, isDeposit, winAmount }) => {
                 isDeposit={isDeposit}
                 totalAmount={totalAmount}
                 winAmount={winAmount}
-            /> 
-             {/* <WalletSubHeader 
-                isDeposit={isDeposit}
-                totalAmount={totalAmount}
-                winAmount={winAmount}
-            /> */}
-            <Text style={{color:'white', textAlign:'center', padding:'10%',paddingBottom:'23%',paddingTop:'23%',fontWeight:700,fontSize:'20px'}}>We have paused our withdrawal till 28th Feb 2023</Text> 
+            />
+            <Flex m="auto" width="100%" justifyContent="center">
+                <Pauseicon />
+            </Flex>
+            <Heading
+                variant="modalHeader"
+                fontSize={["18px"]}
+                padding={10}
+                textAlign={'center'}
+                lineHeight='10'
+            >Due to system upgrade, withdrawal option is disabled until 28th February 2023</Heading>
             <WalletFooter />
         </Box>
     );

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable react/jsx-key */
 import { Icon, Button } from "@chakra-ui/react";
 export const DepositAddIcon = (props) => (
@@ -352,3 +353,46 @@ export const ShareIcon = (props) => (
         </path>
     </Icon>
 );
+
+export const Pauseicon = (props) => {
+    return <Icon viewBox="0 0  79 79"
+        {...props}
+        width="120" height="120"
+    >
+        <defs>
+            <linearGradient id="linear-gradient" x1="0.416" y1="0.5" x2="1.448" y2="0.5" gradientUnits="objectBoundingBox">
+                <stop offset="0" stopColor="#e90a63" />
+                <stop offset="1" stopColor="#481a7f" />
+            </linearGradient>
+            <filter id="Ellipse_281" x="0" y="0" width="79" height="79" filterUnits="userSpaceOnUse">
+                <feOffset input="SourceAlpha" />
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feFlood floodColor="#ff0080" floodOpacity="0.812" />
+                <feComposite operator="in" in2="blur" />
+                <feComposite in="SourceGraphic" />
+            </filter>
+            <filter id="Ellipse_281-2" x="0" y="0" width="79" height="79" filterUnits="userSpaceOnUse">
+                <feOffset dy="3" input="SourceAlpha" />
+                <feGaussianBlur stdDeviation="9" result="blur-2" />
+                <feFlood floodColor="#481a7f" floodOpacity="0.451" result="color" />
+                <feComposite operator="out" in="SourceGraphic" in2="blur-2" />
+                <feComposite operator="in" in="color" />
+                <feComposite operator="in" in2="SourceGraphic" />
+            </filter>
+        </defs>
+        <g id="Group_3619" data-name="Group 3619" transform="translate(-21481 7019)">
+            <g data-type="innerShadowGroup">
+                <g transform="matrix(1, 0, 0, 1, 21481, -7019)" filter="url(#Ellipse_281)">
+                    <circle id="Ellipse_281-3" data-name="Ellipse 281" cx="24.5" cy="24.5" r="24.5" transform="translate(15 15)" fill="url(#linear-gradient)" />
+                </g>
+                <g transform="matrix(1, 0, 0, 1, 21481, -7019)" filter="url(#Ellipse_281-2)">
+                    <circle id="Ellipse_281-4" data-name="Ellipse 281" cx="24.5" cy="24.5" r="24.5" transform="translate(15 15)" fill="#fff" />
+                </g>
+            </g>
+            <g id="Group_3618" data-name="Group 3618">
+                <rect id="Rectangle_2370" data-name="Rectangle 2370" width="6" height="20" transform="translate(21512 -6989)" fill="#fff" />
+                <rect id="Rectangle_2371" data-name="Rectangle 2371" width="6" height="20" transform="translate(21524 -6989)" fill="#fff" />
+            </g>
+        </g>
+    </Icon>
+}
