@@ -460,7 +460,8 @@ const Header = () => {
                 </Box>
                 
             )}
-            <Box
+            {!isHideHeader && ( 
+                <Box
                     bg="#1e052c"
                     w="100%"
                     h={isMobileDevice ? "auto" : "auto"}
@@ -477,27 +478,45 @@ const Header = () => {
                     backgroundSize="cover"
                     display={['block','block','flex','flex']}
                 >
-                    <Flex
-                        w={isMobileDevice ? "100%" : "20%"}
-                        justify={isMobileDevice ? "left" : "unset"}
-                    >
-                        <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}>Limited time Offer</Text>
-                    </Flex>
-                    <Flex
-                        w={isMobileDevice ? "100%" : "70%"}
-                        justify={isMobileDevice ? "left" : "center"}
-                    >
-                        <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}><a target="_blank" href="https://republic.com/lootmogul">Become a Stakeholder in LootMogul! minimum investment $100.</a> <a style={{textDecoration:'underline'}} target="_blank" href="https://republic.com/lootmogul">Learn More</a></Text>
-                    </Flex>
+                    {!isMobileDevice ?
+                         <>
+                         <Flex
+                            w={isMobileDevice ? "100%" : "20%"}
+                            justify={isMobileDevice ? "left" : "unset"}
+                            display={['inline-block','inline-block','flex','flex']}
+                        >
+                            <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}>Limited time Offer</Text>
+                        </Flex>
+                        <Flex
+                            w={isMobileDevice ? "100%" : "70%"}
+                            justify={isMobileDevice ? "left" : "center"}
+                            display={['inline-block','inline-block','flex','flex']}
+                        >
+                            <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}><a target="_blank" href="https://republic.com/lootmogul">Become a Stakeholder in LootMogul! minimum investment $100.</a> <a style={{textDecoration:'underline'}} target="_blank" href="https://republic.com/lootmogul">Learn More</a></Text>
+                        </Flex>
+                        </>   
+                    :
+                    <>
+                        <Flex
+                            w={isMobileDevice ? "100%" : "70%"}
+                            justify={isMobileDevice ? "left" : "center"}
+                            display={['inline-block','inline-block','flex','flex']}
+                        >
+                            <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}><a target="_blank" href="https://republic.com/lootmogul">Limited time Offer. Become a Stakeholder in LootMogul! minimum investment $100.</a> <a style={{textDecoration:'underline'}} target="_blank" href="https://republic.com/lootmogul">Learn More</a></Text>
+                        </Flex>
+                    </>   
+                    }
                     <Flex
                         w={isMobileDevice ? "100%" : "30%"}
-                        justify={isMobileDevice ? "left" : "end"}
+                        justify={isMobileDevice ? "center" : "end"}
                     >
-                        <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["2px 10px","2px 10px","5px 20px","5px 20px"]} border="1px solid #fff" borderRadius="5px">
+                        <Text fontSize={["12px","12px","15px","15px"]} color="#fff" mb="10px" p={["5px 10px","5px 10px","5px 20px","5px 20px"]} border="1px solid #fff" borderRadius="5px">
                         <a target="_blank" href="https://republic.com/lootmogul">Invest Now</a></Text>
                     </Flex>
                 </Box>
-            <Box>
+                )}
+
+            <Box>                 
                 <Login
                     isOpen={isLoginModalActive}
                     OnLoginClose={OnLoginClose}
