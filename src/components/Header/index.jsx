@@ -468,7 +468,7 @@ const Header = () => {
                     pl={["16px", "5%"]}
                     pr={["16px", "5%"]}
                     alignItems="center"
-                    top="0"
+                    top={["65px","60px","90px", "90px"]}
                     justify="space-between"
                     as="nav"
                     position="sticky"
