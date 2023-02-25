@@ -23,6 +23,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     const [options, setOptions] = useState([]);
     const [category, setCategory] = useState(defaultCategoryName);
     const [sortBy, setSortBy] = useState("Sort By");
+    const [searchString, setSearchString] = useState("");
     const [displayData, setDisplayData] = useState(data);
     const [pageNo, setPageNo] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
@@ -55,6 +56,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             data.map((cat) => {
                 options.push(cat.name);
             });
+         
             setCategory(defaultCategoryName);
             setDisplayData(data);
 
@@ -256,8 +258,19 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                     inf.push(influencer);
                 });
             });
+            if (searchString.length > 0) {
+                const filteredData = inf.filter((x) =>
+                    x.name.toLowerCase().includes(searchString.toLowerCase())
+                );
+                setDisplayInfluencers(filteredData);
+               
+            } else {
             setDisplayInfluencers(inf);
+            
+            }
             setDisplayInfluencersBkup(inf);
+          
+           
             const tp =
                 inf?.length > 16 && inf?.length % 16 === 0
                     ? inf?.length / 16
@@ -296,6 +309,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
     };
 
     const searchText = (e) => {
+        setSearchString(e);
         let totalRecords = [];
         if (e.length > 0) {
             const filteredData = displayInfluencers.filter((x) =>

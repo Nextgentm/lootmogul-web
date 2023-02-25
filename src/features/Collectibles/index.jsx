@@ -34,6 +34,7 @@ const Collectibles = memo(({ data, banner }) => {
     const priceData = ["Price Low To High", "Price High To Low"];
     const [breadcumbData, setBreadcumbData] = useState([]);
     const [subHeader, setSubHeader] = useState('');
+    const [searchValue, setSearchValue] = useState("");
     const [isSubPage, setIsSubPage] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
@@ -55,18 +56,33 @@ const Collectibles = memo(({ data, banner }) => {
         try {
             if (selectedCategory.toLocaleLowerCase() !== 'overview') {
                 const selectedData = data.filter(c => c.name.toLowerCase() === selectedCategory.toLowerCase())
-                setSelCategoriesData(selectedData);
+               
+              console.log(searchValue);
+                if(searchValue !==''){
+                let selectedCat = _.cloneDeep(selectedData)
+                selectedCat[0].nftSet =  selectedCat[0].nftSet.filter(s=>s.nft_kred.data.slug.includes(searchValue))
+                console.log('selCategoriesData',selectedCat)
+                setSelCategoriesData(selectedCat);
+                }
+                else{
+                    setSelCategoriesData(selectedData);
+                }
                 const image = !isTabletOrDesktop
                     ? selectedData[0].banner?.data[1].url
-                    : selectedData[0].banner?.data[0].url;
-                setBannerImage(image);
+                    : selectedData[0].banner?.data[0].url;  
+                setBannerImage(image); 
+                console.log("called")
+
             } else {
                 setSelCategoriesData(data);
                 const image = !isTabletOrDesktop
                     ? banner?.[1]?.url || banner?.[0]?.url
                     : banner[0]?.url;
                 setBannerImage(image);
+              
             }
+            console.log();
+            
         } catch (error) {
             setBannerImage(null);
         }
@@ -82,7 +98,9 @@ const Collectibles = memo(({ data, banner }) => {
     }, [selCategoriesData]);
 
     const nftSearch = (value) => {
-        if (value !== '') {
+        setSearchValue(value);
+        if (value !== '') { 
+           
             if (selectedCategory.toLocaleLowerCase() !== 'overview') {
                 let selectedCat = _.cloneDeep(selCategoriesData)
                  selectedCat[0].nftSet =  selectedCat[0].nftSet.filter(s=>s.nft_kred.data.slug.includes(value))
@@ -159,7 +177,7 @@ const Collectibles = memo(({ data, banner }) => {
                                     placeholder="Search by name or attributes"
                                     color={"white"}
                                     onChange={(e) => {
-                                        nftSearch(e.target.value);
+                                        nftSearch(e.target.value);   
                                     }}
                                 />
                             </InputGroup>

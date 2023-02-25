@@ -33,7 +33,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
     useEffect(() => {
         setTimeout(() => {
             if (searchText !== '') {
-                if (searchText.length >= 3) {
+                if (searchText.length >= 0) {
                     const clonedData = structuredClone(content);
                     clonedData.contestmasters.data =
                         content?.contestmasters?.data.filter((x) =>
@@ -41,7 +41,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                         );
                     setContent(clonedData);
                 } else {
-                    setContent(contentBackUp);
+                    setContent(clonedData);
                 }
             }
         }, 1000);
