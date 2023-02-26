@@ -31,19 +31,20 @@ const GamesCategories = ({ isMobileDevice, section }) => {
     const [contentBackUp, setContentBackUp] = useState({});
 
     useEffect(() => {
-        setTimeout(() => {
+        setTimeout(() => {      
             if (searchText !== '') {
-                if (searchText.length >= 0) {
-                    const clonedData = structuredClone(content);
+                if (searchText.length > 0) {
+                    const clonedData = structuredClone(content);  
                     clonedData.contestmasters.data =
-                        content?.contestmasters?.data.filter((x) =>
-                            x.name.toLowerCase().includes(searchText.toLowerCase())
-                        );
-                    setContent(clonedData);
-                } else {
-                    setContent(clonedData);
-                }
+                    content?.contestmasters?.data.filter((x) =>
+                    x.name.toLowerCase().includes(searchText.toLowerCase()));
+                setContent(clonedData);
+                }            
             }
+            else {
+                setContent(section);
+            }
+            
         }, 1000);
         
     }, [searchText]);
@@ -86,7 +87,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                 </Box>
                 <Spacer />
                 <ButtonGroup gap="2">
-                    {content.name !== "Trending Tournament" && content?.contestmasters?.data?.length > 0 ? (
+                    {content.name !== "Trending Tournament"  ? (
                         <Box width={"250px"} right="0">
                             <Search searchText={setSearchText}></Search>
                         </Box>
