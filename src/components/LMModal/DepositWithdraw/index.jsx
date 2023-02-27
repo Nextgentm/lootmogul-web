@@ -26,10 +26,10 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         >
                             <Heading
                                 mt="10px"
-                                fontWeight="600"
+                                fontWeight="500"
                                 variant="modalHeader"
-                                fontSize={["12px","12px", "36px"]}
-                                fontFamily={"blanch"}
+                                fontSize={["12px","12px", "22px"]}
+                                fontFamily={"Open Sans"}
                             >
                                 {isDeposit ? "DEPOSIT" : "WITHDRAW"}
                             </Heading>
@@ -46,6 +46,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         bg="#1d052b"
                         display="flex"
                         justifyContent="center"
+                        fontFamily={"Open Sans"}
                     >
                         <Heading
                             ml="10%"
@@ -77,7 +78,7 @@ const WalletSubHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         <Heading
                             fontWeight="400"
                             fontFamily="Blanch"
-                            fontSize={["20px", "20px", "31px"]}
+                            fontSize={["20px", "20px", "38px"]}
                             ml={["6px!important", "15px!important"]}
                             m="auto"
                             color="white"
@@ -140,15 +141,15 @@ const WalletBody = ({ isDeposit }) => {
         },
         {
             url: "/assets/images/metamask.png",
-            name: "Metamask",
-            mode: "metamask",
+            name: "Crypto",
+            mode: "crypto",
             type: "crypto"
         },
         {
             url: "/assets/images/coinbase.png",
-            name: "Coinbase wallet",
-            mode: "coinbase",
-            type: "crypto"
+            name: "Wire/bank transfer",
+            mode: "bank",
+            type: "bank"
         }
     ];
 
