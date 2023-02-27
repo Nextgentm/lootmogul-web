@@ -44,12 +44,13 @@ function CustomTable({ columns, data, currentUser, rawData, noOfRec }) {
     );
 
     return (
-        <Box width="100%">
+        <Box width="90%">
             <Table
                 mt="5%"
                 width="100%"
                 tableLayout="fixed"
-                bg="#1C1C1C"
+                bg="#240e45"
+                variant="striped"
                 color="#C7C7C7"
                 colorScheme="stripedTable"
                 {...getTableProps()}
