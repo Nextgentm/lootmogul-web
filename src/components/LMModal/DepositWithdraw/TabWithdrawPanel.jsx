@@ -9,9 +9,13 @@ import {
     InputLeftAddon,
     Checkbox,
     Button,
-    Box
+    Box,
+    Heading,
+    Tooltip,
+    RadioGroup,
+    Radio
 } from "@chakra-ui/react";
-
+import { InfoIcon } from "../../Icons";
 import strapi from "../../../utils/strapi";
 import AppContext from "../../../utils/AppContext";
 import { useBreakpointValue } from "@chakra-ui/react";
@@ -34,6 +38,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
 
     const [userBal, setuserBal] = useState({});
     const { user, updateUser } = useContext(AppContext);
+    const [currency, setCurrency] = useState('USD');
+    const [minimumDeposit, setMinimumDeposit] = useState(5);
+    const [numberOfChips, setNumberOfChips] = useState(35);
+    const [numberOfAmount, setNumberOfAmount] = useState(0);
+
+    const [withdrawalType, setWithdrawalType] = useState('paypal')
+
     useEffect(() => {
         if (user) {
             setuserBal({
@@ -117,146 +128,413 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
 
     return (
         <Flex h="100%" w="100%" direction={"column"}>
-            <Box bg="#39106A" p="20px" borderRadius="15px">
-            <Flex
-                w="100%"
-                justifyContent={isDeposit ? "space-between" : "space-evenly"}
-                bg="#1D052B"
-                p="4%"
-                borderTopRadius="15px"
-            >
-                <InputGroup>
-                    <InputLeftAddon
-                        w={["48%", "40%"]}
-                        fontSize={["13px", "17px"]}
-                        fontWeight="600"
-                        bg="#39106A"
-                        color="#fff"
-                        pr="15px"
-                    >
-                        Amount
-                    </InputLeftAddon>
-                    <Input
-                        w={currentSize === "base" ? "40%" : "50%"}
-                        color="white"
-                        defaultValue={amount}
-                        onChange={(e) => {
-                            setAmount(e.target.value);
-                        }}
-                        placeholder="Amount"
-                    ></Input>
-                </InputGroup>
-
-                <Select
-                    w={currentSize === "base" ? "64%" : "80%"}
-                    color="white"
-                    bg="#1D052B"
-                    onChange={(e) => {
-                        setCryptoType(e.target.value);
-                    }}
-                >
-                    {cashOption.map((type, index) => {
-                        return (
-                            <option
-                                style={{ backgroundColor: "#3F3F3F" }}
-                                key={"cash" + index}
-                            >
-                                {type}
-                            </option>
-                        );
-                    })}
-                </Select>
-            </Flex>
-            <Flex
-                w="100%"
-                direction="column"
-                justifyContent={"space-between"}
-                bg="#1D052B"
-                p="4%"
-                borderBottomRadius="15px"
-            >
-                <InputGroup>
-                    <InputLeftAddon
-                        fontSize={["13px", "17px"]}
-                        fontWeight="600"
-                        bg="#39106A"
-                        color="#fff"
-                    >
-                        Email Id:
-                    </InputLeftAddon>
-                    <Input
-                        color="white"
-                        defaultValue={email}
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                        }}
-                        placeholder="Email Id"
-                    ></Input>
-                </InputGroup>
-
-                <Text m="auto" my="2%" textAlign={"center"} color="white">
-                    {data.type === "cash" ? "OR" : "AND"}
-                </Text>
-
-                <InputGroup>
-                    <InputLeftAddon
-                        fontSize={["13px", "17px"]}
-                        fontWeight="600"
-                        bg="#39106A"
-                        color="#fff"
-                    >
-                        Account Id:
-                    </InputLeftAddon>
-                    <Input
-                        color="white"
-                        defaultValue={account}
-                        onChange={(e) => {
-                            setAccount(e.target.value);
-                        }}
-                        placeholder="Account Id"
-                    ></Input>
-                </InputGroup>
-            </Flex>
-            <Flex mt="3%" w="100%">
-                <Checkbox
-                    w="100%"
-                    onChange={(e) => setAccepted(e.target.checked)}
-                >
+             <Heading as='h5' size={['10px', '10px', 'sm']} variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
+             SELECT NUMBER OF CHIPS
+            </Heading>
+            <Flex direction={"column"} w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px">
+                <Flex>
                     <Text
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px","12px", "18px"]}
+                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
+                        alignContent={"center"}
+                        m="auto"
                     >
-                        I hereby accept the{" "}
-                        <Text
-                            color="primary"
-                            fontFamily={"Sora"}
-                            fontSize={["12px","12px", "18px"]}
-                            onClick={(e) => {
-                                e.preventDefault();
-                                window.open(
-                                    process.env.NEXT_PUBLIC_WORDPRESS_URL+"/terms-conditions#payment",
-                                    "_blank"
-                                );
-                            }}
+                        CHIP
+                        <Tooltip
+                            placement="top-start"
+                            label="Enter number of chip, Based on total chip showing equivalent amount."
+                            bg="#383838"
+                            borderRadius="10px"
+                            color="white"
+                            fontSize="sm"
+                            p="10px"
                         >
-                            {" "}
-                            &nbsp; Terms and Condition
-                        </Text>
+                            <Text>
+                                <InfoIcon
+                                    color="white"
+                                    float="right"
+                                    mt="-13px!important"
+                                    boxSize={"20px"}
+                                />
+                            </Text>
+                        </Tooltip>
                     </Text>
-                </Checkbox>
+
+                    <Input
+                        w={currentSize === "base" ? "40%" : "40%"}
+                        h="42px"
+                        color="white"
+                        defaultValue={amount}
+                        value={amount}
+                        placeholder="Amount"
+                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
+                        fontWeight="400"
+                        fontFamily="Sora"
+                        backgroundColor="#1d052b"
+                    ></Input>
+                    <Text
+                        display="inline-flex"
+                        color="white"
+                        fontFamily={"Sora"}
+                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
+                        alignContent={"center"}
+                        m="auto"
+                    >
+                        = {currency} {numberOfAmount}
+                    </Text>
+                </Flex>
             </Flex>
-            <Button
-                w="100%"
-                mt="3%"
-                disabled={!accepted}
-                onClick={() => {
-                    checkValidity();
-                }}
-            >
-                {isDeposit ? "Deposit" : "Withdraw"}
-            </Button>   
+            <Heading as='h5' size={['10px', '10px', 'sm']} variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
+            SELECT PAYMENT METHOD
+            </Heading>
+            <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px" display="block">
+                <RadioGroup defaultValue='paypal' onChange={setWithdrawalType}>
+                    <Box color='white' w="25%" display="inline-table" bg="#1D052B" mr="10px" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px">
+                        <Radio size='md' colorScheme='pink' defaultChecked="true" value='paypal' style={{ fontSize: "10px" }}>
+                            <Text
+                                display="inline-flex"
+                                color="white"
+                                fontFamily={"Sora"}
+                                fontSize={["9px", "9px", "14px", "14px", "14px", "16px"]}
+                                alignContent={"center"}
+                                m="auto"
+                            >
+                                Paypal
+                            </Text>
+                        </Radio>
+                    </Box>
+                    <Box color='white' w="25%" display="inline-table" bg="#1D052B" mr="10px" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px" >
+                        <Radio size='md' colorScheme='pink' value='crypto'>
+                            <Text
+                                display="inline-flex"
+                                color="white"
+                                fontFamily={"Sora"}
+                                fontSize={["9px", "9px", "14px", "14px", "14px", "16px"]}
+                                alignContent={"center"}
+                                m="auto"
+                            >
+                                Crypto
+                            </Text>
+                        </Radio>
+                    </Box>
+                    <Box color='white' w="45%" display="inline-table" bg="#1D052B" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px" >
+                        <Radio size='md' colorScheme='pink' value='bank'>
+                            <Text
+                                display="inline-flex"
+                                color="white"
+                                fontFamily={"Sora"}
+                                fontSize={["9px", "9px", "14px", "14px", "14px", "16px"]}
+                                alignContent={"center"}
+                                m="auto"
+                            >
+                                Wire/bank transfer
+                            </Text>
+                        </Radio>
+                    </Box>
+                </RadioGroup>
+            </Flex>
+            {withdrawalType== 'paypal' ? (
+                <Box>
+                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" pt="4%" pb="2%" borderRadius="10px">
+                        <Select
+                            w={currentSize === "base" ? "40%" : "45%"}
+                            h="42px"
+                            color="white"
+                            backgroundColor="#1d052b"
+                            value={currency}
+                        >
+                            <option>USD</option>
+                        </Select>
+                        <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
+                            <InputLeftAddon
+                                w={["48%", "50%"]}
+                                fontSize={["13px", "17px"]}
+                                fontWeight="600"
+                                bg="#39106A"
+                                color="#fff"
+                                pr="15px"
+                            >
+                                Amount
+                            </InputLeftAddon>
+                            <Input
+                                w={currentSize === "base" ? "40%" : "50%"}
+                                color="white"
+                                bg="#39106A"
+                                defaultValue={amount}
+                                onChange={(e) => {
+                                    setAmount(e.target.value);
+                                }}
+                                placeholder="Amount"
+                                borderLeft="0"
+                            ></Input>
+                        </InputGroup>
+                    </Flex>
+               
+                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" p="2%" borderRadius="10px">
+                        <InputGroup>
+                                <InputLeftAddon
+                                    fontSize={["13px", "17px"]}
+                                    fontWeight="600"
+                                    bg="#39106A"
+                                    color="#fff"
+                                >
+                                    Paypal registered id
+                                </InputLeftAddon>
+                                <Input
+                                    color="white"
+                                    defaultValue={email}
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                    }}
+                                    placeholder="Paypal registered id"
+                                    borderLeft="0"
+                                ></Input>
+                        </InputGroup>
+                    </Flex>
+                </Box>
+            ) : ( 
+                <></>
+            )}
+
+            {withdrawalType== 'crypto' ? (
+                <Box>
+                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" pt="4%" pb="2%" borderRadius="10px">
+                        <Select
+                            w={currentSize === "base" ? "40%" : "45%"}
+                            h="42px"
+                            color="white"
+                            backgroundColor="#1d052b"
+                        >
+                            <option style={{ "background": "#1d052b" }}>Select Crypto Tokens</option>
+                            <option style={{ "background": "#1d052b" }} value="metamask">Metamask</option>
+                            <option style={{ "background": "#1d052b" }} value="coinbase">Coinbase</option>
+                        </Select>
+                        <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
+                            <InputLeftAddon
+                                w={["48%", "50%"]}
+                                fontSize={["13px", "17px"]}
+                                fontWeight="600"
+                                bg="#39106A"
+                                color="#fff"
+                                pr="15px"
+                            >
+                                Crypto Value:
+                            </InputLeftAddon>
+                            <Input
+                                w={currentSize === "base" ? "40%" : "50%"}
+                                color="white"
+                                bg="#39106A"
+                                defaultValue={amount}
+                                onChange={(e) => {
+                                    setAmount(e.target.value);
+                                }}
+                                placeholder="Amount"
+                                borderLeft="0"
+                            ></Input>
+                        </InputGroup>
+                    </Flex>
+                    <Flex w="100%" justifyContent={"space-evenly"} p="2%"pb="0" bg="#1d052b" borderRadius="10px">
+                        <Select
+                            w={currentSize === "base" ? "100%" : "100%"}
+                            h="42px"
+                            color="white"
+                            backgroundColor="#1d052b"
+                        >
+                            <option style={{ "background": "#1d052b" }}>Select Crypto Wallet Type</option>
+                            <option style={{ "background": "#1d052b" }} value="metamask">USD</option>
+                        </Select>
+                    </Flex>
+                    <Heading pl="2%" as='h5' size={['10px', '10px', 'sm']} variant="modalHeader" mt='20px' mb='5px' fontWeight="400">
+                    CRYPTO WALLET ADDRESS
+                    </Heading>
+                    <Flex w="100%" justifyContent={"space-evenly"} p="2%" pt="0%" pb="0" bg="#1d052b" borderRadius="10px">
+                        <InputGroup w={currentSize === "base" ? "100%" : "100%"}>
+                                <Input
+                                    w={currentSize === "base" ? "100%" : "100%"}
+                                    color="white"
+                                    bg="#1d052b"
+                                    defaultValue={amount}
+                                    placeholder="Crypto Wallet Address"
+                                ></Input>
+                            </InputGroup>
+                    </Flex>
+                </Box>
+            ) : ( 
+            <></>
+            )}
+            
+            {withdrawalType== 'bank' ? (
+                <Box>
+                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" pt="10px" pb="5px" borderRadius="10px">
+                        <Select
+                            w={currentSize === "base" ? "40%" : "45%"}
+                            h="42px"
+                            color="white"
+                            backgroundColor="#1d052b"
+                            value={currency}
+                        >
+                            <option>USD</option>
+                        </Select>
+                        <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
+                            <InputLeftAddon
+                                w={["48%", "50%"]}
+                                fontSize={["13px", "17px"]}
+                                fontWeight="600"
+                                bg="#39106A"
+                                color="#fff"
+                                pr="15px"
+                            >
+                                Amount
+                            </InputLeftAddon>
+                            <Input
+                                w={currentSize === "base" ? "40%" : "50%"}
+                                color="white"
+                                bg="#39106A"
+                                defaultValue={amount}
+                                onChange={(e) => {
+                                    setAmount(e.target.value);
+                                }}
+                                placeholder="Amount"
+                                borderLeft="0"
+                            ></Input>
+                        </InputGroup>
+                    </Flex>
+               
+                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" p="2px 2%"  borderRadius="10px">
+                        <InputGroup>
+                                <InputLeftAddon
+                                    fontSize={["13px", "17px"]}
+                                    fontWeight="600"
+                                    bg="#39106A"
+                                    color="#fff"
+                                    w={["48%", "50%"]}
+                                >
+                                    Beneficiary name
+                                </InputLeftAddon>
+                                <Input
+                                    color="white"
+                                    placeholder="Beneficiary name"
+                                    borderLeft="0"
+                                ></Input>
+                        </InputGroup>
+                    </Flex>
+                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" p="2px 2%" borderRadius="10px">
+                        <InputGroup>
+                                <InputLeftAddon
+                                    fontSize={["13px", "17px"]}
+                                    fontWeight="600"
+                                    bg="#39106A"
+                                    color="#fff"
+                                    w={["48%", "50%"]}
+                                >
+                                    IBN or Account number
+                                </InputLeftAddon>
+                                <Input
+                                    color="white"
+                                    placeholder="IBN or Account number"
+                                    borderLeft="0"
+                                ></Input>
+                        </InputGroup>
+                    </Flex>
+                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" p="2px 2%" borderRadius="10px">
+                        <InputGroup>
+                                <InputLeftAddon
+                                    fontSize={["13px", "17px"]}
+                                    fontWeight="600"
+                                    bg="#39106A"
+                                    color="#fff"
+                                    w={["48%", "50%"]}
+                                >
+                                    BIC or SWIFT Code
+                                </InputLeftAddon>
+                                <Input
+                                    color="white"
+                                    placeholder="BIC or SWIFT Code"
+                                    borderLeft="0"
+                                ></Input>
+                        </InputGroup>
+                    </Flex>
+                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" p="2px 2%" borderRadius="10px">
+                        <InputGroup>
+                                <InputLeftAddon
+                                    fontSize={["13px", "17px"]}
+                                    fontWeight="600"
+                                    bg="#39106A"
+                                    color="#fff"
+                                    w={["48%", "50%"]}
+                                >
+                                    Bank name
+                                </InputLeftAddon>
+                                <Input
+                                    color="white"
+                                    placeholder="Bank name"
+                                    borderLeft="0"
+                                ></Input>
+                        </InputGroup>
+                    </Flex>
+                    <Heading pl="2%" as='h5' size={['10px', '10px', 'sm']} variant="modalHeader" mt='5px' mb='5px' fontWeight="400">
+                    Bank Address
+                    </Heading>
+                    <Flex w="100%" justifyContent={"space-evenly"} p="2%" pt="0%" pb="0" bg="#1d052b" borderRadius="10px">
+                        <InputGroup w={currentSize === "base" ? "100%" : "100%"}>
+                                <Input
+                                    w={currentSize === "base" ? "100%" : "100%"}
+                                    color="white"
+                                    bg="#1d052b"
+                                    placeholder="Bank Address"
+                                ></Input>
+                            </InputGroup>
+                    </Flex>
+                </Box>
+            ) : ( 
+                <></>
+            )}
+            <Box bg="#1d052b">
+                <Flex mt="3%" w="100%" textAlign="center">
+                    <Checkbox
+                        w="100%"
+                        onChange={(e) => setAccepted(e.target.checked)}
+                        textAlign="center"
+                        display="block"
+                        mt="15px"
+                    >
+                        <Text
+                            display="inline-flex"
+                            color="white"
+                            fontFamily={"Sora"}
+                            fontSize={["12px","12px", "16px"]}
+                        >
+                            I hereby accept the{" "}
+                            <Text
+                                color="primary"
+                                fontFamily={"Sora"}
+                                fontSize={["12px","12px", "16px"]}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    window.open(
+                                        process.env.NEXT_PUBLIC_WORDPRESS_URL+"/terms-conditions#payment",
+                                        "_blank"
+                                    );
+                                }}
+                            >
+                                {" "}
+                                &nbsp; Terms and Condition
+                            </Text>
+                        </Text>
+                    </Checkbox>
+                </Flex>
+                <Button
+                    w="100%"
+                    mt="3%"
+                    disabled={!accepted}
+                    onClick={() => {
+                        checkValidity();
+                    }}
+                >
+                    {isDeposit ? "Deposit" : "Withdraw"}
+                </Button>   
             </Box>
             
 
