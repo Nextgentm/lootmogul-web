@@ -52,7 +52,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                             ml="10%"
                             fontWeight="600"
                             variant="modalHeader"
-                            fontSize={["10px", "16px"]}
+                            fontSize={["16px", "16px"]}
                         >
                             {isDeposit ? "DEPOSIT" : "WITHDRAW"}
                         </Heading>
@@ -78,7 +78,7 @@ const WalletSubHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         <Heading
                             fontWeight="400"
                             fontFamily="Blanch"
-                            fontSize={["20px", "20px", "38px"]}
+                            fontSize={["30px", "30px", "38px"]}
                             ml={["6px!important", "15px!important"]}
                             m="auto"
                             color="white"
@@ -89,14 +89,14 @@ const WalletSubHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         </Heading>
                         <Image
                             alt="tag"
-                            boxSize={["15px","20px","25px"]}
+                            boxSize={["20px","20px","25px"]}
                             src="/assets/Icon.png"
                             ml="5px"
                             display="inline-flex"
                             verticalAlign="sub"
                         />
                         <Heading
-                        fontSize={["24px", "28px", "38px"]}
+                        fontSize={["30px", "30px", "38px"]}
                         mt="auto"
                         ml="10px"
                         mb="auto"
