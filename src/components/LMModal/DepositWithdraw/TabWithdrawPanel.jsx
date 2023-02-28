@@ -20,6 +20,9 @@ import strapi from "../../../utils/strapi";
 import AppContext from "../../../utils/AppContext";
 import { useBreakpointValue } from "@chakra-ui/react";
 import LMNonCloseALert from "../../../components/LMNonCloseALert";
+import axios from "axios";
+import jsondata from "../../../../public/assets/paypal-currency.json";
+
 
 const TabWithdrawPanel = ({ data, isDeposit }) => {
     const ref = useRef();
@@ -42,8 +45,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     const [minimumDeposit, setMinimumDeposit] = useState(5);
     const [numberOfChips, setNumberOfChips] = useState(35);
     const [numberOfAmount, setNumberOfAmount] = useState(0);
-
+    const [currencyoptions, setCurrencyOptions] = useState([]);
     const [withdrawalType, setWithdrawalType] = useState('paypal')
+    const [bitpaycurrencyoptions, setBitpayCurrencyOptions] = useState([]);
 
     useEffect(() => {
         if (user) {
@@ -126,6 +130,96 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             });
     };
 
+    useEffect(() => {
+        async function fetchData() {
+            // Fetch data   
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const results = []
+                        // Store results in the results array
+            var defaultCurrencyValue;
+            data.data.forEach((value) => {
+                if (value.currency === "USD") {
+                    defaultCurrencyValue = {
+                        currency: value.currency,
+                        minimumDeposit: value.minimumDeposit,
+                        numberOfChips: value.numberOfChips,
+                    }
+                }
+                results.push({
+                    currency: value.currency,
+                    minimumDeposit: value.minimumDeposit,
+                    numberOfChips: value.numberOfChips,
+                });
+            });
+            jsondata.forEach((jsonValue) => {
+                results.push({
+                    currency: jsonValue,
+                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
+                    numberOfChips: defaultCurrencyValue.numberOfChips,
+                });
+            })
+
+            setCurrencyOptions(results);
+        }
+        // Trigger the fetch
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            // Fetch data
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const results_bitpay = []
+            // Store results in the results array
+
+            var defaultCurrencyValue;
+            data.data.forEach((value) => {
+                if (value.currency === "USD") {
+                    defaultCurrencyValue = {
+                        currency: value.currency,
+                        minimumDeposit: value.minimumDeposit,
+                        numberOfChips: value.numberOfChips,
+                    }
+                }
+                results_bitpay.push({
+                    currency: value.currency,
+                    minimumDeposit: value.minimumDeposit,
+                    numberOfChips: value.numberOfChips,
+                });
+            });
+            await fetch('https://test.bitpay.com/currencies')
+                .then(response => response.json())
+                .then(additionalCurrencies => {
+                    additionalCurrencies.data.forEach((jsonValue) => {
+                        results_bitpay.push({
+                            currency: jsonValue.code,
+                            minimumDeposit: defaultCurrencyValue.minimumDeposit,
+                            numberOfChips: defaultCurrencyValue.numberOfChips,
+                        });
+                    })
+                })
+
+            setBitpayCurrencyOptions(results_bitpay);
+        }
+        // Trigger the fetch
+        fetchData();
+    }, []);
+
+    const handleChange = (e) => {
+        setCurrency(e.target.value);
+        setMinimumDeposit(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
+        setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
+        //setTotalAmount(amount);
+        let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
+        setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+
+    };
+    const setTotalAmount = (addedAmount) => {
+        let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
+        setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
+        setAmount(addedAmount);
+    };
+
     return (
         <Flex h="100%" w="100%" direction={"column"}>
              <Heading as='h5' fontSize={['13px', '13px', '16px']} variant="modalHeader" mt='{["0px","px","5px","15px"]}' mb='5px' fontWeight="400">
@@ -168,6 +262,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         color="white"
                         defaultValue={amount}
                         value={amount}
+                        onChange={(e) => {
+                            setTotalAmount(Number(e.target.value));
+                        }}
                         placeholder="Amount"
                         fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
                         fontWeight="400"
@@ -244,8 +341,15 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             color="white"
                             backgroundColor="#1d052b"
                             value={currency}
+                            onChange={handleChange} 
                         >
-                            <option>USD</option>
+                        {currencyoptions.map((option) => {
+                            return (
+                                <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                    {option.currency}
+                                </option>
+                            );
+                        })}
                         </Select>
                         <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
                             <InputLeftAddon
@@ -263,7 +367,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 w={currentSize === "base" ? "50%" : "50%"}
                                 color="white"
                                 bg="#39106A"
-                                defaultValue={amount}
+                                defaultValue={numberOfAmount}
+                                value={numberOfAmount}
                                 onChange={(e) => {
                                     setAmount(e.target.value);
                                 }}
@@ -333,7 +438,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 w={currentSize === "base" ? "50%" : "50%"}
                                 color="white"
                                 bg="#39106A"
-                                defaultValue={amount}
+                                defaultValue={numberOfAmount}
+                                value={numberOfAmount}
                                 onChange={(e) => {
                                     setAmount(e.target.value);
                                 }}
@@ -350,9 +456,15 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             color="white"
                             backgroundColor="#1d052b"
                             fontSize={["11px","13px", "18px"]}
+                            onChange={handleChange}
                         >
-                            <option style={{ "background": "#1d052b" }}>Select Crypto Wallet Type</option>
-                            <option style={{ "background": "#1d052b" }} value="metamask">USD</option>
+                        {bitpaycurrencyoptions.map((option) => {
+                            return (
+                                <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                    {option.currency}
+                                </option>
+                            );
+                        })}
                         </Select>
                     </Flex>
                     <Heading pl="2%" as='h5' fontSize={['13px', '13px', '16px']} variant="modalHeader" mt={['5px','10px','10px']} mb='5px' fontWeight="400">
@@ -384,8 +496,15 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             color="white"
                             backgroundColor="#1d052b"
                             value={currency}
-                        >
-                            <option>USD</option>
+                            onChange={handleChange} 
+                            >
+                            {currencyoptions.map((option) => {
+                                return (
+                                    <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                        {option.currency}
+                                    </option>
+                                );
+                            })}
                         </Select>
                         <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
                             <InputLeftAddon
@@ -403,7 +522,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 w={currentSize === "base" ? "50%" : "50%"}
                                 color="white"
                                 bg="#39106A"
-                                defaultValue={amount}
+                                defaultValue={numberOfAmount}
+                                value={numberOfAmount}
                                 onChange={(e) => {
                                     setAmount(e.target.value);
                                 }}
