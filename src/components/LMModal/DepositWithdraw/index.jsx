@@ -27,10 +27,10 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         >
                             <Heading
                                 mt="10px"
-                                fontWeight="600"
+                                fontWeight="500"
                                 variant="modalHeader"
-                                fontSize={["12px","12px", "36px"]}
-                                fontFamily={"blanch"}
+                                fontSize={["12px","12px", "22px"]}
+                                fontFamily={"Open Sans"}
                             >
                                 {isDeposit ? "DEPOSIT" : "WITHDRAW"}
                             </Heading>
@@ -47,12 +47,13 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         bg="#1d052b"
                         display="flex"
                         justifyContent="center"
+                        fontFamily={"Open Sans"}
                     >
                         <Heading
                             ml="10%"
                             fontWeight="600"
                             variant="modalHeader"
-                            fontSize={["10px", "16px"]}
+                            fontSize={["16px", "16px"]}
                         >
                             {isDeposit ? "DEPOSIT" : "WITHDRAW"}
                         </Heading>
@@ -78,7 +79,7 @@ const WalletSubHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         <Heading
                             fontWeight="400"
                             fontFamily="Blanch"
-                            fontSize={["20px", "20px", "31px"]}
+                            fontSize={["30px", "30px", "38px"]}
                             ml={["6px!important", "15px!important"]}
                             m="auto"
                             color="white"
@@ -89,14 +90,14 @@ const WalletSubHeader = ({ totalAmount, isDeposit, winAmount }) => {
                         </Heading>
                         <Image
                             alt="tag"
-                            boxSize={["15px","20px","25px"]}
+                            boxSize={["20px","20px","25px"]}
                             src="/assets/Icon.png"
                             ml="5px"
                             display="inline-flex"
                             verticalAlign="sub"
                         />
                         <Heading
-                        fontSize={["24px", "28px", "38px"]}
+                        fontSize={["30px", "30px", "38px"]}
                         mt="auto"
                         ml="10px"
                         mb="auto"
@@ -141,15 +142,15 @@ const WalletBody = ({ isDeposit }) => {
         },
         {
             url: "/assets/images/metamask.png",
-            name: "Metamask",
-            mode: "metamask",
+            name: "Crypto",
+            mode: "crypto",
             type: "crypto"
         },
         {
             url: "/assets/images/coinbase.png",
-            name: "Coinbase wallet",
-            mode: "coinbase",
-            type: "crypto"
+            name: "Wire/bank transfer",
+            mode: "bank",
+            type: "bank"
         }
     ];
 
