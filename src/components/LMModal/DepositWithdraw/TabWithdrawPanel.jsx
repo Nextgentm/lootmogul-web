@@ -20,6 +20,9 @@ import strapi from "../../../utils/strapi";
 import AppContext from "../../../utils/AppContext";
 import { useBreakpointValue } from "@chakra-ui/react";
 import LMNonCloseALert from "../../../components/LMNonCloseALert";
+import axios from "axios";
+import jsondata from "../../../../public/assets/paypal-currency.json";
+
 
 const TabWithdrawPanel = ({ data, isDeposit }) => {
     const ref = useRef();
@@ -42,8 +45,20 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     const [minimumDeposit, setMinimumDeposit] = useState(5);
     const [numberOfChips, setNumberOfChips] = useState(35);
     const [numberOfAmount, setNumberOfAmount] = useState(0);
-
+    const [currencyoptions, setCurrencyOptions] = useState([]);
     const [withdrawalType, setWithdrawalType] = useState('paypal')
+    const [bitpaycurrencyoptions, setBitpayCurrencyOptions] = useState([]);
+
+    const [cryptotokens, setCryptoTokens] = useState([]);
+    const [cryptocurrency, setCryptoCurrency] = useState([]);
+    const [cryptoaddress, setCryptoAddress] = useState([]);
+    
+    const [beneficiaryname, setBeneficiaryName] = useState([]);
+    const [accountnumber, setAccountNumber] = useState([]);
+    const [swiftcode, setSwiftCode] = useState([]);
+    const [bankname, setBankName] = useState([]);
+    const [bankaddress, setBankAddress] = useState([]);
+    
 
     useEffect(() => {
         if (user) {
@@ -67,16 +82,17 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     }, [data]);
 
     const checkValidity = () => {
-        if (!amount || amount === 0)
+        console.log(Math.ceil(numberOfAmount));
+        if (!numberOfAmount || numberOfAmount === 0)
             setAlertShow({ isOpen: true, msg: "Enter Amount" });
-        if (amount && amount >= userBal.winnings) {
+        if (numberOfAmount && numberOfAmount >= userBal.winnings) {
             setAlertShow({ isOpen: true, msg: "Your wallet Balance is low" });
             return;
         }
-        if (data.type === "cash") {
-            if (amount) {
-                if (amount >= 5) {
-                    if (!email && !account)
+        if (withdrawalType === 'paypal') {
+            if (numberOfAmount) {
+                if (numberOfAmount >= 5) {
+                    if (!email)
                         setAlertShow({
                             isOpen: true,
                             msg: "Enter either Email Id or Account Id"
@@ -88,13 +104,15 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         msg: "Withdraw more than $5"
                     });
             } else setAlertShow({ isOpen: true, msg: "Withdraw more than $5" });
-        } else {
-            if (amount) {
-                if (amount >= 100) {
-                    if (!email || !account)
+        } 
+        if(withdrawalType === 'crypto')
+        {
+            if (numberOfAmount) {
+                if (numberOfAmount >= 100) {
+                    if (!email)
                         setAlertShow({
                             isOpen: true,
-                            msg: "Enter both Email Id or Account Id"
+                            msg: "Enter valid Email Id"
                         });
                     else withdraw();
                 } else
@@ -108,9 +126,19 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     };
     const withdraw = () => {
         let withDrawReqData = {
-            email: email,
-            amount: amount,
-            mode: data.mode,
+            email: email ? email : null,
+            chips: amount,
+            amount: numberOfAmount,
+            mode: withdrawalType,
+            currency: currency ? currency : null,
+            cryptoToken: cryptotokens ? cryptotokens : null,
+            walletType: cryptocurrency ? cryptocurrency : null,
+            walletAddress: cryptoaddress ? cryptoaddress : null,
+            beneficiary: beneficiaryname ? beneficiaryname : null,
+            siftCode : swiftcode ? swiftcode : null,
+            bankName : bankname ? bankname : null,
+            account : accountnumber ? accountnumber : null,
+            bankAddress : bankaddress ? bankaddress : null,
             user: user?.id,
             account: account,
             cryptoType: data.type !== "cash" ? cryptoType : null
@@ -124,6 +152,101 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             .catch((error) => {
                 setAlertShow({ isOpen: true, msg: error.message });
             });
+    };
+
+    useEffect(() => {
+        async function fetchData() {
+            // Fetch data   
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const results = []
+                        // Store results in the results array
+            var defaultCurrencyValue;
+            data.data.forEach((value) => {
+                if (value.currency === "USD") {
+                    defaultCurrencyValue = {
+                        currency: value.currency,
+                        minimumDeposit: value.minimumDeposit,
+                        numberOfChips: value.numberOfChips,
+                    }
+                }
+                results.push({
+                    currency: value.currency,
+                    minimumDeposit: value.minimumDeposit,
+                    numberOfChips: value.numberOfChips,
+                });
+            });
+            jsondata.forEach((jsonValue) => {
+                results.push({
+                    currency: jsonValue,
+                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
+                    numberOfChips: defaultCurrencyValue.numberOfChips,
+                });
+            })
+
+            setCurrencyOptions(results);
+        }
+        // Trigger the fetch
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            // Fetch data
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const results_bitpay = []
+            // Store results in the results array
+
+            var defaultCurrencyValue;
+            data.data.forEach((value) => {
+                if (value.currency === "USD") {
+                    defaultCurrencyValue = {
+                        currency: value.currency,
+                        minimumDeposit: value.minimumDeposit,
+                        numberOfChips: value.numberOfChips,
+                    }
+                }
+                results_bitpay.push({
+                    currency: value.currency,
+                    minimumDeposit: value.minimumDeposit,
+                    numberOfChips: value.numberOfChips,
+                });
+            });
+            await fetch('https://test.bitpay.com/currencies')
+                .then(response => response.json())
+                .then(additionalCurrencies => {
+                    additionalCurrencies.data.forEach((jsonValue) => {
+                        results_bitpay.push({
+                            currency: jsonValue.code,
+                            minimumDeposit: defaultCurrencyValue.minimumDeposit,
+                            numberOfChips: defaultCurrencyValue.numberOfChips,
+                        });
+                    })
+                })
+
+            setBitpayCurrencyOptions(results_bitpay);
+        }
+        // Trigger the fetch
+        fetchData();
+    }, []);
+
+    const handleChange = (e) => {
+        if (withdrawalType === 'paypal') {
+            setCurrency(e.target.value);
+        }
+        else{
+            setCryptoCurrency(e.target.value);
+        }
+        setMinimumDeposit(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
+        setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
+        //setTotalAmount(amount);
+        let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
+        setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+
+    };
+    const setTotalAmount = (addedAmount) => {
+        let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
+        setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
+        setAmount(addedAmount);
     };
 
     return (
@@ -168,6 +291,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         color="white"
                         defaultValue={amount}
                         value={amount}
+                        onChange={(e) => {
+                            setTotalAmount(Number(e.target.value));
+                        }}
                         placeholder="Amount"
                         fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
                         fontWeight="400"
@@ -244,8 +370,15 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             color="white"
                             backgroundColor="#1d052b"
                             value={currency}
+                            onChange={handleChange} 
                         >
-                            <option>USD</option>
+                        {currencyoptions.map((option) => {
+                            return (
+                                <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                    {option.currency}
+                                </option>
+                            );
+                        })}
                         </Select>
                         <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
                             <InputLeftAddon
@@ -263,7 +396,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 w={currentSize === "base" ? "50%" : "50%"}
                                 color="white"
                                 bg="#39106A"
-                                defaultValue={amount}
+                                defaultValue={numberOfAmount}
+                                value={numberOfAmount}
                                 onChange={(e) => {
                                     setAmount(e.target.value);
                                 }}
@@ -312,6 +446,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             color="white"
                             fontSize={["11px","13px", "18px"]}
                             backgroundColor="#1d052b"
+                            onChange={(e) => {
+                                setCryptoTokens(e.target.value);
+                            }}
                         >
                             <option style={{ "background": "#1d052b" }}>Select Crypto Tokens</option>
                             <option style={{ "background": "#1d052b" }} value="metamask">Metamask</option>
@@ -333,7 +470,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 w={currentSize === "base" ? "50%" : "50%"}
                                 color="white"
                                 bg="#39106A"
-                                defaultValue={amount}
+                                defaultValue={numberOfAmount}
+                                value={numberOfAmount}
                                 onChange={(e) => {
                                     setAmount(e.target.value);
                                 }}
@@ -350,9 +488,15 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             color="white"
                             backgroundColor="#1d052b"
                             fontSize={["11px","13px", "18px"]}
+                            onChange={handleChange}
                         >
-                            <option style={{ "background": "#1d052b" }}>Select Crypto Wallet Type</option>
-                            <option style={{ "background": "#1d052b" }} value="metamask">USD</option>
+                        {bitpaycurrencyoptions.map((option) => {
+                            return (
+                                <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                    {option.currency}
+                                </option>
+                            );
+                        })}
                         </Select>
                     </Flex>
                     <Heading pl="2%" as='h5' fontSize={['13px', '13px', '16px']} variant="modalHeader" mt={['5px','10px','10px']} mb='5px' fontWeight="400">
@@ -367,6 +511,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                     placeholder="Crypto Wallet Address"
                                     h={["30px","30px","42px"]}
                                     fontSize={["11px","13px", "18px"]}
+                                    onChange={(e) => {
+                                        setCryptoAddress(e.target.value);
+                                    }}
                                 ></Input>
                             </InputGroup>
                     </Flex>
@@ -384,8 +531,15 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             color="white"
                             backgroundColor="#1d052b"
                             value={currency}
-                        >
-                            <option>USD</option>
+                            onChange={handleChange} 
+                            >
+                            {currencyoptions.map((option) => {
+                                return (
+                                    <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                        {option.currency}
+                                    </option>
+                                );
+                            })}
                         </Select>
                         <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
                             <InputLeftAddon
@@ -403,7 +557,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 w={currentSize === "base" ? "50%" : "50%"}
                                 color="white"
                                 bg="#39106A"
-                                defaultValue={amount}
+                                defaultValue={numberOfAmount}
+                                value={numberOfAmount}
                                 onChange={(e) => {
                                     setAmount(e.target.value);
                                 }}
@@ -432,6 +587,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                     borderLeft="0"
                                     h={["30px","30px","42px"]}
                                     fontSize={["10px","13px", "18px"]}
+                                    onChange={(e) => {
+                                        setBeneficiaryName(e.target.value);
+                                    }}
                                 ></Input>
                         </InputGroup>
                     </Flex>
@@ -453,6 +611,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                     borderLeft="0"
                                     h={["30px","30px","42px"]}
                                     fontSize={["10px","13px", "18px"]}
+                                    onChange={(e) => {
+                                        setAccountNumber(e.target.value);
+                                    }}
                                 ></Input>
                         </InputGroup>
                     </Flex>
@@ -474,6 +635,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                     borderLeft="0"
                                     h={["30px","30px","42px"]}
                                     fontSize={["10px","13px", "18px"]}
+                                    onChange={(e) => {
+                                        setSwiftCode(e.target.value);
+                                    }}
                                 ></Input>
                         </InputGroup>
                     </Flex>
@@ -495,6 +659,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                     borderLeft="0"
                                     h={["30px","30px","42px"]}
                                     fontSize={["10px","13px", "18px"]}
+                                    onChange={(e) => {
+                                        setBankName(e.target.value);
+                                    }}
                                 ></Input>
                         </InputGroup>
                     </Flex>
@@ -510,6 +677,9 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                     placeholder="Bank Address"
                                     fontSize={["13px", "18px"]}
                                     h={["30px","30px","42px"]}
+                                    onChange={(e) => {
+                                        setBankAddress(e.target.value);
+                                    }}
                                 ></Input>
                             </InputGroup>
                     </Flex>
