@@ -52,6 +52,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     const [cryptotokens, setCryptoTokens] = useState([]);
     const [cryptocurrency, setCryptoCurrency] = useState([]);
     const [cryptoaddress, setCryptoAddress] = useState([]);
+    const [cryptousdamounts, setCryptoUsdAmounts] = useState([]);
+    const [cryptoamount, setCryptoAmount] = useState([]);
     
     const [beneficiaryname, setBeneficiaryName] = useState([]);
     const [accountnumber, setAccountNumber] = useState([]);
@@ -62,6 +64,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
 
     useEffect(() => {
         if (user) {
+            console.log(user);
             setuserBal({
                 deposit: user?.wallets?.find(
                     (w) => w.currency?.type === "deposit"
@@ -82,16 +85,16 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     }, [data]);
 
     const checkValidity = () => {
-        console.log(Math.ceil(numberOfAmount));
-        if (!numberOfAmount || numberOfAmount === 0)
+        console.log(amount + '--'+userBal.winnings);
+        if (!amount || amount === 0)
             setAlertShow({ isOpen: true, msg: "Enter Amount" });
-        if (numberOfAmount && numberOfAmount >= userBal.winnings) {
+        if (amount >= userBal.winnings) {
             setAlertShow({ isOpen: true, msg: "Your wallet Balance is low" });
             return;
         }
         if (withdrawalType === 'paypal') {
-            if (numberOfAmount) {
-                if (numberOfAmount >= 5) {
+            if (amount) {
+                if (amount >= 35) {
                     if (!email)
                         setAlertShow({
                             isOpen: true,
@@ -103,12 +106,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         isOpen: true,
                         msg: "Withdraw more than $5"
                     });
-            } else setAlertShow({ isOpen: true, msg: "Withdraw more than $5" });
+            } else setAlertShow({ isOpen: true, msg: "Withdraw more than 35 chips" });
         } 
         if(withdrawalType === 'crypto')
         {
-            if (numberOfAmount) {
-                if (numberOfAmount >= 100) {
+            if (amount) {
+                if (amount >= 700) {
                     if (!email)
                         setAlertShow({
                             isOpen: true,
@@ -118,21 +121,40 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 } else
                     setAlertShow({
                         isOpen: true,
-                        msg: "Withdraw more than $100"
+                        msg: "Withdraw more than 700"
                     });
             } else
-                setAlertShow({ isOpen: true, msg: "Withdraw more than $100" });
+                setAlertShow({ isOpen: true, msg: "Withdraw more than 700 chips" });
+        }
+        if(withdrawalType === 'bank')
+        {
+            if (amount) {
+                if (amount >= 5) {
+                    if (!accountnumber && !beneficiaryname && !swiftcode && !bankname)
+                        setAlertShow({
+                            isOpen: true,
+                            msg: "Enter Bank Account Details"
+                        });
+                    else withdraw();
+                } else
+                    setAlertShow({
+                        isOpen: true,
+                        msg: "Withdraw more than 35 chips"
+                    });
+            } else
+                setAlertShow({ isOpen: true, msg: "Withdraw more than 35 chips" });
         }
     };
     const withdraw = () => {
         let withDrawReqData = {
-            email: email ? email : null,
+            email: email ? email : user?.email,
             chips: amount,
-            amount: Number(numberOfAmount),
+            amount: +numberOfAmount,
             mode: withdrawalType,
             currency: currency ? currency : null,
             cryptoToken: cryptotokens ? cryptotokens : null,
             walletType: cryptocurrency ? cryptocurrency : null,
+            crypto_usd_amount: cryptousdamounts ? cryptousdamounts : null,
             walletAddress: cryptoaddress ? cryptoaddress : null,
             beneficiary: beneficiaryname ? beneficiaryname : null,
             siftCode : swiftcode ? swiftcode : null,
@@ -161,6 +183,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             const results = []
                         // Store results in the results array
             var defaultCurrencyValue;
+            var setMinimumDeposit;
+            var setNumberOfChips;
             data.data.forEach((value) => {
                 if (value.currency === "USD") {
                     defaultCurrencyValue = {
@@ -169,17 +193,32 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         numberOfChips: value.numberOfChips,
                     }
                 }
-                results.push({
-                    currency: value.currency,
-                    minimumDeposit: value.minimumDeposit,
-                    numberOfChips: value.numberOfChips,
-                });
             });
             jsondata.forEach((jsonValue) => {
+                
+                data.data.forEach((value) => {
+                    if (value.currency === "USD") {
+                        defaultCurrencyValue = {
+                            currency: value.currency,
+                            minimumDeposit: value.minimumDeposit,
+                            numberOfChips: value.numberOfChips,
+                        }
+                    }
+                    
+                    if(value.currency.toUpperCase() == jsonValue.toUpperCase()){
+                        setMinimumDeposit = value.minimumDeposit;
+                        setNumberOfChips = value.numberOfChips;
+                    }
+                    else{
+                        setMinimumDeposit = defaultCurrencyValue.minimumDeposit;
+                        setNumberOfChips = defaultCurrencyValue.numberOfChips;
+                    }
+                });
+
                 results.push({
                     currency: jsonValue,
-                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
-                    numberOfChips: defaultCurrencyValue.numberOfChips,
+                    minimumDeposit: setMinimumDeposit,
+                    numberOfChips: setNumberOfChips,
                 });
             })
 
@@ -193,10 +232,20 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         async function fetchData() {
             // Fetch data
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const coinlayer = await axios.get(
+                `http://api.coinlayer.com/live`,{ 
+                    params: {
+                    access_key: 'b3142b314cb40d8f2ff4e6575fe6d12f'
+                  }
+                });
+            
             const results_bitpay = []
             // Store results in the results array
 
             var defaultCurrencyValue;
+            var setMinimumDeposit;
+            var setNumberOfChips;
+            var setCryptoUsdAmount;
             data.data.forEach((value) => {
                 if (value.currency === "USD") {
                     defaultCurrencyValue = {
@@ -205,20 +254,59 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         numberOfChips: value.numberOfChips,
                     }
                 }
-                results_bitpay.push({
-                    currency: value.currency,
-                    minimumDeposit: value.minimumDeposit,
-                    numberOfChips: value.numberOfChips,
-                });
             });
             await fetch('https://test.bitpay.com/currencies')
                 .then(response => response.json())
                 .then(additionalCurrencies => {
                     additionalCurrencies.data.forEach((jsonValue) => {
+                        
+                        if(coinlayer.data.success == true){
+                            for (const rates in coinlayer.data.rates) {
+                            
+                                if (rates.toUpperCase() === "BTC") {
+                                    setCryptoUsdAmount = coinlayer.data.rates[rates];
+                                }
+
+                                if (rates.toUpperCase() === jsonValue.code.toUpperCase()){
+                                    setCryptoUsdAmount = coinlayer.data.rates[rates];
+                                }
+                            }
+                            /*coinlayer.data.rates.forEach((value) => {
+                                if (code.toUpperCase() === "BTC") {
+                                    setCryptoUsdAmount = value;
+                                }
+
+                                if (code.toUpperCase() === jsonValue.code.toUpperCase()){
+                                    setCryptoUsdAmount = value;
+                                }
+                            });*/
+                        }
+                        
+                        
+                        data.data.forEach((value) => {
+                            if (value.currency === "USD") {
+                                defaultCurrencyValue = {
+                                    currency: value.currency,
+                                    minimumDeposit: value.minimumDeposit,
+                                    numberOfChips: value.numberOfChips,
+                                }
+                            }
+                            
+                            if(value.currency.toUpperCase() == jsonValue.code.toUpperCase()){
+                                setMinimumDeposit = value.minimumDeposit;
+                                setNumberOfChips = value.numberOfChips;
+                            }
+                            else{
+                                setMinimumDeposit = defaultCurrencyValue.minimumDeposit;
+                                setNumberOfChips = defaultCurrencyValue.numberOfChips;
+                            }
+                        });
+
                         results_bitpay.push({
                             currency: jsonValue.code,
-                            minimumDeposit: defaultCurrencyValue.minimumDeposit,
-                            numberOfChips: defaultCurrencyValue.numberOfChips,
+                            minimumDeposit: setMinimumDeposit,
+                            numberOfChips: setNumberOfChips,
+                            cryptoAmount: setCryptoUsdAmount
                         });
                     })
                 })
@@ -236,17 +324,39 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         else{
             setCryptoCurrency(e.target.value);
         }
-        setMinimumDeposit(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
-        setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
-        //setTotalAmount(amount);
-        let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
-        setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+
+        if (withdrawalType === 'crypto') {
+            setMinimumDeposit(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
+            setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
+            setCryptoAmount( e.target.selectedOptions[0].getAttribute('cryptoamount'));
+
+            let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
+            let usdAmountSelectedCrypto = (amount / numberOfAmount).toFixed(2);
+            setCryptoUsdAmounts(usdAmountSelectedCrypto);
+            setNumberOfAmount((usdAmountSelectedCrypto / e.target.selectedOptions[0].getAttribute('cryptoamount')).toFixed(5));
+        }
+        else{
+            setMinimumDeposit(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
+            setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
+            let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
+            setNumberOfAmount((amount / numberOfAmount).toFixed(2)); 
+        }
+        
 
     };
     const setTotalAmount = (addedAmount) => {
-        let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
-        setAmount(addedAmount);
+        if (withdrawalType === 'crypto') {
+            let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
+            let usdAmountSelectedCrypto = (addedAmount / numberOfAmount).toFixed(2);
+            setNumberOfAmount((usdAmountSelectedCrypto / cryptoamount).toFixed(5));
+            setAmount(addedAmount);
+        }   
+        else{
+            let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
+            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
+            setAmount(addedAmount);
+        }
+
     };
 
     return (
@@ -308,7 +418,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         alignContent={"center"}
                         m="auto"
                     >
-                        = {currency} {numberOfAmount}
+                        = {withdrawalType=='crypto' ? cryptocurrency : currency} {numberOfAmount}
                     </Text>
                 </Flex>
             </Flex>
@@ -492,7 +602,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         >
                         {bitpaycurrencyoptions.map((option) => {
                             return (
-                                <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                <option cryptoAmount={option.cryptoAmount} minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
                                     {option.currency}
                                 </option>
                             );
