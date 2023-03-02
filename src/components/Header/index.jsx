@@ -473,7 +473,7 @@ const Header = () => {
                     justify="space-between"
                     as="nav"
                     position="sticky"
-                    zIndex={"101"}
+                    zIndex={"9"}
                     backgroundImage="/assets/bg-bar.png"
                     backgroundSize="cover"
                     display={['block','block','flex','flex']}
