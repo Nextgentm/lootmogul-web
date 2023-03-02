@@ -111,7 +111,7 @@ const AllInfluencers = ({
             setColumnValues("repeat(5, 1fr)");
             setHight("328px");
             setWidth("252px");
-            setMarLeft("5px");
+            setMarLeft("11px");
         } else if (isLargeDesk) {
             setColumnValues("repeat(8, 1fr)");
             setHight("328px");

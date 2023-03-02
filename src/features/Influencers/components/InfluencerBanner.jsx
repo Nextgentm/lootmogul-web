@@ -64,6 +64,7 @@ const InfluencerBanner = ({ getBannerImage }) => {
                                 className="custom-img"
                                 layout="fill"
                                 objectFit="contain"
+                                width="95%"
                             />
                         </Flex>
                     </Box>

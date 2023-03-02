@@ -107,7 +107,7 @@ const GameTabs = ({defaultTab,gameData}) =>  {
             tab:<Text>Leaderboard</Text>,
             tabPanel: <LeaderboardTab gameData={gameData} lbRecords={lbRecords} loading={loading} currentUser={currentUser} user={user} />
         
-    })
+    }) 
     }
   
     return <Box mt="3%" ml={["18px","0px","0px"]} mr="18px" textAlign={"left"}>
