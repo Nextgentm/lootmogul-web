@@ -92,7 +92,7 @@ const DepostWithdrawstop = ({ totalAmount, isDeposit, winAmount }) => {
                 padding={10}
                 textAlign={'center'}
                 lineHeight='10'
-            >Due to system upgrade, withdrawal option is disabled until 28th February 2023</Heading>
+            >Due to system upgrade, withdrawal option is disabled until 8th March 2023</Heading>
             <WalletFooter />
         </Box>
     );
