@@ -473,7 +473,7 @@ const Header = () => {
                     justify="space-between"
                     as="nav"
                     position="sticky"
-                    zIndex={"101"}
+                    zIndex={"9"}
                     backgroundImage="/assets/bg-bar.png"
                     backgroundSize="cover"
                     display={['block','block','flex','flex']}
@@ -492,7 +492,7 @@ const Header = () => {
                             justify={isMobileDevice ? "left" : "center"}
                             display={['inline-block','inline-block','flex','flex']}
                         >
-                            <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}><a target="_blank" href="https://republic.com/lootmogul">Become a Stakeholder in LootMogul! minimum investment $100.</a> <a style={{textDecoration:'underline'}} target="_blank" href="https://republic.com/lootmogul">Learn More</a></Text>
+                            <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}><a target="_blank" href="https://lootmogul.me/republic_website">Become a Stakeholder in LootMogul! minimum investment $100.</a> <a style={{textDecoration:'underline'}} target="_blank" href="https://lootmogul.me/republic_website">Learn More</a></Text>
                         </Flex>
                         </>   
                     :
@@ -502,7 +502,7 @@ const Header = () => {
                             justify={isMobileDevice ? "left" : "center"}
                             display={['inline-block','inline-block','flex','flex']}
                         >
-                            <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}><a target="_blank" href="https://republic.com/lootmogul">Limited time Offer. Become a Stakeholder in LootMogul! minimum investment $100.</a> <a style={{textDecoration:'underline'}} target="_blank" href="https://republic.com/lootmogul">Learn More</a></Text>
+                            <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}><a target="_blank" href="https://lootmogul.me/republic_website">Limited time Offer. Become a Stakeholder in LootMogul! minimum investment $100.</a> <a style={{textDecoration:'underline'}} target="_blank" href="https://lootmogul.me/republic_website">Learn More</a></Text>
                         </Flex>
                     </>   
                     }
@@ -511,7 +511,7 @@ const Header = () => {
                         justify={isMobileDevice ? "center" : "end"}
                     >
                         <Text fontSize={["12px","12px","15px","15px"]} color="#fff" mb="10px" p={["5px 10px","5px 10px","5px 20px","5px 20px"]} border="1px solid #fff" borderRadius="5px">
-                        <a target="_blank" href="https://republic.com/lootmogul">Invest Now</a></Text>
+                        <a target="_blank" href="https://lootmogul.me/republic_website">Invest Now</a></Text>
                     </Flex>
                 </Box>
                 )}
