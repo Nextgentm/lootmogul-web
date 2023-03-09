@@ -8,96 +8,108 @@ import { useContext, useEffect, useState } from "react";
 import AppContext from "../../../utils/AppContext";
 
 const PaidGameConfirmation = ({ retry, contestmaster }) => {
-  const [locationCheck, setLocationCheck] = useState({
-    isBan: false,
-    isBanText: "",
-  });
-  const [showAlert, setShowAlert] = useState(false);
-  const [showModal, setShowModal] = useState({ show: false, mode: "" });
-  const { setCurrentContest, amounts, setShowPaidGameConfirmation, user } =
-    useContext(AppContext);
-  useEffect(() => {
-    setLocationCheck({
-      isBan: true,
-      isBanText: "Please Wait!! Fetching Location...",
+    const [locationCheck, setLocationCheck] = useState({
+        isBan: false,
+        isBanText: ""
     });
+    const [showAlert, setShowAlert] = useState(false);
+    const [showModal, setShowModal] = useState({ show: false, mode: "" });
+    const { setCurrentContest, amounts, setShowPaidGameConfirmation, user } =
+        useContext(AppContext);
+    useEffect(() => {
+        setLocationCheck({
+            isBan: true,
+            isBanText: "Please Wait!! Fetching Location..."
+        });
 
-    CheckAvailableLocation().then((res) => {
-      if (res) {
-        setLocationCheck({ isBan: res.isBan, isBanText: res.isBanText });
+        CheckAvailableLocation().then((res) => {
+            if (res) {
+                setLocationCheck({
+                    isBan: res.isBan,
+                    isBanText: res.isBanText
+                });
 
-        if (!res.isBan) {
-          const res = checkEligilbility(contestmaster, amounts);
-          let userTotalBonus = user ? user?.wallets.find(s => s.currency.type == "bonus")?.balance || 0 : 0
-          if (res.canPlay) {
-            setCurrentContest(contestmaster);
-            setShowModal({
-              show: true,
-              mode: "joining",
-              data: {
-                entryFee: contestmaster?.entryFee,
-                deductBal: res.deductAmount,
-                balance: res.balance,
-                bonus:
-                  userTotalBonus > 0 ? (contestmaster?.feeWallet?.find(
-                    (w) => w.currency?.data?.type == "bonus"
-                  )?.percent * contestmaster?.entryFee) / 100 || 0 : 0,
-              },
-            });
-          } else if (!res.canPlay) {
-            setShowModal({
-              show: true,
-              mode: "add",
-              data: {
-                balance: res.balance,
-              },
-            });
-          }
-        } else {
-          setShowAlert(true);
-        }
-      }
-    });
-  }, [contestmaster]);
+                if (!res.isBan) {
+                    const res = checkEligilbility(contestmaster, amounts);
+                    let userTotalBonus = user
+                        ? user?.wallets.find((s) => s.currency.type == "bonus")
+                              ?.balance || 0
+                        : 0;
+                    if (res.canPlay) {
+                        setCurrentContest(contestmaster);
+                        setShowModal({
+                            show: true,
+                            mode: "joining",
+                            data: {
+                                entryFee: contestmaster?.entryFee,
+                                deductBal: res.deductAmount,
+                                balance: res.balance + userTotalBonus,
+                                bonus:
+                                    userTotalBonus > 0
+                                        ? (contestmaster?.feeWallet?.find(
+                                              (w) =>
+                                                  w.currency?.data?.type ==
+                                                  "bonus"
+                                          )?.percent *
+                                              contestmaster?.entryFee) /
+                                              100 || 0
+                                        : 0
+                            }
+                        });
+                    } else if (!res.canPlay) {
+                        setShowModal({
+                            show: true,
+                            mode: "add",
+                            data: {
+                                balance: res.balance
+                            }
+                        });
+                    }
+                } else {
+                    setShowAlert(true);
+                }
+            }
+        });
+    }, [contestmaster]);
 
-  return (
-    <>
-      <LMNonCloseALert
-        header={"Location Check"}
-        canClose={showAlert}
-        data={locationCheck.isBanText}
-        isOpen={locationCheck.isBan}
-        onClose={() => {
-          setShowPaidGameConfirmation({});
-          setLocationCheck({ isBan: false });
-        }}
-      />
-      <LMModal
-        isShow={showModal.show}
-        scrollBehavior="outside"
-        mode={showModal.mode}
-        style={{ padding: "2%" }}
-        handleClose={() => {
-          setShowAlert(false);
-          setShowModal(false);
-          setShowPaidGameConfirmation({});
-        }}
-      >
-        {showModal.mode === "add" && (
-          <DepostWithdraw
-            totalAmount={showModal.data.balance}
-            isDeposit={true}
-          />
-        )}
-        {showModal.mode === "joining" && (
-          <JoiningPopup
-            retry={{ retry: retry, count: contestmaster?.retries }}
-            data={showModal.data}
-          />
-        )}
-      </LMModal>
-    </>
-  );
+    return (
+        <>
+            <LMNonCloseALert
+                header={"Location Check"}
+                canClose={showAlert}
+                data={locationCheck.isBanText}
+                isOpen={locationCheck.isBan}
+                onClose={() => {
+                    setShowPaidGameConfirmation({});
+                    setLocationCheck({ isBan: false });
+                }}
+            />
+            <LMModal
+                isShow={showModal.show}
+                scrollBehavior="outside"
+                mode={showModal.mode}
+                style={{ padding: "2%" }}
+                handleClose={() => {
+                    setShowAlert(false);
+                    setShowModal(false);
+                    setShowPaidGameConfirmation({});
+                }}
+            >
+                {showModal.mode === "add" && (
+                    <DepostWithdraw
+                        totalAmount={showModal.data.balance}
+                        isDeposit={true}
+                    />
+                )}
+                {showModal.mode === "joining" && (
+                    <JoiningPopup
+                        retry={{ retry: retry, count: contestmaster?.retries }}
+                        data={showModal.data}
+                    />
+                )}
+            </LMModal>
+        </>
+    );
 };
 
 export default PaidGameConfirmation;
