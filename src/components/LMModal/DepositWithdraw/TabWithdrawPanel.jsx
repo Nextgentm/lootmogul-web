@@ -128,7 +128,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         let withDrawReqData = {
             email: email ? email : null,
             chips: amount,
-            amount: numberOfAmount,
+            amount: Number(numberOfAmount),
             mode: withdrawalType,
             currency: currency ? currency : null,
             cryptoToken: cryptotokens ? cryptotokens : null,
