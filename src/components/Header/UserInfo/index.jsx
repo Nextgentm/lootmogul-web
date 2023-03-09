@@ -242,11 +242,11 @@ const UserInfo = ({ user, isMobileDevice }) => {
                     />
                 )}
                 {showModal.mode === "add" && (
-                    // <DepostWithdrawModal
-                    //     totalAmount={totalAmount}
-                    //     winAmount={amounts?.winnings}
-                    // />
-                    <DepostWithdrawstop/>
+                    <DepostWithdrawModal
+                        totalAmount={totalAmount}
+                        winAmount={amounts?.winnings}
+                    />
+                    // <DepostWithdrawstop/>
                 )}
 
             </LMModalComponent>

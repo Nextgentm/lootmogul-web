@@ -129,7 +129,7 @@ const Footer = () => {
                                 height="auto"
                                 onClick={() => router.push("/")}
                                 // {...logoStyle}
-                                alignItem="center"
+                                alignItems="center"
                                 m="10px auto"
                             />
                         </Link>

@@ -141,7 +141,7 @@ export const AppContextContainer = ({ children }) => {
         console.log(value);
         try {
             const resp = await axios.post(
-                process.env.NEXT_PUBLIC_WORDPRESS_URL+`/wp-json/strapi/v1/setCurrentUser/`,
+                process.env.NEXT_PUBLIC_WORDPRESS_URL + `/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.email,
                     strapi_jwt: 'logout',
@@ -159,14 +159,14 @@ export const AppContextContainer = ({ children }) => {
                 setUser(null);
                 if (router.route === '/influencers' || router.route === '/nfts' || router.route === '/games') {
                     router.push(router.route);
-                }else {
+                } else {
                     router.push("/");
                 }
             }
         } catch (error) {
             console.log(error);
         }
-        
+
     }
 
     const fetchGameJoiningData = async (contestmaster = currentContest) => {
@@ -177,7 +177,7 @@ export const AppContextContainer = ({ children }) => {
                 populate: {
                     contestmaster: {
                         fields: ['id', 'slug'],
-                        populate: { game: { fields: ['url', 'type'] } }
+                        populate: { game: { fields: ['url', 'type', 'config'] } }
                     }
                 }
             });
@@ -195,9 +195,16 @@ export const AppContextContainer = ({ children }) => {
 
 
                     } else {
+                        console.log("data[0]?.contestmaster?.data?.game", data[0]?.contestmaster?.data?.game)
                         if (data[0]?.contestmaster?.data?.game?.data?.url && data[0]?.contestmaster?.data?.game?.data?.type == 'html') {
                             if (typeof window !== "undefined") {
                                 window.open(data[0]?.contestmaster?.data?.game?.data?.url + "?ticketId=" + resp?.ticketId + "&token=" + strapi.getToken() + "&redirecturi=" + encodeURI(process.env.NEXT_PUBLIC_SITE_URL + "/games/" + data[0]?.contestmaster?.data?.slug) + "&ts=" + moment().format(), "_self");
+                            }
+                        }
+                        else if (data[0]?.contestmaster?.data?.game?.data?.url && data[0]?.contestmaster?.data?.game?.data?.type == "iframe") {
+                            console.log(data[0]?.contestmaster?.data?.game?.data?.config)
+                            if (data[0]?.contestmaster?.data?.game?.data?.config?.game == 'marketjs') {
+                                // router.push('/games/' + data[0]?.contestmaster?.data?.game?.data?.config?.game_id + '/' + data[0]?.contestmaster?.data?.game?.data?.config?.slug)
                             }
                         }
                         else
@@ -232,25 +239,24 @@ export const AppContextContainer = ({ children }) => {
     const [gameInProgress, setGameInProgress] = useState(false);
 
 
-useEffect(() => {
-    if (!router.isReady) return;
-    const access_token = router.query.access_token;
-    const provider = router.query.provider;
-    if (access_token) {
-      if (provider == "facebook") {
-        callAuthService("facebook", access_token);
-      } else {
-        callAuthService("google", access_token);
-      }
-    }else if(router.query.jwt)
-    {
-      strapi.setToken(router.query.jwt);
-              setJwt(router.query.jwt);
-              console.log('jwt',jwt);
-              console.log('router jwty',router.query.jwt);
-              window.localStorage.setItem("strapi_jwt", router.query.jwt);
-    }
-  }, [router.isReady]);
+    useEffect(() => {
+        if (!router.isReady) return;
+        const access_token = router.query.access_token;
+        const provider = router.query.provider;
+        if (access_token) {
+            if (provider == "facebook") {
+                callAuthService("facebook", access_token);
+            } else {
+                callAuthService("google", access_token);
+            }
+        } else if (router.query.jwt) {
+            strapi.setToken(router.query.jwt);
+            setJwt(router.query.jwt);
+            console.log('jwt', jwt);
+            console.log('router jwty', router.query.jwt);
+            window.localStorage.setItem("strapi_jwt", router.query.jwt);
+        }
+    }, [router.isReady]);
 
     useEffect(() => {
         setMobileDevice(!isDesktopDevice);
@@ -434,7 +440,7 @@ useEffect(() => {
     const insertLoggedInUserInDB = async (value) => {
         try {
             const resp = await axios.post(
-                process.env.NEXT_PUBLIC_WORDPRESS_URL+`/wp-json/strapi/v1/setCurrentUser/`,
+                process.env.NEXT_PUBLIC_WORDPRESS_URL + `/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.user.email,
                     strapi_jwt: value.jwt,
@@ -461,16 +467,16 @@ useEffect(() => {
                         username: formData.username,
                         identifier: formData.email,
                         password: formData.password,
-                    }   
+                    }
                     let registerResult = await strapi.register(apiValues);
                     console.log(registerResult);
                     return;
-                } catch ({error}) {
+                } catch ({ error }) {
                     toast({
                         title: error.message,
                         status: "error",
                         duration: 3000,
-                        position:'top-right',
+                        position: 'top-right',
                         isClosable: true
                     });
                     console.log(error);
@@ -488,12 +494,12 @@ useEffect(() => {
                     insertLoggedInUserInDB(data);
                     setJwt(data.jwt);
                     console.log(data);
-                } catch ({error}) {
+                } catch ({ error }) {
                     toast({
                         title: error.message,
                         status: "error",
                         duration: 3000,
-                        position:'top-right',
+                        position: 'top-right',
                         isClosable: true
                     });
                     console.log(error);
@@ -568,22 +574,21 @@ useEffect(() => {
     };
 
     useEffect(async () => {
-        if( router.query.jwt )
-        {
+        if (router.query.jwt) {
             try {
-            const response = await axios
-                .get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/users/me`, {
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json",
-                        "Authorization": "Bearer "+router.query.jwt,
-                    }
-                });
+                const response = await axios
+                    .get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/users/me`, {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json",
+                            "Authorization": "Bearer " + router.query.jwt,
+                        }
+                    });
                 console.log(response.data);
                 updateUser(response.data);
                 setUser(response.data);
             } catch (error) {
-                console.log('error occured',error);
+                console.log('error occured', error);
             }
         }
         if (!router.isReady) return;
