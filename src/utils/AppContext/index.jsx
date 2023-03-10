@@ -195,7 +195,6 @@ export const AppContextContainer = ({ children }) => {
 
 
                     } else {
-                        console.log("data[0]?.contestmaster?.data?.game", data[0]?.contestmaster?.data?.game)
                         if (data[0]?.contestmaster?.data?.game?.data?.url && data[0]?.contestmaster?.data?.game?.data?.type == 'html') {
                             if (typeof window !== "undefined") {
                                 window.open(data[0]?.contestmaster?.data?.game?.data?.url + "?ticketId=" + resp?.ticketId + "&token=" + strapi.getToken() + "&redirecturi=" + encodeURI(process.env.NEXT_PUBLIC_SITE_URL + "/games/" + data[0]?.contestmaster?.data?.slug) + "&ts=" + moment().format(), "_self");
@@ -204,13 +203,16 @@ export const AppContextContainer = ({ children }) => {
                         else if (data[0]?.contestmaster?.data?.game?.data?.url && data[0]?.contestmaster?.data?.game?.data?.type == "iframe") {
                             console.log(data[0]?.contestmaster?.data?.game?.data?.config)
                             if (data[0]?.contestmaster?.data?.game?.data?.config?.game == 'marketjs') {
-                                // router.push('/games/' + data[0]?.contestmaster?.data?.game?.data?.config?.game_id + '/' + data[0]?.contestmaster?.data?.game?.data?.config?.slug)
+                                setJoiningData(data[0]);
+                                router.push('/games/' + data[0]?.id + '/' + data[0]?.contestmaster?.data?.game?.data?.config?.slug)
                             }
                         }
-                        else
+                        else {
                             setJoiningData(resp);
+                            router.push("/joining");
+                        }
                         setShowLoading({});
-                        router.push("/joining");
+
                     }
                 }
                 else {
