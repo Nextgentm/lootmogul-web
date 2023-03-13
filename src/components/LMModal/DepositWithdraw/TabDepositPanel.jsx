@@ -66,25 +66,33 @@ const TabDepositPanel = ({ isDeposit }) => {
             const results = []
                         // Store results in the results array
             var defaultCurrencyValue;
-            data.data.forEach((value) => {
-                if (value.currency === "USD") {
-                    defaultCurrencyValue = {
-                        currency: value.currency,
-                        minimumDeposit: value.minimumDeposit,
-                        numberOfChips: value.numberOfChips,
-                    }
-                }
-                results.push({
-                    currency: value.currency,
-                    minimumDeposit: value.minimumDeposit,
-                    numberOfChips: value.numberOfChips,
-                });
-            });
+            var setMinimumDeposit;
+            var setNumberOfChips;
+           
             jsondata.forEach((jsonValue) => {
+                
+                data.data.forEach((value) => {
+                    if (value.currency === "USD") {
+                        defaultCurrencyValue = {
+                            currency: value.currency,
+                            minimumDeposit: value.minimumDeposit,
+                            numberOfChips: value.numberOfChips,
+                        }
+                        setMinimumDeposit = defaultCurrencyValue.minimumDeposit;
+                        setNumberOfChips = defaultCurrencyValue.numberOfChips;
+                    }
+                    
+                    if(value.currency.toUpperCase() == jsonValue.toUpperCase()){
+                        setMinimumDeposit = value.minimumDeposit;
+                        setNumberOfChips = value.numberOfChips;
+                    }
+                    
+                });
+
                 results.push({
                     currency: jsonValue,
-                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
-                    numberOfChips: defaultCurrencyValue.numberOfChips,
+                    minimumDeposit: setMinimumDeposit,
+                    numberOfChips: setNumberOfChips,
                 });
             })
 
@@ -110,11 +118,12 @@ const TabDepositPanel = ({ isDeposit }) => {
                         numberOfChips: value.numberOfChips,
                     }
                 }
-                results_bitpay.push({
+                /*results_bitpay.push({
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
                     numberOfChips: value.numberOfChips,
-                });
+                });*/
+
             });
             await fetch('https://test.bitpay.com/currencies')
                 .then(response => response.json())
