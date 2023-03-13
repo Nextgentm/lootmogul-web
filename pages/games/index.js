@@ -1,19 +1,21 @@
 
 import strapi from "../../src/utils/strapi";
 import SEOContainer from '../../src/features/SEOContainer';
-import {getSeoData} from "../../src/queries/strapiQueries";
+import { getSeoData } from "../../src/queries/strapiQueries";
 import GamesComponent from '../../src/features/Games/index';
- const defaultSEOData = {
-  metaTitle:"Play Online Trivia Games With Your Favorite Influencers",
-  metaDescription:"Play Games With Your Favorite Influencers And Win Exciting Prizes",
-  canonicalURL:"https://lootmogul.com/games"
+import MultipleLoggedInUser from "../../src/components/MultipleLoggedInUser";
+const defaultSEOData = {
+  metaTitle: "Play Online Trivia Games With Your Favorite Influencers",
+  metaDescription: "Play Games With Your Favorite Influencers And Win Exciting Prizes",
+  canonicalURL: "https://lootmogul.com/games"
 
 };
 
-export default function GamesPage({ data, banners=[] , contestSectionsData, seoData}) {
+export default function GamesPage({ data, banners = [], contestSectionsData, seoData }) {
   return <>
-    <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 
-  <GamesComponent contestSectionsData={contestSectionsData?.data || []} contestmasters={data || []} banners={banners?.data || []} />
+    <SEOContainer seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData} />
+    <GamesComponent contestSectionsData={contestSectionsData?.data || []} contestmasters={data || []} banners={banners?.data || []} />
+    <MultipleLoggedInUser />
   </>;
 }
 
@@ -21,15 +23,15 @@ export default function GamesPage({ data, banners=[] , contestSectionsData, seoD
 
 export async function getStaticProps() {
   // Fetch data from external API
-  let pageNo=1;
+  let pageNo = 1;
   let pageCount = 1;
   let data = [];
   do {
     const res = await strapi.find("contestmasters", {
-      fields: ["name", "slug","priority","entryFee","isFeatured","retries"],
+      fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
       sort: "priority",
       populate: {
-        contest_section:{
+        contest_section: {
           fields: ["name", "slug"]
         },
         icon: {
@@ -42,7 +44,7 @@ export async function getStaticProps() {
             },
           },
         },
-        reward:{
+        reward: {
         }
       },
 
@@ -51,40 +53,43 @@ export async function getStaticProps() {
         pageSize: 25,
       },
     });
-  
-    if(res?.meta){
+
+    if (res?.meta) {
       data.push(res.data);
-      if(pageCount==1){
+      if (pageCount == 1) {
         pageCount = res.meta.pagination.pageCount
       }
     }
-     pageNo++;
-    } while (pageNo<=pageCount);
+    pageNo++;
+  } while (pageNo <= pageCount);
   // Pass data to the page via props
   data = data.flat();
 
 
-  try{
+  try {
     const contestSectionsRes = await fetch(
-      process.env.NEXT_PUBLIC_STRAPI_API_URL+'/api/contest-sections?sort=priority'
+      process.env.NEXT_PUBLIC_STRAPI_API_URL + '/api/contest-sections?sort=priority'
     );
-  
-     const contestSectionsData = await contestSectionsRes.json();
+
+    const contestSectionsData = await contestSectionsRes.json();
 
     const bannersRes = await fetch(
-      process.env.NEXT_PUBLIC_STRAPI_API_URL+'/api/campaigns?sort=priority&populate=bannerImage'
+      process.env.NEXT_PUBLIC_STRAPI_API_URL + '/api/campaigns?sort=priority&populate=bannerImage'
     );
-  
-     const banners = await bannersRes.json();
-     const seoData = await getSeoData("games");
-  
-     return { props: { data, contestSectionsData, banners , seoData} ,
-     revalidate: 300};
+
+    const banners = await bannersRes.json();
+    const seoData = await getSeoData("games");
+
+    return {
+      props: { data, contestSectionsData, banners, seoData },
+      revalidate: 300
+    };
   } catch (error) {
-    
-    }
-    return { props: { data } ,
+
+  }
+  return {
+    props: { data },
     revalidate: 300, // In seconds
   };
-  }
+}
 

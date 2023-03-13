@@ -1,11 +1,24 @@
-import { useEffect, useState } from "react"
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState } from "react"
+import MultipleLoggedInUser from "../../../components/MultipleLoggedInUser";
+import { getGameRoomOrCreateRoom } from "../../../services/gameSevice";
+import AppContext from "../../../utils/AppContext";
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
+
+    const {
+        setIsHideHeader,
+        setIsHideFooter,
+        joiningData, user
+
+    } = useContext(AppContext);
+    const router = useRouter();
 
     var globalIframe, globalUrl;
 
     const [gameUrl, setGameUrl] = useState()
     useEffect(() => {
+
         if (gameUrl)
             init()
         return () => {
@@ -14,13 +27,28 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             })
         }
     }, [gameUrl]);
-    useEffect(() => {
-        if (gameSlug && gameid)
-            setGameUrl("https://play.gamepix.com/" + gameSlug + "/embed?sid=" + gameid)
 
-    }, [gameSlug, gameid])
+    useEffect(() => {
+        console.log("joiningData", joiningData)
+        if (!joiningData) {
+            router.push("/games");
+        }
+        if (gameSlug && gameid && joiningData?.contestmaster?.data?.game?.data?.config?.url && user?.id) {
+            console.log("Valid Data found")
+            getGameRoomOrCreateRoom(joiningData?.id, user?.id).then((roomData) => {
+                console.log("roomData", roomData)
+                setGameUrl(joiningData?.contestmaster?.data?.game?.data?.config?.url + "?env=stg&tournament_id=" + joiningData.id + "&user_id=" + user?.id + "&game_id=" + joiningData?.id)
+            }).catch((e) => {
+                console.log("erro", e)
+            })
+
+        }
+
+    }, [gameSlug, gameid, joiningData, user?.id])
 
     const init = () => {
+        setIsHideHeader(true);
+        setIsHideFooter(true);
         //////// 1) Create the iframe that will contains the game ////////
         const iframe = document.createElement('iframe');
         iframe.id = 'game-frame';
@@ -37,6 +65,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         const eventer = window[eventMethod];
         const messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
         eventer(messageEvent, function (e) {
+            console.log("e", e.data)
             switch (e.data.type) {
                 case 'loading':
                     loading(e.data.percentage);
@@ -75,6 +104,8 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     }
 
     return (
-        <div id="idDiv" style={{ height: '100vh' }}></div>
+        <div id="idDiv" style={{ height: '100vh' }}>
+            {/* <MultipleLoggedInUser /> */}
+        </div>
     )
 }
