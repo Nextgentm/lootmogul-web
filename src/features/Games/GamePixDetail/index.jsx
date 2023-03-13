@@ -35,12 +35,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         }
         if (gameSlug && gameid && joiningData?.contestmaster?.data?.game?.data?.config?.url && user?.id) {
             console.log("Valid Data found")
-            getGameRoomOrCreateRoom(joiningData?.id, user?.id).then((roomData) => {
-                console.log("roomData", roomData)
-                setGameUrl(joiningData?.contestmaster?.data?.game?.data?.config?.url + "?env=stg&tournament_id=" + joiningData.id + "&user_id=" + user?.id + "&game_id=" + joiningData?.id)
-            }).catch((e) => {
-                console.log("erro", e)
-            })
+            setGameUrl(joiningData?.contestmaster?.data?.game?.data?.config?.url + "?env=stg&tournament_id=" + gameid + "&user_id=" + user?.id + "&game_id=" + joiningData?.id)
 
         }
 
@@ -105,7 +100,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
 
     return (
         <div id="idDiv" style={{ height: '100vh' }}>
-            {/* <MultipleLoggedInUser /> */}
+            <MultipleLoggedInUser />
         </div>
     )
 }
