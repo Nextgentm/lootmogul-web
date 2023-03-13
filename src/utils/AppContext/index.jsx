@@ -10,6 +10,7 @@ import * as ga from "../../services/googleAnalytics";
 import LMNonCloseALert from "../../components/LMNonCloseALert";
 import moment from "moment";
 import axios from 'axios';
+import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
 
 export const AppContext = createContext({});
 
@@ -201,10 +202,33 @@ export const AppContextContainer = ({ children }) => {
                             }
                         }
                         else if (data[0]?.contestmaster?.data?.game?.data?.url && data[0]?.contestmaster?.data?.game?.data?.type == "iframe") {
+
                             console.log(data[0]?.contestmaster?.data?.game?.data?.config)
+
+
                             if (data[0]?.contestmaster?.data?.game?.data?.config?.game == 'marketjs') {
-                                setJoiningData(data[0]);
-                                router.push('/games/' + data[0]?.id + '/' + data[0]?.contestmaster?.data?.game?.data?.config?.slug)
+                                try {
+                                    const roomData = await getGameRoomOrCreateRoom(data[0]?.id, user?.id)
+                                    console.log("roomData", roomData)
+                                    if (roomData) {
+                                        setJoiningData(data[0]);
+                                        router.push('/games/' + roomData?.id + '/' + data[0]?.contestmaster?.data?.game?.data?.config?.slug)
+                                    }
+                                    else {
+                                        router.push("/games");
+                                    }
+                                }
+                                catch (e) {
+                                    console.log("MarketJS game room operation eror", e)
+                                    toast({
+                                        title: "Error While starting game. Please try again.",
+                                        status: "error",
+                                        duration: 3000,
+                                        position: 'top-right',
+                                        isClosable: true
+                                    });
+                                    router.push("/games");
+                                }
                             }
                         }
                         else {
