@@ -89,31 +89,31 @@ export const getGameRoomOrCreateRoom = async (contest_id, user_id) => {
 
 const getActiveContestRoom = async (contest_id, user_id) => {
     try {
-        // const activeRoom = await strapi.find("rooms", {
-        //     filters: {
-        //         contest: contest_id
-        //     },
-        //     populate: ["contest", "users"]
-        // })
-        // console.log("activeRoom", activeRoom)
-        var config = {
-            method: 'get',
-            maxBodyLength: Infinity,
-            url: 'http://localhost:1337/api/rooms?filters%5Bcontest%5D=1771&populate%5B0%5D=contest&populate%5B1%5D=users',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjM2MjQsImlhdCI6MTY3ODY5NjI3OSwiZXhwIjoxNjc4NzAzNDc5fQ.miTJ0ISsiAl2rvRMINWwmtgn888xBP1rvIpSmbYHgU4'
-            }
-        };
+        const activeRoom = await strapi.find("rooms", {
+            filters: {
+                contest: contest_id
+            },
+            populate: ["contest", "users"]
+        })
+        console.log("activeRoom", activeRoom)
+        // var config = {
+        //     method: 'get',
+        //     maxBodyLength: Infinity,
+        //     url: 'http://localhost:1337/api/rooms?filters%5Bcontest%5D=1771&populate%5B0%5D=contest&populate%5B1%5D=users',
+        //     headers: {
+        //         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjM2MjQsImlhdCI6MTY3ODY5NjI3OSwiZXhwIjoxNjc4NzAzNDc5fQ.miTJ0ISsiAl2rvRMINWwmtgn888xBP1rvIpSmbYHgU4'
+        //     }
+        // };
 
-        axios(config)
-            .then(function (response) {
-                console.log(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        // axios(config)
+        //     .then(function (response) {
+        //         console.log(response.data);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
 
-        // return activeRoom?.data
+        return activeRoom?.data
     }
     catch (e) {
         console.log(e)
