@@ -465,7 +465,6 @@ const Header = () => {
                     bg="#1e052c"
                     w="100%"
                     h={isMobileDevice ? "auto" : "auto"}
-                    display="flex"
                     pl={["16px", "5%"]}
                     pr={["16px", "5%"]}
                     alignItems="center"
