@@ -95,9 +95,9 @@ export const AppContextContainer = ({ children }) => {
         const isRetry = await strapi.request(
             "post",
             "contest/custom-contest/checkifretry?contest=" +
-                contestmaster.contest?.id +
-                "&userId=" +
-                user?.id,
+            contestmaster.contest?.id +
+            "&userId=" +
+            user?.id,
             {}
         );
         if (isRetry?.retry && isRetry?.free) {
@@ -154,7 +154,7 @@ export const AppContextContainer = ({ children }) => {
         try {
             const resp = await axios.post(
                 process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                    `/wp-json/strapi/v1/setCurrentUser/`,
+                `/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.email,
                     strapi_jwt: "logout",
@@ -201,11 +201,11 @@ export const AppContextContainer = ({ children }) => {
             });
             let query = coupon
                 ? "contest/custom-contest/join?contest=" +
-                  data[0].id +
-                  "&coupon=" +
-                  coupon +
-                  "&userId=" +
-                  user?.id
+                data[0].id +
+                "&coupon=" +
+                coupon +
+                "&userId=" +
+                user?.id
                 : "contest/custom-contest/join?contest=" + data[0].id;
             if (data?.length > 0) {
                 const resp = await strapi.request("post", query, {});
@@ -216,32 +216,32 @@ export const AppContextContainer = ({ children }) => {
                         if (
                             data[0]?.contestmaster?.data?.game?.data?.url &&
                             data[0]?.contestmaster?.data?.game?.data?.type ==
-                                "html"
+                            "html"
                         ) {
                             if (typeof window !== "undefined") {
                                 window.open(
                                     data[0]?.contestmaster?.data?.game?.data
                                         ?.url +
-                                        "?ticketId=" +
-                                        resp?.ticketId +
-                                        "&token=" +
-                                        strapi.getToken() +
-                                        "&redirecturi=" +
-                                        encodeURI(
-                                            process.env.NEXT_PUBLIC_SITE_URL +
-                                                "/games/" +
-                                                data[0]?.contestmaster?.data
-                                                    ?.slug
-                                        ) +
-                                        "&ts=" +
-                                        moment().format(),
+                                    "?ticketId=" +
+                                    resp?.ticketId +
+                                    "&token=" +
+                                    strapi.getToken() +
+                                    "&redirecturi=" +
+                                    encodeURI(
+                                        process.env.NEXT_PUBLIC_SITE_URL +
+                                        "/games/" +
+                                        data[0]?.contestmaster?.data
+                                            ?.slug
+                                    ) +
+                                    "&ts=" +
+                                    moment().format(),
                                     "_self"
                                 );
                             }
                         } else if (
                             data[0]?.contestmaster?.data?.game?.data?.url &&
                             data[0]?.contestmaster?.data?.game?.data?.type ==
-                                "iframe"
+                            "iframe"
                         ) {
                             console.log(
                                 data[0]?.contestmaster?.data?.game?.data?.config
@@ -251,39 +251,41 @@ export const AppContextContainer = ({ children }) => {
                                 data[0]?.contestmaster?.data?.game?.data?.config
                                     ?.game == "marketjs"
                             ) {
+                                setShowPaidGameConfirmation({});
+
                                 // try {
-                                    const roomData =
-                                        await getGameRoomOrCreateRoom(
-                                            data[0]?.id,
-                                            user?.id
-                                        );
-                                    console.log("roomData", roomData);
-                                    if (roomData) {
-                                        setJoiningData(data[0]);
-                                        router.push(
-                                            "/games/" +
-                                                roomData?.id +
-                                                "/" +
-                                                data[0]?.contestmaster?.data
-                                                    ?.game?.data?.config?.slug
-                                        );
-                                    } else {
-                                        router.push("/games");
-                                    }
+                                const roomData =
+                                    await getGameRoomOrCreateRoom(
+                                        data[0]?.id,
+                                        user?.id
+                                    );
+                                console.log("roomData", roomData);
+                                if (roomData) {
+                                    setJoiningData(data[0]);
+                                    router.push(
+                                        "/games/" +
+                                        roomData?.id +
+                                        "/" +
+                                        data[0]?.contestmaster?.data
+                                            ?.game?.data?.config?.slug
+                                    );
+                                } else {
+                                    router.push("/games");
+                                }
                                 // } catch (e) {
-                                    // setShowLoading({});
-                                    // console.log(
-                                    //     "MarketJS game room operation eror",
-                                    //     e
-                                    // );
-                                    // toast({
-                                    //     title: "Error While starting game. Please try again.",
-                                    //     status: "error",
-                                    //     duration: 3000,
-                                    //     position: "top-right",
-                                    //     isClosable: true
-                                    // });
-                                    // router.push("/games");
+                                // setShowLoading({});
+                                // console.log(
+                                //     "MarketJS game room operation eror",
+                                //     e
+                                // );
+                                // toast({
+                                //     title: "Error While starting game. Please try again.",
+                                //     status: "error",
+                                //     duration: 3000,
+                                //     position: "top-right",
+                                //     isClosable: true
+                                // });
+                                // router.push("/games");
                                 // }
                             }
                         } else {
@@ -481,7 +483,7 @@ export const AppContextContainer = ({ children }) => {
                                     trackingCode: trackingCode || ""
                                 }
                             });
-                        } catch (error) {}
+                        } catch (error) { }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("utm_medium");
@@ -496,10 +498,10 @@ export const AppContextContainer = ({ children }) => {
                             await strapi.request(
                                 "get",
                                 "referral-codes/signwithreferral?referral_code=" +
-                                    referral_code
+                                referral_code
                             );
                             updateUser();
-                        } catch (error) {}
+                        } catch (error) { }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
@@ -528,7 +530,7 @@ export const AppContextContainer = ({ children }) => {
         try {
             const resp = await axios.post(
                 process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                    `/wp-json/strapi/v1/setCurrentUser/`,
+                `/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.user.email,
                     strapi_jwt: value.jwt,
@@ -632,7 +634,7 @@ export const AppContextContainer = ({ children }) => {
                                     trackingCode: trackingCode || ""
                                 }
                             });
-                        } catch (error) {}
+                        } catch (error) { }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("utm_medium");
@@ -647,10 +649,10 @@ export const AppContextContainer = ({ children }) => {
                             await strapi.request(
                                 "get",
                                 "referral-codes/signwithreferral?referral_code=" +
-                                    referral_code
+                                referral_code
                             );
                             updateUser();
-                        } catch (error) {}
+                        } catch (error) { }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
