@@ -16,12 +16,12 @@ import CountDownTimer from "../../components/CountDownTimer";
 const GameDetails = ({ gameData }) => {
     const { isTabletOrDesktop } = useContext(AppContext);
     const router = useRouter();
-    
-    const { showPaidGameConfirmation, CheckAndStartGame, showCaptcha, setShowCaptcha} = useContext(AppContext);
-    const [defaultTab, setDefaultTab] = useState(router.asPath.includes("#leaderboard")?1:0);
-    const [contestStatus,setContestStatus]= useState(false);
 
-   
+    const { showPaidGameConfirmation, CheckAndStartGame, showCaptcha, setShowCaptcha } = useContext(AppContext);
+    const [defaultTab, setDefaultTab] = useState(router.asPath.includes("#leaderboard") ? 1 : 0);
+    const [contestStatus, setContestStatus] = useState(false);
+
+
     // useEffect(async () => {
     //     // fetch user stats
     //     if (gameData) {
@@ -40,20 +40,20 @@ const GameDetails = ({ gameData }) => {
         <Box
             mr={["18px", "60px"]}
             ml={["18px", "60px"]}
-            
+
             m="auto"
             textAlign={"center"}
             key={`GameDetail-${gameData?.id}`}
-            mt={["20px","40px"]}
+            mt={["20px", "40px"]}
             mb={"10vw"}
         >
 
-         
+
 
             {gameData && <GameInfo isTabletOrDesktop={isTabletOrDesktop} gameData={gameData} />}
             {gameData && <GameTabs defaultTab={defaultTab} gameData={gameData} />}
 
-            {gameData && gameData.contest && (gameData?.contest?.status === "active" ||contestStatus) &&
+            {gameData && gameData.contest && (gameData?.contest?.status === "active" || contestStatus) &&
                 <Button m="auto"
                     onClick={() => {
                         CheckAndStartGame(`GameDetail-${gameData?.id}`, gameData)
@@ -65,7 +65,7 @@ const GameDetails = ({ gameData }) => {
             {gameData && gameData.contest && (gameData?.contest?.status === "upcoming" && !contestStatus) && (
                 <Button m="auto" opacity="1!important" variant="outline" disabled mb="2%" color="primary">
 
-                    <CountDownTimer onZero={()=>setContestStatus(true)} startDate={gameData.contest.startDate} /> </Button>)}
+                    <CountDownTimer onZero={() => setContestStatus(true)} startDate={gameData.contest.startDate} /> </Button>)}
             {gameData && gameData.contest && gameData?.contest?.status === "closed" && (
                 <Button m="auto" variant="outline" disabled mb="2%">
 
