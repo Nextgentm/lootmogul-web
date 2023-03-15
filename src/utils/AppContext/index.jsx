@@ -4,16 +4,12 @@ import strapi from "../strapi";
 import socketio from "socket.io-client";
 import { useRouter } from "next/router";
 import { defaultAudioSettings, game } from "../../services/audioService";
-import {
-    defaultDataSettings,
-    getCountForCaptcha
-} from "../../services/dataService";
+import { defaultDataSettings, getCountForCaptcha } from "../../services/dataService";
 import { apiLikeRequests } from "../../features/Home/api";
 import * as ga from "../../services/googleAnalytics";
 import LMNonCloseALert from "../../components/LMNonCloseALert";
 import moment from "moment";
-import axios from "axios";
-import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
+import axios from 'axios';
 
 export const AppContext = createContext({});
 
@@ -21,14 +17,10 @@ export const AppContextContainer = ({ children }) => {
     const router = useRouter();
     const toast = useToast();
     const [isLoginModalActive, setLoginModalActive] = useState(false);
-    const [isForgotPasswordModalActive, setForgotPasswordModalActive] =
-        useState(false);
-    const [isCheckYourMailModalActive, setCheckYourMailModalActive] =
-        useState(false);
-    const [isChangePasswordModalActive, setChangePasswordModalActive] =
-        useState(false);
-    const [isPasswordChangedModalActive, setPasswordChangedModalActive] =
-        useState(false);
+    const [isForgotPasswordModalActive, setForgotPasswordModalActive] = useState(false);
+    const [isCheckYourMailModalActive, setCheckYourMailModalActive] = useState(false);
+    const [isChangePasswordModalActive, setChangePasswordModalActive] = useState(false);
+    const [isPasswordChangedModalActive, setPasswordChangedModalActive] = useState(false);
     const [isMobileDevice, setMobileDevice] = useState(false);
 
     const [isTabletOrDesktop, setIsTabletOrDesktop] = useState(false);
@@ -47,9 +39,7 @@ export const AppContextContainer = ({ children }) => {
     //const [countForCaptcha, setCountForCaptcha] = useState(getCountForCaptcha());
     const [amounts, setAmounts] = useState({});
 
-    const [showPaidGameConfirmation, setShowPaidGameConfirmation] = useState(
-        {}
-    );
+    const [showPaidGameConfirmation, setShowPaidGameConfirmation] = useState({});
     const [showCaptcha, setShowCaptcha] = useState({});
     const [coupon, setCoupon] = useState("");
     const [joiningData, setJoiningData] = useState(null);
@@ -74,116 +64,110 @@ export const AppContextContainer = ({ children }) => {
         setPasswordChangedModalActive(!isPasswordChangedModalActive);
     };
 
+
     const CheckAndStartGame = (callerKey, contestmaster) => {
+
         if (!user) {
             setShowLoading({});
             toggleLoginModal();
-            setRoutePathAfterLogin({
-                nextPath: "/joining",
-                contestmaster: contestmaster,
-                callerKey
-            });
-        } else if (parseInt(getCountForCaptcha()) === 5) {
-            setShowCaptcha({ cm: contestmaster.id, callerKey: callerKey });
-        } else {
-            setShowCaptcha({});
-            CheckLocationAndConfirm(contestmaster, callerKey);
+            setRoutePathAfterLogin({ nextPath: "/joining", contestmaster: contestmaster, callerKey });
         }
+        else
+            if (parseInt(getCountForCaptcha()) === 5) {
+                setShowCaptcha({ 'cm': contestmaster.id, 'callerKey': callerKey });
+            } else {
+                setShowCaptcha({});
+                CheckLocationAndConfirm(contestmaster, callerKey);
+            }
     };
 
     const CheckIfRetry = async (contestmaster, callerKey) => {
+
         const isRetry = await strapi.request(
             "post",
-            "contest/custom-contest/checkifretry?contest=" +
-            contestmaster.contest?.id +
-            "&userId=" +
-            user?.id,
+            "contest/custom-contest/checkifretry?contest=" + contestmaster.contest?.id + "&userId=" + user?.id,
             {}
         );
         if (isRetry?.retry && isRetry?.free) {
             setShowPaidGameConfirmation({});
-            setCurrentContest(contestmaster);
+            setCurrentContest(
+                contestmaster
+            );
             fetchGameJoiningData(contestmaster);
-        } else if (isRetry?.retry && !isRetry?.free) {
-            setShowLoading({});
 
-            // show popup that your retries are over and then show below popup
-            setShowPaidGameConfirmation({
-                cm: contestmaster.id,
-                callerKey: callerKey,
-                retry: "exceeded"
-            });
-        } else {
-            setShowLoading({});
-            setShowPaidGameConfirmation({
-                cm: contestmaster.id,
-                callerKey: callerKey
-            });
         }
-    };
+        else
+            if (isRetry?.retry && !isRetry?.free) {
+                setShowLoading({});
+
+                // show popup that your retries are over and then show below popup
+                setShowPaidGameConfirmation({ 'cm': contestmaster.id, 'callerKey': callerKey, 'retry': "exceeded" });
+            }
+            else {
+                setShowLoading({});
+                setShowPaidGameConfirmation({ 'cm': contestmaster.id, 'callerKey': callerKey });
+            }
+    }
 
     const CheckLocationAndConfirm = (contestmaster, callerKey) => {
         if (contestmaster.entryFee > 0 && contestmaster.retries > 0) {
             CheckIfRetry(contestmaster, callerKey);
-        } else if (contestmaster.entryFee != 0) {
-            setShowLoading(false);
-            setShowPaidGameConfirmation({
-                cm: contestmaster.id,
-                callerKey: callerKey
-            });
-        } else {
-            setShowPaidGameConfirmation({});
-            setCurrentContest(contestmaster);
-            fetchGameJoiningData(contestmaster);
-            // router.push("/joining")
         }
-    };
+        else
+            if (contestmaster.entryFee != 0) {
+                setShowLoading(false);
+                setShowPaidGameConfirmation({ 'cm': contestmaster.id, 'callerKey': callerKey });
+            }
+            else {
+                setShowPaidGameConfirmation({});
+                setCurrentContest(
+                    contestmaster
+                );
+                fetchGameJoiningData(contestmaster);
+                // router.push("/joining")
+            }
 
-    const onPlayAgain = async (
-        contestmaster = currentContest,
-        callerKey = `CheckRetry-${currentContest?.id}`
-    ) => {
+    }
+
+    const onPlayAgain = async (contestmaster = currentContest, callerKey = `CheckRetry-${currentContest?.id}`) => {
         if (contestmaster.entryFee > 0 && contestmaster.retries > 0) {
             CheckIfRetry(contestmaster, callerKey);
         } else fetchGameJoiningData();
-    };
+
+    }
     const logout = async () => {
-        console.log("Im Logout to..");
+        console.log('Im Logout to..');
         const value = await strapi.fetchUser();
         console.log(value);
         try {
             const resp = await axios.post(
-                process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                `/wp-json/strapi/v1/setCurrentUser/`,
+                process.env.NEXT_PUBLIC_WORDPRESS_URL+`/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.email,
-                    strapi_jwt: "logout",
+                    strapi_jwt: 'logout',
                     provider: value.provider
                 }
             );
             const data = resp.data;
             if (data.success) {
                 console.log(data);
-                console.log("User Data Update to logout...");
-                if (typeof window !== "undefined" && window.localStorage) {
+                console.log('User Data Update to logout...');
+                if (typeof window !== 'undefined' && window.localStorage) {
                     localStorage.clear();
                 }
                 strapi.logout();
                 setUser(null);
-                if (
-                    router.route === "/influencers" ||
-                    router.route === "/nfts" ||
-                    router.route === "/games"
-                ) {
+                if (router.route === '/influencers' || router.route === '/nfts' || router.route === '/games') {
                     router.push(router.route);
-                } else {
+                }else {
                     router.push("/");
                 }
             }
         } catch (error) {
             console.log(error);
         }
-    };
+        
+    }
 
     const fetchGameJoiningData = async (contestmaster = currentContest) => {
         if (contestmaster) {
@@ -192,115 +176,48 @@ export const AppContextContainer = ({ children }) => {
                 filters: { contestmaster: contestmaster.id },
                 populate: {
                     contestmaster: {
-                        fields: ["id", "slug"],
-                        populate: {
-                            game: { fields: ["url", "type", "config"] }
-                        }
+                        fields: ['id', 'slug'],
+                        populate: { game: { fields: ['url', 'type'] } }
                     }
                 }
             });
-            let query = coupon
-                ? "contest/custom-contest/join?contest=" +
-                data[0].id +
-                "&coupon=" +
-                coupon +
-                "&userId=" +
-                user?.id
-                : "contest/custom-contest/join?contest=" + data[0].id;
+            let query = coupon ? "contest/custom-contest/join?contest=" + data[0].id + "&coupon=" + coupon + "&userId=" + user?.id : "contest/custom-contest/join?contest=" + data[0].id;
             if (data?.length > 0) {
-                const resp = await strapi.request("post", query, {});
+
+                const resp = await strapi.request(
+                    "post",
+                    query,
+                    {}
+                );
                 if (resp?.ticketId) {
                     setCoupon("");
                     if (resp?.status == 0) {
+
+
                     } else {
-                        if (
-                            data[0]?.contestmaster?.data?.game?.data?.url &&
-                            data[0]?.contestmaster?.data?.game?.data?.type ==
-                            "html"
-                        ) {
+                        if (data[0]?.contestmaster?.data?.game?.data?.url && data[0]?.contestmaster?.data?.game?.data?.type == 'html') {
                             if (typeof window !== "undefined") {
-                                window.open(
-                                    data[0]?.contestmaster?.data?.game?.data
-                                        ?.url +
-                                    "?ticketId=" +
-                                    resp?.ticketId +
-                                    "&token=" +
-                                    strapi.getToken() +
-                                    "&redirecturi=" +
-                                    encodeURI(
-                                        process.env.NEXT_PUBLIC_SITE_URL +
-                                        "/games/" +
-                                        data[0]?.contestmaster?.data
-                                            ?.slug
-                                    ) +
-                                    "&ts=" +
-                                    moment().format(),
-                                    "_self"
-                                );
+                                window.open(data[0]?.contestmaster?.data?.game?.data?.url + "?ticketId=" + resp?.ticketId + "&token=" + strapi.getToken() + "&redirecturi=" + encodeURI(process.env.NEXT_PUBLIC_SITE_URL + "/games/" + data[0]?.contestmaster?.data?.slug) + "&ts=" + moment().format(), "_self");
                             }
-                        } else if (
-                            data[0]?.contestmaster?.data?.game?.data?.url &&
-                            data[0]?.contestmaster?.data?.game?.data?.type ==
-                            "iframe"
-                        ) {
-                            console.log(
-                                data[0]?.contestmaster?.data?.game?.data?.config
-                            );
-
-                            if (
-                                data[0]?.contestmaster?.data?.game?.data?.config
-                                    ?.game == "marketjs"
-                            ) {
-                                setShowPaidGameConfirmation({});
-
-                                // try {
-                                const roomData =
-                                    await getGameRoomOrCreateRoom(
-                                        data[0]?.id,
-                                        user?.id
-                                    );
-                                console.log("roomData", roomData);
-                                if (roomData) {
-                                    setJoiningData(data[0]);
-                                    router.push(
-                                        "/games/" +
-                                        roomData?.id +
-                                        "/" +
-                                        data[0]?.contestmaster?.data
-                                            ?.game?.data?.config?.slug
-                                    );
-                                } else {
-                                    router.push("/games");
-                                }
-                                // } catch (e) {
-                                // setShowLoading({});
-                                // console.log(
-                                //     "MarketJS game room operation eror",
-                                //     e
-                                // );
-                                // toast({
-                                //     title: "Error While starting game. Please try again.",
-                                //     status: "error",
-                                //     duration: 3000,
-                                //     position: "top-right",
-                                //     isClosable: true
-                                // });
-                                // router.push("/games");
-                                // }
-                            }
-                        } else {
-                            setJoiningData(resp);
-                            router.push("/joining");
                         }
+                        else
+                            setJoiningData(resp);
                         setShowLoading({});
+                        router.push("/joining");
                     }
-                } else {
+                }
+                else {
+
                     setCoupon("");
                 }
             } else {
+
+
             }
-        }
-    };
+        };
+    }
+
+
 
     const [jwt, setJwt] = useState();
 
@@ -314,28 +231,31 @@ export const AppContextContainer = ({ children }) => {
 
     const [gameInProgress, setGameInProgress] = useState(false);
 
-    useEffect(() => {
-        if (!router.isReady) return;
-        const access_token = router.query.access_token;
-        const provider = router.query.provider;
-        if (access_token) {
-            if (provider == "facebook") {
-                callAuthService("facebook", access_token);
-            } else {
-                callAuthService("google", access_token);
-            }
-        } else if (router.query.jwt) {
-            strapi.setToken(router.query.jwt);
-            setJwt(router.query.jwt);
-            console.log("jwt", jwt);
-            console.log("router jwty", router.query.jwt);
-            window.localStorage.setItem("strapi_jwt", router.query.jwt);
-        }
-    }, [router.isReady]);
+
+useEffect(() => {
+    if (!router.isReady) return;
+    const access_token = router.query.access_token;
+    const provider = router.query.provider;
+    if (access_token) {
+      if (provider == "facebook") {
+        callAuthService("facebook", access_token);
+      } else {
+        callAuthService("google", access_token);
+      }
+    }else if(router.query.jwt)
+    {
+      strapi.setToken(router.query.jwt);
+              setJwt(router.query.jwt);
+              console.log('jwt',jwt);
+              console.log('router jwty',router.query.jwt);
+              window.localStorage.setItem("strapi_jwt", router.query.jwt);
+    }
+  }, [router.isReady]);
 
     useEffect(() => {
         setMobileDevice(!isDesktopDevice);
     }, [isDesktopDevice]);
+
 
     useEffect(() => {
         setIsTabletOrDesktop(isNotMobile);
@@ -386,6 +306,7 @@ export const AppContextContainer = ({ children }) => {
                 return data;
             }
         } catch (error) {
+
             return null;
         }
     };
@@ -399,27 +320,24 @@ export const AppContextContainer = ({ children }) => {
     useEffect(() => {
         if (!user && strapi?.user) {
             updateUser();
-        } else if (user && !strapi.user) {
+        }
+        else if (user && !strapi.user) {
             setUser(null);
         }
     }, [strapi?.user]);
 
     useEffect(() => {
-        if (
-            typeof window !== "undefined" &&
-            window.localStorage?.getItem("quizVoiceOver") === null
-        ) {
+        if (typeof window !== 'undefined' && window.localStorage?.getItem("quizVoiceOver") === null) {
             defaultAudioSettings();
         }
+
     }, []);
 
     useEffect(() => {
-        if (
-            typeof window !== "undefined" &&
-            window.localStorage?.getItem("sssPage") === null
-        ) {
+        if (typeof window !== 'undefined' && window.localStorage?.getItem("sssPage") === null) {
             game();
         }
+
     }, []);
 
     useEffect(() => {
@@ -435,7 +353,7 @@ export const AppContextContainer = ({ children }) => {
     const FetchLikes = async () => {
         const il = await apiLikeRequests(user);
         setInfluencerLikes(il);
-    };
+    }
     const callAuthService = async (provider, token) => {
         let data;
         defaultDataSettings();
@@ -448,42 +366,29 @@ export const AppContextContainer = ({ children }) => {
             insertLoggedInUserInDB(data);
 
             if (data.user.is_new) {
-                if (typeof window !== "undefined") {
-                    const utm_source =
-                        window.localStorage?.getItem("utm_source");
-                    const utm_medium =
-                        window.localStorage?.getItem("utm_medium");
-                    const utm_campaign =
-                        window.localStorage?.getItem("utm_campaign");
+
+                if (typeof window !== 'undefined') {
+                    const utm_source = window.localStorage?.getItem("utm_source");
+                    const utm_medium = window.localStorage?.getItem("utm_medium");
+                    const utm_campaign = window.localStorage?.getItem("utm_campaign");
                     const utm_term = window.localStorage?.getItem("utm_term");
-                    const utm_content =
-                        window.localStorage?.getItem("utm_content");
-                    const trackingCode =
-                        window.localStorage?.getItem("trackingCode");
-                    const referral_code =
-                        window.localStorage?.getItem("referral_code");
+                    const utm_content = window.localStorage?.getItem("utm_content");
+                    const trackingCode = window.localStorage?.getItem("trackingCode");
+                    const referral_code = window.localStorage?.getItem("referral_code");
                     const provider = window.localStorage?.getItem("provider");
 
-                    if (
-                        (provider && trackingCode) ||
-                        utm_source ||
-                        utm_medium ||
-                        utm_term ||
-                        utm_campaign ||
-                        utm_content
-                    ) {
+                    if (provider && trackingCode || (utm_source || utm_medium || utm_term || utm_campaign || utm_content)) {
+
                         try {
-                            strapi.request("post", "sourcetracking", {
-                                data: {
-                                    utm_source: provider || utm_source,
-                                    utm_medium: utm_medium || "",
-                                    utm_campaign: utm_campaign || "",
-                                    utm_term: utm_term || "",
-                                    utm_content: utm_content || "",
-                                    trackingCode: trackingCode || ""
-                                }
-                            });
-                        } catch (error) { }
+
+                            strapi.request(
+                                "post",
+                                "sourcetracking",
+                                { 'data': { 'utm_source': provider || utm_source, 'utm_medium': utm_medium || "", 'utm_campaign': utm_campaign || "", 'utm_term': utm_term || "", 'utm_content': utm_content || "", 'trackingCode': trackingCode || "" } });
+                        }
+                        catch (error) {
+
+                        }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("utm_medium");
@@ -497,11 +402,13 @@ export const AppContextContainer = ({ children }) => {
                         try {
                             await strapi.request(
                                 "get",
-                                "referral-codes/signwithreferral?referral_code=" +
-                                referral_code
+                                "referral-codes/signwithreferral?referral_code=" + referral_code
                             );
                             updateUser();
-                        } catch (error) { }
+                        }
+                        catch (error) {
+
+                        }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
@@ -509,14 +416,12 @@ export const AppContextContainer = ({ children }) => {
                 }
             }
             ga.eventTracking({
-                action: data.user.is_new
-                    ? "new user signup happened"
-                    : "user logged in",
+                action: data.user.is_new ? "new user signup happened" : "user logged in",
                 params: data.user
             });
             clevertap.onUserLogin.push({
-                Site: data.user
-            });
+                "Site": data.user
+            })
             await updateUser(data.user);
         }
         if (routePathAfterLogin) {
@@ -529,8 +434,7 @@ export const AppContextContainer = ({ children }) => {
     const insertLoggedInUserInDB = async (value) => {
         try {
             const resp = await axios.post(
-                process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                `/wp-json/strapi/v1/setCurrentUser/`,
+                process.env.NEXT_PUBLIC_WORDPRESS_URL+`/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.user.email,
                     strapi_jwt: value.jwt,
@@ -540,12 +444,12 @@ export const AppContextContainer = ({ children }) => {
 
             const data = resp.data;
             if (data.success) {
-                console.log("User Data saved successfully to DB");
+                console.log('User Data saved successfully to DB');
             }
         } catch (error) {
             console.log(error);
         }
-    };
+    }
 
     const callCustomAuthService = async (formData, formType) => {
         let data;
@@ -556,17 +460,17 @@ export const AppContextContainer = ({ children }) => {
                     const apiValues = {
                         username: formData.username,
                         identifier: formData.email,
-                        password: formData.password
-                    };
+                        password: formData.password,
+                    }   
                     let registerResult = await strapi.register(apiValues);
                     console.log(registerResult);
                     return;
-                } catch ({ error }) {
+                } catch ({error}) {
                     toast({
                         title: error.message,
                         status: "error",
                         duration: 3000,
-                        position: "top-right",
+                        position:'top-right',
                         isClosable: true
                     });
                     console.log(error);
@@ -578,18 +482,18 @@ export const AppContextContainer = ({ children }) => {
                 try {
                     const apiValues = {
                         identifier: formData.username,
-                        password: formData.password
-                    };
+                        password: formData.password,
+                    }
                     data = await strapi.login(apiValues);
                     insertLoggedInUserInDB(data);
                     setJwt(data.jwt);
                     console.log(data);
-                } catch ({ error }) {
+                } catch ({error}) {
                     toast({
                         title: error.message,
                         status: "error",
                         duration: 3000,
-                        position: "top-right",
+                        position:'top-right',
                         isClosable: true
                     });
                     console.log(error);
@@ -599,42 +503,28 @@ export const AppContextContainer = ({ children }) => {
         }
         if (data?.user) {
             if (data.user.is_new) {
-                if (typeof window !== "undefined") {
-                    const utm_source =
-                        window.localStorage?.getItem("utm_source");
-                    const utm_medium =
-                        window.localStorage?.getItem("utm_medium");
-                    const utm_campaign =
-                        window.localStorage?.getItem("utm_campaign");
+                if (typeof window !== 'undefined') {
+                    const utm_source = window.localStorage?.getItem("utm_source");
+                    const utm_medium = window.localStorage?.getItem("utm_medium");
+                    const utm_campaign = window.localStorage?.getItem("utm_campaign");
                     const utm_term = window.localStorage?.getItem("utm_term");
-                    const utm_content =
-                        window.localStorage?.getItem("utm_content");
-                    const trackingCode =
-                        window.localStorage?.getItem("trackingCode");
-                    const referral_code =
-                        window.localStorage?.getItem("referral_code");
+                    const utm_content = window.localStorage?.getItem("utm_content");
+                    const trackingCode = window.localStorage?.getItem("trackingCode");
+                    const referral_code = window.localStorage?.getItem("referral_code");
                     const provider = window.localStorage?.getItem("provider");
 
-                    if (
-                        (provider && trackingCode) ||
-                        utm_source ||
-                        utm_medium ||
-                        utm_term ||
-                        utm_campaign ||
-                        utm_content
-                    ) {
+                    if (provider && trackingCode || (utm_source || utm_medium || utm_term || utm_campaign || utm_content)) {
+
                         try {
-                            strapi.request("post", "sourcetracking", {
-                                data: {
-                                    utm_source: provider || utm_source,
-                                    utm_medium: utm_medium || "",
-                                    utm_campaign: utm_campaign || "",
-                                    utm_term: utm_term || "",
-                                    utm_content: utm_content || "",
-                                    trackingCode: trackingCode || ""
-                                }
-                            });
-                        } catch (error) { }
+
+                            strapi.request(
+                                "post",
+                                "sourcetracking",
+                                { 'data': { 'utm_source': provider || utm_source, 'utm_medium': utm_medium || "", 'utm_campaign': utm_campaign || "", 'utm_term': utm_term || "", 'utm_content': utm_content || "", 'trackingCode': trackingCode || "" } });
+                        }
+                        catch (error) {
+
+                        }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("utm_medium");
@@ -648,11 +538,13 @@ export const AppContextContainer = ({ children }) => {
                         try {
                             await strapi.request(
                                 "get",
-                                "referral-codes/signwithreferral?referral_code=" +
-                                referral_code
+                                "referral-codes/signwithreferral?referral_code=" + referral_code
                             );
                             updateUser();
-                        } catch (error) { }
+                        }
+                        catch (error) {
+
+                        }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
@@ -660,14 +552,12 @@ export const AppContextContainer = ({ children }) => {
                 }
             }
             ga.eventTracking({
-                action: data.user.is_new
-                    ? "new user signup happened"
-                    : "user logged in",
+                action: data.user.is_new ? "new user signup happened" : "user logged in",
                 params: data.user
             });
             clevertap.onUserLogin.push({
-                Site: data.user
-            });
+                "Site": data.user
+            })
             await updateUser(data.user);
         }
         if (routePathAfterLogin) {
@@ -678,23 +568,22 @@ export const AppContextContainer = ({ children }) => {
     };
 
     useEffect(async () => {
-        if (router.query.jwt) {
+        if( router.query.jwt )
+        {
             try {
-                const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/users/me`,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Accept: "application/json",
-                            Authorization: "Bearer " + router.query.jwt
-                        }
+            const response = await axios
+                .get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/users/me`, {
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "Authorization": "Bearer "+router.query.jwt,
                     }
-                );
+                });
                 console.log(response.data);
                 updateUser(response.data);
                 setUser(response.data);
             } catch (error) {
-                console.log("error occured", error);
+                console.log('error occured',error);
             }
         }
         if (!router.isReady) return;
@@ -747,8 +636,7 @@ export const AppContextContainer = ({ children }) => {
                 influencerLikes,
                 FetchLikes,
                 showLoading,
-                showCaptcha,
-                setShowCaptcha,
+                showCaptcha, setShowCaptcha,
                 joiningData,
                 fetchGameJoiningData,
                 setShowLoading,
