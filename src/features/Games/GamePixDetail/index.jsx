@@ -1,4 +1,6 @@
+import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Box, Button, Heading, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react"
+import MultipleLoggedInUser from "../../../components/MultipleLoggedInUser";
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
@@ -75,6 +77,40 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     }
 
     return (
-        <div id="idDiv" style={{ height: '100vh' }}></div>
+        <div id="idDiv" style={{ height: '100vh' }}>
+            <MultipleLoggedInUser />
+            <AlertDialog
+                motionPreset="slideInBottom"
+                onClose={handleClose}
+                isOpen={isOpen}
+                onClick={handleClose}
+                isCentered
+                size={"xl"}
+                bg="background"
+                closeOnOverlayClick={false}
+                closeOnEsc={false}
+            >
+                <AlertDialogOverlay />
+
+                <AlertDialogContent p="10px" bg="background">
+                    <Box border="2.7033px dashed #515151">
+                        <AlertDialogHeader>
+                            <Heading color="white">
+                                Game Over
+                            </Heading>
+                        </AlertDialogHeader>
+                        <AlertDialogCloseButton _focus={{ boxShadow: "none" }} />
+                        <AlertDialogBody>
+                            <Text variant="hint">
+                                Your score is updated. Please check leaderboard.
+                            </Text>
+                        </AlertDialogBody>
+                        <AlertDialogFooter>
+                            <Button onClick={handleClose}>Close</Button>
+                        </AlertDialogFooter>
+                    </Box>
+                </AlertDialogContent>
+            </AlertDialog>
+        </div>
     )
 }
