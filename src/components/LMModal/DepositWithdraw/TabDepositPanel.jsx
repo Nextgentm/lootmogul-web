@@ -176,9 +176,9 @@ const TabDepositPanel = ({ isDeposit }) => {
     }, []);
 
     const deposit = async () => {
-        if (amount <= numberOfChips) {
+        if (amount < numberOfChips) {
             console.log('zero');
-            setAlertShow({ isOpen: true, msg: "Enter Deposit more than " + numberOfChips + " Chips" });
+            setAlertShow({ isOpen: true, msg: "Enter minimum " + numberOfChips + " chips for Deposit" });
         }
         else {
             const user = await strapi.fetchUser();
@@ -295,8 +295,8 @@ const TabDepositPanel = ({ isDeposit }) => {
                             </Text>
                         </Radio>
                     </Box>
-                    <Box color='white' w="48%" display="inline-table" bg="#1D052B" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px" >
-                        <Radio size='md' colorScheme='pink' value='2'>
+                    <Box color='white' opacity={"0.5"} w="48%" display="inline-table" bg="#1D052B" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px" >
+                        <Radio size='md' colorScheme='pink' value='2' isDisabled>
                             <Text
                                 display="inline-flex"
                                 color="white"
