@@ -179,11 +179,11 @@ const WalletPage = ({ totalAmount }) => {
                     />
                 )}
                 {showModal.mode === "sub" && (
-                    <DepostWithdraw
-                        totalAmount={totalAmount}
-                        winAmount={amounts?.winnings}
-                    />
-                    // <DepostWithdrawstop/>
+                    // <DepostWithdraw
+                    //     totalAmount={totalAmount}
+                    //     winAmount={amounts?.winnings}
+                    // />
+                    <DepostWithdrawstop/>
                 )}
             </LMModal>
         </Box>

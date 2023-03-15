@@ -1,26 +1,11 @@
-import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Box, Button, Heading, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react"
-import MultipleLoggedInUser from "../../../components/MultipleLoggedInUser";
-import { getGameRoomOrCreateRoom } from "../../../services/gameSevice";
-import AppContext from "../../../utils/AppContext";
+import { useEffect, useState } from "react"
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
-
-    const {
-        setIsHideHeader,
-        setIsHideFooter,
-        joiningData, user
-
-    } = useContext(AppContext);
-    const router = useRouter();
 
     var globalIframe, globalUrl;
 
     const [gameUrl, setGameUrl] = useState()
-    const [isOpen, setOpen] = useState(false);
     useEffect(() => {
-
         if (gameUrl)
             init()
         return () => {
@@ -29,23 +14,13 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             })
         }
     }, [gameUrl]);
-
     useEffect(() => {
-        console.log("joiningData", joiningData)
-        if (!joiningData) {
-            router.push("/games");
-        }
-        if (gameSlug && gameid && joiningData?.contestmaster?.data?.game?.data?.config?.url && user?.id) {
-            console.log("Valid Data found")
-            setGameUrl(joiningData?.contestmaster?.data?.game?.data?.config?.url + "?env=stg&tournament_id=" + gameid + "&user_id=" + user?.id + "&game_id=" + joiningData?.id)
+        if (gameSlug && gameid)
+            setGameUrl("https://play.gamepix.com/" + gameSlug + "/embed?sid=" + gameid)
 
-        }
-
-    }, [gameSlug, gameid, joiningData, user?.id])
+    }, [gameSlug, gameid])
 
     const init = () => {
-        setIsHideHeader(true);
-        setIsHideFooter(true);
         //////// 1) Create the iframe that will contains the game ////////
         const iframe = document.createElement('iframe');
         iframe.id = 'game-frame';
@@ -62,14 +37,21 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         const eventer = window[eventMethod];
         const messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
         eventer(messageEvent, function (e) {
-            if (e && typeof e?.data == 'string' && e.data.includes("name")) {
-                let data = JSON.parse(e.data)
-                console.log("Data-=-=-=-=-", data)
-                if (data?.name == 'GameEnd') {
-                    setOpen(true)
-                }
+            switch (e.data.type) {
+                case 'loading':
+                    loading(e.data.percentage);
+                    break;
+                case 'loaded':
+                    playGame(e.data.url);
+                    break;
+                case 'send':
+                    sendScore({
+                        type: e.data.label,
+                        level: e.data.level,
+                        score: e.data.score
+                    });
+                    break;
             }
-
         }, false);
         document.getElementById('idDiv').appendChild(iframe);
         globalIframe = iframe;
@@ -83,11 +65,6 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         // here you have access to type, level and score
         console.log("123456", object);
     }
-    const handleClose = () => {
-        console.log("Game over")
-        router.push("/games");
-
-    }
 
     const playGame = (url) => {
         console.log("-=-=-=-=-=-=-=-=-= Play game")
@@ -98,40 +75,6 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     }
 
     return (
-        <div id="idDiv" style={{ height: '100vh' }}>
-            <MultipleLoggedInUser />
-            <AlertDialog
-                motionPreset="slideInBottom"
-                // onClose={handleClose}
-                isOpen={isOpen}
-                // onClick={handleClose}
-                isCentered
-                size={"xl"}
-                bg="background"
-                closeOnOverlayClick={false}
-                closeOnEsc={false}
-            >
-                <AlertDialogOverlay />
-
-                <AlertDialogContent p="10px" bg="background">
-                    <Box border="2.7033px dashed #515151">
-                        <AlertDialogHeader>
-                            <Heading color="white">
-                                Game Over
-                            </Heading>
-                        </AlertDialogHeader>
-                        <AlertDialogCloseButton _focus={{ boxShadow: "none" }} />
-                        <AlertDialogBody>
-                            <Text variant="hint">
-                                Your score is updated. Please check leaderboard.
-                            </Text>
-                        </AlertDialogBody>
-                        <AlertDialogFooter>
-                            <Button onClick={handleClose}>Close</Button>
-                        </AlertDialogFooter>
-                    </Box>
-                </AlertDialogContent>
-            </AlertDialog>
-        </div>
+        <div id="idDiv" style={{ height: '100vh' }}></div>
     )
 }
