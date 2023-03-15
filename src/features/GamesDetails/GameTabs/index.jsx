@@ -24,9 +24,9 @@ const GameTabs = ({ defaultTab, gameData }) => {
         if (gameData) {
             setTimeout(() => {
                 getLeaderBoard()
-            }, [1000])
+            }, [2000])
         }
-    }, [gameData, defaultTab,user]);
+    }, [gameData, defaultTab, user]);
 
     const getLeaderBoard = async () => {
         if (gameData) {
@@ -50,9 +50,19 @@ const GameTabs = ({ defaultTab, gameData }) => {
                         "leaderboard.lbrecords"
                     ]
                 });
-
-                if (lbs?.data?.length > 0) {
-                    lbs.data = lbs.data
+                const finalLBData = []
+                for (let i = 0; i < lbs.data?.length; i++) {
+                    const e = lbs.data[i]
+                    console.log("E*-*-*-*-", e)
+                    console.log("finalLBData", finalLBData)
+                    if (!finalLBData?.find(s => s.user?.data?.id == e.user?.data?.id)) {
+                        let tempData = lbs.data?.filter(s => s?.user?.data?.id == e.user?.data?.id)
+                        if (tempData[0])
+                            finalLBData.push(tempData[0])
+                    }
+                };
+                if (finalLBData?.length > 0) {
+                    lbs.data = finalLBData
                         ?.filter(
                             (rec) =>
                                 rec.user?.data?.fullName?.length > 0 ||
@@ -100,7 +110,9 @@ const GameTabs = ({ defaultTab, gameData }) => {
                             };
                         });
                 }
-
+                console.log("lbs.data*-*-*-*-*-*-*-*", lbs.data)
+            
+                console.log("finalLBData", lbs.data)
                 setLbRecords(lbs.data);
 
 
