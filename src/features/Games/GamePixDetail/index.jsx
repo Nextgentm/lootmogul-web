@@ -85,6 +85,8 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     }
     const handleClose = () => {
         console.log("Game over")
+        setIsHideHeader(false);
+        setIsHideFooter(false);
         router.push("/games");
 
     }
