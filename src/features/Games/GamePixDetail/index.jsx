@@ -102,9 +102,9 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             <MultipleLoggedInUser />
             <AlertDialog
                 motionPreset="slideInBottom"
-                // onClose={handleClose}
+                onClose={handleClose}
                 isOpen={isOpen}
-                // onClick={handleClose}
+                onClick={handleClose}
                 isCentered
                 size={"xl"}
                 bg="background"
