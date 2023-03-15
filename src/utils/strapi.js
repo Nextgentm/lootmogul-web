@@ -14,18 +14,20 @@ strapi.axios.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.log("error", error)
+    if (error.response) {
+      const { status } = error.response;
+      switch (status) {
+        case 401: case 403: {
 
-    const { status } = error.response;
-    switch (status) {
-      case 401: case 403:{
-        
-        strapi.logout();
-        if(location.pathname != "/")
-              window.location.replace("/");
-        break;
+          strapi.logout();
+          if (location.pathname != "/")
+            window.location.replace("/");
+          break;
+        }
+        default:
+          break;
       }
-      default:
-        break;
     }
     return Promise.reject(error);
   }

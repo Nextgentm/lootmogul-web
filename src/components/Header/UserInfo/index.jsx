@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { Button, Text, Flex, useOutsideClick, Tooltip, Image } from "@chakra-ui/react";
-/*import Image from "next/image";*/
+import { Button, Text, Flex, useOutsideClick, Tooltip } from "@chakra-ui/react";
+import Image from "next/image";
 import {
     ChevronDownIcon,
     ChevronUpIcon,
@@ -217,11 +217,9 @@ const UserInfo = ({ user, isMobileDevice }) => {
                 >
                     <Image
                         alt="profile"
-                        width={45}
-                        height={45}
-                        border={user?.photoURL?"1px solid #df0b65":""}
-                        borderRadius={user?.photoURL?"50%":""}
-                        src={user?.photoURL ? user?.photoURL : "/assets/Users.png"}
+                        width={30}
+                        height={30}
+                        src="/assets/Users.png"
                     />
 
                     {isTabletOrDesktop && <ArrowIcon ml="4px" color="white" />}
@@ -244,11 +242,11 @@ const UserInfo = ({ user, isMobileDevice }) => {
                     />
                 )}
                 {showModal.mode === "add" && (
-                    // <DepostWithdrawModal
-                    //     totalAmount={totalAmount}
-                    //     winAmount={amounts?.winnings}
-                    // />
-                    <DepostWithdrawstop/>
+                    <DepostWithdrawModal
+                        totalAmount={totalAmount}
+                        winAmount={amounts?.winnings}
+                    />
+                    // <DepostWithdrawstop/>
                 )}
 
             </LMModalComponent>
