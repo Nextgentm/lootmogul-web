@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
     Link,
     Box,
@@ -290,6 +290,9 @@ const Header = () => {
         togglePasswordChangedModal();
     };
 
+    const [annoucementBar, setaAnnoucementBar] = useState(true);
+    const onAnnoucementClick = () => setaAnnoucementBar(false)
+
     return (
         <>
             {!isHideHeader && (
@@ -460,14 +463,13 @@ const Header = () => {
                 </Box>
                 
             )}
-            {!isHideHeader && ( 
+            {!isHideHeader && annoucementBar && ( 
                 <Box
                     bg="#1e052c"
                     w="100%"
                     h={isMobileDevice ? "auto" : "auto"}
-                    display="flex"
                     pl={["16px", "5%"]}
-                    pr={["16px", "5%"]}
+                    pr={["16px", "0%"]}
                     alignItems="center"
                     top={["65px","60px","90px", "90px"]}
                     justify="space-between"
@@ -510,9 +512,25 @@ const Header = () => {
                         w={isMobileDevice ? "100%" : "30%"}
                         justify={isMobileDevice ? "center" : "end"}
                     >
-                        <Text fontSize={["12px","12px","15px","15px"]} color="#fff" mb="10px" p={["5px 10px","5px 10px","5px 20px","5px 20px"]} border="1px solid #fff" borderRadius="5px">
+                        <Text fontSize={["12px","12px","15px","15px"]} color="#fff" mb="5px" p={["5px 10px","5px 10px","5px 20px","5px 20px"]} border="1px solid #fff" borderRadius="5px">
                         <a target="_blank" href="https://lootmogul.me/republic_website">Invest Now</a></Text>
                     </Flex>
+
+                    {!isMobileDevice ?
+                         <>
+                            <Flex
+                                w={isMobileDevice ? "15%" : "5%"}
+                                justify={isMobileDevice ? "center" : "center"}
+                                bg="#977fa0"
+                                ml="2%"
+                                cursor="pointer"
+                            >
+                                <Text fontSize={["12px","12px","15px","15px"]} color="#000"  mb={["0px","0px","5px"]} p={["5px","5px","15px"]} textAlign="center" onClick={onAnnoucementClick}>
+                                X</Text>
+                            </Flex>
+                        </>
+                        : <></>
+                    }
                 </Box>
                 )}
 
