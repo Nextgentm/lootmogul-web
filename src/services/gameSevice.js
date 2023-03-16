@@ -37,9 +37,9 @@ export const getGameRoomOrCreateRoom = async (contest_id, user_id) => {
                     // const updateUserInRoom = await strapi.update("rooms", room[0].id,
                     //     {
                     //         contest: contest_id,
-                    //         users: [...data, user_id]
+                    //         users: [...data?.map(s => s.id), user_id]
                     //     }, { populate: ["users"] })
-                    // console.log("updateUserInRoom-*-*-*--", updateUserInRoom)
+                    console.log("updateUserInRoom-*-*-*--", [...data?.map(s => s.id), user_id])
                     let query = "contest/custom-contest/matchfound"
                     const resp = await strapi.request(
                         "post",
@@ -48,7 +48,7 @@ export const getGameRoomOrCreateRoom = async (contest_id, user_id) => {
                             data: {
                                 data: {
                                     contest: contest_id,
-                                    users: [...data, user_id],
+                                    users: [...data?.map(s => s.id), user_id],
                                     room: room[0].id
                                 }
                             }
