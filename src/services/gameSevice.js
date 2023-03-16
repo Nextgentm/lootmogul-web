@@ -55,7 +55,7 @@ export const getGameRoomOrCreateRoom = async (contest_id, user_id) => {
                         }
                     );
                     console.log("-=-=-=-=resp", resp)
-                    return updateUserInRoom[0]
+                    return room[0]
 
                 }
                 else {
