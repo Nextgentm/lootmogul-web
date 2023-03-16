@@ -67,6 +67,8 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 console.log("Data-=-=-=-=-", data)
                 if (data?.name == 'GameEnd') {
                     setOpen(true)
+                    setIsHideHeader(false);
+                    setIsHideFooter(false);
                 }
             }
 
