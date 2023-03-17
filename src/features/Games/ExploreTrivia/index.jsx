@@ -11,7 +11,7 @@ const ExploreTrivia = ({ section, executeScroll }) => {
     }).length > 0 ? {
       id: 0,
       label: "Skill Games",
-      icon: "games_trending_icon.svg",
+      icon: "skillgame.png",
     } : {},
     section?.filter((item) => {
       if (
