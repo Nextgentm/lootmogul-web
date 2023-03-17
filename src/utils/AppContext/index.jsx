@@ -53,6 +53,8 @@ export const AppContextContainer = ({ children }) => {
     const [showCaptcha, setShowCaptcha] = useState({});
     const [coupon, setCoupon] = useState("");
     const [joiningData, setJoiningData] = useState(null);
+    const [isPayIsStarted, setIsPayIsStarted] = useState(false)
+    const [isFromNoLocationGame, setIsFromNoLocationGame] = useState(false)
 
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
@@ -192,9 +194,9 @@ export const AppContextContainer = ({ children }) => {
                 filters: { contestmaster: contestmaster.id },
                 populate: {
                     contestmaster: {
-                        fields: ["id", "slug"],
                         populate: {
-                            game: { fields: ["url", "type", "config"] }
+                            game: { fields: ["url", "type", "config"] },
+                            feeWallet: { populate: "wallet" }
                         }
                     }
                 }
@@ -261,14 +263,23 @@ export const AppContextContainer = ({ children }) => {
                                     );
                                 console.log("roomData", roomData);
                                 if (roomData) {
+                                    console.log("-=-=-=-=-=-Joning setting", data[0])
+                                    setIsPayIsStarted("ended")
                                     setJoiningData(data[0]);
-                                    router.push(
-                                        "/games/" +
+                                    console.log("route", router.pathname)
+                                    if (router.pathname != "/games/" +
                                         roomData?.id +
                                         "/" +
                                         data[0]?.contestmaster?.data
-                                            ?.game?.data?.config?.slug
-                                    );
+                                            ?.game?.data?.config?.slug)
+                                        router.push(
+                                            "/games/" +
+                                            roomData?.id +
+                                            "/" +
+                                            data[0]?.contestmaster?.data
+                                                ?.game?.data?.config?.slug
+                                        );
+
                                 } else {
                                     router.push("/games");
                                 }
@@ -754,7 +765,11 @@ export const AppContextContainer = ({ children }) => {
                 setShowLoading,
                 onPlayAgain,
                 setCoupon,
-                logout
+                logout,
+                isPayIsStarted,
+                setIsPayIsStarted,
+                setIsFromNoLocationGame,
+                isFromNoLocationGame
             }}
         >
             {children}
