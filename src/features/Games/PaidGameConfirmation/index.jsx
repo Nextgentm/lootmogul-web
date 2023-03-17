@@ -14,7 +14,7 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
     });
     const [showAlert, setShowAlert] = useState(false);
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
-    const { setCurrentContest, amounts, setShowPaidGameConfirmation, user } =
+    const { setCurrentContest, amounts, setShowPaidGameConfirmation, user, isFromNoLocationGame } =
         useContext(AppContext);
     useEffect(() => {
         setLocationCheck({
@@ -22,7 +22,8 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
             isBanText: "Please Wait!! Fetching Location..."
         });
 
-        CheckAvailableLocation().then((res) => {
+        CheckAvailableLocation(isFromNoLocationGame).then((res) => {
+            console.log("setShowModal", res)
             if (res) {
                 setLocationCheck({
                     isBan: res.isBan,
@@ -33,7 +34,7 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
                     const res = checkEligilbility(contestmaster, amounts);
                     let userTotalBonus = user
                         ? user?.wallets.find((s) => s.currency.type == "bonus")
-                              ?.balance || 0
+                            ?.balance || 0
                         : 0;
                     if (res.canPlay) {
                         setCurrentContest(contestmaster);

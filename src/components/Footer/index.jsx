@@ -15,7 +15,7 @@ const Footer = () => {
     const { isTabletOrDesktop, isHideFooter } = useContext(AppContext);
 
     return (
-        isHideFooter ?
+        !isHideFooter ?
             <Box bg="#0f092d" pb="10px">
                 {isTabletOrDesktop && (
                     <Flex
