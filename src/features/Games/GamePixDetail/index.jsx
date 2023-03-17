@@ -1,16 +1,26 @@
 import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Box, Button, Heading, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react"
+import GameOverPopup, { GameBody } from "../../../components/LMModal/GameOverPopup";
+import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import MultipleLoggedInUser from "../../../components/MultipleLoggedInUser";
 import { getGameRoomOrCreateRoom } from "../../../services/gameSevice";
 import AppContext from "../../../utils/AppContext";
+import strapi from "../../../utils/strapi";
+import PaidGameConfirmation from "../PaidGameConfirmation";
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
     const {
         setIsHideHeader,
         setIsHideFooter,
-        joiningData, user
+        joiningData, user,
+        setShowLoading,
+        setShowPaidGameConfirmation,
+        showPaidGameConfirmation,
+        showLoading,
+        currentContest,
+        isPayIsStarted
 
     } = useContext(AppContext);
     const router = useRouter();
@@ -19,6 +29,8 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
 
     const [gameUrl, setGameUrl] = useState()
     const [isOpen, setOpen] = useState(false);
+    const [retryCount, setRetryCount] = useState();
+    console.log("joiningData------detail", joiningData)
     useEffect(() => {
 
         if (gameUrl)
@@ -29,6 +41,23 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             })
         }
     }, [gameUrl]);
+
+    useEffect(() => {
+        console.log("game login", showLoading)
+    }, [showLoading])
+    useEffect(() => {
+        if (isPayIsStarted == "ended") {
+            console.log("pay dended")
+            setShowPaidGameConfirmation({})
+            setShowLoading(false)
+            setIsHideHeader(true);
+            setIsHideFooter(true);
+            setOpen(false)
+        }
+        else if (isPayIsStarted == "started") {
+            setShowLoading(true)
+        }
+    }, [isPayIsStarted])
 
     useEffect(() => {
         console.log("joiningData", joiningData)
@@ -44,8 +73,10 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     }, [gameSlug, gameid, joiningData, user?.id])
 
     const init = () => {
+        setShowLoading(false)
         setIsHideHeader(true);
         setIsHideFooter(true);
+        setOpen(false)
         //////// 1) Create the iframe that will contains the game ////////
         const iframe = document.createElement('iframe');
         iframe.id = 'game-frame';
@@ -61,14 +92,14 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         const eventMethod = window.addEventListener ? 'addEventListener' : 'attachEvent';
         const eventer = window[eventMethod];
         const messageEvent = eventMethod == 'attachEvent' ? 'onmessage' : 'message';
-        eventer(messageEvent, function (e) {
+        eventer(messageEvent, async function (e) {
             if (e && typeof e?.data == 'string' && e.data.includes("name")) {
                 let data = JSON.parse(e.data)
                 console.log("Data-=-=-=-=-", data)
                 if (data?.name == 'GameEnd') {
-                    setOpen(true)
-                    setIsHideHeader(false);
-                    setIsHideFooter(false);
+                    console.log("Game over", joiningData)
+                    setShowLoading(true)
+                    retryConst()
                 }
             }
 
@@ -81,14 +112,45 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             message: 'soundOn'
         }, globalUrl);
     }
-    const sendScore = (object) => {
-        // here you have access to type, level and score
-        console.log("123456", object);
-    }
-    const handleClose = () => {
-        console.log("Game over")
-        router.push("/games");
+    const handleClose = async () => {
+        setIsHideHeader(false);
+        setIsHideFooter(false);
+        router.push("/games/" + joiningData?.contestmaster?.data?.slug);
 
+    }
+    const retryConst = async () => {
+        try {
+
+            const isRetry = await strapi.request(
+                "post",
+                "contest/custom-contest/checkifretry?contest=" +
+                joiningData?.id +
+                "&userId=" +
+                user?.id,
+                {}
+            );
+            setShowLoading(false)
+            if (isRetry?.playCount % isRetry?.retries == 0) {
+                setRetryCount(isRetry?.retries)
+
+
+                setOpen(true)
+            }
+        }
+        catch (e) {
+            console.log(e)
+            setTimeout(() => {
+                retryConst()
+            }, 1000);
+        }
+    }
+    const handleJoin = () => {
+        setShowLoading(false)
+        setShowPaidGameConfirmation({
+            cm: joiningData?.contestmaster.id,
+            callerKey: `GameInfo-${joiningData?.id}`,
+            retry: "exceeded"
+        });
     }
 
     const playGame = (url) => {
@@ -116,24 +178,22 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 <AlertDialogOverlay />
 
                 <AlertDialogContent p="10px" bg="background">
-                    <Box border="2.7033px dashed #515151">
-                        <AlertDialogHeader>
-                            <Heading color="white">
-                                Game Over
-                            </Heading>
-                        </AlertDialogHeader>
-                        <AlertDialogCloseButton _focus={{ boxShadow: "none" }} />
-                        <AlertDialogBody>
-                            <Text variant="hint">
-                                Your score is updated. Please check leaderboard.
-                            </Text>
-                        </AlertDialogBody>
-                        <AlertDialogFooter>
-                            <Button onClick={handleClose}>Close</Button>
-                        </AlertDialogFooter>
-                    </Box>
+                <GameOverPopup onJoin={handleJoin} onCancel={handleClose} />
                 </AlertDialogContent>
             </AlertDialog>
+            {joiningData &&
+                showPaidGameConfirmation?.callerKey == `GameInfo-${joiningData?.id}` && (
+                    <PaidGameConfirmation contestmaster={currentContest} retry={showPaidGameConfirmation?.retry} />
+                )}
+            {showLoading ?
+                <LMNonCloseALert
+                    header={"Please Wait....."}
+                    canClose={false}
+                    isOpen={
+                        showLoading == true
+                    }
+                ></LMNonCloseALert>
+                : <></>}
         </div>
     )
 }

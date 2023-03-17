@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Text, Image,Button } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Image, Button } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { Pauseicon } from "../../Icons";
 
@@ -73,11 +73,11 @@ const WalletFooter = () => {
     );
 };
 
-const GameBody = () => {
+export const GameBody = ({ onJoin, onCancel }) => {
     return (
         <Box m="auto" bg="#fff" pb="10px" width="100%" borderRadius="12px" justifyContent="center">
-             <Heading               
-                fontSize={[,"24px","24px","34px"]}
+            <Heading
+                fontSize={[, "24px", "24px", "34px"]}
                 p={"10px"}
                 pt={"25px"}
                 textAlign={'center'}
@@ -88,22 +88,23 @@ const GameBody = () => {
                 Your free retry are over
             </Heading>
             <Heading
-                fontSize={[,"24px","24px","34px"]}
+                fontSize={[, "24px", "24px", "34px"]}
                 padding={"10px"}
                 textAlign={'center'}
                 color="#000000"
                 fontWeight="700"
                 fontFamily="Open Sans"
             >
-                Do you want to <br/> continue?
+                Do you want to <br /> continue?
             </Heading>
             <Button
-                fontSize={['16px','18px', '22px']}
-                p={['20px 30px','20px 30px', '25px 40px']}
+                fontSize={['16px', '18px', '22px']}
+                p={['20px 30px', '20px 30px', '25px 40px']}
                 m={["2% auto", "1% auto", "1% auto", "1% auto", "3% auto", "5% auto"]}
                 textAlign={'center'}
                 display="flex"
                 boxShadow={0}
+                onClick={onJoin}
             >
                 Retry
             </Button>
@@ -111,12 +112,13 @@ const GameBody = () => {
             <Button
                 fontSize={['10px', '10px']}
                 p={['5px 30px', '5px 20px']}
-                m={["5px auto", "5px auto","5px auto"]}
+                m={["5px auto", "5px auto", "5px auto"]}
                 textAlign={'center'}
                 display="flex"
                 boxShadow={0}
                 height="30px"
                 backgroundImage="linear-gradient(90deg, #672099 0%, #481A7F 100%)"
+                onClick={onCancel}
             >
                 Cancle
             </Button>
@@ -124,11 +126,11 @@ const GameBody = () => {
     );
 };
 
-const GameOverPopup = ({ totalAmount, isDeposit, winAmount }) => {
+export const GameOverPopup = ({ totalAmount, isDeposit, winAmount, onJoin, onCancel }) => {
     return (
         <Box width="100%" bg="#672099" borderRadius="12px" border="20px solid #672099" boxShadow="0px 6px 40px #090014">
             <WalletHeader />
-            <GameBody/>           
+            <GameBody onCancel={onCancel} onJoin={onJoin} />
             <WalletFooter />
         </Box>
     );
