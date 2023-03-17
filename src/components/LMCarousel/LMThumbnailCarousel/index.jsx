@@ -5,8 +5,10 @@ import Slider from "react-slick";
 
 const LMThumbnailCarousel = ({
     children1,
-    autoplaySpeed = 2000
+    autoplaySpeed = 2000,
+    slider_type
 }) => {
+    
     const [currentSlideIndex, setcurrentSlideIndex] = useState(0);
     const PrevArrow = (props) => {
         const { className, style, onClick } = props;
@@ -16,11 +18,8 @@ const LMThumbnailCarousel = ({
                 className={className}
                 onClick={onClick}
             >
-                <Image
-                    src="/assets/arrow-left.png"
-                    //  layout="fill"
-                    width={20}
-                    height={20}
+                <img
+                    src="/assets/skillgame/left-arrow.png"
                     alt="Left"
                 />
             </Box>
@@ -34,17 +33,15 @@ const LMThumbnailCarousel = ({
                 className={className}
                 onClick={onClick}
             >
-                <Image
-                    src="/assets/arrow-right.png"
-                    width={20}
-                    height={20}
+                <img
+                    src="/assets/skillgame/right-arrow.png"
                     alt="Right"
                 />
             </Box>
         );
     };
     const horizontalSettings = {
-        dots: true,
+        dots: false,
 
         infinite: true,
         arrows: true,
@@ -76,6 +73,52 @@ const LMThumbnailCarousel = ({
         )
     };
 
-    return <Slider {...horizontalSettings}>{children1}</Slider>;
+    if(slider_type == 'skillgame'){
+        const imagestyle = {
+            margin: "25px auto",
+          };
+      
+        return <Slider {...horizontalSettings}>
+        <div>
+            <img
+                src="/assets/skillgame/FlickAmericanFootball.png"
+                alt="FlickAmericanFootball"
+                style={imagestyle}
+             />
+        </div>
+        <div>
+            <img 
+                src="/assets/skillgame/FlickSoccer.png"
+                alt="FlickSoccer"
+                style={imagestyle}
+             />
+        </div>
+        <div>
+            <img 
+                src="/assets/skillgame/CommandoBoat.png"
+                alt="CommandoBoat"
+                style={imagestyle}
+             />
+        </div>
+        <div>
+            <img 
+                src="/assets/skillgame/CoolArcher.png"
+                alt="CoolArcher"
+                style={imagestyle}
+             />
+        </div>
+        <div>
+            <img 
+                src="/assets/skillgame/HoopStar.png"
+                alt="HoopStar"
+                style={imagestyle}
+             />
+        </div>
+    </Slider>;
+    }
+    else{
+        return <Slider {...horizontalSettings}>{children1}</Slider>;
+    }
+
 };
 export default LMThumbnailCarousel;
