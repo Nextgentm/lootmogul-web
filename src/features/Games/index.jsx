@@ -78,7 +78,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
         }
       });
       setFeaturedGames(fg);
-
+      
       setContestSections(contestSectionsData);
       const ci = fg.map((item, index) => {
         return (
@@ -97,7 +97,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
           </Link>
         );
       });
-      setCarouselItem(ci.slice(0, 1));
+      setCarouselItem(ci.slice(0, 5));
     }
   }, [contestmasters, contestSectionsData]);
 
@@ -163,6 +163,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   disableDots={true}
                   autoplaySpeed={5000}
                   children1={carouselItem}
+                  slider_type="skillgame"
                 ></LMThumbnailCarousel>
               )}
             </Box>
