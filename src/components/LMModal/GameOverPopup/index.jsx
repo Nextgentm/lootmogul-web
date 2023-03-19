@@ -39,13 +39,13 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
 
                 {currentSize === "base" && (
                     <Box
-                    width="100%"
-                    paddingTop="5%"
-                    borderTopLeftRadius="8px"
-                    paddingBottom="0%"
-                    paddingLeft={"2%"}
-                    bg="#672099"
-                    textAlign="center"
+                        width="100%"
+                        paddingTop="5%"
+                        borderTopLeftRadius="8px"
+                        paddingBottom="0%"
+                        paddingLeft={"2%"}
+                        bg="#672099"
+                        textAlign="center"
                     >
                         <Heading
                             mt="10px"
@@ -68,7 +68,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
 const WalletFooter = () => {
     return (
         <Flex m="auto" width="100%" justifyContent="center">
-            
+
         </Flex>
     );
 };
@@ -120,7 +120,7 @@ export const GameBody = ({ onJoin, onCancel }) => {
                 backgroundImage="linear-gradient(90deg, #672099 0%, #481A7F 100%)"
                 onClick={onCancel}
             >
-                Cancle
+                Cancel
             </Button>
         </Box>
     );

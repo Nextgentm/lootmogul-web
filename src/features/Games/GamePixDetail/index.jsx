@@ -98,8 +98,10 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 console.log("Data-=-=-=-=-", data)
                 if (data?.name == 'GameEnd') {
                     console.log("Game over", joiningData)
-                    setShowLoading(true)
-                    retryConst()
+                    if (joiningData?.contestmaster?.data?.entryFee > 0) {
+                        setShowLoading(true)
+                        retryConst()
+                    }
                 }
             }
 
@@ -115,7 +117,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     const handleClose = async () => {
         setIsHideHeader(false);
         setIsHideFooter(false);
-        router.push("/games/" + joiningData?.contestmaster?.data?.slug);
+        router.push("/games/" + joiningData?.contestmaster?.data?.slug + "#leaderboard");
 
     }
     const retryConst = async () => {
@@ -132,8 +134,6 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             setShowLoading(false)
             if (isRetry?.playCount % isRetry?.retries == 0) {
                 setRetryCount(isRetry?.retries)
-
-
                 setOpen(true)
             }
         }
@@ -178,7 +178,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 <AlertDialogOverlay />
 
                 <AlertDialogContent p="10px" bg="background">
-                <GameOverPopup onJoin={handleJoin} onCancel={handleClose} />
+                    <GameOverPopup onJoin={handleJoin} onCancel={handleClose} />
                 </AlertDialogContent>
             </AlertDialog>
             {joiningData &&
@@ -194,6 +194,26 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     }
                 ></LMNonCloseALert>
                 : <></>}
-        </div>
+            <div style={{
+                position: "absolute",
+                top: 0,
+                right: 0,
+            }}>
+                <Button
+                    fontSize={['20px', '20px']}
+                    p={['5px 30px', '5px 20px']}
+                    m={["5px auto", "5px auto", "5px auto"]}
+                    size='lg'
+                    textAlign={'center'}
+                    display="flex"
+                    boxShadow={0}
+                    height="50px"
+                    backgroundImage="linear-gradient(90deg, #672099 0%, #481A7F 100%)"
+                    onClick={handleClose}
+                >
+                    Cancel
+                </Button>
+            </div>
+        </div >
     )
 }
