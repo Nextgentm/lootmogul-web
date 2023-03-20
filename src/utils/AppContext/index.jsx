@@ -281,6 +281,8 @@ export const AppContextContainer = ({ children }) => {
                                         );
 
                                 } else {
+                                    setShowLoading(false);
+
                                     router.push("/games");
                                 }
                                 // } catch (e) {

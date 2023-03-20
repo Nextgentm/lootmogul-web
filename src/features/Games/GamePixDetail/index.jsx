@@ -133,8 +133,9 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             );
             setShowLoading(false)
             if (isRetry?.playCount % isRetry?.retries == 0) {
-                setRetryCount(isRetry?.retries)
-                setOpen(true)
+                // setRetryCount(isRetry?.retries)
+                getScore()
+
             }
         }
         catch (e) {
@@ -143,6 +144,18 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 retryConst()
             }, 1000);
         }
+    }
+    const getScore = async () => {
+        const score = await strapi.find(
+            "scores",
+            {
+                filters: { contest: joiningData?.id, user: user?.id },
+                sort: "createdAt:DESC"
+            }
+        );
+        console.log("score", score)
+        setRetryCount(score?.data[0]?.score)
+        setOpen(true)
     }
     const handleJoin = () => {
         setShowLoading(false)
@@ -178,7 +191,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 <AlertDialogOverlay />
 
                 <AlertDialogContent p="10px" bg="background">
-                    <GameOverPopup onJoin={handleJoin} onCancel={handleClose} />
+                    <GameOverPopup onJoin={handleJoin} onCancel={handleClose} score={retryCount} />
                 </AlertDialogContent>
             </AlertDialog>
             {joiningData &&

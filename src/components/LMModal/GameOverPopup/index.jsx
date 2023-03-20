@@ -2,7 +2,7 @@ import { Box, Flex, Heading, Text, Image, Button } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { Pauseicon } from "../../Icons";
 
-const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
+const WalletHeader = ({ totalAmount, isDeposit, score }) => {
     const currentSize = useBreakpointValue({
         base: "base",
         sm: "sm",
@@ -31,7 +31,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                                 paddingBottom={12}
                                 fontWeight="400"
                             >
-                                {"Score 50"}
+                                Score {score}
                             </Heading>
                         </Box>
                     </Flex>
@@ -55,7 +55,7 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                             paddingBottom={12}
                             fontWeight="400"
                         >
-                            {"Score 50"}
+                            Score {score}
                         </Heading>
                     </Box>
                 )}
@@ -126,10 +126,10 @@ export const GameBody = ({ onJoin, onCancel }) => {
     );
 };
 
-export const GameOverPopup = ({ totalAmount, isDeposit, winAmount, onJoin, onCancel }) => {
+export const GameOverPopup = ({ totalAmount, isDeposit, score, onJoin, onCancel }) => {
     return (
         <Box width="100%" bg="#672099" borderRadius="12px" border="20px solid #672099" boxShadow="0px 6px 40px #090014">
-            <WalletHeader />
+            <WalletHeader score={score} />
             <GameBody onCancel={onCancel} onJoin={onJoin} />
             <WalletFooter />
         </Box>
