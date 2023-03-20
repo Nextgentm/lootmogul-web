@@ -25,17 +25,17 @@ const ExploreTrivia = ({ section, executeScroll }) => {
       icon: "games_trending_icon.svg",
     } : {},
     {
-      id: 2,
+      id: 1,
       label: "Influencer Tournament",
       icon: "games_influencer_tournament.svg",
     },
     {
-      id: 3,
+      id: 2,
       label: "Advanced Premium",
       icon: "games_advanced_premium_icon.svg",
     },
     {
-      id: 4,
+      id: 3,
       label: "Free Tournament",
       icon: "games_free_tournament.svg",
     },
