@@ -92,7 +92,7 @@ const MultipleLoggedInUser = ({ openPopup }) => {
                 if (window.localStorage.getItem("strapi_jwt") === null) {
                     clearTimer();
                 }
-            }, 2000);
+            }, 8000);
         } catch (error) {
             console.log(error);
         }
