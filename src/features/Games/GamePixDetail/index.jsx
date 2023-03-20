@@ -30,6 +30,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     const [gameUrl, setGameUrl] = useState()
     const [isOpen, setOpen] = useState(false);
     const [retryCount, setRetryCount] = useState();
+    const [shouldShowCancel, setShouldShowCancel] = useState(false)
     console.log("joiningData------detail", joiningData)
     useEffect(() => {
 
@@ -101,6 +102,9 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     if (joiningData?.contestmaster?.data?.entryFee > 0) {
                         setShowLoading(true)
                         retryConst()
+                    }
+                    else {
+                        setShouldShowCancel(true)
                     }
                 }
             }
@@ -212,20 +216,21 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 top: 0,
                 right: 0,
             }}>
-                <Button
-                    fontSize={['20px', '20px']}
-                    p={['5px 30px', '5px 20px']}
-                    m={["5px auto", "5px auto", "5px auto"]}
-                    size='lg'
-                    textAlign={'center'}
-                    display="flex"
-                    boxShadow={0}
-                    height="50px"
-                    backgroundImage="linear-gradient(90deg, #672099 0%, #481A7F 100%)"
-                    onClick={handleClose}
-                >
-                    Cancel
-                </Button>
+                {shouldShowCancel ?
+                    <Button
+                        fontSize={['20px', '20px']}
+                        p={['5px 30px', '5px 20px']}
+                        m={["5px auto", "5px auto", "5px auto"]}
+                        size='lg'
+                        textAlign={'center'}
+                        display="flex"
+                        boxShadow={0}
+                        height="50px"
+                        backgroundImage="linear-gradient(90deg, #672099 0%, #481A7F 100%)"
+                        onClick={handleClose}
+                    >
+                        Cancel
+                    </Button> : <></>}
             </div>
         </div >
     )
