@@ -66,7 +66,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         }
         if (gameSlug && gameid && joiningData?.contestmaster?.data?.game?.data?.config?.url && user?.id) {
             console.log("Valid Data found")
-            setGameUrl(joiningData?.contestmaster?.data?.game?.data?.config?.url + "?env=stg&tournament_id=" + gameid + "&user_id=" + user?.id + "&game_id=" + joiningData?.id)
+            setGameUrl(joiningData?.contestmaster?.data?.game?.data?.config?.url + "&tournament_id=" + gameid + "&user_id=" + user?.id + "&game_id=" + joiningData?.id)
 
         }
 
