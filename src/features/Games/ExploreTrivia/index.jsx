@@ -20,22 +20,22 @@ const ExploreTrivia = ({ section, executeScroll }) => {
       )
         return item;
     }).length > 0 ? {
-      id: 0,
+      id: 1,
       label: "Trending Tournament",
       icon: "games_trending_icon.svg",
     } : {},
     {
-      id: 1,
+      id: 2,
       label: "Influencer Tournament",
       icon: "games_influencer_tournament.svg",
     },
     {
-      id: 2,
+      id: 3,
       label: "Advanced Premium",
       icon: "games_advanced_premium_icon.svg",
     },
     {
-      id: 3,
+      id: 4,
       label: "Free Tournament",
       icon: "games_free_tournament.svg",
     },
@@ -67,6 +67,7 @@ const ExploreTrivia = ({ section, executeScroll }) => {
         flexWrap="wrap"
       >
         {trivias.map((item, index) => (
+                    
           <Button
             onClick={() => {
               executeScroll(item.id);
