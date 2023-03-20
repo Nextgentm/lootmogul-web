@@ -4,13 +4,13 @@ const ExploreTrivia = ({ section, executeScroll }) => {
   const trivias = [
     section?.filter((item) => {
       if (
-        item.name === "Skill Games" &&
+        item.name === "Mini Games" &&
         item?.contestmasters?.data?.length > 0
       )
         return item;
     }).length > 0 ? {
       id: 0,
-      label: "Skill Games",
+      label: "Mini Games",
       icon: "skillgame.png",
     } : {},
     section?.filter((item) => {
