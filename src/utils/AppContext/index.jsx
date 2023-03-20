@@ -266,6 +266,7 @@ export const AppContextContainer = ({ children }) => {
                                     console.log("-=-=-=-=-=-Joning setting", data[0])
                                     setIsPayIsStarted("ended")
                                     setJoiningData(data[0]);
+                                    updateUser();
                                     console.log("route", router.pathname)
                                     if (router.pathname != "/games/" +
                                         roomData?.id +
