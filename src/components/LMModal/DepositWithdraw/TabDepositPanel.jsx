@@ -66,33 +66,25 @@ const TabDepositPanel = ({ isDeposit }) => {
             const results = []
                         // Store results in the results array
             var defaultCurrencyValue;
-            var setMinimumDeposit;
-            var setNumberOfChips;
-           
-            jsondata.forEach((jsonValue) => {
-                
-                data.data.forEach((value) => {
-                    if (value.currency === "USD") {
-                        defaultCurrencyValue = {
-                            currency: value.currency,
-                            minimumDeposit: value.minimumDeposit,
-                            numberOfChips: value.numberOfChips,
-                        }
-                        setMinimumDeposit = defaultCurrencyValue.minimumDeposit;
-                        setNumberOfChips = defaultCurrencyValue.numberOfChips;
+            data.data.forEach((value) => {
+                if (value.currency === "USD") {
+                    defaultCurrencyValue = {
+                        currency: value.currency,
+                        minimumDeposit: value.minimumDeposit,
+                        numberOfChips: value.numberOfChips,
                     }
-                    
-                    if(value.currency.toUpperCase() == jsonValue.toUpperCase()){
-                        setMinimumDeposit = value.minimumDeposit;
-                        setNumberOfChips = value.numberOfChips;
-                    }
-                    
+                }
+                results.push({
+                    currency: value.currency,
+                    minimumDeposit: value.minimumDeposit,
+                    numberOfChips: value.numberOfChips,
                 });
-
+            });
+            jsondata.forEach((jsonValue) => {
                 results.push({
                     currency: jsonValue,
-                    minimumDeposit: setMinimumDeposit,
-                    numberOfChips: setNumberOfChips,
+                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
+                    numberOfChips: defaultCurrencyValue.numberOfChips,
                 });
             })
 
@@ -118,12 +110,11 @@ const TabDepositPanel = ({ isDeposit }) => {
                         numberOfChips: value.numberOfChips,
                     }
                 }
-                /*results_bitpay.push({
+                results_bitpay.push({
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
                     numberOfChips: value.numberOfChips,
-                });*/
-
+                });
             });
             await fetch('https://test.bitpay.com/currencies')
                 .then(response => response.json())
@@ -176,9 +167,9 @@ const TabDepositPanel = ({ isDeposit }) => {
     }, []);
 
     const deposit = async () => {
-        if (amount < numberOfChips) {
+        if (amount <= numberOfChips) {
             console.log('zero');
-            setAlertShow({ isOpen: true, msg: "Enter minimum " + numberOfChips + " chips for Deposit" });
+            setAlertShow({ isOpen: true, msg: "Enter Deposit more than " + numberOfChips + " Chips" });
         }
         else {
             const user = await strapi.fetchUser();
@@ -295,8 +286,8 @@ const TabDepositPanel = ({ isDeposit }) => {
                             </Text>
                         </Radio>
                     </Box>
-                    <Box color='white' opacity={"0.5"} w="48%" display="inline-table" bg="#1D052B" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px" >
-                        <Radio size='md' colorScheme='pink' value='2' isDisabled>
+                    <Box color='white' w="48%" display="inline-table" bg="#1D052B" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px" >
+                        <Radio size='md' colorScheme='pink' value='2'>
                             <Text
                                 display="inline-flex"
                                 color="white"

@@ -20,7 +20,9 @@ const JoiningPopup = ({ retry, data }) => {
         setShowPaidGameConfirmation,
         user,
         fetchGameJoiningData,
-        setCoupon
+        setCoupon,
+        set,
+        setIsPayIsStarted
     } = useContext(AppContext);
     const [couponAmount, setCouponAmount] = useState({
         show: false,
@@ -179,6 +181,7 @@ const JoiningPopup = ({ retry, data }) => {
                         my="5%"
                         onClick={() => {
                             setLoading(true);
+                            setIsPayIsStarted("started")
                             fetchGameJoiningData();
                             // setShowPaidGameConfirmation({});
 

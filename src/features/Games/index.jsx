@@ -78,7 +78,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
         }
       });
       setFeaturedGames(fg);
-
+      
       setContestSections(contestSectionsData);
       const ci = fg.map((item, index) => {
         return (
@@ -97,7 +97,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
           </Link>
         );
       });
-      setCarouselItem(ci.slice(0, 1));
+      setCarouselItem(ci.slice(0, 5));
     }
   }, [contestmasters, contestSectionsData]);
 
@@ -142,7 +142,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   fontSize={["20px", "20px", "24px"]}
                   fontWeight="normal"
                   onClick={() => {
-                    "https://d3vhkc3gcq7ogm.cloudfront.net/en/flick-soccer-lootmogul/index.html?tournament_id=3&game_id=4"
+                    executeScroll(0);
                   }}
                 >
                   Play Now
@@ -163,6 +163,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   disableDots={true}
                   autoplaySpeed={5000}
                   children1={carouselItem}
+                  slider_type="skillgame"
                 ></LMThumbnailCarousel>
               )}
             </Box>

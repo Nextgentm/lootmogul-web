@@ -430,11 +430,11 @@ const MobileTable = ({ data, loading }) => {
                                     {transaction?.type === "debit" ||
                                         transaction?.type === "hold" ? (
                                         <Text color="#FF6E3B" fontWeight="bold">
-                                            -${transaction?.amount}
+                                            -${transaction?.chips}
                                         </Text>
                                     ) : (
                                         <Text color="#51E36E" fontWeight="bold">
-                                            +${transaction?.amount}
+                                            +${transaction?.chips}
                                         </Text>
                                     )}
                                 </Text>
