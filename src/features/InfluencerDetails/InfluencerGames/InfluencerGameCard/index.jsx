@@ -191,7 +191,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             _hover={{ textDecoration: "none !important" }}
                             w="90%"
                             onClick={(e) => {
-                                if (contestmaster?.contest_section?.data?.name == 'Skill Games') {
+                                if (contestmaster?.contest_section?.data?.name == 'Mini Games') {
                                     setIsFromNoLocationGame(true)
                                 }
                                 e.preventDefault();
