@@ -80,39 +80,49 @@ const LMThumbnailCarousel = ({
       
         return <Slider {...horizontalSettings}>
         <div>
-            <img
-                src="/assets/skillgame/FlickAmericanFootball.png"
-                alt="FlickAmericanFootball"
-                style={imagestyle}
-             />
-        </div>
-        <div>
-            <img 
-                src="/assets/skillgame/FlickSoccer.png"
-                alt="FlickSoccer"
-                style={imagestyle}
-             />
-        </div>
-        <div>
-            <img 
-                src="/assets/skillgame/CommandoBoat.png"
-                alt="CommandoBoat"
-                style={imagestyle}
-             />
-        </div>
-        <div>
-            <img 
-                src="/assets/skillgame/CoolArcher.png"
-                alt="CoolArcher"
-                style={imagestyle}
-             />
-        </div>
-        <div>
+            <a href="/games/hoop-star">
             <img 
                 src="/assets/skillgame/HoopStar.png"
                 alt="HoopStar"
                 style={imagestyle}
              />
+             </a>
+        </div>
+        <div>
+            <a href="/games/scott-flick-american-football">
+            <img
+                src="/assets/skillgame/FlickAmericanFootball.png"
+                alt="FlickAmericanFootball"
+                style={imagestyle}
+             />
+             </a>
+        </div>
+        <div>
+            <a href="/games/flick-soccer">
+            <img 
+                src="/assets/skillgame/FlickSoccer.png"
+                alt="FlickSoccer"
+                style={imagestyle}
+             />
+             </a>
+        </div>
+        <div>
+            <a href="/games/cool-archer">
+            <img 
+                src="/assets/skillgame/CoolArcher.png"
+                alt="CoolArcher"
+                style={imagestyle}
+             />
+             </a>
+        </div>
+        <div>
+            <a href="/games/commando-boat">
+            <img 
+                src="/assets/skillgame/CommandoBoat.png"
+                alt="CommandoBoat"
+                style={imagestyle}
+             />
+             </a>
         </div>
     </Slider>;
     }
