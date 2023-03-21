@@ -117,7 +117,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                     {content?.contestmasters?.data
                         .sort((a, b) => a.priority - b.priority)
                         .map((cm, index) => (
-                            <WrapItem m="auto !important" mb="2%!important">
+                            <WrapItem mb="2%!important">
                                 <GamesCard
                                     style={{ mr: "24px" }}
                                     key={`gamescard-${index}`}
