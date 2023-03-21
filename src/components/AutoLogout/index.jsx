@@ -41,11 +41,9 @@ const AutoLogout = ({ openPopup }) => {
     useEffect(() => {
         try {
             if (user) {
-                console.log("Session Tracking started.");
                 const jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
                 if (jwt_token === null) {
                     clearTimer();
-                    console.log('Null JWT')
                 }
                 else{
                     const decodedJwt = parseJwt(jwt_token);
@@ -72,7 +70,6 @@ const AutoLogout = ({ openPopup }) => {
                                 router.push("/");
                             }
                             clearTimer();
-                            console.log("Session Tracking ended.");
                         }
 
                         if (window.localStorage.getItem("strapi_jwt") === null) {
