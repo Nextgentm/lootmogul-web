@@ -17,14 +17,15 @@ import rehypeRaw from "rehype-raw";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 
 const newMarkDownTheme = {
-    p: (props) => {
+    span: (props) => {
         const { children } = props;
         return (
-            <Text mb={2} textAlign="left" fontSize={"14px"}>
+            <Text mb={2} textAlign="left" fontSize={"15px"} color="#c7c7c7">
                 {children}
             </Text>
         );
     }
+    
 };
 
 const DetailsTab = ({ gameData }) => {
@@ -110,7 +111,7 @@ const DetailsTab = ({ gameData }) => {
                 How to Play
             </Heading>
             {gameData?.game?.data?.howToPlay ? (
-                <Box color="white" mt="2%" textAlign={"left"}>
+                <Box color="white" ml="-16px" mt="2%" textAlign={"left"}>
                     {" "}
                     <ReactMarkdown
                         rehypePlugins={[rehypeRaw]}
@@ -202,7 +203,7 @@ const DetailsTab = ({ gameData }) => {
                 Contest Terms &amp; Conditions
             </Heading>
             {gameData?.tandc && (
-                <Box color="white" mt="2%" textAlign={"left"}>
+                <Box color="white" ml="-16px" mt="2%" textAlign={"left"}>
                     {" "}
                     <ReactMarkdown
                         rehypePlugins={[rehypeRaw]}

@@ -106,6 +106,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                 objectFit="contain"
                                 alt={imgUrl}
                                 layout="fill"
+                                w="350px"
                                 src={getStrapiMedia(imgUrl)}
                             />
                         </Flex>
