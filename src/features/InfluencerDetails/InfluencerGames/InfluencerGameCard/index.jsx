@@ -183,7 +183,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             onClick={(e) => {
                                 if (
                                     contestmaster?.contest_section?.data
-                                        ?.name == "Mini Games"
+                                        ?.name == "Web3 Games"
                                 ) {
                                     setIsFromNoLocationGame(true);
                                 }
