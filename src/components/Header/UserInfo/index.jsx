@@ -231,11 +231,11 @@ const UserInfo = ({ user, isMobileDevice }) => {
                     cursor={"pointer"}
                     onClick={() => togglePopupMenu(!isPopupMenuShowing)}
                 >
-                    <Image
+                    <img
                         alt="profile"
-                        width={30}
-                        height={30}
-                        src="/assets/Users.png"
+                        style={{"border":"1px solid #df0b65","border-radius":"50px","width":"45px","height":"45px"}}
+                        borderRadius="50px"
+                        src={user?.photoURL ? user?.photoURL : "/assets/Users.png"}
                     />
 
                     {isTabletOrDesktop && <ArrowIcon ml="4px" color="white" />}
