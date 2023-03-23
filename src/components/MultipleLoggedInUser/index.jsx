@@ -45,7 +45,6 @@ const MultipleLoggedInUser = ({ openPopup }) => {
                     window.location.pathname !== "/joining" &&
                     window.localStorage.getItem("strapi_jwt") !== null
                 ) {
-                    console.log("Multiple Device Tracking started.");
                     const resp = await axios.post(
                         process.env.NEXT_PUBLIC_WORDPRESS_URL+`/wp-json/strapi/v1/getCurrentUser/`,
                         {
@@ -61,7 +60,6 @@ const MultipleLoggedInUser = ({ openPopup }) => {
                             window.localStorage.getItem("strapi_jwt");
 
                         if (localStorageTokenValue !== data.strapi_jwt) {
-                            console.log("multiple devices found");
                             if (
                                 typeof window !== "undefined" &&
                                 window.localStorage
@@ -84,7 +82,6 @@ const MultipleLoggedInUser = ({ openPopup }) => {
                                 setOpen(true);
                             }
                             
-                            console.log("Multiple Device Tracking ended.");
                         }
                     }
                 }

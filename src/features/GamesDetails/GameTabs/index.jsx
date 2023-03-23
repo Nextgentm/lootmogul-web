@@ -54,8 +54,6 @@ const GameTabs = ({ defaultTab, gameData }) => {
                     const finalLBData = []
                     for (let i = 0; i < lbs.data?.length; i++) {
                         const e = lbs.data[i]
-                        console.log("E*-*-*-*-", e)
-                        console.log("finalLBData", finalLBData)
                         if (!finalLBData?.find(s => s.user?.data?.id == e.user?.data?.id)) {
                             let tempData = lbs.data?.filter(s => s?.user?.data?.id == e.user?.data?.id)
                             if (tempData[0])
@@ -111,9 +109,6 @@ const GameTabs = ({ defaultTab, gameData }) => {
                                 };
                             });
                     }
-                    console.log("lbs.data*-*-*-*-*-*-*-*", lbs.data)
-
-                    console.log("finalLBData", lbs.data)
                     setLbRecords(lbs.data);
 
 
@@ -127,14 +122,11 @@ const GameTabs = ({ defaultTab, gameData }) => {
             }, 1000);
         }
     }
-    console.log("lbRecords*-", lbRecords)
-    // if (lbRecords && lbRecords.length) {
     tabsData.push({
         tab: <Text>Leaderboard</Text>,
         tabPanel: <LeaderboardTab gameData={gameData} lbRecords={lbRecords} loading={loading} currentUser={currentUser} user={user} />
 
     })
-    // }
     if ((defaultTab == 1 && tabsData?.length == 2) || defaultTab == 0)
         return <Box mt="3%" ml={["18px", "0px", "0px"]} mr="18px" textAlign={"left"}>
             {gameData && <LMSectionTabs defaultTab={defaultTab} variant={"unstyled"} data={tabsData} />}

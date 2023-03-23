@@ -18,7 +18,7 @@ const GameInfoGrid = ({ gameData }) => {
       icon: "games_winners_icon.svg",
     },
     {
-      label: nFormatter(gameData?.roomsCount, 1) + " Plays",
+      label: nFormatter(gameData?.ticketsCount, 1) + " Plays",
       icon: "games_plays_icon.svg",
     },
   ];
