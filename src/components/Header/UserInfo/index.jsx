@@ -36,7 +36,23 @@ const UserInfo = ({ user, isMobileDevice }) => {
         handler: () => togglePopupMenu(false)
     });
 
+    let paramsLogin = "";
+    if (typeof window !== "undefined") {
+        const jwt_token = window.localStorage?.getItem("strapi_jwt");
+        if(jwt_token !== null){
+            paramsLogin = "?jwt=" +jwt_token;
+        }
+        else{
+            paramsLogin = '';
+        }
+         
+    }
+
     const popupMenuItems = [
+        {
+            label: "Profile",
+            action: () => window.location.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL+"/profile/"+paramsLogin)
+        },
         {
             label: "My Wallet",
             action: () => router.push("/wallet")
@@ -215,11 +231,11 @@ const UserInfo = ({ user, isMobileDevice }) => {
                     cursor={"pointer"}
                     onClick={() => togglePopupMenu(!isPopupMenuShowing)}
                 >
-                    <Image
+                    <img
                         alt="profile"
-                        width={30}
-                        height={30}
-                        src="/assets/Users.png"
+                        style={{"border":"1px solid #df0b65","border-radius":"50px","width":"45px","height":"45px"}}
+                        borderRadius="50px"
+                        src={user?.photoURL ? user?.photoURL : "/assets/Users.png"}
                     />
 
                     {isTabletOrDesktop && <ArrowIcon ml="4px" color="white" />}
