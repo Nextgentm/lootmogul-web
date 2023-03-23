@@ -36,7 +36,23 @@ const UserInfo = ({ user, isMobileDevice }) => {
         handler: () => togglePopupMenu(false)
     });
 
+    let paramsLogin = "";
+    if (typeof window !== "undefined") {
+        const jwt_token = window.localStorage?.getItem("strapi_jwt");
+        if(jwt_token !== null){
+            paramsLogin = "?jwt=" +jwt_token;
+        }
+        else{
+            paramsLogin = '';
+        }
+         
+    }
+
     const popupMenuItems = [
+        {
+            label: "Profile",
+            action: () => window.location.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL+"/profile/"+paramsLogin)
+        },
         {
             label: "My Wallet",
             action: () => router.push("/wallet")
