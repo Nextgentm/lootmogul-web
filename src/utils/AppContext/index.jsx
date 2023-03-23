@@ -150,7 +150,6 @@ export const AppContextContainer = ({ children }) => {
         } else fetchGameJoiningData();
     };
     const logout = async () => {
-        console.log("Im Logout to..");
         const value = await strapi.fetchUser();
         console.log(value);
         try {
@@ -166,7 +165,6 @@ export const AppContextContainer = ({ children }) => {
             const data = resp.data;
             if (data.success) {
                 console.log(data);
-                console.log("User Data Update to logout...");
                 if (typeof window !== "undefined" && window.localStorage) {
                     localStorage.clear();
                 }
@@ -261,13 +259,10 @@ export const AppContextContainer = ({ children }) => {
                                         data[0]?.id,
                                         user?.id
                                     );
-                                console.log("roomData", roomData);
                                 if (roomData) {
-                                    console.log("-=-=-=-=-=-Joning setting", data[0])
                                     setIsPayIsStarted("ended")
                                     setJoiningData(data[0]);
                                     updateUser();
-                                    console.log("route", router.pathname)
                                     if (router.pathname != "/games/" +
                                         roomData?.id +
                                         "/" +
@@ -341,8 +336,6 @@ export const AppContextContainer = ({ children }) => {
         } else if (router.query.jwt) {
             strapi.setToken(router.query.jwt);
             setJwt(router.query.jwt);
-            console.log("jwt", jwt);
-            console.log("router jwty", router.query.jwt);
             window.localStorage.setItem("strapi_jwt", router.query.jwt);
         }
     }, [router.isReady]);
@@ -554,7 +547,6 @@ export const AppContextContainer = ({ children }) => {
 
             const data = resp.data;
             if (data.success) {
-                console.log("User Data saved successfully to DB");
             }
         } catch (error) {
             console.log(error);
