@@ -29,7 +29,6 @@ export default function CollectibleDetailsPage({ nftCollections, seoData }) {
     
     useEffect(()=>{
         // debugger;
-        console.log('name of the router',router.query.slug);
         const isValid = nftCollections.find(c => c.slug.toLowerCase() === router.query.slug.toLowerCase());
         setIsValidCollection(isValid);
     });
@@ -132,7 +131,6 @@ export async function getStaticPaths() {
     }
 
     data = data.flat();
-    console.log(data);
     const paths = data?.map((nft) => ({
         params: { slug: nft.slug || nft.id.toString() },
     }));

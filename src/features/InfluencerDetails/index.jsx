@@ -57,7 +57,6 @@ const InfluencerDetail = ({ influencer, breadcumbData }) => {
                     fullInfluencer?.contestmasters?.data.length > 0) ||
                 (fullInfluencer?.nft_kreds?.data &&
                     fullInfluencer?.nft_kreds?.data.length > 0);
-            console.log("isTabAvailable", isTabAvailable);
             setIsTabAvailable(isTabAvailable);
             const td = isContest
                 ? [

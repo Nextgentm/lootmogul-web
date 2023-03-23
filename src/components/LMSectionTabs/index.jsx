@@ -2,8 +2,6 @@
 import { Tabs, TabList, TabPanels, Tab, TabPanel, Center, Button } from '@chakra-ui/react'
 
 const LMSectionTabs = ({ data, defaultTab, variant }) => {
-  console.log("Leaderboarerd defaultTab", defaultTab)
-  console.log("Leaderboarerd data", data)
   return <Tabs align='center' width="100%" variant={variant} defaultIndex={defaultTab ? defaultTab : 0} orientation="horizontal">
     <TabList m="auto" align='center' borderBottom={"0px"}>
       {data && data.map((item, index) => {

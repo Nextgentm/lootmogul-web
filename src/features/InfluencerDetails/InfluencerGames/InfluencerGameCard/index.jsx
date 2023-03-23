@@ -24,7 +24,6 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
     const router = useRouter();
     const [isHeartClick, setHeartClick] = useState(false);
     const [contestStatus, setContestStatus] = useState(false);
-
     const {
         showPaidGameConfirmation,
         CheckAndStartGame,
@@ -47,7 +46,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
             const resp = await strapi.request(
                 "get",
                 "connection/toggleInfluencerLike?influencer=" +
-                contestmaster.influencer.data.id,
+                    contestmaster.influencer.data.id,
                 {}
             );
             FetchLikes();
@@ -67,20 +66,18 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
             _hover={{ border: "none", textDecoration: "none" }}
             _focus={{ border: "none", textDecoration: "none" }}
             key={`igc-${contestmaster?.id}`}
-
         >
-            <VStack {...style} >
-                <Flex flexDir={"column"} textAlign="center"
-                    bgImage={
-                        "/assets/designupdate1/gamecard_portrait.png"
-                    }
+            <VStack {...style}>
+                <Flex
+                    flexDir={"column"}
+                    textAlign="center"
+                    bgImage={"/assets/designupdate1/gamecard_portrait.png"}
                     bgPosition="center"
                     bgRepeat="no-repeat"
                     bgSize="100% 100%"
                     cursor="pointer"
                     width={"100%"}
                     height={["360px", "500px", "400px"]}
-
                 >
                     <Text
                         mt={10}
@@ -106,6 +103,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                 objectFit="contain"
                                 alt={imgUrl}
                                 layout="fill"
+                                w="350px"
                                 src={getStrapiMedia(imgUrl)}
                             />
                         </Flex>
@@ -133,9 +131,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     mt={1}
                 >
                     <VStack style={{ "align-items": "flex-start" }}>
-
-
-                        <Flex >
+                        <Flex>
                             <Image
                                 alt="tag"
                                 boxSize={["25px", "30px"]}
@@ -149,11 +145,10 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             >
                                 {contestmaster.entryFee != 0
                                     ? "Entry Fee - " +
-                                    contestmaster.entryFee + " CHIPS"
+                                      contestmaster.entryFee +
+                                      " CHIPS"
                                     : "Free"}
-
                             </Text>
-
                         </Flex>
                         <Text
                             color="#FFF"
@@ -162,11 +157,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             mt={0}
                             pl="6px"
                         >
-                            {nFormatter(
-                                contestmaster.roomsCount,
-                                1
-                            )}{" "}
-                            Plays
+                            {nFormatter(contestmaster.ticketsCount, 1)} Plays
                         </Text>
                     </VStack>
 
@@ -191,8 +182,11 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             _hover={{ textDecoration: "none !important" }}
                             w="90%"
                             onClick={(e) => {
-                                if (contestmaster?.contest_section?.data?.name == 'Mini Games') {
-                                    setIsFromNoLocationGame(true)
+                                if (
+                                    contestmaster?.contest_section?.data
+                                        ?.name == "Web3 Games"
+                                ) {
+                                    setIsFromNoLocationGame(true);
                                 }
                                 e.preventDefault();
                                 setShowLoading({
@@ -244,8 +238,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     )}
                 {contestmaster &&
                     showCaptcha &&
-                    showCaptcha?.callerKey ==
-                    `igc-${contestmaster?.id}` && (
+                    showCaptcha?.callerKey == `igc-${contestmaster?.id}` && (
                         <LMNonCloseALert
                             header={"Clear Captcha!"}
                             canClose={false}
@@ -265,19 +258,18 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     )}
                 {showPaidGameConfirmation?.callerKey ==
                     `igc-${contestmaster?.id}` && (
-                        <PaidGameConfirmation contestmaster={contestmaster} />
-                    )}
+                    <PaidGameConfirmation contestmaster={contestmaster} />
+                )}
 
-                    <LMNonCloseALert
-                        header={"Please Wait....."}
-                        canClose={false}
-                        isOpen={
-                            showLoading.key == `igc-${contestmaster?.id}` &&
-                            showLoading.show
-                        }
-                    ></LMNonCloseALert>
-                </VStack>
-            
+                <LMNonCloseALert
+                    header={"Please Wait....."}
+                    canClose={false}
+                    isOpen={
+                        showLoading.key == `igc-${contestmaster?.id}` &&
+                        showLoading.show
+                    }
+                ></LMNonCloseALert>
+            </VStack>
         </Link>
     );
 };

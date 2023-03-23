@@ -91,7 +91,6 @@ const Joining = (props) => {
         "join",
         { jwt: strapi.getToken(), ticket: ticketId },
         (response) => {
-          console.log(response);
           props.setLoading(false);
           if (response.status === 0) {
             socket?.disconnect();
