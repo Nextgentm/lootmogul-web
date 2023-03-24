@@ -157,7 +157,12 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             mt={0}
                             pl="6px"
                         >
-                            {nFormatter(contestmaster.ticketsCount, 1)} Plays
+                            {contestmaster?.contest_section?.data?.name ==
+                            "Web3 Games"
+                                ? nFormatter(contestmaster?.playCount, 1)
+                                : nFormatter(contestmaster?.roomsCount, 1) *
+                                  2}{" "}
+                            Players Played
                         </Text>
                     </VStack>
 
