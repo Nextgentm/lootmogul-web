@@ -179,7 +179,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     }
 
     return (
-        <div id="idDiv" style={{ height: '100vh' }}>
+        <div id="idDiv" style={{ height: '100dvh' }}>
             <MultipleLoggedInUser />
             <AlertDialog
                 motionPreset="slideInBottom"
