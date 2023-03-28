@@ -17,7 +17,7 @@ const GameInfoGrid = ({ gameData }) => {
         },
         {
             label:
-                gameData?.contest_section?.data?.name == "Web3 Games"
+                gameData?.contest_section?.data?.name == "Blockchain Games"
                     ? nFormatter(gameData?.playCount, 1)
                     : nFormatter(gameData?.roomsCount, 1) * 2 + " players",
             icon: "games_players_icon.svg"
