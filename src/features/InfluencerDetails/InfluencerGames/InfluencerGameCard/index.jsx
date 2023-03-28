@@ -79,7 +79,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     width={"100%"}
                     height={["360px", "500px", "400px"]}
                 >
-                    <Text
+                    {/* <Text
                         mt={10}
                         color="#FDFFE5"
                         fontSize="19px"
@@ -90,7 +90,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                         overflow="visible"
                     >
                         {sectionName}
-                    </Text>
+                    </Text> */}
 
                     {imgUrl && (
                         <Flex
