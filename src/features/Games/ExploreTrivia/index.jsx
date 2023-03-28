@@ -4,13 +4,13 @@ const ExploreTrivia = ({ section, executeScroll }) => {
   const trivias = [
     section?.filter((item) => {
       if (
-        item.name === "Web3 Games" &&
+        item.name === "Blockchain Games" &&
         item?.contestmasters?.data?.length > 0
       )
         return item;
     }).length > 0 ? {
       id: 0,
-      label: "Web3 Games",
+      label: "Blockchain Games",
       icon: "skillgame.png",
     } : {},
     section?.filter((item) => {

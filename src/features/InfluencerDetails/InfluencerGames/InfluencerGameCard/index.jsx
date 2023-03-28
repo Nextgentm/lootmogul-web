@@ -79,7 +79,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     width={"100%"}
                     height={["360px", "500px", "400px"]}
                 >
-                    <Text
+                    {/* <Text
                         mt={10}
                         color="#FDFFE5"
                         fontSize="19px"
@@ -90,7 +90,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                         overflow="visible"
                     >
                         {sectionName}
-                    </Text>
+                    </Text> */}
 
                     {imgUrl && (
                         <Flex
@@ -158,7 +158,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             pl="6px"
                         >
                             {contestmaster?.contest_section?.data?.name ==
-                            "Web3 Games"
+                            "Blockchain Games"
                                 ? nFormatter(contestmaster?.playCount, 1)
                                 : nFormatter(contestmaster?.roomsCount, 1) *
                                   2}{" "}
@@ -189,7 +189,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             onClick={(e) => {
                                 if (
                                     contestmaster?.contest_section?.data
-                                        ?.name == "Web3 Games"
+                                        ?.name == "Blockchain Games"
                                 ) {
                                     setIsFromNoLocationGame(true);
                                 }
