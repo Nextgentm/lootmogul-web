@@ -42,7 +42,12 @@ const TabDepositPanel = ({ isDeposit }) => {
     const handleIncrease = (addedAmount) => {
         /*const newAmount = amount + addedAmount;*/
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
+        if(currency == 'BTC' || currency == 'ETH'){
+            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(4));
+        }
+        else{
+            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
+        }
         setAmount(addedAmount);
     };
 
@@ -58,6 +63,10 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [currencyoptions, setCurrencyOptions] = useState([]);
     const [bitpaycurrencyoptions, setBitpayCurrencyOptions] = useState([]);
 
+    const [defaultFiatChip, SetDefaultFiatChip] = useState([]);
+    const [defaultFiatAmount, SetDefaultFiatAmount] = useState([]);
+    const [defaultCrytoChip, SetDefaultCrytoChip] = useState([]);
+    const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState([]);
 
     useEffect(() => {
         async function fetchData() {
@@ -70,6 +79,9 @@ const TabDepositPanel = ({ isDeposit }) => {
                 if(value.currency == 'USD'){
                     setNumberOfChips(value.numberOfChips);
                     setMinimumDeposit(value.minimumDeposit);
+                    
+                    SetDefaultFiatChip(value.numberOfChips);
+                    SetDefaultFiatAmount(value.minimumDeposit);
                 }
                 results.push({
                     currency: value.currency,
@@ -93,7 +105,10 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                
+                if(value.currency == 'BTC'){
+                    SetDefaultCrytoChip(value.numberOfChips);
+                    SetDefaultCrytoAmount(value.cryptoMinimumDeposit);
+                }
                 results_bitpay.push({
                     currency: value.currency,
                     minimumDeposit: value.cryptoMinimumDeposit,
@@ -113,12 +128,24 @@ const TabDepositPanel = ({ isDeposit }) => {
         setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
         //setTotalAmount(amount);
         let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
-        setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+        if(e.target.value == 'BTC' || e.target.value == 'ETH'){
+            setNumberOfAmount((amount / numberOfAmount).toFixed(4));
+        }
+        else{
+            setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+        }
+
 
     };
     const setTotalAmount = (addedAmount) => {
+        
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
+        if(currency == 'BTC' || currency == 'ETH'){
+            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(4));
+        }
+        else{
+            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
+        }
         setAmount(addedAmount);
     };
 
@@ -232,13 +259,28 @@ const TabDepositPanel = ({ isDeposit }) => {
     useEffect(() => {
         if (depositType == 2){
             setCurrency('BTC');
-            setMinimumDeposit('0.00018');
-            setNumberOfChips('34');
+            setMinimumDeposit(defaultCrytoAmount);
+            setNumberOfChips(defaultCrytoChip);
+            if(amount){
+                let numberOfAmount = Number(defaultCrytoChip) / Number(defaultCrytoAmount);
+                setNumberOfAmount((amount / numberOfAmount).toFixed(4));
+            }
         }
             
 
-        if (depositType == 1)
-            setCurrency('USD')    
+        if (depositType == 1){
+            setCurrency('USD') 
+            setMinimumDeposit(defaultFiatAmount);
+            setNumberOfChips(defaultFiatChip);
+           
+            if(amount){
+                let numberOfAmount = Number(defaultFiatChip) / Number(defaultFiatAmount);
+                setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+            }
+            
+           
+        }
+               
     }, [depositType])
 
     return (
