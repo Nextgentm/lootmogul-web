@@ -52,8 +52,8 @@ const TabDepositPanel = ({ isDeposit }) => {
     };
 
     const [currency, setCurrency] = useState(getInitialState);
-    const [minimumDeposit, setMinimumDeposit] = useState(5);
-    const [numberOfChips, setNumberOfChips] = useState(35);
+    const [minimumDeposit, setMinimumDeposit] = useState(0);
+    const [numberOfChips, setNumberOfChips] = useState(0);
     const [numberOfAmount, setNumberOfAmount] = useState(0);
     const [currencyoptions, setCurrencyOptions] = useState([]);
     const [bitpaycurrencyoptions, setBitpayCurrencyOptions] = useState([]);
@@ -62,12 +62,15 @@ const TabDepositPanel = ({ isDeposit }) => {
     useEffect(() => {
         async function fetchData() {
             // Fetch data   
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false`);
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto]`);
             const results = []
                         // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                
+                if(value.currency == 'USD'){
+                    setNumberOfChips(value.numberOfChips);
+                    setMinimumDeposit(value.minimumDeposit);
+                }
                 results.push({
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
@@ -93,7 +96,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 
                 results_bitpay.push({
                     currency: value.currency,
-                    minimumDeposit: value.minimumDeposit,
+                    minimumDeposit: value.cryptoMinimumDeposit,
                     numberOfChips: value.numberOfChips,
                 });
             });
@@ -227,8 +230,12 @@ const TabDepositPanel = ({ isDeposit }) => {
     };
 
     useEffect(() => {
-        if (depositType == 2)
-            setCurrency('USD')
+        if (depositType == 2){
+            setCurrency('BTC');
+            setMinimumDeposit('0.00018');
+            setNumberOfChips('34');
+        }
+            
 
         if (depositType == 1)
             setCurrency('USD')    
