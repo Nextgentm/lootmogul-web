@@ -52,8 +52,8 @@ const TabDepositPanel = ({ isDeposit }) => {
     };
 
     const [currency, setCurrency] = useState(getInitialState);
-    const [minimumDeposit, setMinimumDeposit] = useState(5);
-    const [numberOfChips, setNumberOfChips] = useState(35);
+    const [minimumDeposit, setMinimumDeposit] = useState(0);
+    const [numberOfChips, setNumberOfChips] = useState(0);
     const [numberOfAmount, setNumberOfAmount] = useState(0);
     const [currencyoptions, setCurrencyOptions] = useState([]);
     const [bitpaycurrencyoptions, setBitpayCurrencyOptions] = useState([]);
@@ -62,17 +62,14 @@ const TabDepositPanel = ({ isDeposit }) => {
     useEffect(() => {
         async function fetchData() {
             // Fetch data   
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto]`);
             const results = []
                         // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currency === "USD") {
-                    defaultCurrencyValue = {
-                        currency: value.currency,
-                        minimumDeposit: value.minimumDeposit,
-                        numberOfChips: value.numberOfChips,
-                    }
+                if(value.currency == 'USD'){
+                    setNumberOfChips(value.numberOfChips);
+                    setMinimumDeposit(value.minimumDeposit);
                 }
                 results.push({
                     currency: value.currency,
@@ -80,13 +77,6 @@ const TabDepositPanel = ({ isDeposit }) => {
                     numberOfChips: value.numberOfChips,
                 });
             });
-            jsondata.forEach((jsonValue) => {
-                results.push({
-                    currency: jsonValue,
-                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
-                    numberOfChips: defaultCurrencyValue.numberOfChips,
-                });
-            })
 
             setCurrencyOptions(results);
         }
@@ -97,37 +87,20 @@ const TabDepositPanel = ({ isDeposit }) => {
     useEffect(() => {
         async function fetchData() {
             // Fetch data
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true`);
             const results_bitpay = []
             // Store results in the results array
 
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currency === "USD") {
-                    defaultCurrencyValue = {
-                        currency: value.currency,
-                        minimumDeposit: value.minimumDeposit,
-                        numberOfChips: value.numberOfChips,
-                    }
-                }
+                
                 results_bitpay.push({
                     currency: value.currency,
-                    minimumDeposit: value.minimumDeposit,
+                    minimumDeposit: value.cryptoMinimumDeposit,
                     numberOfChips: value.numberOfChips,
                 });
             });
-            await fetch('https://test.bitpay.com/currencies')
-                .then(response => response.json())
-                .then(additionalCurrencies => {
-                    additionalCurrencies.data.forEach((jsonValue) => {
-                        results_bitpay.push({
-                            currency: jsonValue.code,
-                            minimumDeposit: defaultCurrencyValue.minimumDeposit,
-                            numberOfChips: defaultCurrencyValue.numberOfChips,
-                        });
-                    })
-                })
-
+            
             setBitpayCurrencyOptions(results_bitpay);
         }
         // Trigger the fetch
@@ -257,8 +230,12 @@ const TabDepositPanel = ({ isDeposit }) => {
     };
 
     useEffect(() => {
-        if (depositType == 2)
-            setCurrency('USD')
+        if (depositType == 2){
+            setCurrency('BTC');
+            setMinimumDeposit('0.00018');
+            setNumberOfChips('34');
+        }
+            
 
         if (depositType == 1)
             setCurrency('USD')    
@@ -286,8 +263,8 @@ const TabDepositPanel = ({ isDeposit }) => {
                             </Text>
                         </Radio>
                     </Box>
-                    <Box color='white'opacity={"0.5"} w="48%" display="inline-table" bg="#1D052B" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px" >
-                        <Radio size='md' colorScheme='pink' value='2' isDisabled>
+                    <Box color='white' w="48%" display="inline-table" bg="#1D052B" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px" >
+                        <Radio size='md' colorScheme='pink' value='2'>
                             <Text
                                 display="inline-flex"
                                 color="white"
