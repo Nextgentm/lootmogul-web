@@ -54,7 +54,7 @@ const routes = [
         activeImageUrl: "/assets/MobileMenuIcons/Ambassadors-icon-active.png"
     },
     {
-        label: "NFT",
+        label: "Collectibles",
         path: "/nfts",
         isExternalLink: false,
         imageUrl: "/assets/MobileMenuIcons/NFTs-icon.png",
