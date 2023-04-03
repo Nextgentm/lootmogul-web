@@ -43,7 +43,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         /*const newAmount = amount + addedAmount;*/
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
         if(currency == 'BTC' || currency == 'ETH'){
-            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(4));
+            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(6));
         }
         else{
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
@@ -129,7 +129,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         //setTotalAmount(amount);
         let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
         if(e.target.value == 'BTC' || e.target.value == 'ETH'){
-            setNumberOfAmount((amount / numberOfAmount).toFixed(4));
+            setNumberOfAmount((amount / numberOfAmount).toFixed(6));
         }
         else{
             setNumberOfAmount((amount / numberOfAmount).toFixed(2));
@@ -141,7 +141,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
         if(currency == 'BTC' || currency == 'ETH'){
-            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(4));
+            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(6));
         }
         else{
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
@@ -263,7 +263,7 @@ const TabDepositPanel = ({ isDeposit }) => {
             setNumberOfChips(defaultCrytoChip);
             if(amount){
                 let numberOfAmount = Number(defaultCrytoChip) / Number(defaultCrytoAmount);
-                setNumberOfAmount((amount / numberOfAmount).toFixed(4));
+                setNumberOfAmount((amount / numberOfAmount).toFixed(6));
             }
         }
             
