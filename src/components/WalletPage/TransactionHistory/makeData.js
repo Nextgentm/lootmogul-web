@@ -50,7 +50,7 @@ const transactionTableData = (transaction, isMobile) => {
                 </Text>
             ) : (
                 <Text color="#fff" fontWeight="400">
-                    +{transaction?.chips || Math.round(transaction?.balanceBeforeConversion + 7)} CHIPS
+                    +{ Math.round(transaction?.chips) || Math.round(transaction?.balanceBeforeConversion + 7)} CHIPS
                 </Text>
             ),
 
