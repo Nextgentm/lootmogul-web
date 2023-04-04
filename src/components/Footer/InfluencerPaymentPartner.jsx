@@ -52,9 +52,9 @@ const InfluencerPaymentPartner = () => {
                 >
                     <Text
                         color="white"
+                        variant="BoldWhiteText"
                         fontFamily="Blanch"
                         fontSize={["30px", "30px", "35px", "35px"]}
-                        fontWeight={500}
                         lineHeight="35px"
                         mb="25px"
                     >
