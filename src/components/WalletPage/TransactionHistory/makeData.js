@@ -46,17 +46,17 @@ const transactionTableData = (transaction, isMobile) => {
         chips:
             transaction?.type === "debit" || transaction?.type === "hold" ? (
                 <Text color="#fff" fontWeight="400">
-                    -{transaction?.chips} CHIPS
+                    -{Math.round(transaction?.chips)} CHIPS
                 </Text>
             ) : (
                 <Text color="#fff" fontWeight="400">
-                    +{ Math.round(transaction?.chips) || Math.round(transaction?.balanceBeforeConversion + 7)} CHIPS
+                    +{Math.round(transaction?.chips) || Math.round(transaction?.balanceBeforeConversion + 7)} CHIPS
                 </Text>
             ),
 
         closingbalance:
             <Text color="#fff" fontWeight="400">
-                {transaction?.closingBalance ? transaction?.closingBalance + ' CHIPS' : '-'}
+                {transaction?.closingBalance ? Math.round(transaction?.closingBalance) + ' CHIPS' : '-'}
             </Text>,
 
         status: (
