@@ -90,36 +90,36 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             return;
         }
         if (withdrawalType === 'paypal') {
-            if (numberOfAmount) {
-                if (numberOfAmount >= 5) {
+            if (amount) {
+                if (amount >= 34) {
                     if (!email)
                         setAlertShow({
                             isOpen: true,
-                            msg: "Enter either Email Id or Account Id"
+                            msg: "Enter Paypal registered id"
                         });
                     else withdraw();
                 } else
                     setAlertShow({
                         isOpen: true,
-                        msg: "Withdraw more than $5"
+                        msg: "Withdraw more than 34 chips"
                     });
-            } else setAlertShow({ isOpen: true, msg: "Withdraw more than $5" });
+            } else setAlertShow({ isOpen: true, msg: "Withdraw more than 34 chips" });
         }
         else if (withdrawalType === 'crypto') {
-            if (numberOfAmount) {
-                if (numberOfAmount >= 100) {
+            if (amount) {
+                if (amount >= 700) {
                     withdraw();
                 } else
                     setAlertShow({
                         isOpen: true,
-                        msg: "Withdraw more than $100"
+                        msg: "Withdraw more than 700 chips"
                     });
             } else
-                setAlertShow({ isOpen: true, msg: "Withdraw more than $100" });
+                setAlertShow({ isOpen: true, msg: "Withdraw more than 700 chips" });
         }
         else {
             if (amount) {
-                if (amount >= 100) {
+                if (amount >= 700) {
                     if (!accountnumber)
                         setAlertShow({
                             isOpen: true,
@@ -129,10 +129,10 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 } else
                     setAlertShow({
                         isOpen: true,
-                        msg: "Withdraw more than $100"
+                        msg: "Withdraw more than 700 chips"
                     });
             } else
-                setAlertShow({ isOpen: true, msg: "Withdraw more than $100" });
+                setAlertShow({ isOpen: true, msg: "Withdraw more than 700 chips " });
         }
     };
     const withdraw = () => {

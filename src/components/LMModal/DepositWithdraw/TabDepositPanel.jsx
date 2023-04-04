@@ -394,7 +394,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                         alignContent={"center"}
                         m="auto"
                     >
-                        CHIP
+                        CHIPS
                         <Tooltip
                             placement="top-start"
                             label="Enter number of chip, Based on total chip showing equivalent amount."
@@ -489,7 +489,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                             }}
                         >
                             {" "}
-                            &nbsp; Terms and Condition
+                            &nbsp; Terms and Conditions
                         </Text>
                     </Text>
                 </Checkbox>
