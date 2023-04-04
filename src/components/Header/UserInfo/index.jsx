@@ -39,19 +39,19 @@ const UserInfo = ({ user, isMobileDevice }) => {
     let paramsLogin = "";
     if (typeof window !== "undefined") {
         const jwt_token = window.localStorage?.getItem("strapi_jwt");
-        if(jwt_token !== null){
-            paramsLogin = "?jwt=" +jwt_token;
+        if (jwt_token !== null) {
+            paramsLogin = "?jwt=" + jwt_token;
         }
-        else{
+        else {
             paramsLogin = '';
         }
-         
+
     }
 
     const popupMenuItems = [
         {
             label: "Profile",
-            action: () => window.location.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL+"/profile/"+paramsLogin)
+            action: () => window.location.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL + "/profile/" + paramsLogin)
         },
         {
             label: "My Wallet",
@@ -233,7 +233,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
                 >
                     <img
                         alt="profile"
-                        style={{"border":"1px solid #df0b65","border-radius":"50px","width":"45px","height":"45px"}}
+                        style={{ "border": "1px solid #df0b65", "border-radius": "50px", "width": "45px", "height": "45px" }}
                         borderRadius="50px"
                         src={user?.photoURL ? user?.photoURL : "/assets/Users.png"}
                     />
@@ -258,11 +258,11 @@ const UserInfo = ({ user, isMobileDevice }) => {
                     />
                 )}
                 {showModal.mode === "add" && (
-                    /*<DepostWithdrawModal
+                    <DepostWithdrawModal
                         totalAmount={totalAmount}
                         winAmount={amounts?.winnings}
-                    />*/
-                     <DepostWithdrawstop/>
+                    />
+                    //  <DepostWithdrawstop/>
                 )}
 
             </LMModalComponent>
