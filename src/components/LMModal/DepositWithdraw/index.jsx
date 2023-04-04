@@ -24,13 +24,13 @@ const WalletHeader = ({ totalAmount, isDeposit, winAmount }) => {
                             paddingLeft={"2%"}
                             bg="#1d052b"
                             textAlign="center"
+                            fontFamily={"Open Sans"}
                         >
                             <Heading
                                 mt="10px"
                                 fontWeight="500"
                                 variant="modalHeader"
                                 fontSize={["12px","12px", "22px"]}
-                                fontFamily={"Open Sans"}
                             >
                                 {isDeposit ? "DEPOSIT" : "WITHDRAW"}
                             </Heading>

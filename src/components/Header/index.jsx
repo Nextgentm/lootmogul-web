@@ -57,8 +57,8 @@ const routes = [
         label: "Collectibles",
         path: "/nfts",
         isExternalLink: false,
-        imageUrl: "/assets/MobileMenuIcons/NFTs-icon.png",
-        activeImageUrl: "/assets/MobileMenuIcons/NFTs-icon-active.png"
+        imageUrl: "/assets/MobileMenuIcons/digitalcollectibles.png",
+        activeImageUrl: "/assets/MobileMenuIcons/digitalcollectibles_active.png"
     },
     {
         label: "Games",
