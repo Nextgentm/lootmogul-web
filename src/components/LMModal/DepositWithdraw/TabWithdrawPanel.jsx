@@ -168,31 +168,31 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     useEffect(() => {
         async function fetchData() {
             // Fetch data   
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false`);
             const results = []
             // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currency === "USD") {
+                /*if (value.currency === "USD") {
                     defaultCurrencyValue = {
                         currency: value.currency,
                         minimumDeposit: value.minimumDeposit,
                         numberOfChips: value.numberOfChips,
                     }
-                }
+                }*/
                 results.push({
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
                     numberOfChips: value.numberOfChips,
                 });
             });
-            jsondata.forEach((jsonValue) => {
+            /*jsondata.forEach((jsonValue) => {
                 results.push({
                     currency: jsonValue,
                     minimumDeposit: defaultCurrencyValue.minimumDeposit,
                     numberOfChips: defaultCurrencyValue.numberOfChips,
                 });
-            })
+            })*/
 
             setCurrencyOptions(results);
         }
@@ -203,26 +203,26 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     useEffect(() => {
         async function fetchData() {
             // Fetch data
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips`);
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true`);
             const results_bitpay = []
             // Store results in the results array
 
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currency === "USD") {
+                /*if (value.currency === "USD") {
                     defaultCurrencyValue = {
                         currency: value.currency,
                         minimumDeposit: value.minimumDeposit,
                         numberOfChips: value.numberOfChips,
                     }
-                }
+                }*/
                 results_bitpay.push({
                     currency: value.currency,
-                    minimumDeposit: value.minimumDeposit,
+                    minimumDeposit: value.cryptoMinimumDeposit,
                     numberOfChips: value.numberOfChips,
                 });
             });
-            await fetch('https://test.bitpay.com/currencies')
+           /* await fetch('https://test.bitpay.com/currencies')
                 .then(response => response.json())
                 .then(additionalCurrencies => {
                     additionalCurrencies.data.forEach((jsonValue) => {
@@ -233,7 +233,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         });
                     })
                 })
-
+            */    
             setBitpayCurrencyOptions(results_bitpay);
         }
         // Trigger the fetch
@@ -245,21 +245,47 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             setCurrency(e.target.value);
         }
         else {
-            setCryptoCurrency(e.target.value);
+            setCurrency(e.target.value);
+            //setCryptoCurrency(e.target.value);
         }
         setMinimumDeposit(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
         setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
         //setTotalAmount(amount);
         let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
-        setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+        if(currency == 'BTC' || currency == 'ETH'){
+            setNumberOfAmount((amount / numberOfAmount).toFixed(6));
+        }
+        else{
+            setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+        }
+        
+
+        //setNumberOfAmount((amount / numberOfAmount).toFixed(6));
 
     };
     const setTotalAmount = (addedAmount) => {
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
+        if(currency == 'BTC' || currency == 'ETH'){
+            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(6));
+        }
+        else{
+            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
+        }
+        
         setAmount(addedAmount);
     };
 
+    useEffect(() => {
+        if (withdrawalType == 'crypto'){
+            setCurrency('BTC');
+            
+        }
+        if (withdrawalType == 'paypal' || withdrawalType == 'bank'){
+            setCurrency('USD') 
+        }
+               
+    }, [withdrawalType])
+    
     return (
         <Flex h="100%" w="100%" direction={"column"}>
             <Heading as='h5' fontSize={['13px', '13px', '16px']} variant="modalHeader" mt='{["0px","px","5px","15px"]}' mb='5px' fontWeight="400">
@@ -727,7 +753,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 }}
                             >
                                 {" "}
-                                &nbsp; Terms and Condition
+                                &nbsp; Terms and Conditions
                             </Text>
                         </Text>
                     </Checkbox>
