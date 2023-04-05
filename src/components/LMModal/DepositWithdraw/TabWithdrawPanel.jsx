@@ -59,6 +59,10 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     const [bankname, setBankName] = useState();
     const [bankaddress, setBankAddress] = useState();
 
+    const [defaultFiatChip, SetDefaultFiatChip] = useState([]);
+    const [defaultFiatAmount, SetDefaultFiatAmount] = useState([]);
+    const [defaultCrytoChip, SetDefaultCrytoChip] = useState([]);
+    const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState([]);
 
     useEffect(() => {
         if (user) {
@@ -173,13 +177,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                /*if (value.currency === "USD") {
-                    defaultCurrencyValue = {
-                        currency: value.currency,
-                        minimumDeposit: value.minimumDeposit,
-                        numberOfChips: value.numberOfChips,
-                    }
-                }*/
+                if (value.currency === "USD") {
+                    SetDefaultFiatChip(value.numberOfChips);
+                    SetDefaultFiatAmount(value.minimumDeposit);
+
+                    setMinimumDeposit(value.numberOfChips);
+                    setNumberOfChips(value.minimumDeposit);
+                }
                 results.push({
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
@@ -209,13 +213,10 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
 
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                /*if (value.currency === "USD") {
-                    defaultCurrencyValue = {
-                        currency: value.currency,
-                        minimumDeposit: value.minimumDeposit,
-                        numberOfChips: value.numberOfChips,
-                    }
-                }*/
+                if (value.currency === "BTC") {
+                    SetDefaultCrytoChip(value.numberOfChips);
+                    SetDefaultCrytoAmount(value.cryptoMinimumDeposit);
+                }
                 results_bitpay.push({
                     currency: value.currency,
                     minimumDeposit: value.cryptoMinimumDeposit,
@@ -278,10 +279,22 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     useEffect(() => {
         if (withdrawalType == 'crypto'){
             setCurrency('BTC');
+            setMinimumDeposit(defaultCrytoAmount);
+            setNumberOfChips(defaultCrytoChip);
+            if(amount){
+                let numberOfAmount = Number(defaultCrytoChip) / Number(defaultCrytoAmount);
+                setNumberOfAmount((amount / numberOfAmount).toFixed(6));
+            }
             
         }
         if (withdrawalType == 'paypal' || withdrawalType == 'bank'){
-            setCurrency('USD') 
+            setCurrency('USD');
+            setMinimumDeposit(defaultFiatAmount);
+            setNumberOfChips(defaultFiatChip);
+            if(amount){
+                let numberOfAmount = Number(defaultFiatChip) / Number(defaultFiatAmount);
+                setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+            }
         }
                
     }, [withdrawalType])
