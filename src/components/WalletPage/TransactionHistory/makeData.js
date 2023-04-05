@@ -56,7 +56,7 @@ const transactionTableData = (transaction, isMobile) => {
 
         closingbalance:
             <Text color="#fff" fontWeight="400">
-                {transaction?.closingBalance ? Math.round(transaction?.closingBalance) + ' CHIPS' : '-'}
+                {transaction?.closingBalance ? Number(transaction?.closingBalance).toFixed(2) + ' CHIPS' : '-'}
             </Text>,
 
         status: (
