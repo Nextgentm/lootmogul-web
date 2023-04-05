@@ -46,11 +46,11 @@ const transactionTableData = (transaction, isMobile) => {
         chips:
             transaction?.type === "debit" || transaction?.type === "hold" ? (
                 <Text color="#fff" fontWeight="400">
-                    -{Math.round(transaction?.chips)} CHIPS
+                    -{Number(transaction?.chips).toFixed(2)} CHIPS
                 </Text>
             ) : (
                 <Text color="#fff" fontWeight="400">
-                    +{Math.round(transaction?.chips) || Math.round(transaction?.balanceBeforeConversion + 7)} CHIPS
+                    +{Number(transaction?.chips).toFixed(2) || Number(transaction?.balanceBeforeConversion + 7).toFixed(2)} CHIPS
                 </Text>
             ),
 
