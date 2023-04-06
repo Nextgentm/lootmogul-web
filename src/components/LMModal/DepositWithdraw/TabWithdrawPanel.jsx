@@ -181,8 +181,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
 
-                    setMinimumDeposit(value.numberOfChips);
-                    setNumberOfChips(value.minimumDeposit);
+                    setMinimumDeposit(value.minimumDeposit);
+                    setNumberOfChips(value.numberOfChips);
                 }
                 results.push({
                     currency: value.currency,
