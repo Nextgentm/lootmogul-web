@@ -23,7 +23,6 @@ import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import axios from "axios";
 import jsondata from "../../../../public/assets/paypal-currency.json";
 
-
 const TabWithdrawPanel = ({ data, isDeposit }) => {
     const ref = useRef();
     const [amount, setAmount] = useState(0);
@@ -41,12 +40,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
 
     const [userBal, setuserBal] = useState({});
     const { user, updateUser } = useContext(AppContext);
-    const [currency, setCurrency] = useState('USD');
+    const [currency, setCurrency] = useState("USD");
     const [minimumDeposit, setMinimumDeposit] = useState(5);
     const [numberOfChips, setNumberOfChips] = useState(35);
     const [numberOfAmount, setNumberOfAmount] = useState(0);
     const [currencyoptions, setCurrencyOptions] = useState([]);
-    const [withdrawalType, setWithdrawalType] = useState('paypal')
+    const [withdrawalType, setWithdrawalType] = useState("paypal");
     const [bitpaycurrencyoptions, setBitpayCurrencyOptions] = useState([]);
 
     const [cryptotokens, setCryptoTokens] = useState("");
@@ -85,6 +84,20 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         }
     }, [data]);
 
+    const emailvalidation = (e) => {
+        const emailRegex = new RegExp(
+            /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
+            "gm"
+        );
+        const isValidEmail = emailRegex.test(e.target.value);
+        console.log("isValidEmail", isValidEmail);
+        if (isValidEmail == true) {
+            setEmail(e.target.value);
+        } else {
+            setEmail("");
+        }
+    };
+
     const checkValidity = () => {
         console.log(Math.ceil(numberOfAmount));
         if (!numberOfAmount || numberOfAmount === 0)
@@ -93,13 +106,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             setAlertShow({ isOpen: true, msg: "Your wallet Balance is low" });
             return;
         }
-        if (withdrawalType === 'paypal') {
+        if (withdrawalType === "paypal") {
             if (amount) {
                 if (amount >= 34) {
                     if (!email)
                         setAlertShow({
                             isOpen: true,
-                            msg: "Enter Paypal registered id"
+                            msg: "Enter Valid Paypal registered id"
                         });
                     else withdraw();
                 } else
@@ -107,9 +120,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         isOpen: true,
                         msg: "Withdraw more than 34 chips"
                     });
-            } else setAlertShow({ isOpen: true, msg: "Withdraw more than 34 chips" });
-        }
-        else if (withdrawalType === 'crypto') {
+            } else
+                setAlertShow({
+                    isOpen: true,
+                    msg: "Withdraw more than 34 chips"
+                });
+        } else if (withdrawalType === "crypto") {
             if (amount) {
                 if (amount >= 700) {
                     withdraw();
@@ -119,9 +135,11 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         msg: "Withdraw more than 700 chips"
                     });
             } else
-                setAlertShow({ isOpen: true, msg: "Withdraw more than 700 chips" });
-        }
-        else {
+                setAlertShow({
+                    isOpen: true,
+                    msg: "Withdraw more than 700 chips"
+                });
+        } else {
             if (amount) {
                 if (amount >= 700) {
                     if (!accountnumber)
@@ -136,7 +154,10 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         msg: "Withdraw more than 700 chips"
                     });
             } else
-                setAlertShow({ isOpen: true, msg: "Withdraw more than 700 chips " });
+                setAlertShow({
+                    isOpen: true,
+                    msg: "Withdraw more than 700 chips "
+                });
         }
     };
     const withdraw = () => {
@@ -171,9 +192,11 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
 
     useEffect(() => {
         async function fetchData() {
-            // Fetch data   
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false`);
-            const results = []
+            // Fetch data
+            const { data } = await axios.get(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false`
+            );
+            const results = [];
             // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
@@ -187,7 +210,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 results.push({
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
-                    numberOfChips: value.numberOfChips,
+                    numberOfChips: value.numberOfChips
                 });
             });
             /*jsondata.forEach((jsonValue) => {
@@ -207,8 +230,10 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     useEffect(() => {
         async function fetchData() {
             // Fetch data
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true`);
-            const results_bitpay = []
+            const { data } = await axios.get(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true`
+            );
+            const results_bitpay = [];
             // Store results in the results array
 
             var defaultCurrencyValue;
@@ -220,10 +245,10 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 results_bitpay.push({
                     currency: value.currency,
                     minimumDeposit: value.cryptoMinimumDeposit,
-                    numberOfChips: value.numberOfChips,
+                    numberOfChips: value.numberOfChips
                 });
             });
-           /* await fetch('https://test.bitpay.com/currencies')
+            /* await fetch('https://test.bitpay.com/currencies')
                 .then(response => response.json())
                 .then(additionalCurrencies => {
                     additionalCurrencies.data.forEach((jsonValue) => {
@@ -234,7 +259,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         });
                     })
                 })
-            */    
+            */
             setBitpayCurrencyOptions(results_bitpay);
         }
         // Trigger the fetch
@@ -242,75 +267,97 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     }, []);
 
     const handleChange = (e) => {
-        if (withdrawalType === 'paypal') {
+        if (withdrawalType === "paypal") {
             setCurrency(e.target.value);
-        }
-        else {
+        } else {
             setCurrency(e.target.value);
             //setCryptoCurrency(e.target.value);
         }
-        setMinimumDeposit(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
-        setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
+        setMinimumDeposit(
+            e.target.selectedOptions[0].getAttribute("minimumDeposit")
+        );
+        setNumberOfChips(
+            e.target.selectedOptions[0].getAttribute("numberOfChips")
+        );
         //setTotalAmount(amount);
-        let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
-        if(currency == 'BTC' || currency == 'ETH'){
+        let numberOfAmount =
+            Number(e.target.selectedOptions[0].getAttribute("numberOfChips")) /
+            Number(e.target.selectedOptions[0].getAttribute("minimumDeposit"));
+        if (currency == "BTC" || currency == "ETH") {
             setNumberOfAmount((amount / numberOfAmount).toFixed(6));
-        }
-        else{
+        } else {
             setNumberOfAmount((amount / numberOfAmount).toFixed(2));
         }
-        
 
         //setNumberOfAmount((amount / numberOfAmount).toFixed(6));
-
     };
     const setTotalAmount = (addedAmount) => {
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        if(currency == 'BTC' || currency == 'ETH'){
+        if (currency == "BTC" || currency == "ETH") {
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(6));
-        }
-        else{
+        } else {
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
         }
-        
+
         setAmount(addedAmount);
     };
 
     useEffect(() => {
-        if (withdrawalType == 'crypto'){
-            setCurrency('BTC');
+        if (withdrawalType == "crypto") {
+            setCurrency("BTC");
             setMinimumDeposit(defaultCrytoAmount);
             setNumberOfChips(defaultCrytoChip);
-            if(amount){
-                let numberOfAmount = Number(defaultCrytoChip) / Number(defaultCrytoAmount);
+            if (amount) {
+                let numberOfAmount =
+                    Number(defaultCrytoChip) / Number(defaultCrytoAmount);
                 setNumberOfAmount((amount / numberOfAmount).toFixed(6));
             }
-            
         }
-        if (withdrawalType == 'paypal' || withdrawalType == 'bank'){
-            setCurrency('USD');
+        if (withdrawalType == "paypal" || withdrawalType == "bank") {
+            setCurrency("USD");
             setMinimumDeposit(defaultFiatAmount);
             setNumberOfChips(defaultFiatChip);
-            if(amount){
-                let numberOfAmount = Number(defaultFiatChip) / Number(defaultFiatAmount);
+            if (amount) {
+                let numberOfAmount =
+                    Number(defaultFiatChip) / Number(defaultFiatAmount);
                 setNumberOfAmount((amount / numberOfAmount).toFixed(2));
             }
         }
-               
-    }, [withdrawalType])
-    
+    }, [withdrawalType]);
+
     return (
         <Flex h="100%" w="100%" direction={"column"}>
-            <Heading as='h5' fontSize={['13px', '13px', '16px']} variant="modalHeader" mt='{["0px","px","5px","15px"]}' mb='5px' fontWeight="400">
+            <Heading
+                as="h5"
+                fontSize={["13px", "13px", "16px"]}
+                variant="modalHeader"
+                mt='{["0px","px","5px","15px"]}'
+                mb="5px"
+                fontWeight="400"
+            >
                 SELECT NUMBER OF CHIPS
             </Heading>
-            <Flex direction={"column"} w="100%" justifyContent={"space-evenly"} bg="#481A7F" p={["5px", "5px", "2%", "2%"]} borderRadius="10px">
+            <Flex
+                direction={"column"}
+                w="100%"
+                justifyContent={"space-evenly"}
+                bg="#481A7F"
+                p={["5px", "5px", "2%", "2%"]}
+                borderRadius="10px"
+            >
                 <Flex>
                     <Text
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px", "12px", "13px", "13px", "14px", "18px"]}
+                        fontSize={[
+                            "12px",
+                            "12px",
+                            "13px",
+                            "13px",
+                            "14px",
+                            "18px"
+                        ]}
                         alignContent={"center"}
                         m="auto"
                     >
@@ -345,7 +392,14 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             setTotalAmount(Number(e.target.value));
                         }}
                         placeholder="Amount"
-                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
+                        fontSize={[
+                            "12px",
+                            "12px",
+                            "14px",
+                            "14px",
+                            "14px",
+                            "18px"
+                        ]}
                         fontWeight="400"
                         fontFamily="Sora"
                         backgroundColor="#1d052b"
@@ -354,7 +408,14 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
+                        fontSize={[
+                            "12px",
+                            "12px",
+                            "14px",
+                            "14px",
+                            "14px",
+                            "18px"
+                        ]}
                         alignContent={"center"}
                         m="auto"
                     >
@@ -362,18 +423,53 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     </Text>
                 </Flex>
             </Flex>
-            <Heading as='h5' fontSize={['13px', '13px', '16px']} variant="modalHeader" mt={['5px', '5px', '15px']} mb='5px' fontWeight="400">
+            <Heading
+                as="h5"
+                fontSize={["13px", "13px", "16px"]}
+                variant="modalHeader"
+                mt={["5px", "5px", "15px"]}
+                mb="5px"
+                fontWeight="400"
+            >
                 SELECT PAYMENT METHOD
             </Heading>
-            <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p={["2px", "2px", "2%", "2%"]} borderRadius="10px" display="block">
-                <RadioGroup defaultValue='paypal' onChange={setWithdrawalType}>
-                    <Box color='white' w={["20%", "20%", "25%"]} display="inline-table" bg="#1D052B" mr={["2px", "2px", "10px", "10px"]} p={["5px 5px", "5px 10px", "10px 25px"]} borderRadius="10px">
-                        <Radio size='md' colorScheme='pink' defaultChecked="true" value='paypal' style={{ fontSize: "10px" }}>
+            <Flex
+                w="100%"
+                justifyContent={"space-evenly"}
+                bg="#481A7F"
+                p={["2px", "2px", "2%", "2%"]}
+                borderRadius="10px"
+                display="block"
+            >
+                <RadioGroup defaultValue="paypal" onChange={setWithdrawalType}>
+                    <Box
+                        color="white"
+                        w={["20%", "20%", "25%"]}
+                        display="inline-table"
+                        bg="#1D052B"
+                        mr={["2px", "2px", "10px", "10px"]}
+                        p={["5px 5px", "5px 10px", "10px 25px"]}
+                        borderRadius="10px"
+                    >
+                        <Radio
+                            size="md"
+                            colorScheme="pink"
+                            defaultChecked="true"
+                            value="paypal"
+                            style={{ fontSize: "10px" }}
+                        >
                             <Text
                                 display="inline-flex"
                                 color="white"
                                 fontFamily={"Sora"}
-                                fontSize={["10px", "12px", "14px", "14px", "14px", "16px"]}
+                                fontSize={[
+                                    "10px",
+                                    "12px",
+                                    "14px",
+                                    "14px",
+                                    "14px",
+                                    "16px"
+                                ]}
                                 alignContent={"center"}
                                 m="auto"
                             >
@@ -381,13 +477,28 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             </Text>
                         </Radio>
                     </Box>
-                    <Box color='white' w={["20%", "20%", "25%"]} display="inline-table" bg="#1D052B" mr={["2px", "2px", "10px", "10px"]} p={["5px 5px", "5px 10px", "10px 25px"]} borderRadius="10px" >
-                        <Radio size='md' colorScheme='pink' value='crypto'>
+                    <Box
+                        color="white"
+                        w={["20%", "20%", "25%"]}
+                        display="inline-table"
+                        bg="#1D052B"
+                        mr={["2px", "2px", "10px", "10px"]}
+                        p={["5px 5px", "5px 10px", "10px 25px"]}
+                        borderRadius="10px"
+                    >
+                        <Radio size="md" colorScheme="pink" value="crypto">
                             <Text
                                 display="inline-flex"
                                 color="white"
                                 fontFamily={"Sora"}
-                                fontSize={["10px", "12px", "14px", "14px", "14px", "16px"]}
+                                fontSize={[
+                                    "10px",
+                                    "12px",
+                                    "14px",
+                                    "14px",
+                                    "14px",
+                                    "16px"
+                                ]}
                                 alignContent={"center"}
                                 m="auto"
                             >
@@ -395,13 +506,27 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             </Text>
                         </Radio>
                     </Box>
-                    <Box color='white' w={["47%", "47%", "45%"]} display="inline-table" bg="#1D052B" p={["5px 5px", "5px 10px", "10px 25px"]} borderRadius="10px" >
-                        <Radio size='md' colorScheme='pink' value='bank'>
+                    <Box
+                        color="white"
+                        w={["47%", "47%", "45%"]}
+                        display="inline-table"
+                        bg="#1D052B"
+                        p={["5px 5px", "5px 10px", "10px 25px"]}
+                        borderRadius="10px"
+                    >
+                        <Radio size="md" colorScheme="pink" value="bank">
                             <Text
                                 display="inline-flex"
                                 color="white"
                                 fontFamily={"Sora"}
-                                fontSize={["10px", "12px", "14px", "14px", "14px", "16px"]}
+                                fontSize={[
+                                    "10px",
+                                    "12px",
+                                    "14px",
+                                    "14px",
+                                    "14px",
+                                    "16px"
+                                ]}
                                 alignContent={"center"}
                                 m="auto"
                             >
@@ -411,9 +536,16 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     </Box>
                 </RadioGroup>
             </Flex>
-            {withdrawalType == 'paypal' ? (
+            {withdrawalType == "paypal" ? (
                 <Box>
-                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" pt="4%" pb="2%" borderRadius="10px">
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        bg="#1d052b"
+                        pt="4%"
+                        pb="2%"
+                        borderRadius="10px"
+                    >
                         <Select
                             w={currentSize === "base" ? "45%" : "45%"}
                             h={["30px", "30px", "42px"]}
@@ -424,7 +556,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         >
                             {currencyoptions.map((option) => {
                                 return (
-                                    <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                    <option
+                                        minimumDeposit={option.minimumDeposit}
+                                        numberOfChips={option.numberOfChips}
+                                        value={option.currency}
+                                        style={{ background: "#1d052b" }}
+                                    >
                                         {option.currency}
                                     </option>
                                 );
@@ -458,7 +595,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         </InputGroup>
                     </Flex>
 
-                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" p="2%" borderRadius="10px">
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        bg="#1d052b"
+                        p="2%"
+                        borderRadius="10px"
+                    >
                         <InputGroup>
                             <InputLeftAddon
                                 fontSize={["11px", "13px", "17px"]}
@@ -474,7 +617,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 fontSize={["11px", "13px", "17px"]}
                                 defaultValue={email}
                                 onChange={(e) => {
-                                    setEmail(e.target.value);
+                                    emailvalidation(e);
                                 }}
                                 placeholder="Paypal registered id"
                                 borderLeft="0"
@@ -487,9 +630,16 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 <></>
             )}
 
-            {withdrawalType == 'crypto' ? (
+            {withdrawalType == "crypto" ? (
                 <Box>
-                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" pt="4%" pb="2%" borderRadius="10px">
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        bg="#1d052b"
+                        pt="4%"
+                        pb="2%"
+                        borderRadius="10px"
+                    >
                         <Select
                             w={currentSize === "base" ? "47%" : "45%"}
                             h={["30px", "30px", "42px"]}
@@ -500,9 +650,21 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 setCryptoTokens(e.target.value);
                             }}
                         >
-                            <option style={{ "background": "#1d052b" }}>Select Crypto Tokens</option>
-                            <option style={{ "background": "#1d052b" }} value="metamask">Metamask</option>
-                            <option style={{ "background": "#1d052b" }} value="coinbase">Coinbase</option>
+                            <option style={{ background: "#1d052b" }}>
+                                Select Crypto Tokens
+                            </option>
+                            <option
+                                style={{ background: "#1d052b" }}
+                                value="metamask"
+                            >
+                                Metamask
+                            </option>
+                            <option
+                                style={{ background: "#1d052b" }}
+                                value="coinbase"
+                            >
+                                Coinbase
+                            </option>
                         </Select>
                         <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
                             <InputLeftAddon
@@ -531,7 +693,14 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             ></Input>
                         </InputGroup>
                     </Flex>
-                    <Flex w="100%" justifyContent={"space-evenly"} p={["1%", "1%", "2%"]} pb="0" bg="#1d052b" borderRadius="10px">
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        p={["1%", "1%", "2%"]}
+                        pb="0"
+                        bg="#1d052b"
+                        borderRadius="10px"
+                    >
                         <Select
                             w={currentSize === "base" ? "100%" : "100%"}
                             h={["30px", "30px", "42px"]}
@@ -542,18 +711,41 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         >
                             {bitpaycurrencyoptions.map((option) => {
                                 return (
-                                    <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                    <option
+                                        minimumDeposit={option.minimumDeposit}
+                                        numberOfChips={option.numberOfChips}
+                                        value={option.currency}
+                                        style={{ background: "#1d052b" }}
+                                    >
                                         {option.currency}
                                     </option>
                                 );
                             })}
                         </Select>
                     </Flex>
-                    <Heading pl="2%" as='h5' fontSize={['13px', '13px', '16px']} variant="modalHeader" mt={['5px', '10px', '10px']} mb='5px' fontWeight="400">
+                    <Heading
+                        pl="2%"
+                        as="h5"
+                        fontSize={["13px", "13px", "16px"]}
+                        variant="modalHeader"
+                        mt={["5px", "10px", "10px"]}
+                        mb="5px"
+                        fontWeight="400"
+                    >
                         CRYPTO WALLET ADDRESS
                     </Heading>
-                    <Flex w="100%" justifyContent={"space-evenly"} p={["1%", "1%", "2%"]} pt="0%" pb="0" bg="#1d052b" borderRadius="10px">
-                        <InputGroup w={currentSize === "base" ? "100%" : "100%"}>
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        p={["1%", "1%", "2%"]}
+                        pt="0%"
+                        pb="0"
+                        bg="#1d052b"
+                        borderRadius="10px"
+                    >
+                        <InputGroup
+                            w={currentSize === "base" ? "100%" : "100%"}
+                        >
                             <Input
                                 w={currentSize === "base" ? "100%" : "100%"}
                                 color="white"
@@ -572,9 +764,16 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 <></>
             )}
 
-            {withdrawalType == 'bank' ? (
+            {withdrawalType == "bank" ? (
                 <Box>
-                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" pt="10px" pb="5px" borderRadius="10px">
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        bg="#1d052b"
+                        pt="10px"
+                        pb="5px"
+                        borderRadius="10px"
+                    >
                         <Select
                             w={currentSize === "base" ? "47%" : "45%"}
                             h={["30px", "30px", "42px"]}
@@ -585,7 +784,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         >
                             {currencyoptions.map((option) => {
                                 return (
-                                    <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                    <option
+                                        minimumDeposit={option.minimumDeposit}
+                                        numberOfChips={option.numberOfChips}
+                                        value={option.currency}
+                                        style={{ background: "#1d052b" }}
+                                    >
                                         {option.currency}
                                     </option>
                                 );
@@ -619,7 +823,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         </InputGroup>
                     </Flex>
 
-                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" p="2px 2%" borderRadius="10px">
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        bg="#1d052b"
+                        p="2px 2%"
+                        borderRadius="10px"
+                    >
                         <InputGroup>
                             <InputLeftAddon
                                 fontSize={["10px", "13px", "18px"]}
@@ -643,7 +853,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             ></Input>
                         </InputGroup>
                     </Flex>
-                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" p="2px 2%" borderRadius="10px">
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        bg="#1d052b"
+                        p="2px 2%"
+                        borderRadius="10px"
+                    >
                         <InputGroup>
                             <InputLeftAddon
                                 fontSize={["10px", "13px", "18px"]}
@@ -667,7 +883,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             ></Input>
                         </InputGroup>
                     </Flex>
-                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" p="2px 2%" borderRadius="10px">
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        bg="#1d052b"
+                        p="2px 2%"
+                        borderRadius="10px"
+                    >
                         <InputGroup>
                             <InputLeftAddon
                                 fontSize={["10px", "13px", "18px"]}
@@ -691,7 +913,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             ></Input>
                         </InputGroup>
                     </Flex>
-                    <Flex w="100%" justifyContent={"space-evenly"} bg="#1d052b" p="2px 2%" borderRadius="10px">
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        bg="#1d052b"
+                        p="2px 2%"
+                        borderRadius="10px"
+                    >
                         <InputGroup>
                             <InputLeftAddon
                                 fontSize={["10px", "13px", "18px"]}
@@ -715,11 +943,29 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             ></Input>
                         </InputGroup>
                     </Flex>
-                    <Heading pl="2%" as='h5' fontSize={['13px', '13px', '16px']} variant="modalHeader" mt='5px' mb='5px' fontWeight="400">
+                    <Heading
+                        pl="2%"
+                        as="h5"
+                        fontSize={["13px", "13px", "16px"]}
+                        variant="modalHeader"
+                        mt="5px"
+                        mb="5px"
+                        fontWeight="400"
+                    >
                         Bank Address
                     </Heading>
-                    <Flex w="100%" justifyContent={"space-evenly"} p="2%" pt="0%" pb="0" bg="#1d052b" borderRadius="10px">
-                        <InputGroup w={currentSize === "base" ? "100%" : "100%"}>
+                    <Flex
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        p="2%"
+                        pt="0%"
+                        pb="0"
+                        bg="#1d052b"
+                        borderRadius="10px"
+                    >
+                        <InputGroup
+                            w={currentSize === "base" ? "100%" : "100%"}
+                        >
                             <Input
                                 w={currentSize === "base" ? "100%" : "100%"}
                                 color="white"
@@ -760,7 +1006,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 onClick={(e) => {
                                     e.preventDefault();
                                     window.open(
-                                        process.env.NEXT_PUBLIC_WORDPRESS_URL + "/terms-conditions#payment",
+                                        process.env.NEXT_PUBLIC_WORDPRESS_URL +
+                                            "/terms-conditions#payment",
                                         "_blank"
                                     );
                                 }}
@@ -773,8 +1020,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 </Flex>
                 <Button
                     w="100%"
-                    fontSize={['16px', '22px']}
-                    p={['20px 30px', '25px 40px']}
+                    fontSize={["16px", "22px"]}
+                    p={["20px 30px", "25px 40px"]}
                     mt={["2%", "1%", "1%", "1%", "1%", "3%"]}
                     disabled={!accepted}
                     onClick={() => {
@@ -784,10 +1031,6 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     {isDeposit ? "PROCEED" : "PROCEED"}
                 </Button>
             </Box>
-
-
-
-
 
             <LMNonCloseALert
                 header={"Transaction!!!"}
