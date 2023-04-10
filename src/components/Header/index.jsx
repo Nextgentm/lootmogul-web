@@ -112,7 +112,8 @@ const Header = () => {
     if (typeof window !== "undefined") {
         const jwt_token = window.localStorage?.getItem("strapi_jwt");
         if(jwt_token !== null){
-            paramsLogin = "?jwt=" +jwt_token;
+            paramsLogin = '';
+            //paramsLogin = "?jwt=" +jwt_token;
         }
         else{
             paramsLogin = '';
