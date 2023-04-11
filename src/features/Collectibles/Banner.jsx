@@ -16,18 +16,18 @@ const Banner = ({ banner, isSubPage }) => {
                                 fontSize={[
                                     "70px",
                                     "70px",
-                                    "100px",
+                                    "85px",
                                 ]}
                                 fontFamily="var(--chakra-fonts-Blanch)"
                                 lineHeight="1"
                                 variant="headText"
                                 textShadow="unset"
                             >
-                                Discover, Buy, & Trade <br />
-                                Digital Collectibles <br />
-                                Of Your Favorite Sportstar
+                                DISCOVER, BUY, TRADE<br/>
+                                and unlock the sports star digital collectibles that offer<br />
+                                real-life benefits and utilities. 
                             </Text>
-
+                             
                             <Text
                                 color="white"
                                 fontSize={[
@@ -41,7 +41,7 @@ const Banner = ({ banner, isSubPage }) => {
                                 mt="1rem"
                                 width={"90%"}
                             >
-                                Unlock rare digital assets of inspiring sports star with true in real-life utilities
+                                Get your hands on exclusive limited-edition digital collectibles of your favorite sports star! 
                             </Text>
                         </Box>
                         <Box
