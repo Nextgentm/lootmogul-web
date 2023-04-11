@@ -13,7 +13,8 @@ import {
     Heading,
     Tooltip,
     RadioGroup,
-    Radio
+    Radio,
+    Image
 } from "@chakra-ui/react";
 import { InfoIcon } from "../../Icons";
 import strapi from "../../../utils/strapi";
@@ -331,18 +332,21 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 as="h5"
                 fontSize={["13px", "13px", "16px"]}
                 variant="modalHeader"
-                mt='{["0px","px","5px","15px"]}'
+                mt='{["0px","px","5px","5px"]}'
                 mb="5px"
                 fontWeight="400"
             >
                 SELECT NUMBER OF CHIPS
+                <Text pl="4px" fontSize='xs' color="white" fontFamily={"Sora"} fontWeight="400" display="inline-block">
+                    (Min Chips: {numberOfChips} CHIPS)
+                </Text>
             </Heading>
             <Flex
                 direction={"column"}
                 w="100%"
                 justifyContent={"space-evenly"}
                 bg="#481A7F"
-                p={["5px", "5px", "2%", "2%"]}
+                p={["5px", "5px", "1%", "1%"]}
                 borderRadius="10px"
             >
                 <Flex>
@@ -361,10 +365,10 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         alignContent={"center"}
                         m="auto"
                     >
-                        CHIP
+                        CHIPS
                         <Tooltip
                             placement="top-start"
-                            label="Enter number of chip, Based on total chip showing equivalent amount."
+                            label="Enter number of chips, Based on total chips showing equivalent amount."
                             bg="#383838"
                             borderRadius="10px"
                             color="white"
@@ -427,7 +431,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 as="h5"
                 fontSize={["13px", "13px", "16px"]}
                 variant="modalHeader"
-                mt={["5px", "5px", "15px"]}
+                mt={["5px", "5px", "8px"]}
                 mb="5px"
                 fontWeight="400"
             >
@@ -437,7 +441,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 w="100%"
                 justifyContent={"space-evenly"}
                 bg="#481A7F"
-                p={["2px", "2px", "2%", "2%"]}
+                p={["2px", "2px", "1%", "1%"]}
                 borderRadius="10px"
                 display="block"
             >
@@ -542,7 +546,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         w="100%"
                         justifyContent={"space-evenly"}
                         bg="#1d052b"
-                        pt="4%"
+                        pt={["4%", "4%", "4%"]}
                         pb="2%"
                         borderRadius="10px"
                     >
@@ -610,7 +614,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 h={["30px", "30px", "42px"]}
                                 color="#fff"
                             >
-                                Paypal registered id
+                                Send money
                             </InputLeftAddon>
                             <Input
                                 color="white"
@@ -619,7 +623,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 onChange={(e) => {
                                     emailvalidation(e);
                                 }}
-                                placeholder="Paypal registered id"
+                                placeholder="@username, email or mobile"
                                 borderLeft="0"
                                 h={["30px", "30px", "42px"]}
                             ></Input>
@@ -636,12 +640,13 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         w="100%"
                         justifyContent={"space-evenly"}
                         bg="#1d052b"
-                        pt="4%"
-                        pb="2%"
+                        pt={["4%", "4%", "2%"]}
+                        pb={["1%", "1%", "1%"]}
                         borderRadius="10px"
                     >
                         <Select
-                            w={currentSize === "base" ? "47%" : "45%"}
+                            w={currentSize === "base" ? "47%" : "47%"}
+                            mr={["2%", "2%", "2%"]}
                             h={["30px", "30px", "42px"]}
                             color="white"
                             fontSize={["11px", "13px", "18px"]}
@@ -696,7 +701,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     <Flex
                         w="100%"
                         justifyContent={"space-evenly"}
-                        p={["1%", "1%", "2%"]}
+                        p={["1%", "1%", "0.5%"]}
                         pb="0"
                         bg="#1d052b"
                         borderRadius="10px"
@@ -724,12 +729,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         </Select>
                     </Flex>
                     <Heading
-                        pl="2%"
+                        pl="1%"
                         as="h5"
                         fontSize={["13px", "13px", "16px"]}
                         variant="modalHeader"
                         mt={["5px", "10px", "10px"]}
-                        mb="5px"
+                        mb="0px"
                         fontWeight="400"
                     >
                         CRYPTO WALLET ADDRESS
@@ -737,7 +742,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     <Flex
                         w="100%"
                         justifyContent={"space-evenly"}
-                        p={["1%", "1%", "2%"]}
+                        p={["1%", "1%", "1%"]}
                         pt="0%"
                         pb="0"
                         bg="#1d052b"
@@ -775,8 +780,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         borderRadius="10px"
                     >
                         <Select
-                            w={currentSize === "base" ? "47%" : "45%"}
-                            h={["30px", "30px", "42px"]}
+                            w={currentSize === "base" ? "47%" : "47%"}
+                            h={["30px", "30px", "38px"]}
                             color="white"
                             backgroundColor="#1d052b"
                             value={currency}
@@ -798,12 +803,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
                             <InputLeftAddon
                                 w={["48%", "50%"]}
-                                fontSize={["13px", "17px"]}
+                                fontSize={["13px", "16px"]}
                                 fontWeight="600"
                                 bg="#39106A"
                                 color="#fff"
                                 pr="15px"
-                                h={["30px", "30px", "42px"]}
+                                h={["30px", "30px", "38px"]}
                             >
                                 Amount
                             </InputLeftAddon>
@@ -818,7 +823,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 }}
                                 placeholder="Amount"
                                 borderLeft="0"
-                                h={["30px", "30px", "42px"]}
+                                h={["30px", "30px", "38px"]}
                             ></Input>
                         </InputGroup>
                     </Flex>
@@ -827,17 +832,17 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         w="100%"
                         justifyContent={"space-evenly"}
                         bg="#1d052b"
-                        p="2px 2%"
+                        p="2px 1%"
                         borderRadius="10px"
                     >
                         <InputGroup>
                             <InputLeftAddon
-                                fontSize={["10px", "13px", "18px"]}
+                                fontSize={["10px", "13px", "16px"]}
                                 fontWeight="600"
                                 bg="#39106A"
                                 color="#fff"
                                 w={["48%", "50%"]}
-                                h={["30px", "30px", "42px"]}
+                                h={["30px", "30px", "38px"]}
                             >
                                 Beneficiary name
                             </InputLeftAddon>
@@ -845,8 +850,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 color="white"
                                 placeholder="Beneficiary name"
                                 borderLeft="0"
-                                h={["30px", "30px", "42px"]}
-                                fontSize={["10px", "13px", "18px"]}
+                                h={["30px", "30px", "38px"]}
+                                fontSize={["10px", "13px", "16px"]}
                                 onChange={(e) => {
                                     setBeneficiaryName(e.target.value);
                                 }}
@@ -857,17 +862,17 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         w="100%"
                         justifyContent={"space-evenly"}
                         bg="#1d052b"
-                        p="2px 2%"
+                        p="2px 1%"
                         borderRadius="10px"
                     >
                         <InputGroup>
                             <InputLeftAddon
-                                fontSize={["10px", "13px", "18px"]}
+                                fontSize={["10px", "13px", "16px"]}
                                 fontWeight="600"
                                 bg="#39106A"
                                 color="#fff"
                                 w={["48%", "50%"]}
-                                h={["30px", "30px", "42px"]}
+                                h={["30px", "30px", "38px"]}
                             >
                                 IBN or Account number
                             </InputLeftAddon>
@@ -875,8 +880,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 color="white"
                                 placeholder="IBN or Account number"
                                 borderLeft="0"
-                                h={["30px", "30px", "42px"]}
-                                fontSize={["10px", "13px", "18px"]}
+                                h={["30px", "30px", "38px"]}
+                                fontSize={["10px", "13px", "16px"]}
                                 onChange={(e) => {
                                     setAccountNumber(e.target.value);
                                 }}
@@ -887,17 +892,17 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         w="100%"
                         justifyContent={"space-evenly"}
                         bg="#1d052b"
-                        p="2px 2%"
+                        p="2px 1%"
                         borderRadius="10px"
                     >
                         <InputGroup>
                             <InputLeftAddon
-                                fontSize={["10px", "13px", "18px"]}
+                                fontSize={["10px", "13px", "16px"]}
                                 fontWeight="600"
                                 bg="#39106A"
                                 color="#fff"
                                 w={["48%", "50%"]}
-                                h={["30px", "30px", "42px"]}
+                                h={["30px", "30px", "38px"]}
                             >
                                 BIC or SWIFT Code
                             </InputLeftAddon>
@@ -905,8 +910,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 color="white"
                                 placeholder="BIC or SWIFT Code"
                                 borderLeft="0"
-                                h={["30px", "30px", "42px"]}
-                                fontSize={["10px", "13px", "18px"]}
+                                h={["30px", "30px", "38px"]}
+                                fontSize={["10px", "13px", "16px"]}
                                 onChange={(e) => {
                                     setSwiftCode(e.target.value);
                                 }}
@@ -917,17 +922,17 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         w="100%"
                         justifyContent={"space-evenly"}
                         bg="#1d052b"
-                        p="2px 2%"
+                        p="2px 1%"
                         borderRadius="10px"
                     >
                         <InputGroup>
                             <InputLeftAddon
-                                fontSize={["10px", "13px", "18px"]}
+                                fontSize={["10px", "13px", "16px"]}
                                 fontWeight="600"
                                 bg="#39106A"
                                 color="#fff"
                                 w={["48%", "50%"]}
-                                h={["30px", "30px", "42px"]}
+                                h={["30px", "30px", "38px"]}
                             >
                                 Bank name
                             </InputLeftAddon>
@@ -935,8 +940,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 color="white"
                                 placeholder="Bank name"
                                 borderLeft="0"
-                                h={["30px", "30px", "42px"]}
-                                fontSize={["10px", "13px", "18px"]}
+                                h={["30px", "30px", "38px"]}
+                                fontSize={["10px", "13px", "16px"]}
                                 onChange={(e) => {
                                     setBankName(e.target.value);
                                 }}
@@ -944,7 +949,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         </InputGroup>
                     </Flex>
                     <Heading
-                        pl="2%"
+                        pl="1%"
                         as="h5"
                         fontSize={["13px", "13px", "16px"]}
                         variant="modalHeader"
@@ -957,7 +962,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                     <Flex
                         w="100%"
                         justifyContent={"space-evenly"}
-                        p="2%"
+                        p="1%"
                         pt="0%"
                         pb="0"
                         bg="#1d052b"
@@ -971,8 +976,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 color="white"
                                 bg="#1d052b"
                                 placeholder="Bank Address"
-                                fontSize={["13px", "18px"]}
-                                h={["30px", "30px", "42px"]}
+                                fontSize={["13px", "16px"]}
+                                h={["30px", "30px", "38px"]}
                                 onChange={(e) => {
                                     setBankAddress(e.target.value);
                                 }}
@@ -984,25 +989,27 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 <></>
             )}
             <Box bg="#1d052b">
-                <Flex mt={["1%", "1%", "3%"]} w="100%" textAlign="center">
+                <Flex mt={["1%", "1%", "1%"]} w="100%" textAlign="center" verticalAlign="baseline">
                     <Checkbox
                         w="100%"
                         onChange={(e) => setAccepted(e.target.checked)}
                         textAlign="center"
                         display="block"
-                        mt={["5px", "5px", "15px"]}
+                        mt={["5px", "5px", "5px"]}
+                        verticalAlign="baseline"
                     >
                         <Text
                             display="inline-flex"
                             color="white"
                             fontFamily={"Sora"}
-                            fontSize={["12px", "12px", "16px"]}
+                            fontSize={["12px", "12px", "14px"]}
+                            verticalAlign="super"
                         >
                             I hereby accept the{" "}
                             <Text
                                 color="primary"
                                 fontFamily={"Sora"}
-                                fontSize={["12px", "12px", "16px"]}
+                                fontSize={["12px", "12px", "14px"]}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     window.open(
@@ -1021,8 +1028,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 <Button
                     w="100%"
                     fontSize={["16px", "22px"]}
-                    p={["20px 30px", "25px 40px"]}
-                    mt={["2%", "1%", "1%", "1%", "1%", "3%"]}
+                    p={["20px 30px", "22px 40px"]}
+                    mt={["2%", "1%", "1%", "0%", "0%", "1%"]}
                     disabled={!accepted}
                     onClick={() => {
                         checkValidity();
