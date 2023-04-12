@@ -95,7 +95,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         if (isValidEmail == true) {
             setEmail(e.target.value);
         } else {
-            setEmail("");
+            setAccount(e.target.value);
         }
     };
 
@@ -110,12 +110,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         if (withdrawalType === "paypal") {
             if (amount) {
                 if (amount >= 34) {
-                    if (!email)
-                        setAlertShow({
-                            isOpen: true,
-                            msg: "Enter Valid Paypal registered id"
-                        });
-                    else withdraw();
+                    if (!account || !email)
+                        withdraw();
+                    else setAlertShow({
+                        isOpen: true,
+                        msg: "Enter Valid Paypal registered id"
+                    });
                 } else
                     setAlertShow({
                         isOpen: true,
@@ -619,7 +619,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                             <Input
                                 color="white"
                                 fontSize={["11px", "13px", "17px"]}
-                                defaultValue={email}
+                                defaultValue={email || account}
                                 onChange={(e) => {
                                     emailvalidation(e);
                                 }}
@@ -1014,7 +1014,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                     e.preventDefault();
                                     window.open(
                                         process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                                            "/terms-conditions#payment",
+                                        "/terms-conditions#payment",
                                         "_blank"
                                     );
                                 }}
