@@ -71,7 +71,7 @@ const TabDepositPanel = ({ isDeposit }) => {
     useEffect(() => {
         async function fetchData() {
             // Fetch data   
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false`);
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false&sort=order`);
             const results = []
                         // Store results in the results array
             var defaultCurrencyValue;
@@ -99,7 +99,7 @@ const TabDepositPanel = ({ isDeposit }) => {
     useEffect(() => {
         async function fetchData() {
             // Fetch data
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true`);
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true&sort=order`);
             const results_bitpay = []
             // Store results in the results array
 
