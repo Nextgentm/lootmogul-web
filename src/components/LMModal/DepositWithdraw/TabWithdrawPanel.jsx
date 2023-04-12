@@ -111,11 +111,11 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             if (amount) {
                 if (amount >= 34) {
                     if (!account || !email)
-                        setAlertShow({
-                            isOpen: true,
-                            msg: "Enter Valid Paypal registered id"
-                        });
-                    else withdraw();
+                        withdraw();
+                    else setAlertShow({
+                        isOpen: true,
+                        msg: "Enter Valid Paypal registered id"
+                    });
                 } else
                     setAlertShow({
                         isOpen: true,
@@ -621,7 +621,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 fontSize={["11px", "13px", "17px"]}
                                 defaultValue={email || account}
                                 onChange={(e) => {
-                                    emailvalidation(e.target.value);
+                                    emailvalidation(e);
                                 }}
                                 placeholder="@username, email or mobile"
                                 borderLeft="0"
