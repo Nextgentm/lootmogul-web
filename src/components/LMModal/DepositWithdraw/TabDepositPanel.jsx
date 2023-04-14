@@ -87,6 +87,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
                     numberOfChips: value.numberOfChips,
+                    logo:value.logo
                 });
             });
 
@@ -113,6 +114,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     currency: value.currency,
                     minimumDeposit: value.cryptoMinimumDeposit,
                     numberOfChips: value.numberOfChips,
+                    logo:value.logo
                 });
             });
             
@@ -338,7 +340,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     return (
                         // eslint-disable-next-line react/no-unknown-property
                         <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
-                            {option.currency}
+                            {option.currency} ( {option.logo} )
                         </option>
                     );
                 })}
@@ -356,7 +358,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     return (
                         // eslint-disable-next-line react/no-unknown-property
                         <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
-                            {option.currency}
+                            {option.currency} ( {option.logo} )
                         </option>
                     );
                 })}
