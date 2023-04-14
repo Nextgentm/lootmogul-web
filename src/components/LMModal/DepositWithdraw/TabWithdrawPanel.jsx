@@ -569,7 +569,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                         value={option.currency}
                                         style={{ background: "#1d052b" }}
                                     >
-                                        {option.currency}
+                                        {option.currency} ( {option.logo} )
                                     </option>
                                 );
                             })}
@@ -725,7 +725,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                         value={option.currency}
                                         style={{ background: "#1d052b" }}
                                     >
-                                        {option.currency}
+                                        {option.currency} ( {option.logo} ) 
                                     </option>
                                 );
                             })}
