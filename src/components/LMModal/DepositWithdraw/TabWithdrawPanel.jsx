@@ -14,7 +14,7 @@ import {
     Tooltip,
     RadioGroup,
     Radio,
-    Image
+    Icon
 } from "@chakra-ui/react";
 import { InfoIcon } from "../../Icons";
 import strapi from "../../../utils/strapi";
@@ -95,7 +95,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         if (isValidEmail == true) {
             setEmail(e.target.value);
         } else {
-            setEmail("");
+            setAccount(e.target.value);
         }
     };
 
@@ -110,12 +110,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         if (withdrawalType === "paypal") {
             if (amount) {
                 if (amount >= 34) {
-                    if (!email)
-                        setAlertShow({
-                            isOpen: true,
-                            msg: "Enter Valid Paypal registered id"
-                        });
-                    else withdraw();
+                    if (!account || !email)
+                        withdraw();
+                    else setAlertShow({
+                        isOpen: true,
+                        msg: "Enter Valid Paypal registered id"
+                    });
                 } else
                     setAlertShow({
                         isOpen: true,
@@ -195,7 +195,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         async function fetchData() {
             // Fetch data
             const { data } = await axios.get(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false`
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false&sort=order`
             );
             const results = [];
             // Store results in the results array
@@ -211,7 +211,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 results.push({
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
-                    numberOfChips: value.numberOfChips
+                    numberOfChips: value.numberOfChips,
+                    logo:value.logo
                 });
             });
             /*jsondata.forEach((jsonValue) => {
@@ -232,7 +233,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         async function fetchData() {
             // Fetch data
             const { data } = await axios.get(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true`
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true&sort=order`
             );
             const results_bitpay = [];
             // Store results in the results array
@@ -246,7 +247,8 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 results_bitpay.push({
                     currency: value.currency,
                     minimumDeposit: value.cryptoMinimumDeposit,
-                    numberOfChips: value.numberOfChips
+                    numberOfChips: value.numberOfChips,
+                    logo:value.logo
                 });
             });
             /* await fetch('https://test.bitpay.com/currencies')
@@ -550,6 +552,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         pb="2%"
                         borderRadius="10px"
                     >
+
                         <Select
                             w={currentSize === "base" ? "45%" : "45%"}
                             h={["30px", "30px", "42px"]}
@@ -566,7 +569,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                         value={option.currency}
                                         style={{ background: "#1d052b" }}
                                     >
-                                        {option.currency}
+                                        {option.currency} ({option.logo})
                                     </option>
                                 );
                             })}
@@ -614,12 +617,12 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                 h={["30px", "30px", "42px"]}
                                 color="#fff"
                             >
-                                Send money
+                                Paypal Detail
                             </InputLeftAddon>
                             <Input
                                 color="white"
                                 fontSize={["11px", "13px", "17px"]}
-                                defaultValue={email}
+                                defaultValue={email || account}
                                 onChange={(e) => {
                                     emailvalidation(e);
                                 }}
@@ -722,7 +725,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                         value={option.currency}
                                         style={{ background: "#1d052b" }}
                                     >
-                                        {option.currency}
+                                        {option.currency} ({option.logo}) 
                                     </option>
                                 );
                             })}
@@ -795,7 +798,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                         value={option.currency}
                                         style={{ background: "#1d052b" }}
                                     >
-                                        {option.currency}
+                                        {option.currency} ({option.logo})
                                     </option>
                                 );
                             })}
@@ -1014,7 +1017,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                     e.preventDefault();
                                     window.open(
                                         process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                                            "/terms-conditions#payment",
+                                        "/terms-conditions#payment",
                                         "_blank"
                                     );
                                 }}
