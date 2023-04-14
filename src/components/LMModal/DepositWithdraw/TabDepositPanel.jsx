@@ -340,7 +340,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     return (
                         // eslint-disable-next-line react/no-unknown-property
                         <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
-                            {option.currency} ( {option.logo} )
+                            {option.currency} ({option.logo})
                         </option>
                     );
                 })}
@@ -358,7 +358,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     return (
                         // eslint-disable-next-line react/no-unknown-property
                         <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
-                            {option.currency} ( {option.logo} )
+                            {option.currency} ({option.logo})
                         </option>
                     );
                 })}
