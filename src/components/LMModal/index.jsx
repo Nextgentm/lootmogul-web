@@ -10,8 +10,10 @@ import {
     Heading,
     Image
 } from "@chakra-ui/react";
+import { memo } from "react";
 
-const LMModal = ({
+// eslint-disable-next-line react/display-name
+const LMModal = memo(({
     isShow,
     handleClose,
     headerText,
@@ -37,8 +39,8 @@ const LMModal = ({
             <ModalOverlay />
             <ModalContent
                 minW={
-                    mode === "add" || mode === "deposit"|| mode ==="sub"
-                        ? ["375px","400px", "760px"]
+                    mode === "add" || mode === "deposit" || mode === "sub"
+                        ? ["375px", "400px", "760px"]
                         : ""
                 }
                 style={style}
@@ -56,6 +58,6 @@ const LMModal = ({
             </ModalContent>
         </Modal>
     );
-};
+});
 
 export default LMModal;

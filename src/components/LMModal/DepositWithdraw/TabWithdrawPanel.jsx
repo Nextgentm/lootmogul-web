@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef, useContext, memo } from "react";
 import {
     Flex,
     Input,
@@ -23,8 +23,12 @@ import { useBreakpointValue } from "@chakra-ui/react";
 import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import axios from "axios";
 import jsondata from "../../../../public/assets/paypal-currency.json";
+import MyPageLoader from "../../MyPageLoader";
+import { GridLoader } from "react-spinners";
+import { isNumber } from "../../../utils/utils";
 
-const TabWithdrawPanel = ({ data, isDeposit }) => {
+// eslint-disable-next-line react/display-name
+const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     const ref = useRef();
     const [amount, setAmount] = useState(0);
     const [email, setEmail] = useState(null);
@@ -40,7 +44,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     const [cryptoType, setCryptoType] = useState("Bitcoin");
 
     const [userBal, setuserBal] = useState({});
-    const { user, updateUser } = useContext(AppContext);
+    const { user, updateUser, currencyToChip, getCurrencyToChip } = useContext(AppContext);
     const [currency, setCurrency] = useState("USD");
     const [minimumDeposit, setMinimumDeposit] = useState(5);
     const [numberOfChips, setNumberOfChips] = useState(35);
@@ -64,7 +68,22 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
     const [defaultCrytoChip, SetDefaultCrytoChip] = useState([]);
     const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState([]);
 
+    const [loading, setLoading] = useState(true);
+
+    console.log("loading", loading)
     useEffect(() => {
+        if (!currencyToChip?.length) {
+            setLoading(true)
+            getCurrencyToChip()
+        }
+    }, [])
+    useEffect(() => {
+        if (currencyToChip?.length)
+            setCurrencyRecord(currencyToChip)
+    }, [currencyToChip])
+
+    useEffect(() => {
+        console.log("useeffect 1 ")
         if (user) {
             setuserBal({
                 deposit: user?.wallets?.find(
@@ -78,12 +97,79 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
             });
         }
     }, [user]);
+
     useEffect(() => {
+        console.log("useeffect 2 ")
         if (data) {
-            if (data.type === "cash") setCashOption(["USD"]);
-            else setCashOption(["Bitcoin", "Ethereum", "Dogecoin"]);
+            if (data.type === "cash") {
+                setCashOption(["USD"]);
+            }
+            else {
+                setCashOption(["Bitcoin", "Ethereum", "Dogecoin"]);
+            }
         }
     }, [data]);
+
+    useEffect(() => {
+
+        if (withdrawalType == "crypto") {
+            setCurrency("BTC");
+            setMinimumDeposit(defaultCrytoAmount);
+            setNumberOfChips(defaultCrytoChip);
+            if (amount) {
+                let numberOfAmount =
+                    Number(defaultCrytoChip) / Number(defaultCrytoAmount);
+                setNumberOfAmount((amount / numberOfAmount).toFixed(6));
+            }
+        }
+        if (withdrawalType == "paypal" || withdrawalType == "bank") {
+            setCurrency("USD");
+            setMinimumDeposit(defaultFiatAmount);
+            setNumberOfChips(defaultFiatChip);
+            if (amount) {
+                let numberOfAmount =
+                    Number(defaultFiatChip) / Number(defaultFiatAmount);
+                setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+            }
+        }
+    }, [withdrawalType]);
+
+    const setCurrencyRecord = (data) => {
+        console.log("jwt-=-=-=-=-", data)
+        const results = [];
+        const results_bitpay = [];
+        // Store results in the results array
+        data.forEach((value) => {
+            if (!value.isCrypto) {
+                if (value.currency === "USD") {
+                    SetDefaultFiatChip(value.numberOfChips);
+                    SetDefaultFiatAmount(value.minimumDeposit);
+
+                    setMinimumDeposit(value.minimumDeposit);
+                    setNumberOfChips(value.numberOfChips);
+                }
+                results.push({
+                    currency: value.currency,
+                    minimumDeposit: value.minimumDeposit,
+                    numberOfChips: value.numberOfChips
+                });
+            }
+            else {
+                if (value.currency === "Bitcoin") {
+                    SetDefaultCrytoChip(value.numberOfChips);
+                    SetDefaultCrytoAmount(value.cryptoMinimumDeposit);
+                }
+                results_bitpay.push({
+                    currency: value.currency,
+                    minimumDeposit: value.cryptoMinimumDeposit,
+                    numberOfChips: value.numberOfChips
+                });
+            }
+        });
+        setCurrencyOptions(results);
+        setBitpayCurrencyOptions(results_bitpay);
+        setLoading(false)
+    }
 
     const emailvalidation = (e) => {
         const emailRegex = new RegExp(
@@ -195,7 +281,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
         async function fetchData() {
             // Fetch data
             const { data } = await axios.get(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false&sort=order`
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false`
             );
             const results = [];
             // Store results in the results array
@@ -294,99 +380,88 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
 
         //setNumberOfAmount((amount / numberOfAmount).toFixed(6));
     };
-    const setTotalAmount = (addedAmount) => {
+    const setTotalAmount = async (addedAmount) => {
+        console.log("addedAmount-=-=-", addedAmount);
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
         if (currency == "BTC" || currency == "ETH") {
-            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(6));
+            await setNumberOfAmount(Number(addedAmount / numberOfAmount).toFixed(6));
         } else {
-            setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
+            await setNumberOfAmount(Number(addedAmount / numberOfAmount).toFixed(2));
         }
 
         setAmount(addedAmount);
     };
 
-    useEffect(() => {
-        if (withdrawalType == "crypto") {
-            setCurrency("BTC");
-            setMinimumDeposit(defaultCrytoAmount);
-            setNumberOfChips(defaultCrytoChip);
-            if (amount) {
-                let numberOfAmount =
-                    Number(defaultCrytoChip) / Number(defaultCrytoAmount);
-                setNumberOfAmount((amount / numberOfAmount).toFixed(6));
-            }
-        }
-        if (withdrawalType == "paypal" || withdrawalType == "bank") {
-            setCurrency("USD");
-            setMinimumDeposit(defaultFiatAmount);
-            setNumberOfChips(defaultFiatChip);
-            if (amount) {
-                let numberOfAmount =
-                    Number(defaultFiatChip) / Number(defaultFiatAmount);
-                setNumberOfAmount((amount / numberOfAmount).toFixed(2));
-            }
-        }
-    }, [withdrawalType]);
 
     return (
         <Flex h="100%" w="100%" direction={"column"}>
-            <Heading
-                as="h5"
-                fontSize={["13px", "13px", "16px"]}
-                variant="modalHeader"
-                mt='{["0px","px","5px","5px"]}'
-                mb="5px"
-                fontWeight="400"
-            >
-                SELECT NUMBER OF CHIPS
-                <Text pl="4px" fontSize='xs' color="white" fontFamily={"Sora"} fontWeight="400" display="inline-block">
-                    (Min Chips: {numberOfChips} CHIPS)
-                </Text>
-            </Heading>
-            <Flex
-                direction={"column"}
-                w="100%"
-                justifyContent={"space-evenly"}
-                bg="#481A7F"
-                p={["5px", "5px", "1%", "1%"]}
-                borderRadius="10px"
-            >
-                <Flex>
-                    <Text
-                        display="inline-flex"
-                        color="white"
-                        fontFamily={"Sora"}
-                        fontSize={[
-                            "12px",
-                            "12px",
-                            "13px",
-                            "13px",
-                            "14px",
-                            "18px"
-                        ]}
-                        alignContent={"center"}
-                        m="auto"
+            {loading ?
+                <Flex h="100%"  direction={"column"} justifyContent={'center'} alignItems={'center'}>
+                    <GridLoader
+                        color={"#DDBF79"}
+                        loading={true}
+                        width={100}
+                        size={20}
+                    />
+                </Flex> :
+                <>
+                    <Heading
+                        as="h5"
+                        fontSize={["13px", "13px", "16px"]}
+                        variant="modalHeader"
+                        mt='{["0px","px","5px","5px"]}'
+                        mb="5px"
+                        fontWeight="400"
                     >
-                        CHIPS
-                        <Tooltip
-                            placement="top-start"
-                            label="Enter number of chips, Based on total chips showing equivalent amount."
-                            bg="#383838"
-                            borderRadius="10px"
-                            color="white"
-                            fontSize="sm"
-                            p="10px"
-                        >
-                            <Text>
-                                <InfoIcon
+                        SELECT NUMBER OF CHIPS
+                        <Text pl="4px" fontSize='xs' color="white" fontFamily={"Sora"} fontWeight="400" display="inline-block">
+                            (Min Chips: {numberOfChips} CHIPS)
+                        </Text>
+                    </Heading>
+                    <Flex
+                        direction={"column"}
+                        w="100%"
+                        justifyContent={"space-evenly"}
+                        bg="#481A7F"
+                        p={["5px", "5px", "1%", "1%"]}
+                        borderRadius="10px"
+                    >
+                        <Flex>
+                            <Text
+                                display="inline-flex"
+                                color="white"
+                                fontFamily={"Sora"}
+                                fontSize={[
+                                    "12px",
+                                    "12px",
+                                    "13px",
+                                    "13px",
+                                    "14px",
+                                    "18px"
+                                ]}
+                                alignContent={"center"}
+                                m="auto"
+                            >
+                                CHIPS
+                                <Tooltip
+                                    placement="top-start"
+                                    label="Enter number of chips, Based on total chips showing equivalent amount."
+                                    bg="#383838"
+                                    borderRadius="10px"
                                     color="white"
-                                    float="right"
-                                    mt="-13px!important"
-                                    boxSize={"20px"}
-                                />
+                                    fontSize="sm"
+                                    p="10px"
+                                >
+                                    <Text>
+                                        <InfoIcon
+                                            color="white"
+                                            float="right"
+                                            mt="-13px!important"
+                                            boxSize={"20px"}
+                                        />
+                                    </Text>
+                                </Tooltip>
                             </Text>
-                        </Tooltip>
-                    </Text>
 
                     <Input
                         w={currentSize === "base" ? "40%" : "40%"}
@@ -552,7 +627,6 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                         pb="2%"
                         borderRadius="10px"
                     >
-
                         <Select
                             w={currentSize === "base" ? "45%" : "45%"}
                             h={["30px", "30px", "42px"]}
@@ -725,7 +799,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                         value={option.currency}
                                         style={{ background: "#1d052b" }}
                                     >
-                                        {option.currency} ({option.logo}) 
+                                        {option.currency}  ({option.logo})
                                     </option>
                                 );
                             })}
@@ -798,7 +872,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                         value={option.currency}
                                         style={{ background: "#1d052b" }}
                                     >
-                                        {option.currency} ({option.logo})
+                                        {option.currency}  ({option.logo})
                                     </option>
                                 );
                             })}
@@ -1017,7 +1091,7 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                                     e.preventDefault();
                                     window.open(
                                         process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                                        "/terms-conditions#payment",
+                                            "/terms-conditions#payment",
                                         "_blank"
                                     );
                                 }}
@@ -1042,17 +1116,18 @@ const TabWithdrawPanel = ({ data, isDeposit }) => {
                 </Button>
             </Box>
 
-            <LMNonCloseALert
-                header={"Transaction!!!"}
-                canClose={true}
-                data={alert.msg}
-                isOpen={alert.isOpen}
-                onClose={() => {
-                    setAlertShow({ isOpen: false });
-                }}
-            />
+                    <LMNonCloseALert
+                        header={"Transaction!!!"}
+                        canClose={true}
+                        data={alert.msg}
+                        isOpen={alert.isOpen}
+                        onClose={() => {
+                            setAlertShow({ isOpen: false });
+                        }}
+                    />
+                </>}
         </Flex>
     );
-};
+});
 
 export default TabWithdrawPanel;

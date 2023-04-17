@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Box, Flex, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { WalletIcon } from "../Icons";
@@ -16,7 +16,7 @@ import DepostWithdrawstop from "../LMModal/DepositWithdraw/withdrawStop";
 const WalletPage = ({ totalAmount }) => {
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
     const router = useRouter();
-    const { amounts } = useContext(AppContext);
+    const { amounts, getCurrencyToChip, jwt } = useContext(AppContext);
     const depositData = {
         title: "Deposit",
         desc: "Total chips you have available to play with",
@@ -57,6 +57,10 @@ const WalletPage = ({ totalAmount }) => {
         });
     };
 
+    useEffect(() => {
+        if (jwt)
+            getCurrencyToChip()
+    }, [jwt])
     return (
         <Box p={["10px", "20px"]} m={["10px", "60px"]} bg="transparent linear-gradient(90deg, #070623 0%, #1F052C 100%) 0% 0% no-repeat padding-box" width={["auto", "auto"]}>
             <Flex justifyContent={"flex-start"} direction={["column", "row"]}>
@@ -163,7 +167,6 @@ const WalletPage = ({ totalAmount }) => {
             </Flex>
 
             <TransactionHistory />
-
             <LMModal
                 isShow={showModal.show}
                 scrollBehavior="outside"
