@@ -28,6 +28,7 @@ const ChangePassword = dynamic(() => import("../../features/ChangePassword"));
 const PasswordChanged = dynamic(() => import("../../features/PasswordChanged"));
 import NavDrawer from "./NavDrawer/index";
 import AutoLogout from "../AutoLogout";
+import CountDown from "./Countdown/index";
 
 const routes = [
     {
@@ -488,8 +489,8 @@ const Header = () => {
                             w={isMobileDevice ? "100%" : "20%"}
                             justify={isMobileDevice ? "left" : "unset"}
                             display={['inline-block','inline-block','flex','flex']}
-                        >
-                            <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}>Limited time Offer</Text>
+                        >   <CountDown/>
+                            
                         </Flex>
                         <Flex
                             w={isMobileDevice ? "100%" : "70%"}
@@ -506,7 +507,11 @@ const Header = () => {
                             justify={isMobileDevice ? "left" : "center"}
                             display={['inline-block','inline-block','flex','flex']}
                         >
-                            <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}><a target="_blank" href="https://lootmogul.me/republic_website">Limited time Offer. Become a Stakeholder in LootMogul! minimum investment $100.</a> <a style={{textDecoration:'underline'}} target="_blank" href="https://lootmogul.me/republic_website">Learn More</a></Text>
+                                <Box pt="10px">
+                                <CountDown/>
+                                </Box>
+                                
+                            <Text fontSize={["12px","12px","15px","15px"]} color="#fff" p={["5px","5px","15px","15px"]}><a target="_blank" href="https://lootmogul.me/republic_website"> Become a Stakeholder in LootMogul! minimum investment $100.</a> <a style={{textDecoration:'underline'}} target="_blank" href="https://lootmogul.me/republic_website">Learn More</a></Text>
                         </Flex>
                     </>   
                     }
