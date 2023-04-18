@@ -155,12 +155,12 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 });
             }
             else {
-                if (value.currency === "Bitcoin") {
+                if (value.currencyCode === "BTC") {
                     SetDefaultCrytoChip(value.numberOfChips);
                     SetDefaultCrytoAmount(value.cryptoMinimumDeposit);
                 }
                 results_bitpay.push({
-                    currency: value.currency,
+                    currency: value.currencyCode,
                     minimumDeposit: value.cryptoMinimumDeposit,
                     numberOfChips: value.numberOfChips
                 });
