@@ -55,6 +55,7 @@ export const AppContextContainer = ({ children }) => {
     const [joiningData, setJoiningData] = useState(null);
     const [isPayIsStarted, setIsPayIsStarted] = useState(false)
     const [isFromNoLocationGame, setIsFromNoLocationGame] = useState(false)
+    const [currencyToChip, setCurrencyToChip] = useState([])
 
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
@@ -683,6 +684,14 @@ export const AppContextContainer = ({ children }) => {
         }
     };
 
+    const getCurrencyToChip = async () => {
+        const { data } = await axios.get(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&pagination[pageSize]=100`
+        );
+
+        setCurrencyToChip(data.data)
+    }
+
     useEffect(async () => {
         if (router.query.jwt) {
             try {
@@ -699,12 +708,15 @@ export const AppContextContainer = ({ children }) => {
                 console.log(response.data);
                 updateUser(response.data);
                 setUser(response.data);
+                getCurrencyToChip()
             } catch (error) {
                 console.log("error occured", error);
             }
         }
         if (!router.isReady) return;
     }, [router.isReady]);
+
+
 
     return (
         <AppContext.Provider
@@ -764,7 +776,11 @@ export const AppContextContainer = ({ children }) => {
                 isPayIsStarted,
                 setIsPayIsStarted,
                 setIsFromNoLocationGame,
-                isFromNoLocationGame
+                isFromNoLocationGame,
+                getCurrencyToChip,
+                currencyToChip,
+                setCurrencyToChip
+
             }}
         >
             {children}
