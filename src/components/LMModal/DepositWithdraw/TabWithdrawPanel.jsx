@@ -203,7 +203,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         }
         if (withdrawalType === "paypal") {
             if (amount) {
-                if (amount >= 34) {
+                if (amount >= numberOfChips) {
                     if (account || email)
                         withdraw();
                     else setAlertShow({
@@ -213,12 +213,12 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 } else
                     setAlertShow({
                         isOpen: true,
-                        msg: "Withdraw more than 34 chips"
+                        msg: `Withdraw more than ${numberOfChips} chips`
                     });
             } else
                 setAlertShow({
                     isOpen: true,
-                    msg: "Withdraw more than 34 chips"
+                    msg: `Withdraw more than ${numberOfChips} chips`
                 });
         } else if (withdrawalType === "crypto") {
             if (amount) {
@@ -251,7 +251,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             } else
                 setAlertShow({
                     isOpen: true,
-                    msg: "Withdraw more than 700 chips "
+                    msg: "Withdraw more than 700 chips"
                 });
         }
     };
