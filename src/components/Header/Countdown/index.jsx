@@ -3,10 +3,10 @@ import { useTimer } from 'react-timer-hook';
 import { Text,Grid, GridItem } from '@chakra-ui/react'
 import moment from 'moment-timezone';
 
-
-var a = moment.tz("04-24-2023 23:59", "America/Los_Angeles");
+const date = new Date("04-25-2023 12:29");
+var a = moment.tz(date, "America/Los_Angeles");
 const newData = a.format(); 
-console.log(newData);
+console.log(a.format());
 function MyTimer({ expiryTimestamp }) {
     const {
       seconds,
@@ -48,7 +48,7 @@ function MyTimer({ expiryTimestamp }) {
     }
 const CountDown = ({ isOpen, onClose, renderMobileRoutes }) => {
   
-    const time = new Date(newData);
+    const time = new Date("04-25-2023 12:29");
     time.setSeconds(time.getSeconds()); // 10 minutes timer
     return (
       <div>
