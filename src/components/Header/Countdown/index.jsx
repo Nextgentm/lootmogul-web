@@ -32,7 +32,7 @@ function MyTimer({ expiryTimestamp }) {
                   <Text>{lefthours}{righthours}</Text>
                   <Text fontFamily="var(--chakra-fonts-Blanch)" lineHeight="0">Hours</Text></GridItem>
                 <GridItem w='100%' h='50' p="5px 10px" bg='#F60C67' color="#fff" verticalAlign="middle" display="inline-grid" borderRadius="5px" fontSize="18px">
-                  <Text>{leftminutes}{rightseconds}</Text>
+                  <Text>{leftminutes}{rightminutes}</Text>
                   <Text fontFamily="var(--chakra-fonts-Blanch)" lineHeight="0">Minutes</Text></GridItem>
                 <GridItem w='100%' h='50' p="5px 10px" bg='#F60C67' color="#fff" verticalAlign="middle" display="inline-grid" borderRadius="5px" fontSize="18px">
                   <Text>{leftseconds}{rightseconds}</Text>
@@ -43,7 +43,7 @@ function MyTimer({ expiryTimestamp }) {
     }
 const CountDown = ({ isOpen, onClose, renderMobileRoutes }) => {
     
-    const time = new Date('04-24-2023 11:59');
+    const time = new Date('04-24-2023 23:59');
     time.setSeconds(time.getSeconds()); // 10 minutes timer
     return (
       <div>
