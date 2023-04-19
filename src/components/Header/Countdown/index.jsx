@@ -43,7 +43,7 @@ function MyTimer({ expiryTimestamp }) {
     }
 const CountDown = ({ isOpen, onClose, renderMobileRoutes }) => {
     
-    const time = new Date('04-24-2023 11:59');
+    const time = new Date('04-24-2023 23:59');
     time.setSeconds(time.getSeconds()); // 10 minutes timer
     return (
       <div>
