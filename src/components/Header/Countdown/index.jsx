@@ -1,6 +1,16 @@
 import React from 'react';
 import { useTimer } from 'react-timer-hook';
 import { Text,Grid, GridItem } from '@chakra-ui/react'
+import moment from 'moment-timezone';
+
+//const current_time = moment.tz("04-24-2023 23:59",(new Date()).getTimezoneOffset());
+//const date = new Date("04-25-2023 12:29");
+//const a = moment.tz(date, "America/Los_Angeles");
+//const newData = a.format(); 
+var m = moment.tz("04-25-2023 6:59", "Asia/Calcutta");
+var dateLos_Angeles = m.tz("America/Los_Angeles").format();
+console.log(m.tz("America/Los_Angeles").format());
+console.log(moment.tz.guess());
 
 function MyTimer({ expiryTimestamp }) {
     const {
@@ -42,8 +52,8 @@ function MyTimer({ expiryTimestamp }) {
       );
     }
 const CountDown = ({ isOpen, onClose, renderMobileRoutes }) => {
-    
-    const time = new Date('04-24-2023 23:59');
+  
+    const time = new Date(dateLos_Angeles);
     time.setSeconds(time.getSeconds()); // 10 minutes timer
     return (
       <div>
