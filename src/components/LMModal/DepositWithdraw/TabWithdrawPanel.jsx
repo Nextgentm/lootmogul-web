@@ -63,10 +63,10 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     const [bankname, setBankName] = useState();
     const [bankaddress, setBankAddress] = useState();
 
-    const [defaultFiatChip, SetDefaultFiatChip] = useState([]);
-    const [defaultFiatAmount, SetDefaultFiatAmount] = useState([]);
-    const [defaultCrytoChip, SetDefaultCrytoChip] = useState([]);
-    const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState([]);
+    const [defaultFiatChip, SetDefaultFiatChip] = useState();
+    const [defaultFiatAmount, SetDefaultFiatAmount] = useState();
+    const [defaultCrytoChip, SetDefaultCrytoChip] = useState();
+    const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
 
     const [loading, setLoading] = useState(true);
 
@@ -115,13 +115,18 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             setCurrency("BTC");
             setMinimumDeposit(defaultCrytoAmount);
             setNumberOfChips(defaultCrytoChip);
+            console.log("defaultCrytoChip", defaultCrytoChip)
+            console.log("defaultCrytoAmount", defaultCrytoAmount)
             if (amount) {
                 let numberOfAmount =
                     Number(defaultCrytoChip) / Number(defaultCrytoAmount);
+                console.log("numberOfAmount", numberOfAmount)
+
                 setNumberOfAmount((amount / numberOfAmount).toFixed(6));
             }
         }
         if (withdrawalType == "paypal" || withdrawalType == "bank") {
+            console.log("Setting USD", withdrawalType)
             setCurrency("USD");
             setMinimumDeposit(defaultFiatAmount);
             setNumberOfChips(defaultFiatChip);
@@ -131,7 +136,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 setNumberOfAmount((amount / numberOfAmount).toFixed(2));
             }
         }
-    }, [withdrawalType]);
+    }, [withdrawalType, currencyToChip]);
 
     const setCurrencyRecord = (data) => {
         console.log("jwt-=-=-=-=-", data)
@@ -148,9 +153,11 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     setNumberOfChips(value.numberOfChips);
                 }
                 results.push({
-                    currency: value.currencyCode,
+                    currency: value.currency,
+                    currencyCode: value.currencyCode,
                     minimumDeposit: value.minimumDeposit,
-                    numberOfChips: value.numberOfChips
+                    numberOfChips: value.numberOfChips,
+                    logo: value.logo
                 });
             }
             else {
@@ -159,9 +166,11 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     SetDefaultCrytoAmount(value.cryptoMinimumDeposit);
                 }
                 results_bitpay.push({
-                    currency: value.currencyCode,
+                    currency: value.currency,
+                    currencyCode: value.currencyCode,
                     minimumDeposit: value.cryptoMinimumDeposit,
-                    numberOfChips: value.numberOfChips
+                    numberOfChips: value.numberOfChips,
+                    logo: value.logo
                 });
             }
         });
@@ -275,85 +284,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 setAlertShow({ isOpen: true, msg: error.message });
             });
     };
-
-    useEffect(() => {
-        async function fetchData() {
-            // Fetch data
-            const { data } = await axios.get(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false`
-            );
-            const results = [];
-            // Store results in the results array
-            var defaultCurrencyValue;
-            data.data.forEach((value) => {
-                if (value.currency === "USD") {
-                    SetDefaultFiatChip(value.numberOfChips);
-                    SetDefaultFiatAmount(value.minimumDeposit);
-
-                    setMinimumDeposit(value.minimumDeposit);
-                    setNumberOfChips(value.numberOfChips);
-                }
-                results.push({
-                    currency: value.currency,
-                    minimumDeposit: value.minimumDeposit,
-                    numberOfChips: value.numberOfChips,
-                    logo: value.logo
-                });
-            });
-            /*jsondata.forEach((jsonValue) => {
-                results.push({
-                    currency: jsonValue,
-                    minimumDeposit: defaultCurrencyValue.minimumDeposit,
-                    numberOfChips: defaultCurrencyValue.numberOfChips,
-                });
-            })*/
-
-            setCurrencyOptions(results);
-        }
-        // Trigger the fetch
-        fetchData();
-    }, []);
-
-    useEffect(() => {
-        async function fetchData() {
-            // Fetch data
-            const { data } = await axios.get(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true&sort=order`
-            );
-            const results_bitpay = [];
-            // Store results in the results array
-
-            var defaultCurrencyValue;
-            data.data.forEach((value) => {
-                if (value.currency === "BTC") {
-                    SetDefaultCrytoChip(value.numberOfChips);
-                    SetDefaultCrytoAmount(value.cryptoMinimumDeposit);
-                }
-                results_bitpay.push({
-                    currency: value.currency,
-                    minimumDeposit: value.cryptoMinimumDeposit,
-                    numberOfChips: value.numberOfChips,
-                    logo: value.logo
-                });
-            });
-            /* await fetch('https://test.bitpay.com/currencies')
-                .then(response => response.json())
-                .then(additionalCurrencies => {
-                    additionalCurrencies.data.forEach((jsonValue) => {
-                        results_bitpay.push({
-                            currency: jsonValue.code,
-                            minimumDeposit: defaultCurrencyValue.minimumDeposit,
-                            numberOfChips: defaultCurrencyValue.numberOfChips,
-                        });
-                    })
-                })
-            */
-            setBitpayCurrencyOptions(results_bitpay);
-        }
-        // Trigger the fetch
-        fetchData();
-    }, []);
-
     const handleChange = (e) => {
         if (withdrawalType === "paypal") {
             setCurrency(e.target.value);
@@ -368,9 +298,11 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             e.target.selectedOptions[0].getAttribute("numberOfChips")
         );
         //setTotalAmount(amount);
+        console.log("e.target.selectedOptions[0]", e.target.selectedOptions[0])
         let numberOfAmount =
             Number(e.target.selectedOptions[0].getAttribute("numberOfChips")) /
             Number(e.target.selectedOptions[0].getAttribute("minimumDeposit"));
+        console.log("numberOfAmount", numberOfAmount)
         if (currency == "BTC" || currency == "ETH") {
             setNumberOfAmount((amount / numberOfAmount).toFixed(6));
         } else {
@@ -637,7 +569,9 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                     {currencyoptions.map((option) => {
                                         return (
                                             <option
-                                                value={option.currency}
+                                                minimumDeposit={option.minimumDeposit}
+                                                numberOfChips={option.numberOfChips}
+                                                value={option.currencyCode}
                                                 style={{ background: "#1d052b" }}
                                             >
                                                 {option.currency} ({option.logo})
@@ -787,11 +721,14 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                     backgroundColor="#1d052b"
                                     fontSize={["11px", "13px", "18px"]}
                                     onChange={handleChange}
+                                    value={currency}
                                 >
                                     {bitpaycurrencyoptions.map((option) => {
                                         return (
                                             <option
-                                                value={option.currency}
+                                                minimumDeposit={option.minimumDeposit}
+                                                numberOfChips={option.numberOfChips}
+                                                value={option.currencyCode}
                                                 style={{ background: "#1d052b" }}
                                             >
                                                 {option.currency}  ({option.logo})
@@ -862,6 +799,8 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                     {currencyoptions.map((option) => {
                                         return (
                                             <option
+                                                minimumDeposit={option.minimumDeposit}
+                                                numberOfChips={option.numberOfChips}
                                                 value={option.currency}
                                                 style={{ background: "#1d052b" }}
                                             >

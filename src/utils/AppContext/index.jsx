@@ -686,7 +686,7 @@ export const AppContextContainer = ({ children }) => {
 
     const getCurrencyToChip = async () => {
         const { data } = await axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*`
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&pagination[pageSize]=100`
         );
 
         setCurrencyToChip(data.data)
