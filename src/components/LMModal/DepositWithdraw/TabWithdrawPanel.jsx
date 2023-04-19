@@ -280,7 +280,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         async function fetchData() {
             // Fetch data
             const { data } = await axios.get(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false`
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*`
             );
             const results = [];
             // Store results in the results array
