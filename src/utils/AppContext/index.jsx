@@ -708,6 +708,7 @@ export const AppContextContainer = ({ children }) => {
                 console.log(response.data);
                 updateUser(response.data);
                 setUser(response.data);
+                getCurrencyToChip()
             } catch (error) {
                 console.log("error occured", error);
             }
