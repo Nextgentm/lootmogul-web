@@ -58,8 +58,10 @@ const WalletPage = ({ totalAmount }) => {
     };
 
     useEffect(() => {
-        if (jwt)
+        if (jwt) {
+            console.log("wwwwwwww")
             getCurrencyToChip()
+        }
     }, [jwt])
     return (
         <Box p={["10px", "20px"]} m={["10px", "60px"]} bg="transparent linear-gradient(90deg, #070623 0%, #1F052C 100%) 0% 0% no-repeat padding-box" width={["auto", "auto"]}>

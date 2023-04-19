@@ -70,16 +70,15 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
 
     const [loading, setLoading] = useState(true);
 
-    console.log("loading", loading)
-    useEffect(() => {
-        if (!currencyToChip?.length) {
-            setLoading(true)
-            getCurrencyToChip()
-        }
-    }, [])
+
     useEffect(() => {
         if (currencyToChip?.length)
             setCurrencyRecord(currencyToChip)
+        else {
+            setLoading(true)
+            console.log("-=-=-=-=-=calling")
+            getCurrencyToChip()
+        }
     }, [currencyToChip])
 
     useEffect(() => {
@@ -141,7 +140,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         // Store results in the results array
         data.forEach((value) => {
             if (!value.isCrypto) {
-                if (value.currency === "USD") {
+                if (value.currencyCode === "USD") {
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
 
@@ -149,7 +148,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     setNumberOfChips(value.numberOfChips);
                 }
                 results.push({
-                    currency: value.currency,
+                    currency: value.currencyCode,
                     minimumDeposit: value.minimumDeposit,
                     numberOfChips: value.numberOfChips
                 });
@@ -196,7 +195,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         if (withdrawalType === "paypal") {
             if (amount) {
                 if (amount >= 34) {
-                    if (!account || !email)
+                    if (account || email)
                         withdraw();
                     else setAlertShow({
                         isOpen: true,
@@ -298,7 +297,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
                     numberOfChips: value.numberOfChips,
-                    logo:value.logo
+                    logo: value.logo
                 });
             });
             /*jsondata.forEach((jsonValue) => {
@@ -334,7 +333,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     currency: value.currency,
                     minimumDeposit: value.cryptoMinimumDeposit,
                     numberOfChips: value.numberOfChips,
-                    logo:value.logo
+                    logo: value.logo
                 });
             });
             /* await fetch('https://test.bitpay.com/currencies')
@@ -396,7 +395,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     return (
         <Flex h="100%" w="100%" direction={"column"}>
             {loading ?
-                <Flex h="100%"  direction={"column"} justifyContent={'center'} alignItems={'center'}>
+                <Flex h="100%" direction={"column"} justifyContent={'center'} alignItems={'center'}>
                     <GridLoader
                         color={"#DDBF79"}
                         loading={true}
@@ -463,658 +462,652 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                 </Tooltip>
                             </Text>
 
-                    <Input
-                        w={currentSize === "base" ? "40%" : "40%"}
-                        h={["30px", "30px", "42px"]}
-                        color="white"
-                        defaultValue={amount}
-                        value={amount}
-                        onChange={(e) => {
-                            setTotalAmount(Number(e.target.value));
-                        }}
-                        placeholder="Amount"
-                        fontSize={[
-                            "12px",
-                            "12px",
-                            "14px",
-                            "14px",
-                            "14px",
-                            "18px"
-                        ]}
-                        fontWeight="400"
-                        fontFamily="Sora"
-                        backgroundColor="#1d052b"
-                    ></Input>
-                    <Text
-                        display="inline-flex"
-                        color="white"
-                        fontFamily={"Sora"}
-                        fontSize={[
-                            "12px",
-                            "12px",
-                            "14px",
-                            "14px",
-                            "14px",
-                            "18px"
-                        ]}
-                        alignContent={"center"}
-                        m="auto"
-                    >
-                        = {currency} {numberOfAmount}
-                    </Text>
-                </Flex>
-            </Flex>
-            <Heading
-                as="h5"
-                fontSize={["13px", "13px", "16px"]}
-                variant="modalHeader"
-                mt={["5px", "5px", "8px"]}
-                mb="5px"
-                fontWeight="400"
-            >
-                SELECT PAYMENT METHOD
-            </Heading>
-            <Flex
-                w="100%"
-                justifyContent={"space-evenly"}
-                bg="#481A7F"
-                p={["2px", "2px", "1%", "1%"]}
-                borderRadius="10px"
-                display="block"
-            >
-                <RadioGroup defaultValue="paypal" onChange={setWithdrawalType}>
-                    <Box
-                        color="white"
-                        w={["20%", "20%", "25%"]}
-                        display="inline-table"
-                        bg="#1D052B"
-                        mr={["2px", "2px", "10px", "10px"]}
-                        p={["5px 5px", "5px 10px", "10px 25px"]}
-                        borderRadius="10px"
-                    >
-                        <Radio
-                            size="md"
-                            colorScheme="pink"
-                            defaultChecked="true"
-                            value="paypal"
-                            style={{ fontSize: "10px" }}
-                        >
-                            <Text
-                                display="inline-flex"
-                                color="white"
-                                fontFamily={"Sora"}
-                                fontSize={[
-                                    "10px",
-                                    "12px",
-                                    "14px",
-                                    "14px",
-                                    "14px",
-                                    "16px"
-                                ]}
-                                alignContent={"center"}
-                                m="auto"
-                            >
-                                Paypal
-                            </Text>
-                        </Radio>
-                    </Box>
-                    <Box
-                        color="white"
-                        w={["20%", "20%", "25%"]}
-                        display="inline-table"
-                        bg="#1D052B"
-                        mr={["2px", "2px", "10px", "10px"]}
-                        p={["5px 5px", "5px 10px", "10px 25px"]}
-                        borderRadius="10px"
-                    >
-                        <Radio size="md" colorScheme="pink" value="crypto">
-                            <Text
-                                display="inline-flex"
-                                color="white"
-                                fontFamily={"Sora"}
-                                fontSize={[
-                                    "10px",
-                                    "12px",
-                                    "14px",
-                                    "14px",
-                                    "14px",
-                                    "16px"
-                                ]}
-                                alignContent={"center"}
-                                m="auto"
-                            >
-                                Crypto
-                            </Text>
-                        </Radio>
-                    </Box>
-                    <Box
-                        color="white"
-                        w={["47%", "47%", "45%"]}
-                        display="inline-table"
-                        bg="#1D052B"
-                        p={["5px 5px", "5px 10px", "10px 25px"]}
-                        borderRadius="10px"
-                    >
-                        <Radio size="md" colorScheme="pink" value="bank">
-                            <Text
-                                display="inline-flex"
-                                color="white"
-                                fontFamily={"Sora"}
-                                fontSize={[
-                                    "10px",
-                                    "12px",
-                                    "14px",
-                                    "14px",
-                                    "14px",
-                                    "16px"
-                                ]}
-                                alignContent={"center"}
-                                m="auto"
-                            >
-                                Wire/bank transfer
-                            </Text>
-                        </Radio>
-                    </Box>
-                </RadioGroup>
-            </Flex>
-            {withdrawalType == "paypal" ? (
-                <Box>
-                    <Flex
-                        w="100%"
-                        justifyContent={"space-evenly"}
-                        bg="#1d052b"
-                        pt={["4%", "4%", "4%"]}
-                        pb="2%"
-                        borderRadius="10px"
-                    >
-                        <Select
-                            w={currentSize === "base" ? "45%" : "45%"}
-                            h={["30px", "30px", "42px"]}
-                            color="white"
-                            backgroundColor="#1d052b"
-                            value={currency}
-                            onChange={handleChange}
-                        >
-                            {currencyoptions.map((option) => {
-                                return (
-                                    <option
-                                        minimumDeposit={option.minimumDeposit}
-                                        numberOfChips={option.numberOfChips}
-                                        value={option.currency}
-                                        style={{ background: "#1d052b" }}
-                                    >
-                                        {option.currency} ({option.logo})
-                                    </option>
-                                );
-                            })}
-                        </Select>
-                        <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
-                            <InputLeftAddon
-                                w={["50%", "50%"]}
-                                fontSize={["13px", "17px"]}
-                                fontWeight="600"
-                                bg="#39106A"
-                                color="#fff"
-                                pr="15px"
-                                h={["30px", "30px", "42px"]}
-                            >
-                                Amount
-                            </InputLeftAddon>
                             <Input
-                                w={currentSize === "base" ? "50%" : "50%"}
+                                w={currentSize === "base" ? "40%" : "40%"}
+                                h={["30px", "30px", "42px"]}
                                 color="white"
-                                bg="#39106A"
-                                defaultValue={numberOfAmount}
-                                value={numberOfAmount}
+                                defaultValue={amount}
+                                value={amount}
                                 onChange={(e) => {
-                                    setAmount(e.target.value);
+                                    setTotalAmount(Number(e.target.value));
                                 }}
                                 placeholder="Amount"
-                                borderLeft="0"
-                                h={["30px", "30px", "42px"]}
+                                fontSize={[
+                                    "12px",
+                                    "12px",
+                                    "14px",
+                                    "14px",
+                                    "14px",
+                                    "18px"
+                                ]}
+                                fontWeight="400"
+                                fontFamily="Sora"
+                                backgroundColor="#1d052b"
                             ></Input>
-                        </InputGroup>
-                    </Flex>
-
-                    <Flex
-                        w="100%"
-                        justifyContent={"space-evenly"}
-                        bg="#1d052b"
-                        p="2%"
-                        borderRadius="10px"
-                    >
-                        <InputGroup>
-                            <InputLeftAddon
-                                fontSize={["11px", "13px", "17px"]}
-                                fontWeight="600"
-                                bg="#39106A"
-                                h={["30px", "30px", "42px"]}
-                                color="#fff"
-                            >
-                                Paypal Detail
-                            </InputLeftAddon>
-                            <Input
+                            <Text
+                                display="inline-flex"
                                 color="white"
-                                fontSize={["11px", "13px", "17px"]}
-                                defaultValue={email || account}
-                                onChange={(e) => {
-                                    emailvalidation(e);
-                                }}
-                                placeholder="@username, email or mobile"
-                                borderLeft="0"
-                                h={["30px", "30px", "42px"]}
-                            ></Input>
-                        </InputGroup>
-                    </Flex>
-                </Box>
-            ) : (
-                <></>
-            )}
-
-            {withdrawalType == "crypto" ? (
-                <Box>
-                    <Flex
-                        w="100%"
-                        justifyContent={"space-evenly"}
-                        bg="#1d052b"
-                        pt={["4%", "4%", "2%"]}
-                        pb={["1%", "1%", "1%"]}
-                        borderRadius="10px"
-                    >
-                        <Select
-                            w={currentSize === "base" ? "47%" : "47%"}
-                            mr={["2%", "2%", "2%"]}
-                            h={["30px", "30px", "42px"]}
-                            color="white"
-                            fontSize={["11px", "13px", "18px"]}
-                            backgroundColor="#1d052b"
-                            onChange={(e) => {
-                                setCryptoTokens(e.target.value);
-                            }}
-                        >
-                            <option style={{ background: "#1d052b" }}>
-                                Select Crypto Tokens
-                            </option>
-                            <option
-                                style={{ background: "#1d052b" }}
-                                value="metamask"
+                                fontFamily={"Sora"}
+                                fontSize={[
+                                    "12px",
+                                    "12px",
+                                    "14px",
+                                    "14px",
+                                    "14px",
+                                    "18px"
+                                ]}
+                                alignContent={"center"}
+                                m="auto"
                             >
-                                Metamask
-                            </option>
-                            <option
-                                style={{ background: "#1d052b" }}
-                                value="coinbase"
-                            >
-                                Coinbase
-                            </option>
-                        </Select>
-                        <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
-                            <InputLeftAddon
-                                w={["60%", "50%"]}
-                                fontSize={["11px", "13px", "18px"]}
-                                fontWeight="600"
-                                bg="#39106A"
-                                color="#fff"
-                                pr="15px"
-                                h={["30px", "30px", "42px"]}
-                            >
-                                Crypto Value:
-                            </InputLeftAddon>
-                            <Input
-                                w={currentSize === "base" ? "50%" : "50%"}
-                                color="white"
-                                bg="#39106A"
-                                defaultValue={numberOfAmount}
-                                value={numberOfAmount}
-                                onChange={(e) => {
-                                    setAmount(e.target.value);
-                                }}
-                                placeholder="Amount"
-                                borderLeft="0"
-                                h={["30px", "30px", "42px"]}
-                            ></Input>
-                        </InputGroup>
-                    </Flex>
-                    <Flex
-                        w="100%"
-                        justifyContent={"space-evenly"}
-                        p={["1%", "1%", "0.5%"]}
-                        pb="0"
-                        bg="#1d052b"
-                        borderRadius="10px"
-                    >
-                        <Select
-                            w={currentSize === "base" ? "100%" : "100%"}
-                            h={["30px", "30px", "42px"]}
-                            color="white"
-                            backgroundColor="#1d052b"
-                            fontSize={["11px", "13px", "18px"]}
-                            onChange={handleChange}
-                        >
-                            {bitpaycurrencyoptions.map((option) => {
-                                return (
-                                    <option
-                                        minimumDeposit={option.minimumDeposit}
-                                        numberOfChips={option.numberOfChips}
-                                        value={option.currency}
-                                        style={{ background: "#1d052b" }}
-                                    >
-                                        {option.currency}  ({option.logo})
-                                    </option>
-                                );
-                            })}
-                        </Select>
+                                = {currency} {numberOfAmount}
+                            </Text>
+                        </Flex>
                     </Flex>
                     <Heading
-                        pl="1%"
                         as="h5"
                         fontSize={["13px", "13px", "16px"]}
                         variant="modalHeader"
-                        mt={["5px", "10px", "10px"]}
-                        mb="0px"
-                        fontWeight="400"
-                    >
-                        CRYPTO WALLET ADDRESS
-                    </Heading>
-                    <Flex
-                        w="100%"
-                        justifyContent={"space-evenly"}
-                        p={["1%", "1%", "1%"]}
-                        pt="0%"
-                        pb="0"
-                        bg="#1d052b"
-                        borderRadius="10px"
-                    >
-                        <InputGroup
-                            w={currentSize === "base" ? "100%" : "100%"}
-                        >
-                            <Input
-                                w={currentSize === "base" ? "100%" : "100%"}
-                                color="white"
-                                bg="#1d052b"
-                                placeholder="Crypto Wallet Address"
-                                h={["30px", "30px", "42px"]}
-                                fontSize={["11px", "13px", "18px"]}
-                                onChange={(e) => {
-                                    setCryptoAddress(e.target.value);
-                                }}
-                            ></Input>
-                        </InputGroup>
-                    </Flex>
-                </Box>
-            ) : (
-                <></>
-            )}
-
-            {withdrawalType == "bank" ? (
-                <Box>
-                    <Flex
-                        w="100%"
-                        justifyContent={"space-evenly"}
-                        bg="#1d052b"
-                        pt="10px"
-                        pb="5px"
-                        borderRadius="10px"
-                    >
-                        <Select
-                            w={currentSize === "base" ? "47%" : "47%"}
-                            h={["30px", "30px", "38px"]}
-                            color="white"
-                            backgroundColor="#1d052b"
-                            value={currency}
-                            onChange={handleChange}
-                        >
-                            {currencyoptions.map((option) => {
-                                return (
-                                    <option
-                                        minimumDeposit={option.minimumDeposit}
-                                        numberOfChips={option.numberOfChips}
-                                        value={option.currency}
-                                        style={{ background: "#1d052b" }}
-                                    >
-                                        {option.currency}  ({option.logo})
-                                    </option>
-                                );
-                            })}
-                        </Select>
-                        <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
-                            <InputLeftAddon
-                                w={["48%", "50%"]}
-                                fontSize={["13px", "16px"]}
-                                fontWeight="600"
-                                bg="#39106A"
-                                color="#fff"
-                                pr="15px"
-                                h={["30px", "30px", "38px"]}
-                            >
-                                Amount
-                            </InputLeftAddon>
-                            <Input
-                                w={currentSize === "base" ? "50%" : "50%"}
-                                color="white"
-                                bg="#39106A"
-                                defaultValue={numberOfAmount}
-                                value={numberOfAmount}
-                                onChange={(e) => {
-                                    setAmount(e.target.value);
-                                }}
-                                placeholder="Amount"
-                                borderLeft="0"
-                                h={["30px", "30px", "38px"]}
-                            ></Input>
-                        </InputGroup>
-                    </Flex>
-
-                    <Flex
-                        w="100%"
-                        justifyContent={"space-evenly"}
-                        bg="#1d052b"
-                        p="2px 1%"
-                        borderRadius="10px"
-                    >
-                        <InputGroup>
-                            <InputLeftAddon
-                                fontSize={["10px", "13px", "16px"]}
-                                fontWeight="600"
-                                bg="#39106A"
-                                color="#fff"
-                                w={["48%", "50%"]}
-                                h={["30px", "30px", "38px"]}
-                            >
-                                Beneficiary name
-                            </InputLeftAddon>
-                            <Input
-                                color="white"
-                                placeholder="Beneficiary name"
-                                borderLeft="0"
-                                h={["30px", "30px", "38px"]}
-                                fontSize={["10px", "13px", "16px"]}
-                                onChange={(e) => {
-                                    setBeneficiaryName(e.target.value);
-                                }}
-                            ></Input>
-                        </InputGroup>
-                    </Flex>
-                    <Flex
-                        w="100%"
-                        justifyContent={"space-evenly"}
-                        bg="#1d052b"
-                        p="2px 1%"
-                        borderRadius="10px"
-                    >
-                        <InputGroup>
-                            <InputLeftAddon
-                                fontSize={["10px", "13px", "16px"]}
-                                fontWeight="600"
-                                bg="#39106A"
-                                color="#fff"
-                                w={["48%", "50%"]}
-                                h={["30px", "30px", "38px"]}
-                            >
-                                IBN or Account number
-                            </InputLeftAddon>
-                            <Input
-                                color="white"
-                                placeholder="IBN or Account number"
-                                borderLeft="0"
-                                h={["30px", "30px", "38px"]}
-                                fontSize={["10px", "13px", "16px"]}
-                                onChange={(e) => {
-                                    setAccountNumber(e.target.value);
-                                }}
-                            ></Input>
-                        </InputGroup>
-                    </Flex>
-                    <Flex
-                        w="100%"
-                        justifyContent={"space-evenly"}
-                        bg="#1d052b"
-                        p="2px 1%"
-                        borderRadius="10px"
-                    >
-                        <InputGroup>
-                            <InputLeftAddon
-                                fontSize={["10px", "13px", "16px"]}
-                                fontWeight="600"
-                                bg="#39106A"
-                                color="#fff"
-                                w={["48%", "50%"]}
-                                h={["30px", "30px", "38px"]}
-                            >
-                                BIC or SWIFT Code
-                            </InputLeftAddon>
-                            <Input
-                                color="white"
-                                placeholder="BIC or SWIFT Code"
-                                borderLeft="0"
-                                h={["30px", "30px", "38px"]}
-                                fontSize={["10px", "13px", "16px"]}
-                                onChange={(e) => {
-                                    setSwiftCode(e.target.value);
-                                }}
-                            ></Input>
-                        </InputGroup>
-                    </Flex>
-                    <Flex
-                        w="100%"
-                        justifyContent={"space-evenly"}
-                        bg="#1d052b"
-                        p="2px 1%"
-                        borderRadius="10px"
-                    >
-                        <InputGroup>
-                            <InputLeftAddon
-                                fontSize={["10px", "13px", "16px"]}
-                                fontWeight="600"
-                                bg="#39106A"
-                                color="#fff"
-                                w={["48%", "50%"]}
-                                h={["30px", "30px", "38px"]}
-                            >
-                                Bank name
-                            </InputLeftAddon>
-                            <Input
-                                color="white"
-                                placeholder="Bank name"
-                                borderLeft="0"
-                                h={["30px", "30px", "38px"]}
-                                fontSize={["10px", "13px", "16px"]}
-                                onChange={(e) => {
-                                    setBankName(e.target.value);
-                                }}
-                            ></Input>
-                        </InputGroup>
-                    </Flex>
-                    <Heading
-                        pl="1%"
-                        as="h5"
-                        fontSize={["13px", "13px", "16px"]}
-                        variant="modalHeader"
-                        mt="5px"
+                        mt={["5px", "5px", "8px"]}
                         mb="5px"
                         fontWeight="400"
                     >
-                        Bank Address
+                        SELECT PAYMENT METHOD
                     </Heading>
                     <Flex
                         w="100%"
                         justifyContent={"space-evenly"}
-                        p="1%"
-                        pt="0%"
-                        pb="0"
-                        bg="#1d052b"
+                        bg="#481A7F"
+                        p={["2px", "2px", "1%", "1%"]}
                         borderRadius="10px"
-                    >
-                        <InputGroup
-                            w={currentSize === "base" ? "100%" : "100%"}
-                        >
-                            <Input
-                                w={currentSize === "base" ? "100%" : "100%"}
-                                color="white"
-                                bg="#1d052b"
-                                placeholder="Bank Address"
-                                fontSize={["13px", "16px"]}
-                                h={["30px", "30px", "38px"]}
-                                onChange={(e) => {
-                                    setBankAddress(e.target.value);
-                                }}
-                            ></Input>
-                        </InputGroup>
-                    </Flex>
-                </Box>
-            ) : (
-                <></>
-            )}
-            <Box bg="#1d052b">
-                <Flex mt={["1%", "1%", "1%"]} w="100%" textAlign="center" verticalAlign="baseline">
-                    <Checkbox
-                        w="100%"
-                        onChange={(e) => setAccepted(e.target.checked)}
-                        textAlign="center"
                         display="block"
-                        mt={["5px", "5px", "5px"]}
-                        verticalAlign="baseline"
                     >
-                        <Text
-                            display="inline-flex"
-                            color="white"
-                            fontFamily={"Sora"}
-                            fontSize={["12px", "12px", "14px"]}
-                            verticalAlign="super"
-                        >
-                            I hereby accept the{" "}
-                            <Text
-                                color="primary"
-                                fontFamily={"Sora"}
-                                fontSize={["12px", "12px", "14px"]}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    window.open(
-                                        process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                                            "/terms-conditions#payment",
-                                        "_blank"
-                                    );
-                                }}
+                        <RadioGroup defaultValue="paypal" onChange={setWithdrawalType}>
+                            <Box
+                                color="white"
+                                w={["20%", "20%", "25%"]}
+                                display="inline-table"
+                                bg="#1D052B"
+                                mr={["2px", "2px", "10px", "10px"]}
+                                p={["5px 5px", "5px 10px", "10px 25px"]}
+                                borderRadius="10px"
                             >
-                                {" "}
-                                &nbsp; Terms and Conditions
-                            </Text>
-                        </Text>
-                    </Checkbox>
-                </Flex>
-                <Button
-                    w="100%"
-                    fontSize={["16px", "22px"]}
-                    p={["20px 30px", "22px 40px"]}
-                    mt={["2%", "1%", "1%", "0%", "0%", "1%"]}
-                    disabled={!accepted}
-                    onClick={() => {
-                        checkValidity();
-                    }}
-                >
-                    {isDeposit ? "PROCEED" : "PROCEED"}
-                </Button>
-            </Box>
+                                <Radio
+                                    size="md"
+                                    colorScheme="pink"
+                                    defaultChecked="true"
+                                    value="paypal"
+                                    style={{ fontSize: "10px" }}
+                                >
+                                    <Text
+                                        display="inline-flex"
+                                        color="white"
+                                        fontFamily={"Sora"}
+                                        fontSize={[
+                                            "10px",
+                                            "12px",
+                                            "14px",
+                                            "14px",
+                                            "14px",
+                                            "16px"
+                                        ]}
+                                        alignContent={"center"}
+                                        m="auto"
+                                    >
+                                        Paypal
+                                    </Text>
+                                </Radio>
+                            </Box>
+                            <Box
+                                color="white"
+                                w={["20%", "20%", "25%"]}
+                                display="inline-table"
+                                bg="#1D052B"
+                                mr={["2px", "2px", "10px", "10px"]}
+                                p={["5px 5px", "5px 10px", "10px 25px"]}
+                                borderRadius="10px"
+                            >
+                                <Radio size="md" colorScheme="pink" value="crypto">
+                                    <Text
+                                        display="inline-flex"
+                                        color="white"
+                                        fontFamily={"Sora"}
+                                        fontSize={[
+                                            "10px",
+                                            "12px",
+                                            "14px",
+                                            "14px",
+                                            "14px",
+                                            "16px"
+                                        ]}
+                                        alignContent={"center"}
+                                        m="auto"
+                                    >
+                                        Crypto
+                                    </Text>
+                                </Radio>
+                            </Box>
+                            <Box
+                                color="white"
+                                w={["47%", "47%", "45%"]}
+                                display="inline-table"
+                                bg="#1D052B"
+                                p={["5px 5px", "5px 10px", "10px 25px"]}
+                                borderRadius="10px"
+                            >
+                                <Radio size="md" colorScheme="pink" value="bank">
+                                    <Text
+                                        display="inline-flex"
+                                        color="white"
+                                        fontFamily={"Sora"}
+                                        fontSize={[
+                                            "10px",
+                                            "12px",
+                                            "14px",
+                                            "14px",
+                                            "14px",
+                                            "16px"
+                                        ]}
+                                        alignContent={"center"}
+                                        m="auto"
+                                    >
+                                        Wire/bank transfer
+                                    </Text>
+                                </Radio>
+                            </Box>
+                        </RadioGroup>
+                    </Flex>
+                    {withdrawalType == "paypal" ? (
+                        <Box>
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                bg="#1d052b"
+                                pt={["4%", "4%", "4%"]}
+                                pb="2%"
+                                borderRadius="10px"
+                            >
+                                <Select
+                                    w={currentSize === "base" ? "45%" : "45%"}
+                                    h={["30px", "30px", "42px"]}
+                                    color="white"
+                                    backgroundColor="#1d052b"
+                                    value={currency}
+                                    onChange={handleChange}
+                                >
+                                    {currencyoptions.map((option) => {
+                                        return (
+                                            <option
+                                                value={option.currency}
+                                                style={{ background: "#1d052b" }}
+                                            >
+                                                {option.currency} ({option.logo})
+                                            </option>
+                                        );
+                                    })}
+                                </Select>
+                                <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
+                                    <InputLeftAddon
+                                        w={["50%", "50%"]}
+                                        fontSize={["13px", "17px"]}
+                                        fontWeight="600"
+                                        bg="#39106A"
+                                        color="#fff"
+                                        pr="15px"
+                                        h={["30px", "30px", "42px"]}
+                                    >
+                                        Amount
+                                    </InputLeftAddon>
+                                    <Input
+                                        w={currentSize === "base" ? "50%" : "50%"}
+                                        color="white"
+                                        bg="#39106A"
+                                        defaultValue={numberOfAmount}
+                                        value={numberOfAmount}
+                                        onChange={(e) => {
+                                            setAmount(e.target.value);
+                                        }}
+                                        placeholder="Amount"
+                                        borderLeft="0"
+                                        h={["30px", "30px", "42px"]}
+                                    ></Input>
+                                </InputGroup>
+                            </Flex>
+
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                bg="#1d052b"
+                                p="2%"
+                                borderRadius="10px"
+                            >
+                                <InputGroup>
+                                    <InputLeftAddon
+                                        fontSize={["11px", "13px", "17px"]}
+                                        fontWeight="600"
+                                        bg="#39106A"
+                                        h={["30px", "30px", "42px"]}
+                                        color="#fff"
+                                    >
+                                        Paypal Detail
+                                    </InputLeftAddon>
+                                    <Input
+                                        color="white"
+                                        fontSize={["11px", "13px", "17px"]}
+                                        defaultValue={email || account}
+                                        onChange={(e) => {
+                                            emailvalidation(e);
+                                        }}
+                                        placeholder="@username, email or mobile"
+                                        borderLeft="0"
+                                        h={["30px", "30px", "42px"]}
+                                    ></Input>
+                                </InputGroup>
+                            </Flex>
+                        </Box>
+                    ) : (
+                        <></>
+                    )}
+
+                    {withdrawalType == "crypto" ? (
+                        <Box>
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                bg="#1d052b"
+                                pt={["4%", "4%", "2%"]}
+                                pb={["1%", "1%", "1%"]}
+                                borderRadius="10px"
+                            >
+                                <Select
+                                    w={currentSize === "base" ? "47%" : "47%"}
+                                    mr={["2%", "2%", "2%"]}
+                                    h={["30px", "30px", "42px"]}
+                                    color="white"
+                                    fontSize={["11px", "13px", "18px"]}
+                                    backgroundColor="#1d052b"
+                                    onChange={(e) => {
+                                        setCryptoTokens(e.target.value);
+                                    }}
+                                >
+                                    <option style={{ background: "#1d052b" }}>
+                                        Select Crypto Tokens
+                                    </option>
+                                    <option
+                                        style={{ background: "#1d052b" }}
+                                        value="metamask"
+                                    >
+                                        Metamask
+                                    </option>
+                                    <option
+                                        style={{ background: "#1d052b" }}
+                                        value="coinbase"
+                                    >
+                                        Coinbase
+                                    </option>
+                                </Select>
+                                <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
+                                    <InputLeftAddon
+                                        w={["60%", "50%"]}
+                                        fontSize={["11px", "13px", "18px"]}
+                                        fontWeight="600"
+                                        bg="#39106A"
+                                        color="#fff"
+                                        pr="15px"
+                                        h={["30px", "30px", "42px"]}
+                                    >
+                                        Crypto Value:
+                                    </InputLeftAddon>
+                                    <Input
+                                        w={currentSize === "base" ? "50%" : "50%"}
+                                        color="white"
+                                        bg="#39106A"
+                                        defaultValue={numberOfAmount}
+                                        value={numberOfAmount}
+                                        onChange={(e) => {
+                                            setAmount(e.target.value);
+                                        }}
+                                        placeholder="Amount"
+                                        borderLeft="0"
+                                        h={["30px", "30px", "42px"]}
+                                    ></Input>
+                                </InputGroup>
+                            </Flex>
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                p={["1%", "1%", "0.5%"]}
+                                pb="0"
+                                bg="#1d052b"
+                                borderRadius="10px"
+                            >
+                                <Select
+                                    w={currentSize === "base" ? "100%" : "100%"}
+                                    h={["30px", "30px", "42px"]}
+                                    color="white"
+                                    backgroundColor="#1d052b"
+                                    fontSize={["11px", "13px", "18px"]}
+                                    onChange={handleChange}
+                                >
+                                    {bitpaycurrencyoptions.map((option) => {
+                                        return (
+                                            <option
+                                                value={option.currency}
+                                                style={{ background: "#1d052b" }}
+                                            >
+                                                {option.currency}  ({option.logo})
+                                            </option>
+                                        );
+                                    })}
+                                </Select>
+                            </Flex>
+                            <Heading
+                                pl="1%"
+                                as="h5"
+                                fontSize={["13px", "13px", "16px"]}
+                                variant="modalHeader"
+                                mt={["5px", "10px", "10px"]}
+                                mb="0px"
+                                fontWeight="400"
+                            >
+                                CRYPTO WALLET ADDRESS
+                            </Heading>
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                p={["1%", "1%", "1%"]}
+                                pt="0%"
+                                pb="0"
+                                bg="#1d052b"
+                                borderRadius="10px"
+                            >
+                                <InputGroup
+                                    w={currentSize === "base" ? "100%" : "100%"}
+                                >
+                                    <Input
+                                        w={currentSize === "base" ? "100%" : "100%"}
+                                        color="white"
+                                        bg="#1d052b"
+                                        placeholder="Crypto Wallet Address"
+                                        h={["30px", "30px", "42px"]}
+                                        fontSize={["11px", "13px", "18px"]}
+                                        onChange={(e) => {
+                                            setCryptoAddress(e.target.value);
+                                        }}
+                                    ></Input>
+                                </InputGroup>
+                            </Flex>
+                        </Box>
+                    ) : (
+                        <></>
+                    )}
+
+                    {withdrawalType == "bank" ? (
+                        <Box>
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                bg="#1d052b"
+                                pt="10px"
+                                pb="5px"
+                                borderRadius="10px"
+                            >
+                                <Select
+                                    w={currentSize === "base" ? "47%" : "47%"}
+                                    h={["30px", "30px", "38px"]}
+                                    color="white"
+                                    backgroundColor="#1d052b"
+                                    value={currency}
+                                    onChange={handleChange}
+                                >
+                                    {currencyoptions.map((option) => {
+                                        return (
+                                            <option
+                                                value={option.currency}
+                                                style={{ background: "#1d052b" }}
+                                            >
+                                                {option.currency}  ({option.logo})
+                                            </option>
+                                        );
+                                    })}
+                                </Select>
+                                <InputGroup w={currentSize === "base" ? "50%" : "50%"}>
+                                    <InputLeftAddon
+                                        w={["48%", "50%"]}
+                                        fontSize={["13px", "16px"]}
+                                        fontWeight="600"
+                                        bg="#39106A"
+                                        color="#fff"
+                                        pr="15px"
+                                        h={["30px", "30px", "38px"]}
+                                    >
+                                        Amount
+                                    </InputLeftAddon>
+                                    <Input
+                                        w={currentSize === "base" ? "50%" : "50%"}
+                                        color="white"
+                                        bg="#39106A"
+                                        defaultValue={numberOfAmount}
+                                        value={numberOfAmount}
+                                        onChange={(e) => {
+                                            setAmount(e.target.value);
+                                        }}
+                                        placeholder="Amount"
+                                        borderLeft="0"
+                                        h={["30px", "30px", "38px"]}
+                                    ></Input>
+                                </InputGroup>
+                            </Flex>
+
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                bg="#1d052b"
+                                p="2px 1%"
+                                borderRadius="10px"
+                            >
+                                <InputGroup>
+                                    <InputLeftAddon
+                                        fontSize={["10px", "13px", "16px"]}
+                                        fontWeight="600"
+                                        bg="#39106A"
+                                        color="#fff"
+                                        w={["48%", "50%"]}
+                                        h={["30px", "30px", "38px"]}
+                                    >
+                                        Beneficiary name
+                                    </InputLeftAddon>
+                                    <Input
+                                        color="white"
+                                        placeholder="Beneficiary name"
+                                        borderLeft="0"
+                                        h={["30px", "30px", "38px"]}
+                                        fontSize={["10px", "13px", "16px"]}
+                                        onChange={(e) => {
+                                            setBeneficiaryName(e.target.value);
+                                        }}
+                                    ></Input>
+                                </InputGroup>
+                            </Flex>
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                bg="#1d052b"
+                                p="2px 1%"
+                                borderRadius="10px"
+                            >
+                                <InputGroup>
+                                    <InputLeftAddon
+                                        fontSize={["10px", "13px", "16px"]}
+                                        fontWeight="600"
+                                        bg="#39106A"
+                                        color="#fff"
+                                        w={["48%", "50%"]}
+                                        h={["30px", "30px", "38px"]}
+                                    >
+                                        IBN or Account number
+                                    </InputLeftAddon>
+                                    <Input
+                                        color="white"
+                                        placeholder="IBN or Account number"
+                                        borderLeft="0"
+                                        h={["30px", "30px", "38px"]}
+                                        fontSize={["10px", "13px", "16px"]}
+                                        onChange={(e) => {
+                                            setAccountNumber(e.target.value);
+                                        }}
+                                    ></Input>
+                                </InputGroup>
+                            </Flex>
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                bg="#1d052b"
+                                p="2px 1%"
+                                borderRadius="10px"
+                            >
+                                <InputGroup>
+                                    <InputLeftAddon
+                                        fontSize={["10px", "13px", "16px"]}
+                                        fontWeight="600"
+                                        bg="#39106A"
+                                        color="#fff"
+                                        w={["48%", "50%"]}
+                                        h={["30px", "30px", "38px"]}
+                                    >
+                                        BIC or SWIFT Code
+                                    </InputLeftAddon>
+                                    <Input
+                                        color="white"
+                                        placeholder="BIC or SWIFT Code"
+                                        borderLeft="0"
+                                        h={["30px", "30px", "38px"]}
+                                        fontSize={["10px", "13px", "16px"]}
+                                        onChange={(e) => {
+                                            setSwiftCode(e.target.value);
+                                        }}
+                                    ></Input>
+                                </InputGroup>
+                            </Flex>
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                bg="#1d052b"
+                                p="2px 1%"
+                                borderRadius="10px"
+                            >
+                                <InputGroup>
+                                    <InputLeftAddon
+                                        fontSize={["10px", "13px", "16px"]}
+                                        fontWeight="600"
+                                        bg="#39106A"
+                                        color="#fff"
+                                        w={["48%", "50%"]}
+                                        h={["30px", "30px", "38px"]}
+                                    >
+                                        Bank name
+                                    </InputLeftAddon>
+                                    <Input
+                                        color="white"
+                                        placeholder="Bank name"
+                                        borderLeft="0"
+                                        h={["30px", "30px", "38px"]}
+                                        fontSize={["10px", "13px", "16px"]}
+                                        onChange={(e) => {
+                                            setBankName(e.target.value);
+                                        }}
+                                    ></Input>
+                                </InputGroup>
+                            </Flex>
+                            <Heading
+                                pl="1%"
+                                as="h5"
+                                fontSize={["13px", "13px", "16px"]}
+                                variant="modalHeader"
+                                mt="5px"
+                                mb="5px"
+                                fontWeight="400"
+                            >
+                                Bank Address
+                            </Heading>
+                            <Flex
+                                w="100%"
+                                justifyContent={"space-evenly"}
+                                p="1%"
+                                pt="0%"
+                                pb="0"
+                                bg="#1d052b"
+                                borderRadius="10px"
+                            >
+                                <InputGroup
+                                    w={currentSize === "base" ? "100%" : "100%"}
+                                >
+                                    <Input
+                                        w={currentSize === "base" ? "100%" : "100%"}
+                                        color="white"
+                                        bg="#1d052b"
+                                        placeholder="Bank Address"
+                                        fontSize={["13px", "16px"]}
+                                        h={["30px", "30px", "38px"]}
+                                        onChange={(e) => {
+                                            setBankAddress(e.target.value);
+                                        }}
+                                    ></Input>
+                                </InputGroup>
+                            </Flex>
+                        </Box>
+                    ) : (
+                        <></>
+                    )}
+                    <Box bg="#1d052b">
+                        <Flex mt={["1%", "1%", "1%"]} w="100%" textAlign="center" verticalAlign="baseline">
+                            <Checkbox
+                                w="100%"
+                                onChange={(e) => setAccepted(e.target.checked)}
+                                textAlign="center"
+                                display="block"
+                                mt={["5px", "5px", "5px"]}
+                                verticalAlign="baseline"
+                            >
+                                <Text
+                                    display="inline-flex"
+                                    color="white"
+                                    fontFamily={"Sora"}
+                                    fontSize={["12px", "12px", "14px"]}
+                                    verticalAlign="super"
+                                >
+                                    I hereby accept the{" "}
+                                    <Text
+                                        color="primary"
+                                        fontFamily={"Sora"}
+                                        fontSize={["12px", "12px", "14px"]}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            window.open(
+                                                process.env.NEXT_PUBLIC_WORDPRESS_URL +
+                                                "/terms-conditions#payment",
+                                                "_blank"
+                                            );
+                                        }}
+                                    >
+                                        {" "}
+                                        &nbsp; Terms and Conditions
+                                    </Text>
+                                </Text>
+                            </Checkbox>
+                        </Flex>
+                        <Button
+                            w="100%"
+                            fontSize={["16px", "22px"]}
+                            p={["20px 30px", "22px 40px"]}
+                            mt={["2%", "1%", "1%", "0%", "0%", "1%"]}
+                            disabled={!accepted}
+                            onClick={() => {
+                                checkValidity();
+                            }}
+                        >
+                            {isDeposit ? "PROCEED" : "PROCEED"}
+                        </Button>
+                    </Box>
 
                     <LMNonCloseALert
                         header={"Transaction!!!"}
