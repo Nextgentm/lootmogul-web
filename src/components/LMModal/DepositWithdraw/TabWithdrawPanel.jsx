@@ -35,7 +35,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     const [cashOption, setCashOption] = useState([]);
     const [account, setAccount] = useState(null);
     const [accepted, setAccepted] = useState(false);
-    const [alert, setAlertShow] = useState({ iOpen: false, msg: "" });
+    const [alert, setAlertShow] = useState({ iOpen: false, msg: "", title: '' });
     const currentSize = useBreakpointValue({
         base: "base",
         sm: "sm",
@@ -215,17 +215,20 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     } else
                         setAlertShow({
                             isOpen: true,
-                            msg: "Enter Valid Paypal registered id"
+                            msg: "Enter Valid Paypal registered id",
+                            title: "Oopps!!"
                         });
                 } else
                     setAlertShow({
                         isOpen: true,
-                        msg: `Withdraw more than ${numberOfChips} chips`
+                        msg: `Withdraw minimum ${numberOfChips} chips`,
+                        title: "Oopps!!"
                     });
             } else
                 setAlertShow({
                     isOpen: true,
-                    msg: `Withdraw more than ${numberOfChips} chips`
+                    msg: `Withdraw minimum ${numberOfChips} chips`,
+                    title: "Oopps!!"
                 });
         } else if (withdrawalType === "crypto") {
             if (amount) {
@@ -234,12 +237,14 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 } else
                     setAlertShow({
                         isOpen: true,
-                        msg: "Withdraw more than 700 chips"
+                        msg: "Withdraw minimum 700 chips",
+                        title: "Oopps!!"
                     });
             } else
                 setAlertShow({
                     isOpen: true,
-                    msg: "Withdraw more than 700 chips"
+                    msg: "Withdraw minimum 700 chips",
+                    title: "Oopps!!"
                 });
         } else {
             if (amount) {
@@ -247,7 +252,9 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     if (!accountnumber)
                         setAlertShow({
                             isOpen: true,
-                            msg: "Enter Account Number"
+                            msg: "Enter Account Number",
+                            title: "Oopps!!"
+
                         });
                     else {
                         withdraw();
@@ -255,12 +262,15 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 } else
                     setAlertShow({
                         isOpen: true,
-                        msg: "Withdraw more than 700 chips"
+                        msg: "Withdraw minium 700 chips",
+                        title: "Oopps!!"
+
                     });
             } else
                 setAlertShow({
                     isOpen: true,
-                    msg: "Withdraw more than 700 chips"
+                    msg: "Withdraw minium 700 chips",
+                    title: "Oopps!!"
                 });
         }
     };
@@ -286,11 +296,14 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         strapi
             .create("withdrawals", withDrawReqData)
             .then((res) => {
-                setAlertShow({ isOpen: true, msg: res.message });
+                setAlertShow({ isOpen: true, msg: res.message, title: "Withdraw request added successfully" });
                 updateUser();
             })
             .catch((error) => {
-                setAlertShow({ isOpen: true, msg: error.message });
+                setAlertShow({
+                    isOpen: true, msg: error.message,
+                    title: "Oopps!!"
+                });
             });
     };
     const handleChange = (e) => {
@@ -322,18 +335,20 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     };
     const setTotalAmount = async (addedAmount) => {
         console.log("addedAmount-=-=-", addedAmount);
-        let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        if (currency == "BTC" || currency == "ETH") {
-            await setNumberOfAmount(
-                Number(addedAmount / numberOfAmount).toFixed(6)
-            );
-        } else {
-            await setNumberOfAmount(
-                Number(addedAmount / numberOfAmount).toFixed(2)
-            );
-        }
+        if (typeof Number(addedAmount) == 'number') {
+            let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
+            if (currency == "BTC" || currency == "ETH") {
+                await setNumberOfAmount(
+                    Number(addedAmount / numberOfAmount).toFixed(6)
+                );
+            } else {
+                await setNumberOfAmount(
+                    Number(addedAmount / numberOfAmount).toFixed(2)
+                );
+            }
 
-        setAmount(addedAmount);
+            setAmount(addedAmount);
+        }
     };
 
     return (
@@ -371,7 +386,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                             fontWeight="400"
                             display="inline-block"
                         >
-                            (Min Chips: {numberOfChips} CHIPS)
+                            (Min Chips: {withdrawalType == 'crypto' ? 700 : numberOfChips} CHIPS)
                         </Text>
                     </Heading>
                     <Flex
@@ -426,7 +441,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                 defaultValue={amount}
                                 value={amount}
                                 onChange={(e) => {
-                                    setTotalAmount(Number(e.target.value));
+                                    setTotalAmount(e.target.value);
                                 }}
                                 placeholder="Amount"
                                 fontSize={[
@@ -440,6 +455,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                 fontWeight="400"
                                 fontFamily="Sora"
                                 backgroundColor="#1d052b"
+                                type="number"
                             ></Input>
                             <Text
                                 display="inline-flex"
@@ -513,7 +529,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                         alignContent={"center"}
                                         m="auto"
                                     >
-                                        Paypal
+                                        PayPal
                                     </Text>
                                 </Radio>
                             </Box>
@@ -605,9 +621,11 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                     {currencyoptions.map((option) => {
                                         return (
                                             <option
+                                                // eslint-disable-next-line react/no-unknown-property
                                                 minimumDeposit={
                                                     option.minimumDeposit
                                                 }
+                                                // eslint-disable-next-line react/no-unknown-property
                                                 numberOfChips={
                                                     option.numberOfChips
                                                 }
@@ -671,7 +689,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                         h={["30px", "30px", "42px"]}
                                         color="#fff"
                                     >
-                                        Paypal Detail
+                                        PayPal Detail
                                     </InputLeftAddon>
                                     <Input
                                         color="white"
@@ -781,9 +799,11 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                     {bitpaycurrencyoptions.map((option) => {
                                         return (
                                             <option
+                                                // eslint-disable-next-line react/no-unknown-property
                                                 minimumDeposit={
                                                     option.minimumDeposit
                                                 }
+                                                // eslint-disable-next-line react/no-unknown-property
                                                 numberOfChips={
                                                     option.numberOfChips
                                                 }
@@ -865,9 +885,11 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                     {currencyoptions.map((option) => {
                                         return (
                                             <option
+                                                // eslint-disable-next-line react/no-unknown-property
                                                 minimumDeposit={
                                                     option.minimumDeposit
                                                 }
+                                                // eslint-disable-next-line react/no-unknown-property
                                                 numberOfChips={
                                                     option.numberOfChips
                                                 }
@@ -1112,7 +1134,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                             window.open(
                                                 process.env
                                                     .NEXT_PUBLIC_WORDPRESS_URL +
-                                                    "/terms-conditions#payment",
+                                                "/terms-conditions#payment",
                                                 "_blank"
                                             );
                                         }}
@@ -1138,7 +1160,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     </Box>
 
                     <LMNonCloseALert
-                        header={"Transaction!!!"}
+                        header={alert.title || "Transaction!!!"}
                         canClose={true}
                         data={alert.msg}
                         isOpen={alert.isOpen}

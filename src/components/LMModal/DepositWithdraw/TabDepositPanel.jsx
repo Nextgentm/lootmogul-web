@@ -42,10 +42,10 @@ const TabDepositPanel = ({ isDeposit }) => {
     const handleIncrease = (addedAmount) => {
         /*const newAmount = amount + addedAmount;*/
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        if(currency == 'BTC' || currency == 'ETH'){
+        if (currency == 'BTC' || currency == 'ETH') {
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(6));
         }
-        else{
+        else {
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
         }
         setAmount(addedAmount);
@@ -63,23 +63,23 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [currencyoptions, setCurrencyOptions] = useState([]);
     const [bitpaycurrencyoptions, setBitpayCurrencyOptions] = useState([]);
 
-    const [defaultFiatChip, SetDefaultFiatChip] = useState([]);
-    const [defaultFiatAmount, SetDefaultFiatAmount] = useState([]);
-    const [defaultCrytoChip, SetDefaultCrytoChip] = useState([]);
-    const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState([]);
+    const [defaultFiatChip, SetDefaultFiatChip] = useState();
+    const [defaultFiatAmount, SetDefaultFiatAmount] = useState();
+    const [defaultCrytoChip, SetDefaultCrytoChip] = useState();
+    const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
 
     useEffect(() => {
         async function fetchData() {
             // Fetch data   
             const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false&sort=order`);
             const results = []
-                        // Store results in the results array
+            // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if(value.currency == 'USD'){
+                if (value.currencyCode == 'USD') {
                     setNumberOfChips(value.numberOfChips);
                     setMinimumDeposit(value.minimumDeposit);
-                    
+
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
                 }
@@ -87,7 +87,8 @@ const TabDepositPanel = ({ isDeposit }) => {
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
                     numberOfChips: value.numberOfChips,
-                    logo:value.logo
+                    logo: value.logo,
+                    currencyCode: value.currencyCode
                 });
             });
 
@@ -106,7 +107,7 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if(value.currency == 'BTC'){
+                if (value.currencyCode == 'BTC') {
                     SetDefaultCrytoChip(value.numberOfChips);
                     SetDefaultCrytoAmount(value.cryptoMinimumDeposit);
                 }
@@ -114,10 +115,11 @@ const TabDepositPanel = ({ isDeposit }) => {
                     currency: value.currency,
                     minimumDeposit: value.cryptoMinimumDeposit,
                     numberOfChips: value.numberOfChips,
-                    logo:value.logo
+                    logo: value.logo,
+                    currencyCode: value.currencyCode
                 });
             });
-            
+
             setBitpayCurrencyOptions(results_bitpay);
         }
         // Trigger the fetch
@@ -130,22 +132,22 @@ const TabDepositPanel = ({ isDeposit }) => {
         setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
         //setTotalAmount(amount);
         let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
-        if(e.target.value == 'BTC' || e.target.value == 'ETH'){
+        if (e.target.value == 'BTC' || e.target.value == 'ETH') {
             setNumberOfAmount((amount / numberOfAmount).toFixed(6));
         }
-        else{
+        else {
             setNumberOfAmount((amount / numberOfAmount).toFixed(2));
         }
 
 
     };
     const setTotalAmount = (addedAmount) => {
-        
+
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        if(currency == 'BTC' || currency == 'ETH'){
+        if (currency == 'BTC' || currency == 'ETH') {
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(6));
         }
-        else{
+        else {
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
         }
         setAmount(addedAmount);
@@ -259,30 +261,31 @@ const TabDepositPanel = ({ isDeposit }) => {
     };
 
     useEffect(() => {
-        if (depositType == 2){
+        console.log("defaultCrytoChip", defaultCrytoChip)
+        if (depositType == 2) {
             setCurrency('BTC');
             setMinimumDeposit(defaultCrytoAmount);
             setNumberOfChips(defaultCrytoChip);
-            if(amount){
+            if (amount) {
                 let numberOfAmount = Number(defaultCrytoChip) / Number(defaultCrytoAmount);
                 setNumberOfAmount((amount / numberOfAmount).toFixed(6));
             }
         }
-            
 
-        if (depositType == 1){
-            setCurrency('USD') 
+
+        if (depositType == 1) {
+            setCurrency('USD')
             setMinimumDeposit(defaultFiatAmount);
             setNumberOfChips(defaultFiatChip);
-           
-            if(amount){
+
+            if (amount) {
                 let numberOfAmount = Number(defaultFiatChip) / Number(defaultFiatAmount);
                 setNumberOfAmount((amount / numberOfAmount).toFixed(2));
             }
-            
-           
+
+
         }
-               
+
     }, [depositType])
 
     return (
@@ -327,45 +330,45 @@ const TabDepositPanel = ({ isDeposit }) => {
                 SELECT CURRENCY
             </Heading>
             <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px">
-            { depositType == 1 ? (
-                <Select
-                    w={currentSize === "base" ? "40%" : "40%"}
-                    h="42px"
-                    color="white"
-                    backgroundColor="#1d052b"
-                    value={currency}
-                    onChange={handleChange}
-                >
-                {currencyoptions.map((option) => {
-                    return (
-                        // eslint-disable-next-line react/no-unknown-property
-                        <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
-                            {option.currency} ({option.logo})
-                        </option>
-                    );
-                })}
-                </Select>
-            ) : (
-                <Select
-                    w={currentSize === "base" ? "40%" : "40%"}
-                    h="42px"
-                    color="white"
-                    backgroundColor="#1d052b"
-                    value={currency}
-                    onChange={handleChange}
-                >
-                {bitpaycurrencyoptions.map((option) => {
-                    return (
-                        // eslint-disable-next-line react/no-unknown-property
-                        <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
-                            {option.currency} ({option.logo})
-                        </option>
-                    );
-                })}
-                </Select>
-            )}
-                
-                
+                {depositType == 1 ? (
+                    <Select
+                        w={currentSize === "base" ? "40%" : "40%"}
+                        h="42px"
+                        color="white"
+                        backgroundColor="#1d052b"
+                        value={currency}
+                        onChange={handleChange}
+                    >
+                        {currencyoptions.map((option) => {
+                            return (
+                                // eslint-disable-next-line react/no-unknown-property
+                                <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                    {option.currency} ({option.logo})
+                                </option>
+                            );
+                        })}
+                    </Select>
+                ) : (
+                    <Select
+                        w={currentSize === "base" ? "40%" : "40%"}
+                        h="42px"
+                        color="white"
+                        backgroundColor="#1d052b"
+                        value={currency}
+                        onChange={handleChange}
+                    >
+                        {bitpaycurrencyoptions.map((option) => {
+                            return (
+                                // eslint-disable-next-line react/no-unknown-property
+                                <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                    {option.currency} ({option.logo})
+                                </option>
+                            );
+                        })}
+                    </Select>
+                )}
+
+
 
                 <Text
                     display="inline-flex"
