@@ -1166,7 +1166,8 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                         isOpen={alert.isOpen}
                         onClose={() => {
                             setAlertShow({ isOpen: false });
-                            setShowModalwithdrawalpopup(false);
+                            if (alert.title == "Withdraw request added successfully")
+                                setShowModalwithdrawalpopup(false);
                         }}
                     />
                 </>
