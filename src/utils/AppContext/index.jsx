@@ -53,9 +53,9 @@ export const AppContextContainer = ({ children }) => {
     const [showCaptcha, setShowCaptcha] = useState({});
     const [coupon, setCoupon] = useState("");
     const [joiningData, setJoiningData] = useState(null);
-    const [isPayIsStarted, setIsPayIsStarted] = useState(false)
-    const [isFromNoLocationGame, setIsFromNoLocationGame] = useState(false)
-    const [currencyToChip, setCurrencyToChip] = useState([])
+    const [isPayIsStarted, setIsPayIsStarted] = useState(false);
+    const [isFromNoLocationGame, setIsFromNoLocationGame] = useState(false);
+    const [currencyToChip, setCurrencyToChip] = useState([]);
 
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
@@ -255,20 +255,22 @@ export const AppContextContainer = ({ children }) => {
                                 setShowPaidGameConfirmation({});
 
                                 // try {
-                                const roomData =
-                                    await getGameRoomOrCreateRoom(
-                                        data[0]?.id,
-                                        user?.id
-                                    );
+                                const roomData = await getGameRoomOrCreateRoom(
+                                    data[0]?.id,
+                                    user?.id
+                                );
                                 if (roomData) {
-                                    setIsPayIsStarted("ended")
+                                    setIsPayIsStarted("ended");
                                     setJoiningData(data[0]);
                                     updateUser();
-                                    if (router.pathname != "/games/" +
+                                    if (
+                                        router.pathname !=
+                                        "/games/" +
                                         roomData?.id +
                                         "/" +
-                                        data[0]?.contestmaster?.data
-                                            ?.game?.data?.config?.slug)
+                                        data[0]?.contestmaster?.data?.game
+                                            ?.data?.config?.slug
+                                    )
                                         router.push(
                                             "/games/" +
                                             roomData?.id +
@@ -276,7 +278,6 @@ export const AppContextContainer = ({ children }) => {
                                             data[0]?.contestmaster?.data
                                                 ?.game?.data?.config?.slug
                                         );
-
                                 } else {
                                     setShowLoading(false);
 
@@ -323,6 +324,10 @@ export const AppContextContainer = ({ children }) => {
     const [isHideFooter, setIsHideFooter] = useState(false);
 
     const [gameInProgress, setGameInProgress] = useState(false);
+
+    const [showModalwithdrawalpopup, setShowModalwithdrawalpopup] = useState(false);
+
+    console.log("appcontex show model", showModalwithdrawalpopup);
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -686,11 +691,11 @@ export const AppContextContainer = ({ children }) => {
 
     const getCurrencyToChip = async () => {
         const { data } = await axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&pagination[pageSize]=100`
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&pagination[pageSize]=100&sort=order`
         );
 
-        setCurrencyToChip(data.data)
-    }
+        setCurrencyToChip(data.data);
+    };
 
     useEffect(async () => {
         if (router.query.jwt) {
@@ -708,15 +713,13 @@ export const AppContextContainer = ({ children }) => {
                 console.log(response.data);
                 updateUser(response.data);
                 setUser(response.data);
-                getCurrencyToChip()
+                getCurrencyToChip();
             } catch (error) {
                 console.log("error occured", error);
             }
         }
         if (!router.isReady) return;
     }, [router.isReady]);
-
-
 
     return (
         <AppContext.Provider
@@ -779,8 +782,9 @@ export const AppContextContainer = ({ children }) => {
                 isFromNoLocationGame,
                 getCurrencyToChip,
                 currencyToChip,
-                setCurrencyToChip
-
+                setCurrencyToChip,
+                setShowModalwithdrawalpopup,
+                showModalwithdrawalpopup
             }}
         >
             {children}
