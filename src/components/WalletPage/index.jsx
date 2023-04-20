@@ -16,7 +16,16 @@ import DepostWithdrawstop from "../LMModal/DepositWithdraw/withdrawStop";
 const WalletPage = ({ totalAmount }) => {
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
     const router = useRouter();
-    const { amounts, getCurrencyToChip, jwt } = useContext(AppContext);
+    const { amounts, getCurrencyToChip, jwt, showModalwithdrawalpopup, setShowModalwithdrawalpopup } =
+        useContext(AppContext);
+    console.log("showModal", showModal);
+    console.log("showModalwithdrawalpopup", showModalwithdrawalpopup);
+    useEffect(() => {
+        if (showModalwithdrawalpopup == false) {
+            setShowModal(false);
+        }
+        setShowModalwithdrawalpopup(true);
+    }, [showModalwithdrawalpopup]);
     const depositData = {
         title: "Deposit",
         desc: "Total chips you have available to play with",
@@ -59,16 +68,26 @@ const WalletPage = ({ totalAmount }) => {
 
     useEffect(() => {
         if (jwt) {
-            console.log("wwwwwwww")
-            getCurrencyToChip()
+            console.log("wwwwwwww");
+            getCurrencyToChip();
         }
-    }, [jwt])
+    }, [jwt]);
     return (
-        <Box p={["10px", "20px"]} m={["10px", "60px"]} bg="transparent linear-gradient(90deg, #070623 0%, #1F052C 100%) 0% 0% no-repeat padding-box" width={["auto", "auto"]}>
+        <Box
+            p={["10px", "20px"]}
+            m={["10px", "60px"]}
+            bg="transparent linear-gradient(90deg, #070623 0%, #1F052C 100%) 0% 0% no-repeat padding-box"
+            width={["auto", "auto"]}
+        >
             <Flex justifyContent={"flex-start"} direction={["column", "row"]}>
                 <Flex width={["100%"]} justifyContent={"flex-start"}>
                     <Flex mt="auto" mb={"auto"}>
-                        <Heading ml="15px" mr="15px" color="white" fontSize={["36px", "36px", "62px"]}>
+                        <Heading
+                            ml="15px"
+                            mr="15px"
+                            color="white"
+                            fontSize={["36px", "36px", "62px"]}
+                        >
                             WALLET BALANCE IN CHIPS
                         </Heading>
                         <Image
@@ -80,13 +99,23 @@ const WalletPage = ({ totalAmount }) => {
                             src="/assets/Icon.png"
                             alt="bonus"
                         />
-                        <Heading ml="10px" color="primary" fontSize={["36px", "36px", "62px"]}>
+                        <Heading
+                            ml="10px"
+                            color="primary"
+                            fontSize={["36px", "36px", "62px"]}
+                        >
                             {totalAmount}
                         </Heading>
                     </Flex>
                 </Flex>
             </Flex>
-            <Text fontSize={["12px", "17px"]} ml="15px" mt="10px" variant="hint" color="white">
+            <Text
+                fontSize={["12px", "17px"]}
+                ml="15px"
+                mt="10px"
+                variant="hint"
+                color="white"
+            >
                 Balance : Deposit + Winnings + Bonus = {totalAmount} Chips
             </Text>
             <Flex
@@ -97,21 +126,27 @@ const WalletPage = ({ totalAmount }) => {
             >
                 <WalletCard
                     displayData={depositData}
-                    amount={parseFloat(amounts?.deposit || 0).toFixed(amounts?.deposit % 1 != 0 ? 2 : 0)}
+                    amount={parseFloat(amounts?.deposit || 0).toFixed(
+                        amounts?.deposit % 1 != 0 ? 2 : 0
+                    )}
                     onClick={() => setShowModal({ show: true, mode: "add" })}
                     onChange={onChangeAmount}
                 />
 
                 <WalletCard
                     displayData={withdrawData}
-                    amount={parseFloat(amounts?.winnings || 0).toFixed(amounts?.winnings % 1 != 0 ? 2 : 0)}
+                    amount={parseFloat(amounts?.winnings || 0).toFixed(
+                        amounts?.winnings % 1 != 0 ? 2 : 0
+                    )}
                     onClick={() => setShowModal({ show: true, mode: "sub" })}
                     onChange={onChangeAmount}
                 />
 
                 <WalletCard
                     displayData={bonusData}
-                    amount={parseFloat(amounts?.bonus || 0).toFixed(amounts?.bonus % 1 != 0 ? 2 : 0)}
+                    amount={parseFloat(amounts?.bonus || 0).toFixed(
+                        amounts?.bonus % 1 != 0 ? 2 : 0
+                    )}
                     onClick={() => setShowModal({ show: true, mode: "add" })}
                     onChange={onChangeAmount}
                 />
@@ -127,7 +162,6 @@ const WalletPage = ({ totalAmount }) => {
                 boxShadow="0px 50px 50px -30px rgba(187, 187, 187, 0.1)"
                 borderRadius="20px"
                 border="1px solid #3C3C3C"
-
             >
                 <Image
                     mr="7px"
@@ -149,7 +183,8 @@ const WalletPage = ({ totalAmount }) => {
                         ml={["5%", "5%", "2%"]}
                         color="#fff"
                     >
-                        Maximum usable Bonus per match is 10% of the contest entry fee
+                        Maximum usable Bonus per match is 10% of the contest
+                        entry fee
                         <Text
                             variant="hint"
                             fontSize={["10px", "12px", "16px"]}
@@ -158,13 +193,15 @@ const WalletPage = ({ totalAmount }) => {
                             cursor="pointer"
                             color="primary"
                             onClick={() => {
-                                router.push(process.env.NEXT_PUBLIC_WORDPRESS_URL + "/terms-conditions");
+                                router.push(
+                                    process.env.NEXT_PUBLIC_WORDPRESS_URL +
+                                        "/terms-conditions"
+                                );
                             }}
                         >
                             Know more....
                         </Text>
                     </Text>
-
                 </Flex>
             </Flex>
 
