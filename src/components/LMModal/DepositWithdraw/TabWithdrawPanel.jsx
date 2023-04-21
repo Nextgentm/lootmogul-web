@@ -229,7 +229,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 } else
                     setAlertShow({
                         isOpen: true,
-                        msg: `Withdraw minimum ${numberOfChips} 656565 chips`,
+                        msg: `Withdraw minimum ${numberOfChips} chips`,
                         title: "Oops!!"
                     });
             } else
