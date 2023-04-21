@@ -216,19 +216,19 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                         setAlertShow({
                             isOpen: true,
                             msg: "Enter Valid Paypal registered id",
-                            title: "Oopps!!"
+                            title: "Oops!!"
                         });
                 } else
                     setAlertShow({
                         isOpen: true,
                         msg: `Withdraw minimum ${numberOfChips} chips`,
-                        title: "Oopps!!"
+                        title: "Oops!!"
                     });
             } else
                 setAlertShow({
                     isOpen: true,
                     msg: `Withdraw minimum ${numberOfChips} chips`,
-                    title: "Oopps!!"
+                    title: "Oops!!"
                 });
         } else if (withdrawalType === "crypto") {
             if (amount) {
@@ -238,13 +238,13 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     setAlertShow({
                         isOpen: true,
                         msg: "Withdraw minimum 700 chips",
-                        title: "Oopps!!"
+                        title: "Oops!!"
                     });
             } else
                 setAlertShow({
                     isOpen: true,
                     msg: "Withdraw minimum 700 chips",
-                    title: "Oopps!!"
+                    title: "Oops!!"
                 });
         } else {
             if (amount) {
@@ -253,7 +253,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                         setAlertShow({
                             isOpen: true,
                             msg: "Enter Account Number",
-                            title: "Oopps!!"
+                            title: "Oops!!"
 
                         });
                     else {
@@ -263,14 +263,14 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     setAlertShow({
                         isOpen: true,
                         msg: "Withdraw minium 700 chips",
-                        title: "Oopps!!"
+                        title: "Oops!!"
 
                     });
             } else
                 setAlertShow({
                     isOpen: true,
                     msg: "Withdraw minium 700 chips",
-                    title: "Oopps!!"
+                    title: "Oops!!"
                 });
         }
     };
@@ -302,7 +302,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             .catch((error) => {
                 setAlertShow({
                     isOpen: true, msg: error.message,
-                    title: "Oopps!!"
+                    title: "Oops!!"
                 });
             });
     };
