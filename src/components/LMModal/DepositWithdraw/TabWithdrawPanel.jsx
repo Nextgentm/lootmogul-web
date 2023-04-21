@@ -35,7 +35,11 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     const [cashOption, setCashOption] = useState([]);
     const [account, setAccount] = useState(null);
     const [accepted, setAccepted] = useState(false);
-    const [alert, setAlertShow] = useState({ iOpen: false, msg: "", title: '' });
+    const [alert, setAlertShow] = useState({
+        iOpen: false,
+        msg: "",
+        title: ""
+    });
     const currentSize = useBreakpointValue({
         base: "base",
         sm: "sm",
@@ -209,7 +213,11 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         }
         if (withdrawalType === "paypal") {
             if (amount) {
-                if (amount >= numberOfChips) {
+                console.log("numberOfChipsnumberOfChips", typeof(numberOfChips));
+                console.log("amountamountamountamount", typeof(amount));
+                console.log("amount >= numberOfChips", Number(amount) >= Number(numberOfChips));
+                if (Number(amount) >= numberOfChips) {
+                    console.log("condition true in if")
                     if (account || email) {
                         withdraw();
                     } else
@@ -221,7 +229,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 } else
                     setAlertShow({
                         isOpen: true,
-                        msg: `Withdraw minimum ${numberOfChips} chips`,
+                        msg: `Withdraw minimum ${numberOfChips} 656565 chips`,
                         title: "Oops!!"
                     });
             } else
@@ -254,7 +262,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                             isOpen: true,
                             msg: "Enter Account Number",
                             title: "Oops!!"
-
                         });
                     else {
                         withdraw();
@@ -264,7 +271,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                         isOpen: true,
                         msg: "Withdraw minium 700 chips",
                         title: "Oops!!"
-
                     });
             } else
                 setAlertShow({
@@ -296,12 +302,17 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         strapi
             .create("withdrawals", withDrawReqData)
             .then((res) => {
-                setAlertShow({ isOpen: true, msg: res.message, title: "Withdraw request added successfully" });
+                setAlertShow({
+                    isOpen: true,
+                    msg: res.message,
+                    title: "Withdraw request added successfully"
+                });
                 updateUser();
             })
             .catch((error) => {
                 setAlertShow({
-                    isOpen: true, msg: error.message,
+                    isOpen: true,
+                    msg: error.message,
                     title: "Oops!!"
                 });
             });
@@ -335,7 +346,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     };
     const setTotalAmount = async (addedAmount) => {
         console.log("addedAmount-=-=-", addedAmount);
-        if (typeof Number(addedAmount) == 'number') {
+        if (typeof Number(addedAmount) == "number") {
             let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
             if (currency == "BTC" || currency == "ETH") {
                 await setNumberOfAmount(
@@ -386,7 +397,9 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                             fontWeight="400"
                             display="inline-block"
                         >
-                            (Min Chips: {withdrawalType == 'crypto' ? 700 : numberOfChips} CHIPS)
+                            (Min Chips:{" "}
+                            {withdrawalType == "crypto" ? 700 : numberOfChips}{" "}
+                            CHIPS)
                         </Text>
                     </Heading>
                     <Flex
@@ -1134,7 +1147,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                                             window.open(
                                                 process.env
                                                     .NEXT_PUBLIC_WORDPRESS_URL +
-                                                "/terms-conditions#payment",
+                                                    "/terms-conditions#payment",
                                                 "_blank"
                                             );
                                         }}
@@ -1166,7 +1179,10 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                         isOpen={alert.isOpen}
                         onClose={() => {
                             setAlertShow({ isOpen: false });
-                            if (alert.title == "Withdraw request added successfully")
+                            if (
+                                alert.title ==
+                                "Withdraw request added successfully"
+                            )
                                 setShowModalwithdrawalpopup(false);
                         }}
                     />
