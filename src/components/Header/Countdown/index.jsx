@@ -37,7 +37,7 @@ function MyTimer({ expiryTimestamp }) {
             <Grid templateColumns='repeat(4, 1fr)' gap={1}>
                 <GridItem w='100%' h='50' p="5px 10px" bg='#F60C67' color="#fff" verticalAlign="middle" display="inline-grid" borderRadius="5px" fontSize="18px">
                   <Text>{leftdays}{rightdays}</Text>
-                  <Text fontFamily="var(--chakra-fonts-Blanch)" lineHeight="0">Days</Text></GridItem>
+                  <Text fontFamily="var(--chakra-fonts-Blanch)" lineHeight="0">Day</Text></GridItem>
                 <GridItem w='100%' h='50' p="5px 10px" bg='#F60C67' color="#fff" verticalAlign="middle" display="inline-grid" borderRadius="5px" fontSize="18px">
                   <Text>{lefthours}{righthours}</Text>
                   <Text fontFamily="var(--chakra-fonts-Blanch)" lineHeight="0">Hours</Text></GridItem>
