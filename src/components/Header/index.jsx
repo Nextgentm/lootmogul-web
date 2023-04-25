@@ -292,7 +292,7 @@ const Header = () => {
         togglePasswordChangedModal();
     };
 
-    const [annoucementBar, setaAnnoucementBar] = useState(true);
+    const [annoucementBar, setaAnnoucementBar] = useState(false);
     const onAnnoucementClick = () => setaAnnoucementBar(false)
 
     return (
