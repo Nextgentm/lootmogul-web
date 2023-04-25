@@ -123,6 +123,13 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
 
     useEffect(() => {
         if (withdrawalType == "crypto") {
+            setEmail("");
+            setAccount("");
+            setBankAddress("");
+            setBankName("");
+            setSwiftCode("");
+            setAccountNumber("");
+            setBeneficiaryName("");
             setCurrency("BTC");
             setMinimumDeposit(defaultCrytoAmount);
             setNumberOfChips(defaultCrytoChip);
@@ -136,8 +143,32 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 setNumberOfAmount((amount / numberOfAmount).toFixed(6));
             }
         }
-        if (withdrawalType == "paypal" || withdrawalType == "bank") {
+        if (withdrawalType == "paypal") {
             console.log("Setting USD", withdrawalType);
+            setCryptoAddress("");
+            setCryptoCurrency("");
+            setCryptoTokens("");
+            setCurrency("USD");
+            setBankAddress("");
+            setBankName("");
+            setSwiftCode("");
+            setAccountNumber("");
+            setBeneficiaryName("");
+            setMinimumDeposit(defaultFiatAmount);
+            setNumberOfChips(defaultFiatChip);
+            if (amount) {
+                let numberOfAmount =
+                    Number(defaultFiatChip) / Number(defaultFiatAmount);
+                setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+            }
+        }
+        if (withdrawalType == "bank") {
+            console.log("Setting USD", withdrawalType);
+            setEmail("");
+            setAccount("");
+            setCryptoAddress("");
+            setCryptoCurrency("");
+            setCryptoTokens("");
             setCurrency("USD");
             setMinimumDeposit(defaultFiatAmount);
             setNumberOfChips(defaultFiatChip);
@@ -213,11 +244,14 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         }
         if (withdrawalType === "paypal") {
             if (amount) {
-                console.log("numberOfChipsnumberOfChips", typeof(numberOfChips));
-                console.log("amountamountamountamount", typeof(amount));
-                console.log("amount >= numberOfChips", Number(amount) >= Number(numberOfChips));
+                console.log("numberOfChipsnumberOfChips", typeof numberOfChips);
+                console.log("amountamountamountamount", typeof amount);
+                console.log(
+                    "amount >= numberOfChips",
+                    Number(amount) >= Number(numberOfChips)
+                );
                 if (Number(amount) >= numberOfChips) {
-                    console.log("condition true in if")
+                    console.log("condition true in if");
                     if (account || email) {
                         withdraw();
                     } else
