@@ -115,7 +115,15 @@ const LMThumbnailCarousel = ({
              />
              </a>
         </div>
-       
+        <div>
+            <a href="/games/pro-cricket-champion">
+            <img 
+                src="/assets/skillgame/Pro-Cricket.png"
+                alt="CommandoBoat"
+                style={imagestyle}
+             />
+             </a>
+        </div>
     </Slider>;
     }
     else{
