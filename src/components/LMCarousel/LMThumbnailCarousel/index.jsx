@@ -115,15 +115,7 @@ const LMThumbnailCarousel = ({
              />
              </a>
         </div>
-        <div>
-            <a href="/games/commando-boat">
-            <img 
-                src="/assets/skillgame/CommandoBoat.png"
-                alt="CommandoBoat"
-                style={imagestyle}
-             />
-             </a>
-        </div>
+       
     </Slider>;
     }
     else{
