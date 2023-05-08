@@ -76,8 +76,13 @@ const LMThumbnailCarousel = ({
     if(slider_type == 'skillgame'){
         const imagestyle = {
             margin: "25px auto",
-          };
+        };
       
+        const cricketImageStyle = {
+            margin: "25px auto",
+            padding: "25px"
+        };
+
         return <Slider {...horizontalSettings}>
         <div>
             <a href="/games/hoop-star">
@@ -119,8 +124,8 @@ const LMThumbnailCarousel = ({
             <a href="/games/pro-cricket-champion">
             <img 
                 src="/assets/skillgame/Pro-Cricket.png"
-                alt="CommandoBoat"
-                style={imagestyle}
+                alt="Pro-Cricket"
+                style={cricketImageStyle}
              />
              </a>
         </div>
