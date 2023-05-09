@@ -157,8 +157,8 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             mt={0}
                             pl="6px"
                         >
-                            {contestmaster?.contest_section?.data?.name ==
-                            "Blockchain Games"
+                            {contestmaster?.game?.data?.config?.game ==
+                            "marketjs"
                                 ? nFormatter(contestmaster?.playCount, 1)
                                 : nFormatter(contestmaster?.roomsCount, 1) *
                                   2}{" "}
@@ -188,8 +188,8 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             w="90%"
                             onClick={(e) => {
                                 if (
-                                    contestmaster?.contest_section?.data
-                                        ?.name == "Blockchain Games"
+                                    contestmaster?.game?.data
+                                        ?.config?.game == "marketjs"
                                 ) {
                                     setIsFromNoLocationGame(true);
                                 }
