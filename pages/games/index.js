@@ -55,6 +55,9 @@ export async function getStaticProps() {
           },
         },
         reward: {},
+        game:{
+          fields:"*"
+        }
       },
 
       pagination: {
@@ -63,6 +66,7 @@ export async function getStaticProps() {
       },
     });
     if (res?.meta) {
+      console.log("res.data",res.data[0])
       data.push(res.data);
       if (pageCount == 1) {
         pageCount = res.meta.pagination.pageCount;
