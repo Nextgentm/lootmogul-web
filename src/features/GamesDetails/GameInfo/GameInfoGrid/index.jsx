@@ -10,6 +10,7 @@ import {
 import { nFormatter } from "../../../../utils/utils";
 
 const GameInfoGrid = ({ gameData }) => {
+    console.log("gameData",gameData)
     const gameInfo = [
         {
             label: gameData?.contest_section?.data?.name,
@@ -17,8 +18,8 @@ const GameInfoGrid = ({ gameData }) => {
         },
         {
             label:
-                gameData?.contest_section?.data?.name == "Blockchain Games"
-                    ? nFormatter(gameData?.playCount, 1)
+                gameData?.game?.data?.config.game == "marketjs"
+                    ? nFormatter(gameData?.playCount, 1)+" Players"
                     : nFormatter(gameData?.roomsCount, 1) * 2 + " players",
             icon: "games_players_icon.svg"
         },
