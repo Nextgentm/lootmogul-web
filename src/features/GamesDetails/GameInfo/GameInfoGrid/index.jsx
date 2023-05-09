@@ -18,7 +18,7 @@ const GameInfoGrid = ({ gameData }) => {
         },
         {
             label:
-                gameData?.game?.data?.config.game == "marketjs"
+                gameData?.game?.data?.config?.game == "marketjs"
                     ? nFormatter(gameData?.playCount, 1)+" Players"
                     : nFormatter(gameData?.roomsCount, 1) * 2 + " players",
             icon: "games_players_icon.svg"
