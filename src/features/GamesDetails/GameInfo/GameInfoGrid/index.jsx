@@ -10,7 +10,7 @@ import {
 import { nFormatter } from "../../../../utils/utils";
 
 const GameInfoGrid = ({ gameData }) => {
-    console.log("gameData",gameData)
+    console.log("gameData", gameData);
     const gameInfo = [
         {
             label: gameData?.contest_section?.data?.name,
@@ -19,10 +19,9 @@ const GameInfoGrid = ({ gameData }) => {
         {
             label:
                 gameData?.game?.data?.config?.game == "marketjs"
-                    ? nFormatter(gameData?.playCount, 1)+" Players"
-                    : nFormatter(gameData?.roomsCount, 1) * 2 + " players",
+                    ? nFormatter(gameData?.playCount, 1) + " Plays"
+                    : nFormatter(gameData?.roomsCount, 1) * 2 + " Plays",
             icon: "games_players_icon.svg"
-            
         },
         {
             label:
@@ -33,7 +32,10 @@ const GameInfoGrid = ({ gameData }) => {
             icon: "games_winners_icon.svg"
         },
         {
-            label: nFormatter(gameData?.ticketsCount, 1) + " Plays",
+            label:
+                gameData?.game?.data?.config?.game == "marketjs"
+                    ? nFormatter(gameData?.ticketsCount, 1) + " Players"
+                    : nFormatter(gameData?.ticketsCount, 1) + " Players",
             icon: "games_plays_icon.svg"
         }
     ];
