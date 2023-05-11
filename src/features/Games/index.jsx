@@ -21,7 +21,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
 
   useEffect(() => {
     let irs = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 100; i++) {
       irs[i] = React.createRef();
     }
     setItemRefs(irs);
@@ -80,6 +80,8 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
       setFeaturedGames(fg);
       
       setContestSections(contestSectionsData);
+      console.log(contestSectionsData);
+
       const ci = fg.map((item, index) => {
         return (
           <Link
@@ -268,7 +270,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
             contestSections.map((section, index) => (
               <Box
                 key={"sec-index-" + index}
-                ref={itemRefs[index]}
+                ref={itemRefs[section.priority]}
               // ref={(el) => {
               //   let iR = itemRefs;
               //   iR[index] = el;

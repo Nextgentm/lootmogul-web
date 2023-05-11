@@ -16,6 +16,13 @@ const SiteMap = () => {
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
                 _hover={{ textDecoration: "none" }}
+                href={process.env.NEXT_PUBLIC_WORDPRESS_URL+'/about-us/'}
+            >
+                <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>About us</Text>
+            </Link>
+            <Link
+                _focus={{ border: "none", boxShadow: "none" }}
+                _hover={{ textDecoration: "none" }}
                 href="https://metaverse.lootmogul.com/what-is-metaverse/"
             >
                 <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>What is Metaverse?</Text>
@@ -27,25 +34,14 @@ const SiteMap = () => {
             >
                 <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>What are Digital Collectibles?</Text>
             </Link>
-            <Link
-                _focus={{ border: "none", boxShadow: "none" }}
-                _hover={{ textDecoration: "none" }}
-                href={process.env.NEXT_PUBLIC_WORDPRESS_URL+'/about-us/'}
-            >
-                <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>About us</Text>
+            <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href={process.env.NEXT_PUBLIC_WORDPRESS_URL+"/press-releases/"}>
+                <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Press Releases</Text>
             </Link>
-            <Link
-                _focus={{ border: "none", boxShadow: "none" }}
-                _hover={{ textDecoration: "none" }}
-                href={process.env.NEXT_PUBLIC_WORDPRESS_URL+'/invest-in-lootmogul/'}
-            >
-                <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Invest In Lootmogul</Text>
+            <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href={process.env.NEXT_PUBLIC_WORDPRESS_URL+"/podcast-ama-sessions/"}>
+                <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Podcast & AMA Sessions</Text>
             </Link>
             <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href="/faq">
                 <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>FAQs</Text>
-            </Link>
-            <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} href={process.env.NEXT_PUBLIC_WORDPRESS_URL+"/press-releases/"}>
-                <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Press Releases</Text>
             </Link>
             <Link _focus={{ border: "none", boxShadow: "none" }} _hover={{ textDecoration: "none" }} isExternal href="https://metaverse.lootmogul.com/wp-content/uploads/2022/10/Litepaper.pdf">
                 <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2"  fontSize={["15px", "15px", "16px", "16px"]}>Litepaper</Text>
@@ -65,6 +61,13 @@ const SiteMap = () => {
                 
             >
                 <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Terms of Services</Text>
+            </Link>
+            <Link
+                _focus={{ border: "none", boxShadow: "none" }}
+                _hover={{ textDecoration: "none" }}
+                href={process.env.NEXT_PUBLIC_WORDPRESS_URL+'/invest-in-lootmogul/'}
+            >
+                <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Invest In Lootmogul</Text>
             </Link>
             {/* <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2">Blog</Text> */}
         </Box>
