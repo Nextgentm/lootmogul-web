@@ -80,7 +80,7 @@ export async function getStaticProps() {
   try {
     const contestSectionsRes = await fetch(
       process.env.NEXT_PUBLIC_STRAPI_API_URL +
-        "/api/contest-sections?populate=*&sort=priority"
+        "/api/contest-sections?sort=priority"
     );
 
     const contestSectionsData = await contestSectionsRes.json();
