@@ -20,6 +20,7 @@ const CollectiblesComponent = dynamic(
 export default function ColleNFTctiblePage({ nftCollections, seoData }) {
     return (
         <>
+        
             <SEOContainer
                 seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData}
             />

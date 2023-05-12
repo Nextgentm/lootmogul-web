@@ -1,6 +1,18 @@
 import { Text, Box, SimpleGrid, Image, Button } from "@chakra-ui/react";
 import React from "react";
 const ExploreTrivia = ({ section, executeScroll }) => {
+  const results = []
+  
+  section.forEach((value) => {
+    if(value?.contestmasters?.data?.length > 0){
+          results.push({
+              id: value.priority,
+              label: value.label || value.name,
+              icon: value.image.data?.url || "/assets/designupdate1/games_influencer_tournament.svg",
+          });
+        }  
+    });
+
   const trivias = [
     section?.filter((item) => {
       if (
@@ -60,13 +72,13 @@ const ExploreTrivia = ({ section, executeScroll }) => {
       </Text>
 
       <SimpleGrid
-        columns={[1, 1, 2, trivias?.length >= 5 ? 5 : trivias?.length, trivias?.length >= 5 ? 5 : trivias?.length]}
+        columns={[1, 1, 2, results?.length >= 5 ? 5 : results?.length, results?.length >= 5 ? 5 : results?.length]}
         w="100%"
         px={["5%"]}
         mt={["20px", 0]}
         flexWrap="wrap"
       >
-        {trivias.map((item, index) => (
+        {results.map((item, index) => (
                     
           <Button
             onClick={() => {
@@ -87,7 +99,7 @@ const ExploreTrivia = ({ section, executeScroll }) => {
               boxSize="55px"
               alt={item.icon}
               objectFit={"contain"}
-              src={`/assets/designupdate1/${item.icon}`}
+              src={`${item.icon}`}
             />
 
             <Text
