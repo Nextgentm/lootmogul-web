@@ -145,7 +145,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                     executeScroll(0);
                   }}
                 >
-                  Play Now
+                  Play Now here
                 </Button>
               </Box>
             </Box>
