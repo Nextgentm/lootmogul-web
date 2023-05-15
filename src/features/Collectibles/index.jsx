@@ -7,7 +7,8 @@ import {
     Text,
     Input,
     InputGroup,
-    InputLeftElement
+    InputLeftElement,
+    Link
 } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 import MultipleLoggedInUser from "../../components/MultipleLoggedInUser";
@@ -148,14 +149,33 @@ const Collectibles = memo(({ data, banner }) => {
                     alignItems="center"
                     flexDirection={["column", "column", "row"]}
                 >
-                    <Text
+                    <Button
                         color="white"
-                        fontSize={["3em", "4em"]}
                         fontFamily="Blanch"
                         inlineSize={"100"}
+                        w={["90vw", "90vw", "auto"]}
+                        mr={["0px", "0px", "15px"]}
+                        ml={["15px", "0px", "0px"]}
+                        mt="20px"
+                        mb="20px"
+                        fontSize={[
+                            "40px !important",
+                            "40px !important",
+                            "36px !important"
+                        ]}
+                        fontWeight={500}
+                        variant={"segment"}
+                        _focus={{
+                            bgImage:
+                                "linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                        }}
+                        bgImage={
+                            "linear-gradient(90deg, #E90A63 0%, #481A7F 100%);"
+                        }
                     >
-                        EXPLORE
-                    </Text>
+                       <Link isExternal href={process.env.NEXT_PUBLIC_MARKETPLACE_URL}> EXPLORE Marketplace </Link>
+                    </Button>
+                    
                     {/* desktop Filters */}
 
                     {(!isMobileDevice && selectedCategory.toLowerCase() !== defaultCategories.toLowerCase()) && <Flex alignItems="center" pos="relative">
