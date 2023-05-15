@@ -142,7 +142,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   fontSize={["20px", "20px", "24px"]}
                   fontWeight="normal"
                   onClick={() => {
-                    executeScroll(0);
+                    executeScroll(1);
                   }}
                 >
                   Play Now here
