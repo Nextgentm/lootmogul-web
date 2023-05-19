@@ -7,6 +7,8 @@ import GamesCategories from "./GamesCategories";
 import ExploreTrivia from "./ExploreTrivia";
 import GameCarouselCard from "./GameCarouselCard";
 import LMThumbnailCarousel from "../../components/LMCarousel/LMThumbnailCarousel";
+import Banner from "../../components/Games/Banner";
+
 import React from "react";
 import MultipleLoggedInUser from "../../components/MultipleLoggedInUser";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
@@ -102,193 +104,85 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
   }, [contestmasters, contestSectionsData]);
 
   return (
-    <Box mx={[4, 8]}>
-      <Box mb={"10vw"}>
-        <Box>
-          <Flex direction={["column", "column", "column", "row"]}>
-            <Box w={["100%", "100%", "100%", "70%"]}>
-              <Box mt={!isMobileDevice ? 26 : 0}>
-                <Text
+    <Box> 
+      <Box className="top_game_banner">
+       <Banner executeScroll={executeScroll} />
+      </Box> 
+      {isMobileDevice && <Box>
+        <Flex direction={["column", "column", "column", "row"]}>
+          <Box w={["100%", "100%", "100%", "100%"]}>
+              <Box mt={!isMobileDevice ? 25 : 65} ml="30px">
+                  <Text
                   variant="headText"
                   fontSize={[
-                    "70px",
-                    "70px",
-                    "100px",
+                      "50px",
+                      "50px",
+                      "70px",
                   ]}
                   mb={0}
                   fontFamily="var(--chakra-fonts-Blanch)"
-                  lineHeight="1"
+                  lineHeight={[
+                      "50px",
+                      "50px",
+                      "60px",
+                  ]}
                   textShadow="unset"
-                >
+                  >
                   Join the fun and win big
                   <br />
                   with our exciting games!
-                </Text>
+                  </Text>
 
-                <Text
+                  <Text
                   color="#FFF !important"
-                  fontSize={["18px", "18px", "25px", "1.3em"]}
-                  lineHeight={["35px", "35px", "40px"]}
+                  fontSize={["14px", "16px", "25px", "1.3em"]}
+                  lineHeight={["14px", "18px", "40px"]}
                   fontWeight="normal"
                   width={["100%", "100%", "100%", "50%"]}
                   my="1em"
-                >
+                  >
                   Get a chance to win amazing prizes
-                </Text>
-
-                <Button
-                  mt={6}
-                  mb={6}
-                  fontSize={["20px", "20px", "24px"]}
-                  fontWeight="normal"
-                  onClick={() => {
-                    executeScroll(1);
-                  }}
+                  </Text>
+                  
+              </Box>
+          </Box>
+        </Flex>
+      </Box>
+      }
+      <Box mx={[4, 8]}>
+        <Box mb={"10vw"}>
+          <ExploreTrivia
+            section={contestSections}
+            executeScroll={executeScroll}
+          />
+        
+          <Box>
+            {contestSections &&
+              contestSections.map((section, index) => (
+                <Box
+                  key={"sec-index-" + index}
+                  ref={itemRefs[section.priority]}
+                // ref={(el) => {
+                //   let iR = itemRefs;
+                //   iR[index] = el;
+                //   setItemRefs(iR);
+                // }}
                 >
-                  Play Now
-                </Button>
-              </Box>
-            </Box>
-            <Box
-              w={["100%", "100%", "100%", "30%"]}
-              m="auto"
-              bgSize="cover"
-              textAlign={"center"}
-              px={10}
-              pb={12}
-            >
-              {carouselItem && (
-                <LMThumbnailCarousel
-                  isLimitedDots={true}
-                  disableDots={true}
-                  autoplaySpeed={5000}
-                  children1={carouselItem}
-                  slider_type="skillgame"
-                ></LMThumbnailCarousel>
-              )}
-            </Box>
-          </Flex>
-        </Box>
-
-        <ExploreTrivia
-          section={contestSections}
-          executeScroll={executeScroll}
-        />
-        {/* <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
-          <Box p="2">
-            <Heading variant="sectionTitle">MarketJs Tournament</Heading>
+                  {section?.contestmasters?.data &&
+                    section?.contestmasters?.data.length > 0 && (
+                      <GamesCategories
+                        key={`games-${index}`}
+                        isMobileDevice={isMobileDevice}
+                        section={section}
+                      />
+                    )}
+                </Box>
+              ))}
           </Box>
-        </Flex>
-        <Box mx={[2.5, 0]}>
-          <ScrollMenu
-            LeftArrow={LeftArrow}
-            RightArrow={RightArrow}
-            apiRef={ref}
-          >
-            <MarketJs style={{
-              w: [
-                "75vw",
-                "75vw",
-                "370px",
-                "370px"
-              ],
-              mx: 3
-            }}
-              imgUrl="./assets/FlickSoccer.png"
-              author="Flick soccer"
-              key="Flick soccer"
-              sectionName={'Arcade'}
-              gameUrl="https://d3vhkc3gcq7ogm.cloudfront.net/en/flick-soccer-lootmogul/index.html?tournament_id=3&game_id=4"
-            />
-            <MarketJs style={{
-              w: [
-                "75vw",
-                "75vw",
-                "370px",
-                "370px"
-              ],
-              mx: 3
-            }}
-              imgUrl="./assets/hoop-star.jpeg"
-              author="Hoop star"
-              key="Hoop star"
-              sectionName={'Arcade'}
-              gameUrl="https://d3vhkc3gcq7ogm.cloudfront.net/en/hoop-star-lootmogul/index.html?tournament_id=1&game_id=2"
-            />
-          </ScrollMenu>
-        </Box>
 
-        <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
-          <Box p="2">
-            <Heading variant="sectionTitle">Gamepix Tournament</Heading>
-          </Box>
-        </Flex>
-        <Box mx={[2.5, 0]}>
-          <ScrollMenu
-            LeftArrow={LeftArrow}
-            RightArrow={RightArrow}
-            apiRef={ref}
-          >
-            <GamePixCard style={{
-              w: [
-                "75vw",
-                "75vw",
-                "370px",
-                "370px"
-              ],
-              mx: 3
-            }}
-              imgUrl="https://games.assets.gamepix.com/2TM7A/thumbnail/small.png"
-              author="Football Masters"
-              key="Football Masters"
-              sectionName={'Arcade'}
-              gameUrl="football-masters"
-              gameid='1'
-            />
-            <GamePixCard style={{
-              w: [
-                "75vw",
-                "75vw",
-                "370px",
-                "370px"
-              ],
-              mx: 3
-            }}
-              imgUrl="https://games.assets.gamepix.com/35LBE/thumbnail/small.png"
-              author="Basketball Stars"
-              key="Basketball Stars"
-              sectionName={'Arcade'}
-              gameUrl="basketball-stars"
-              gameid='1'
-            />
-          </ScrollMenu>
-        </Box> */}
-        <Box>
-          {contestSections &&
-            contestSections.map((section, index) => (
-              <Box
-                key={"sec-index-" + index}
-                ref={itemRefs[section.priority]}
-              // ref={(el) => {
-              //   let iR = itemRefs;
-              //   iR[index] = el;
-              //   setItemRefs(iR);
-              // }}
-              >
-                {section?.contestmasters?.data &&
-                  section?.contestmasters?.data.length > 0 && (
-                    <GamesCategories
-                      key={`games-${index}`}
-                      isMobileDevice={isMobileDevice}
-                      section={section}
-                    />
-                  )}
-              </Box>
-            ))}
+          {bottomBanners && <BottomBanners bannersList={bottomBanners} />}
+        
         </Box>
-
-        {bottomBanners && <BottomBanners bannersList={bottomBanners} />}
-      
       </Box>
     </Box>
   );

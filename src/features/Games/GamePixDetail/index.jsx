@@ -180,7 +180,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
 
     return (
         <div id="idDiv" style={{ height: '100dvh' }}>
-            <MultipleLoggedInUser />
+            {/* <MultipleLoggedInUser /> */}
             <AlertDialog
                 motionPreset="slideInBottom"
                 onClose={handleClose}
