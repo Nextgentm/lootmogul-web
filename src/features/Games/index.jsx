@@ -7,6 +7,8 @@ import GamesCategories from "./GamesCategories";
 import ExploreTrivia from "./ExploreTrivia";
 import GameCarouselCard from "./GameCarouselCard";
 import LMThumbnailCarousel from "../../components/LMCarousel/LMThumbnailCarousel";
+import Banner from "../../components/Games/Banner";
+
 import React from "react";
 import MultipleLoggedInUser from "../../components/MultipleLoggedInUser";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
@@ -102,8 +104,10 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
   }, [contestmasters, contestSectionsData]);
 
   return (
+    
     <Box mx={[4, 8]}>
       <Box mb={"10vw"}>
+      <Banner></Banner>
         <Box>
           <Flex direction={["column", "column", "column", "row"]}>
             <Box w={["100%", "100%", "100%", "70%"]}>
