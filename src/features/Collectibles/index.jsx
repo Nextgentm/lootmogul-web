@@ -149,7 +149,7 @@ const Collectibles = memo(({ data, banner }) => {
                     alignItems="center"
                     flexDirection={["column", "column", "row"]}
                 >
-                    <Button
+                    {/*<Button
                         color="white"
                         fontFamily="Blanch"
                         inlineSize={"100"}
@@ -174,7 +174,7 @@ const Collectibles = memo(({ data, banner }) => {
                         }
                     >
                        <Link isExternal href={process.env.NEXT_PUBLIC_MARKETPLACE_URL}> EXPLORE Marketplace </Link>
-                    </Button>
+                    </Button>*/}
                     
                     {/* desktop Filters */}
 
