@@ -19,7 +19,7 @@ const Banner = ({
                 onClick={onClick}
             >
                 <img
-                    src="/assets/skillgame/left-arrow.png"
+                    src="/assets/designupdate1/arrow-left-selected.png"
                     alt="Left"
                 />
             </Box>
@@ -34,7 +34,7 @@ const Banner = ({
                 onClick={onClick}
             >
                 <img
-                    src="/assets/skillgame/right-arrow.png"
+                    src="/assets/designupdate1/arrow-right-selected.png"
                     alt="Right"
                 />
             </Box>
@@ -75,10 +75,12 @@ const Banner = ({
 
         const imagestyle = {
             margin: "auto",
+            width: "100%",
         };
       
         const cricketImageStyle = {
             margin: "auto",
+            width: "100%"
         };
 
         return <Slider {...horizontalSettings}>
