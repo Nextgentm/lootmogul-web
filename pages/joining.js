@@ -107,7 +107,7 @@ const Joining = (props) => {
   useEffect(() => {}, [user, currentContest]);
 
   return (
-    <>{!props.loading &&  users?.length>0 && <PlayersJoining timeLeft={timer} users={users} />}</>
+    <>{!props.loading &&  users?.length>0 && timer &&<PlayersJoining timeLeft={timer} users={users} />}</>
   );
 };
 
