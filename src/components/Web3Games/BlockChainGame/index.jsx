@@ -1,9 +1,12 @@
 import { Box, Flex, Image, Text, VStack, Link } from '@chakra-ui/react'
 import React from 'react'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import GameCategory from "./GameCategory";
+import { AppContext } from "../../../utils/AppContext/index";
 
 const BlackChainGame = ({contestmasters,contestSectionsData}) => {
-    console.log(contestmasters);
+    //console.log(contestSectionsData);
+    const { isMobileDevice } = useContext(AppContext);
     const [contestSections, setContestSections] = useState([]);
     useEffect(() => {
         if (contestmasters) {
@@ -55,211 +58,29 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                     fontFamily="var(--chakra-fonts-Blanch)"
                     lineHeight="65px"
                     textAlign="center"
+                    mb="5%"
                 >
                     Explore Ambassador Blockchain Games
                 </Text>
-                <Flex
-                    flexDir={["column", "column", "column", "row"]}
-                    w="100%"
-                    alignItems={"center"}
-                    p="2% 5%"
-                >
-                <Link
-                    href={"/games/" }
-                    passhref="true"
-                    _hover={{ border: "none", textDecoration: "none" }}
-                    _focus={{ border: "none", textDecoration: "none" }}
-                    key={`igc-1`}
-                >
-                    <VStack>
-                        <Flex
-                            flexDir={"column"}
-                            textAlign="center"
-                            bgImage={"/assets/designupdate1/gamecard_portrait.png"}
-                            bgPosition="center"
-                            bgRepeat="no-repeat"
-                            bgSize="100% 100%"
-                            cursor="pointer"
-                            width={"100%"}
-                            height={["360px", "500px", "400px"]}
+                <Box>
+                    {contestSections &&
+                    contestSections.map((section, index) => (
+                        <Box
+                        key={"sec-index-" + index}
+                        
                         >
-                            <Flex
-                                m="auto"
-                                w="50%"
-                                height={["260px", "400px", "300px"]}
-                                className="influencerdiv"
-                            >
-                                <Image
-                                    objectFit="contain"
-                                    alt="Image"
-                                    layout="fill"
-                                    w="450px"
-                                    src="/assets/Contest_Image.png"
-                                />
-                            </Flex>
-                            <Text
-                                mb={10}
-                                color="#FDFFE5"
-                                fontSize={["16px"]}
-                                fontWeight={"600"}
-                                align={"center"}
-                                mx={10}
-                                textOverflow="ellipsis"
-                                overflow="visible"
-                            >
-                                T20 Pro Cricket Championship
-                            </Text>
-                        </Flex>
-                    </VStack>
-                </Link>
-                <Link
-                    href={"/games/" }
-                    passhref="true"
-                    _hover={{ border: "none", textDecoration: "none" }}
-                    _focus={{ border: "none", textDecoration: "none" }}
-                    key={`igc-1`}
-                >
-                    <VStack>
-                        <Flex
-                            flexDir={"column"}
-                            textAlign="center"
-                            bgImage={"/assets/designupdate1/gamecard_portrait.png"}
-                            bgPosition="center"
-                            bgRepeat="no-repeat"
-                            bgSize="100% 100%"
-                            cursor="pointer"
-                            width={"100%"}
-                            height={["360px", "500px", "400px"]}
-                        >
-                            <Flex
-                                m="auto"
-                                w="50%"
-                                height={["260px", "400px", "300px"]}
-                                className="influencerdiv"
-                            >
-                                <Image
-                                    objectFit="contain"
-                                    alt="Image"
-                                    layout="fill"
-                                    w="450px"
-                                    src="/assets/Contest_Image.png"
-                                />
-                            </Flex>
-                            <Text
-                                mb={10}
-                                color="#FDFFE5"
-                                fontSize={["16px"]}
-                                fontWeight={"600"}
-                                align={"center"}
-                                mx={10}
-                                textOverflow="ellipsis"
-                                overflow="visible"
-                            >
-                                T20 Pro Cricket Championship
-                            </Text>
-                        </Flex>
-                    </VStack>
-                </Link>
-                <Link
-                    href={"/games/" }
-                    passhref="true"
-                    _hover={{ border: "none", textDecoration: "none" }}
-                    _focus={{ border: "none", textDecoration: "none" }}
-                    key={`igc-1`}
-                >
-                    <VStack>
-                        <Flex
-                            flexDir={"column"}
-                            textAlign="center"
-                            bgImage={"/assets/designupdate1/gamecard_portrait.png"}
-                            bgPosition="center"
-                            bgRepeat="no-repeat"
-                            bgSize="100% 100%"
-                            cursor="pointer"
-                            width={"100%"}
-                            height={["360px", "500px", "400px"]}
-                        >
-                            <Flex
-                                m="auto"
-                                w="50%"
-                                height={["260px", "400px", "300px"]}
-                                className="influencerdiv"
-                            >
-                                <Image
-                                    objectFit="contain"
-                                    alt="Image"
-                                    layout="fill"
-                                    w="450px"
-                                    src="/assets/Contest_Image.png"
-                                />
-                            </Flex>
-                            <Text
-                                mb={10}
-                                color="#FDFFE5"
-                                fontSize={["16px"]}
-                                fontWeight={"600"}
-                                align={"center"}
-                                mx={10}
-                                textOverflow="ellipsis"
-                                overflow="visible"
-                            >
-                                T20 Pro Cricket Championship
-                            </Text>
-                        </Flex>
-                    </VStack>
-                </Link>
-                <Link
-                    href={"/games/" }
-                    passhref="true"
-                    _hover={{ border: "none", textDecoration: "none" }}
-                    _focus={{ border: "none", textDecoration: "none" }}
-                    key={`igc-1`}
-                >
-                    <VStack>
-                        <Flex
-                            flexDir={"column"}
-                            textAlign="center"
-                            bgImage={"/assets/designupdate1/gamecard_portrait.png"}
-                            bgPosition="center"
-                            bgRepeat="no-repeat"
-                            bgSize="100% 100%"
-                            cursor="pointer"
-                            width={"100%"}
-                            height={["360px", "500px", "400px"]}
-                        >
-                            <Flex
-                                m="auto"
-                                w="50%"
-                                height={["260px", "400px", "300px"]}
-                                className="influencerdiv"
-                            >
-                                <Image
-                                    objectFit="contain"
-                                    alt="Image"
-                                    layout="fill"
-                                    w="450px"
-                                    src="/assets/Contest_Image.png"
-                                />
-                            </Flex>
-                            <Text
-                                mb={10}
-                                color="#FDFFE5"
-                                fontSize={["16px"]}
-                                fontWeight={"600"}
-                                align={"center"}
-                                mx={10}
-                                textOverflow="ellipsis"
-                                overflow="visible"
-                            >
-                                T20 Pro Cricket Championship
-                            </Text>
-                        </Flex>
-                    </VStack>
-                </Link>
-                
-                </Flex>
+                        {section?.contestmasters?.data &&
+                            section?.contestmasters?.data.length > 0 && (
+                            <GameCategory
+                                key={`games-${index}`}
+                                isMobileDevice={isMobileDevice}
+                                section={section}
+                            />
+                            )}
+                        </Box>
+                    ))}
+                </Box>
             </Box>
-            
         </Flex>
         <Flex
             flexDir={["column", "column", "column", "row"]}
@@ -282,15 +103,51 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                     fontFamily="var(--chakra-fonts-Blanch)"
                     lineHeight="65px"
                     textAlign="center"
+                    mb="1%"
                 >
                     Play Free Games
                 </Text>
-
-                
+                <Text
+                    color="white"
+                    fontSize={[
+                        "18",
+                        "18",
+                        "18",
+                        "18",
+                        "18"
+                    ]}
+                    mt="20px"
+                    fontFamily="Sora"
+                    fontWeight="normal"
+                    lineHeight={["28px", "28px", "28px"]}
+                    width={["100%", "100%", "80%"]}
+                    textAlign="center"
+                    m="auto"
+                    mb="4%"
+                >
+                    Here best of all LootMogul blockchain games are free to play, allowing you to jump right into the action without any cost. Join the LootMogul community, show off your skills, and become a true champion on the field.
+                </Text>
+                <Box>
+                    {contestSections &&
+                    contestSections.map((section, index) => (
+                        <Box
+                        key={"sec-index-" + index}
+                        
+                        >
+                        {section?.contestmasters?.data &&
+                            section?.contestmasters?.data.length > 0 && (
+                            <GameCategory
+                                key={`games-${index}`}
+                                isMobileDevice={isMobileDevice}
+                                section={section}
+                            />
+                            )}
+                        </Box>
+                    ))}
+                </Box>
             </Box>
-            
         </Flex>
-        </Box>
+    </Box>
     )
 }
 
