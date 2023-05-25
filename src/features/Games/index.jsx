@@ -106,7 +106,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
   return (
     <Box> 
       <Box className="top_game_banner">
-       <Banner/>
+       <Banner executeScroll={executeScroll} />
       </Box> 
       <Box mx={[4, 8]}>
         <Box mb={"10vw"}>
