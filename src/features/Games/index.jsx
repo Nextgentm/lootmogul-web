@@ -108,6 +108,47 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
       <Box className="top_game_banner">
        <Banner executeScroll={executeScroll} />
       </Box> 
+      {isMobileDevice && <Box>
+        <Flex direction={["column", "column", "column", "row"]}>
+          <Box w={["100%", "100%", "100%", "100%"]}>
+              <Box mt={!isMobileDevice ? 25 : 65} ml="30px">
+                  <Text
+                  variant="headText"
+                  fontSize={[
+                      "50px",
+                      "50px",
+                      "70px",
+                  ]}
+                  mb={0}
+                  fontFamily="var(--chakra-fonts-Blanch)"
+                  lineHeight={[
+                      "50px",
+                      "50px",
+                      "60px",
+                  ]}
+                  textShadow="unset"
+                  >
+                  Join the fun and win big
+                  <br />
+                  with our exciting games!
+                  </Text>
+
+                  <Text
+                  color="#FFF !important"
+                  fontSize={["14px", "16px", "25px", "1.3em"]}
+                  lineHeight={["14px", "18px", "40px"]}
+                  fontWeight="normal"
+                  width={["100%", "100%", "100%", "50%"]}
+                  my="1em"
+                  >
+                  Get a chance to win amazing prizes
+                  </Text>
+                  
+              </Box>
+          </Box>
+        </Flex>
+      </Box>
+      }
       <Box mx={[4, 8]}>
         <Box mb={"10vw"}>
           <ExploreTrivia
