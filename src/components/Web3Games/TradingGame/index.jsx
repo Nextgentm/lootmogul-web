@@ -46,19 +46,25 @@ const TradingGame = () => {
                 >
                     Are You Ready for the Ultimate Cricket Challenge? Play and Win Daily in Our T20 Pro Cricket Contest. One top performer gets to win a prize of INR 500* every day. The contest is free to join.
                 </Text>
-
-                <Button
-                    bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
-                    filter="drop-shadow(0 0 20px #FF0080)"
-                    boxShadow="inset 0 0 0px 0px #481A7F"
-                    width="180px"
-                    fontSize="21px"
-                    fontWeight="500"
-                    p="23px"
-                    mt="20px"
-                    >
-                    Play Now
-                </Button>
+                <Link
+                    href={"/games" }
+                    _hover={{ border: "none", textDecoration: "none" }}
+                    _focus={{ border: "none", textDecoration: "none" }}
+                    key={`igc-1`}
+                >
+                    <Button
+                        bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                        filter="drop-shadow(0 0 20px #FF0080)"
+                        boxShadow="inset 0 0 0px 0px #481A7F"
+                        width="180px"
+                        fontSize="21px"
+                        fontWeight="500"
+                        p="28px"
+                        mt="30px"
+                        >
+                        Play Now
+                    </Button>
+                </Link>    
             </Box>
             <Box
                 bgSize="cover"
@@ -68,8 +74,7 @@ const TradingGame = () => {
                 width={["30%", "30%", "30%", "30%"]}
             >
                 <Link
-                    href={"/games/" }
-                    passhref="true"
+                    href={"/games" }
                     _hover={{ border: "none", textDecoration: "none" }}
                     _focus={{ border: "none", textDecoration: "none" }}
                     key={`igc-1`}

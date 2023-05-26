@@ -1,9 +1,29 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react'
+import { Box, Flex, Image, Text, useDisclosure } from '@chakra-ui/react'
 import React from 'react'
+import { useContext, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { AppContext } from "../../../utils/AppContext";
+
 const Login = dynamic(() => import("../../../features/Login"));
 
 const Banner = ({ getBannerImage }) => {
+    const [isLoginModalActive, setLoginModalActive] = useState(true);
+    const { user } = useContext(AppContext);
+    
+    const toggleLoginModal = () => {
+        setLoginModalActive(!isLoginModalActive);
+    };
+
+    const OnLoginClose = async () => {
+        toggleLoginModal();
+    };
+    
+    useEffect(() => {
+        if(user?.id){
+            setLoginModalActive(false);
+        }
+    },[user]);
+
     return (
         <Flex
             flexDir={["column", "column", "column", "row"]}
@@ -28,7 +48,7 @@ const Banner = ({ getBannerImage }) => {
                     fontFamily="var(--chakra-fonts-Blanch)"
                     lineHeight="65px"
                 >
-                    Join LootMogul Web3 Sports Gaming
+                    Join LootMogul Web3 <br/>Sports Gaming
                 </Text>
 
                 <Text
@@ -56,10 +76,13 @@ const Banner = ({ getBannerImage }) => {
                 pb={[0, 0, 0, 12]}
                 width={["120%", "120%", "120%", "50%"]}
             >
-                <Login
-                    isOpen='true'
-                    OnLoginClose='true'
-                />
+                <Box>                 
+                    {!user?.id && <Login
+                        isOpen={isLoginModalActive}
+                        OnLoginClose={OnLoginClose}
+                    />
+                    }
+                </Box>
             </Box>
         </Flex>
     )

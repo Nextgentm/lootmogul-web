@@ -41,7 +41,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            p="2% 5%"
+            p="2% 0%"
         >
             <Box
                 px={10}
@@ -87,7 +87,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            p="2% 5%"
+            p="2% 0%"
         >
             <Box
                 px={10}
@@ -141,7 +141,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                                 key={`games-${index}`}
                                 isMobileDevice={isMobileDevice}
                                 section={section}
-                                type="Free tournaments"
+                                type="Blockchain Games"
                             />
                             )}
                         </Box>
