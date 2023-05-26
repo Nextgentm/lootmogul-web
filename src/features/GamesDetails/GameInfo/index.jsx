@@ -161,7 +161,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
             />
           )}
         </Box>
-        <MultipleLoggedInUser />
+        {/* <MultipleLoggedInUser /> */}
       </Flex>
     </>
   );

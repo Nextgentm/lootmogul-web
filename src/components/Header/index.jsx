@@ -30,6 +30,8 @@ import NavDrawer from "./NavDrawer/index";
 import AutoLogout from "../AutoLogout";
 import CountDown from "./Countdown/index";
 
+import CookieConsent from "react-cookie-consent";
+
 const routes = [
     {
         label: "Home",
@@ -575,8 +577,23 @@ const Header = () => {
                     OnPasswordChangedClose={OnPasswordChangedClose}
                 />
             </Box>
-            <SessionTimeout />
-            <AutoLogout />
+            {/* <SessionTimeout /> */}
+            {/* <AutoLogout /> */}
+
+            {!isHideHeader && (
+                <CookieConsent
+                    location="bottom"
+                    buttonText="Accept"
+                    cookieName="CookieLawInfoConsent"
+                    style={{ background: "#100026", fontSize: "45px",fontFamily:"Blanch",lineHeight:"50px" }}
+                    buttonStyle={{ color:"#fff", background: "#e90a63", fontSize: "25px",lineHeight:"1", width:"100px" }}
+                    expires={365}
+                    >
+                    We value your privacy
+                    {" "}
+                    <br/><span style={{ fontSize: "25px",width:"75%",display:"block",lineHeight:"25px" }}>We use cookies on our website to give you the most relevant experience by remembering your preferences and repeat visits. By clicking “Accept”, you consent to the use of ALL the cookies.</span>
+                </CookieConsent>
+            )}
             </>
     );
 };

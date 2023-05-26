@@ -63,7 +63,7 @@ const Joining = (props) => {
 
   useEffect(() => {
     if (socket) {
-      
+      console.log("socket",socket)
       socket.on("enter_game_lobby", (data) => {
         setUsers(data.users);
 
@@ -107,7 +107,7 @@ const Joining = (props) => {
   useEffect(() => {}, [user, currentContest]);
 
   return (
-    <>{!props.loading &&  users?.length>0 && <PlayersJoining timeLeft={timer} users={users} />}</>
+    <>{!props.loading &&  users?.length>0 && timer &&<PlayersJoining timeLeft={timer} users={users} />}</>
   );
 };
 

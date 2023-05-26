@@ -362,7 +362,7 @@ const Collectibles = memo(({ data, banner }) => {
                 </Flex>
             </Box>
 
-            <MultipleLoggedInUser></MultipleLoggedInUser>
+            {/* <MultipleLoggedInUser></MultipleLoggedInUser> */}
         </Box>
         </>
     )
