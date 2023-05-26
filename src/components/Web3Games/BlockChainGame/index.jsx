@@ -75,6 +75,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                                 key={`games-${index}`}
                                 isMobileDevice={isMobileDevice}
                                 section={section}
+                                type="Blockchain Games"
                             />
                             )}
                         </Box>
@@ -140,6 +141,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                                 key={`games-${index}`}
                                 isMobileDevice={isMobileDevice}
                                 section={section}
+                                type="Free tournaments"
                             />
                             )}
                         </Box>

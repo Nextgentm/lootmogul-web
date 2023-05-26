@@ -21,7 +21,7 @@ import {
 //import Search from "../../Influencers/components/Search";
 import structuredClone from "@ungap/structured-clone";
 
-const GameCategory = ({ isMobileDevice, section }) => {
+const GameCategory = ({ isMobileDevice, section, type }) => {
     const ref = useRef();
     const [isLargerScreen] = useMediaQuery("(min-width: 2200px)");
     const arrowTrashhold = isMobileDevice ? 2 : isLargerScreen ? 7 : 5;
@@ -57,7 +57,7 @@ const GameCategory = ({ isMobileDevice, section }) => {
     return (
         <Box>
             <>
-                {content.name == "Blockchain Games" &&
+                {content.name == type &&
                 content?.contestmasters?.data?.length > 0 ? (
                     <Box mx={[2.5, 0]}>
                         <ScrollMenu
