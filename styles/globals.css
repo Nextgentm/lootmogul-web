@@ -253,3 +253,11 @@ nav {
     height: 55px;
     z-index: 9;
 }
+.slick-dots li.slick-active button::before {
+  color: #E90A63; 
+}
+.slick-dots li button::before {
+  font-size: 50px;
+  color: #481A7F;
+  opacity: 1;
+}

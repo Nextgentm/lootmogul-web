@@ -3,6 +3,7 @@ import React from 'react'
 import { useState, useEffect, useContext } from "react";
 import GameCategory from "./GameCategory";
 import { AppContext } from "../../../utils/AppContext/index";
+import Slider from "react-slick";
 
 const BlackChainGame = ({contestmasters,contestSectionsData}) => {
     //console.log(contestSectionsData);
@@ -35,13 +36,42 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
         }
       }, [contestmasters, contestSectionsData]);
       console.log(contestSections);
+
+      const horizontalSettings = {
+        dots: false,
+        infinite: true,
+        arrows: true,
+        cssEase: "linear",
+        slidesToShow: 1,
+        autoplay: false,
+        autoplaySpeed: 100,
+        dotsClass: "slick-dots slick-thumb customSlide limited-dots",
+        customPaging: (pagi, i) => (
+            <Box
+                height="5px"
+                width={["40px", "90px"]}
+                _before={{ width: "100%" }}
+                bg={
+                    pagi === currentSlideIndex
+                        ? "linear-gradient(180deg, #43C8FF 0%, #45E470 100%), #FFFFFF"
+                        : "#8E8E8E"
+                }
+                borderRadius="20px"
+                cursor="pointer"
+            />
+        )
+    };
+
     return (
+        
+
         <Box>
+            
         <Flex
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            p="2% 0%"
+            p="2% 5%"
         >
             <Box
                 px={10}
@@ -87,7 +117,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            p="2% 0%"
+            p="2% 5%"
         >
             <Box
                 px={10}

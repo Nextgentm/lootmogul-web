@@ -9,7 +9,10 @@ import {
     Heading,
     Spacer,
     ButtonGroup,
-    Button
+    Button,
+    Link,
+    VStack,
+    Image
 } from "@chakra-ui/react";
 import GamesCard from "../../../../features/InfluencerDetails/InfluencerGames/InfluencerGameCard";
 import { useRef, useState, useEffect } from "react";
@@ -20,6 +23,9 @@ import {
 } from "../../../../components/ContentNavigator/arrows";
 //import Search from "../../Influencers/components/Search";
 import structuredClone from "@ungap/structured-clone";
+import Slider from "react-slick";
+import { getStrapiMedia } from "../../../../utils/medias";
+import { nFormatter } from "../../../../utils/utils";
 
 const GameCategory = ({ isMobileDevice, section, type }) => {
     const ref = useRef();
@@ -29,7 +35,15 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
     const [searchText, setSearchText] = useState("");
     const [content, setContent] = useState({});
     const [contentBackUp, setContentBackUp] = useState({});
+    const [currentSlideIndex, setcurrentSlideIndex] = useState(0);
 
+    const horizontalSettings = {
+        dots: true,
+        infinite: true,
+        arrows: false,
+        slidesToShow: 6,
+        slidesToScroll: 6
+    };
     useEffect(() => {
         setTimeout(() => {      
             if (searchText !== '') {
@@ -57,40 +71,131 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
     return (
         <Box>
             <>
-                {content.name == type &&
-                content?.contestmasters?.data?.length > 0 ? (
-                    <Box mx={[2.5, 0]}>
-                        <ScrollMenu
-                            LeftArrow={LeftArrow}
-                            RightArrow={RightArrow}
-                            apiRef={ref}
-                        >
-                            {content?.contestmasters?.data
+            <Slider {...horizontalSettings}>
+                {content.name == type && content?.contestmasters?.data?.length > 0 && content?.contestmasters?.data
                                 ?.sort((a, b) => a.priority - b.priority)
-                                .map((cm, index) => (
-                                    <GamesCard
-                                        style={{
-                                            w: [
-                                                "75vw",
-                                                "75vw",
-                                                "370px",
-                                                "370px"
-                                            ],
-                                            mx: 3
-                                        }}
-                                        itemId={`item-${index}`}
-                                        key={`item-${index}`}
-                                        contestmaster={cm}
-                                        sectionName={content.name}
-                                    />
-                                ))}
-                        </ScrollMenu>
+                    .map((cm, index) => (
+                    <Box
+                        bgSize="cover"
+                        textAlign={"center"}
+                        px={[0, 0, 0, 5]}
+                        pb={[0, 0, 0, 12]}
+                    >
+                        <Link
+                           href={"/games/" + cm?.slug}
+                            _hover={{ border: "none", textDecoration: "none" }}
+                            _focus={{ border: "none", textDecoration: "none" }}
+                            key={index}
+                        >
+                            <VStack>
+                                <Flex
+                                    flexDir={"column"}
+                                    textAlign="center"
+                                    bgImage={"/assets/designupdate1/gamecard_portrait.png"}
+                                    bgPosition="center"
+                                    bgRepeat="no-repeat"
+                                    bgSize="100% 100%"
+                                    cursor="pointer"
+                                    width={"100%"}
+                                    height={["150px", "150px", "170px"]}
+                                >
+                                    <Flex
+                                        m="auto"
+                                        w="60%"
+                                        height={["150px", "150px", "150px"]}
+                                        className="influencerdiv"
+                                    >
+                                        <Image
+                                            objectFit="contain"
+                                            alt="Image"
+                                            layout="fill"
+                                            w="150px"
+                                            src={getStrapiMedia(cm?.icon?.data?.url)}
+                                        />
+                                        
+                                    </Flex>
+                                    
+                                </Flex>
+                            </VStack>
+                            <Flex>
+                                <Text
+                                    mt={"5px"}
+                                    color="#FDFFE5"
+                                    fontSize={["15px"]}
+                                    fontWeight={"600"}
+                                    align={"left"}
+                                    textOverflow="ellipsis"
+                                    overflow="visible"
+                                >
+                                    {cm.name}
+                                </Text>
+                            </Flex>
+                            <Flex
+                                w={"full"}
+                                align="left"
+                                justify={"space-between"}
+                                px="0"
+                            >
+                                <VStack style={{ "align-items": "flex-start" }}>
+                                    <Flex>
+                                        <Image
+                                            alt="tag"
+                                            boxSize={["15px", "17px"]}
+                                            src="/assets/Icon.png"
+                                            mt="3px"
+                                        />
+                                        <Text
+                                            ml="6px"
+                                            color="#FFF"
+                                            fontSize={["13px", "14px"]}
+                                            fontWeight="400"
+                                        >
+                                            {cm.entryFee != 0
+                                                ? "Entry Fee - " +
+                                                cm.entryFee +
+                                                " CHIPS"
+                                                : "Free"}
+                                        </Text>
+                                    </Flex>
+                                    <Text
+                                        color="#FFF"
+                                        fontSize={["12px", "13px"]}
+                                        fontWeight="200"
+                                        mt={0}
+                                        pl="6px"
+                                    >
+                                        {cm?.game?.data?.config?.game ==
+                                        "marketjs"
+                                            ? nFormatter(cm?.playCount, 1)
+                                            : nFormatter(cm?.roomsCount, 1) *
+                                            2}{" "}
+                                        Players Played
+                                    </Text>
+                                </VStack>
+                            </Flex>
+                            <Flex>
+                            {cm &&
+                            cm.contest &&
+                            (cm?.contest?.status === "active") && (
+                                <Button
+                                    variant="solid"
+                                    h={["25px", "25px"]}
+                                    fontSize={["15px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="95%"
+                                    p="25px"
+                                >
+                                    Play Now
+                                </Button>
+                            )}
+                            </Flex>
+                        </Link>
                     </Box>
-                ) : (
-                    <Box>
-                        
-                    </Box>
+                    )   
                 )}
+                </Slider>
             </>
         </Box>
     );
