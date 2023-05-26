@@ -42,7 +42,33 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
         infinite: true,
         arrows: false,
         slidesToShow: 6,
-        slidesToScroll: 6
+        slidesToScroll: 6,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+                initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+                }
+            }
+        ]
     };
     useEffect(() => {
         setTimeout(() => {      
@@ -78,8 +104,9 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
                     <Box
                         bgSize="cover"
                         textAlign={"center"}
-                        px={[0, 0, 0, 5]}
-                        pb={[0, 0, 0, 12]}
+                        px={[5, 5, 5, 5]}
+                        pb={[5, 5, 5, 12]}
+                        mt={[10, 10, 5, 0]}
                     >
                         <Link
                            href={"/games/" + cm?.slug}

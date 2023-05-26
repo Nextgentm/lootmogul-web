@@ -9,7 +9,7 @@ const Login = dynamic(() => import("../../../features/Login"));
 const Banner = ({ getBannerImage }) => {
     const [isLoginModalActive, setLoginModalActive] = useState(true);
     const { user } = useContext(AppContext);
-    
+    const { isMobileDevice } = useContext(AppContext);
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
     };
@@ -29,9 +29,10 @@ const Banner = ({ getBannerImage }) => {
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            backgroundImage="/assets/web-3Desktopbanner.jpg"
+            backgroundImage={isMobileDevice ? "/assets/web-3Mobilebanner.jpg" : "/assets/web-3Desktopbanner.jpg" }
             height="620px"
             p="2% 5%"
+            backgroundSize="contain"
         >
             <Box
                 px={10}
@@ -40,13 +41,17 @@ const Banner = ({ getBannerImage }) => {
                 <Text
                     variant="headText"
                     fontSize={[
-                        "70px",
-                        "70px",
+                        "52px",
+                        "52px",
                         "80px",
                     ]}
                     textShadow="0px 0px 10px #00034E94;"
                     fontFamily="var(--chakra-fonts-Blanch)"
-                    lineHeight="65px"
+                    lineHeight={[
+                        "42px",
+                        "42px",
+                        "65px",
+                    ]}
                 >
                     Join LootMogul Web3 <br/>Sports Gaming
                 </Text>
@@ -54,16 +59,16 @@ const Banner = ({ getBannerImage }) => {
                 <Text
                     color="white"
                     fontSize={[
-                        "18",
-                        "18",
-                        "18",
+                        "15",
+                        "15",
+                        "15",
                         "18",
                         "18"
                     ]}
                     mt="20px"
                     fontFamily="Sora"
                     fontWeight="normal"
-                    lineHeight={["28px", "28px", "28px"]}
+                    lineHeight={["20px", "20px", "28px"]}
                     width={["100%", "100%", "80%"]}
                 >
                     Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!

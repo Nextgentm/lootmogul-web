@@ -3,7 +3,6 @@ import React from 'react'
 import { useState, useEffect, useContext } from "react";
 import GameCategory from "./GameCategory";
 import { AppContext } from "../../../utils/AppContext/index";
-import Slider from "react-slick";
 
 const BlackChainGame = ({contestmasters,contestSectionsData}) => {
     //console.log(contestSectionsData);
@@ -37,56 +36,38 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
       }, [contestmasters, contestSectionsData]);
       console.log(contestSections);
 
-      const horizontalSettings = {
-        dots: false,
-        infinite: true,
-        arrows: true,
-        cssEase: "linear",
-        slidesToShow: 1,
-        autoplay: false,
-        autoplaySpeed: 100,
-        dotsClass: "slick-dots slick-thumb customSlide limited-dots",
-        customPaging: (pagi, i) => (
-            <Box
-                height="5px"
-                width={["40px", "90px"]}
-                _before={{ width: "100%" }}
-                bg={
-                    pagi === currentSlideIndex
-                        ? "linear-gradient(180deg, #43C8FF 0%, #45E470 100%), #FFFFFF"
-                        : "#8E8E8E"
-                }
-                borderRadius="20px"
-                cursor="pointer"
-            />
-        )
-    };
+     
 
-    return (
-        
-
-        <Box>
-            
+    return ( 
+    <Box>
         <Flex
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            p="2% 5%"
+            p={[
+                "2% 2%",
+                "2% 2%",
+                "2% 5%",
+            ]}
         >
             <Box
-                px={10}
+                px={[5,5,10]}
                 width={["100%", "100%", "100%", "100%"]}
             >
                 <Text
                     variant="headText"
                     fontSize={[
-                        "70px",
-                        "70px",
+                        "52px",
+                        "52px",
                         "85px",
                     ]}
                     textShadow="0px 0px 10px #00034E94;"
                     fontFamily="var(--chakra-fonts-Blanch)"
-                    lineHeight="65px"
+                    lineHeight={[
+                        "42px",
+                        "42px",
+                        "65px",
+                    ]}
                     textAlign="center"
                     mb="5%"
                 >
@@ -117,24 +98,33 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            p="2% 5%"
+            p={[
+                "2% 0%",
+                "2% 0%",
+                "2% 5%",
+            ]}
         >
             <Box
-                px={10}
+                px={[5,5,10]}
                 width={["100%", "100%", "100%", "100%"]}
             >
                 <Text
                     variant="headText"
                     fontSize={[
-                        "70px",
-                        "70px",
+                        "52px",
+                        "52px",
                         "85px",
                     ]}
                     textShadow="0px 0px 10px #00034E94;"
                     fontFamily="var(--chakra-fonts-Blanch)"
-                    lineHeight="65px"
+                    lineHeight={[
+                        "42px",
+                        "42px",
+                        "85px",
+                    ]}
                     textAlign="center"
                     mb="1%"
+                    mt={[10, 10, 5, 0]}
                 >
                     Play Free Games
                 </Text>

@@ -18,13 +18,17 @@ const TradingGame = () => {
                 <Text
                     variant="headText"
                     fontSize={[
-                        "70px",
-                        "70px",
+                        "52px",
+                        "52px",
                         "80px",
                     ]}
                     textShadow="0px 0px 10px #00034E94;"
                     fontFamily="var(--chakra-fonts-Blanch)"
-                    lineHeight="65px"
+                    lineHeight={[
+                        "42px",
+                        "42px",
+                        "62px",
+                    ]}
                 >
                     Trending Contest
                 </Text>
@@ -51,6 +55,7 @@ const TradingGame = () => {
                     _hover={{ border: "none", textDecoration: "none" }}
                     _focus={{ border: "none", textDecoration: "none" }}
                     key={`igc-1`}
+                    
                 >
                     <Button
                         bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
@@ -61,6 +66,7 @@ const TradingGame = () => {
                         fontWeight="500"
                         p="28px"
                         mt="30px"
+                        mb="30px"
                         >
                         Play Now
                     </Button>
@@ -71,7 +77,7 @@ const TradingGame = () => {
                 textAlign={"center"}
                 px={[0, 0, 0, 10]}
                 pb={[0, 0, 0, 12]}
-                width={["30%", "30%", "30%", "30%"]}
+                width={["90%", "90%", "30%", "30%"]}
             >
                 <Link
                     href={"/games" }
@@ -89,11 +95,11 @@ const TradingGame = () => {
                             bgSize="100% 100%"
                             cursor="pointer"
                             width={"100%"}
-                            height={["360px", "500px", "400px"]}
+                            height={["330px", "300px", "400px"]}
                         >
                             <Flex
                                 m="auto"
-                                w="50%"
+                                w="60%"
                                 height={["260px", "400px", "300px"]}
                                 className="influencerdiv"
                             >
@@ -101,7 +107,7 @@ const TradingGame = () => {
                                     objectFit="contain"
                                     alt="Image"
                                     layout="fill"
-                                    w="450px"
+                                    w="350px"
                                     src="/assets/Contest_Image.png"
                                 />
                             </Flex>
@@ -135,8 +141,8 @@ const TradingGame = () => {
                 <Text
                     variant="headText"
                     fontSize={[
-                        "70px",
-                        "70px",
+                        "52px",
+                        "52px",
                         "85px",
                     ]}
                     textShadow="0px 0px 10px #00034E94;"
@@ -149,16 +155,16 @@ const TradingGame = () => {
                 <Text
                     color="white"
                     fontSize={[
-                        "21",
-                        "21",
-                        "21",
+                        "18",
+                        "18",
+                        "18",
                         "21",
                         "21"
                     ]}
                     mt="20px"
                     fontFamily="Sora"
                     fontWeight="normal"
-                    lineHeight={["35px", "35px", "35px"]}
+                    lineHeight={["28px", "28px", "35px"]}
                     width={["100%", "100%", "100%"]}
                 >
                     <UnorderedList>
