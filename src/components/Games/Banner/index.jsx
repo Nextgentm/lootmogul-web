@@ -88,18 +88,27 @@ const Banner = ({
 
         return <Slider {...horizontalSettings}>
         <div className="gameslide">
+        {!isMobileDevice ?
             <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-            poster={!isMobileDevice ? "/assets/videos/GamePosterImage.png" : "/assets/videos/GamePosterImageMobile.png"}>
+            poster="/assets/videos/GamePosterImage.png">
                 <source
-                src={!isMobileDevice ? "/assets/videos/Gamespagebannerfordesktop.mp4" : "/assets/videos/Gamespagebannerformobile.mp4"}
+                src="/assets/videos/Gamespagebannerfordesktop.mp4"
                 type="video/mp4"
                 />
             </video>
+            : <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
+            poster="/assets/videos/GamePosterImageMobile.png">
+                <source
+                src="/assets/videos/Gamespagebannerformobile.mp4"
+                type="video/mp4"
+                />
+            </video>
+        }
             <div className="banner-read-thumb-lg">
             <Box>
                 <Flex direction={["column", "column", "column", "row"]}>
                     <Box w={["100%", "100%", "100%", "70%"]}>
-                        <Box mt={!isMobileDevice ? 26 : 0}>
+                    {!isMobileDevice ? <Box mt={!isMobileDevice ? 26 : 0}>
                             <Text
                             variant="headText"
                             fontSize={[
@@ -145,7 +154,26 @@ const Banner = ({
                             Play Now
                             </Button>
                         </Box>
-                    </Box>
+                         : 
+                         <>
+                         <Box pt={"50%"}>
+                            <Button
+                                mt={3}
+                                mb={3}
+                                fontSize={["14px", "14px", "20px"]}
+                                padding={["15px", "15px", "25px"]}
+                                fontWeight="normal"
+                                onClick={() => {
+                                    executeScroll(1);
+                                }}
+                                >
+                                Play Now
+                            </Button>
+                        </Box>
+                         </>
+                         }
+                    </Box> 
+                   
                 </Flex>
                 </Box>
             </div>
