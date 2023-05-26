@@ -1,5 +1,7 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import React from 'react'
+import dynamic from "next/dynamic";
+const Login = dynamic(() => import("../../../features/Login"));
 
 const Banner = ({ getBannerImage }) => {
     return (
@@ -54,7 +56,10 @@ const Banner = ({ getBannerImage }) => {
                 pb={[0, 0, 0, 12]}
                 width={["120%", "120%", "120%", "50%"]}
             >
-                
+                <Login
+                    isOpen='true'
+                    OnLoginClose='true'
+                />
             </Box>
         </Flex>
     )
