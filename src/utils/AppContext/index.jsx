@@ -478,7 +478,8 @@ export const AppContextContainer = ({ children }) => {
                                     utm_campaign: utm_campaign || "",
                                     utm_term: utm_term || "",
                                     utm_content: utm_content || "",
-                                    trackingCode: trackingCode || ""
+                                    trackingCode: trackingCode || "",
+                                    user_id: data.user?.id || ""
                                 }
                             });
                         } catch (error) {}
@@ -610,7 +611,7 @@ export const AppContextContainer = ({ children }) => {
                     const referral_code =
                         window.localStorage?.getItem("referral_code");
                     const provider = window.localStorage?.getItem("provider");
-                    debugger;
+                    
                     if (
                         (provider && trackingCode) ||
                         utm_source ||
@@ -628,7 +629,8 @@ export const AppContextContainer = ({ children }) => {
                                     utm_campaign: utm_campaign || "",
                                     utm_term: utm_term || "",
                                     utm_content: utm_content || "",
-                                    trackingCode: trackingCode || ""
+                                    trackingCode: trackingCode || "",
+                                    user_id: data.user?.id || ""
                                 }
                             });
                         } catch (error) {}
