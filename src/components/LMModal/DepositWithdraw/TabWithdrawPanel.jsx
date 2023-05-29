@@ -85,13 +85,11 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         if (currencyToChip?.length) setCurrencyRecord(currencyToChip);
         else {
             setLoading(true);
-            console.log("-=-=-=-=-=calling");
             getCurrencyToChip();
         }
     }, [currencyToChip]);
 
     useEffect(() => {
-        console.log("useeffect 1 ");
         if (user) {
             setuserBal({
                 deposit: user?.wallets?.find(
@@ -107,7 +105,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     }, [user]);
 
     useEffect(() => {
-        console.log("useeffect 2 ");
         if (data) {
             if (data.type === "cash") {
                 setCashOption(["USD"]);
@@ -133,18 +130,14 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             setCurrency("BTC");
             setMinimumDeposit(defaultCrytoAmount);
             setNumberOfChips(defaultCrytoChip);
-            console.log("defaultCrytoChip", defaultCrytoChip);
-            console.log("defaultCrytoAmount", defaultCrytoAmount);
             if (amount) {
                 let numberOfAmount =
                     Number(defaultCrytoChip) / Number(defaultCrytoAmount);
-                console.log("numberOfAmount", numberOfAmount);
 
                 setNumberOfAmount((amount / numberOfAmount).toFixed(6));
             }
         }
         if (withdrawalType == "paypal") {
-            console.log("Setting USD", withdrawalType);
             setCryptoAddress("");
             setCryptoCurrency("");
             setCryptoTokens("");
@@ -163,7 +156,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             }
         }
         if (withdrawalType == "bank") {
-            console.log("Setting USD", withdrawalType);
             setEmail("");
             setAccount("");
             setCryptoAddress("");
@@ -181,7 +173,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     }, [withdrawalType, currencyToChip]);
 
     const setCurrencyRecord = (data) => {
-        console.log("jwt-=-=-=-=-", data);
         const results = [];
         const results_bitpay = [];
         // Store results in the results array
@@ -226,7 +217,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             "gm"
         );
         const isValidEmail = emailRegex.test(e.target.value);
-        console.log("isValidEmail", isValidEmail);
         if (isValidEmail == true) {
             setEmail(e.target.value);
         } else {
@@ -235,7 +225,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     };
 
     const checkValidity = () => {
-        console.log(Math.ceil(numberOfAmount));
         if (!numberOfAmount || numberOfAmount === 0)
             setAlertShow({ isOpen: true, msg: "Enter Amount" });
         if (numberOfAmount && numberOfAmount >= userBal.winnings) {
@@ -244,14 +233,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         }
         if (withdrawalType === "paypal") {
             if (amount) {
-                console.log("numberOfChipsnumberOfChips", typeof numberOfChips);
-                console.log("amountamountamountamount", typeof amount);
-                console.log(
-                    "amount >= numberOfChips",
-                    Number(amount) >= Number(numberOfChips)
-                );
                 if (Number(amount) >= numberOfChips) {
-                    console.log("condition true in if");
                     if (account || email) {
                         withdraw();
                     } else
@@ -365,11 +347,10 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             e.target.selectedOptions[0].getAttribute("numberOfChips")
         );
         //setTotalAmount(amount);
-        console.log("e.target.selectedOptions[0]", e.target.selectedOptions[0]);
         let numberOfAmount =
             Number(e.target.selectedOptions[0].getAttribute("numberOfChips")) /
             Number(e.target.selectedOptions[0].getAttribute("minimumDeposit"));
-        console.log("numberOfAmount", numberOfAmount);
+        
         if (currency == "BTC" || currency == "ETH") {
             setNumberOfAmount((amount / numberOfAmount).toFixed(6));
         } else {
@@ -379,7 +360,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         //setNumberOfAmount((amount / numberOfAmount).toFixed(6));
     };
     const setTotalAmount = async (addedAmount) => {
-        console.log("addedAmount-=-=-", addedAmount);
+        
         if (typeof Number(addedAmount) == "number") {
             let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
             if (currency == "BTC" || currency == "ETH") {

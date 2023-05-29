@@ -65,12 +65,6 @@ const NftsCategories = ({ NFTS, isSelectedCat, index, nftSelectCategory, isSubPa
 
   const updateNft = () => {
     let allNfts = NFTS.nftSet?.sort((a, b) => a.priority - b.priority);
-    // if (!isSubPage) {
-    //   console.log('reducing it');
-    //   // allNfts.length <= 6 ? allNfts = allNfts : allNfts = allNfts.splice(0, 6);
-    // }
-    // console.log(NFTS.name);
-    // console.log(allNfts);
     setDisplayCards(allNfts);
   };
 

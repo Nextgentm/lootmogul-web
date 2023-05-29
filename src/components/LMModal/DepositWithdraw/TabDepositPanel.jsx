@@ -172,12 +172,10 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     const deposit = async () => {
         if (amount < numberOfChips) {
-            console.log('zero');
             setAlertShow({ isOpen: true, msg: "Enter minimum " + numberOfChips + " chips for Deposit" });
         }
         else {
             const user = await strapi.fetchUser();
-            console.log('user', user)
             if (depositType == 1) {
                 try {
 
@@ -249,7 +247,6 @@ const TabDepositPanel = ({ isDeposit }) => {
                         const {
                             data: { bitpay_url }
                         } = resp.data;
-                        console.log('bitpay_url', bitpay_url)
                         window.location.href = bitpay_url
                     }
                 } catch (error) {
@@ -261,7 +258,6 @@ const TabDepositPanel = ({ isDeposit }) => {
     };
 
     useEffect(() => {
-        console.log("defaultCrytoChip", defaultCrytoChip)
         if (depositType == 2) {
             setCurrency('BTC');
             setMinimumDeposit(defaultCrytoAmount);

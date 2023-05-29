@@ -18,8 +18,7 @@ const WalletPage = ({ totalAmount }) => {
     const router = useRouter();
     const { amounts, getCurrencyToChip, jwt, showModalwithdrawalpopup, setShowModalwithdrawalpopup } =
         useContext(AppContext);
-    console.log("showModal", showModal);
-    console.log("showModalwithdrawalpopup", showModalwithdrawalpopup);
+    
     useEffect(() => {
         if (showModalwithdrawalpopup == false) {
             setShowModal(false);
@@ -68,7 +67,6 @@ const WalletPage = ({ totalAmount }) => {
 
     useEffect(() => {
         if (jwt) {
-            console.log("wwwwwwww");
             getCurrencyToChip();
         }
     }, [jwt]);

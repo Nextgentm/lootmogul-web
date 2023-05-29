@@ -116,7 +116,7 @@ const GameTabs = ({ defaultTab, gameData }) => {
                 setLoading(false);
             }
         } catch (e) {
-            console.log(e)
+            
             setTimeout(() => {
                 getLeaderBoard()
             }, 1000);

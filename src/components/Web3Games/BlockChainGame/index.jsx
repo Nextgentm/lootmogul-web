@@ -5,7 +5,7 @@ import GameCategory from "./GameCategory";
 import { AppContext } from "../../../utils/AppContext/index";
 
 const BlackChainGame = ({contestmasters,contestSectionsData}) => {
-    //console.log(contestSectionsData);
+    
     const { isMobileDevice } = useContext(AppContext);
     const [contestSections, setContestSections] = useState([]);
     useEffect(() => {
@@ -34,7 +34,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
           
         }
       }, [contestmasters, contestSectionsData]);
-      console.log(contestSections);
+      
 
      
 

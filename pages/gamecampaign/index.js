@@ -20,9 +20,6 @@ export default function GamesPage({
   contestSectionsData,
   seoData,
 }) {
-  console.log('-----------'); 
-  console.log(contestSectionsData);   
-  console.log('-----------'); 
   return (
     <>
       
@@ -72,7 +69,6 @@ export async function getStaticProps() {
       },
     });
     if (res?.meta) {
-      console.log("res.data",res.data[0])
       data.push(res.data);
       if (pageCount == 1) {
         pageCount = res.meta.pagination.pageCount;

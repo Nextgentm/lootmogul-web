@@ -3,7 +3,7 @@ import { Image,Button,Link } from '@chakra-ui/react';
 import React, {  } from "react";
 
 const NotFound = (isActivePage) => {
-    console.log(isActivePage);
+    
     let return_ur = '';
     let return_name = '';
     if(isActivePage.isNfts){
