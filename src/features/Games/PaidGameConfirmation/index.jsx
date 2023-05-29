@@ -23,7 +23,7 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
         });
 
         CheckAvailableLocation(isFromNoLocationGame).then((res) => {
-            console.log("setShowModal", res)
+            
             if (res) {
                 setLocationCheck({
                     isBan: res.isBan,

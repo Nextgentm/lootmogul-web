@@ -91,7 +91,7 @@ const MultipleLoggedInUser = ({ openPopup }) => {
                 }
             }, 8000);
         } catch (error) {
-            console.log(error);
+            
         }
     };
 

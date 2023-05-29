@@ -31,24 +31,24 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     const [isOpen, setOpen] = useState(false);
     const [retryCount, setRetryCount] = useState();
     const [shouldShowCancel, setShouldShowCancel] = useState(false)
-    console.log("joiningData------detail", joiningData)
+    
     useEffect(() => {
 
         if (gameUrl)
             init()
         return () => {
             window.removeEventListener('message', (e) => {
-                console.log("Removed Listner")
+                
             })
         }
     }, [gameUrl]);
 
     useEffect(() => {
-        console.log("game login", showLoading)
+        
     }, [showLoading])
     useEffect(() => {
         if (isPayIsStarted == "ended") {
-            console.log("pay dended")
+            
             setShowPaidGameConfirmation({})
             setShowLoading(false)
             setIsHideHeader(true);
@@ -61,12 +61,12 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     }, [isPayIsStarted])
 
     useEffect(() => {
-        console.log("joiningData", joiningData)
+        
         if (!joiningData) {
             router.push("/games");
         }
         if (gameSlug && gameid && joiningData?.contestmaster?.data?.game?.data?.config?.url && user?.id) {
-            console.log("Valid Data found")
+            
             setGameUrl(joiningData?.contestmaster?.data?.game?.data?.config?.url + "&tournament_id=" + gameid + "&user_id=" + user?.id + "&game_id=" + joiningData?.id)
 
         }
@@ -96,9 +96,9 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         eventer(messageEvent, async function (e) {
             if (e && typeof e?.data == 'string' && e.data.includes("name")) {
                 let data = JSON.parse(e.data)
-                console.log("Data-=-=-=-=-", data)
+                
                 if (data?.name == 'GameEnd') {
-                    console.log("Game over", joiningData)
+                    
                     if (joiningData?.contestmaster?.data?.entryFee > 0) {
                         setShowLoading(true)
                         retryConst()
@@ -143,7 +143,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             }
         }
         catch (e) {
-            console.log(e)
+            
             setTimeout(() => {
                 retryConst()
             }, 1000);
@@ -157,7 +157,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 sort: "createdAt:DESC"
             }
         );
-        console.log("score", score)
+        
         setRetryCount(score?.data[0]?.score)
         setOpen(true)
     }
@@ -171,7 +171,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     }
 
     const playGame = (url) => {
-        console.log("-=-=-=-=-=-=-=-=-= Play game")
+        
         globalUrl = url;
         globalIframe.contentWindow.postMessage({
             message: 'callbackExecuted'

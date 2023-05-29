@@ -9,8 +9,6 @@ import moment from 'moment-timezone';
 //const newData = a.format(); 
 var m = moment.tz("04-25-2023 6:59", "Asia/Calcutta");
 var dateLos_Angeles = m.tz("America/Los_Angeles").format();
-console.log(m.tz("America/Los_Angeles").format());
-console.log(moment.tz.guess());
 
 function MyTimer({ expiryTimestamp }) {
     const {

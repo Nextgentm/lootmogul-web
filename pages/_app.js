@@ -80,9 +80,9 @@ function MyApp({ Component, pageProps }) {
       if (typeof window !== 'undefined') {
         window.localStorage?.setItem("utm_source", utm_source);
         window.localStorage?.setItem("utm_medium", utm_medium);
-        window.localStorage?.setItem("utm_term", utm_medium);
-        window.localStorage?.setItem("utm_campaign", utm_medium);
-        window.localStorage?.setItem("utm_content", utm_medium);
+        window.localStorage?.setItem("utm_term", utm_term);
+        window.localStorage?.setItem("utm_campaign", utm_campaign);
+        window.localStorage?.setItem("utm_content", utm_content);
       }
     }
   }, [utm_source, utm_medium, utm_term, utm_campaign, utm_content]);

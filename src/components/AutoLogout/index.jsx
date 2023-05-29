@@ -80,7 +80,7 @@ const AutoLogout = ({ openPopup }) => {
                 
             }
         } catch (error) {
-            console.log(error);
+            
         }
     }, [user]);
 

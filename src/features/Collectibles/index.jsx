@@ -58,11 +58,11 @@ const Collectibles = memo(({ data, banner }) => {
             if (selectedCategory.toLocaleLowerCase() !== 'overview') {
                 const selectedData = data.filter(c => c.name.toLowerCase() === selectedCategory.toLowerCase())
                
-              console.log(searchValue);
+              
                 if(searchValue !==''){
                 let selectedCat = _.cloneDeep(selectedData)
                 selectedCat[0].nftSet =  selectedCat[0].nftSet.filter(s=>s.nft_kred.data.slug.includes(searchValue))
-                console.log('selCategoriesData',selectedCat)
+                
                 setSelCategoriesData(selectedCat);
                 }
                 else{
@@ -72,7 +72,7 @@ const Collectibles = memo(({ data, banner }) => {
                     ? selectedData[0].banner?.data[1].url
                     : selectedData[0].banner?.data[0].url;  
                 setBannerImage(image); 
-                console.log("called")
+                
 
             } else {
                 setSelCategoriesData(data);
@@ -82,7 +82,7 @@ const Collectibles = memo(({ data, banner }) => {
                 setBannerImage(image);
               
             }
-            console.log();
+            
             
         } catch (error) {
             setBannerImage(null);
@@ -105,13 +105,13 @@ const Collectibles = memo(({ data, banner }) => {
             if (selectedCategory.toLocaleLowerCase() !== 'overview') {
                 let selectedCat = _.cloneDeep(selCategoriesData)
                  selectedCat[0].nftSet =  selectedCat[0].nftSet.filter(s=>s.nft_kred.data.slug.includes(value))
-                console.log('selCategoriesData',selectedCat)
+                
                 setSelCategoriesData(selectedCat);
             }
         } else {
-            console.log(data)
+            
             const selectedData = data.filter(c => c.name.toLowerCase() === selectedCategory.toLowerCase())
-            console.log("selectedData",selectedData)
+            
             setSelCategoriesData(selectedData);
         }
     };

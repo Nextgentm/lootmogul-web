@@ -118,7 +118,6 @@ const TransactionHistory = memo(() => {
             setLoading(false);
             setData(data);
         } catch (error) {
-            console.log(error);
             setLoading(false);
         }
     };
@@ -137,7 +136,6 @@ const TransactionHistory = memo(() => {
 
     React.useEffect(() => {
         if (user) {
-            console.log(user);
             fetchData();
         }
     }, [user, amounts]);

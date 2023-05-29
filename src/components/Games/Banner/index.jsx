@@ -92,14 +92,14 @@ const Banner = ({
             <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
             poster="/assets/videos/GamePosterImage.png">
                 <source
-                src="/assets/videos/Gamespagebannerfordesktop.mp4"
+                src="https://lootmogul.s3.us-west-2.amazonaws.com/Gamespagebannerfordesktop.mp4"
                 type="video/mp4"
                 />
             </video>
             : <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
             poster="/assets/videos/GamePosterImageMobile.png">
                 <source
-                src="/assets/videos/Gamespagebannerformobile.mp4"
+                src="https://lootmogul.s3.us-west-2.amazonaws.com/Gamespagebannerformobile.mp4"
                 type="video/mp4"
                 />
             </video>
@@ -117,6 +117,7 @@ const Banner = ({
                                 "70px",
                             ]}
                             mb={0}
+                            mt="5%"
                             fontFamily="var(--chakra-fonts-Blanch)"
                             lineHeight={[
                                 "30px",
