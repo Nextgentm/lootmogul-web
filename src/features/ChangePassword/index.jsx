@@ -34,7 +34,7 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
     const [inputCode,setInputCode] = useState('');
     const router = useRouter();
     const secCode = router.asPath.replace("/reset-password?code=",'');
-    console.log(secCode);
+    
 
     const { setChangePasswordModalActive, togglePasswordChangedModal } = useContext(AppContext);
 

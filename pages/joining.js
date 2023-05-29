@@ -63,7 +63,6 @@ const Joining = (props) => {
 
   useEffect(() => {
     if (socket) {
-      console.log("socket",socket)
       socket.on("enter_game_lobby", (data) => {
         setUsers(data.users);
 

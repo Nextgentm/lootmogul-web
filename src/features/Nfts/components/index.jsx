@@ -288,7 +288,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                     a.nft_kred.data.sale_price - b.nft_kred.data.sale_price
             );
 
-            console.log(selData);
+            
             setSelCategoriesData(selData);
         } else {
             const selData = data.filter(
@@ -301,7 +301,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                         b.nft_kred.data.market_price
                 );
             });
-            console.log(selData);
+            
             setSelCategoriesData(selData);
         }
     };

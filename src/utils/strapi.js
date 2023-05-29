@@ -14,7 +14,7 @@ strapi.axios.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log("error", error)
+    
     if (error.response) {
       const { status } = error.response;
       switch (status) {

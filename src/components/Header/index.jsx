@@ -98,6 +98,7 @@ const Header = () => {
     const router = useRouter();
 
     const isActiveLink = (path, queryPath) => {
+        //TODO: need to check what condition is this and remove the proper statements
         if (queryPath)
             console.log(path.split("/")[1], router.pathname.split("/")[1])
             return path.split("/")[1] === router.pathname.split("/")[1] || queryPath === router.pathname;

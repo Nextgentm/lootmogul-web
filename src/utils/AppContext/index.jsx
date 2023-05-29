@@ -126,8 +126,7 @@ export const AppContextContainer = ({ children }) => {
     };
 
     const CheckLocationAndConfirm = (contestmaster, callerKey) => {
-        console.log("contestmaster-=-=-=-=",contestmaster)
-        console.log("callerKey-=-=-=-=",callerKey)
+        
         if (contestmaster.entryFee > 0 && contestmaster.retries > 0) {
             CheckIfRetry(contestmaster, callerKey);
         } else if (contestmaster.entryFee != 0) {
@@ -154,7 +153,7 @@ export const AppContextContainer = ({ children }) => {
     };
     const logout = async () => {
         const value = await strapi.fetchUser();
-        console.log(value);
+        
         try {
             const resp = await axios.post(
                 process.env.NEXT_PUBLIC_WORDPRESS_URL +
@@ -167,7 +166,7 @@ export const AppContextContainer = ({ children }) => {
             );
             const data = resp.data;
             if (data.success) {
-                console.log(data);
+                
                 if (typeof window !== "undefined" && window.localStorage) {
                     localStorage.clear();
                 }
@@ -184,7 +183,7 @@ export const AppContextContainer = ({ children }) => {
                 }
             }
         } catch (error) {
-            console.log(error);
+                                            
         }
     };
 
@@ -202,7 +201,7 @@ export const AppContextContainer = ({ children }) => {
                     }
                 }
             });
-            console.log("data-*-*-*-*-*-*-*-*-*-*-*-*--", data);
+            
             let query = coupon
                 ? "contest/custom-contest/join?contest=" +
                   data[0].id +
@@ -213,7 +212,7 @@ export const AppContextContainer = ({ children }) => {
                 : "contest/custom-contest/join?contest=" + data[0].id;
             if (data?.length > 0) {
                 const resp = await strapi.request("post", query, {});
-                console.log("respons-*-*-*-*-*-*-*-*-*-*-*-*--", resp);
+                
                 if (resp?.ticketId) {
                     setCoupon("");
                     if (resp?.status == 0) {
@@ -248,9 +247,7 @@ export const AppContextContainer = ({ children }) => {
                             data[0]?.contestmaster?.data?.game?.data?.type ==
                                 "iframe"
                         ) {
-                            console.log(
-                                data[0]?.contestmaster?.data?.game?.data?.config
-                            );
+                          
 
                             if (
                                 data[0]?.contestmaster?.data?.game?.data?.config
@@ -287,21 +284,6 @@ export const AppContextContainer = ({ children }) => {
 
                                     router.push("/games");
                                 }
-                                // } catch (e) {
-                                // setShowLoading({});
-                                // console.log(
-                                //     "MarketJS game room operation eror",
-                                //     e
-                                // );
-                                // toast({
-                                //     title: "Error While starting game. Please try again.",
-                                //     status: "error",
-                                //     duration: 3000,
-                                //     position: "top-right",
-                                //     isClosable: true
-                                // });
-                                // router.push("/games");
-                                // }
                             }
                         } else {
                             setJoiningData(resp);
@@ -331,8 +313,6 @@ export const AppContextContainer = ({ children }) => {
 
     const [showModalwithdrawalpopup, setShowModalwithdrawalpopup] =
         useState(false);
-
-    console.log("appcontex show model", showModalwithdrawalpopup);
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -560,11 +540,12 @@ export const AppContextContainer = ({ children }) => {
             if (data.success) {
             }
         } catch (error) {
-            console.log(error);
+            
         }
     };
 
     const callCustomAuthService = async (formData, formType) => {
+       
         let data;
         defaultDataSettings();
         if (formType === "signup" || formType === "login") {
@@ -573,11 +554,9 @@ export const AppContextContainer = ({ children }) => {
                     const apiValues = {
                         username: formData.username,
                         identifier: formData.email,
-                        password: formData.password
+                    password: formData.password
                     };
-                    let registerResult = await strapi.register(apiValues);
-                    console.log(registerResult);
-                    return;
+                    data = await strapi.register(apiValues);
                 } catch ({ error }) {
                     toast({
                         title: error.message,
@@ -586,7 +565,7 @@ export const AppContextContainer = ({ children }) => {
                         position: "top-right",
                         isClosable: true
                     });
-                    console.log(error);
+                    
                     return;
                 }
             }
@@ -600,7 +579,7 @@ export const AppContextContainer = ({ children }) => {
                     data = await strapi.login(apiValues);
                     insertLoggedInUserInDB(data);
                     setJwt(data.jwt);
-                    console.log(data);
+                    
                 } catch ({ error }) {
                     toast({
                         title: error.message,
@@ -609,12 +588,12 @@ export const AppContextContainer = ({ children }) => {
                         position: "top-right",
                         isClosable: true
                     });
-                    console.log(error);
                     return;
                 }
             }
         }
         if (data?.user) {
+            debugger;
             if (data.user.is_new) {
                 if (typeof window !== "undefined") {
                     const utm_source =
@@ -631,7 +610,7 @@ export const AppContextContainer = ({ children }) => {
                     const referral_code =
                         window.localStorage?.getItem("referral_code");
                     const provider = window.localStorage?.getItem("provider");
-
+                    debugger;
                     if (
                         (provider && trackingCode) ||
                         utm_source ||
@@ -641,6 +620,7 @@ export const AppContextContainer = ({ children }) => {
                         utm_content
                     ) {
                         try {
+                            debugger;
                             strapi.request("post", "sourcetracking", {
                                 data: {
                                     utm_source: provider || utm_source,
@@ -715,12 +695,12 @@ export const AppContextContainer = ({ children }) => {
                         }
                     }
                 );
-                console.log(response.data);
+                
                 updateUser(response.data);
                 setUser(response.data);
                 getCurrencyToChip();
             } catch (error) {
-                console.log("error occured", error);
+                
             }
         }
         if (!router.isReady) return;

@@ -50,6 +50,7 @@ const Login = ({ isOpen, OnLoginClose }) => {
     }
 
     const  handleSubmit =() => {
+        debugger;
         if (inputEmailId==='' && inputPassword==='') {
             return;
         }

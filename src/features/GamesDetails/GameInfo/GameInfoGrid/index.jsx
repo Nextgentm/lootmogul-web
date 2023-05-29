@@ -10,7 +10,7 @@ import {
 import { nFormatter } from "../../../../utils/utils";
 
 const GameInfoGrid = ({ gameData }) => {
-    console.log("gameData", gameData);
+    
     const gameInfo = [
         {
             label: gameData?.contest_section?.data?.name,

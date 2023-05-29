@@ -42,7 +42,7 @@ import React, {
       startTimerInterval.current = setTimeout(() => {
         let storedTimeStamp = sessionStorage.getItem('lastTimeStamp');
         warningInactive(storedTimeStamp);
-        console.log(storedTimeStamp)
+        
       }, 1000);
     };
   
