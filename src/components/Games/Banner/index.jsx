@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import { Box } from "@chakra-ui/react";
+import React, { useContext, useState, useEffect } from "react";
+import { Box, Button, Text, Link, Flex, Heading } from "@chakra-ui/react";
 import Image from "next/image";
 import Slider from "react-slick";
+import { AppContext } from "../../../utils/AppContext/index";
 
 const Banner = ({
     children1,
     autoplaySpeed = 2000,
-    slider_type
+    slider_type,
+    executeScroll
 }) => {
-    
+    const { isMobileDevice } = useContext(AppContext);
     const [currentSlideIndex, setcurrentSlideIndex] = useState(0);
+   
     const PrevArrow = (props) => {
         const { className, style, onClick } = props;
         return (
@@ -84,33 +87,98 @@ const Banner = ({
         };
 
         return <Slider {...horizontalSettings}>
-        <div>
-            <a href="/games/hoop-star">
-            <img 
-                src="/assets/skillgame/banner/1.gif"
-                alt="HoopStar"
-                style={imagestyle}
-             />
-             </a>
+        <div className="gameslide">
+        {!isMobileDevice ?
+            <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
+            poster="/assets/videos/GamePosterImage.png">
+                <source
+                src="/assets/videos/Gamespagebannerfordesktop.mp4"
+                type="video/mp4"
+                />
+            </video>
+            : <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
+            poster="/assets/videos/GamePosterImageMobile.png">
+                <source
+                src="/assets/videos/Gamespagebannerformobile.mp4"
+                type="video/mp4"
+                />
+            </video>
+        }
+            <div className="banner-read-thumb-lg">
+            <Box>
+                <Flex direction={["column", "column", "column", "row"]}>
+                    <Box w={["100%", "100%", "100%", "70%"]}>
+                    {!isMobileDevice ? <Box mt={!isMobileDevice ? 26 : 0}>
+                            <Text
+                            variant="headText"
+                            fontSize={[
+                                "34px",
+                                "34px",
+                                "70px",
+                            ]}
+                            mb={0}
+                            fontFamily="var(--chakra-fonts-Blanch)"
+                            lineHeight={[
+                                "30px",
+                                "30px",
+                                "60px",
+                            ]}
+                            textShadow="unset"
+                            >
+                            Join the fun and win big
+                            <br />
+                            with our exciting games!
+                            </Text>
+
+                            <Text
+                            color="#FFF !important"
+                            fontSize={["14px", "16px", "25px", "1.3em"]}
+                            lineHeight={["14px", "18px", "40px"]}
+                            fontWeight="normal"
+                            width={["100%", "100%", "100%", "50%"]}
+                            my="1em"
+                            >
+                            Get a chance to win amazing prizes
+                            </Text>
+
+                            <Button
+                            mt={3}
+                            mb={3}
+                            fontSize={["14px", "14px", "20px"]}
+                            padding={["15px", "15px", "25px"]}
+                            fontWeight="normal"
+                            onClick={() => {
+                                executeScroll(1);
+                            }}
+                            >
+                            Play Now
+                            </Button>
+                        </Box>
+                         : 
+                         <>
+                         <Box pt={"50%"}>
+                            <Button
+                                mt={3}
+                                mb={3}
+                                fontSize={["14px", "14px", "20px"]}
+                                padding={["15px", "15px", "25px"]}
+                                fontWeight="normal"
+                                onClick={() => {
+                                    executeScroll(1);
+                                }}
+                                >
+                                Play Now
+                            </Button>
+                        </Box>
+                         </>
+                         }
+                    </Box> 
+                   
+                </Flex>
+                </Box>
+            </div>
         </div>
-        <div>
-            <a href="/games/scott-flick-american-football">
-            <img
-                src="/assets/skillgame/banner/3.png"
-                alt="FlickAmericanFootball"
-                style={imagestyle}
-             />
-             </a>
-        </div>
-        <div>
-            <a href="/games/flick-soccer">
-            <img 
-                src="/assets/skillgame/banner/2.gif"
-                alt="FlickSoccer"
-                style={imagestyle}
-             />
-             </a>
-        </div>
+       
     </Slider>;
     
 

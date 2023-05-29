@@ -577,8 +577,8 @@ const Header = () => {
                     OnPasswordChangedClose={OnPasswordChangedClose}
                 />
             </Box>
-            <SessionTimeout />
-            <AutoLogout />
+            {/* <SessionTimeout /> */}
+            {/* <AutoLogout /> */}
 
             {!isHideHeader && (
                 <CookieConsent

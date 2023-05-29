@@ -95,7 +95,7 @@ const CollectibleView =memo(({ NFTS, index, nftSelectCategory, isSubPage }) => {
                 >
                   {NFTS.name}
                 </Text>
-                <Flex alignItems="center">
+                {/* <Flex alignItems="center">
                   <Text
                     color="white"
                     fontFamily="Sora"
@@ -114,7 +114,7 @@ const CollectibleView =memo(({ NFTS, index, nftSelectCategory, isSubPage }) => {
                     {" "}
                     {moment(NFTS.createdAt).format("MMMM Do, YYYY")}
                   </Text>
-                </Flex>
+                </Flex> */}
                 <Text
                   color="white"
                   fontFamily="Sora"

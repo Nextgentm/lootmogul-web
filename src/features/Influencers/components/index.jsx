@@ -382,7 +382,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 setFilterValue={setFilterValue}
                 dataPrePage={dataPrePage}
             />
-            <MultipleLoggedInUser />
+            {/* <MultipleLoggedInUser /> */}
         </Box>
     );
 };

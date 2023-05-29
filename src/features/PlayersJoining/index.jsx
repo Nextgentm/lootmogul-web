@@ -87,7 +87,7 @@ const PlayersJoining = ({ timeLeft, users }) => {
                 }
                 }
             />
-            <MultipleLoggedInUser />
+            {/* <MultipleLoggedInUser /> */}
         </Box>
     );
 };

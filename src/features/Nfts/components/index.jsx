@@ -415,7 +415,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 displayAllData={displayAllData}
                 isSubPage={isSubPage}
             />
-            <MultipleLoggedInUser />
+            {/* <MultipleLoggedInUser /> */}
         </Box></>
     );
 };
