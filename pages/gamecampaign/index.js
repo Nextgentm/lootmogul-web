@@ -18,14 +18,16 @@ export default function GamesPage({
   data,
   banners = [],
   contestSectionsData,
+  campaignsSectionsResData,
   seoData,
 }) {
+  console.log(campaignsSectionsResData?.data[0]);
   return (
     <>
       
       <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 
-        <Banner/>
-        <TradingGame/>
+        <Banner bannerData={campaignsSectionsResData?.data[0] || []}/>
+        <TradingGame tradingCardData={campaignsSectionsResData?.data[0] || []}/>
         <BlockChainGame 
             contestSectionsData={contestSectionsData?.data || []}
             contestmasters={data || []}
@@ -85,7 +87,12 @@ export async function getStaticProps() {
         "/api/contest-sections?populate=image&sort=priority"
     );
 
+    const campaignsSectionsRes = await fetch(
+      process.env.NEXT_PUBLIC_STRAPI_API_URL +
+        "/api/game-campaigns?populate=*"
+    );
     const contestSectionsData = await contestSectionsRes.json();
+    const campaignsSectionsResData = await campaignsSectionsRes.json();
 
     const bannersRes = await fetch(
       process.env.NEXT_PUBLIC_STRAPI_API_URL +
@@ -96,7 +103,7 @@ export async function getStaticProps() {
     const seoData = await getSeoData("games");
 
     return {
-      props: { data, contestSectionsData, banners, seoData },
+      props: { data, contestSectionsData, campaignsSectionsResData, banners, seoData },
       revalidate: 300,
     };
   } catch (error) {}

@@ -7,7 +7,7 @@ import { AppContext } from "../../../utils/AppContext";
 const Login = dynamic(() => import("../../../features/Login"));
 const LoginForm = dynamic(() => import("../../../features/LoginForm"));
 
-const Banner = ({ getBannerImage }) => {
+const Banner = ({ bannerData }) => {
     const [isLoginModalActive, setLoginModalActive] = useState(false);
     const { user } = useContext(AppContext);
     const { isMobileDevice } = useContext(AppContext);
@@ -30,7 +30,7 @@ const Banner = ({ getBannerImage }) => {
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            backgroundImage={isMobileDevice ? "/assets/web-3Mobilebanner.jpg" : "/assets/web-3Desktopbanner.jpg" }
+            backgroundImage={isMobileDevice ?  "/assets/web-3Mobilebanner.jpg" : bannerData.banner_image.data[0].url || "/assets/web-3Desktopbanner.jpg" }
             height="700px"
             p="2% 5%"
             backgroundSize="cover"
@@ -55,7 +55,7 @@ const Banner = ({ getBannerImage }) => {
                         "65px",
                     ]}
                 >
-                    Join LootMogul Web3 Sports Gaming
+                    {bannerData.banner_header}
                 </Text>
 
                 <Text
@@ -73,7 +73,7 @@ const Banner = ({ getBannerImage }) => {
                     lineHeight={["20px", "20px", "28px"]}
                     width={["100%", "100%", "60%"]}
                 >
-                    Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!
+                    {bannerData.banner_subheader}
                 </Text>
                 {!user && isMobileDevice && (
                     <>

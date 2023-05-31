@@ -1,7 +1,7 @@
 import { Box, Flex, Image, Text, Button, VStack, Link, ListItem, UnorderedList, } from '@chakra-ui/react'
 import React from 'react'
 
-const TradingGame = () => {
+const TradingGame = ({tradingCardData}) => {
     return (
     <Box>
         <Flex
@@ -30,7 +30,7 @@ const TradingGame = () => {
                         "62px",
                     ]}
                 >
-                    Trending Contest
+                    {tradingCardData.trending_header}
                 </Text>
 
                 <Text
@@ -48,10 +48,10 @@ const TradingGame = () => {
                     lineHeight={["28px", "28px", "28px"]}
                     width={["100%", "100%", "80%"]}
                 >
-                    Are You Ready for the Ultimate Cricket Challenge? Play and Win Daily in Our T20 Pro Cricket Contest. One top performer gets to win a prize of INR 500* every day. The contest is free to join.
+                    {tradingCardData.trending_subheader}
                 </Text>
                 <Link
-                    href={"/games" }
+                    href={tradingCardData.trending_redirectionUrl || '/games'}
                     _hover={{ border: "none", textDecoration: "none" }}
                     _focus={{ border: "none", textDecoration: "none" }}
                     key={`igc-1`}
@@ -108,7 +108,7 @@ const TradingGame = () => {
                                     alt="Image"
                                     layout="fill"
                                     w="350px"
-                                    src="/assets/Contest_Image.png"
+                                    src={bannerData.banner_image.data[0].url}
                                 />
                             </Flex>
                             <Text
@@ -167,6 +167,8 @@ const TradingGame = () => {
                     lineHeight={["28px", "28px", "35px"]}
                     width={["100%", "100%", "100%"]}
                 >
+                    
+
                     <UnorderedList>
                         <ListItem>The contest joining is FREE to play.</ListItem>
                         <ListItem>To avail the offer play & win maximum contests.</ListItem>
