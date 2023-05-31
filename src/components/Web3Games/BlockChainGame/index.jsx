@@ -97,6 +97,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
         <Flex
             flexDir={["column", "column", "column", "row"]}
             w="100%"
+            display="none"
             alignItems={"center"}
             p={[
                 "2% 0%",

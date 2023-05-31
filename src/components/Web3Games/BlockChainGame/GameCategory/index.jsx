@@ -147,12 +147,15 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
                             <Flex>
                                 <Text
                                     mt={"5px"}
+                                    ml={"5px"}
                                     color="#FDFFE5"
                                     fontSize={["15px"]}
                                     fontWeight={"600"}
                                     align={"left"}
                                     textOverflow="ellipsis"
                                     overflow="visible"
+                                    height={["45px","45px","45px","45px","45px","auto"]}
+                                    lineHeight={["24px"]}
                                 >
                                     {cm.name}
                                 </Text>
@@ -176,6 +179,7 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
                                             color="#FFF"
                                             fontSize={["13px", "14px"]}
                                             fontWeight="400"
+                                            align={"left"}
                                         >
                                             {cm.entryFee != 0
                                                 ? "Entry Fee - " +
@@ -206,13 +210,15 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
                             (cm?.contest?.status === "active") && (
                                 <Button
                                     variant="solid"
-                                    h={["25px", "25px"]}
-                                    fontSize={["15px"]}
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
                                     mt="12px"
                                     textTransform="uppercase"
                                     _hover={{ textDecoration: "none !important" }}
-                                    w="95%"
-                                    p="25px"
+                                    w="100%"
+                                    p="5px"
+                                    fontWeight="400"
                                 >
                                     Play Now
                                 </Button>
