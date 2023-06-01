@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from "react";
 import GameCategory from "./GameCategory";
 import { AppContext } from "../../../utils/AppContext/index";
 
-const BlackChainGame = ({contestmasters,contestSectionsData}) => {
+const BlackChainGame = ({contestmasters,contestSectionsData, blockChainCardData}) => {
     
     const { isMobileDevice } = useContext(AppContext);
     const [contestSections, setContestSections] = useState([]);
@@ -15,21 +15,24 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
     
           contestmasters.map((cm) => {
             if (cm.isFeatured) fg.push(cm);
-    
-            let section = contestSectionsData?.find(
-              (sec) => sec.id == cm.contest_section?.data?.id
-            );
-            if (section) {
-              if (section?.contestmasters?.data)
-                section.contestmasters.data?.push(cm);
-              else {
-                section.contestmasters = {
-                  data: [cm]
-                };
-              }
-            }
+            
+                let section = contestSectionsData?.find(
+                    (sec) => sec.id == cm.contest_section?.data?.id
+                  );
+      
+                  if (section) {
+                    if (section?.contestmasters?.data)
+                      section.contestmasters.data?.push(cm);
+                    else {
+                      section.contestmasters = {
+                        data: [cm]
+                      };
+                    }
+                  }
+            
           });
-          
+          console.log('hello cm.contest?.id');
+          console.log(contestSectionsData);
           setContestSections(contestSectionsData);
           
         }
@@ -40,6 +43,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
 
     return ( 
     <Box>
+         {blockChainCardData.gameSection1_isVisible && (
         <Flex
             flexDir={["column", "column", "column", "row"]}
             w="100%"
@@ -54,7 +58,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                 px={[5,5,10]}
                 width={["100%", "100%", "100%", "100%"]}
             >
-                <Text
+                 {blockChainCardData.gameSection1_header && (<Text
                     variant="headText"
                     fontSize={[
                         "52px",
@@ -69,11 +73,32 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                         "65px",
                     ]}
                     textAlign="center"
-                    mb="5%"
+                    mb="1%"
                 >
-                    Explore Ambassador Blockchain Games
+                    {blockChainCardData.gameSection1_header}
                 </Text>
-                <Box>
+                )}
+                {blockChainCardData.gameSection1_subheader && (<Text
+                    color="white"
+                    fontSize={[
+                        "18",
+                        "18",
+                        "18",
+                        "18",
+                        "18"
+                    ]}
+                    mt="20px"
+                    fontFamily="Sora"
+                    fontWeight="normal"
+                    lineHeight={["28px", "28px", "28px"]}
+                    width={["100%", "100%", "80%"]}
+                    textAlign="center"
+                    m="auto"
+                >
+                    {blockChainCardData.gameSection1_subheader}
+                </Text>
+                )}
+                <Box mt="4%" className='gameslider'>
                     {contestSections &&
                     contestSections.map((section, index) => (
                         <Box
@@ -86,7 +111,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                                 key={`games-${index}`}
                                 isMobileDevice={isMobileDevice}
                                 section={section}
-                                type="Blockchain Games"
+                                type="paid"
                             />
                             )}
                         </Box>
@@ -94,6 +119,9 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                 </Box>
             </Box>
         </Flex>
+        )}
+
+        {blockChainCardData.gameSection2_isVisible && (
         <Flex
             flexDir={["column", "column", "column", "row"]}
             w="100%"
@@ -108,7 +136,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                 px={[5,5,10]}
                 width={["100%", "100%", "100%", "100%"]}
             >
-                <Text
+                {blockChainCardData.gameSection2_header && ( <Text
                     variant="headText"
                     fontSize={[
                         "52px",
@@ -126,9 +154,10 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                     mb="1%"
                     mt={[10, 10, 5, 0]}
                 >
-                    Play Free Games
+                    {blockChainCardData.gameSection2_header}
                 </Text>
-                <Text
+                )}
+                {blockChainCardData.gameSection2_subheader && ( <Text
                     color="white"
                     fontSize={[
                         "18",
@@ -144,11 +173,13 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                     width={["100%", "100%", "80%"]}
                     textAlign="center"
                     m="auto"
-                    mb="4%"
+                    
                 >
-                    Here best of all LootMogul blockchain games are free to play, allowing you to jump right into the action without any cost. Join the LootMogul community, show off your skills, and become a true champion on the field.
+                   {blockChainCardData.gameSection2_subheader}
                 </Text>
-                <Box className='gameslider'>
+                )}
+
+                <Box mt="4%" className='gameslider'>
                     {contestSections &&
                     contestSections.map((section, index) => (
                         <Box
@@ -161,7 +192,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                                 key={`games-${index}`}
                                 isMobileDevice={isMobileDevice}
                                 section={section}
-                                type="Blockchain Games"
+                                type="free"
                             />
                             )}
                         </Box>
@@ -169,6 +200,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData}) => {
                 </Box>
             </Box>
         </Flex>
+        )}
     </Box>
     )
 }
