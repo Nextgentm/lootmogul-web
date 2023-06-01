@@ -26,7 +26,7 @@ import { AppContext } from "../../utils/AppContext/index";
 import { root, loginTitleStyle } from "../Login/styles";
 
 
-const LoginForm = ({ isOpen, OnLoginClose }) => {
+const LoginForm = ({ isOpen, OnLoginClose, redirectUrl }) => {
     const [selectedOption, setSelectedOption] = useState("signup");
     const [passwordType, setPasswordType] = useState("password");
     const [inputEmailId, setInputEmailId] = useState();
@@ -60,7 +60,7 @@ const LoginForm = ({ isOpen, OnLoginClose }) => {
                 email: inputEmailId,
                 password: inputPassword,
             }
-            callCustomAuthService(formData, selectedOption);
+            callCustomAuthService(formData, selectedOption, redirectUrl);
             if (selectedOption === 'signup') {
                 setSelectedOption('login');
             }
