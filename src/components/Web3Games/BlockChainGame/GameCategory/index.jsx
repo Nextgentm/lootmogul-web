@@ -98,10 +98,10 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
         <Box className="gameslider">
             <>
             <Slider {...horizontalSettings}>
-                {content?.contestmasters?.data?.length > 0 && content?.contestmasters?.data
+                {content.name == "Blockchain Games" && content?.contestmasters?.data?.length > 0 && content?.contestmasters?.data
                                 ?.sort((a, b) => a.priority - b.priority)
                     .map((cm, index) => 
-                     type == 'free' && cm.entryFee == 0 ? ( <Box
+                        type == 'free' && cm.entryFee == 0 ? ( <Box
                         bgSize="cover"
                         textAlign={"center"}
                         px={[5, 5, 5, 5]}
@@ -228,7 +228,7 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
                     </Box>
                     )
                     :
-                    <>
+                    type === "paid" && (
                      <Box
                         bgSize="cover"
                         textAlign={"center"}
@@ -354,8 +354,8 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
                             </Flex>
                         </Link>
                     </Box>
-                    
-                    </>            
+                    )
+                                
                 )}
                 </Slider>
             </>

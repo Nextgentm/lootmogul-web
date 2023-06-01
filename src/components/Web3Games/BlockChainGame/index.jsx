@@ -15,7 +15,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData, blockChainCardData}
     
           contestmasters.map((cm) => {
             if (cm.isFeatured) fg.push(cm);
-            if(cm.contest?.id === blockChainCardData.contests.data.id){
+            
                 let section = contestSectionsData?.find(
                     (sec) => sec.id == cm.contest_section?.data?.id
                   );
@@ -29,7 +29,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData, blockChainCardData}
                       };
                     }
                   }
-            }
+            
           });
           console.log('hello cm.contest?.id');
           console.log(contestSectionsData);
@@ -111,7 +111,7 @@ const BlackChainGame = ({contestmasters,contestSectionsData, blockChainCardData}
                                 key={`games-${index}`}
                                 isMobileDevice={isMobileDevice}
                                 section={section}
-                                type="Blockchain Games"
+                                type="paid"
                             />
                             )}
                         </Box>

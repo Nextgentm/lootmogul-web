@@ -37,7 +37,7 @@ const Banner = ({ bannerData }) => {
         >
             <Box
                 px={[5,5,10]}
-                width={["100%", "100%", "100%", "60%"]}
+                width={["100%", "100%", "100%", "75%"]}
             >
                 <Text
                     variant="headText"
@@ -105,7 +105,7 @@ const Banner = ({ bannerData }) => {
                 textAlign={"center"}
                 px={[0, 0, 0, 10]}
                 pb={[0, 0, 0, 12]}
-                width={["120%", "120%", "120%", "30%"]}
+                width={["100%", "100%", "100%", "30%"]}
             >
                 <Box> 
                     {!isMobileDevice ?
