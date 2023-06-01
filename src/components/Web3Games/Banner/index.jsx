@@ -3,11 +3,12 @@ import React from 'react'
 import { useContext, useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { AppContext } from "../../../utils/AppContext";
-
+import { useRouter } from "next/router";
 const Login = dynamic(() => import("../../../features/Login"));
 const LoginForm = dynamic(() => import("../../../features/LoginForm"));
 
 const Banner = ({ bannerData }) => {
+    const router = useRouter();
     const [isLoginModalActive, setLoginModalActive] = useState(false);
     const { user } = useContext(AppContext);
     const { isMobileDevice } = useContext(AppContext);
@@ -21,6 +22,7 @@ const Banner = ({ bannerData }) => {
     
     useEffect(() => {
         if(user?.id){
+            router.push(bannerData.trending_redirectionUrl );
             setLoginModalActive(false);
         }
     },[user]);
@@ -113,6 +115,7 @@ const Banner = ({ bannerData }) => {
                     {!user?.id && <LoginForm
                         isOpen={isLoginModalActive}
                         OnLoginClose={OnLoginClose}
+                        redirectUrl={bannerData.trending_redirectionUrl}
                     />
                     }
                     </> :
@@ -120,6 +123,7 @@ const Banner = ({ bannerData }) => {
                     {!user?.id && <Login
                         isOpen={isLoginModalActive}
                         OnLoginClose={OnLoginClose}
+                        redirectUrl={bannerData.trending_redirectionUrl}
                     />
                     }
                     </> }                

@@ -518,6 +518,8 @@ export const AppContextContainer = ({ children }) => {
             });
             await updateUser(data.user);
         }
+       
+
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
@@ -545,7 +547,7 @@ export const AppContextContainer = ({ children }) => {
         }
     };
 
-    const callCustomAuthService = async (formData, formType) => {
+    const callCustomAuthService = async (formData, formType, redirectUrl = '') => {
        
         let data;
         defaultDataSettings();
@@ -668,6 +670,12 @@ export const AppContextContainer = ({ children }) => {
                 Site: data.user
             });
             await updateUser(data.user);
+        }
+        
+        if (
+            router.route === "/gamecampaign" 
+        ) {
+            router.push(redirectUrl);
         }
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
