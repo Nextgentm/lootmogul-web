@@ -21,7 +21,7 @@ export default function GamesPage({
   campaignsSectionsResData,
   seoData,
 }) {
-  console.log(data);
+  //console.log(data);
   return (
     <>
       
