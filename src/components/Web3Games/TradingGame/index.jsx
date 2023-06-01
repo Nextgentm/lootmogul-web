@@ -1,7 +1,8 @@
 import { Box, Flex, Image, Text, Button, VStack, Link, ListItem, UnorderedList, } from '@chakra-ui/react'
 import React from 'react'
 
-const TradingGame = () => {
+const TradingGame = ({tradingCardData}) => {
+    const content =  tradingCardData.trending_contestHighlights;
     return (
     <Box>
         <Flex
@@ -12,7 +13,7 @@ const TradingGame = () => {
             pb="0"
         >
             <Box
-                px={10}
+                px={[5,5,10]}
                 width={["100%", "100%", "100%", "70%"]}
             >
                 <Text
@@ -30,7 +31,7 @@ const TradingGame = () => {
                         "62px",
                     ]}
                 >
-                    Trending Contest
+                    {tradingCardData.trending_header}
                 </Text>
 
                 <Text
@@ -48,10 +49,10 @@ const TradingGame = () => {
                     lineHeight={["28px", "28px", "28px"]}
                     width={["100%", "100%", "80%"]}
                 >
-                    Are You Ready for the Ultimate Cricket Challenge? Play and Win Daily in Our T20 Pro Cricket Contest. One top performer gets to win a prize of INR 500* every day. The contest is free to join.
+                    {tradingCardData.trending_subheader}
                 </Text>
                 <Link
-                    href={"/games" }
+                    href={tradingCardData.trending_redirectionUrl || '/games'}
                     _hover={{ border: "none", textDecoration: "none" }}
                     _focus={{ border: "none", textDecoration: "none" }}
                     key={`igc-1`}
@@ -80,7 +81,7 @@ const TradingGame = () => {
                 width={["90%", "90%", "30%", "30%"]}
             >
                 <Link
-                    href={"/games" }
+                    href={tradingCardData.trending_redirectionUrl || '/games'}
                     _hover={{ border: "none", textDecoration: "none" }}
                     _focus={{ border: "none", textDecoration: "none" }}
                     key={`igc-1`}
@@ -108,7 +109,7 @@ const TradingGame = () => {
                                     alt="Image"
                                     layout="fill"
                                     w="350px"
-                                    src="/assets/Contest_Image.png"
+                                    src={tradingCardData.trending_gameLogo.data[0].url}
                                 />
                             </Flex>
                             <Text
@@ -121,7 +122,7 @@ const TradingGame = () => {
                                 textOverflow="ellipsis"
                                 overflow="visible"
                             >
-                                T20 Pro Cricket Championship
+                                {tradingCardData.contests.data[0]?.name}
                             </Text>
                         </Flex>
                     </VStack>
@@ -135,7 +136,7 @@ const TradingGame = () => {
             p="5%"
         >
             <Box
-                px={10}
+                px={[5,5,10]}
                 width={["100%", "100%", "100%", "90%"]}
             >
                 <Text
@@ -167,15 +168,7 @@ const TradingGame = () => {
                     lineHeight={["28px", "28px", "35px"]}
                     width={["100%", "100%", "100%"]}
                 >
-                    <UnorderedList>
-                        <ListItem>The contest joining is FREE to play.</ListItem>
-                        <ListItem>To avail the offer play & win maximum contests.</ListItem>
-                        <ListItem>A Top Performer to Win INR 500*, everyday.</ListItem>
-                        <ListItem>1 winner can win claim reward for max. 3 times in the contest duration.</ListItem>
-                        <ListItem>This is a leaderboard contest, the top leaderboard winner will be declared based on the highest points scored.</ListItem>
-                        <ListItem>Same winner can only be chosen again if there is a new score. Winner with same score will not be considered again even if they are on top of the leaderboard.</ListItem>
-                    </UnorderedList>   
-                    <span style={{"fontSize":"14px"}}>For more information, refer to game’s terms and conditions. </span>            
+                    <p dangerouslySetInnerHTML={{ __html: content }}></p>            
                 </Text>
             </Box>
         </Flex>

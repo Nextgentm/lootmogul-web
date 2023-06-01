@@ -432,7 +432,7 @@ const Header = () => {
                                 </Link>
                             </>
                         )}
-                        {!user && (
+                        {!user && router.route != "/gamecampaign"  && (
                             <>
                                 <Button
                                     {...loginBtnStyle}
