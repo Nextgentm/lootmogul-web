@@ -21,7 +21,7 @@ export default function GamesPage({
   campaignsSectionsResData,
   seoData,
 }) {
-  console.log(campaignsSectionsResData?.data[0]);
+  console.log(data);
   return (
     <>
       
@@ -31,6 +31,7 @@ export default function GamesPage({
         <BlockChainGame 
             contestSectionsData={contestSectionsData?.data || []}
             contestmasters={data || []}
+            blockChainCardData={campaignsSectionsResData?.data[0] || []}
         />
     </>
   );

@@ -297,6 +297,7 @@ nav {
   color: #E90A63; 
 }
 .gameslider .slick-dots li button::before {font-size: 50px;color: #481A7F;opacity: 1;}
+.gameslider .slick-track {width: auto !important;}
 @media screen and (max-width: 768px) {
   .gameslider {
     padding-bottom: 10px;
