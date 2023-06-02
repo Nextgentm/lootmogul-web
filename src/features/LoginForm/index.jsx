@@ -324,14 +324,16 @@ const LoginForm = ({ isOpen, OnLoginClose, redirectUrl }) => {
                             ? <Flex>New to LootMogul? <Text color="primary" ml="5px">Sign Up</Text></Flex>
                             : <Flex>Already user? <Text color="primary" ml="5px">Login</Text></Flex>}
                     </Text>
-                    <Text
-                        my="12px"
-                        textAlign="center"
-                        fontFamily="Open Sans,Sans-serif"
-                        color="#fff"
-                        fontWeight="500"
-                        fontSize={["12px", "12px"]}
+                    <Text                                    
                     >
+                        <Box  
+                            my="12px"
+                            textAlign="center"
+                            fontFamily="Open Sans,Sans-serif"
+                            color="#fff"
+                            fontWeight="500"
+                            fontSize={["12px", "12px"]}
+                       >
                         By registering, you accept you are 18+ &
                         agree to our{" "}
                         <Link
@@ -353,6 +355,7 @@ const LoginForm = ({ isOpen, OnLoginClose, redirectUrl }) => {
                         >
                             Privacy Policy
                         </Link>
+                        </Box>
                     </Text>
                 </Flex>
             </Box>
