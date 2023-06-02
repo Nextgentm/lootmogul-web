@@ -32,7 +32,7 @@ const Banner = ({ bannerData }) => {
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            backgroundImage={isMobileDevice ?  "/assets/web-3Mobilebanner.jpg" : bannerData.banner_image.data[0].url || "/assets/web-3Desktopbanner.jpg" }
+            backgroundImage={isMobileDevice ? bannerData.mobile_banner_image.data[0].url ||  "/assets/web-3Mobilebanner.jpg" : bannerData.banner_image.data[0].url || "/assets/web-3Desktopbanner.jpg" }
             height="700px"
             p="2% 5%"
             backgroundSize="cover"
