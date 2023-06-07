@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTable, usePagination } from "react-table";
 import {
     Table,
@@ -10,16 +10,18 @@ import {
     Flex,
     Box,
     Text,
-    Tooltip,
+    Tooltip
 } from "@chakra-ui/react";
 import {
     ChevronRightIcon,
-    ChevronLeftIcon
+    ChevronLeftIcon,
+    ChevronDownIcon
 } from "@chakra-ui/icons";
 
 import { makeData, makeColumn } from "./makeData";
 
-function CustomTable({ columns, data }) {
+function CustomTable({ columns, data, alldata }) {
+    console.log("columns*-*-*-*-*-*", columns);
     const {
         getTableProps,
         getTableBodyProps,
@@ -40,9 +42,24 @@ function CustomTable({ columns, data }) {
         },
         usePagination
     );
+    const [showPopUp, setshowpopup] = useState(false);
+    const [nestedId, setNestedId] = useState();
+    const rowclick = (e) => {
+        let numericValue = parseInt(e.replace("#", ""));
+        console.log("numericValue", numericValue);
+        setNestedId(numericValue);
+        let nestedData = alldata.find((i) => {
+            numericValue == i.id;
+        });
+        console.log("nestedData-=-=-=", nestedData);
+        if (showPopUp) {
+            setshowpopup(false);
+        } else {
+            setshowpopup(true);
+        }
+    };
     return (
         <Box width="100%">
-
             <Table
                 mt="5%"
                 width="100%"
@@ -51,7 +68,6 @@ function CustomTable({ columns, data }) {
                 variant="striped"
                 color="#C7C7C7"
                 colorScheme="stripedTable"
-
                 {...getTableProps()}
             >
                 <Thead key="thead_1">
@@ -77,26 +93,69 @@ function CustomTable({ columns, data }) {
                 <Tbody key="tbody_1" {...getTableBodyProps()}>
                     {page.map((row, i) => {
                         prepareRow(row);
+
+                        console.log("dar---------------", row.cells);
+
                         return (
-                            <Tr key={i} {...row.getRowProps()}>
-                                {row.cells.map((cell, i) => {
-                                    return (
-                                        <Td
-                                            fontSize={["10px", "16px"]}
-                                            color="#C7C7C7"
-                                            py={[2, 4]}
-                                            px={[4, 6]}
-                                            fontWeight="bold"
-                                            textAlign="center"
-                                            fontFamily="Sora"
-                                            key={i}
-                                            {...cell.getCellProps()}
-                                        >
-                                            {cell.render("Cell")}
-                                        </Td>
-                                    );
-                                })}
-                            </Tr>
+                            <>
+                                <Tr
+                                    key={i}
+                                    {...row.getRowProps()}
+                                    onClick={() =>
+                                        setNestedId(nestedId ? i : -1)
+                                    }
+                                >
+                                    {row.cells.map((cell, j) => {
+                                        return (
+                                            <Td
+                                                fontSize={["10px", "16px"]}
+                                                color="#C7C7C7"
+                                                py={[2, 4]}
+                                                px={[4, 6]}
+                                                fontWeight="bold"
+                                                textAlign="center"
+                                                fontFamily="Sora"
+                                                key={j}
+                                                {...cell.getCellProps()}
+                                                // background={"#E90A63"}
+                                            >
+                                                {cell.render("Cell")}
+                                            </Td>
+                                        );
+                                    })}
+                                </Tr>
+                                {nestedId === i &&
+                                    row?.subRows?.map((sRow, k) => {
+                                        prepareRow(sRow);
+                                        console.log("sRow");
+                                        return (
+                                            <Tr key={k} {...sRow.getRowProps()}>
+                                                {sRow.cells.map((cell, i) => {
+                                                    return (
+                                                        <Td
+                                                            fontSize={[
+                                                                "10px",
+                                                                "16px"
+                                                            ]}
+                                                            color="#C7C7C7"
+                                                            py={[2, 4]}
+                                                            px={[4, 6]}
+                                                            fontWeight="bold"
+                                                            textAlign="center"
+                                                            fontFamily="Sora"
+                                                            key={i}
+                                                            {...cell.getCellProps()}
+                                                        >
+                                                            {cell.render(
+                                                                "Cell"
+                                                            )}
+                                                        </Td>
+                                                    );
+                                                })}
+                                            </Tr>
+                                        );
+                                    })}
+                            </>
                         );
                     })}
                 </Tbody>
@@ -159,8 +218,9 @@ function CustomTable({ columns, data }) {
 function TransactionTable({ tableData, tableColumns, isMobile, auditLogData }) {
     return (
         <CustomTable
+            alldata={tableData}
             columns={makeColumn(tableColumns)}
-            data={makeData(tableData, isMobile, auditLogData)}
+            data={makeData(tableData, isMobile, auditLogData, tableData.length)}
         />
     );
 }
