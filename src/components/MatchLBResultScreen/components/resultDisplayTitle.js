@@ -11,12 +11,14 @@ const ResultDisplayTitle = (props) => {
             mt="-1%"
         >
             <Text
-                color="#F8ED1D"
+                
                 fontFamily="Blanch"
-                fontSize={["28px", "35px"]}
+                fontSize={["38px", "54px"]}
                 mb="12px"
                 textAlign={"center"}
                 mt={["10%", "-3%"]}
+                color="#FFFFFF"
+                lineHeight={["38px", "54px"]}
             >
                 {props.name}
             </Text>

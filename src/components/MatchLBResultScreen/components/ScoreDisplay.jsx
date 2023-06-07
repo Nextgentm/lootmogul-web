@@ -17,12 +17,13 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
     return (
         <Box
             className="abc"
-            width={["auto", "44%"]}
-            height={["300px", "330px"]}
-            border={"1px solid #F8ED1D"}
+            width={["90%","90%", "44%"]}
+            height={["350px","300px", "390px"]}
+            border={"1px solid #E90A63"}
             margin={"auto"}
             borderRadius="10px"
             direction={["column", "row"]}
+            p="15px"
         >
             <Flex
                 m="auto"
@@ -35,7 +36,6 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                 <Flex
                     width={["30%", "38%"]}
                     height={["87px", "110px"]}
-                    background="#1C1C1C"
                     borderRadius="10px"
                     mt="40px"
                     direction={["column"]}
@@ -47,19 +47,21 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                         height={["25%", "18%"]}
                         fontFamily={"Sora"}
                         fontWeight="700"
-                        fontSize={["10px", "14px"]}
+                        fontSize={["9px","12px" , "18px"]}
                         textColor="#FFFFFF"
                         direction="row"
+                        lineHeight={["22px", "30px"]}
                     >
                         Your Rank
                     </Text>
                     <Box
-                        width={["70%", "60%"]}
-                        height={["43px", "43px"]}
-                        background="linear-gradient(90deg, #51E36E 0%, rgba(69, 228, 118, 0) 100%)"
+                        width={["80%", "60%"]}
+                        height={["43px", "50px"]}
+                        background="linear-gradient(90deg, #E90A63 0%, rgba(69, 228, 118, 0) 100%)"
                         m="auto"
                         borderRadius="5px 0px 0px 5px"
                         alignContent={"center"}
+                        mt={["20px","35px", "20px"]}
                     >
                         <Text
                             width={["80%", "100%"]}
@@ -78,23 +80,35 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                         </Text>
                     </Box>
                 </Flex>
-
-                <Avatar
-                    name={user.fullName}
-                    src={user.profilePic}
-                    boxSize={{
-                        base: "60px",
-                        sm: "60px",
-                        md: "80px",
-                        lg: "80px"
-                    }}
-                    showBorder={true}
-                ></Avatar>
+                <Box
+                    pos="relative"
+                    m="auto"
+                    textAlign={"center"}
+                    width={["150px","220px","220px"]}
+                    height={["140px","160px","160px"]}
+                    bgRepeat="no-repeat"
+                    bgPosition="center"
+                    bgSize="contain"
+                    backgroundImage={"/assets/not_win_user_bg.png"}
+                >
+                    <Avatar
+                        name={user.fullName}
+                        src={user.profilePic}
+                        boxSize={{
+                            base: "60px",
+                            sm: "60px",
+                            md: "80px",
+                            lg: "80px"
+                        }}
+                        showBorder={true}
+                        mt="40px"
+                    ></Avatar>
+                </Box>                
+                
 
                 <Flex
                     width={["30%", "38%"]}
                     height={["87px", "110px"]}
-                    background="#1C1C1C"
                     borderRadius="10px"
                     textAlign="center"
                     mt="40px"
@@ -106,19 +120,21 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                         height={["25%", "18%"]}
                         fontFamily={"Sora"}
                         fontWeight="700"
-                        fontSize={["10px", "14px"]}
+                        fontSize={["9px","12px", "18px"]}
                         textColor="#FFFFFF"
                         direction="row"
+                        lineHeight={["22px", "30px"]}
                     >
                         Your Points
                     </Text>
                     <Box
-                        width={["70%", "60%"]}
+                        width={["80%", "60%"]}
                         height={["43px", "43px"]}
-                        background="linear-gradient(90deg, #51E36E 0%, rgba(69, 228, 118, 0) 100%)"
+                        background="linear-gradient(90deg, #E90A63 0%, rgba(69, 228, 118, 0) 100%)"
                         m="auto"
                         borderRadius="5px 0px 0px 5px"
                         alignContent={"center"}
+                        mt={["20px","35px", "20px"]}
                     >
                         <Text
                             color="white"
@@ -145,24 +161,20 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                 {userResult?.reward && (
                     <Text
                         fontFamily="Blanch"
-                        text
-                        align={"center"}
-                        width={["", "229px"]}
-                        height={["", "33px"]}
-                        fontSize={["18px", "25px"]}
-                        textShadow={"0px 4px 10px rgba(0, 0, 0, 0.55)"}
-                        bgGradient={"linear(to-l, #EBCE2C, #FF6E3B)"}
-                        bgClip="text"
-                        mt={["-1%", ""]}
+                        width={["100%", "100%"]}
+                        height={["0px", "15px", "33px"]}
+                        fontSize={["25px","40px", "50px"]}
+                        color="#E90A63"
+                        textAlign={"center"}
                     >
                         {userResult?.reward}{" "}
                     </Text>
                 )}
-                {userResult?.waitingMessage && (
+                {userResult?.waitingMessage || (
                     <Text
                         textAlign={"center"}
                         width="473px"
-                        height={"18px"}
+                        height={["18px","18px","18px"]}
                         ml="-60%"
                         mt="1%"
                         fontSize={"14px"}
@@ -216,10 +228,10 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                 className="abc3"
             >
                 <Box
-                    width="300px"
+                    width={["200px","250px","100px"]}
                     height="1px"
-                    background="#C4C4C4"
-                    mt="10px"
+                    background="linear-gradient(90deg, #E90A63 0%, rgba(69, 228, 118, 0) 100%)"
+                    mt={["15px","35px","35px"]}
                     direction="row"
                 ></Box>
             </Flex>
@@ -228,7 +240,7 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                     <Tr>
                         <Td
                             textColor={"#FFFFFF"}
-                            fontSize={["14px", "17px"]}
+                            fontSize={["14px", "16px", "19px"]}
                             textAlign={"justify"}
                             fontWeight={"700"}
                         >
@@ -237,7 +249,7 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                         </Td>
                         <Td
                             textColor={"#FFFFFF"}
-                            fontSize={["14px", "17px"]}
+                            fontSize={["14px","16px", "19px"]}
                             textAlign={"justify"}
                             fontWeight={"700"}
                         >
@@ -251,7 +263,7 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                     <Tr>
                         <Td
                             textColor={"#FFFFFF"}
-                            fontSize={["14px", "17px"]}
+                            fontSize={["14px", "16px", "19px"]}
                             textAlign={"justify"}
                             fontWeight={"700"}
                         >
@@ -259,7 +271,7 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                         </Td>
                         <Td
                             textColor={"#FFFFFF"}
-                            fontSize={["14px", "17px"]}
+                            fontSize={["14px", "16px", "19px"]}
                             textAlign={"justify"}
                             fontWeight={"700"}
                         >
@@ -272,7 +284,7 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                         <Tr>
                             <Td
                                 textColor={"#FFFFFF"}
-                                fontSize={["14px", "17px"]}
+                                fontSize={["14px", "16px", "19px"]}
                                 textAlign={"justify"}
                                 fontWeight={"700"}
                             >
@@ -280,7 +292,7 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
                             </Td>
                             <Td
                                 textColor={"#FFFFFF"}
-                                fontSize={["14px", "17px"]}
+                                fontSize={["14px", "16px", "19px"]}
                                 textAlign={"justify"}
                                 fontWeight={"700"}
                             >

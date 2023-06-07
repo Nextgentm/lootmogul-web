@@ -14,12 +14,17 @@ import AppContext from "../../../utils/AppContext";
 import { AddIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import strapi from "../../../utils/strapi";
-import { useBreakpointValue, Heading, Radio, RadioGroup, Stack } from "@chakra-ui/react";
+import {
+    useBreakpointValue,
+    Heading,
+    Radio,
+    RadioGroup,
+    Stack
+} from "@chakra-ui/react";
 import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import { useRouter } from "next/router";
 const stripeJs = async () => await import("@stripe/stripe-js/pure");
 import jsondata from "../../../../public/assets/currency.json";
-
 
 const TabDepositPanel = ({ isDeposit }) => {
     const { asPath } = useRouter();
@@ -28,7 +33,7 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     const ref = useRef();
     const [amount, setAmount] = useState(0);
-    const [depositType, setDepositType] = useState(1)
+    const [depositType, setDepositType] = useState(1);
     const [accepted, setAccepted] = useState(false);
     const [alert, setAlertShow] = useState({ iOpen: false, msg: "" });
     const currentSize = useBreakpointValue({
@@ -42,10 +47,9 @@ const TabDepositPanel = ({ isDeposit }) => {
     const handleIncrease = (addedAmount) => {
         /*const newAmount = amount + addedAmount;*/
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        if (currency == 'BTC' || currency == 'ETH') {
+        if (currency == "BTC" || currency == "ETH") {
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(6));
-        }
-        else {
+        } else {
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
         }
         setAmount(addedAmount);
@@ -70,13 +74,15 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     useEffect(() => {
         async function fetchData() {
-            // Fetch data   
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false&sort=order`);
-            const results = []
+            // Fetch data
+            const { data } = await axios.get(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=false&sort=order`
+            );
+            const results = [];
             // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currencyCode == 'USD') {
+                if (value.currencyCode == "USD") {
                     setNumberOfChips(value.numberOfChips);
                     setMinimumDeposit(value.minimumDeposit);
 
@@ -101,13 +107,15 @@ const TabDepositPanel = ({ isDeposit }) => {
     useEffect(() => {
         async function fetchData() {
             // Fetch data
-            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true&sort=order`);
-            const results_bitpay = []
+            const { data } = await axios.get(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/currency-to-chips?populate=*&filters[isCrypto][$eq]=true&sort=order`
+            );
+            const results_bitpay = [];
             // Store results in the results array
 
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currencyCode == 'BTC') {
+                if (value.currencyCode == "BTC") {
                     SetDefaultCrytoChip(value.numberOfChips);
                     SetDefaultCrytoAmount(value.cryptoMinimumDeposit);
                 }
@@ -128,26 +136,27 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     const handleChange = (e) => {
         setCurrency(e.target.value);
-        setMinimumDeposit(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
-        setNumberOfChips(e.target.selectedOptions[0].getAttribute('numberOfChips'));
+        setMinimumDeposit(
+            e.target.selectedOptions[0].getAttribute("minimumDeposit")
+        );
+        setNumberOfChips(
+            e.target.selectedOptions[0].getAttribute("numberOfChips")
+        );
         //setTotalAmount(amount);
-        let numberOfAmount = Number(e.target.selectedOptions[0].getAttribute('numberOfChips')) / Number(e.target.selectedOptions[0].getAttribute('minimumDeposit'));
-        if (e.target.value == 'BTC' || e.target.value == 'ETH') {
+        let numberOfAmount =
+            Number(e.target.selectedOptions[0].getAttribute("numberOfChips")) /
+            Number(e.target.selectedOptions[0].getAttribute("minimumDeposit"));
+        if (e.target.value == "BTC" || e.target.value == "ETH") {
             setNumberOfAmount((amount / numberOfAmount).toFixed(6));
-        }
-        else {
+        } else {
             setNumberOfAmount((amount / numberOfAmount).toFixed(2));
         }
-
-
     };
     const setTotalAmount = (addedAmount) => {
-
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
-        if (currency == 'BTC' || currency == 'ETH') {
+        if (currency == "BTC" || currency == "ETH") {
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(6));
-        }
-        else {
+        } else {
             setNumberOfAmount((addedAmount / numberOfAmount).toFixed(2));
         }
         setAmount(addedAmount);
@@ -172,13 +181,14 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     const deposit = async () => {
         if (amount < numberOfChips) {
-            setAlertShow({ isOpen: true, msg: "Enter minimum " + numberOfChips + " chips for Deposit" });
-        }
-        else {
+            setAlertShow({
+                isOpen: true,
+                msg: "Enter minimum " + numberOfChips + " chips for Deposit"
+            });
+        } else {
             const user = await strapi.fetchUser();
             if (depositType == 1) {
                 try {
-
                     const { loadStripe } = await stripeJs();
 
                     if (user) {
@@ -188,7 +198,8 @@ const TabDepositPanel = ({ isDeposit }) => {
                             {
                                 user_id: id,
                                 redirect_url:
-                                    process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                    process.env
+                                        .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
                                     asPath,
                                 type: "DEPOSIT",
                                 value: +numberOfAmount,
@@ -202,24 +213,18 @@ const TabDepositPanel = ({ isDeposit }) => {
                                 }
                             }
                         );
-
                         const {stripe_session_id} = JSON.parse(resp.data.data);
 
                         const stripe = await loadStripe(
                             process.env.NEXT_PUBLIC_STRIPE_API_KEY
                         );
-
                         stripe.redirectToCheckout({
                             sessionId: stripe_session_id
                         });
                     }
-                } catch (error) {
-
-                }
-            }
-            else if (depositType == 2) {
+                } catch (error) {}
+            } else if (depositType == 2) {
                 try {
-
                     if (user) {
                         const { id } = user;
                         const resp = await axios.post(
@@ -227,7 +232,8 @@ const TabDepositPanel = ({ isDeposit }) => {
                             {
                                 user_id: id,
                                 redirect_url:
-                                    process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                    process.env
+                                        .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
                                     asPath,
                                 type: "DEPOSIT",
                                 value: +numberOfAmount,
@@ -245,58 +251,96 @@ const TabDepositPanel = ({ isDeposit }) => {
                         const {
                             data: { bitpay_url }
                         } = resp.data;
-                        window.location.href = bitpay_url
+                        window.location.href = bitpay_url;
                     }
-                } catch (error) {
-
-                }
+                } catch (error) {}
             }
         }
-
     };
 
     useEffect(() => {
         if (depositType == 2) {
-            setCurrency('BTC');
+            setCurrency("BTC");
             setMinimumDeposit(defaultCrytoAmount);
             setNumberOfChips(defaultCrytoChip);
             if (amount) {
-                let numberOfAmount = Number(defaultCrytoChip) / Number(defaultCrytoAmount);
+                let numberOfAmount =
+                    Number(defaultCrytoChip) / Number(defaultCrytoAmount);
                 setNumberOfAmount((amount / numberOfAmount).toFixed(6));
             }
         }
 
-
         if (depositType == 1) {
-            setCurrency('USD')
+            setCurrency("USD");
             setMinimumDeposit(defaultFiatAmount);
             setNumberOfChips(defaultFiatChip);
 
             if (amount) {
-                let numberOfAmount = Number(defaultFiatChip) / Number(defaultFiatAmount);
+                let numberOfAmount =
+                    Number(defaultFiatChip) / Number(defaultFiatAmount);
                 setNumberOfAmount((amount / numberOfAmount).toFixed(2));
             }
-
-
         }
-
-    }, [depositType])
+    }, [depositType]);
 
     return (
-
-        <Flex h="100%" w="100%" bg="#1d052b" direction={"column"} pr={['5px', '5px', '30px']} fontSize="5" marginBottom={"-1%"} marginTop="-4.4%" >
-            <Heading as='h5' size={['10px', '10px', 'sm']} variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
+        <Flex
+            h="100%"
+            w="100%"
+            bg="#1d052b"
+            direction={"column"}
+            pr={["5px", "5px", "30px"]}
+            fontSize="5"
+            marginBottom={"-1%"}
+            marginTop="-4.4%"
+        >
+            <Heading
+                as="h5"
+                size={["10px", "10px", "sm"]}
+                variant="modalHeader"
+                mt="15px"
+                mb="5px"
+                fontWeight="400"
+            >
                 SELECT PAYMENT METHOD
             </Heading>
-            <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px" display="block">
-                <RadioGroup defaultValue='1' onChange={setDepositType}>
-                    <Box color='white' w="48%" display="inline-table" bg="#1D052B" mr="10px" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px">
-                        <Radio size='md' colorScheme='pink' defaultChecked="true" value='1' style={{ fontSize: "10px" }}>
+            <Flex
+                w="100%"
+                justifyContent={"space-evenly"}
+                bg="#481A7F"
+                p="2%"
+                borderRadius="10px"
+                display="block"
+            >
+                <RadioGroup defaultValue="1" onChange={setDepositType}>
+                    <Box
+                        color="white"
+                        w="48%"
+                        display="inline-table"
+                        bg="#1D052B"
+                        mr="10px"
+                        p={["5px 10px", "5px 10px", "10px 25px"]}
+                        borderRadius="10px"
+                    >
+                        <Radio
+                            size="md"
+                            colorScheme="pink"
+                            defaultChecked="true"
+                            value="1"
+                            style={{ fontSize: "10px" }}
+                        >
                             <Text
                                 display="inline-flex"
                                 color="white"
                                 fontFamily={"Sora"}
-                                fontSize={["9px", "9px", "14px", "14px", "14px", "16px"]}
+                                fontSize={[
+                                    "9px",
+                                    "9px",
+                                    "14px",
+                                    "14px",
+                                    "14px",
+                                    "16px"
+                                ]}
                                 alignContent={"center"}
                                 m="auto"
                             >
@@ -304,13 +348,27 @@ const TabDepositPanel = ({ isDeposit }) => {
                             </Text>
                         </Radio>
                     </Box>
-                    <Box color='white' w="48%" display="inline-table" bg="#1D052B" p={["5px 10px", "5px 10px", "10px 25px"]} borderRadius="10px" >
-                        <Radio size='md' colorScheme='pink' value='2'>
+                    <Box
+                        color="white"
+                        w="48%"
+                        display="inline-table"
+                        bg="#1D052B"
+                        p={["5px 10px", "5px 10px", "10px 25px"]}
+                        borderRadius="10px"
+                    >
+                        <Radio size="md" colorScheme="pink" value="2">
                             <Text
                                 display="inline-flex"
                                 color="white"
                                 fontFamily={"Sora"}
-                                fontSize={["9px", "9px", "14px", "14px", "14px", "16px"]}
+                                fontSize={[
+                                    "9px",
+                                    "9px",
+                                    "14px",
+                                    "14px",
+                                    "14px",
+                                    "16px"
+                                ]}
                                 alignContent={"center"}
                                 m="auto"
                             >
@@ -320,10 +378,23 @@ const TabDepositPanel = ({ isDeposit }) => {
                     </Box>
                 </RadioGroup>
             </Flex>
-            <Heading as='h5' size='sm' variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
+            <Heading
+                as="h5"
+                size="sm"
+                variant="modalHeader"
+                mt="15px"
+                mb="5px"
+                fontWeight="400"
+            >
                 SELECT CURRENCY
             </Heading>
-            <Flex w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px">
+            <Flex
+                w="100%"
+                justifyContent={"space-evenly"}
+                bg="#481A7F"
+                p="2%"
+                borderRadius="10px"
+            >
                 {depositType == 1 ? (
                     <Select
                         w={currentSize === "base" ? "40%" : "40%"}
@@ -336,7 +407,12 @@ const TabDepositPanel = ({ isDeposit }) => {
                         {currencyoptions.map((option) => {
                             return (
                                 // eslint-disable-next-line react/no-unknown-property
-                                <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                <option
+                                    minimumDeposit={option.minimumDeposit}
+                                    numberOfChips={option.numberOfChips}
+                                    value={option.currency}
+                                    style={{ background: "#1d052b" }}
+                                >
                                     {option.currency} ({option.logo})
                                 </option>
                             );
@@ -354,15 +430,18 @@ const TabDepositPanel = ({ isDeposit }) => {
                         {bitpaycurrencyoptions.map((option) => {
                             return (
                                 // eslint-disable-next-line react/no-unknown-property
-                                <option minimumDeposit={option.minimumDeposit} numberOfChips={option.numberOfChips} value={option.currency} style={{ "background": "#1d052b" }}>
+                                <option
+                                    minimumDeposit={option.minimumDeposit}
+                                    numberOfChips={option.numberOfChips}
+                                    value={option.currency}
+                                    style={{ background: "#1d052b" }}
+                                >
                                     {option.currency} ({option.logo})
                                 </option>
                             );
                         })}
                     </Select>
                 )}
-
-
 
                 <Text
                     display="inline-flex"
@@ -374,22 +453,49 @@ const TabDepositPanel = ({ isDeposit }) => {
                 >
                     {minimumDeposit} {currency} = {numberOfChips} CHIPS
                 </Text>
-
             </Flex>
-            <Heading as='h5' size='sm' variant="modalHeader" mt='15px' mb='5px' fontWeight="400">
+            <Heading
+                as="h5"
+                size="sm"
+                variant="modalHeader"
+                mt="15px"
+                mb="5px"
+                fontWeight="400"
+            >
                 SELECT NUMBER OF CHIPS
-                <Text pl="4px" fontSize='xs' color="white" fontFamily={"Sora"} fontWeight="400" display="inline-block">
+                <Text
+                    pl="4px"
+                    fontSize="xs"
+                    color="white"
+                    fontFamily={"Sora"}
+                    fontWeight="400"
+                    display="inline-block"
+                >
                     (Min Chips: {numberOfChips} CHIPS)
                 </Text>
             </Heading>
 
-            <Flex direction={"column"} w="100%" justifyContent={"space-evenly"} bg="#481A7F" p="2%" borderRadius="10px">
+            <Flex
+                direction={"column"}
+                w="100%"
+                justifyContent={"space-evenly"}
+                bg="#481A7F"
+                p="2%"
+                borderRadius="10px"
+            >
                 <Flex>
                     <Text
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
+                        fontSize={[
+                            "12px",
+                            "12px",
+                            "14px",
+                            "14px",
+                            "14px",
+                            "18px"
+                        ]}
                         alignContent={"center"}
                         m="auto"
                     >
@@ -424,7 +530,14 @@ const TabDepositPanel = ({ isDeposit }) => {
                             setTotalAmount(Number(e.target.value));
                         }}
                         placeholder="Amount"
-                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
+                        fontSize={[
+                            "12px",
+                            "12px",
+                            "14px",
+                            "14px",
+                            "14px",
+                            "18px"
+                        ]}
                         fontWeight="400"
                         fontFamily="Sora"
                         backgroundColor="#1d052b"
@@ -433,7 +546,14 @@ const TabDepositPanel = ({ isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px", "12px", "14px", "14px", "14px", "18px"]}
+                        fontSize={[
+                            "12px",
+                            "12px",
+                            "14px",
+                            "14px",
+                            "14px",
+                            "18px"
+                        ]}
                         alignContent={"center"}
                         m="auto"
                     >
@@ -442,7 +562,10 @@ const TabDepositPanel = ({ isDeposit }) => {
                 </Flex>
                 {isDeposit && (
                     <Flex>
-                        <AddInputBox value={50} onClick={() => handleIncrease(50)} />
+                        <AddInputBox
+                            value={50}
+                            onClick={() => handleIncrease(50)}
+                        />
                         <AddInputBox
                             value={100}
                             onClick={() => handleIncrease(100)}
@@ -459,11 +582,25 @@ const TabDepositPanel = ({ isDeposit }) => {
                 )}
             </Flex>
             <Flex>
-                <Text fontSize={["12px", "12px", "16px", "16px", "16px", "lg"]} pt="5px" pl="4px" textAlign="center" color="white" fontFamily={"Sora"} fontWeight="300" display="inline-block">
-                    Note - All the amount which you deposit will auto-convert into chips
+                <Text
+                    fontSize={["12px", "12px", "16px", "16px", "16px", "lg"]}
+                    pt="5px"
+                    pl="4px"
+                    textAlign="center"
+                    color="white"
+                    fontFamily={"Sora"}
+                    fontWeight="300"
+                    display="inline-block"
+                >
+                    Note - All the amount which you deposit will auto-convert
+                    into chips
                 </Text>
             </Flex>
-            <Flex mt={["1%", "1%", "1%", "1%", "1%", "3%"]} ml={["10px", "10px", "15%"]} w="100%">
+            <Flex
+                mt={["1%", "1%", "1%", "1%", "1%", "3%"]}
+                ml={["10px", "10px", "15%"]}
+                w="100%"
+            >
                 <Checkbox
                     w="100%"
                     onChange={(e) => setAccepted(e.target.checked)}
@@ -472,17 +609,32 @@ const TabDepositPanel = ({ isDeposit }) => {
                         display="inline-flex"
                         color="white"
                         fontFamily={"Sora"}
-                        fontSize={["12px", "12px", "16px", "16px", "16px", "18px"]}
+                        fontSize={[
+                            "12px",
+                            "12px",
+                            "16px",
+                            "16px",
+                            "16px",
+                            "18px"
+                        ]}
                     >
                         I hereby accept the{" "}
                         <Text
                             color="primary"
                             fontFamily={"Sora"}
-                            fontSize={["12px", "12px", "16px", "16px", "16px", "18px"]}
+                            fontSize={[
+                                "12px",
+                                "12px",
+                                "16px",
+                                "16px",
+                                "16px",
+                                "18px"
+                            ]}
                             onClick={(e) => {
                                 e.preventDefault();
                                 window.open(
-                                    process.env.NEXT_PUBLIC_WORDPRESS_URL + "/terms-conditions#payment",
+                                    process.env.NEXT_PUBLIC_WORDPRESS_URL +
+                                        "/terms-conditions#payment",
                                     "_blank"
                                 );
                             }}
@@ -496,8 +648,8 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             <Button
                 w="100%"
-                fontSize={['16px', '22px']}
-                p={['20px 30px', '25px 40px']}
+                fontSize={["16px", "22px"]}
+                p={["20px 30px", "25px 40px"]}
                 mt={["2%", "1%", "1%", "1%", "1%", "3%"]}
                 onClick={deposit}
                 disabled={!accepted || amount <= 0}
@@ -514,7 +666,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     setAlertShow({ isOpen: false });
                 }}
             />
-        </Flex >
+        </Flex>
     );
 };
 
@@ -532,11 +684,12 @@ const AddInputBox = ({ value, onClick }) => {
             onClick={onClick}
             style={{
                 border: "1px solid #505050",
-                background: "transparent linear-gradient(90deg, #E90A63 0%, #481A7F 100%) 0% 0% no-repeat padding-box",
+                background:
+                    "transparent linear-gradient(90deg, #E90A63 0%, #481A7F 100%) 0% 0% no-repeat padding-box",
                 display: "flex",
                 justifyContent: "space-around",
                 fontFamily: "Sora",
-                boxShadow: "0px 0px 0px 0px #481A7F73, 0px 0px 5px #FF0080CF",
+                boxShadow: "0px 0px 0px 0px #481A7F73, 0px 0px 5px #FF0080CF"
             }}
         >
             <Box
@@ -566,4 +719,3 @@ const AddInputBox = ({ value, onClick }) => {
         </Button>
     );
 };
-

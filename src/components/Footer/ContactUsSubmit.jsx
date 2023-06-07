@@ -4,7 +4,7 @@ import { Flex, Box, Text, Link, Input, Button } from "@chakra-ui/react";
 const ContactUsSubmit = () => {
   return (
     <Box w={["100%", "100%", "60%", "70%"]} mr={["20px", "20px", "20px", "20px"]}>
-    <Box mb="30px" pt="10px">
+    <Box mb={["0px","0px","30px"]} pt="10px">
         <Text
         textAlign={["center","center","left","left"]}
             variant="BoldWhiteText"
@@ -40,7 +40,7 @@ const ContactUsSubmit = () => {
      textAlign={["center","center","left","left"]}
         fontWeight="400 !important"
         variant="BoldWhiteText"
-        mt="70px"
+        mt={["10px","20px","70px"]}
         mb="20px"
         lineHeight="1"
         fontSize={["30px", "30px", "30px", "30px"]}
