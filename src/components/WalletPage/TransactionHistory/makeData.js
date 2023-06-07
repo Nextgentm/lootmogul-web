@@ -3,6 +3,7 @@ import { Text, Box, Flex } from "@chakra-ui/react";
 import moment from "moment";
 
 const transactionTableData = (transaction, isMobile) => {
+    console.log("transaction-=-=-=-=-=-=-=-", transaction);
     return {
         transactionid: isMobile ? (
             <Box>
@@ -34,15 +35,21 @@ const transactionTableData = (transaction, isMobile) => {
         ),
         activity:
             (transaction?.type === "debit" || transaction?.type === "hold") &&
-                transaction?.contest?.data?.contestmaster?.data?.name
+            transaction?.contest?.data?.contestmaster?.data?.name
                 ? "Played " + transaction.contest.data.contestmaster.data.name
                 : transaction?.type === "credit" &&
-                    transaction?.contest?.data?.contestmaster?.data?.name
-                    ? "Won in " + transaction.contest.data.contestmaster.data.name
-                    : transaction?.eventmaster?.data?.name
-                        ? transaction.eventmaster.data.name
-                        : transaction?.balanceBeforeConversion ? transaction?.currency?.data?.name + " wallet amount " + transaction?.balanceBeforeConversion + 'USD is converted to ' + Math.round(transaction?.balanceBeforeConversion + 7) + ' CHIPS' : "transaction"
-        ,
+                  transaction?.contest?.data?.contestmaster?.data?.name
+                ? "Won in " + transaction.contest.data.contestmaster.data.name
+                : transaction?.eventmaster?.data?.name
+                ? transaction.eventmaster.data.name
+                : transaction?.balanceBeforeConversion
+                ? transaction?.currency?.data?.name +
+                  " wallet amount " +
+                  transaction?.balanceBeforeConversion +
+                  "USD is converted to " +
+                  Math.round(transaction?.balanceBeforeConversion + 7) +
+                  " CHIPS"
+                : "transaction",
         chips:
             transaction?.type === "debit" || transaction?.type === "hold" ? (
                 <Text color="#fff" fontWeight="400">
@@ -50,14 +57,22 @@ const transactionTableData = (transaction, isMobile) => {
                 </Text>
             ) : (
                 <Text color="#fff" fontWeight="400">
-                    +{Number(transaction?.chips).toFixed(2) || Number(transaction?.balanceBeforeConversion + 7).toFixed(2)} CHIPS
+                    +
+                    {Number(transaction?.chips).toFixed(2) ||
+                        Number(
+                            transaction?.balanceBeforeConversion + 7
+                        ).toFixed(2)}{" "}
+                    CHIPS
                 </Text>
             ),
 
-        closingbalance:
+        closingbalance: (
             <Text color="#fff" fontWeight="400">
-                {transaction?.closingBalance ? Number(transaction?.closingBalance).toFixed(2) + ' CHIPS' : '-'}
-            </Text>,
+                {transaction?.closingBalance
+                    ? Number(transaction?.closingBalance).toFixed(2) + " CHIPS"
+                    : "-"}
+            </Text>
+        ),
 
         status: (
             <Box>
@@ -68,7 +83,11 @@ const transactionTableData = (transaction, isMobile) => {
                     textAlign="center"
                     fontFamily="Sora"
                 >
-                    {transaction?.status ? transaction?.status : transaction?.balanceBeforeConversion ? "success" : ''}
+                    {transaction?.status
+                        ? transaction?.status
+                        : transaction?.balanceBeforeConversion
+                        ? "success"
+                        : ""}
                 </Text>
 
                 <Text
@@ -76,30 +95,39 @@ const transactionTableData = (transaction, isMobile) => {
                     color="#C7C7C7"
                     textAlign="center"
                     fontFamily="Sora"
-                    textTransform='uppercase'
+                    textTransform="uppercase"
                 >
                     {transaction?.type}
                 </Text>
             </Box>
         ),
         date: moment(transaction?.createdAt).format("DD-MM-YYYY, HH:mm"),
-        action: <ChevronDownIcon />
+        action:  transaction?.transactions?.data?.length ?<ChevronDownIcon />:'',
+        subRows:
+            transaction.transactions && transaction.transactions.data
+                ? transaction.transactions.data.map((s) =>
+                      transactionTableData(s, isMobile)
+                  )
+                : undefined
     };
 };
 
 export const makeData = (tableData, isMobile, auditLogData) => {
-
-    tableData.push(...auditLogData)
-    const sortedArray = _.uniqWith(_.orderBy(tableData, [(obj) => new Date(obj.createdAt)], ['desc']), _.isEqual);
+    tableData.push(...auditLogData);
+    const sortedArray = _.uniqWith(
+        _.orderBy(tableData, [(obj) => new Date(obj.createdAt)], ["desc"]),
+        _.isEqual
+    );
 
     tableData = sortedArray.map((transaction) => {
         return {
             ...transactionTableData(transaction, isMobile)
         };
     });
-
+    // console.clear()
+    console.log("tableData-=-=-=-=-=-=-=-=-=-=-", tableData);
     return tableData;
-}
+};
 export function makeColumn(tableColumns) {
     tableColumns = tableColumns.map((col) => {
         return {
