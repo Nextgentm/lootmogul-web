@@ -1,11 +1,17 @@
 import {
     Flex,
+    Box,
     Button,
     Text,
     Image,
     Popover,
     PopoverTrigger,
+    Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbSeparator,
   } from "@chakra-ui/react";
+  import { ChevronRightIcon  } from "@chakra-ui/icons";
   import { useRouter } from "next/router";
   import { useContext, useEffect, useState } from "react";
   import AppContext from "../../../../utils/AppContext";
@@ -14,6 +20,9 @@ import {
   import { setCountForCaptcha } from "../../../../services/dataService";
   import CountDownTimer from "../../../../components/CountDownTimer";
   import dynamic from "next/dynamic";
+
+  import { breabCrumbStyle } from "../../../../components/Header/styles";
+
   const NextShare = dynamic(() => import("../../../../utils/socialbuttons"));
   const PaidGameConfirmation = dynamic(() =>
     import("../../../Games/PaidGameConfirmation")
@@ -84,8 +93,19 @@ import {
         setHeartClick(true);
       }
     }, [gameData, influencerLikes]);
-  
+    
+    const breadcumbData = [
+      { text: "Home", url: process.env.NEXT_PUBLIC_WORDPRESS_URL, isCurrentPage: false },
+      {
+        text: 'Games',
+        url: "/games/",
+        isCurrentPage: false,
+      },
+      { text: gameData.name, url: "", isCurrentPage: true },
+    ];
+
     return (
+      <Box>
       <Flex
         px={["0", "0", "0", "2", "6"]}
         mt="20px"
@@ -238,7 +258,7 @@ import {
               ></NextShare>
             </Popover>
           </Flex>
-  
+                
           {/* <Flex {...iconStyles} w={["30px","30px","30px","40px"]}  >
                           <Image
                           boxSize="20px"
@@ -250,6 +270,30 @@ import {
                   </Flex> */}
         </Flex>
       </Flex>
+      <Box mt={5}  fontWeight={"bold"}>
+            <Flex mt={10}>
+                <Breadcrumb
+                    spacing="3px"
+                    fontSize={"20px"}
+                    color={"white"}
+                    separator={<ChevronRightIcon color="gray.500" />}
+                >
+                    {breadcumbData?.map((route) => (
+                        <BreadcrumbItem>
+                            <BreadcrumbLink
+                                href={route.url}
+                                {...breabCrumbStyle(route.isCurrentPage)}
+                               
+                            >
+                                {route.text}
+                                {route.isCurrentPage}
+                            </BreadcrumbLink>
+                        </BreadcrumbItem>
+                    ))}
+                </Breadcrumb>
+            </Flex>
+        </Box>            
+      </Box>
     );
   };
   
