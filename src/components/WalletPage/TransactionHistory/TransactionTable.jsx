@@ -19,8 +19,20 @@ import {
 } from "@chakra-ui/icons";
 
 import { makeData, makeColumn } from "./makeData";
+import CancelWithdraw from "../CancelWithdraw";
 
 function CustomTable({ columns, data, alldata }) {
+    const [isCancelModalActive, setCancelModalActive] = useState(false);
+    const toggleCancelModal = (i) => {
+        setCancelModalActive(!isCancelModalActive);
+        setNestedId(nestedId ? i : -1)
+    };
+
+    const OnLoginClose = async () => {
+        toggleCancelModal();
+    };
+    
+    
     console.log("columns*-*-*-*-*-*", columns);
     const {
         getTableProps,
@@ -90,7 +102,7 @@ function CustomTable({ columns, data, alldata }) {
                         ))
                     )}
                 </Thead>
-                <Tbody key="tbody_1" {...getTableBodyProps()}>
+                <Tbody key="tbody_1" {...getTableBodyProps()} className="wallet-transaction-history">
                     {page.map((row, i) => {
                         prepareRow(row);
 
@@ -102,8 +114,9 @@ function CustomTable({ columns, data, alldata }) {
                                     key={i}
                                     {...row.getRowProps()}
                                     onClick={() =>
-                                        setNestedId(nestedId ? i : -1)
+                                        toggleCancelModal(i)//setNestedId(nestedId ? i : -1)
                                     }
+                                    className={nestedId === i ? "active": ''}
                                 >
                                     {row.cells.map((cell, j) => {
                                         return (
@@ -163,7 +176,7 @@ function CustomTable({ columns, data, alldata }) {
 
             <Flex
                 justifyContent="space-around"
-                mt={4}
+                mt={20}
                 mb={4}
                 ml="auto"
                 mr="auto"
@@ -171,21 +184,17 @@ function CustomTable({ columns, data, alldata }) {
                 alignItems="center"
             >
                 <Flex key="paginator">
-                    <Tooltip key="tootltip" label="Previous Page">
-                        <ChevronLeftIcon
-                            key="lefticon"
-                            isDisabled={!canPreviousPage}
-                            color="#43C8FF
-"
+                    <Tooltip key="tootltip" label="Previous Page">                      
+                        <img
+                            src="/assets/designupdate1/arrow-left-unselected.png"
+                            alt="Right"
                             onClick={previousPage}
-                            h={6}
-                            w={6}
                         />
                     </Tooltip>
                 </Flex>
 
                 <Flex alignItems="center" key="paginator2">
-                    <Text key="pagetext" flexShrink="0" color="white" mr={8}>
+                    <Text key="pagetext" flexShrink="0" color="white" mr={8} fontSize={21}>
                         Page{" "}
                         <Text key="pagetext1" fontWeight="bold" as="span">
                             {pageIndex + 1}
@@ -199,19 +208,23 @@ function CustomTable({ columns, data, alldata }) {
 
                 <Flex key="righticon">
                     <Tooltip label="Next Page" key="righticon1">
-                        <ChevronRightIcon
-                            key="righticon2"
-                            isDisabled={!canNextPage}
-                            color="#43C8FF
-"
+                        <img
+                            src="/assets/designupdate1/arrow-right-selected.png"
+                            alt="Right"
                             onClick={nextPage}
-                            h={6}
-                            w={6}
                         />
                     </Tooltip>
                 </Flex>
             </Flex>
+            <CancelWithdraw
+                isOpen={isCancelModalActive}
+                OnLoginClose={OnLoginClose}
+            />
         </Box>
+       
+            
+            
+        
     );
 }
 
