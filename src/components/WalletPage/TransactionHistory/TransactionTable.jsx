@@ -20,6 +20,7 @@ import {
 
 import { makeData, makeColumn } from "./makeData";
 import CancelWithdraw from "../CancelWithdraw";
+import ConfirmWithdrawal from "../ConfirmWithdrawal";
 
 function CustomTable({ columns, data, alldata }) {
     const [isCancelModalActive, setCancelModalActive] = useState(false);
@@ -216,10 +217,15 @@ function CustomTable({ columns, data, alldata }) {
                     </Tooltip>
                 </Flex>
             </Flex>
+            <ConfirmWithdrawal
+                isOpen={isCancelModalActive}
+                OnLoginClose={OnLoginClose}
+            />
             <CancelWithdraw
                 isOpen={isCancelModalActive}
                 OnLoginClose={OnLoginClose}
             />
+            
         </Box>
        
             
