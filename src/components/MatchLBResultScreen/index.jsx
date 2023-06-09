@@ -110,7 +110,7 @@ const MatchLBResultScreen = (props) => {
         <>
             {userResult && (
                 <Box
-                    bgImage="url('/assets/image 132.jpg')"
+                    background="transparent radial-gradient(closest-side at 0% 0%, #481A7F 0%, #180529 70%) 0% 0% no-repeat padding-box;"
                     bgRepeat="no-repeat"
                     bgSize="cover"
                 >
@@ -164,12 +164,16 @@ const MatchLBResultScreen = (props) => {
                                 onClick={() => handleLBClicked()}
                                 width={["auto", "auto"]}
                                 height="46px"
-                                variant="outline"
-                                fontSize={"18px"}
+                                fontSize={["18px","18px","18px"]}
                                 flex="none"
                                 order={"0"}
                                 marginTop={"3%"}
                                 flex-grow="0"
+                                color="#fff"
+                                backgroundImage={"radial-gradient(closest-side at 0% 0%, #481A7F 0%, #180529 70%)"}
+                                boxShadow={'0 0 0 0'}
+                                border="1px solid #E90A63"
+                                p='7'
                             >
                                 VIEW LEADERBOARD
                             </Button>
