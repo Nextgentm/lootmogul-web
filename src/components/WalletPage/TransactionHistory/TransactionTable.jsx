@@ -24,17 +24,18 @@ import ConfirmWithdrawal from "../ConfirmWithdrawal";
 
 function CustomTable({ columns, data, alldata }) {
     const [isCancelModalActive, setCancelModalActive] = useState(false);
+    const [modelData, setModelData] = useState();
+
     const toggleCancelModal = (i) => {
         setCancelModalActive(!isCancelModalActive);
-        setNestedId(nestedId ? i : -1)
+        setNestedId(nestedId ? i : -1);
     };
 
     const OnLoginClose = async () => {
         toggleCancelModal();
     };
-    
-    
-    console.log("columns*-*-*-*-*-*", columns);
+
+    console.log("alldata*-*-*-*-*-*", alldata);
     const {
         getTableProps,
         getTableBodyProps,
@@ -57,20 +58,37 @@ function CustomTable({ columns, data, alldata }) {
     );
     const [showPopUp, setshowpopup] = useState(false);
     const [nestedId, setNestedId] = useState();
+
     const rowclick = (e) => {
         let numericValue = parseInt(e.replace("#", ""));
-        console.log("numericValue", numericValue);
-        setNestedId(numericValue);
-        let nestedData = alldata.find((i) => {
-            numericValue == i.id;
+        // setNestedId(numericValue);
+        let model = alldata.find((i) => {
+            return i.id == numericValue;
         });
-        console.log("nestedData-=-=-=", nestedData);
+        setModelData(model);
         if (showPopUp) {
             setshowpopup(false);
         } else {
             setshowpopup(true);
         }
     };
+
+    const confirmcancel = () => {
+        console.log("modelData-------", modelData);
+        console.log("cancel");
+        delete modelData.id;
+        // modelData.status = "cancelled";
+        let newwithdrawal = {
+            ...modelData,
+            status:"cancelled",
+        };
+        //cancelled
+        console.log("newwithdrawal", newwithdrawal);
+        
+        // const resp = await strapi.create("crypto-wallets", cryptoAdd);
+
+    };
+
     return (
         <Box width="100%">
             <Table
@@ -103,21 +121,23 @@ function CustomTable({ columns, data, alldata }) {
                         ))
                     )}
                 </Thead>
-                <Tbody key="tbody_1" {...getTableBodyProps()} className="wallet-transaction-history">
+                <Tbody
+                    key="tbody_1"
+                    {...getTableBodyProps()}
+                    className="wallet-transaction-history"
+                >
                     {page.map((row, i) => {
                         prepareRow(row);
-
-                        console.log("dar---------------", row.cells);
-
                         return (
                             <>
                                 <Tr
                                     key={i}
                                     {...row.getRowProps()}
-                                    onClick={() =>
-                                        toggleCancelModal(i)//setNestedId(nestedId ? i : -1)
-                                    }
-                                    className={nestedId === i ? "active": ''}
+                                    onClick={() => {
+                                        toggleCancelModal(i); //setNestedId(nestedId ? i : -1)
+                                        rowclick(row.cells[0].value);
+                                    }}
+                                    className={nestedId === i ? "active" : ""}
                                 >
                                     {row.cells.map((cell, j) => {
                                         return (
@@ -185,7 +205,7 @@ function CustomTable({ columns, data, alldata }) {
                 alignItems="center"
             >
                 <Flex key="paginator">
-                    <Tooltip key="tootltip" label="Previous Page">                      
+                    <Tooltip key="tootltip" label="Previous Page">
                         <img
                             src="/assets/designupdate1/arrow-left-unselected.png"
                             alt="Right"
@@ -195,7 +215,13 @@ function CustomTable({ columns, data, alldata }) {
                 </Flex>
 
                 <Flex alignItems="center" key="paginator2">
-                    <Text key="pagetext" flexShrink="0" color="white" mr={8} fontSize={21}>
+                    <Text
+                        key="pagetext"
+                        flexShrink="0"
+                        color="white"
+                        mr={8}
+                        fontSize={21}
+                    >
                         Page{" "}
                         <Text key="pagetext1" fontWeight="bold" as="span">
                             {pageIndex + 1}
@@ -224,13 +250,10 @@ function CustomTable({ columns, data, alldata }) {
             <CancelWithdraw
                 isOpen={isCancelModalActive}
                 OnLoginClose={OnLoginClose}
+                modelData={modelData}
+                confirmcancel={confirmcancel}
             />
-            
         </Box>
-       
-            
-            
-        
     );
 }
 
