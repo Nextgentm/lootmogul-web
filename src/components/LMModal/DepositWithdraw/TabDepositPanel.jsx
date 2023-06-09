@@ -178,7 +178,6 @@ const TabDepositPanel = ({ isDeposit }) => {
             const user = await strapi.fetchUser();
             if (depositType == 1) {
                 try {
-
                     const { loadStripe } = await stripeJs();
 
                     if (user) {
@@ -202,15 +201,11 @@ const TabDepositPanel = ({ isDeposit }) => {
                                 }
                             }
                         );
-
-                        const {
-                            data: { stripe_session_id }
-                        } = resp.data;
+                        const {stripe_session_id} = JSON.parse(resp.data.data);
 
                         const stripe = await loadStripe(
                             process.env.NEXT_PUBLIC_STRIPE_API_KEY
                         );
-
                         stripe.redirectToCheckout({
                             sessionId: stripe_session_id
                         });
