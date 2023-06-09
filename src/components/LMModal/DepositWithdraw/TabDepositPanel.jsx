@@ -203,9 +203,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                             }
                         );
 
-                        const {
-                            data: { stripe_session_id }
-                        } = resp.data;
+                        const {stripe_session_id} = JSON.parse(resp.data.data);
 
                         const stripe = await loadStripe(
                             process.env.NEXT_PUBLIC_STRIPE_API_KEY
