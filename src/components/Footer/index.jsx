@@ -116,6 +116,7 @@ const Footer = () => {
                         m="0 auto"
                         px="10px"
                         direction="column"
+                        pb={["0px","0px","40px"]}
                     >
                         <Flex direction="column" alignItems="flex-start" width="100%" mb="20px">
                             <Link
@@ -162,7 +163,7 @@ const Footer = () => {
                             </Link>
                         </Flex>
 
-                        <Flex direction="row" alignItems="flex-start" width="100%" my="20px">
+                        <Flex direction="row" alignItems="flex-start" width="100%" my="20px" mb={["0px","0px","20px"]}>
                             <InfluencerPaymentPartner />
                             <Box
                                 w="5px"
@@ -173,7 +174,7 @@ const Footer = () => {
                         <Flex
                             w="100%"
                             justify="center"
-                            mt="20px"
+                            mt={["0px","0px","20px"]}
                         >
                             <ContactUsSubmit />
                         </Flex>
