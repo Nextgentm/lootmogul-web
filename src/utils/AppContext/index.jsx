@@ -98,9 +98,9 @@ export const AppContextContainer = ({ children }) => {
         const isRetry = await strapi.request(
             "post",
             "contest/custom-contest/checkifretry?contest=" +
-                contestmaster.contest?.id +
-                "&userId=" +
-                user?.id,
+            contestmaster.contest?.id +
+            "&userId=" +
+            user?.id,
             {}
         );
         if (isRetry?.retry && isRetry?.free) {
@@ -126,7 +126,7 @@ export const AppContextContainer = ({ children }) => {
     };
 
     const CheckLocationAndConfirm = (contestmaster, callerKey) => {
-        
+
         if (contestmaster.entryFee > 0 && contestmaster.retries > 0) {
             CheckIfRetry(contestmaster, callerKey);
         } else if (contestmaster.entryFee != 0) {
@@ -153,11 +153,11 @@ export const AppContextContainer = ({ children }) => {
     };
     const logout = async () => {
         const value = await strapi.fetchUser();
-        
+
         try {
             const resp = await axios.post(
                 process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                    `/wp-json/strapi/v1/setCurrentUser/`,
+                `/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.email,
                     strapi_jwt: "logout",
@@ -166,7 +166,7 @@ export const AppContextContainer = ({ children }) => {
             );
             const data = resp.data;
             if (data.success) {
-                
+
                 if (typeof window !== "undefined" && window.localStorage) {
                     localStorage.clear();
                 }
@@ -183,7 +183,7 @@ export const AppContextContainer = ({ children }) => {
                 }
             }
         } catch (error) {
-                                            
+
         }
     };
 
@@ -201,18 +201,18 @@ export const AppContextContainer = ({ children }) => {
                     }
                 }
             });
-            
+
             let query = coupon
                 ? "contest/custom-contest/join?contest=" +
-                  data[0].id +
-                  "&coupon=" +
-                  coupon +
-                  "&userId=" +
-                  user?.id
+                data[0].id +
+                "&coupon=" +
+                coupon +
+                "&userId=" +
+                user?.id
                 : "contest/custom-contest/join?contest=" + data[0].id;
             if (data?.length > 0) {
                 const resp = await strapi.request("post", query, {});
-                
+
                 if (resp?.ticketId) {
                     setCoupon("");
                     if (resp?.status == 0) {
@@ -220,34 +220,34 @@ export const AppContextContainer = ({ children }) => {
                         if (
                             data[0]?.contestmaster?.data?.game?.data?.url &&
                             data[0]?.contestmaster?.data?.game?.data?.type ==
-                                "html"
+                            "html"
                         ) {
                             if (typeof window !== "undefined") {
                                 window.open(
                                     data[0]?.contestmaster?.data?.game?.data
                                         ?.url +
-                                        "?ticketId=" +
-                                        resp?.ticketId +
-                                        "&token=" +
-                                        strapi.getToken() +
-                                        "&redirecturi=" +
-                                        encodeURI(
-                                            process.env.NEXT_PUBLIC_SITE_URL +
-                                                "/games/" +
-                                                data[0]?.contestmaster?.data
-                                                    ?.slug
-                                        ) +
-                                        "&ts=" +
-                                        moment().format(),
+                                    "?ticketId=" +
+                                    resp?.ticketId +
+                                    "&token=" +
+                                    strapi.getToken() +
+                                    "&redirecturi=" +
+                                    encodeURI(
+                                        process.env.NEXT_PUBLIC_SITE_URL +
+                                        "/games/" +
+                                        data[0]?.contestmaster?.data
+                                            ?.slug
+                                    ) +
+                                    "&ts=" +
+                                    moment().format(),
                                     "_self"
                                 );
                             }
                         } else if (
                             data[0]?.contestmaster?.data?.game?.data?.url &&
                             data[0]?.contestmaster?.data?.game?.data?.type ==
-                                "iframe"
+                            "iframe"
                         ) {
-                          
+
 
                             if (
                                 data[0]?.contestmaster?.data?.game?.data?.config
@@ -267,17 +267,17 @@ export const AppContextContainer = ({ children }) => {
                                     if (
                                         router.pathname !=
                                         "/games/" +
-                                            roomData?.id +
-                                            "/" +
-                                            data[0]?.contestmaster?.data?.game
-                                                ?.data?.config?.slug
+                                        roomData?.id +
+                                        "/" +
+                                        data[0]?.contestmaster?.data?.game
+                                            ?.data?.config?.slug
                                     )
                                         router.push(
                                             "/games/" +
-                                                roomData?.id +
-                                                "/" +
-                                                data[0]?.contestmaster?.data
-                                                    ?.game?.data?.config?.slug
+                                            roomData?.id +
+                                            "/" +
+                                            data[0]?.contestmaster?.data
+                                                ?.game?.data?.config?.slug
                                         );
                                 } else {
                                     setShowLoading(false);
@@ -482,7 +482,7 @@ export const AppContextContainer = ({ children }) => {
                                     user_id: data.user?.id || ""
                                 }
                             });
-                        } catch (error) {}
+                        } catch (error) { }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("utm_medium");
@@ -497,10 +497,10 @@ export const AppContextContainer = ({ children }) => {
                             await strapi.request(
                                 "get",
                                 "referral-codes/signwithreferral?referral_code=" +
-                                    referral_code
+                                referral_code
                             );
                             updateUser();
-                        } catch (error) {}
+                        } catch (error) { }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
@@ -509,8 +509,8 @@ export const AppContextContainer = ({ children }) => {
             }
             ga.eventTracking({
                 action: data.user.is_new
-                    ? "new user signup happened"
-                    : "user logged in",
+                    ? provider + " new user signup happened"
+                    : provider + " user logged in",
                 params: data.user
             });
             clevertap.onUserLogin.push({
@@ -518,7 +518,7 @@ export const AppContextContainer = ({ children }) => {
             });
             await updateUser(data.user);
         }
-       
+
 
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
@@ -531,7 +531,7 @@ export const AppContextContainer = ({ children }) => {
         try {
             const resp = await axios.post(
                 process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                    `/wp-json/strapi/v1/setCurrentUser/`,
+                `/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.user.email,
                     strapi_jwt: value.jwt,
@@ -543,12 +543,12 @@ export const AppContextContainer = ({ children }) => {
             if (data.success) {
             }
         } catch (error) {
-            
+
         }
     };
 
     const callCustomAuthService = async (formData, formType, redirectUrl = '') => {
-       
+
         let data;
         defaultDataSettings();
         if (formType === "signup" || formType === "login") {
@@ -557,7 +557,7 @@ export const AppContextContainer = ({ children }) => {
                     const apiValues = {
                         username: formData.username,
                         identifier: formData.email,
-                    password: formData.password
+                        password: formData.password
                     };
                     data = await strapi.register(apiValues);
                 } catch ({ error }) {
@@ -568,7 +568,7 @@ export const AppContextContainer = ({ children }) => {
                         position: "top-right",
                         isClosable: true
                     });
-                    
+
                     return;
                 }
             }
@@ -582,7 +582,7 @@ export const AppContextContainer = ({ children }) => {
                     data = await strapi.login(apiValues);
                     insertLoggedInUserInDB(data);
                     setJwt(data.jwt);
-                    
+
                 } catch ({ error }) {
                     toast({
                         title: error.message,
@@ -596,7 +596,6 @@ export const AppContextContainer = ({ children }) => {
             }
         }
         if (data?.user) {
-            debugger;
             if (data.user.is_new) {
                 if (typeof window !== "undefined") {
                     const utm_source =
@@ -613,7 +612,7 @@ export const AppContextContainer = ({ children }) => {
                     const referral_code =
                         window.localStorage?.getItem("referral_code");
                     const provider = window.localStorage?.getItem("provider");
-                    
+
                     if (
                         (provider && trackingCode) ||
                         utm_source ||
@@ -635,7 +634,7 @@ export const AppContextContainer = ({ children }) => {
                                     user_id: data.user?.id || ""
                                 }
                             });
-                        } catch (error) {}
+                        } catch (error) { }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("utm_medium");
@@ -650,20 +649,21 @@ export const AppContextContainer = ({ children }) => {
                             await strapi.request(
                                 "get",
                                 "referral-codes/signwithreferral?referral_code=" +
-                                    referral_code
+                                referral_code
                             );
                             updateUser();
-                        } catch (error) {}
+                        } catch (error) { }
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
                     }
                 }
             }
+            debugger;
             ga.eventTracking({
                 action: data.user.is_new
-                    ? "new user signup happened"
-                    : "user logged in",
+                    ? "new user signup happened with new emailID"
+                    : "custom user logged in with emailID",
                 params: data.user
             });
             clevertap.onUserLogin.push({
@@ -671,9 +671,9 @@ export const AppContextContainer = ({ children }) => {
             });
             await updateUser(data.user);
         }
-        
+
         if (
-            router.route === "/gamecampaign" 
+            router.route === "/gamecampaign"
         ) {
             router.push(redirectUrl);
         }
@@ -705,12 +705,12 @@ export const AppContextContainer = ({ children }) => {
                         }
                     }
                 );
-                
+
                 updateUser(response.data);
                 setUser(response.data);
                 getCurrencyToChip();
             } catch (error) {
-                
+
             }
         }
         if (!router.isReady) return;
