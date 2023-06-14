@@ -302,9 +302,11 @@ nav {
   .gameslider {
     padding-bottom: 10px;
   }
+  .Influencer_banner_image img.custom-img {width: 80%;}
 }
 
 .wallet-transaction-history tr {background: #0b0b29 !important;}
 .wallet-transaction-history tr:nth-of-type(odd) td{background: #261f3b !important;}
 .wallet-transaction-history tr.active{background: #e90a63 !important;}
 .wallet-transaction-history tr.active:nth-of-type(odd) td {background: #e90a63 !important;}
+
