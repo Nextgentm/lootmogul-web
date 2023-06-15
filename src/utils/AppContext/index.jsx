@@ -507,6 +507,18 @@ export const AppContextContainer = ({ children }) => {
                     }
                 }
             }
+
+            /** For Mokmobups */
+            if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
+                const utm_term = router.query.utm_term;
+                const { data } = await axios.get(
+                    `http://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&transaction_id=${utm_term}`
+                );
+                console.log(data);
+                
+            }
+            /** For Mokmobups */
+
             ga.eventTracking({
                 action: data.user.is_new
                     ? provider + " new user signup happened"
@@ -660,6 +672,17 @@ export const AppContextContainer = ({ children }) => {
                 }
             }
             debugger;
+            
+            /** For Mokmobups */
+            if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
+                const utm_term = router.query.utm_term;
+                const { data } = await axios.get(
+                    `http://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&transaction_id=${utm_term}`
+                );
+                console.log(data);
+            }
+            /** For Mokmobups */
+
             ga.eventTracking({
                 action: data.user.is_new
                     ? "new user signup happened with new emailID"
