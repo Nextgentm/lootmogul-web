@@ -169,7 +169,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     with Google
                                 </Button>
 
-                                <FacebookLogin
+                                {/*<FacebookLogin
                                     appId={
                                         process.env
                                             .NEXT_PUBLIC_FACEBOOK_CLIENT_ID
@@ -206,7 +206,8 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         </Button>
                                     )}
                                 />
-
+                                */}        
+                                
                                 <Box>
                                     <Image
                                         alt="or"
