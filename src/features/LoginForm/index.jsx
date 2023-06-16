@@ -157,7 +157,7 @@ const LoginForm = ({ isOpen, OnLoginClose, redirectUrl }) => {
                         with Google
                     </Button>
 
-                    {/*<FacebookLogin
+                    <FacebookLogin
                         appId={
                             process.env
                                 .NEXT_PUBLIC_FACEBOOK_CLIENT_ID
@@ -194,7 +194,7 @@ const LoginForm = ({ isOpen, OnLoginClose, redirectUrl }) => {
                             </Button>
                         )}
                     />
-                    */}
+                
                     
                     <Box>
                         <Image
