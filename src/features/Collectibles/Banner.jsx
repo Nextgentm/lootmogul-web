@@ -22,6 +22,7 @@ const Banner = ({ banner, isSubPage }) => {
                                 lineHeight="1"
                                 variant="headText"
                                 textShadow="unset"
+                                mt={["0rem","0rem","0rem","0rem","4rem"]}
                             >
                                 DISCOVER, BUY, TRADE<br/>
                                 and unlock the sports star digital collectibles that offer<br />
@@ -58,8 +59,8 @@ const Banner = ({ banner, isSubPage }) => {
                                     src={banner}
                                     className="custom-img"
                                     layout="fill"
-                                    width={"100%"}
-                                    height={["300px", "300px", "400px", "400px"]}
+                                    width={"auto"}
+                                    height={["300px", "300px", "400px", "450px", "600px"]}
                                 />
                             </Flex>
 
