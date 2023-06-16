@@ -346,7 +346,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 />
             )}
 
-            <Box w="100% " overflow="hidden">
+            <Box w="100% " overflow="hidden" className="Influencer_banner_image">
                 {selectedCategory &&
                     category !== defaultCategoryName.toLowerCase() ? (
                     <InfluencerDetailBanner getBannerImage={getBannerImage} />

@@ -122,11 +122,13 @@ const GameTabs = ({ defaultTab, gameData }) => {
             }, 1000);
         }
     }
-    tabsData.push({
-        tab: <Text>Leaderboard</Text>,
-        tabPanel: <LeaderboardTab gameData={gameData} lbRecords={lbRecords} loading={loading} currentUser={currentUser} user={user} />
-
-    })
+    
+    if(gameData.type != 'battle'){
+        tabsData.push({
+            tab: <Text>Leaderboard</Text>,
+            tabPanel: <LeaderboardTab gameData={gameData} lbRecords={lbRecords} loading={loading} currentUser={currentUser} user={user} />
+        })
+    }
     if ((defaultTab == 1 && tabsData?.length == 2) || defaultTab == 0)
         return <Box mt="3%" ml={["18px", "0px", "0px"]} mr="18px" textAlign={"left"}>
             {gameData && <LMSectionTabs defaultTab={defaultTab} variant={"unstyled"} data={tabsData} />}

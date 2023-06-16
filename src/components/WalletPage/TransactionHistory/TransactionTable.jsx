@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useTable, usePagination } from "react-table";
 import {
     Table,
@@ -10,16 +10,32 @@ import {
     Flex,
     Box,
     Text,
-    Tooltip,
+    Tooltip
 } from "@chakra-ui/react";
 import {
     ChevronRightIcon,
-    ChevronLeftIcon
+    ChevronLeftIcon,
+    ChevronDownIcon
 } from "@chakra-ui/icons";
 
 import { makeData, makeColumn } from "./makeData";
+import CancelWithdraw from "../CancelWithdraw";
+import ConfirmWithdrawal from "../ConfirmWithdrawal";
 
-function CustomTable({ columns, data }) {
+function CustomTable({ columns, data, alldata }) {
+    const [isCancelModalActive, setCancelModalActive] = useState(false);
+    const [modelData, setModelData] = useState();
+
+    const toggleCancelModal = (i) => {
+        setCancelModalActive(!isCancelModalActive);
+        setNestedId(nestedId ? i : -1);
+    };
+
+    const OnLoginClose = async () => {
+        toggleCancelModal();
+    };
+
+    console.log("alldata*-*-*-*-*-*", alldata);
     const {
         getTableProps,
         getTableBodyProps,
@@ -40,9 +56,41 @@ function CustomTable({ columns, data }) {
         },
         usePagination
     );
+    const [showPopUp, setshowpopup] = useState(false);
+    const [nestedId, setNestedId] = useState();
+
+    const rowclick = (e) => {
+        let numericValue = parseInt(e.replace("#", ""));
+        // setNestedId(numericValue);
+        let model = alldata.find((i) => {
+            return i.id == numericValue;
+        });
+        setModelData(model);
+        if (showPopUp) {
+            setshowpopup(false);
+        } else {
+            setshowpopup(true);
+        }
+    };
+
+    const confirmcancel = () => {
+        console.log("modelData-------", modelData);
+        console.log("cancel");
+        delete modelData.id;
+        // modelData.status = "cancelled";
+        let newwithdrawal = {
+            ...modelData,
+            status:"cancelled",
+        };
+        //cancelled
+        console.log("newwithdrawal", newwithdrawal);
+        
+        // const resp = await strapi.create("crypto-wallets", cryptoAdd);
+
+    };
+
     return (
         <Box width="100%">
-
             <Table
                 mt="5%"
                 width="100%"
@@ -51,7 +99,6 @@ function CustomTable({ columns, data }) {
                 variant="striped"
                 color="#C7C7C7"
                 colorScheme="stripedTable"
-
                 {...getTableProps()}
             >
                 <Thead key="thead_1">
@@ -74,29 +121,75 @@ function CustomTable({ columns, data }) {
                         ))
                     )}
                 </Thead>
-                <Tbody key="tbody_1" {...getTableBodyProps()}>
+                <Tbody
+                    key="tbody_1"
+                    {...getTableBodyProps()}
+                    className="wallet-transaction-history"
+                >
                     {page.map((row, i) => {
                         prepareRow(row);
                         return (
-                            <Tr key={i} {...row.getRowProps()}>
-                                {row.cells.map((cell, i) => {
-                                    return (
-                                        <Td
-                                            fontSize={["10px", "16px"]}
-                                            color="#C7C7C7"
-                                            py={[2, 4]}
-                                            px={[4, 6]}
-                                            fontWeight="bold"
-                                            textAlign="center"
-                                            fontFamily="Sora"
-                                            key={i}
-                                            {...cell.getCellProps()}
-                                        >
-                                            {cell.render("Cell")}
-                                        </Td>
-                                    );
-                                })}
-                            </Tr>
+                            <>
+                                <Tr
+                                    key={i}
+                                    {...row.getRowProps()}
+                                    onClick={() => {
+                                        toggleCancelModal(i); //setNestedId(nestedId ? i : -1)
+                                        rowclick(row.cells[0].value);
+                                    }}
+                                    className={nestedId === i ? "active" : ""}
+                                >
+                                    {row.cells.map((cell, j) => {
+                                        return (
+                                            <Td
+                                                fontSize={["10px", "16px"]}
+                                                color="#C7C7C7"
+                                                py={[2, 4]}
+                                                px={[4, 6]}
+                                                fontWeight="bold"
+                                                textAlign="center"
+                                                fontFamily="Sora"
+                                                key={j}
+                                                {...cell.getCellProps()}
+                                                // background={"#E90A63"}
+                                            >
+                                                {cell.render("Cell")}
+                                            </Td>
+                                        );
+                                    })}
+                                </Tr>
+                                {nestedId === i &&
+                                    row?.subRows?.map((sRow, k) => {
+                                        prepareRow(sRow);
+                                        console.log("sRow");
+                                        return (
+                                            <Tr key={k} {...sRow.getRowProps()}>
+                                                {sRow.cells.map((cell, i) => {
+                                                    return (
+                                                        <Td
+                                                            fontSize={[
+                                                                "10px",
+                                                                "16px"
+                                                            ]}
+                                                            color="#C7C7C7"
+                                                            py={[2, 4]}
+                                                            px={[4, 6]}
+                                                            fontWeight="bold"
+                                                            textAlign="center"
+                                                            fontFamily="Sora"
+                                                            key={i}
+                                                            {...cell.getCellProps()}
+                                                        >
+                                                            {cell.render(
+                                                                "Cell"
+                                                            )}
+                                                        </Td>
+                                                    );
+                                                })}
+                                            </Tr>
+                                        );
+                                    })}
+                            </>
                         );
                     })}
                 </Tbody>
@@ -104,7 +197,7 @@ function CustomTable({ columns, data }) {
 
             <Flex
                 justifyContent="space-around"
-                mt={4}
+                mt={20}
                 mb={4}
                 ml="auto"
                 mr="auto"
@@ -113,20 +206,22 @@ function CustomTable({ columns, data }) {
             >
                 <Flex key="paginator">
                     <Tooltip key="tootltip" label="Previous Page">
-                        <ChevronLeftIcon
-                            key="lefticon"
-                            isDisabled={!canPreviousPage}
-                            color="#43C8FF
-"
+                        <img
+                            src="/assets/designupdate1/arrow-left-unselected.png"
+                            alt="Right"
                             onClick={previousPage}
-                            h={6}
-                            w={6}
                         />
                     </Tooltip>
                 </Flex>
 
                 <Flex alignItems="center" key="paginator2">
-                    <Text key="pagetext" flexShrink="0" color="white" mr={8}>
+                    <Text
+                        key="pagetext"
+                        flexShrink="0"
+                        color="white"
+                        mr={8}
+                        fontSize={21}
+                    >
                         Page{" "}
                         <Text key="pagetext1" fontWeight="bold" as="span">
                             {pageIndex + 1}
@@ -140,18 +235,24 @@ function CustomTable({ columns, data }) {
 
                 <Flex key="righticon">
                     <Tooltip label="Next Page" key="righticon1">
-                        <ChevronRightIcon
-                            key="righticon2"
-                            isDisabled={!canNextPage}
-                            color="#43C8FF
-"
+                        <img
+                            src="/assets/designupdate1/arrow-right-selected.png"
+                            alt="Right"
                             onClick={nextPage}
-                            h={6}
-                            w={6}
                         />
                     </Tooltip>
                 </Flex>
             </Flex>
+            <ConfirmWithdrawal
+                isOpen={isCancelModalActive}
+                OnLoginClose={OnLoginClose}
+            />
+            <CancelWithdraw
+                isOpen={isCancelModalActive}
+                OnLoginClose={OnLoginClose}
+                modelData={modelData}
+                confirmcancel={confirmcancel}
+            />
         </Box>
     );
 }
@@ -159,8 +260,9 @@ function CustomTable({ columns, data }) {
 function TransactionTable({ tableData, tableColumns, isMobile, auditLogData }) {
     return (
         <CustomTable
+            alldata={tableData}
             columns={makeColumn(tableColumns)}
-            data={makeData(tableData, isMobile, auditLogData)}
+            data={makeData(tableData, isMobile, auditLogData, tableData.length)}
         />
     );
 }
