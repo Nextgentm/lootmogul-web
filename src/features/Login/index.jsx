@@ -49,20 +49,20 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
         setPasswordType("password")
     }
 
-    const  handleSubmit =() => {
+    const handleSubmit = () => {
         debugger;
-        if (inputEmailId==='' && inputPassword==='') {
+        if (inputEmailId === '' && inputPassword === '') {
             return;
         }
-            const formData = {
-                username: inputEmailId,
-                email: inputEmailId,
-                password: inputPassword,
-            }
-            callCustomAuthService(formData, selectedOption, redirectUrl);
-            if (selectedOption === 'signup') {
-                setSelectedOption('login');
-            }
+        const formData = {
+            username: inputEmailId,
+            email: inputEmailId,
+            password: inputPassword,
+        }
+        callCustomAuthService(formData, selectedOption, redirectUrl);
+        if (selectedOption === 'signup') {
+            setSelectedOption('login');
+        }
     }
 
 
@@ -169,7 +169,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     with Google
                                 </Button>
 
-                                {/*<FacebookLogin
+                                {<FacebookLogin
                                     appId={
                                         process.env
                                             .NEXT_PUBLIC_FACEBOOK_CLIENT_ID
@@ -206,8 +206,8 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         </Button>
                                     )}
                                 />
-                                */}        
-                                
+                                }
+
                                 <Box>
                                     <Image
                                         alt="or"
