@@ -512,7 +512,7 @@ export const AppContextContainer = ({ children }) => {
             if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
                 const utm_term = router.query.utm_term;
                 const { data } = await axios.get(
-                    `http://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&transaction_id=${utm_term}`
+                    `http://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 );
                 console.log(data);
                 
@@ -677,7 +677,7 @@ export const AppContextContainer = ({ children }) => {
             if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
                 const utm_term = router.query.utm_term;
                 const { data } = await axios.get(
-                    `http://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&transaction_id=${utm_term}`
+                    `http://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 );
                 console.log(data);
             }
