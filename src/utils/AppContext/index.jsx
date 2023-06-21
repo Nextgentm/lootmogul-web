@@ -347,6 +347,7 @@ export const AppContextContainer = ({ children }) => {
     };
 
     const updateUser = async (obj) => {
+        // debugger;
         let data = obj;
         //if (!data) data = user;
 
@@ -633,6 +634,7 @@ export const AppContextContainer = ({ children }) => {
                         utm_content
                     ) {
                         try {
+                            debugger;
                             strapi.request("post", "sourcetracking", {
                                 data: {
                                     utm_source: provider || utm_source,
@@ -669,16 +671,15 @@ export const AppContextContainer = ({ children }) => {
                     }
                 }
             }
-            
+            debugger;
             
             /** For Mokmobups */
             if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
                 const utm_term = router.query.utm_term;
-                let wmadv = await axios.get(
-                    `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
+                const { data } = await axios.get(
+                    `http://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 );
-                console.log("wmadv=>",wmadv);
-                console.log("wmadvURL=>",`https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`);
+                console.log(data);
             }
             /** For Mokmobups */
 

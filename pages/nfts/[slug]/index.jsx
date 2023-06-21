@@ -28,6 +28,7 @@ export default function CollectibleDetailsPage({ nftCollections, seoData }) {
     
     
     useEffect(()=>{
+        // debugger;
         const isValid = nftCollections.find(c => c.slug.toLowerCase() === router.query.slug.toLowerCase());
         setIsValidCollection(isValid);
     });

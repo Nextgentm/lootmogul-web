@@ -42,6 +42,7 @@ const Collectibles = memo(({ data, banner }) => {
 
     // this is to handle refresh scnerio 
     useEffect(() => {
+        // debugger;
         if (JSON.stringify(router.query) !== '{}') {
             const category = data.find(c => c.slug.toLowerCase() === router.query.slug.toLowerCase());
             setSelectedCategory(category.name);
