@@ -1,5 +1,8 @@
 /* eslint-disable react/jsx-key */
 import dynamic from 'next/dynamic'
+import {
+  Button,
+} from "@chakra-ui/react";
 
 const Header = dynamic(() => import("../src/components/Header"));
 const Footer = dynamic(() => import("../src/components/Footer"));
@@ -23,7 +26,7 @@ import "../styles/globals.css";
 import * as ga from '../src/services/googleAnalytics';
 import LMNonCloseALert from '../src/components/LMNonCloseALert';
 import MaintenancePage from '../src/features/MaintenancePage';
-
+import * as Sentry from '@sentry/nextjs';
 
 library.add(faTelegramPlane);
 
@@ -105,6 +108,13 @@ function MyApp({ Component, pageProps }) {
 
   }, [router.events]);
 
+  const onSentry = () => {
+    const myException = { message: 'Something went wrong', code: 500 };
+
+    Sentry.captureMessage(JSON.stringify(myException));
+    
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraUIContainer>
@@ -118,7 +128,7 @@ function MyApp({ Component, pageProps }) {
           {process.env.NEXT_PUBLIC_MAINTENANCE === 'true' ? <MaintenancePage></MaintenancePage> : <>
             {router.route === "/" ? '' : <Header />}
             {stickyBtn && router.route !== "/" ? <StickySocialIcons /> : ''}
-
+            {/* <Button onClick={onSentry}>hello</Button> */}
             <Component
               {...pageProps}
               loading={loading}
