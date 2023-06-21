@@ -60,7 +60,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
             setHeartClick(true);
         }
     }, [contestmaster, influencerLikes]);
-    console.log(contestmaster.contest?.endDate);
+    //console.log(contestmaster.contest?.endDate);
     return (
         <Link
             href={"/games/" + contestmaster?.slug}

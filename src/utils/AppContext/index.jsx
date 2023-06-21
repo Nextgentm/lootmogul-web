@@ -14,6 +14,7 @@ import LMNonCloseALert from "../../components/LMNonCloseALert";
 import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
+import * as Sentry from '@sentry/nextjs';
 
 export const AppContext = createContext({});
 
@@ -347,9 +348,9 @@ export const AppContextContainer = ({ children }) => {
     };
 
     const updateUser = async (obj) => {
-        
+
         let data = obj;
-        
+
 
         if (user && !strapi.user) {
             setUser(null);
@@ -514,8 +515,9 @@ export const AppContextContainer = ({ children }) => {
                 let wmadv = await axios.get(
                     `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 );
-                console.log("wmadv",wmadv);
-                console.log("wmadvURL",`https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`);
+                const myMessage = { message: 'wmadv', wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}` };
+
+                Sentry.captureMessage(JSON.stringify(myMessage));
             }
 
             /** For mobupps */
@@ -530,7 +532,7 @@ export const AppContextContainer = ({ children }) => {
             clevertap.onUserLogin.push({
                 Site: data.user
             });
-            
+
             await updateUser(data.user);
         }
 
@@ -637,7 +639,7 @@ export const AppContextContainer = ({ children }) => {
                         utm_content
                     ) {
                         try {
-                            
+
                             strapi.request("post", "sourcetracking", {
                                 data: {
                                     utm_source: provider || utm_source,
@@ -677,11 +679,13 @@ export const AppContextContainer = ({ children }) => {
             /** For Mobupps */
             if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
                 const utm_term = router.query.utm_term;
-                let wmadv  = await axios.get(
+                let wmadv = await axios.get(
                     `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 );
-                console.log("wmadv",wmadv);
-                console.log("wmadvURL",`https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`);
+                const myMessage = { message: 'wmadv', wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}` };
+
+                Sentry.captureMessage(JSON.stringify(myMessage));
+                
             }
             /** For Mobupps */
 
