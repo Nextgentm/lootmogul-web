@@ -347,9 +347,9 @@ export const AppContextContainer = ({ children }) => {
     };
 
     const updateUser = async (obj) => {
-        // debugger;
+        
         let data = obj;
-        //if (!data) data = user;
+        
 
         if (user && !strapi.user) {
             setUser(null);
@@ -508,16 +508,17 @@ export const AppContextContainer = ({ children }) => {
                 }
             }
 
-            /** For Mokmobups */
+            /** For mobupps */
             if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
                 const utm_term = router.query.utm_term;
-                const { data } = await axios.get(
-                    `http://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
+                let wmadv = await axios.get(
+                    `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 );
-                console.log(data);
-                
+                console.log("wmadv",wmadv);
+                console.log("wmadvURL",`https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`);
             }
-            /** For Mokmobups */
+
+            /** For mobupps */
 
             ga.eventTracking({
                 action: data.user.is_new
@@ -525,9 +526,11 @@ export const AppContextContainer = ({ children }) => {
                     : provider + " user logged in",
                 params: data.user
             });
+
             clevertap.onUserLogin.push({
                 Site: data.user
             });
+            
             await updateUser(data.user);
         }
 
@@ -634,7 +637,7 @@ export const AppContextContainer = ({ children }) => {
                         utm_content
                     ) {
                         try {
-                            debugger;
+                            
                             strapi.request("post", "sourcetracking", {
                                 data: {
                                     utm_source: provider || utm_source,
@@ -671,17 +674,16 @@ export const AppContextContainer = ({ children }) => {
                     }
                 }
             }
-            debugger;
-            
-            /** For Mokmobups */
+            /** For Mobupps */
             if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
                 const utm_term = router.query.utm_term;
-                const { data } = await axios.get(
-                    `http://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
+                let wmadv  = await axios.get(
+                    `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 );
-                console.log(data);
+                console.log("wmadv",wmadv);
+                console.log("wmadvURL",`https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`);
             }
-            /** For Mokmobups */
+            /** For Mobupps */
 
             ga.eventTracking({
                 action: data.user.is_new

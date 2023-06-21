@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Text, Flex, Box, VStack, Link, Button, Image } from "@chakra-ui/react";
+import { Text, Flex, Box, VStack, Link, Button, Image, Tooltip } from "@chakra-ui/react";
 import { getStrapiMedia } from "../../../../utils/medias";
 import SocialActions from "../../SocialActions";
 import { useRouter } from "next/router";
@@ -9,6 +9,8 @@ import strapi from "../../../../utils/strapi";
 import { setCountForCaptcha } from "../../../../services/dataService";
 import dynamic from "next/dynamic";
 import CountDownTimer from "../../../../components/CountDownTimer";
+import { InfoIcon } from "../../../../components/Icons";
+import moment from "moment";
 const PaidGameConfirmation = dynamic(() =>
     import("../../../Games/PaidGameConfirmation")
 );
@@ -58,7 +60,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
             setHeartClick(true);
         }
     }, [contestmaster, influencerLikes]);
-
+    console.log(contestmaster.contest?.endDate);
     return (
         <Link
             href={"/games/" + contestmaster?.slug}
@@ -165,13 +167,41 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             Players Played
                         </Text>
                     </VStack>
-
+                    {sectionName === 'Blockchain Games' ? (
+                    <Box w={["30%","30%","23%"]}>
+                        <Tooltip
+                            placement="top-end"
+                            label={'Contest end at '+moment(contestmaster.contest?.endDate).format("DD MMM, YYYY, HH:mm")} 
+                            bg="#383838"
+                            borderRadius="10px"
+                            color="white"
+                            fontSize="sm"
+                            p="10px"
+                        >
+                            <Text>
+                                <InfoIcon
+                                    color="#ddd"
+                                    float="right"
+                                    boxSize={"29px"}
+                                />
+                            </Text>
+                        </Tooltip>
+                                 
                     <SocialActions
                         onHeartClick={onHeartClick}
                         isHeartClick={isHeartClick}
                         imgSize={{ width: "25px", height: "25px" }}
                         influencer={contestmaster.influencer}
                     />
+                    </Box>
+                    ) : 
+                    <SocialActions
+                        onHeartClick={onHeartClick}
+                        isHeartClick={isHeartClick}
+                        imgSize={{ width: "25px", height: "25px" }}
+                        influencer={contestmaster.influencer}
+                    />
+                    }
                 </Flex>
 
                 {contestmaster &&
