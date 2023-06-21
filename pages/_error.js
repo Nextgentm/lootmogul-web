@@ -24,7 +24,7 @@ const CustomErrorComponent = props => {
   // compensate for https://github.com/vercel/next.js/issues/8592
   // Sentry.captureUnderscoreErrorException(props);
 
-  return <NextErrorComponent statusCode={props.statusCode} />;
+return <NextErrorComponent statusCode={props.statusCode} />;
 };
 
 CustomErrorComponent.getInitialProps = async contextData => {
