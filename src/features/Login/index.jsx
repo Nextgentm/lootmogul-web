@@ -59,7 +59,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
             password: inputPassword,
         }
         callCustomAuthService(formData, selectedOption, redirectUrl);
-        if (selectedOption === 'signup') {
+        if (selectedOption == 'signup') {
             setSelectedOption('login');
         }
     }
