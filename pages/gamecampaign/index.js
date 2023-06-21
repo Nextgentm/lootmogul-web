@@ -11,7 +11,7 @@ import BlockChainGame from "../../src/components/Web3Games/BlockChainGame";
 const defaultSEOData = {
     metaTitle:"Lootmogul | Join LootMogul Web3 Sports Gaming",
     metaDescription:"Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!",
-    canonicalURL:"https://lootmogul.com/web3-games"
+    canonicalURL:process.env.NEXT_BASE_URL+"/web3-games"
 };
 
 export default function GamesPage({

@@ -11,7 +11,7 @@ const InfluencersComponent = dynamic(
 const defaultSEOData = {
   metaTitle:"Lootmogul | Buy NFTs And Play Games With Your Favorite Influencer",
   metaDescription:"Get To Know More About Your Favorite Influencer At Lootmogul.com | Get A Chance To Play Games And Buy Their NFTs",
-  canonicalURL:"https://lootmogul.com/influencers"
+  canonicalURL:process.env.NEXT_BASE_URL+"/influencers"
 
 };
 

@@ -131,7 +131,7 @@ const NextShare = ({ link, caption, hashtag , type="none", influencer=null,user 
                             <VKShareButton
                                 url={link}
                                 image={
-                                    "https://lootmogul.com/assets/lm_logo.png"
+                                    process.env.NEXT_BASE_URL + "/assets/lm_logo.png"
                                 }
                                 onClick={LogShareClick}
                             >
@@ -141,7 +141,7 @@ const NextShare = ({ link, caption, hashtag , type="none", influencer=null,user 
                                 url={link}
                                 title={caption}
                                 image={
-                                    "https://lootmogul.com/assets/lm_logo.png"
+                                    process.env.NEXT_BASE_URL + "/assets/lm_logo.png"
                                 }
                                 onClick={LogShareClick}
                             >

@@ -67,7 +67,7 @@ const Footer = () => {
                                 <Link
                                     _focus={{ border: "none", boxShadow: "none" }}
                                     _hover={{ textDecoration: "none" }}
-                                    href="https://lootmogul.com"
+                                    href={process.env.NEXT_BASE_URL}
                                 >
                                     <Image
                                         alt=""
@@ -122,7 +122,7 @@ const Footer = () => {
                             <Link
                                 _focus={{ border: "none", boxShadow: "none" }}
                                 _hover={{ textDecoration: "none" }}
-                                href="https://lootmogul.com"
+                                href={process.env.NEXT_BASE_URL}
                             >
                                 <Image
                                     alt=""
