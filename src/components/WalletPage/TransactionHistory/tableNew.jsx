@@ -4,12 +4,12 @@ import moment from "moment";
 import React, { useState } from "react";
 
 function TableNew({ tableData, auditLogData }) {
-    console.log("auditLogData", auditLogData);
-    console.log("tableData", tableData);
+    //console.log("auditLogData", auditLogData);
+    //console.log("tableData", tableData);
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {
-        console.log("open=-=-=-");
+        //console.log("open=-=-=-");
         setIsOpen(!isOpen);
     };
 
