@@ -26,14 +26,16 @@ export default function Home({ seoData }) {
   useEffect(() => {
     setTimeout(() => {
       window.location.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL + '/home')
-    }, 5000);
+    }, 500);
   }, []);
 
   return (
     <>
       <SEOContainer seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData} />
       <Box height={isMobileDevice ? "600px" : '850px'}>
-        <LMVideoPlayer mute={true} url={isMobileDevice ? '/assets/videos/nextgenerationmobile.mp4' : '/assets/videos/nextgenerationweb.mp4'} play={true} loop={true} />
+        {/**
+         *<LMVideoPlayer mute={true} url={isMobileDevice ? '/assets/videos/nextgenerationmobile.mp4' : '/assets/videos/nextgenerationweb.mp4'} play={true} loop={true} />
+         */}
       </Box>
 
     </>

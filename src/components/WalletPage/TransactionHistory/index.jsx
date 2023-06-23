@@ -72,7 +72,7 @@ const TransactionHistory = memo(() => {
             }
 
             do {
-                const res = await strapi.find("transaction-infos", {
+                const res = await strapi.find("transactions", {
                     // filters: filters,
                     populate: [
                         "contest.contestmaster",
@@ -294,7 +294,7 @@ const TransactionHistory = memo(() => {
                                     "CLOSING BALANCE",
                                     "STATUS",
                                     "DATE",
-                                    "ACTION"
+                                    //"ACTION"
                                 ]}
                             />
                         </>
