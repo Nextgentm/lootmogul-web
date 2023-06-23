@@ -31,8 +31,8 @@ const BlackChainGame = ({contestmasters,contestSectionsData, blockChainCardData}
                   }
             
           });
-          console.log('hello cm.contest?.id');
-          console.log(contestSectionsData);
+          //console.log('hello cm.contest?.id');
+          //console.log(contestSectionsData);
           setContestSections(contestSectionsData);
           
         }
