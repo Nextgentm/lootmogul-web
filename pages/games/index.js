@@ -7,7 +7,7 @@ const defaultSEOData = {
   metaTitle: "Play Online Trivia Games With Your Favorite Influencers",
   metaDescription:
     "Play Games With Your Favorite Influencers And Win Exciting Prizes",
-  canonicalURL: "https://lootmogul.com/games",
+  canonicalURL: process.env.NEXT_PUBLIC_SITE_URL+"/games",
 };
 
 export default function GamesPage({

@@ -23,14 +23,14 @@ const SiteMap = () => {
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
                 _hover={{ textDecoration: "none" }}
-                href="https://metaverse.lootmogul.com/what-is-metaverse/"
+                href={process.env.NEXT_PUBLIC_WORDPRESS_URL + "/what-is-metaverse/"}
             >
                 <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>What is Metaverse?</Text>
             </Link>
             <Link
                 _focus={{ border: "none", boxShadow: "none" }}
                 _hover={{ textDecoration: "none" }}
-                href="https://metaverse.lootmogul.com/what-is-nft/"
+                href={process.env.NEXT_PUBLIC_WORDPRESS_URL + "/what-is-nft/"}
             >
                 <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>What are Digital Collectibles?</Text>
             </Link>
