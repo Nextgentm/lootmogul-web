@@ -131,7 +131,7 @@ const NextShare = ({ link, caption, hashtag , type="none", influencer=null,user 
                             <VKShareButton
                                 url={link}
                                 image={
-                                    process.env.NEXT_BASE_URL + "/assets/lm_logo.png"
+                                    process.env.NEXT_PUBLIC_SITE_URL + "/assets/lm_logo.png"
                                 }
                                 onClick={LogShareClick}
                             >
@@ -141,7 +141,7 @@ const NextShare = ({ link, caption, hashtag , type="none", influencer=null,user 
                                 url={link}
                                 title={caption}
                                 image={
-                                    process.env.NEXT_BASE_URL + "/assets/lm_logo.png"
+                                    process.env.NEXT_PUBLIC_SITE_URL + "/assets/lm_logo.png"
                                 }
                                 onClick={LogShareClick}
                             >

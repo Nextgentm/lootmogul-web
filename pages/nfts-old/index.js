@@ -9,7 +9,7 @@ const defaultSEOData = {
     "Buy & Trade Exclusive Limited Edition NFTs Of Your Favorite Influencers",
   metaDescription:
     "Support Your Favorite Influencers By Buying And Trading Their NFTs. Get To Know More About Your Favorite Influencers On Lootmogul.com",
-  canonicalURL: process.env.NEXT_BASE_URL+"/nfts",
+  canonicalURL: process.env.NEXT_PUBLIC_SITE_URL+"/nfts",
 };
 const NftsComponent = dynamic(
   () => import("../../src/features/Nfts/components"),

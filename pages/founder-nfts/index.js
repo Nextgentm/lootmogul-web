@@ -9,7 +9,7 @@ import SEOContainer from '../../src/features/SEOContainer';
  const defaultSEOData = {
   metaTitle:"Grab Lootmogul Founder's NFTs",
   metaDescription:"Discover The Latest Premium NFTs Of Our Founders. Buy Digital Art And Digital Collectibles On Lootmogul.com Today.",
-  canonicalURL: process.env.NEXT_BASE_URL + "/founder-nfts"
+  canonicalURL: process.env.NEXT_PUBLIC_SITE_URL + "/founder-nfts"
 
 };
 

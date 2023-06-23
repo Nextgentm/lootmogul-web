@@ -75,7 +75,7 @@ const[rating,setRating]=useState({title:"",review:"",star:0.0});
         alt="share" src="/assets/designupdate1/games_share_icon.svg" />
  </Box> 
             </PopoverTrigger>
-            <NextShare link={process.env.NEXT_BASE_URL+ "/influencer/"+ influencer?.data?.slug} caption={"Come and play with "+influencer?.data?.name} hashtag="lootmogul"
+            <NextShare link={process.env.NEXT_PUBLIC_SITE_URL+ "/influencer/"+ influencer?.data?.slug} caption={"Come and play with "+influencer?.data?.name} hashtag="lootmogul"
               type="influencer"
               influencer={influencer?.data}
               user= {user}

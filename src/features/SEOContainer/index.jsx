@@ -9,12 +9,12 @@ const SEOContainer = ({ seoData, content, pageName }) => {
           description={seoData.metaDescription || content?.description}
           canonical={
             seoData.canonicalURL ||
-            process.env.NEXT_BASE_URL + "/" + pageName + "/" + content?.slug
+            process.env.NEXT_PUBLIC_SITE_URL + "/" + pageName + "/" + content?.slug
           }
           openGraph={{
             url:
               seoData.canonicalURL ||
-              process.env.NEXT_BASE_URL + "/" + pageName + "/" + content?.slug,
+              process.env.NEXT_PUBLIC_SITE_URL + "/" + pageName + "/" + content?.slug,
             title: seoData.metaTitle || content?.name,
             description: seoData.metaDescription || content?.description,
             images: [

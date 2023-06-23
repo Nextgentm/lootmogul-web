@@ -77,7 +77,7 @@ const CardInfo = ({ nft }) => {
                                     </PopoverTrigger>
                                     <NextShare
                                         link={
-                                            process.env.NEXT_BASE_URL + "/nfts/" +
+                                            process.env.NEXT_PUBLIC_SITE_URL + "/nfts/" +
                                             nft?.id
                                         }
                                         caption={
@@ -148,7 +148,7 @@ const CardInfo = ({ nft }) => {
                                     </PopoverTrigger>
                                     <NextShare
                                         link={
-                                            process.env.NEXT_BASE_URL + "/nfts/" +
+                                            process.env.NEXT_PUBLIC_SITE_URL + "/nfts/" +
                                             nft?.id
                                         }
                                         caption={

@@ -179,7 +179,7 @@ const ReferEarn = () => {
                                 >
                                     <FacebookShareButton
                                         url={
-                                            process.env.NEXT_BASE_URL + "?referral_code=" +
+                                            process.env.NEXT_PUBLIC_SITE_URL + "?referral_code=" +
                                                 user.referral_code?.code || ""
                                         }
                                         quote={referralMsg}
@@ -189,7 +189,7 @@ const ReferEarn = () => {
 
                                     <TwitterShareButton
                                         url={
-                                            process.env.NEXT_BASE_URL + "?referral_code=" +
+                                            process.env.NEXT_PUBLIC_SITE_URL + "?referral_code=" +
                                                 user.referral_code?.code || ""
                                         }
                                         title={referralMsg}
@@ -199,7 +199,7 @@ const ReferEarn = () => {
 
                                     <FacebookMessengerShareButton
                                         url={
-                                            process.env.NEXT_BASE_URL + "?referral_code=" +
+                                            process.env.NEXT_PUBLIC_SITE_URL + "?referral_code=" +
                                                 user.referral_code?.code || ""
                                         }
                                         title={referralMsg}
@@ -211,7 +211,7 @@ const ReferEarn = () => {
                                     </FacebookMessengerShareButton>
                                     <WhatsappShareButton
                                         url={
-                                            process.env.NEXT_BASE_URL + "?referral_code=" +
+                                            process.env.NEXT_PUBLIC_SITE_URL + "?referral_code=" +
                                                 user.referral_code?.code || ""
                                         }
                                         title={referralMsg}
@@ -220,7 +220,7 @@ const ReferEarn = () => {
                                     </WhatsappShareButton>
                                     <RedditShareButton
                                         url={
-                                            process.env.NEXT_BASE_URL + "?referral_code=" +
+                                            process.env.NEXT_PUBLIC_SITE_URL + "?referral_code=" +
                                                 user.referral_code?.code || ""
                                         }
                                         title={referralMsg}

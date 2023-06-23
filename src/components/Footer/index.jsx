@@ -67,7 +67,7 @@ const Footer = () => {
                                 <Link
                                     _focus={{ border: "none", boxShadow: "none" }}
                                     _hover={{ textDecoration: "none" }}
-                                    href={process.env.NEXT_BASE_URL}
+                                    href={process.env.NEXT_PUBLIC_SITE_URL}
                                 >
                                     <Image
                                         alt=""
@@ -122,7 +122,7 @@ const Footer = () => {
                             <Link
                                 _focus={{ border: "none", boxShadow: "none" }}
                                 _hover={{ textDecoration: "none" }}
-                                href={process.env.NEXT_BASE_URL}
+                                href={process.env.NEXT_PUBLIC_SITE_URL}
                             >
                                 <Image
                                     alt=""

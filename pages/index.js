@@ -18,7 +18,7 @@ import AppContext from "../src/utils/AppContext";
 const defaultSEOData = {
   metaTitle: "Buy And Trade Your Favorite Influencers NFTs",
   metaDescription: "A Multiverse Blockchain Gaming Platform For Sports Influencers And Fans To Engage | Join And Build Your Own Metaverse Land | Play Games With Influencers",
-  canonicalURL: process.env.NEXT_BASE_URL
+  canonicalURL: process.env.NEXT_PUBLIC_SITE_URL
 };
 
 export default function Home({ seoData }) {
