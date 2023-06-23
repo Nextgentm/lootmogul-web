@@ -86,7 +86,7 @@ const TransactionHistory = memo(() => {
                         pageSize: 60
                     }
                 });
-                console.log("Trasanction DATA =-=-=-=-=-=", res);
+                //console.log("Trasanction DATA =-=-=-=-=-=", res);
 
                 if (res?.meta) {
                     data.push(res.data);

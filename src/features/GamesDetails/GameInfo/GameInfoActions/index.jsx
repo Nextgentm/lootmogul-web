@@ -245,7 +245,7 @@ import {
                 />
               </PopoverTrigger>
               <NextShare
-                link={"https://lootmogul.com/games/" + gameData?.slug}
+                link={process.env.NEXT_PUBLIC_SITE_URL + "/" + gameData?.slug}
                 caption={
                   "Join me on a quiz game - " +
                   gameData?.name +
