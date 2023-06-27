@@ -1,8 +1,5 @@
 /* eslint-disable react/jsx-key */
 import dynamic from 'next/dynamic'
-import {
-  Button,
-} from "@chakra-ui/react";
 
 const Header = dynamic(() => import("../src/components/Header"));
 const Footer = dynamic(() => import("../src/components/Footer"));
