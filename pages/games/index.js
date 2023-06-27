@@ -26,7 +26,7 @@ export default function GamesPage({
         contestmasters={data || []}
         banners={banners?.data || []}
       />
-      {/* <MultipleLoggedInUser /> */}
+
     </>
   );
 }

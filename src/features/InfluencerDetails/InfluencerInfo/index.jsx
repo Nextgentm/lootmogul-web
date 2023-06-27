@@ -152,46 +152,7 @@ const InfluencerInfo = ({ influencer }) => {
                         // showWriteReview
                     />
                 </Flex>
-                {/* <Flex justifyContent={"flex-start"} w="100%" mt="8px">
-                    <Box align="center" mr="20px" key={`info-like`}>
-                        <Text
-                            fontSize={"1rem"}
-                            color="#E90A63"
-                            fontWeight={700}
-                        >
-                            {influencer.likeCount || 0}
-                        </Text>
-                        <Text fontSize={"17px"} color="#FFF" fontWeight="200">
-                            Fav
-                        </Text>
-                    </Box> */}
-
-                    {/* <Box align="center" mr="20px" key={`info-shared`}>
-                        <Text
-                            fontSize={"1rem"}
-                            color="#E90A63"
-                            fontWeight={700}
-                        >
-                            {influencer.shareCount || 0}
-                        </Text>
-                        <Text fontSize={"17px"} color="#FFF" fontWeight="200">
-                            Shared
-                        </Text>
-                    </Box> */}
-
-                    {/* <Box align="center" mr="20px" key={`info-reviews`}>
-                        <Text
-                            fontSize={"1rem"}
-                            color="#E90A63"
-                            fontWeight={700}
-                        >
-                            {influencer.reviewCount || 0}
-                        </Text>
-                        <Text fontSize={"17px"} color="#FFF" fontWeight="200">
-                            Reviews
-                        </Text>
-                    </Box>
-                </Flex> */}
+                
             </Box>
         </Flex>
     );

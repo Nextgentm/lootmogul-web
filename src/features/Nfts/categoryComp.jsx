@@ -114,15 +114,9 @@ const CategoryComponent = ({ displayData,nftSelectCategory,defaultCategory, setT
                                     key={`cate-${index}`}
                                     my="6px"
                                 >
-                                    {/* <Image
-                                        alt={cate.label}
-                                        width="20px"
-                                        height="20px"
-                                        mr="10px"
-                                        src={`/assets/nfts/${cate.icon}` || ""}
-                                    /> */}
+                                    
                                     <Text
-                                        // ml="10px"
+                                        
                                         color="#FFF"
                                         fontFamily="Sora"
                                         fontSize={"20px"}

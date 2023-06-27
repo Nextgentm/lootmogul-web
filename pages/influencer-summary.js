@@ -79,79 +79,10 @@ const InfluencerSummary = () => {
             {" "}
             Influencer / Ambassador Revenue Summary
           </Heading>
-          {/* <Box
-          mx="30px"
-          mb="30px"
-          className="influencer-summary-date"
-        >
-          <Flex
-            width="70%"
-            margin="0 auto"
-            justifyContent="center"
-            alignItems="center">
-            <Box
-              mr="25px"
-            >
-              <DatePicker
-                placeholder='Date Range From'
-                name='form_date'
-                onChange={(date) => console.log(date)}
-                _placeholder={{ color: "#fff", opacity: "1" }}
-                color="#fff"
-                fontSize="20px"
-                fontWeight="500"
-                bgColor="rgba(12, 19, 51, .5)"
-                bgImage="url('./assets/Calender-icon.svg')"
-                bgSize="26px"
-                bgRepeat="no-repeat"
-                bgPosition="10px center"
-                borderColor="#707070"
-                borderWidth="2px"
-                borderRadius="0"
-                p="23px 25px 23px 50px"
-              />
-            </Box>
-
-            <Box
-              mr="25px"
-            >
-              <DatePicker
-                placeholder='Date Range To'
-                name='to_date'
-                onChange={(date) => console.log(date)}
-                _placeholder={{ color: "#fff", opacity: "1" }}
-                color="#fff"
-                fontSize="20px"
-                fontWeight="500"
-                bgColor="rgba(12, 19, 51, .5)"
-                bgImage="url('./assets/Calender-icon.svg')"
-                bgSize="26px"
-                bgRepeat="no-repeat"
-                bgPosition="10px center"
-                borderColor="#707070"
-                borderWidth="2px"
-                borderRadius="0"
-                p="23px 25px 23px 50px"
-              />
-            </Box>
-
-            <Button
-              bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
-              filter="drop-shadow(0 0 20px #FF0080)"
-              boxShadow="inset 0 0 3px -10px #481A7F"
-              width="155px"
-              fontSize="21px"
-              fontWeight="500"
-              p="23px"
-            >
-              Search
-            </Button>
-          </Flex>
-        </Box> */}
           {
             <TableContainer mx="30px" className="influencer-table-date">
               <Table variant="simple" colorScheme="teal">
-                {/* <TableCaption>Influencer Summary</TableCaption> */}
+                
                 <Thead bgColor="#250d47">
                   <Tr>
                     {Object.keys(data).map((key, i) => (
