@@ -100,7 +100,7 @@ const CategoryComponent = ({ defaultCategoryName, selCategoriesData ,setFilterVa
                             _hover={{ bg: "#E90A63" }}
                             _focus={{bg:"transparent"}}
                                
-                                // _hover={{ bg: "black" }}
+                                
                                 onClick={() =>{
                                     setSelectedCategory(cate.name);
                                     setFilterValue(cate.name.toLowerCase())
@@ -112,13 +112,7 @@ const CategoryComponent = ({ defaultCategoryName, selCategoriesData ,setFilterVa
                                     key={`cate-${index}`}
                                     mt="6px"
                                 >
-                                    {/* <Image
-                                        alt={cate.label}
-                                        width="20px"
-                                        height="20px"
-                                        mr="10px"
-                                        src={`/assets/nfts/${cate.icon}`|| ""}
-                                    /> */}
+                                    
                                     <Text
                                         ml="10px"
                                         color="#C7C7C7"

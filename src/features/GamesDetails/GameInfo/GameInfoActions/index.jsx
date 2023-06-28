@@ -211,29 +211,6 @@ import {
             }
           ></LMNonCloseALert>
   
-          {/* <Flex
-                      {...iconStyles}  w={["30px","30px","30px","40px"]} 
-                      cursor="pointer"
-                      style={animate ? style1 : null}
-                  >
-                      <Image
-                      boxSize="20px"
-                          alt="fav"
-                          src={
-                              isHeartClick
-                                  ? "/assets/designupdate1/games_like_icon1.svg"
-                                  : "/assets/designupdate1/games_like_icon.svg"
-                          }
-                          onClick={animateEffect}
-                          {...imgSize}
-                      />
-                      
-                      <ExportedImage alt="fav" {...imgSize} src="/assets/fav.svg" />
-                  </Flex> */}
-          {/* <Flex {...iconStyles}>
-                      <AiOutlineHeart color="white" />
-                  </Flex> */}
-  
           <Flex {...iconStyles} w={["30px", "30px", "30px", "40px"]}>
             <Popover>
               <PopoverTrigger>
@@ -259,15 +236,7 @@ import {
             </Popover>
           </Flex>
                 
-          {/* <Flex {...iconStyles} w={["30px","30px","30px","40px"]}  >
-                          <Image
-                          boxSize="20px"
-                                  alt="share"
-                                  // {...imgSize}
-                                  src="/assets/designupdate1/games_question_icon.svg"
-                              />
-                      <AiOutlineQuestionCircle color="white" />
-                  </Flex> */}
+          
         </Flex>
       </Flex>
       <Box mt={5}  fontWeight={"bold"}>

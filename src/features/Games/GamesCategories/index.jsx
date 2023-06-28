@@ -56,31 +56,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
 
     return (
         <Box>
-            {/* <Flex justify="space-between" my="40px" align="center" w="100%">
-                <Heading variant="sectionTitle">{content.name}</Heading>
-                {content.name !== "Trending Tournament" ? (
-                    <Box width={"250px"} right="0">
-                        <Search searchText={setSearchText}></Search>
-                    </Box>
-                ) : (
-                    ""
-                )}
-                {content?.contestmasters?.data.length > arrowTrashhold ? (
-                    <Box
-                        display={{
-                            base: "none",
-                            md: "flex"
-                        }}
-                        onClick={() => setShowAll(!showAll)}
-                        pos="relative"
-                        right="0"
-                    >
-                        <ViewAllBtn />
-                    </Box>
-                ) : (
-                    ""
-                )}
-            </Flex> */}
+           
             <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
                 <Box p="2">
                     <Heading variant="sectionTitle">{content.name}</Heading>

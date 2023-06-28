@@ -137,7 +137,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             );
             setShowLoading(false)
             if (isRetry?.playCount % isRetry?.retries == 0) {
-                // setRetryCount(isRetry?.retries)
+                
                 getScore()
 
             }
@@ -180,7 +180,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
 
     return (
         <div id="idDiv" style={{ height: '100dvh' }}>
-            {/* <MultipleLoggedInUser /> */}
+            
             <AlertDialog
                 motionPreset="slideInBottom"
                 onClose={handleClose}
