@@ -543,7 +543,11 @@ export const AppContextContainer = ({ children }) => {
                     "MSG-whatsapp": true,              // Enable WhatsApp notifications
                 }
             });
-            clevertap.event.push("New User SigndUp",data.user);
+            clevertap.event.push("Signup", {
+                "Name": data.user.username,            // String
+                "Identity": data.user.mobileNumber,              // String or number
+                "Email": data.user.email,
+            });
 
             await updateUser(data.user);
         }
@@ -722,7 +726,12 @@ export const AppContextContainer = ({ children }) => {
                     "MSG-whatsapp": true,              // Enable WhatsApp notifications
                 }
             });
-            clevertap.event.push("New User SigndUp",data.user);
+            
+            clevertap.event.push("Signup", {
+                "Name": data.user.username,            // String
+                "Identity": data.user.mobileNumber,              // String or number
+                "Email": data.user.email,
+            });
             await updateUser(data.user);
         }
 
