@@ -1814,7 +1814,20 @@ const moduleExports = {
         "permanent": true
        }
     ]
-  }
+  },
+  async headers() {
+    return [
+      {
+        source: '/sw.js',
+        headers: [
+          {
+            key: 'Service-Worker-Allowed',
+            value: '/',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 const sentryWebpackPluginOptions = {

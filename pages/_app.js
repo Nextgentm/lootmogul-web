@@ -76,6 +76,19 @@ function MyApp({ Component, pageProps }) {
   }, [provider, trackingCode]);
 
   useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker
+        .register('/sw.js')
+        .then((registration) => {
+          console.log('Service Worker registration successful:', registration);
+        })
+        .catch((error) => {
+          console.log('Service Worker registration failed:', error);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
     if (utm_source || utm_medium || utm_term || utm_campaign || utm_content) {
       if (typeof window !== 'undefined') {
         window.localStorage?.setItem("utm_source", utm_source);

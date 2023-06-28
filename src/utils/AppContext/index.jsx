@@ -436,6 +436,13 @@ export const AppContextContainer = ({ children }) => {
         setInfluencerLikes(il);
     };
     const callAuthService = async (provider, token) => {
+        debugger;
+        clevertap.notifications.push({
+            "titleText":popupTitleText,
+            "bodyText":popupBodyText,
+            "okButtonText":okButtonText,
+            "rejectButtonText":rejectButtonText,
+            "okButtonColor":okButtonColorInHex});
         let data;
         defaultDataSettings();
 
@@ -583,6 +590,13 @@ export const AppContextContainer = ({ children }) => {
     const callCustomAuthService = async (formData, formType, redirectUrl = '') => {
 
         let data;
+        debugger;
+        clevertap.notifications.push({
+            "titleText":'popupTitleText',
+            "bodyText":'popupBodyText',
+            "okButtonText":'okButtonText',
+            "rejectButtonText":'rejectButtonText',
+            "okButtonColor":'#00bfff'});
         defaultDataSettings();
         if (formType === "signup" || formType === "login") {
             if (formType === "signup") {
