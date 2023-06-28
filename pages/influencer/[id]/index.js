@@ -6,11 +6,7 @@ import strapi from "../../../src/utils/strapi";
 
 export default function InfluencerById({ data, error }) {
   
-  useEffect(()=>{
-    // if (!data.data[0]) {
-    //  router.push('/influencers');
-    // };
-  },[])
+
 
   const router = useRouter();
   const isData = data.data[0];

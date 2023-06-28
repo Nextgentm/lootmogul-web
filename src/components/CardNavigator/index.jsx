@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import React from "react";
 import { Box, Text, Flex,Image } from "@chakra-ui/react";
-// import Image from "next/image";
+
 import { useState } from "react";
 
 const CardNavigator = ({
@@ -26,8 +26,7 @@ const CardNavigator = ({
             >
                 <Image
                     alt="left"
-                    // width={"16"}
-                    // height={"16"}
+
                     transform=" scale(-1)"
                     onClick={toggleOpen}
                     src={
@@ -46,8 +45,7 @@ const CardNavigator = ({
             >
                 <Image
                     alt="right"
-                    // width={"16"}
-                    // height={"16"}
+                    
                     src={
                         !isOpen
                             ? "/assets/nfts/RightArrow.svg"

@@ -21,21 +21,6 @@ const GameDetails = ({ gameData }) => {
     const [defaultTab, setDefaultTab] = useState(router.asPath.includes("#leaderboard") ? 1 : 0);
     const [contestStatus, setContestStatus] = useState(false);
 
-
-    // useEffect(async () => {
-    //     // fetch user stats
-    //     if (gameData) {
-    //         setBreadCrumbPath([
-    //             {
-    //                 label: "Home",
-    //                 path: "/"
-    //             },
-    //             { label: "Games", path: "/games" },
-    //             { label: gameData.name }
-    //         ]);
-    //     }
-
-    // }, [gameData]);
     return (
         <Box
             mr={["18px", "60px"]}

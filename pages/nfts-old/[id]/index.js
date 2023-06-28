@@ -21,11 +21,7 @@ export async function getStaticProps(context) {
   do {
     const res = await strapi.find("nft-collections", {
       sort: "priority",
-      // publicationState: 'preview',
-      //       filters:   { publishedAt: {
-      //           $null: true
-      //         }
-      //       },
+      
 
       populate: {
         sharedSeo: { populate: ["*"] },
