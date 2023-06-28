@@ -28,34 +28,7 @@ const ContentNavigator = ({
                 </Text>
             )}
 
-            {/* {showArrows && !allClicked && (
-                <>
-                    <Box
-                        ml="20px"
-                        cursor="pointer"
-                        onClick={handleLeftArrowClick}
-                    >
-                        <Image
-                            alt="left"
-                            width={"16px"}
-                            height={"16px"}
-                            src={`/assets/arrow-left.png`}
-                        />
-                    </Box>
-                    <Box
-                        ml="20px"
-                        cursor="pointer"
-                        onClick={handleRightArrowClick}
-                    >
-                        <Image
-                            alt="right"
-                            width={"16px"}
-                            height={"16px"}
-                            src={`/assets/arrow-right.png`}
-                        />
-                    </Box>
-                </>
-            )} */}
+            
         </Flex>
     );
 };

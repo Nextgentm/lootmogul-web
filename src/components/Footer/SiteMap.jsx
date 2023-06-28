@@ -63,7 +63,7 @@ const SiteMap = () => {
                 <Text variant="LightWhiteText" textTransform="normal" py="10px" mb="0" lineHeight="1.2" fontSize={["15px", "15px", "16px", "16px"]}>Terms of Services</Text>
             </Link>
             
-            {/* <Text variant="LightWhiteText" textTransform="capitalize" py="10px" mb="0" lineHeight="1.2">Blog</Text> */}
+            
         </Box>
     );
 };

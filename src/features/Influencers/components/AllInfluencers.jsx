@@ -143,40 +143,7 @@ const AllInfluencers = ({
                     {category ? category.toUpperCase() : "ALL AMBASSADORS"}
                 </Heading>
 
-                {/* <Flex alignItems="center" pos="relative">
-                    <Button
-                        variant={!isActive ? "filterBtnSegment" : "filterBtn"}
-                        onClick={() => {
-                            handleToggle();
-                            // nftSelectCategory(influencerCat.name.toLowerCase());
-                        }}
-                    >
-                        FILTER
-                        <Box ml="10px">
-                            <BiFilterAlt color="#FFF" fontSize="25px" />
-                        </Box>
-                    </Button>
-                    {!isActive ? (
-                        <Box
-                            pos="relative"
-                            top="-8"
-                            right="15px"
-                            bg="#817688"
-                            py="0.8"
-                            px="1"
-                            pt="-1 !important"
-                            cursor="pointer"
-                            borderRadius="3px"
-                            onClick={() => {
-                                handleToggle();
-                            }}
-                        >
-                            <CloseIcon h="12px" color="#0f0625" />
-                        </Box>
-                    ) : (
-                        ""
-                    )}
-                </Flex> */}
+                
             </Flex>
             {!isActive ? (
                 <Flex

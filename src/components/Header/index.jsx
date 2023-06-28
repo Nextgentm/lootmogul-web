@@ -117,7 +117,7 @@ const Header = () => {
         const jwt_token = window.localStorage?.getItem("strapi_jwt");
         if(jwt_token !== null){
             paramsLogin = '';
-            //paramsLogin = "?jwt=" +jwt_token;
+            
         }
         else{
             paramsLogin = '';
@@ -473,7 +473,7 @@ const Header = () => {
                     bg="#1e052c"
                     w="100%"
                     h={isMobileDevice ? "auto" : "auto"}
-                    display="flex"
+
                     pl={["16px", "5%"]}
                     pr={["16px", "0%"]}
                     alignItems="center"

@@ -29,7 +29,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
     const [options, setOptions] = useState([]);
     const [categories, setCategories] = useState(defaultCategories);
     const [tempFilterValue, setTempFilterValue] = useState(defaultCategories);
-    //const [selectedCategory, setSelectedCategory] = useState(defaultCategories);
+   
 
     const { callAuthService } = useContext(AppContext);
     const [breadcumbData, setBreadcumbData] = useState([]);
@@ -158,22 +158,12 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             setSelCategoriesData(selData);
             setSelCategoriesDataBkup(selData);
             router.push(
-                // {
-                //     pathname: "/nfts/" + selData[0].slug
-                // },
-                // undefined,
+                
                 "/nfts/",
                 "/nfts/" + selData[0]?.slug,
                 { shallow: true }
             );
-            // let routes = breadcumbData;
-            // routes = routes.splice(0, 2);
-            // routes.map((x) => (x.isCurrentPage = false));
-            // routes.push({
-            //     text: selData[0]?.name,
-            //     url: "/nfts/" + selData[0]?.slug,
-            //     isCurrentPage: true
-            // });
+            
 
             setBreadcumbData([
                 { text: "Overview", url: "/nfts", isCurrentPage: false },
@@ -181,10 +171,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
             ]);
     
             
-            // localStorage.setItem(
-            //     "changedNftBreadCrumbData",
-            //     JSON.stringify(routes)
-            // );
+           
             setSubHeader(selData[0]?.name.toString().toUpperCase());
             setHideFilters(false);
             setIsSubPage(true);
@@ -415,7 +402,7 @@ const Nfts = ({ data, selectedCategory, banner, newNfts, isNewest, nft }) => {
                 displayAllData={displayAllData}
                 isSubPage={isSubPage}
             />
-            {/* <MultipleLoggedInUser /> */}
+            
         </Box></>
     );
 };

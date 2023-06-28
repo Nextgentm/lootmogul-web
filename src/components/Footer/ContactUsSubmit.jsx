@@ -13,13 +13,7 @@ const ContactUsSubmit = () => {
             mb="15px"
             lineHeight="1"
             fontSize="35px"
-            // fontSize={[
-            //     "18px",
-            //     "25px",
-            //     "30px",
-            //     "35px",
-            //     "35px"
-            // ]}
+            
         >
             Contact Us
         </Text>
@@ -62,7 +56,7 @@ const ContactUsSubmit = () => {
         />
         <Button
             className="influencer-card-btn"
-            // width="20%"
+            
             fontSize={"15px"}
             pos="relative"
             right="0"
