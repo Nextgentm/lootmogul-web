@@ -50,12 +50,7 @@ export function LeftArrow() {
   const clickHandler = () => {
     const prevItem = getPrevItem();
     scrollToItem(prevItem?.entry?.target, "smooth", "start");
-    // OR
-    // scrollToItem(
-    //   getItemById(visibleItemsWithoutSeparators.slice(-2)[0]),
-    //   "smooth",
-    //   "end"
-    // );
+
   };
 
   return (
@@ -87,12 +82,7 @@ export function RightArrow() {
   const clickHandler = () => {
     const nextItem = getNextItem();
     scrollToItem(nextItem?.entry?.target, "smooth", "end");
-    // OR
-    // scrollToItem(
-    //   getItemById(visibleItemsWithoutSeparators[1]),
-    //   "smooth",
-    //   "start"
-    // );
+    
   };
 
   return (

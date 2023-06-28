@@ -100,7 +100,7 @@ const Header = () => {
     const isActiveLink = (path, queryPath) => {
         //TODO: need to check what condition is this and remove the proper statements
         if (queryPath)
-            console.log(path.split("/")[1], router.pathname.split("/")[1])
+            //console.log(path.split("/")[1], router.pathname.split("/")[1])
             return path.split("/")[1] === router.pathname.split("/")[1] || queryPath === router.pathname;
         return path == router.pathname.split("/")[1];
     };
@@ -117,7 +117,7 @@ const Header = () => {
         const jwt_token = window.localStorage?.getItem("strapi_jwt");
         if(jwt_token !== null){
             paramsLogin = '';
-            //paramsLogin = "?jwt=" +jwt_token;
+            
         }
         else{
             paramsLogin = '';
@@ -473,7 +473,7 @@ const Header = () => {
                     bg="#1e052c"
                     w="100%"
                     h={isMobileDevice ? "auto" : "auto"}
-                    display="flex"
+
                     pl={["16px", "5%"]}
                     pr={["16px", "0%"]}
                     alignItems="center"

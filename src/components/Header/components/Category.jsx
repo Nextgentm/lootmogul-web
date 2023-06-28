@@ -11,16 +11,7 @@ import {
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useRouter } from "next/router";
 
-// const cates = [
-//     { icon: "baseball-bat 1.png", label: "Baseball", path: "/" },
-//     { icon: "basketball 1.png", label: "Basketball", path: "/" },
-//     { icon: "hamburger 1.png", label: "Food", path: "/" },
-//     { icon: "american-football 1.png", label: "Football", path: "/" },
-//     { icon: "book-stack 1.png", label: "General", path: "/" },
-//     { icon: "hockey-sticks 1.png", label: "Hockey", path: "/" },
-//     { icon: "boxing-gloves 1.png", label: "MMA", path: "/" },
-//     { icon: "soccer-ball 1.png", label: "Soccer", path: "/" }
-// ];
+
 
 const CategoryComponent = () => {
     const router = useRouter();

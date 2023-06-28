@@ -528,9 +528,25 @@ export const AppContextContainer = ({ children }) => {
                     : provider + " user logged in",
                 params: data.user
             });
-
             clevertap.onUserLogin.push({
-                Site: data.user
+                "Site": {
+                    "Name": data.user.username,            // String
+                    "Identity": data.user.mobileNumber,              // String or number
+                    "Email": data.user.email,         // Email address of the user
+                    "Phone": data.user.mobileNumber,           // Phone (with the country code)
+                    "Gender": "M",                     // Can be either M or F
+                    "DOB": new Date(),                 // Date of Birth. Date object
+                    // optional fields. controls whether the user will be sent email, push etc.
+                    "MSG-email": false,                // Disable email notifications
+                    "MSG-push": true,                  // Enable push notifications
+                    "MSG-sms": true,                   // Enable sms notifications
+                    "MSG-whatsapp": true,              // Enable WhatsApp notifications
+                }
+            });
+            clevertap.event.push("Signup", {
+                "Name": data.user.username,            // String
+                "Identity": data.user.mobileNumber,              // String or number
+                "Email": data.user.email,
             });
 
             await updateUser(data.user);
@@ -685,7 +701,7 @@ export const AppContextContainer = ({ children }) => {
                 const myMessage = { message: 'wmadv', wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}` };
 
                 Sentry.captureMessage(JSON.stringify(myMessage));
-                
+
             }
             /** For Mobupps */
 
@@ -696,7 +712,25 @@ export const AppContextContainer = ({ children }) => {
                 params: data.user
             });
             clevertap.onUserLogin.push({
-                Site: data.user
+                "Site": {
+                    "Name": data.user.username,            // String
+                    "Identity": data.user.mobileNumber,              // String or number
+                    "Email": data.user.email,         // Email address of the user
+                    "Phone": data.user.mobileNumber,           // Phone (with the country code)
+                    "Gender": "M",                     // Can be either M or F
+                    "DOB": new Date(),                 // Date of Birth. Date object
+                    // optional fields. controls whether the user will be sent email, push etc.
+                    "MSG-email": false,                // Disable email notifications
+                    "MSG-push": true,                  // Enable push notifications
+                    "MSG-sms": true,                   // Enable sms notifications
+                    "MSG-whatsapp": true,              // Enable WhatsApp notifications
+                }
+            });
+            
+            clevertap.event.push("Signup", {
+                "Name": data.user.username,            // String
+                "Identity": data.user.mobileNumber,              // String or number
+                "Email": data.user.email,
             });
             await updateUser(data.user);
         }

@@ -27,15 +27,15 @@ function CustomTable({ columns, data, alldata }) {
     const [modelData, setModelData] = useState();
 
     const toggleCancelModal = (i) => {
-        setCancelModalActive(!isCancelModalActive);
-        setNestedId(nestedId ? i : -1);
+        //setCancelModalActive(!isCancelModalActive);
+        //setNestedId(nestedId ? i : -1);
     };
 
     const OnLoginClose = async () => {
         toggleCancelModal();
     };
 
-    console.log("alldata*-*-*-*-*-*", alldata);
+    //console.log("alldata*-*-*-*-*-*", alldata);
     const {
         getTableProps,
         getTableBodyProps,
@@ -74,8 +74,8 @@ function CustomTable({ columns, data, alldata }) {
     };
 
     const confirmcancel = () => {
-        console.log("modelData-------", modelData);
-        console.log("cancel");
+        //console.log("modelData-------", modelData);
+        //console.log("cancel");
         delete modelData.id;
         // modelData.status = "cancelled";
         let newwithdrawal = {
@@ -83,7 +83,7 @@ function CustomTable({ columns, data, alldata }) {
             status:"cancelled",
         };
         //cancelled
-        console.log("newwithdrawal", newwithdrawal);
+        //console.log("newwithdrawal", newwithdrawal);
         
         // const resp = await strapi.create("crypto-wallets", cryptoAdd);
 
@@ -161,7 +161,7 @@ function CustomTable({ columns, data, alldata }) {
                                 {nestedId === i &&
                                     row?.subRows?.map((sRow, k) => {
                                         prepareRow(sRow);
-                                        console.log("sRow");
+                                        //console.log("sRow");
                                         return (
                                             <Tr key={k} {...sRow.getRowProps()}>
                                                 {sRow.cells.map((cell, i) => {

@@ -61,22 +61,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             setDisplayData(data);
 
             if (window.location.pathname.includes("category")) {
-                // let routes = breadcumbData;
-                // let cData = JSON.parse(
-                //     window.localStorage.getItem("changedSlugDetails")
-                // );
-                // routes = routes.splice(0, 2);
-                // routes.map((x) => (x.isCurrentPage = false));
-
-                // routes.push({
-                //     text: cData?.name,
-                //     url: "/influencers/category/" + cData?.slug,
-                //     isCurrentPage: true
-                // });
-                // setBreadcumbData([
-                //     { text: "Ambassadors", url: "/influencers", isCurrentPage: false },
-                //     { text: cData?.name, url: "/influencers/category/" + cData?.slug, isCurrentPage: true }
-                // ]);
+                //console.log('code here');
             }
         }
     }, [data, user]);
@@ -102,12 +87,11 @@ const Influencers = ({ data, selectedCategory, banner }) => {
 
     const handleCategoryChange = (e) => {
         const newCategory = e;
-        // let routes = breadcumbData;
-        // routes = routes.splice(0, 2);
+        
 
         if (e === defaultCategoryName.toLowerCase() || e === "") {
             if (!isMobile) {
-                //routes[1].isCurrentPage = true;
+               
                 setBreadcumbData([]);
             }
             router.push(
@@ -123,20 +107,13 @@ const Influencers = ({ data, selectedCategory, banner }) => {
             );
             if (selData?.[0]?.slug)
                 router.push(
-                    // {
-                    //     pathname: "/influencers/category/" + selData[0].slug
-                    // },
+            
                     "/influencers/",
                     "/influencers/category/" + selData[0].slug,
                     { shallow: true }
                 );
 
-            // routes.map((x) => (x.isCurrentPage = false));
-            // routes.push({
-            //     text: selData[0].name,
-            //     url: "/influencers/category/" + selData[0].slug,
-            //     isCurrentPage: true
-            // });
+            
             localStorage.setItem(
                 "changedSlugDetails",
                 JSON.stringify(selData[0])
@@ -202,24 +179,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
         }
     }, [category, displayData]);
 
-    // useEffect(() => {
-    //     if (selectedCategory) return;
-    //     if (sortBy.toLowerCase() === "alphabetical") {
-    //         const newCatData = selCategoriesData.map((cat) => {
-    //             cat.influencers.data?.sort((a, b) =>
-    //                 a.name > b.name ? 1 : -1
-    //             );
-    //             return cat;
-    //         });
-    //         setSelCategoriesData(newCatData);
-    //     } else {
-    //         const newCatData = selCategoriesData.map((cat) => {
-    //             cat.influencers.data?.sort((a, b) => (a.id > b.id ? 1 : -1));
-    //             return cat;
-    //         });
-    //         setSelCategoriesData(newCatData);
-    //     }
-    // }, [sortBy]);
+    
 
     useEffect(() => {
         switch (true) {
@@ -363,11 +323,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 isMobile={isMobile}
             />
             {!isMobile && <Breadcumb data={breadcumbData} mxValue={[10, 10, 16]}></Breadcumb>}
-            {/* <NewInfluencers
-                newInfluencers={newInfluencers}
-                LeftArrow={LeftArrow}
-                RightArrow={RightArrow}
-            /> */}
+            
             <AllInfluencers
                 displayInfluencers={displayInfluencers}
                 category={category}
@@ -382,7 +338,7 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 setFilterValue={setFilterValue}
                 dataPrePage={dataPrePage}
             />
-            {/* <MultipleLoggedInUser /> */}
+            
         </Box>
     );
 };

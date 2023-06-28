@@ -159,59 +159,6 @@ export const GamePixCard = ({ sectionName, imgUrl, author, key, style, gameUrl, 
                     </Text>
                 </Flex>
 
-                {/* <Flex
-                    w={"full"}
-                    align="left"
-                    justify={"space-between"}
-                    px="1rem"
-                    mt={1}
-                >
-                    <VStack style={{ "align-items": "flex-start" }}>
-
-
-                        <Flex >
-                            <Image
-                                alt="tag"
-                                boxSize={["25px", "30px"]}
-                                src="/assets/Icon.png"
-                            />
-                            <Text
-                                ml="6px"
-                                color="#FFF"
-                                fontSize={["15px", "17px"]}
-                                fontWeight="400"
-                            >
-                                {contestmaster.entryFee != 0
-                                    ? "Entry Fee - " +
-                                    contestmaster.entryFee + " CHIPS"
-                                    : "Free"}
-
-                            </Text>
-
-                        </Flex>
-                        <Text
-                            color="#FFF"
-                            fontSize={["0.75rem", "0.9rem"]}
-                            fontWeight="200"
-                            mt={0}
-                            pl="6px"
-                        >
-                            {nFormatter(
-                                contestmaster.roomsCount,
-                                1
-                            )}{" "}
-                            Plays
-                        </Text>
-                    </VStack>
-
-                    <SocialActions
-                        onHeartClick={onHeartClick}
-                        isHeartClick={isHeartClick}
-                        imgSize={{ width: "25px", height: "25px" }}
-                        influencer={contestmaster.influencer}
-                    />
-                </Flex> */}
-
                 <Button
                     variant="solid"
                     h={["40px", "40px"]}

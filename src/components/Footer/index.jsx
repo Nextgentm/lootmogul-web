@@ -24,12 +24,7 @@ const Footer = () => {
                         w="100%"
                         maxW="90%"
                         m="0 auto"
-                    /*direction={[
-                        "column-reverse",
-                        "column-reverse",
-                        "column-reverse",
-                        "row"
-                    ]}*/
+                    
                     >
                         <Flex
                             w={["100%", "100%", "50%", "54%"]}
@@ -67,7 +62,7 @@ const Footer = () => {
                                 <Link
                                     _focus={{ border: "none", boxShadow: "none" }}
                                     _hover={{ textDecoration: "none" }}
-                                    href="https://lootmogul.com"
+                                    href={process.env.NEXT_PUBLIC_SITE_URL}
                                 >
                                     <Image
                                         alt=""
@@ -75,7 +70,7 @@ const Footer = () => {
                                         width={["95%"]}
                                         height="auto"
                                         onClick={() => router.push("/")}
-                                        // {...logoStyle}
+                                        
                                         alignItem="left"
                                         mb="10px"
                                         mt="10px"
@@ -84,7 +79,7 @@ const Footer = () => {
 
                                 <Text
                                     variant="BoldWhiteText"
-                                    // fontSize={["18px", "25px", "30px", "20px", "35px"]}
+                                    
                                     lineHeight="1"
                                     mb="20px"
                                 >
@@ -122,7 +117,7 @@ const Footer = () => {
                             <Link
                                 _focus={{ border: "none", boxShadow: "none" }}
                                 _hover={{ textDecoration: "none" }}
-                                href="https://lootmogul.com"
+                                href={process.env.NEXT_PUBLIC_SITE_URL}
                             >
                                 <Image
                                     alt=""
@@ -130,7 +125,7 @@ const Footer = () => {
                                     width={["100%"]}
                                     height="auto"
                                     onClick={() => router.push("/")}
-                                    // {...logoStyle}
+                                   
                                     alignItems="center"
                                     m="10px auto"
                                 />

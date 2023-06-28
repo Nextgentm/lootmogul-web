@@ -162,11 +162,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                 <Box
                   key={"sec-index-" + index}
                   ref={itemRefs[section.priority]}
-                // ref={(el) => {
-                //   let iR = itemRefs;
-                //   iR[index] = el;
-                //   setItemRefs(iR);
-                // }}
+               
                 >
                   {section?.contestmasters?.data &&
                     section?.contestmasters?.data.length > 0 && (

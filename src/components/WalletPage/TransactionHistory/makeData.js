@@ -3,7 +3,7 @@ import { Text, Box, Flex, Button } from "@chakra-ui/react";
 import moment from "moment";
 
 const transactionTableData = (transaction, isMobile) => {
-    console.log("transaction-=-=-=-=-=-=-=-", transaction);
+    //console.log("transaction-=-=-=-=-=-=-=-", transaction);
     
     return {
         transactionid: isMobile ? (
@@ -166,7 +166,7 @@ export const makeData = (tableData, isMobile, auditLogData) => {
         };
     });
     // console.clear()
-    console.log("tableData-=-=-=-=-=-=-=-=-=-=-", tableData);
+    //console.log("tableData-=-=-=-=-=-=-=-=-=-=-", tableData);
     return tableData;
 };
 export function makeColumn(tableColumns) {

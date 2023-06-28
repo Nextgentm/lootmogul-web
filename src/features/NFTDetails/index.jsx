@@ -325,7 +325,7 @@ const NFTDetails = ({ nftData }) => {
                             </Button>
                         </PopoverTrigger>
                         <NextShare
-                            link={"https://lootmogul.com/nfts/" + nftData?.slug}
+                            link={process.env.NEXT_PUBLIC_SITE_URL+"/nfts/" + nftData?.slug}
                             caption={
                                 "Check out this NFT collection for " +
                                 nftData?.name
@@ -406,7 +406,7 @@ const NFTDetails = ({ nftData }) => {
                                 </PopoverTrigger>
                                 <NextShare
                                     link={
-                                        "https://lootmogul.com/nfts/" +
+                                        process.env.NEXT_PUBLIC_SITE_URL + "/nfts/" +
                                         nftData?.id
                                     }
                                     caption={

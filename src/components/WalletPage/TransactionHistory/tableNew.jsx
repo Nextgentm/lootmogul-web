@@ -4,12 +4,12 @@ import moment from "moment";
 import React, { useState } from "react";
 
 function TableNew({ tableData, auditLogData }) {
-    console.log("auditLogData", auditLogData);
-    console.log("tableData", tableData);
+    //console.log("auditLogData", auditLogData);
+    //console.log("tableData", tableData);
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {
-        console.log("open=-=-=-");
+        //console.log("open=-=-=-");
         setIsOpen(!isOpen);
     };
 
@@ -116,63 +116,7 @@ function TableNew({ tableData, auditLogData }) {
                         </td>
                     </tr>;
                 })}
-                {/* <tr className={`fold ${isOpen ? "open" : ""}`}>
-                    <td colSpan="7">
-                        <div className="fold-content">
-                            <h3>Company Name</h3>
-                            <p>
-                                Pellentesque habitant morbi tristique senectus
-                                et netus et malesuada fames ac turpis egestas.
-                            </p>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Company name</th>
-                                        <th>Customer no</th>
-                                        <th>Customer name</th>
-                                        <th>Insurance no</th>
-                                        <th>Strategy</th>
-                                        <th>Start</th>
-                                        <th>Current</th>
-                                        <th>Diff</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Sony</td>
-                                        <td>13245</td>
-                                        <td>John Doe</td>
-                                        <td>064578</td>
-                                        <td>A, 100%</td>
-                                        <td className="cur">20000</td>
-                                        <td className="cur">33000</td>
-                                        <td className="cur">13000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sony</td>
-                                        <td>13288</td>
-                                        <td>Claire Bennet</td>
-                                        <td>064877</td>
-                                        <td>B, 100%</td>
-                                        <td className="cur">28000</td>
-                                        <td className="cur">48000</td>
-                                        <td className="cur">20000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sony</td>
-                                        <td>12341</td>
-                                        <td>Barry White</td>
-                                        <td>064123</td>
-                                        <td>A, 100%</td>
-                                        <td className="cur">10000</td>
-                                        <td className="cur">22000</td>
-                                        <td className="cur">12000</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </td>
-                </tr> */}
+               
             </tbody>
         </table>
     );

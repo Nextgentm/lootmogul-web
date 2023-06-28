@@ -151,7 +151,7 @@ const InfluencerSummary = () => {
           {
             <TableContainer mx="30px" className="influencer-table-date">
               <Table variant="simple" colorScheme="teal">
-                {/* <TableCaption>Influencer Summary</TableCaption> */}
+                
                 <Thead bgColor="#250d47">
                   <Tr>
                     {Object.keys(data).map((key, i) => (
