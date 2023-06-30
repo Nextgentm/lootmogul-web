@@ -125,11 +125,15 @@ function MyApp({ Component, pageProps }) {
   const askPermission = () => {
     debugger;
     clevertap.notifications.push({
-      "titleText":'popupTitleText',
-      "bodyText":'popupBodyText',
-      "okButtonText":'okButtonText',
-      "rejectButtonText":'rejectButtonText',
-      "okButtonColor":'okButtonColorInHex'});
+      "titleText":'Would you like to receive Push Notifications?',
+      "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+      "okButtonText":'Sign me up!',
+      "rejectButtonText":'No thanks',
+      "okButtonColor":'#F28046',
+      "askAgainTimeInSeconds":5,
+      "notification_bgcolor":"#FF0000",
+      "okButtonBgColor":"#FF0000"
+    });
 }
 
   return (
