@@ -10,7 +10,6 @@ import {
 } from "../../services/dataService";
 import { apiLikeRequests } from "../../features/Home/api";
 import * as ga from "../../services/googleAnalytics";
-import LMNonCloseALert from "../../components/LMNonCloseALert";
 import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
@@ -437,12 +436,6 @@ export const AppContextContainer = ({ children }) => {
     };
     const callAuthService = async (provider, token) => {
         debugger;
-        clevertap.notifications.push({
-            "titleText":popupTitleText,
-            "bodyText":popupBodyText,
-            "okButtonText":okButtonText,
-            "rejectButtonText":rejectButtonText,
-            "okButtonColor":okButtonColorInHex});
         let data;
         defaultDataSettings();
 
@@ -454,6 +447,7 @@ export const AppContextContainer = ({ children }) => {
             insertLoggedInUserInDB(data);
 
             if (data.user.is_new) {
+                clevertap.event.push("Signup");
                 if (typeof window !== "undefined") {
                     const utm_source =
                         window.localStorage?.getItem("utm_source");
@@ -514,6 +508,8 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("trackingCode");
                     }
                 }
+            }else {
+                clevertap.event.push(provider+" "+"User LoggedIn");
             }
 
             /** For mobupps */
@@ -535,27 +531,20 @@ export const AppContextContainer = ({ children }) => {
                     : provider + " user logged in",
                 params: data.user
             });
+            //clevertap login chnages
             clevertap.onUserLogin.push({
                 "Site": {
                     "Name": data.user.username,            // String
-                    "Identity": data.user.mobileNumber,              // String or number
+                    "Identity": data.user.id,              // String or number
                     "Email": data.user.email,         // Email address of the user
-                    "Phone": data.user.mobileNumber,           // Phone (with the country code)
-                    "Gender": "M",                     // Can be either M or F
-                    "DOB": new Date(),                 // Date of Birth. Date object
+                    "Avatar":data.user.ready_player_me_url,
                     // optional fields. controls whether the user will be sent email, push etc.
-                    "MSG-email": false,                // Disable email notifications
+                    "MSG-email": true,                // Disable email notifications
                     "MSG-push": true,                  // Enable push notifications
                     "MSG-sms": true,                   // Enable sms notifications
                     "MSG-whatsapp": true,              // Enable WhatsApp notifications
                 }
             });
-            clevertap.event.push("Signup", {
-                "Name": data.user.username,            // String
-                "Identity": data.user.mobileNumber,              // String or number
-                "Email": data.user.email,
-            });
-
             await updateUser(data.user);
         }
 
@@ -588,15 +577,8 @@ export const AppContextContainer = ({ children }) => {
     };
 
     const callCustomAuthService = async (formData, formType, redirectUrl = '') => {
-
-        let data;
         debugger;
-        clevertap.notifications.push({
-            "titleText":'popupTitleText',
-            "bodyText":'popupBodyText',
-            "okButtonText":'okButtonText',
-            "rejectButtonText":'rejectButtonText',
-            "okButtonColor":'#00bfff'});
+        let data;
         defaultDataSettings();
         if (formType === "signup" || formType === "login") {
             if (formType === "signup") {
@@ -644,6 +626,7 @@ export const AppContextContainer = ({ children }) => {
         }
         if (data?.user) {
             if (data.user.is_new) {
+                clevertap.event.push("New Signup");
                 if (typeof window !== "undefined") {
                     const utm_source =
                         window.localStorage?.getItem("utm_source");
@@ -705,6 +688,8 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("trackingCode");
                     }
                 }
+            }else {
+                clevertap.event.push("User LoggedIn");
             }
             /** For Mobupps */
             if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
@@ -718,33 +703,26 @@ export const AppContextContainer = ({ children }) => {
 
             }
             /** For Mobupps */
-
             ga.eventTracking({
                 action: data.user.is_new
                     ? "new user signup happened with new emailID"
                     : "custom user logged in with emailID",
                 params: data.user
             });
+            debugger;
+            //clevertap login chnages
             clevertap.onUserLogin.push({
                 "Site": {
                     "Name": data.user.username,            // String
-                    "Identity": data.user.mobileNumber,              // String or number
+                    "Identity": data.user.id,              // String or number
                     "Email": data.user.email,         // Email address of the user
-                    "Phone": data.user.mobileNumber,           // Phone (with the country code)
-                    "Gender": "M",                     // Can be either M or F
-                    "DOB": new Date(),                 // Date of Birth. Date object
+                    "Avatar":data.user.ready_player_me_url,
                     // optional fields. controls whether the user will be sent email, push etc.
-                    "MSG-email": false,                // Disable email notifications
+                    "MSG-email": true,                // Disable email notifications
                     "MSG-push": true,                  // Enable push notifications
                     "MSG-sms": true,                   // Enable sms notifications
                     "MSG-whatsapp": true,              // Enable WhatsApp notifications
                 }
-            });
-            
-            clevertap.event.push("Signup", {
-                "Name": data.user.username,            // String
-                "Identity": data.user.mobileNumber,              // String or number
-                "Email": data.user.email,
             });
             await updateUser(data.user);
         }
