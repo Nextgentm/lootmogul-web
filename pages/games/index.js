@@ -7,7 +7,7 @@ const defaultSEOData = {
   metaTitle: "Play Online Trivia Games With Your Favorite Influencers",
   metaDescription:
     "Play Games With Your Favorite Influencers And Win Exciting Prizes",
-  canonicalURL: process.env.NEXT_PUBLIC_SITE_URL+"/games",
+  canonicalURL: process.env.NEXT_PUBLIC_SITE_URL + "/games",
 };
 
 export default function GamesPage({
@@ -26,7 +26,6 @@ export default function GamesPage({
         contestmasters={data || []}
         banners={banners?.data || []}
       />
-
     </>
   );
 }
@@ -55,9 +54,9 @@ export async function getStaticProps() {
           },
         },
         reward: {},
-        game:{
-          fields:"*"
-        }
+        game: {
+          fields: "*",
+        },
       },
 
       pagination: {
@@ -76,6 +75,10 @@ export async function getStaticProps() {
   // Pass data to the page via props
   data = data.flat();
 
+  const filteredDuplicateDataById = [
+    ...new Map(data.map((item) => [item["id"], item])).values(),
+  ];
+
   try {
     const contestSectionsRes = await fetch(
       process.env.NEXT_PUBLIC_STRAPI_API_URL +
@@ -93,7 +96,12 @@ export async function getStaticProps() {
     const seoData = await getSeoData("games");
 
     return {
-      props: { data, contestSectionsData, banners, seoData },
+      props: {
+        data: filteredDuplicateDataById,
+        contestSectionsData,
+        banners,
+        seoData,
+      },
       revalidate: 300,
     };
   } catch (error) {}
