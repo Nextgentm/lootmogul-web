@@ -35,8 +35,40 @@ export async function getStaticProps() {
   let pageNo = 1;
   let pageCount = 1;
   let data = [];
+
   do {
     const res = await strapi.find("contestmasters", {
+      filters: {
+        contest_section: {
+          $or: [
+            {
+              name: {
+                $eq: "Free tournaments",
+              },
+            },
+            {
+              name: {
+                $eq: "Advanced premium tournaments",
+              },
+            },
+            {
+              name: {
+                $eq: "Ambassador tournaments",
+              },
+            },
+            {
+              name: {
+                $eq: "Blockchain Games",
+              },
+            },
+            {
+              name: {
+                $eq: "Trending Tournament",
+              },
+            },
+          ],
+        },
+      },
       fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
       sort: "priority",
       populate: {
