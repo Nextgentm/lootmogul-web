@@ -82,13 +82,16 @@ const TabDepositPanel = ({ isDeposit }) => {
             // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currencyCode == "USD") {
+                if (value.currency == "USD") {
+                    
                     setNumberOfChips(value.numberOfChips);
                     setMinimumDeposit(value.minimumDeposit);
 
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
                 }
+
+                
                 results.push({
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
@@ -115,7 +118,7 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currencyCode == "BTC") {
+                if (value.currency == "Bitcoin") {
                     SetDefaultCrytoChip(value.numberOfChips);
                     SetDefaultCrytoAmount(value.cryptoMinimumDeposit);
                 }
@@ -126,6 +129,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     logo: value.logo,
                     currencyCode: value.currencyCode
                 });
+
             });
 
             setBitpayCurrencyOptions(results_bitpay);
