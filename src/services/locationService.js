@@ -134,3 +134,58 @@ const isBlocked = (req) => {
     });
     return promise;
 };
+
+export const getCurremtLocation = () => {
+    return new Promise(
+        (resolve, reject) => {
+            getPosition().then((res) => {
+                if (res) {
+                    Geocode.fromLatLng(res.lat, res.lng).then((address) => {
+                        if (address) {
+                            let state =
+                                address.results[0].address_components.find(
+                                    (im) =>
+                                        im.types.some(
+                                            (m) =>
+                                                m ===
+                                                "administrative_area_level_1"
+                                        )
+                                ).long_name;
+                            let country =
+                                address.results[0].address_components.find(
+                                    (im) =>
+                                        im.types.some((m) => m === "country")
+                                ).short_name;
+                            let city =
+                                address.results[0].address_components.find(
+                                    (im) =>
+                                        im.types.some((m) => m === "locality")
+                                )?.short_name;
+                            let city1 =
+                                address.results[0].address_components.find(
+                                    (im) =>
+                                        im.types.some(
+                                            (m) =>
+                                                m ===
+                                                "administrative_area_level_1"
+                                        )
+                                )?.long_name;
+                            let location = { state: state, country: country };
+                            resolve(location);
+                        } else
+                            resolve({
+                                state: "No State defined",
+                                country: "No Country defined"
+                            });
+                    });
+                } else
+                    resolve({
+                        state: "No State defined",
+                        country: "No Country defined"
+                    });
+            });
+        },
+        (error) => reject(error),
+        { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 }
+    );
+};
