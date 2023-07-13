@@ -92,8 +92,11 @@ const TabDepositPanel = ({ isDeposit }) => {
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
                 }
-
-                if(lm_user_location == 'IN'){
+                
+                if(lm_user_location == 'IN' && value.currency == "INR"){
+                    
+                    SetDefaultFiatChip(value.numberOfChips);
+                    SetDefaultFiatAmount(value.minimumDeposit);
                     setNumberOfChips(value.numberOfChips);
                     setMinimumDeposit(value.minimumDeposit);
                 }
