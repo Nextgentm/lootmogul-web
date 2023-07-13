@@ -71,6 +71,8 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [defaultFiatAmount, SetDefaultFiatAmount] = useState();
     const [defaultCrytoChip, SetDefaultCrytoChip] = useState();
     const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
+    
+    var lm_user_location = window.localStorage?.getItem("lm_user_location");
 
     useEffect(() => {
         async function fetchData() {
@@ -91,7 +93,10 @@ const TabDepositPanel = ({ isDeposit }) => {
                     SetDefaultFiatAmount(value.minimumDeposit);
                 }
 
-                
+                if(lm_user_location == 'IN'){
+                    setNumberOfChips(value.numberOfChips);
+                    setMinimumDeposit(value.minimumDeposit);
+                }
                 results.push({
                     currency: value.currency,
                     minimumDeposit: value.minimumDeposit,
@@ -275,7 +280,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
 
         if (depositType == 1) {
-            setCurrency("USD");
+            lm_user_location == 'IN' ? setCurrency("INR") : setCurrency("USD");
             setMinimumDeposit(defaultFiatAmount);
             setNumberOfChips(defaultFiatChip);
 

@@ -15,6 +15,7 @@ import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
 import * as Sentry from '@sentry/nextjs';
+import { getCurremtLocation } from "../../services/locationService";
 
 export const AppContext = createContext({});
 
@@ -445,8 +446,12 @@ export const AppContextContainer = ({ children }) => {
             window.localStorage.setItem("token", data.jwt);
 
             insertLoggedInUserInDB(data);
-
+            getCurremtLocation().then((res) => {
+                window.localStorage.setItem("lm_user_location", res?.country);
+            });
+            
             if (data.user.is_new) {
+                
                 if (typeof window !== "undefined") {
                     const utm_source =
                         window.localStorage?.getItem("utm_source");
@@ -615,7 +620,9 @@ export const AppContextContainer = ({ children }) => {
                     data = await strapi.login(apiValues);
                     insertLoggedInUserInDB(data);
                     setJwt(data.jwt);
-
+                    getCurremtLocation().then((res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                    });
                 } catch ({ error }) {
                     toast({
                         title: error.message,
