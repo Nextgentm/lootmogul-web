@@ -2,8 +2,8 @@ import strapi from "../../src/utils/strapi";
 import SEOContainer from "../../src/features/SEOContainer";
 import { getSeoData } from "../../src/queries/strapiQueries";
 import Banner from "../../src/components/Web3Games/Banner";
+import ContentHighlights from "../../src/components/Web3Games/ContentHighlights";   
 import TradingGame from "../../src/components/Web3Games/TradingGame";
-
 
 const defaultSEOData = {
     metaTitle:"Lootmogul | Join LootMogul Web3 Sports Gaming",
@@ -20,7 +20,7 @@ export default function GamesPage({
     <>     
         <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 
         <Banner bannerData={campaignsSectionsResData?.data[1] || []}/>
-        <TradingGame tradingCardData={campaignsSectionsResData?.data[1] || []}/>  
+        <ContentHighlights tradingCardData={campaignsSectionsResData?.data[1] || []}/>  
     </>
     : 
     <>     
