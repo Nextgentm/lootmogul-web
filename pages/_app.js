@@ -145,7 +145,7 @@ function MyApp({ Component, pageProps }) {
             />
             }
 
-            {router.route === "/" || router.route === "/gamecampaign" ? '' : <Footer />}
+            {router.route === "/" || router.route === "/gamecampaign" || router.route === "/signupcampaign" ? '' : <Footer />}
 
           </>}
 

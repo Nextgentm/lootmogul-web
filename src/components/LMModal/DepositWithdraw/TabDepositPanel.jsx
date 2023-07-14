@@ -71,6 +71,8 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [defaultFiatAmount, SetDefaultFiatAmount] = useState();
     const [defaultCrytoChip, SetDefaultCrytoChip] = useState();
     const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
+    
+    var lm_user_location = window.localStorage?.getItem("lm_user_location");
 
     useEffect(() => {
         async function fetchData() {
@@ -82,12 +84,21 @@ const TabDepositPanel = ({ isDeposit }) => {
             // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currencyCode == "USD") {
+                if (value.currency == "USD") {
+                    
                     setNumberOfChips(value.numberOfChips);
                     setMinimumDeposit(value.minimumDeposit);
 
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
+                }
+                
+                if(lm_user_location == 'IN' && value.currency == "INR"){
+                    
+                    SetDefaultFiatChip(value.numberOfChips);
+                    SetDefaultFiatAmount(value.minimumDeposit);
+                    setNumberOfChips(value.numberOfChips);
+                    setMinimumDeposit(value.minimumDeposit);
                 }
                 results.push({
                     currency: value.currency,
@@ -115,7 +126,7 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currencyCode == "BTC") {
+                if (value.currency == "Bitcoin") {
                     SetDefaultCrytoChip(value.numberOfChips);
                     SetDefaultCrytoAmount(value.cryptoMinimumDeposit);
                 }
@@ -126,6 +137,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     logo: value.logo,
                     currencyCode: value.currencyCode
                 });
+
             });
 
             setBitpayCurrencyOptions(results_bitpay);
@@ -271,7 +283,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
 
         if (depositType == 1) {
-            setCurrency("USD");
+            lm_user_location == 'IN' ? setCurrency("INR") : setCurrency("USD");
             setMinimumDeposit(defaultFiatAmount);
             setNumberOfChips(defaultFiatChip);
 
