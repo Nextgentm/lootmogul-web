@@ -1,4 +1,4 @@
-export function nFormatter(num, digits) {
+export function nFormatter(num, digits, type = '') {
   const lookup = [
     { value: 1, symbol: "" },
     { value: 1e3, symbol: " k" },
@@ -9,6 +9,9 @@ export function nFormatter(num, digits) {
     { value: 1e18, symbol: " E" }
   ];
   const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+  if(type == 'roomsCount'){
+    num = num *2;
+  }
   var item = lookup.slice().reverse().find(function (item) {
     return num >= item.value;
   });
