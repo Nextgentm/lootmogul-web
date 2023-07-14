@@ -198,8 +198,8 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
                                         {cm?.game?.data?.config?.game ==
                                         "marketjs"
                                             ? nFormatter(cm?.playCount, 1)
-                                            : nFormatter(cm?.roomsCount, 1) *
-                                            2}{" "}
+                                            : nFormatter(cm?.roomsCount, 1, 'roomsCount')
+                                            }{" "}
                                         Players Played
                                     </Text>
                                 </VStack>
@@ -326,8 +326,8 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
                                         {cm?.game?.data?.config?.game ==
                                         "marketjs"
                                             ? nFormatter(cm?.playCount, 1)
-                                            : nFormatter(cm?.roomsCount, 1) *
-                                            2}{" "}
+                                            : nFormatter(cm?.roomsCount, 1, 'roomsCount')
+                                            }{" "}
                                         Players Played
                                     </Text>
                                 </VStack>

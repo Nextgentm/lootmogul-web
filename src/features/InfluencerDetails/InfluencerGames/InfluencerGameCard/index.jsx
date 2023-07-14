@@ -151,8 +151,8 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             {contestmaster?.game?.data?.config?.game ==
                             "marketjs"
                                 ? nFormatter(contestmaster?.playCount, 1)
-                                : nFormatter(contestmaster?.roomsCount, 1) *
-                                  2}{" "}
+                                : nFormatter(contestmaster?.roomsCount, 1, 'roomsCount')
+                                  }{" "}
                             Players Played
                         </Text>
                     </VStack>
