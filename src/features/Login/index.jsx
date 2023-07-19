@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useGoogleLogin } from "react-google-login";
 import {
@@ -20,16 +20,33 @@ import {
     AlertDialogHeader,
     AlertDialogContent,
     AlertDialogOverlay,
+    IconButton 
 } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
+import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
+import { useRouter } from 'next/router';
 
 const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     const [selectedOption, setSelectedOption] = useState("signup");
     const [passwordType, setPasswordType] = useState("password");
     const [inputEmailId, setInputEmailId] = useState();
     const [inputPassword, setInputPassword] = useState();
+    const [inputReferalCode, setInputReferalCode] = useState();
+
+    const router = useRouter();
+    const {referral_code } = router.query
+    if(referral_code){
+        isOpen = true;
+        console.log('ggg');
+        
+    } 
+    useEffect(() => {
+        if(referral_code){
+            setInputReferalCode(referral_code);
+        }
+    }, [referral_code]);
 
     const { callAuthService, callCustomAuthService, setLoginModalActive, toggleForgotPasswordModal } = useContext(AppContext);
 
@@ -57,6 +74,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
             username: inputEmailId,
             email: inputEmailId,
             password: inputPassword,
+            referalcode: inputReferalCode
         }
         callCustomAuthService(formData, selectedOption, redirectUrl);
         if (selectedOption == 'signup') {
@@ -65,7 +83,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     }
 
 
-
+    const [checked, setChecked] = useState(true);
     const [alertMsg, setAlertMsg] = useState({});
     const ShowAlert = () => {
         return (
@@ -97,6 +115,10 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
             </AlertDialog>
         );
     };
+
+    const toggleReferral = () =>{
+        setChecked(!checked)
+    }
 
     return (
         <Modal isOpen={isOpen} onClose={OnLoginClose} scrollBehavior="inside">
@@ -206,7 +228,53 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     )}
                                 />
                                 }
+                                {selectedOption != "login" && (
+                                <Box w="100%">
+                                    <Text
+                                        my="5px"
+                                        textAlign="left"
+                                        fontFamily="Open Sans,Sans-serif"
+                                        color="white"
+                                        fontWeight="500"
+                                        fontSize={["12px", "13px"]}
+                                    >
+                                        Referral Code (Optional) 
+                                        <IconButton
+                                            backgroundImage="none"
+                                            backgroundColor="transparent"
+                                            boxShadow="none"
+                                            aria-label='Search database'
+                                            icon={checked ? <TriangleUpIcon boxSize={3.5} /> : <TriangleDownIcon boxSize={3.5} />}
+                                            p="4px"
+                                            _hover={{backgroundImage:"none",backgroundColor:"transparent"}}
+                                            _active={{backgroundImage:"none",backgroundColor:"transparent"}}
+                                            _focus={{backgroundImage:"none",backgroundColor:"transparent"}}
+                                            onClick={toggleReferral}
+                                        />
 
+                                    </Text>
+                                    {checked && ( <FormControl>
+                                        <Input
+                                            id="referral_code"
+                                            name="referral_code"
+                                            type="text"
+                                            placeholder="Referral Code"
+                                            bgColor="#fff"
+                                            color="#707070"
+                                            _placeholder={{ color: "#707070" }}
+                                            required
+                                            boxShadow="unset"
+                                            p="6px 10px"
+                                            border="1px solid #707070 !important"
+                                            height="35px"
+                                            _focus={{ outline: "0" }}
+                                            value={inputReferalCode}
+                                            onChange={(e) => setInputReferalCode(e.target.value)}
+                                            isReadOnly = {referral_code ? true : false }
+                                        />
+                                    </FormControl>)}
+                                </Box>
+                                )}
                                 <Box>
                                     <Image
                                         alt="or"
