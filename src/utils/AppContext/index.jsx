@@ -436,7 +436,7 @@ export const AppContextContainer = ({ children }) => {
         const il = await apiLikeRequests(user);
         setInfluencerLikes(il);
     };
-    const callAuthService = async (provider, token) => {
+    const callAuthService = async (provider, token, input_referalcode) => {
         let data;
         defaultDataSettings();
 
@@ -498,7 +498,10 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("trackingCode");
                     }
 
-                    if (referral_code) {
+                    if (referral_code || input_referalcode) {
+                        if(!referral_code){
+                            referral_code = input_referalcode;
+                        }
                         try {
                             await strapi.request(
                                 "get",
@@ -643,42 +646,6 @@ export const AppContextContainer = ({ children }) => {
                 
             if (data.user.is_new) {
 
-                try {
-                    if(formData.referalcode){
-                        let responseReferalCode = await axios.get(
-                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/referral-codes/?filters[code][$eq][0]=`+formData.referalcode,
-                            {
-                                headers: {
-                                    "Content-Type": "application/json",
-                                    Accept: "application/json",
-                                    Authorization: "Bearer " + data.jwt
-                                }
-                            }
-                        );
-                        console.log(responseReferalCode.data.data);
-                        if(responseReferalCode.data.data[0]?.id){
-                            const response = await axios.put(
-                                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/referral-codes/`+responseReferalCode.data.data[0].id,
-                                {
-                                    data: {
-                                        reference_user:data.user
-                                    }
-                                },
-                                {
-                                    headers: {
-                                        "Content-Type": "application/json",
-                                        Accept: "application/json",
-                                        Authorization: "Bearer " + data.jwt
-                                    }
-                                }
-                            );
-                        }    
-                        
-                    }   
-                } catch (error) {
-                    console.log(error)
-                }
-
                 if (typeof window !== "undefined") {
                     const utm_source =
                         window.localStorage?.getItem("utm_source");
@@ -726,7 +693,10 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("trackingCode");
                     }
 
-                    if (referral_code) {
+                    if (referral_code || formData.referalcode) {
+                        if(!referral_code){
+                            referral_code = formData.referalcode;
+                        }
                         try {
                             await strapi.request(
                                 "get",
