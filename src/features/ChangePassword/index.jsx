@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import queryString from "query-string";
 import { useRouter } from "next/router";
@@ -21,65 +21,79 @@ import {
     Heading,
     AlertDialogHeader,
     AlertDialogContent,
-    AlertDialogOverlay,
+    AlertDialogOverlay
 } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
 import strapi from "../../utils/strapi";
+import axios from "axios";
 
 const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
     const [inputNewPwd, setInputNewPwd] = useState();
     const [inputConfirmPwd, setInputConfirmPwd] = useState();
-    const [inputCode,setInputCode] = useState('');
+    const [inputCode, setInputCode] = useState("");
     const router = useRouter();
-    const secCode = router.asPath.replace("/reset-password?code=",'');
-    
+    const secCode = router.query.code || "";
 
-    const { setChangePasswordModalActive, togglePasswordChangedModal } = useContext(AppContext);
+    // Effect to set the code from the query string
+    useEffect(() => {
+        if (secCode) {
+            setInputCode(secCode);
+        }
+    }, [secCode]);
 
-    const handleSubmit = async() => {
-        if( inputNewPwd && inputConfirmPwd )
-        {
-            if( inputNewPwd !== inputConfirmPwd )
-            {
+    const { setChangePasswordModalActive, togglePasswordChangedModal } =
+        useContext(AppContext);
+
+    const handleSubmit = async () => {
+        if (inputNewPwd && inputConfirmPwd) {
+            if (inputNewPwd !== inputConfirmPwd) {
                 setAlertMsg({
                     isOpen: true,
                     title: "Error",
-                    message: "New password and Confirm password not match",
+                    message: "New password and Confirm password not match"
                 });
-            }
-            else
-            {
+            } else {
                 try {
-                    await strapi.resetPassword({
+                    const { jwt, user } = await strapi.resetPassword({
                         code: inputCode,
                         password: inputNewPwd,
                         passwordConfirmation: inputConfirmPwd
-                    })
-                    setInputNewPwd('');
-                    setInputConfirmPwd('');
+                    });
+
+                    const email = user.email;
+
+                    if (jwt && email) {
+                        await axios.post(
+                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/sendEmail`,
+                            {
+                                email,
+                                jwt
+                            }
+                        );
+                    }
+
+                    setInputNewPwd("");
+                    setInputConfirmPwd("");
                     togglePasswordChangedModal();
                     setChangePasswordModalActive(false);
-                    
-                } catch ({error}) {
+                } catch ({ error }) {
                     setAlertMsg({
                         isOpen: true,
                         title: "Error",
-                        message: error.message,
+                        message: error.message
                     });
                 }
             }
-        }
-        else
-        {
+        } else {
             setAlertMsg({
                 isOpen: true,
                 title: "Error",
-                message: "New password and Confirm password is required",
+                message: "New password and Confirm password is required"
             });
         }
-    }
+    };
 
     const [alertMsg, setAlertMsg] = useState({});
     const ShowAlert = () => {
@@ -99,22 +113,26 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                 <AlertDialogOverlay />
 
                 <AlertDialogContent p="10px" bg="background">
-                <Box border="2.7033px dashed #515151">
-                    <AlertDialogHeader>
-                    <Heading color="white">{alertMsg?.title}</Heading>
-                    </AlertDialogHeader>
+                    <Box border="2.7033px dashed #515151">
+                        <AlertDialogHeader>
+                            <Heading color="white">{alertMsg?.title}</Heading>
+                        </AlertDialogHeader>
 
-                    <AlertDialogBody>
-                    <Text variant="hint">{alertMsg?.message}</Text>
-                    </AlertDialogBody>
-                </Box>
+                        <AlertDialogBody>
+                            <Text variant="hint">{alertMsg?.message}</Text>
+                        </AlertDialogBody>
+                    </Box>
                 </AlertDialogContent>
             </AlertDialog>
         );
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={OnChangePasswordClose} scrollBehavior="inside">
+        <Modal
+            isOpen={isOpen}
+            onClose={OnChangePasswordClose}
+            scrollBehavior="inside"
+        >
             <ModalOverlay />
 
             <ModalContent
@@ -165,12 +183,12 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                                     mb="20px"
                                     textAlign="center"
                                 >
-                                    Please make sure your new password must be different from previous used password
+                                    Please make sure your new password must be
+                                    different from previous used password
                                 </Text>
 
                                 <Box w="100%">
-
-                                <FormControl mb="15px">
+                                    <FormControl mb="15px">
                                         <Input
                                             id="code"
                                             name="code"
@@ -185,8 +203,10 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                                             border="1px solid #707070 !important"
                                             height="35px"
                                             _focus={{ outline: "0" }}
-                                            value={secCode}
-                                            onChange={(e) => setInputCode(e.target.value)}
+                                            value={inputCode}
+                                            onChange={(e) =>
+                                                setInputCode(e.target.value)
+                                            }
                                         />
                                     </FormControl>
 
@@ -206,7 +226,10 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                                             height="35px"
                                             _focus={{ outline: "0" }}
                                             value={inputNewPwd}
-                                            onChange={(e) => setInputNewPwd(e.target.value)}
+                                            autoComplete="new-password"
+                                            onChange={(e) =>
+                                                setInputNewPwd(e.target.value)
+                                            }
                                         />
                                     </FormControl>
 
@@ -226,10 +249,15 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                                             height="35px"
                                             _focus={{ outline: "0" }}
                                             value={inputConfirmPwd}
-                                            onChange={(e) => setInputConfirmPwd(e.target.value)}
+                                            autoComplete="new-password"
+                                            onChange={(e) =>
+                                                setInputConfirmPwd(
+                                                    e.target.value
+                                                )
+                                            }
                                         />
                                     </FormControl>
-                                     
+
                                     <Button
                                         width="100%"
                                         h="30px"
@@ -252,7 +280,6 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                     </Flex>
 
                     {ShowAlert()}
-
                 </ModalBody>
             </ModalContent>
         </Modal>

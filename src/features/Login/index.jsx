@@ -67,9 +67,9 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     }
 
     const handleSubmit = () => {
-        if (inputEmailId === '' && inputPassword === '') {
-            return;
-        }
+        // if (inputEmailId === '' && inputPassword === '') {
+        //     return;
+        // }
         const formData = {
             username: inputEmailId,
             email: inputEmailId,
@@ -77,7 +77,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
             referalcode: inputReferalCode
         }
         callCustomAuthService(formData, selectedOption, redirectUrl);
-        if (selectedOption == 'signup') {
+        if (selectedOption == 'signup' && inputEmailId && inputPassword) {
             setSelectedOption('login');
         }
     }
