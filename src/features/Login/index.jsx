@@ -20,20 +20,24 @@ import {
     AlertDialogHeader,
     AlertDialogContent,
     AlertDialogOverlay,
-    IconButton 
+    IconButton,
+    InputGroup,
+    InputRightElement 
 } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
-import { TriangleDownIcon, TriangleUpIcon } from '@chakra-ui/icons'
+import { TriangleDownIcon, TriangleUpIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router';
+import axios from "axios";
 
 const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     const [selectedOption, setSelectedOption] = useState("signup");
     const [passwordType, setPasswordType] = useState("password");
     const [inputEmailId, setInputEmailId] = useState();
     const [inputPassword, setInputPassword] = useState();
-    const [inputReferalCode, setInputReferalCode] = useState();
+    const [inputReferalCode, setInputReferalCode] = useState(null);
+    const [validReferalCode, setValidReferalCode] = useState();
 
     const router = useRouter();
     const {referral_code } = router.query;
@@ -51,6 +55,31 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
             setInputReferalCode(referral_code);
         }
     }, [referral_code]);
+
+    useEffect(() => {
+        const setValidReferalCodeAPI = async () => {
+            try {
+                const resp = await axios.get(
+                    process.env.NEXT_PUBLIC_STRAPI_API_URL +
+                    `/api/referral-codes/referralCodeByCodeName/`+inputReferalCode,
+                );
+                const {data} = resp;
+                setValidReferalCode(data);
+                if(inputReferalCode == ''){
+                    setValidReferalCode(null);
+                }
+            } catch (error) {
+    
+            }
+          };
+          if(inputReferalCode != null){
+            setValidReferalCodeAPI();
+          }
+          else{
+            setValidReferalCode(null);
+          }
+          
+    }, [inputReferalCode]);
 
     const { callAuthService, callCustomAuthService, setLoginModalActive, toggleForgotPasswordModal } = useContext(AppContext);
 
@@ -80,10 +109,23 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
             password: inputPassword,
             referalcode: inputReferalCode
         }
-        callCustomAuthService(formData, selectedOption, redirectUrl);
-        if (selectedOption == 'signup' && inputEmailId && inputPassword) {
-            setSelectedOption('login');
+        if (selectedOption == 'signup' && inputReferalCode != null) {
+            if(validReferalCode == true){
+                callCustomAuthService(formData, selectedOption, redirectUrl);
+                if (selectedOption == 'signup' && inputEmailId && inputPassword) {
+                    setSelectedOption('login');
+                    setInputReferalCode(null);
+                }
+            }
         }
+        else{
+            callCustomAuthService(formData, selectedOption, redirectUrl);
+            setInputReferalCode(null);
+            if (selectedOption == 'signup' && inputEmailId && inputPassword) {
+                setSelectedOption('login');
+            }
+        }
+        
     }
 
 
@@ -258,24 +300,39 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
 
                                     </Text>
                                     {checked && ( <FormControl>
-                                        <Input
-                                            id="referral_code"
-                                            name="referral_code"
-                                            type="text"
-                                            placeholder="Referral Code"
-                                            bgColor="#fff"
-                                            color="#707070"
-                                            _placeholder={{ color: "#707070" }}
-                                            required
-                                            boxShadow="unset"
-                                            p="6px 10px"
-                                            border="1px solid #707070 !important"
-                                            height="35px"
-                                            _focus={{ outline: "0" }}
-                                            value={inputReferalCode}
-                                            onChange={(e) => setInputReferalCode(e.target.value)}
-                                            isReadOnly = {referral_code ? true : false }
-                                        />
+                                        <InputGroup>
+                                            <Input
+                                                id="referral_code"
+                                                name="referral_code"
+                                                type="text"
+                                                placeholder="Referral Code"
+                                                bgColor="#fff"
+                                                color="#707070"
+                                                _placeholder={{ color: "#707070" }}
+                                                required
+                                                boxShadow="unset"
+                                                p="6px 10px"
+                                                border="1px solid #707070 !important"
+                                                height="35px"
+                                                _focus={{ outline: "0" }}
+                                                value={inputReferalCode}
+                                                onChange={(e) => setInputReferalCode(e.target.value)}
+                                                isReadOnly = {referral_code ? true : false }
+                                            />
+                                            { inputReferalCode != null && 
+                                            <>
+                                                <InputRightElement 
+                                                    height="36px"
+                                                    borderTopRightRadius="5px"
+                                                    borderBottomEndRadius="5px"
+                                                >
+                                                {validReferalCode ? <CheckIcon w={5} h={6} color='#23c212' /> : <CloseIcon color='#ff004e' />}
+                                                </InputRightElement>
+                                            </>
+                                            }
+                                        </InputGroup>
+
+                                        
                                     </FormControl>)}
                                 </Box>
                                 )}
