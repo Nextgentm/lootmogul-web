@@ -65,13 +65,20 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                     const email = user.email;
 
                     if (jwt && email) {
-                        await axios.post(
-                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/sendEmail`,
-                            {
-                                email,
-                                jwt
-                            }
-                        );
+                        axios
+                            .post(
+                                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/sendEmail`,
+                                {
+                                    email,
+                                    jwt
+                                }
+                            )
+                            .then((res) => {
+                                console.log(res);
+                            })
+                            .catch((err) => {
+                                console.log(err);
+                            });
                     }
 
                     setInputNewPwd("");
