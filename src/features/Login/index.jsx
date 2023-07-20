@@ -36,11 +36,15 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     const [inputReferalCode, setInputReferalCode] = useState();
 
     const router = useRouter();
-    const {referral_code } = router.query
-    if(referral_code){
+    const {referral_code } = router.query;
+
+    var strapi_jwt = '';
+    if (typeof window !== 'undefined') {
+        strapi_jwt = window.localStorage.getItem("strapi_jwt");
+    }
+
+    if(referral_code && strapi_jwt ===  null){
         isOpen = true;
-        console.log('ggg');
-        
     } 
     useEffect(() => {
         if(referral_code){
