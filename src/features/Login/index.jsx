@@ -36,7 +36,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     const [passwordType, setPasswordType] = useState("password");
     const [inputEmailId, setInputEmailId] = useState();
     const [inputPassword, setInputPassword] = useState();
-    const [inputReferalCode, setInputReferalCode] = useState(null);
+    const [inputReferalCode, setInputReferalCode] = useState('');
     const [validReferalCode, setValidReferalCode] = useState();
 
     const router = useRouter();
@@ -72,7 +72,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     
             }
           };
-          if(inputReferalCode != null){
+          if(inputReferalCode != ''){
             setValidReferalCodeAPI();
           }
           else{
@@ -87,7 +87,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
         clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
 
         onSuccess: (data) => {
-            callAuthService("google", data.accessToken);
+            callAuthService("google", data.accessToken, inputReferalCode);
         }
     });
 
@@ -109,7 +109,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
             password: inputPassword,
             referalcode: inputReferalCode
         }
-        if (selectedOption == 'signup' && inputReferalCode != null) {
+        if (selectedOption == 'signup' && inputReferalCode != '') {
             if(validReferalCode == true){
                 callCustomAuthService(formData, selectedOption, redirectUrl);
                 if (selectedOption == 'signup' && inputEmailId && inputPassword) {
@@ -120,7 +120,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
         }
         else{
             callCustomAuthService(formData, selectedOption, redirectUrl);
-            setInputReferalCode(null);
+            setInputReferalCode('');
             if (selectedOption == 'signup' && inputEmailId && inputPassword) {
                 setSelectedOption('login');
             }
@@ -165,7 +165,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     const toggleReferral = () =>{
         setChecked(!checked)
     }
-
+    
     return (
         <Modal isOpen={isOpen} onClose={OnLoginClose} scrollBehavior="inside">
             <ModalOverlay />
@@ -229,6 +229,8 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     color="black"
                                     variant="login"
                                     onClick={signIn}
+                                    isDisabled = {validReferalCode == false  ? true : false }
+                                    _hover={{backgroundColor:"#fff"}}
                                 >
                                     {selectedOption === "login"
                                         ? "Login"
@@ -244,7 +246,8 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     callback={({ accessToken }) => {
                                         callAuthService(
                                             "facebook",
-                                            accessToken
+                                            accessToken,
+                                            inputReferalCode
                                         );
                                     }}
                                     render={(renderProps) => (
@@ -265,6 +268,8 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             backgroundColor="#FFF"
                                             color="black"
                                             variant="login"
+                                            isDisabled = {validReferalCode == false  ? true : false }
+                                            _hover={{backgroundColor:"#fff"}}
                                         >
                                             {selectedOption === "login"
                                                 ? "Login"
@@ -319,7 +324,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                                 onChange={(e) => setInputReferalCode(e.target.value)}
                                                 isReadOnly = {referral_code ? true : false }
                                             />
-                                            { inputReferalCode != null && 
+                                            { inputReferalCode != '' && 
                                             <>
                                                 <InputRightElement 
                                                     height="36px"
@@ -437,6 +442,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         outline="0"
                                         fontFamily="Open Sans,Sans-serif !important"
                                         onClick={handleSubmit}
+                                        isDisabled = {selectedOption != "login" && validReferalCode == false  ? true : false }
                                     >
                                         {
                                             selectedOption === "login"
