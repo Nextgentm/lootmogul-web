@@ -464,7 +464,7 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.getItem("utm_content");
                     const trackingCode =
                         window.localStorage?.getItem("trackingCode");
-                    const referral_code =
+                    var referral_code =
                         window.localStorage?.getItem("referral_code");
                     const provider = window.localStorage?.getItem("provider");
 
@@ -658,7 +658,7 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.getItem("utm_content");
                     const trackingCode =
                         window.localStorage?.getItem("trackingCode");
-                    const referral_code =
+                    var referral_code =
                         window.localStorage?.getItem("referral_code");
                     const provider = window.localStorage?.getItem("provider");
 

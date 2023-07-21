@@ -52,7 +52,7 @@ const ReferEarn = () => {
             text2: "You Get Bonus"
         }
     ];
-    const markupData = `## Here’s How it works <br> <span style="color:white;  font-size:14px; font-family:sora;"> <ol type={1}><li> Copy the Code, share with your friends</li><li> You can also do this - share your link directly by clicking relevant social media icon right below your code.It will take you to the social media direct message section.You can simply search your contact and send.</li><li>Now your friend visits LootMogul and Sign Up</li><li>You get Bonus added to your wallet</li><li>Friend deposits for first time. You get more Bonus</li><li> Friend plays 10 cash games, you get even more Bonus</li><li> "*" for Terms & Conditions apply. Click here for T&C (This will be linked to T&C of Refer a Friend)</li></ol><br><style> table { border-spacing: 0px;table-layout: fixed; margin-left: auto;margin-right: auto; width: 310px;font-color:white; } td { border: 1px solid #666;word-break: break-all;height: 100%;}</style> <table style="color:white"><tr><td><span style="font-size:16px; font-family;"><b>Steps</span></td><td><span style="font-size:14px; font-family:sora;">Bonus</span></td></tr><tr><td><span style="font-size:14px; font-family:sora;">Friend Signs Up</span> </td><td><span style="font-size:14px; font-family:sora;">7 Chips</span> </td></tr><tr><td><span style="font-size:14px; font-family:sora;">Friend Deposits for first time</span> </td><td><span style="font-size:14px; font-family:sora;">14 Chips</span> </td></tr><tr><td><span style="font-size:14px; font-family:sora;">Friend Plays 10 games from Deposits</span></td><td><span style="font-size:14px; font-family:sora;">21 Chips</span></td></tr></table><span>`;
+    const markupData = `## <h2 style="font-size: 55px;line-height: 60px;margin-bottom: 0;">Here’s How it works</h2> <br> <span style="color:white;  font-size:20px; font-family:sora;line-height: 38px;"><ul><li> Copy the Code, share with your friends</li><li> You can also do this - share your link directly by clicking relevant social media icon right below your code.It will take you to the social media direct message section.You can simply search your contact and send.</li><li>Now your friend visits LootMogul and Sign Up</li><li>You get Bonus added to your wallet</li><li>Friend deposits for first time. You get more Bonus</li><li> Friend plays 10 cash games, you get even more Bonus</li><li style=" font-size: 14px; list-style: none; "> "*" for Terms & Conditions apply. <a href="/terms-conditions/">Click here for T&C </a></li></ul><br><style> table { border-spacing: 0px;table-layout: fixed; margin-left: auto;margin-right: auto; width: 310px;font-color:white; } td { border: 0px solid #666;word-break: break-all;height: 100%;} thead tr{background: transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box;box-shadow: inset 0px 3px 18px #481A7F73;} tbody tr:nth-child(even) {background: #0C1333} tbody tr:nth-child(odd) {background: #301e40 } td {border: 0 !important;} h2{font-size: 55px !important;line-height: 50px !important;    margin-bottom: 0 !important;}</style> <h2>Bonus Distribution</h2> <table style="color:white;width: 85%;margin-top: 25px;margin-left: 1px;margin-right: 1px;margin-bottom: 40px;"><thead><tr><td><span style="font-size:16px; font-family;"><b>Steps</span></td><td><span style="font-size:14px; font-family:sora;">Bonus</span></td></tr></thead><tr><td><span style="font-size:14px; font-family:sora;">Friend Signs Up</span> </td><td><span style="font-size:14px; font-family:sora;">7 Chips</span> </td></tr><tr><td><span style="font-size:14px; font-family:sora;">Friend Deposits for first time</span> </td><td><span style="font-size:14px; font-family:sora;">14 Chips</span> </td></tr><tr><td><span style="font-size:14px; font-family:sora;">Friend Plays 10 games from Deposits</span></td><td><span style="font-size:14px; font-family:sora;">21 Chips</span></td></tr></table><span>`;
     return (
         <Box mt={["15px", "30px"]}>
             <Flex
@@ -238,7 +238,7 @@ const ReferEarn = () => {
                 m="auto"
                 padding="25px"
                 width="90%"
-                minH="250px"
+                minH="300px"
                 mt="5%"
                 background="#481A7F5C 0% 0% no-repeat padding-box;"
                 borderRadius={"md"}
@@ -259,8 +259,9 @@ const ReferEarn = () => {
                             <Flex direction={["row", "column"]} mt="2%" mb="2%">
                                 <Box
                                     m="auto"
-                                    width={["50px", "80px"]}
-                                    height={["50px", "80px"]}
+                                    mb="20px"
+                                    width={["100px", "100px"]}
+                                    height={["100px", "85px"]}
                                     pos="relative"
                                 >
                                     <Image
@@ -270,7 +271,7 @@ const ReferEarn = () => {
                                     />
                                 </Box>
                                 <Box
-                                    mt={"5px!important"}
+                                    mt={"5px important"}
                                     m="auto"
                                     textAlign={["left", "center"]}
                                 >
