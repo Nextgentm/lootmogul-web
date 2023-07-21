@@ -63,14 +63,16 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                     });
 
                     const email = user.email;
+                    const username = user.username;
 
-                    if (jwt && email) {
+                    if (jwt && email && username) {
                         axios
                             .post(
                                 `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/sendEmail`,
                                 {
                                     email,
-                                    jwt
+                                    jwt,
+                                    username
                                 }
                             )
                             .then((res) => {
