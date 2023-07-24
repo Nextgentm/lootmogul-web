@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { useGoogleLogin } from "react-google-login";
 import {
@@ -20,16 +20,66 @@ import {
     AlertDialogHeader,
     AlertDialogContent,
     AlertDialogOverlay,
+    IconButton,
+    InputGroup,
+    InputRightElement 
 } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
+import { TriangleDownIcon, TriangleUpIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
+import { useRouter } from 'next/router';
+import axios from "axios";
 
 const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     const [selectedOption, setSelectedOption] = useState("signup");
     const [passwordType, setPasswordType] = useState("password");
     const [inputEmailId, setInputEmailId] = useState();
     const [inputPassword, setInputPassword] = useState();
+    const [inputReferalCode, setInputReferalCode] = useState('');
+    const [validReferalCode, setValidReferalCode] = useState();
+
+    const router = useRouter();
+    const {referral_code } = router.query;
+
+    var strapi_jwt = '';
+    if (typeof window !== 'undefined') {
+        strapi_jwt = window.localStorage.getItem("strapi_jwt");
+    }
+
+    if(referral_code && strapi_jwt ===  null){
+        isOpen = true;
+    } 
+    useEffect(() => {
+        if(referral_code){
+            setInputReferalCode(referral_code);
+        }
+    }, [referral_code]);
+
+    useEffect(() => {
+        const setValidReferalCodeAPI = async () => {
+            try {
+                const resp = await axios.get(
+                    process.env.NEXT_PUBLIC_STRAPI_API_URL +
+                    `/api/referral-codes/referralCodeByCodeName/`+inputReferalCode,
+                );
+                const {data} = resp;
+                setValidReferalCode(data);
+                if(inputReferalCode == ''){
+                    setValidReferalCode(null);
+                }
+            } catch (error) {
+    
+            }
+          };
+          if(inputReferalCode != ''){
+            setValidReferalCodeAPI();
+          }
+          else{
+            setValidReferalCode(null);
+          }
+          
+    }, [inputReferalCode]);
 
     const { callAuthService, callCustomAuthService, setLoginModalActive, toggleForgotPasswordModal } = useContext(AppContext);
 
@@ -37,7 +87,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
         clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
 
         onSuccess: (data) => {
-            callAuthService("google", data.accessToken);
+            callAuthService("google", data.accessToken, inputReferalCode);
         }
     });
 
@@ -50,22 +100,36 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     }
 
     const handleSubmit = () => {
-        if (inputEmailId === '' && inputPassword === '') {
-            return;
-        }
+        // if (inputEmailId === '' && inputPassword === '') {
+        //     return;
+        // }
         const formData = {
             username: inputEmailId,
             email: inputEmailId,
             password: inputPassword,
+            referalcode: inputReferalCode
         }
-        callCustomAuthService(formData, selectedOption, redirectUrl);
-        if (selectedOption == 'signup') {
-            setSelectedOption('login');
+        if (selectedOption == 'signup' && inputReferalCode != '') {
+            if(validReferalCode == true){
+                callCustomAuthService(formData, selectedOption, redirectUrl);
+                if (selectedOption == 'signup' && inputEmailId && inputPassword) {
+                    setSelectedOption('login');
+                    setInputReferalCode(null);
+                }
+            }
         }
+        else{
+            callCustomAuthService(formData, selectedOption, redirectUrl);
+            setInputReferalCode('');
+            if (selectedOption == 'signup' && inputEmailId && inputPassword) {
+                setSelectedOption('login');
+            }
+        }
+        
     }
 
 
-
+    const [checked, setChecked] = useState(true);
     const [alertMsg, setAlertMsg] = useState({});
     const ShowAlert = () => {
         return (
@@ -98,6 +162,10 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
         );
     };
 
+    const toggleReferral = () =>{
+        setChecked(!checked)
+    }
+    
     return (
         <Modal isOpen={isOpen} onClose={OnLoginClose} scrollBehavior="inside">
             <ModalOverlay />
@@ -161,6 +229,8 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     color="black"
                                     variant="login"
                                     onClick={signIn}
+                                    isDisabled = {validReferalCode == false  ? true : false }
+                                    _hover={{backgroundColor:"#fff"}}
                                 >
                                     {selectedOption === "login"
                                         ? "Login"
@@ -176,7 +246,8 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     callback={({ accessToken }) => {
                                         callAuthService(
                                             "facebook",
-                                            accessToken
+                                            accessToken,
+                                            inputReferalCode
                                         );
                                     }}
                                     render={(renderProps) => (
@@ -197,6 +268,8 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             backgroundColor="#FFF"
                                             color="black"
                                             variant="login"
+                                            isDisabled = {validReferalCode == false  ? true : false }
+                                            _hover={{backgroundColor:"#fff"}}
                                         >
                                             {selectedOption === "login"
                                                 ? "Login"
@@ -206,7 +279,68 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     )}
                                 />
                                 }
+                                {selectedOption != "login" && (
+                                <Box w="100%">
+                                    <Text
+                                        my="5px"
+                                        textAlign="left"
+                                        fontFamily="Open Sans,Sans-serif"
+                                        color="white"
+                                        fontWeight="500"
+                                        fontSize={["12px", "13px"]}
+                                    >
+                                        Referral Code (Optional) 
+                                        <IconButton
+                                            backgroundImage="none"
+                                            backgroundColor="transparent"
+                                            boxShadow="none"
+                                            aria-label='Search database'
+                                            icon={checked ? <TriangleUpIcon boxSize={3.5} /> : <TriangleDownIcon boxSize={3.5} />}
+                                            p="4px"
+                                            _hover={{backgroundImage:"none",backgroundColor:"transparent"}}
+                                            _active={{backgroundImage:"none",backgroundColor:"transparent"}}
+                                            _focus={{backgroundImage:"none",backgroundColor:"transparent"}}
+                                            onClick={toggleReferral}
+                                        />
 
+                                    </Text>
+                                    {checked && ( <FormControl>
+                                        <InputGroup>
+                                            <Input
+                                                id="referral_code"
+                                                name="referral_code"
+                                                type="text"
+                                                placeholder="Referral Code"
+                                                bgColor="#fff"
+                                                color="#707070"
+                                                _placeholder={{ color: "#707070" }}
+                                                required
+                                                boxShadow="unset"
+                                                p="6px 10px"
+                                                border="1px solid #707070 !important"
+                                                height="35px"
+                                                _focus={{ outline: "0" }}
+                                                value={inputReferalCode}
+                                                onChange={(e) => setInputReferalCode(e.target.value)}
+                                                isReadOnly = {referral_code ? true : false }
+                                            />
+                                            { inputReferalCode != '' && 
+                                            <>
+                                                <InputRightElement 
+                                                    height="36px"
+                                                    borderTopRightRadius="5px"
+                                                    borderBottomEndRadius="5px"
+                                                >
+                                                {validReferalCode ? <CheckIcon w={5} h={6} color='#23c212' /> : <CloseIcon color='#ff004e' />}
+                                                </InputRightElement>
+                                            </>
+                                            }
+                                        </InputGroup>
+
+                                        
+                                    </FormControl>)}
+                                </Box>
+                                )}
                                 <Box>
                                     <Image
                                         alt="or"
@@ -308,6 +442,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         outline="0"
                                         fontFamily="Open Sans,Sans-serif !important"
                                         onClick={handleSubmit}
+                                        isDisabled = {selectedOption != "login" && validReferalCode == false  ? true : false }
                                     >
                                         {
                                             selectedOption === "login"

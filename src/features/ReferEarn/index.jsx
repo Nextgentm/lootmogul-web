@@ -38,71 +38,59 @@ const ReferEarn = () => {
     const arrayPlayProtectionImgs = [
         {
             img: "refer1.png",
-            text1: " Friend Sign Up",
+            text1: "Friend Register",
             text2: "Both You & Friend Get Bonus"
         },
         {
             img: "refer2.png",
-            text1: "Friend Deposits for First Time",
+            text1: "Friend first adds chips",
             text2: "You Get Bonus"
         },
         {
             img: "refer3.png",
-            text1: "Friend Plays 10 Cash Games",
+            text1: "Friend plays 10 chips games",
             text2: "You Get Bonus"
         }
     ];
-    const markupData = `## Here’s How it works <br> <span style="color:white;  font-size:14px; font-family:sora;"> <ol type={1}><li> Copy the Code, share with your friends</li><li> You can also do this - share your link directly by clicking relevant social media icon right below your code.It will take you to the social media direct message section.You can simply search your contact and send.</li><li>Now your friend visits LootMogul and Sign Up</li><li>You get Bonus added to your wallet</li><li>Friend deposits for first time. You get more Bonus</li><li> Friend plays 10 cash games, you get even more Bonus</li><li> "*" for Terms & Conditions apply. Click here for T&C (This will be linked to T&C of Refer a Friend)</li></ol><br><style> table { border-spacing: 0px;table-layout: fixed; margin-left: auto;margin-right: auto; width: 310px;font-color:white; } td { border: 1px solid #666;word-break: break-all;height: 100%;}</style> <table style="color:white"><tr><td><span style="font-size:16px; font-family;"><b>Steps</span></td><td><span style="font-size:14px; font-family:sora;">Bonus</span></td></tr><tr><td><span style="font-size:14px; font-family:sora;">Friend Signs Up</span> </td><td><span style="font-size:14px; font-family:sora;">7 Chips</span> </td></tr><tr><td><span style="font-size:14px; font-family:sora;">Friend Deposits for first time</span> </td><td><span style="font-size:14px; font-family:sora;">14 Chips</span> </td></tr><tr><td><span style="font-size:14px; font-family:sora;">Friend Plays 10 games from Deposits</span></td><td><span style="font-size:14px; font-family:sora;">21 Chips</span></td></tr></table><span>`;
+    const markupData = `## <h2 style="font-size: 55px;line-height: 60px;margin-bottom: 0;">Here’s How it works</h2> <br> <span style="color:white;  font-size:20px; font-family:sora;line-height: 38px;"><ul><li> Copy the Code, share with your friends</li><li> You can also do this - share your link directly by clicking relevant social media icon right below your code.It will take you to the social media direct message section.You can simply search your contact and send.</li><li>Now your friend visits LootMogul and Sign Up</li><li>You get Bonus added to your wallet</li><li>Friend deposits for first time. You get more Bonus</li><li> Friend plays 10 cash games, you get even more Bonus</li><li style=" font-size: 14px; list-style: none; "> "*" for Terms & Conditions apply. <a href="/terms-conditions/">Click here for T&C </a></li></ul><br><style> table { border-spacing: 0px;table-layout: fixed; margin-left: auto;margin-right: auto; width: 310px;font-color:white; } td { border: 0px solid #666;word-break: break-all;height: 100%;} thead tr{background: transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box;box-shadow: inset 0px 3px 18px #481A7F73;} tbody tr:nth-child(even) {background: #0C1333} tbody tr:nth-child(odd) {background: #301e40 } td {border: 0 !important;} h2{font-size: 55px !important;line-height: 50px !important;    margin-bottom: 0 !important;}</style> <h2>Bonus Distribution</h2> <table style="color:white;width: 85%;margin-top: 25px;margin-left: 1px;margin-right: 1px;margin-bottom: 40px;"><thead><tr><td><span style="font-size:16px; font-family;"><b>Steps</span></td><td><span style="font-size:14px; font-family:sora;">Bonus</span></td></tr></thead><tr><td><span style="font-size:14px; font-family:sora;">Friend Signs Up</span> </td><td><span style="font-size:14px; font-family:sora;">7 Chips</span> </td></tr><tr><td><span style="font-size:14px; font-family:sora;">Friend Deposits for first time</span> </td><td><span style="font-size:14px; font-family:sora;">14 Chips</span> </td></tr><tr><td><span style="font-size:14px; font-family:sora;">Friend Plays 10 games from Deposits</span></td><td><span style="font-size:14px; font-family:sora;">21 Chips</span></td></tr></table><span>`;
     return (
         <Box mt={["15px", "30px"]}>
             <Flex
-                direction={["column", "row"]}
-                width="100%"
+                direction={["column", "column", "column", "row", "row"]}
+                width="90%"
                 borderRadius={"md"}
-                px={["20px", "20px", "20px", "60px", "60px"]}
+                border="2px solid #481A7F"
+                m="auto"
             >
-                <Box width={["100%", "50%"]} textAlign={["center", "left"]}>
-                    <Text
-                        color="#F8ED1D"
-                        fontSize={["40px", "54px"]}
-                        fontFamily="Blanch"
-                        mb={0}
-                    >
-                        REFER AND EARN
-                    </Text>
-
-                    <Text
-                        color="white"
-                        fontSize={["64px", "98px"]}
-                        fontWeight="bold"
-                        textTransform="uppercase"
-                        fontFamily="Blanch"
-                        lineHeight="52px"
-                    >
-                        up to 700 Chips*
-                    </Text>
+                <Box width={["100%","100%","100%","50%", "50%"]} textAlign={["center", "left"]}>
                     <Box
                         pos="relative"
                         m="auto"
-                        h={["210px", "310px", "310px", "410px"]}
-                        width={["224px", "324px", "324px", "436px"]}
+                        h={["15vh","15vh","25vh","30vh","45vh","55vh"]}
+                        w="100%"
                     >
                         <Image
                             alt="refer"
-                            src="/assets/referafriend.png"
+                            src="/assets/earn_banner.jpg"
                             layout="fill"
                         />
                     </Box>
                 </Box>
                 <Box
-                    width={["100%", "50%"]}
-                    mt={["30px", "30px", "30px", "96px"]}
+                    width={["100%","100%","100%","50%", "50%"]}
                     textAlign={["center", "left"]}
+                    p={["20px", "20px", "20px", "25px"]}
+                    background="#481A7F5C 0% 0% no-repeat padding-box;"
                 >
-                    <Text variant="referHead">
-                        Make it more Exciting! Challenge your friends & family
+                    <Text 
+                        variant="referHead"
+                        fontSize={["40px", "40px", "40px", "34px", "55px"]}
+                        lineHeight={["40px", "40px", "40px", "30px","50px"]}
+                        fontWeight="normal"
+                        fontFamily="Blanch">
+                         Make it more Exciting! Challenge <br/>your friends & family
                     </Text>
-                    <Text mt="15px" variant="referDesc">
+                    <Text mt="15px" variant="referDesc" fontSize={["15px", "17px"]} lineHeight={["18px","23px"]} w={["100%","100%","100%","100%","80%"]}>
                         Lootmogul.com brings you the best incentive that
                         friendship can offer. Bond over your love for Online
                         Sports Trivia along with your friends. Earn cash, Refer
@@ -111,38 +99,44 @@ const ReferEarn = () => {
                     <Box
                         pl={["15px", "25px"]}
                         pr={["15px", "25px"]}
-                        mt={["30px", "70px"]}
-                        border="2.7033px dashed #515151"
+                        mt={["30px", "10px"]}
+                        border="2px dashed #E8E8E8"
+                        borderRadius="4px"
                     >
                         <Text
-                            mt={["10px", "25px"]}
+                            mt={["10px", "10px"]}
                             fontFamily="Sora"
-                            fontSize={["14px", "18px"]}
-                            color="#F8ED1D"
-                            fontWeight={600}
+                            fontSize={["14px", "17px"]}
+                            color="#E8E8E8"
+                            
                         >
                             {" "}
                             Your Referal Code
                         </Text>
                         <Flex
                             mt={"10px"}
-                            mb={"10px"}
-                            borderRadius="30px"
+                            mb={"20px"}
+                            borderRadius="4px"
                             justifyContent={"space-between"}
-                            backgroundColor="#1C1C1C"
+                            backgroundColor="#fff"
                             width="100%"
+                            direction={["column", "column", "row", "row", "row"]}
                         >
                             <Text
-                                px={["15px", "15px", "15px", "70px"]}
+                                px={["15px", "15px", "15px", "15px", "50px"]}
                                 py={"10px"}
-                                color="white"
+                                color="#481A7F"
+                                fontSize={["15px", "20px", "20px", "20px", "26px"]}
+                                fontWeight="700"
                             >
                                 {user
                                     ? user.referral_code?.code
                                     : "Log in for referal code"}
                             </Text>
                             <Button
-                                borderRadius="30px"
+                                borderRadius="4px"
+                                textTransform="uppercase"
+                                fontSize={["15px", "15px", "15px", "15px", "23px"]}
                                 onClick={() => {
                                     if (!user) toggleLoginModal();
                                     else {
@@ -165,68 +159,74 @@ const ReferEarn = () => {
                             <>
                                 {" "}
                                 <Text
-                                    mt={["15px", "40px"]}
+                                    mt={["15px", "0px"]}
                                     textTransform="capitalize"
                                     variant="textualVal"
                                     color="white"
+                                    fontSize={["14px", "17px"]}
                                 >
                                     Share your link
                                 </Text>
                                 <Flex
                                     my="15px"
                                     justify={"space-evenly"}
-                                    width={["100%", "80%", "80%", "60%"]}
+                                    width={["100%", "80%", "80%", "35%"]}
+                                    
                                 >
-                                    <FacebookShareButton
+                                    <RedditShareButton
                                         url={
-                                            process.env.NEXT_PUBLIC_SITE_URL + "?referral_code=" +
-                                                user.referral_code?.code || ""
-                                        }
-                                        quote={referralMsg}
-                                    >
-                                        <FacebookIcon size={32} round />
-                                    </FacebookShareButton>
-
-                                    <TwitterShareButton
-                                        url={
-                                            process.env.NEXT_PUBLIC_SITE_URL + "?referral_code=" +
+                                            process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
                                                 user.referral_code?.code || ""
                                         }
                                         title={referralMsg}
                                     >
-                                        <TwitterIcon size={32} round />
+                                        <RedditIcon size={40} round />
+                                    </RedditShareButton>
+
+                                    <TwitterShareButton
+                                        url={
+                                            process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
+                                                user.referral_code?.code || ""
+                                        }
+                                        title={referralMsg}
+                                    >
+                                        <TwitterIcon size={40} round />
                                     </TwitterShareButton>
+
+                                    <WhatsappShareButton
+                                        url={
+                                            process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
+                                                user.referral_code?.code || ""
+                                        }
+                                        title={referralMsg}
+                                    >
+                                        <WhatsappIcon size={40} round />
+                                    </WhatsappShareButton>
+
+                                    <FacebookShareButton
+                                        url={
+                                            process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
+                                                user.referral_code?.code || ""
+                                        }
+                                        quote={referralMsg}
+                                    >
+                                        <FacebookIcon size={40} round />
+                                    </FacebookShareButton>
 
                                     <FacebookMessengerShareButton
                                         url={
-                                            process.env.NEXT_PUBLIC_SITE_URL + "?referral_code=" +
+                                            process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
                                                 user.referral_code?.code || ""
                                         }
                                         title={referralMsg}
                                     >
                                         <FacebookMessengerIcon
-                                            size={32}
+                                            size={40}
                                             round
                                         />
                                     </FacebookMessengerShareButton>
-                                    <WhatsappShareButton
-                                        url={
-                                            process.env.NEXT_PUBLIC_SITE_URL + "?referral_code=" +
-                                                user.referral_code?.code || ""
-                                        }
-                                        title={referralMsg}
-                                    >
-                                        <WhatsappIcon size={32} round />
-                                    </WhatsappShareButton>
-                                    <RedditShareButton
-                                        url={
-                                            process.env.NEXT_PUBLIC_SITE_URL + "?referral_code=" +
-                                                user.referral_code?.code || ""
-                                        }
-                                        title={referralMsg}
-                                    >
-                                        <RedditIcon size={32} round />
-                                    </RedditShareButton>
+                                    
+                                    
                                 </Flex>
                             </>
                         )}
@@ -236,12 +236,13 @@ const ReferEarn = () => {
 
             <Flex
                 m="auto"
-                background="#1c1c1c"
                 padding="25px"
-                width="100%"
-                minH="200px"
+                width="90%"
+                minH="300px"
                 mt="5%"
-                backgroundImage="linear-gradient(172deg, #7C7C7C -85%, rgba(255, 255, 255, 0) 50%)"
+                background="#481A7F5C 0% 0% no-repeat padding-box;"
+                borderRadius={"md"}
+                border="2px solid #481A7F"
             >
                 <Flex
                     width="100%"
@@ -258,8 +259,9 @@ const ReferEarn = () => {
                             <Flex direction={["row", "column"]} mt="2%" mb="2%">
                                 <Box
                                     m="auto"
-                                    width={["50px", "80px"]}
-                                    height={["50px", "80px"]}
+                                    mb="20px"
+                                    width={["100px", "100px"]}
+                                    height={["100px", "85px"]}
                                     pos="relative"
                                 >
                                     <Image
@@ -269,23 +271,31 @@ const ReferEarn = () => {
                                     />
                                 </Box>
                                 <Box
-                                    mt={"5px!important"}
+                                    mt={"5px important"}
                                     m="auto"
                                     textAlign={["left", "center"]}
                                 >
                                     <Text
                                         letterSpacing="0em"
                                         fontSize={["14px", "20px"]}
+                                        lineHeight={["20px", "25px"]}
                                         color="white"
                                         variant="hint"
+                                        fontFamily="Sora"
+                                        w={"75%"}
+                                        m="auto"
                                     >
                                         {item.text1}{" "}
                                     </Text>
                                     <Text
                                         letterSpacing="0em"
-                                        mt="2%"
-                                        fontSize={["12px", "14px"]}
-                                        color="#F8ED1D"
+                                        m="auto"
+                                        w={"100%"}
+                                        mt="5%"
+                                        ml="5%"
+                                        fontSize={["14px", "17px"]}
+                                        lineHeight={["15px", "18px"]}
+                                        color="#E90A63"
                                         variant="hint"
                                     >
                                         {item.text2}{" "}

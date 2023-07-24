@@ -436,7 +436,7 @@ export const AppContextContainer = ({ children }) => {
         const il = await apiLikeRequests(user);
         setInfluencerLikes(il);
     };
-    const callAuthService = async (provider, token) => {
+    const callAuthService = async (provider, token, input_referalcode) => {
         let data;
         defaultDataSettings();
 
@@ -464,7 +464,7 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.getItem("utm_content");
                     const trackingCode =
                         window.localStorage?.getItem("trackingCode");
-                    const referral_code =
+                    var referral_code =
                         window.localStorage?.getItem("referral_code");
                     const provider = window.localStorage?.getItem("provider");
 
@@ -498,7 +498,10 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("trackingCode");
                     }
 
-                    if (referral_code) {
+                    if (referral_code || input_referalcode) {
+                        if(!referral_code){
+                            referral_code = input_referalcode;
+                        }
                         try {
                             await strapi.request(
                                 "get",
@@ -595,9 +598,10 @@ export const AppContextContainer = ({ children }) => {
                     const apiValues = {
                         username: formData.username,
                         identifier: formData.email,
-                        password: formData.password
+                        password: formData.password,
                     };
                     data = await strapi.register(apiValues);
+                    
                 } catch ({ error }) {
                     toast({
                         title: error.message,
@@ -634,9 +638,14 @@ export const AppContextContainer = ({ children }) => {
                     return;
                 }
             }
+
+            
         }
         if (data?.user) {
+            
+                
             if (data.user.is_new) {
+
                 if (typeof window !== "undefined") {
                     const utm_source =
                         window.localStorage?.getItem("utm_source");
@@ -649,7 +658,7 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.getItem("utm_content");
                     const trackingCode =
                         window.localStorage?.getItem("trackingCode");
-                    const referral_code =
+                    var referral_code =
                         window.localStorage?.getItem("referral_code");
                     const provider = window.localStorage?.getItem("provider");
 
@@ -684,7 +693,10 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("trackingCode");
                     }
 
-                    if (referral_code) {
+                    if (referral_code || formData.referalcode) {
+                        if(!referral_code){
+                            referral_code = formData.referalcode;
+                        }
                         try {
                             await strapi.request(
                                 "get",
