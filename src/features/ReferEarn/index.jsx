@@ -66,7 +66,7 @@ const ReferEarn = () => {
                     <Box
                         pos="relative"
                         m="auto"
-                        h={["15vh","15vh","25vh","30vh","45vh","55vh"]}
+                        h={["20vh","20vh","35vh","62vh","55vh","55vh"]}
                         w="100%"
                     >
                         <Image
