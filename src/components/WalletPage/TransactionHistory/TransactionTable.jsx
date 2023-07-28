@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useTable, usePagination } from "react-table";
 import {
     Table,
@@ -15,16 +15,25 @@ import {
 import {
     ChevronRightIcon,
     ChevronLeftIcon,
-    ChevronDownIcon
+    ChevronDownIcon,
+    ChevronUpIcon
 } from "@chakra-ui/icons";
+import AppContext from "../../../utils/AppContext";
 
 import { makeData, makeColumn } from "./makeData";
 import CancelWithdraw from "../CancelWithdraw";
 import ConfirmWithdrawal from "../ConfirmWithdrawal";
+import { useEffect } from "react";
+import axios from "axios";
 
 function CustomTable({ columns, data, alldata }) {
     const [isCancelModalActive, setCancelModalActive] = useState(false);
     const [modelData, setModelData] = useState();
+    const [isCancelProcesseedModalActive, setCancelProcesseedModalActive] =
+        useState(false);
+    const [activityValue, setActivityValue] = useState("");
+    const [reason, setReason] = useState("");
+	const { refetchChange } = useContext(AppContext);
 
     const toggleCancelModal = (i) => {
         //setCancelModalActive(!isCancelModalActive);
@@ -52,7 +61,7 @@ function CustomTable({ columns, data, alldata }) {
         {
             columns,
             data,
-            initialState: { pageIndex: 0, pageSize: 25 }
+            initialState: { pageIndex: 0, pageSize: 6 }
         },
         usePagination
     );
@@ -71,22 +80,55 @@ function CustomTable({ columns, data, alldata }) {
         } else {
             setshowpopup(true);
         }
+
+        confirmcancel();
     };
 
-    const confirmcancel = () => {
+    const confirmcancel = async (id = null) => {
         //console.log("modelData-------", modelData);
         //console.log("cancel");
-        delete modelData.id;
+        // delete modelData.id;
+        // console.log("modelData", modelData);
+        setCancelModalActive(!isCancelModalActive);
         // modelData.status = "cancelled";
-        let newwithdrawal = {
-            ...modelData,
-            status:"cancelled",
-        };
-        //cancelled
-        //console.log("newwithdrawal", newwithdrawal);
-        
-        // const resp = await strapi.create("crypto-wallets", cryptoAdd);
 
+        if (id) {
+            let newwithdrawal = {
+                ...modelData,
+                status: "cancelled"
+            };
+            //cancelled
+            // console.log("newwithdrawal", newwithdrawal);
+
+            const resp = await axios.post(
+                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/withdrawals/cancel`,
+                {
+                    id: newwithdrawal.id,
+                    reason
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "strapi_jwt"
+                        )}`
+                    }
+                }
+            );
+
+            // console.log("resp", resp);
+
+            setCancelProcesseedModalActive(true);
+            refetchChange();
+        }
+    };
+
+    const closeWithdrawaModal = () => {
+        setCancelModalActive(false);
+        setCancelProcesseedModalActive(false);
+    };
+
+    const closeProcesseedModal = () => {
+        setCancelProcesseedModalActive(false);
     };
 
     return (
@@ -101,6 +143,7 @@ function CustomTable({ columns, data, alldata }) {
                 colorScheme="stripedTable"
                 {...getTableProps()}
             >
+                {/* {console.log("page", page)} */}
                 <Thead key="thead_1">
                     {headerGroups.map((headerGroup) =>
                         headerGroup.headers.map((column, index) => (
@@ -134,8 +177,18 @@ function CustomTable({ columns, data, alldata }) {
                                     key={i}
                                     {...row.getRowProps()}
                                     onClick={() => {
-                                        toggleCancelModal(i); //setNestedId(nestedId ? i : -1)
-                                        rowclick(row.cells[0].value);
+                                        // toggleCancelModal(i);
+                                        if (row?.subRows?.length > 1) {
+                                            if (nestedId === i) {
+                                                setNestedId(-1);
+                                            } else {
+                                                setNestedId(i);
+                                                setActivityValue(
+                                                    row.original.activity
+                                                );
+                                            }
+                                        }
+                                        // rowclick(row.cells[0].value);
                                     }}
                                     className={nestedId === i ? "active" : ""}
                                 >
@@ -152,8 +205,28 @@ function CustomTable({ columns, data, alldata }) {
                                                 key={j}
                                                 {...cell.getCellProps()}
                                                 // background={"#E90A63"}
+                                                onClick={(e) => {
+                                                    if (
+                                                        e.target.value ===
+                                                        "cancel"
+                                                    ) {
+                                                        rowclick(
+                                                            row.cells[1].value
+                                                        );
+                                                    }
+                                                }}
                                             >
-                                                {cell.render("Cell")}
+                                                {cell.column.id === "action" &&
+                                                nestedId === i ? (
+                                                    <>
+                                                        <ChevronUpIcon
+                                                            cursor="pointer"
+                                                            fontSize="40px"
+                                                        />
+                                                    </>
+                                                ) : (
+                                                    cell.render("Cell")
+                                                )}
                                             </Td>
                                         );
                                     })}
@@ -180,8 +253,17 @@ function CustomTable({ columns, data, alldata }) {
                                                             key={i}
                                                             {...cell.getCellProps()}
                                                         >
-                                                            {cell.render(
-                                                                "Cell"
+                                                            {cell.column.id ===
+                                                            "activity" ? (
+                                                                <>
+                                                                    {
+                                                                        activityValue
+                                                                    }
+                                                                </>
+                                                            ) : (
+                                                                cell.render(
+                                                                    "Cell"
+                                                                )
                                                             )}
                                                         </Td>
                                                     );
@@ -244,25 +326,63 @@ function CustomTable({ columns, data, alldata }) {
                 </Flex>
             </Flex>
             <ConfirmWithdrawal
-                isOpen={isCancelModalActive}
+                isOpen={isCancelProcesseedModalActive}
                 OnLoginClose={OnLoginClose}
+                closeWithdrawaModal={closeProcesseedModal}
             />
             <CancelWithdraw
                 isOpen={isCancelModalActive}
                 OnLoginClose={OnLoginClose}
                 modelData={modelData}
                 confirmcancel={confirmcancel}
+                closeWithdrawaModal={closeWithdrawaModal}
+                setReason={setReason}
             />
         </Box>
     );
 }
 
-function TransactionTable({ tableData, tableColumns, isMobile, auditLogData }) {
+function TransactionTable({
+    tableData,
+    tableColumns,
+    isMobile,
+    auditLogData,
+}) {
+    const [alteredData, setAlteredData] = useState([]);
+    const [alteredColumn, setAlteredColumn] = useState([]);
+    useEffect(() => {
+        // console.log(refetchChange);
+        const newData = makeData(
+            tableData,
+            isMobile,
+            auditLogData,
+            tableData.length
+        );
+
+        if (!newData) return;
+        newData.forEach((e, i) => {
+            e["sno"] = i + 1;
+        });
+
+        // console.log(newData);
+
+        setAlteredData(newData);
+    }, [tableData, isMobile, auditLogData, tableData.length]);
+
+    useEffect(() => {
+        const newColumn = makeColumn(tableColumns);
+        newColumn.forEach((e, i) => {
+            if (e.accessor === "s.no") {
+                e.accessor = "sno";
+            }
+        });
+        setAlteredColumn(newColumn);
+    }, [tableColumns]);
     return (
         <CustomTable
             alldata={tableData}
-            columns={makeColumn(tableColumns)}
-            data={makeData(tableData, isMobile, auditLogData, tableData.length)}
+            columns={alteredColumn}
+            data={alteredData}
         />
     );
 }
