@@ -23,8 +23,9 @@ import AppContext from "../../../utils/AppContext";
 import TransactionTable from "./TransactionTable";
 import TableNew from "./tableNew";
 
+// eslint-disable-next-line react/display-name
 const TransactionHistory = memo(() => {
-    const { user, amounts } = useContext(AppContext);
+    const { user, amounts, refetch } = useContext(AppContext);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -38,6 +39,7 @@ const TransactionHistory = memo(() => {
     const [endingDate, setEndingDate] = useState(
         moment().endOf("day").format("YYYY-MM-DD")
     );
+
     const statusOptions = ["All", "Success", "Pending", "Failed"];
     const currentSize = useBreakpointValue({
         base: "base",
@@ -72,8 +74,7 @@ const TransactionHistory = memo(() => {
             }
 
             do {
-                const res = await strapi.find("transactions", {
-                    // filters: filters,
+                const res = await strapi.find("transaction-infos", {
                     populate: [
                         "contest.contestmaster",
                         "currency",
@@ -96,6 +97,47 @@ const TransactionHistory = memo(() => {
                 }
                 pageNo++;
             } while (pageNo <= pageCount);
+
+            pageNo = 1;
+            pageCount = 1;
+            do {
+                const res = await strapi.find("transactions", {
+                    populate: [
+                        "contest.contestmaster",
+                        "currency",
+                        "eventmaster",
+                        "transactions"
+                    ],
+                    sort: "id:DESC",
+                    pagination: {
+                        page: pageNo,
+                        pageSize: 60
+                    }
+                });
+                // console.log("Trasanction DATA =-=-=-=-=-=", res);
+
+                if (res?.meta) {
+                    // filter code DEPOSIT and name Deposit Cash from transaction data inside eventmaster
+                    let filterData = res.data.filter((item) => {
+                        if (
+                            item.eventmaster &&
+                            item.eventmaster.data &&
+                            item.eventmaster.data.name
+                        ) {
+                            return (
+                                item.eventmaster.data.name === "Deposit Cash"
+                            );
+                        }
+                        return true;
+                    });
+                    data.push(filterData);
+                    if (pageCount == 1) {
+                        pageCount = res.meta.pagination.pageCount;
+                    }
+                }
+                pageNo++;
+            } while (pageNo <= pageCount);
+
             data = data.flat();
             let dataBeforeConvertion = data.filter(
                 (i) => new Date(i.createdAt) <= new Date("2023-01-25")
@@ -149,7 +191,7 @@ const TransactionHistory = memo(() => {
         if (user) {
             fetchData();
         }
-    }, [user, amounts]);
+    }, [user, amounts, refetch]);
 
     return (
         <Box mt="40px">
@@ -256,19 +298,23 @@ const TransactionHistory = memo(() => {
                 <Box width="100%">
                     {currentSize === "base" ? (
                         data?.length > 0 ? (
-                            <TransactionTable
-                                isMobile={true}
-                                tableData={data}
-                                auditLogData={auditLogData}
-                                tableColumns={[
-                                    "TRANSACTION ID",
-                                    "ACTIVITY",
-                                    "CHIPS",
-                                    "CLOSING BALANCE",
-                                    "STATUS",
-                                    "ACTION"
-                                ]}
-                            />
+                            <>
+                                <TransactionTable
+                                    isMobile={true}
+                                    tableData={data}
+                                    auditLogData={auditLogData}
+                                    tableColumns={[
+                                        "S.NO",
+                                        "TRANSACTION ID",
+                                        "ACTIVITY",
+                                        "CHIPS",
+                                        "CLOSING BALANCE",
+                                        "STATUS",
+                                        "DATE",
+                                        "ACTION"
+                                    ]}
+                                />
+                            </>
                         ) : (
                             <Box>
                                 <Text style={{ textAlign: "center" }}>
@@ -288,13 +334,14 @@ const TransactionHistory = memo(() => {
                                 tableData={data}
                                 auditLogData={auditLogData}
                                 tableColumns={[
+                                    "S.NO",
                                     "TRANSACTION ID",
                                     "ACTIVITY",
                                     "CHIPS",
                                     "CLOSING BALANCE",
                                     "STATUS",
                                     "DATE",
-                                    //"ACTION"
+                                    "ACTION"
                                 ]}
                             />
                         </>

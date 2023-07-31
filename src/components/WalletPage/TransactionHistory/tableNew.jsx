@@ -1,5 +1,5 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import moment from "moment";
 import React, { useState } from "react";
 
@@ -112,11 +112,10 @@ function TableNew({ tableData, auditLogData }) {
                             )}
                         </td>
                         <td>
-                        <ChevronDownIcon />
+                            <ChevronDownIcon />
                         </td>
                     </tr>;
                 })}
-               
             </tbody>
         </table>
     );
