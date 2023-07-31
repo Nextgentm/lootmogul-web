@@ -14,7 +14,7 @@ import LMNonCloseALert from "../../components/LMNonCloseALert";
 import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
-import * as Sentry from '@sentry/nextjs';
+import * as Sentry from "@sentry/nextjs";
 import { getCurremtLocation } from "../../services/locationService";
 
 export const AppContext = createContext({});
@@ -23,6 +23,8 @@ export const AppContextContainer = ({ children }) => {
     const router = useRouter();
     const toast = useToast();
     const [isLoginModalActive, setLoginModalActive] = useState(false);
+    const [refetch, setRefetch] = useState(false);
+
     const [isForgotPasswordModalActive, setForgotPasswordModalActive] =
         useState(false);
     const [isCheckYourMailModalActive, setCheckYourMailModalActive] =
@@ -78,6 +80,9 @@ export const AppContextContainer = ({ children }) => {
     const togglePasswordChangedModal = () => {
         setPasswordChangedModalActive(!isPasswordChangedModalActive);
     };
+    const refetchChange = () => {
+        setRefetch(!refetch);
+    };
 
     const CheckAndStartGame = (callerKey, contestmaster) => {
         if (!user) {
@@ -100,9 +105,9 @@ export const AppContextContainer = ({ children }) => {
         const isRetry = await strapi.request(
             "post",
             "contest/custom-contest/checkifretry?contest=" +
-            contestmaster.contest?.id +
-            "&userId=" +
-            user?.id,
+                contestmaster.contest?.id +
+                "&userId=" +
+                user?.id,
             {}
         );
         if (isRetry?.retry && isRetry?.free) {
@@ -128,7 +133,6 @@ export const AppContextContainer = ({ children }) => {
     };
 
     const CheckLocationAndConfirm = (contestmaster, callerKey) => {
-
         if (contestmaster.entryFee > 0 && contestmaster.retries > 0) {
             CheckIfRetry(contestmaster, callerKey);
         } else if (contestmaster.entryFee != 0) {
@@ -159,7 +163,7 @@ export const AppContextContainer = ({ children }) => {
         try {
             const resp = await axios.post(
                 process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                `/wp-json/strapi/v1/setCurrentUser/`,
+                    `/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.email,
                     strapi_jwt: "logout",
@@ -168,7 +172,6 @@ export const AppContextContainer = ({ children }) => {
             );
             const data = resp.data;
             if (data.success) {
-
                 if (typeof window !== "undefined" && window.localStorage) {
                     localStorage.clear();
                 }
@@ -184,9 +187,7 @@ export const AppContextContainer = ({ children }) => {
                     router.push("/");
                 }
             }
-        } catch (error) {
-
-        }
+        } catch (error) {}
     };
 
     const fetchGameJoiningData = async (contestmaster = currentContest) => {
@@ -206,11 +207,11 @@ export const AppContextContainer = ({ children }) => {
 
             let query = coupon
                 ? "contest/custom-contest/join?contest=" +
-                data[0].id +
-                "&coupon=" +
-                coupon +
-                "&userId=" +
-                user?.id
+                  data[0].id +
+                  "&coupon=" +
+                  coupon +
+                  "&userId=" +
+                  user?.id
                 : "contest/custom-contest/join?contest=" + data[0].id;
             if (data?.length > 0) {
                 const resp = await strapi.request("post", query, {});
@@ -222,35 +223,33 @@ export const AppContextContainer = ({ children }) => {
                         if (
                             data[0]?.contestmaster?.data?.game?.data?.url &&
                             data[0]?.contestmaster?.data?.game?.data?.type ==
-                            "html"
+                                "html"
                         ) {
                             if (typeof window !== "undefined") {
                                 window.open(
                                     data[0]?.contestmaster?.data?.game?.data
                                         ?.url +
-                                    "?ticketId=" +
-                                    resp?.ticketId +
-                                    "&token=" +
-                                    strapi.getToken() +
-                                    "&redirecturi=" +
-                                    encodeURI(
-                                        process.env.NEXT_PUBLIC_SITE_URL +
-                                        "/games/" +
-                                        data[0]?.contestmaster?.data
-                                            ?.slug
-                                    ) +
-                                    "&ts=" +
-                                    moment().format(),
+                                        "?ticketId=" +
+                                        resp?.ticketId +
+                                        "&token=" +
+                                        strapi.getToken() +
+                                        "&redirecturi=" +
+                                        encodeURI(
+                                            process.env.NEXT_PUBLIC_SITE_URL +
+                                                "/games/" +
+                                                data[0]?.contestmaster?.data
+                                                    ?.slug
+                                        ) +
+                                        "&ts=" +
+                                        moment().format(),
                                     "_self"
                                 );
                             }
                         } else if (
                             data[0]?.contestmaster?.data?.game?.data?.url &&
                             data[0]?.contestmaster?.data?.game?.data?.type ==
-                            "iframe"
+                                "iframe"
                         ) {
-
-
                             if (
                                 data[0]?.contestmaster?.data?.game?.data?.config
                                     ?.game == "marketjs"
@@ -269,17 +268,17 @@ export const AppContextContainer = ({ children }) => {
                                     if (
                                         router.pathname !=
                                         "/games/" +
-                                        roomData?.id +
-                                        "/" +
-                                        data[0]?.contestmaster?.data?.game
-                                            ?.data?.config?.slug
+                                            roomData?.id +
+                                            "/" +
+                                            data[0]?.contestmaster?.data?.game
+                                                ?.data?.config?.slug
                                     )
                                         router.push(
                                             "/games/" +
-                                            roomData?.id +
-                                            "/" +
-                                            data[0]?.contestmaster?.data
-                                                ?.game?.data?.config?.slug
+                                                roomData?.id +
+                                                "/" +
+                                                data[0]?.contestmaster?.data
+                                                    ?.game?.data?.config?.slug
                                         );
                                 } else {
                                     setShowLoading(false);
@@ -349,9 +348,7 @@ export const AppContextContainer = ({ children }) => {
     };
 
     const updateUser = async (obj) => {
-
         let data = obj;
-
 
         if (user && !strapi.user) {
             setUser(null);
@@ -395,6 +392,10 @@ export const AppContextContainer = ({ children }) => {
 
         return () => socket?.disconnect();
     }, []);
+
+    useEffect(() => {
+        updateUser();
+    }, [refetch]);
 
     useEffect(() => {
         if (!user && strapi?.user) {
@@ -449,9 +450,8 @@ export const AppContextContainer = ({ children }) => {
             getCurremtLocation().then((res) => {
                 window.localStorage.setItem("lm_user_location", res?.country);
             });
-            
+
             if (data.user.is_new) {
-                
                 if (typeof window !== "undefined") {
                     const utm_source =
                         window.localStorage?.getItem("utm_source");
@@ -488,7 +488,7 @@ export const AppContextContainer = ({ children }) => {
                                     user_id: data.user?.id || ""
                                 }
                             });
-                        } catch (error) { }
+                        } catch (error) {}
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("utm_medium");
@@ -499,17 +499,17 @@ export const AppContextContainer = ({ children }) => {
                     }
 
                     if (referral_code || input_referalcode) {
-                        if(!referral_code){
+                        if (!referral_code) {
                             referral_code = input_referalcode;
                         }
                         try {
                             await strapi.request(
                                 "get",
                                 "referral-codes/signwithreferral?referral_code=" +
-                                referral_code
+                                    referral_code
                             );
                             updateUser();
-                        } catch (error) { }
+                        } catch (error) {}
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
@@ -518,12 +518,19 @@ export const AppContextContainer = ({ children }) => {
             }
 
             /** For mobupps */
-            if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "mobupps"
+            ) {
                 const utm_term = router.query.utm_term;
                 let wmadv = await axios.get(
                     `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 );
-                const myMessage = { message: 'wmadv', wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}` };
+                const myMessage = {
+                    message: "wmadv",
+                    wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
+                };
 
                 Sentry.captureMessage(JSON.stringify(myMessage));
             }
@@ -537,29 +544,28 @@ export const AppContextContainer = ({ children }) => {
                 params: data.user
             });
             clevertap.onUserLogin.push({
-                "Site": {
-                    "Name": data.user.username,            // String
-                    "Identity": data.user.mobileNumber,              // String or number
-                    "Email": data.user.email,         // Email address of the user
-                    "Phone": data.user.mobileNumber,           // Phone (with the country code)
-                    "Gender": "M",                     // Can be either M or F
-                    "DOB": new Date(),                 // Date of Birth. Date object
+                Site: {
+                    Name: data.user.username, // String
+                    Identity: data.user.mobileNumber, // String or number
+                    Email: data.user.email, // Email address of the user
+                    Phone: data.user.mobileNumber, // Phone (with the country code)
+                    Gender: "M", // Can be either M or F
+                    DOB: new Date(), // Date of Birth. Date object
                     // optional fields. controls whether the user will be sent email, push etc.
-                    "MSG-email": false,                // Disable email notifications
-                    "MSG-push": true,                  // Enable push notifications
-                    "MSG-sms": true,                   // Enable sms notifications
-                    "MSG-whatsapp": true,              // Enable WhatsApp notifications
+                    "MSG-email": false, // Disable email notifications
+                    "MSG-push": true, // Enable push notifications
+                    "MSG-sms": true, // Enable sms notifications
+                    "MSG-whatsapp": true // Enable WhatsApp notifications
                 }
             });
             clevertap.event.push("Signup", {
-                "Name": data.user.username,            // String
-                "Identity": data.user.mobileNumber,              // String or number
-                "Email": data.user.email,
+                Name: data.user.username, // String
+                Identity: data.user.mobileNumber, // String or number
+                Email: data.user.email
             });
 
             await updateUser(data.user);
         }
-
 
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
@@ -572,7 +578,7 @@ export const AppContextContainer = ({ children }) => {
         try {
             const resp = await axios.post(
                 process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                `/wp-json/strapi/v1/setCurrentUser/`,
+                    `/wp-json/strapi/v1/setCurrentUser/`,
                 {
                     user_email: value.user.email,
                     strapi_jwt: value.jwt,
@@ -583,13 +589,14 @@ export const AppContextContainer = ({ children }) => {
             const data = resp.data;
             if (data.success) {
             }
-        } catch (error) {
-
-        }
+        } catch (error) {}
     };
 
-    const callCustomAuthService = async (formData, formType, redirectUrl = '') => {
-
+    const callCustomAuthService = async (
+        formData,
+        formType,
+        redirectUrl = ""
+    ) => {
         let data;
         defaultDataSettings();
         if (formType === "signup" || formType === "login") {
@@ -598,10 +605,9 @@ export const AppContextContainer = ({ children }) => {
                     const apiValues = {
                         username: formData.username,
                         identifier: formData.email,
-                        password: formData.password,
+                        password: formData.password
                     };
                     data = await strapi.register(apiValues);
-                    
                 } catch ({ error }) {
                     toast({
                         title: error.message,
@@ -625,7 +631,10 @@ export const AppContextContainer = ({ children }) => {
                     insertLoggedInUserInDB(data);
                     setJwt(data.jwt);
                     getCurremtLocation().then((res) => {
-                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem(
+                            "lm_user_location",
+                            res?.country
+                        );
                     });
                 } catch ({ error }) {
                     toast({
@@ -638,14 +647,9 @@ export const AppContextContainer = ({ children }) => {
                     return;
                 }
             }
-
-            
         }
         if (data?.user) {
-            
-                
             if (data.user.is_new) {
-
                 if (typeof window !== "undefined") {
                     const utm_source =
                         window.localStorage?.getItem("utm_source");
@@ -671,7 +675,6 @@ export const AppContextContainer = ({ children }) => {
                         utm_content
                     ) {
                         try {
-
                             strapi.request("post", "sourcetracking", {
                                 data: {
                                     utm_source: provider || utm_source,
@@ -683,7 +686,7 @@ export const AppContextContainer = ({ children }) => {
                                     user_id: data.user?.id || ""
                                 }
                             });
-                        } catch (error) { }
+                        } catch (error) {}
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("utm_medium");
@@ -694,17 +697,17 @@ export const AppContextContainer = ({ children }) => {
                     }
 
                     if (referral_code || formData.referalcode) {
-                        if(!referral_code){
+                        if (!referral_code) {
                             referral_code = formData.referalcode;
                         }
                         try {
                             await strapi.request(
                                 "get",
                                 "referral-codes/signwithreferral?referral_code=" +
-                                referral_code
+                                    referral_code
                             );
                             updateUser();
-                        } catch (error) { }
+                        } catch (error) {}
 
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
@@ -712,15 +715,21 @@ export const AppContextContainer = ({ children }) => {
                 }
             }
             /** For Mobupps */
-            if (data.user.is_new && router.route === "/gamecampaign" && router.query.utm_medium === 'mobupps') {
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "mobupps"
+            ) {
                 const utm_term = router.query.utm_term;
                 let wmadv = await axios.get(
                     `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 );
-                const myMessage = { message: 'wmadv', wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}` };
+                const myMessage = {
+                    message: "wmadv",
+                    wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
+                };
 
                 Sentry.captureMessage(JSON.stringify(myMessage));
-
             }
             /** For Mobupps */
 
@@ -731,32 +740,30 @@ export const AppContextContainer = ({ children }) => {
                 params: data.user
             });
             clevertap.onUserLogin.push({
-                "Site": {
-                    "Name": data.user.username,            // String
-                    "Identity": data.user.mobileNumber,              // String or number
-                    "Email": data.user.email,         // Email address of the user
-                    "Phone": data.user.mobileNumber,           // Phone (with the country code)
-                    "Gender": "M",                     // Can be either M or F
-                    "DOB": new Date(),                 // Date of Birth. Date object
+                Site: {
+                    Name: data.user.username, // String
+                    Identity: data.user.mobileNumber, // String or number
+                    Email: data.user.email, // Email address of the user
+                    Phone: data.user.mobileNumber, // Phone (with the country code)
+                    Gender: "M", // Can be either M or F
+                    DOB: new Date(), // Date of Birth. Date object
                     // optional fields. controls whether the user will be sent email, push etc.
-                    "MSG-email": false,                // Disable email notifications
-                    "MSG-push": true,                  // Enable push notifications
-                    "MSG-sms": true,                   // Enable sms notifications
-                    "MSG-whatsapp": true,              // Enable WhatsApp notifications
+                    "MSG-email": false, // Disable email notifications
+                    "MSG-push": true, // Enable push notifications
+                    "MSG-sms": true, // Enable sms notifications
+                    "MSG-whatsapp": true // Enable WhatsApp notifications
                 }
             });
-            
+
             clevertap.event.push("Signup", {
-                "Name": data.user.username,            // String
-                "Identity": data.user.mobileNumber,              // String or number
-                "Email": data.user.email,
+                Name: data.user.username, // String
+                Identity: data.user.mobileNumber, // String or number
+                Email: data.user.email
             });
             await updateUser(data.user);
         }
 
-        if (
-            router.route === "/gamecampaign"
-        ) {
+        if (router.route === "/gamecampaign") {
             router.push(redirectUrl);
         }
         if (routePathAfterLogin) {
@@ -791,9 +798,7 @@ export const AppContextContainer = ({ children }) => {
                 updateUser(response.data);
                 setUser(response.data);
                 getCurrencyToChip();
-            } catch (error) {
-
-            }
+            } catch (error) {}
         }
         if (!router.isReady) return;
     }, [router.isReady]);
@@ -861,7 +866,9 @@ export const AppContextContainer = ({ children }) => {
                 currencyToChip,
                 setCurrencyToChip,
                 setShowModalwithdrawalpopup,
-                showModalwithdrawalpopup
+                showModalwithdrawalpopup,
+				refetchChange,
+				refetch,
             }}
         >
             {children}
