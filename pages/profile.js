@@ -29,17 +29,30 @@ const Profile = () => {
     const toast = useToast();
     const referralMsg =
         "Join me on LootMogul Quiz and get a chance to win real money!";
-    console.log(user);
+    var jwt_token = '';
+    if (typeof window !== 'undefined') {
+        jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
+    }
+        
+   
+    
+    //console.log(user);
+    //console.log(jwt_token);
     const [showIFrame, setShowIFrame] = useState(true)
     const subdomain = 'lootmogul';
     const iFrameRef = useRef(null)
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const shareModalHandler = () => setIsShareModalOpen((prev) => !prev);
+    const [avatarUrl, setAvatarUrl] = useState('')
 
     useEffect(() => {
         let iFrame = iFrameRef.current
         if(iFrame) {
            iFrame.src = `https://${subdomain}.readyplayer.me/avatar?frameApi`
+        }
+
+        if(user?.photoURL){
+            setAvatarUrl(user?.photoURL)  
         }
     })    
 
@@ -74,26 +87,25 @@ const Profile = () => {
         }
         // Get avatar GLB URL
         if (json.eventName === 'v1.avatar.exported') {
-          console.log(`Avatar URL: ${json.data.url}`);
+          //console.log(`Avatar URL: ${json.data.url}`);
           let text = json.data.url
           let result = text.replace("glb", "png");
           localStorage.setItem('image3dAvtar', result);
-          try {
-            const response = axios.put(
+          setAvatarUrl(result)  
+          const response = axios.put(
                 `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/users/`+user.id,
+                { photoURL: result,ready_player_me_url:text },
                 {
-                    body: JSON.stringify({ photoURL: result,ready_player_me_url:text }),
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "application/json",
-                        Authorization: "Bearer " + router.query.jwt
+                        Authorization: "Bearer " + jwt_token
                     }
                 }
             );
-            console.log(response);    
-        } catch (error) {}
-          //setAvatarUrl(result)
-          setShowIFrame(false);
+              
+          
+          //setShowIFrame(false);
           setIsShareModalOpen(false);
           setIsShareModalOpen(false);
         }
@@ -171,46 +183,46 @@ const Profile = () => {
                     <Text>This is your profile page</Text>
                 </Box>
             </Flex>
-            <Flex direction={"row"} w="100%" mt="30px">
-                <Box width="34%" flex='1'mr="1%" border="2px solid #481A7F" borderRadius="8px" backgroundColor="#481A7F5C" p="30px">
-                    <Flex>
-                        <Text fontSize="34px" fontFamily={"Blanch"}>Hello {user?.email}</Text>
-                        <Box>
+            <Flex direction={["column","column","row"]} w="100%" mt="30px">
+                <Box width={["100%","100%","34%"]} flex='1'mr="1%" border="2px solid #481A7F" borderRadius="8px" backgroundColor="#481A7F5C" p="30px">
+                    <Flex direction={["column","column","row"]}>                            
+                            <img width={["150px","200px","150px","200px"]} src={avatarUrl} alt="" />
+                        <Box mt="25px">
                             <Text fontSize="14px" fontFamily={"Sora"} fontWeight={"600"}>LootMogul ID {user?.email}</Text>
                             <Text fontWeight={"600"} pt="10px">Member Since {moment(user?.createdAt).format("YYYY, MMMM")}</Text>
                             {user?.email && (
-                            <Button onClick={imageChange} fontSize={"14px"} p="20px" mt="15px" backgroundImage={"none"} backgroundColor={"#E90A63"}>Update Avatar</Button>
+                            <Button onClick={imageChange} fontSize={"14px"} p="20px" mt="45px" backgroundImage={"none"} backgroundColor={"#E90A63"}>Update Avatar</Button>
                             )}
                         </Box>    
                     </Flex>
                 </Box>
-                <Box width="65%" border="2px solid #481A7F" borderRadius="8px" backgroundColor="#481A7F5C" p="30px">
+                <Box width={["100%","100%","65%"]} border="2px solid #481A7F" borderRadius="8px" backgroundColor="#481A7F5C" p="30px">
                     
                     <Text fontSize="24px" fontFamily={"Sora"} fontWeight={"600"} textTransform={"uppercase"}>USER INFORMATION</Text>
-                    <Flex w={"100%"} mt="20px">
+                    <Flex w={"100%"} mt="20px" direction={["column","row"]}>
                         <Box mr="20px" w={"100%"}>
                             <FormControl>
-                                <FormLabel fontSize={"21px"}>Username</FormLabel>
+                                <FormLabel fontSize={["16px","21px"]}>Username</FormLabel>
                                 <Input isReadOnly value={user?.username} w="100%" h="45px" color={"#111"} fontFamily="Sora" fontSize={"16px"} placeholder='Username' backgroundColor="#fff" />
                             </FormControl>
                         </Box> 
                         <Box w={"100%"}>
                             <FormControl>
-                                <FormLabel fontSize={"21px"}>Email address</FormLabel>
+                                <FormLabel fontSize={["16px","21px"]}>Email address</FormLabel>
                                 <Input isReadOnly value={user?.email} w="100%" h="45px" color={"#111"} fontFamily="Sora" fontSize={"16px"} placeholder='Email address' backgroundColor="#fff" />
                             </FormControl>
                         </Box>    
                     </Flex>
-                    <Flex w={"100%"} mt="20px">
+                    <Flex w={"100%"} mt={["0px","20px"]} direction={["column","row"]}>
                         <Box mr="20px" w={"100%"}>
                             <FormControl>
-                                <FormLabel fontSize={"21px"}>Full name</FormLabel>
+                                <FormLabel fontSize={["16px","21px"]}>Full name</FormLabel>
                                 <Input isReadOnly value={user?.fullName} w="100%" h="45px" color={"#111"} fontFamily="Sora" fontSize={"16px"} placeholder='Full name' backgroundColor="#fff" />
                             </FormControl>
                         </Box> 
                         <Box w={"100%"}>
                             <FormControl>
-                                <FormLabel fontSize={"21px"}>Referral Code</FormLabel>
+                                <FormLabel fontSize={["16px","21px"]}>Referral Code</FormLabel>
                                 <Input isReadOnly value={user?.referral_code.code} w="100%" h="45px" color={"#111"} fontFamily="Sora" fontSize={"16px"} placeholder='Referral Code' backgroundColor="#fff" />
                             </FormControl>
                         </Box>    
