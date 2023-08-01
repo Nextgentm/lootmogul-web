@@ -264,6 +264,7 @@ const Profile = () => {
                         mt={["30px", "10px"]}
                         border="2px dashed #E8E8E8"
                         borderRadius="4px"
+                        
                     >
                         <Text
                             mt={["10px", "10px"]}
@@ -332,7 +333,7 @@ const Profile = () => {
                                 <Flex
                                     my="15px"
                                     justify={"space-evenly"}
-                                    width={["100%", "80%", "80%", "35%"]}
+                                    width={["100%", "80%", "80%", "15%"]}
                                     
                                 >
                                     <RedditShareButton
@@ -375,7 +376,7 @@ const Profile = () => {
                                         <FacebookIcon size={40} round />
                                     </FacebookShareButton>
 
-                                    <FacebookMessengerShareButton
+                                    {/*<FacebookMessengerShareButton
                                         url={
                                             process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
                                                 user.referral_code?.code || ""
@@ -386,7 +387,7 @@ const Profile = () => {
                                             size={40}
                                             round
                                         />
-                                    </FacebookMessengerShareButton>
+                                    </FacebookMessengerShareButton>*/}
                                     
                                     
                                 </Flex>
