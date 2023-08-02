@@ -16,9 +16,14 @@ import DepostWithdrawstop from "../LMModal/DepositWithdraw/withdrawStop";
 const WalletPage = ({ totalAmount }) => {
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
     const router = useRouter();
-    const { amounts, getCurrencyToChip, jwt, showModalwithdrawalpopup, setShowModalwithdrawalpopup } =
-        useContext(AppContext);
-    
+    const {
+        amounts,
+        getCurrencyToChip,
+        jwt,
+        showModalwithdrawalpopup,
+        setShowModalwithdrawalpopup
+    } = useContext(AppContext);
+
     useEffect(() => {
         if (showModalwithdrawalpopup == false) {
             setShowModal(false);
@@ -203,7 +208,7 @@ const WalletPage = ({ totalAmount }) => {
                 </Flex>
             </Flex>
 
-            <TransactionHistory />
+            {/* <TransactionHistory /> */}
             <LMModal
                 isShow={showModal.show}
                 scrollBehavior="outside"
