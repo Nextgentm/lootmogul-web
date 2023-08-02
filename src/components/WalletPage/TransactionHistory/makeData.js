@@ -3,8 +3,8 @@ import { Text, Box, Flex, Button } from "@chakra-ui/react";
 import moment from "moment";
 
 const transactionTableData = (transaction, isMobile) => {
-    //console.log("transaction-=-=-=-=-=-=-=-", transaction);
-    
+    // console.log("transaction-=-=-=-=-=-=-=-", transaction);
+
     return {
         transactionid: isMobile ? (
             <Box>
@@ -103,28 +103,30 @@ const transactionTableData = (transaction, isMobile) => {
             </Box>
         ),
         date: moment(transaction?.createdAt).format("DD-MM-YYYY, HH:mm"),
-        action:  transaction?.transactions?.data?.length ? <ChevronDownIcon cursor="pointer" fontSize="40px" /> : transaction?.status == "pending" ? 
-        <>
-        <Button
-            mt="18px"
-            fontFamily="Sora !important "
-            fontWeight="500"
-            padding={[
-                "0px 30px",
-                "0px 36px",
-                "10px 30px"
-            ]}
-            boxShadow="inset 0 0 0px 0px #481A7F"
-            fontSize="12px"
-            height={["30px", "30px", "25px", "25px"]}
-            bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
-            filter="drop-shadow(0 0 20px #FF0080)"
-            p="28px"
-            width="100px"
-        >
-            CANCEL
-        </Button>
-        <Button
+        action:
+            transaction?.transactions?.data?.length > 1 ? (
+                <ChevronDownIcon cursor="pointer" fontSize="40px" />
+            ) : transaction?.status == "pending" &&
+              transaction?.eventmaster?.data?.code.toLowerCase() ===
+                  "withdraw" ? (
+                <>
+                    <Button
+                        // mt="18px"
+                        fontFamily="Sora !important "
+                        fontWeight="500"
+                        padding={["0px 30px", "0px 36px", "10px 30px"]}
+                        boxShadow="inset 0 0 0px 0px #481A7F"
+                        fontSize="12px"
+                        height={["30px", "30px", "25px", "25px"]}
+                        bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                        filter="drop-shadow(0 0 20px #FF0080)"
+                        p="28px"
+                        width="100px"
+                        value="cancel"
+                    >
+                        CANCEL
+                    </Button>
+                    {/* <Button
             mt="18px"
             fontFamily="Sora !important "
             fontWeight="500"
@@ -142,8 +144,11 @@ const transactionTableData = (transaction, isMobile) => {
             width="100px"
         >
             Confirm
-        </Button>   
-        </> : '',
+        </Button>    */}
+                </>
+            ) : (
+                ""
+            ),
         subRows:
             transaction.transactions && transaction.transactions.data
                 ? transaction.transactions.data.map((s) =>

@@ -9,7 +9,8 @@ import {
     Modal,
     ModalBody,
     ModalContent,
-    ModalOverlay
+    ModalOverlay,
+    ModalCloseButton
 } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
 import { Pauseicon } from "../../Icons";
@@ -63,7 +64,12 @@ const WalletFooter = () => {
     return <Flex m="auto" width="100%" justifyContent="center"></Flex>;
 };
 
-export const CancelWithdrawBody = ({ modelData ,confirmcancel}) => {
+export const CancelWithdrawBody = ({
+    modelData,
+    confirmcancel,
+    closeWithdrawaModal,
+    setReason
+}) => {
     return (
         <Box
             color="#fff"
@@ -79,8 +85,7 @@ export const CancelWithdrawBody = ({ modelData ,confirmcancel}) => {
                     lineHeight={["18px", "18px", "20px"]}
                     w={"39.3333%"}
                 >
-                    TRANSACTION ID: <br />
-                    #{modelData.id}
+                    TRANSACTION ID: <br />#{modelData.id}
                 </Box>
                 <Box
                     fontSize={["10px", "10px", "13px"]}
@@ -98,13 +103,14 @@ export const CancelWithdrawBody = ({ modelData ,confirmcancel}) => {
                     w={"30.3333%"}
                 >
                     DATE <br />
-                   { moment(modelData?.createdAt).format("DD-MM-YYYY")}
+                    {moment(modelData?.createdAt).format("DD-MM-YYYY")}
                 </Box>
             </Flex>
             <Text
                 fontSize={[, "12px", "12px", "13px"]}
                 p={"10px"}
                 pt={"25px"}
+                pl={"3px"}
                 textAlign={"left"}
                 color="#fff"
             >
@@ -113,10 +119,12 @@ export const CancelWithdrawBody = ({ modelData ,confirmcancel}) => {
             <Text
                 fontSize={[, "12px", "12px", "13px"]}
                 p={"10px"}
+                pl={"3px"}
                 textAlign={"left"}
                 color="#fff"
             >
-                Reason of cancellation*
+                Reason of cancellation
+                <span style={{ color: "#dc0b65" }}>*</span>
             </Text>
             <Textarea
                 placeholder="Type reason of cancellation"
@@ -126,6 +134,9 @@ export const CancelWithdrawBody = ({ modelData ,confirmcancel}) => {
                 borderRadius="5px"
                 color="#9B9999"
                 minHeight="50px"
+                onChange={(e) => {
+                    setReason(e.target.value);
+                }}
             />
             <Button
                 fontSize={["16px", "18px", "22px"]}
@@ -153,6 +164,7 @@ export const CancelWithdrawBody = ({ modelData ,confirmcancel}) => {
                 fontWeight="400"
                 mt="5px"
                 h="35px"
+                onClick={closeWithdrawaModal}
             >
                 No
             </Button>
@@ -160,7 +172,14 @@ export const CancelWithdrawBody = ({ modelData ,confirmcancel}) => {
     );
 };
 
-export const CancelWithdraw = ({ isOpen, OnLoginClose, modelData ,confirmcancel}) => {
+export const CancelWithdraw = ({
+    isOpen,
+    OnLoginClose,
+    modelData,
+    confirmcancel,
+    closeWithdrawaModal,
+    setReason
+}) => {
     return (
         <Modal isOpen={isOpen} onClose={OnLoginClose} scrollBehavior="inside">
             <ModalOverlay />
@@ -174,6 +193,20 @@ export const CancelWithdraw = ({ isOpen, OnLoginClose, modelData ,confirmcancel}
                 borderRadius="14"
                 background="transparent"
             >
+                <ModalCloseButton
+                    color="#fff"
+                    background="transparent linear-gradient(90deg, #E90A63 0%, #481A7F 100%) 0% 0% no-repeat padding-box"
+                    borderRadius="full"
+                    outline="#303030"
+                    boxShadow="inset 0px 3px 18px #481A7F73, 0px 0px 20px #FF0080CF"
+                    onClick={closeWithdrawaModal}
+                    sx={{
+                        top: -6,
+                        right: -4,
+                        margin: 2,
+                        position: "absolute"
+                    }}
+                />
                 <ModalBody>
                     <Box
                         width="100%"
@@ -184,7 +217,14 @@ export const CancelWithdraw = ({ isOpen, OnLoginClose, modelData ,confirmcancel}
                         boxShadow="0px 6px 40px #090014"
                     >
                         <WalletHeader />
-                        <CancelWithdrawBody modelData={modelData} confirmcancel={confirmcancel} />
+                        <CancelWithdrawBody
+                            modelData={modelData}
+                            confirmcancel={() => {
+                                confirmcancel(modelData.id);
+                            }}
+                            closeWithdrawaModal={closeWithdrawaModal}
+                            setReason={setReason}
+                        />
                         <WalletFooter />
                     </Box>
                 </ModalBody>

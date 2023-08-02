@@ -66,7 +66,7 @@ const ReferEarn = () => {
                     <Box
                         pos="relative"
                         m="auto"
-                        h={["15vh","15vh","25vh","30vh","45vh","55vh"]}
+                        h={["20vh","20vh","35vh","62vh","55vh","55vh"]}
                         w="100%"
                     >
                         <Image
@@ -170,7 +170,7 @@ const ReferEarn = () => {
                                 <Flex
                                     my="15px"
                                     justify={"space-evenly"}
-                                    width={["100%", "80%", "80%", "35%"]}
+                                    width={["100%", "80%", "80%", "30%"]}
                                     
                                 >
                                     <RedditShareButton
@@ -213,7 +213,7 @@ const ReferEarn = () => {
                                         <FacebookIcon size={40} round />
                                     </FacebookShareButton>
 
-                                    <FacebookMessengerShareButton
+                                    {/*<FacebookMessengerShareButton
                                         url={
                                             process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
                                                 user.referral_code?.code || ""
@@ -224,7 +224,7 @@ const ReferEarn = () => {
                                             size={40}
                                             round
                                         />
-                                    </FacebookMessengerShareButton>
+                                    </FacebookMessengerShareButton>*/}
                                     
                                     
                                 </Flex>
