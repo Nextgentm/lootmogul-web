@@ -74,9 +74,9 @@ export const CancelWithdrawBody = () => {
             justifyContent="center"
         >
             <img
-                src="/assets/designupdate1/arrow-right-selected.png"
+                src="/assets/designupdate1/success.png"
                 alt="Right"
-                style={{ margin: "auto" }}
+                style={{ margin: "auto", width: "80px", padding: "10px" }}
             />
             <Text
                 fontSize={[, "12px", "12px", "13px"]}

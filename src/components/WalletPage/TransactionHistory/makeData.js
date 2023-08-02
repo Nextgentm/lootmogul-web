@@ -3,7 +3,7 @@ import { Text, Box, Flex, Button } from "@chakra-ui/react";
 import moment from "moment";
 
 const transactionTableData = (transaction, isMobile) => {
-    console.log("transaction-=-=-=-=-=-=-=-", transaction);
+    // console.log("transaction-=-=-=-=-=-=-=-", transaction);
 
     return {
         transactionid: isMobile ? (
