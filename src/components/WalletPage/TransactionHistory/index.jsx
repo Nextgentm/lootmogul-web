@@ -90,6 +90,33 @@ const TransactionHistory = memo(() => {
                 //console.log("Trasanction DATA =-=-=-=-=-=", res);
 
                 if (res?.meta) {
+                    //
+                    res.data.forEach((item) => {
+                        if (item.eventmaster.data.code === "JOIN_CONTEST") {
+                            // item.closingBalance = item.transactions.data.filter()
+                            // const closingBalance = Math.max(
+                            //     ...item.transactions.data.map(
+                            //         (i) => i.closingBalance
+                            //     )
+                            // );
+
+                            // item.closingBalance = closingBalance;
+
+                            const closingBalance =
+                                item.transactions.data.reduce((acc, curr) => {
+                                    if (
+                                        acc.closingBalance < curr.closingBalance
+                                    ) {
+                                        return acc;
+                                    } else {
+                                        return curr;
+                                    }
+                                });
+
+                            item.closingBalance = closingBalance.closingBalance;
+                        }
+                    });
+
                     data.push(res.data);
                     if (pageCount == 1) {
                         pageCount = res.meta.pagination.pageCount;
@@ -97,6 +124,14 @@ const TransactionHistory = memo(() => {
                 }
                 pageNo++;
             } while (pageNo <= pageCount);
+
+            const currDataTxnId = data.flat().map((i) => {
+                return i.transactions.data.map((j) => {
+                    return j.id;
+                });
+            });
+
+            // console.log("currDataTxnId", currDataTxnId.flat());
 
             pageNo = 1;
             pageCount = 1;
@@ -119,16 +154,18 @@ const TransactionHistory = memo(() => {
                 if (res?.meta) {
                     // filter code DEPOSIT and name Deposit Cash from transaction data inside eventmaster
                     let filterData = res.data.filter((item) => {
-                        if (
-                            item.eventmaster &&
-                            item.eventmaster.data &&
-                            item.eventmaster.data.name
-                        ) {
-                            return (
-                                item.eventmaster.data.name === "Deposit Cash"
-                            );
-                        }
-                        return true;
+                        // if (
+                        //     item.eventmaster &&
+                        //     item.eventmaster.data &&
+                        //     item.eventmaster.data.name
+                        // ) {
+                        //     return (
+                        //         item.eventmaster.data.name === "Deposit Cash"
+                        //     );
+                        // }
+                        // return true;
+
+                        return currDataTxnId.flat().includes(!item.id);
                     });
                     data.push(filterData);
                     if (pageCount == 1) {
