@@ -110,6 +110,7 @@ export const CancelWithdrawBody = ({
                 fontSize={[, "12px", "12px", "13px"]}
                 p={"10px"}
                 pt={"25px"}
+                pl={"3px"}
                 textAlign={"left"}
                 color="#fff"
             >
@@ -118,10 +119,12 @@ export const CancelWithdrawBody = ({
             <Text
                 fontSize={[, "12px", "12px", "13px"]}
                 p={"10px"}
+                pl={"3px"}
                 textAlign={"left"}
                 color="#fff"
             >
-                Reason of cancellation*
+                Reason of cancellation
+                <span style={{ color: "#dc0b65" }}>*</span>
             </Text>
             <Textarea
                 placeholder="Type reason of cancellation"

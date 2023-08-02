@@ -76,7 +76,7 @@ export const CancelWithdrawBody = () => {
             <img
                 src="/assets/designupdate1/success.png"
                 alt="Right"
-                style={{ margin: "auto" }}
+                style={{ margin: "auto", width: "80px", padding: "10px" }}
             />
             <Text
                 fontSize={[, "12px", "12px", "13px"]}
