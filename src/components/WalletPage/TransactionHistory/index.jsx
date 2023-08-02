@@ -227,7 +227,7 @@ const TransactionHistory = memo(() => {
         if (user) {
             fetchData();
         }
-    }, [user, amounts, refetch]);
+    }, [user, refetch]);
 
     return (
         <Box mt="40px">
@@ -335,7 +335,7 @@ const TransactionHistory = memo(() => {
                     {currentSize === "base" ? (
                         data?.length > 0 ? (
                             <>
-                                {/* <TransactionTable
+                                <TransactionTable
                                     isMobile={true}
                                     tableData={data}
                                     auditLogData={auditLogData}
@@ -349,7 +349,7 @@ const TransactionHistory = memo(() => {
                                         "DATE",
                                         "ACTION"
                                     ]}
-                                /> */}
+                                />
                             </>
                         ) : (
                             <Box>
@@ -366,7 +366,7 @@ const TransactionHistory = memo(() => {
                                 tableData={data}
                                 auditLogData={auditLogData}
                             /> */}
-                            {/* <TransactionTable
+                            <TransactionTable
                                 tableData={data}
                                 auditLogData={auditLogData}
                                 tableColumns={[
@@ -379,7 +379,7 @@ const TransactionHistory = memo(() => {
                                     "DATE",
                                     "ACTION"
                                 ]}
-                            /> */}
+                            />
                         </>
                     ) : (
                         <Box>

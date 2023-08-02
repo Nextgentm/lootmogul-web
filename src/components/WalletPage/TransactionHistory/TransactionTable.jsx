@@ -33,7 +33,7 @@ function CustomTable({ columns, data, alldata }) {
         useState(false);
     const [activityValue, setActivityValue] = useState("");
     const [reason, setReason] = useState("");
-	const { refetchChange } = useContext(AppContext);
+    const { refetchChange } = useContext(AppContext);
 
     const toggleCancelModal = (i) => {
         //setCancelModalActive(!isCancelModalActive);
@@ -342,12 +342,7 @@ function CustomTable({ columns, data, alldata }) {
     );
 }
 
-function TransactionTable({
-    tableData,
-    tableColumns,
-    isMobile,
-    auditLogData,
-}) {
+function TransactionTable({ tableData, tableColumns, isMobile, auditLogData }) {
     const [alteredData, setAlteredData] = useState([]);
     const [alteredColumn, setAlteredColumn] = useState([]);
     useEffect(() => {
@@ -367,7 +362,7 @@ function TransactionTable({
         // console.log(newData);
 
         setAlteredData(newData);
-    }, [tableData, isMobile, auditLogData, tableData.length]);
+    }, [tableData]);
 
     useEffect(() => {
         const newColumn = makeColumn(tableColumns);
@@ -378,6 +373,7 @@ function TransactionTable({
         });
         setAlteredColumn(newColumn);
     }, [tableColumns]);
+
     return (
         <CustomTable
             alldata={tableData}
