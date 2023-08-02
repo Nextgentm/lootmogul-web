@@ -90,18 +90,14 @@ const TransactionHistory = memo(() => {
                 //console.log("Trasanction DATA =-=-=-=-=-=", res);
 
                 if (res?.meta) {
-                    //
+                    // remove all transaction-info data which has no transactions
+                    console.log("res.data", res.data);
+                    res.data = res.data.filter((item) => {
+                        return item.transactions.data.length > 0;
+                    });
+
                     res.data.forEach((item) => {
                         if (item.eventmaster.data.code === "JOIN_CONTEST") {
-                            // item.closingBalance = item.transactions.data.filter()
-                            // const closingBalance = Math.max(
-                            //     ...item.transactions.data.map(
-                            //         (i) => i.closingBalance
-                            //     )
-                            // );
-
-                            // item.closingBalance = closingBalance;
-
                             const closingBalance =
                                 item.transactions.data.reduce((acc, curr) => {
                                     if (
@@ -152,6 +148,8 @@ const TransactionHistory = memo(() => {
                 // console.log("Trasanction DATA =-=-=-=-=-=", res);
 
                 if (res?.meta) {
+                    // console.log("res.data", res.data);
+                    // console.log("currDataTxnId.flat()", currDataTxnId.flat());
                     // filter code DEPOSIT and name Deposit Cash from transaction data inside eventmaster
                     let filterData = res.data.filter((item) => {
                         // if (
@@ -165,8 +163,9 @@ const TransactionHistory = memo(() => {
                         // }
                         // return true;
 
-                        return currDataTxnId.flat().includes(!item.id);
+                        return !currDataTxnId.flat().includes(item.id);
                     });
+                    // console.log("filterData", filterData);
                     data.push(filterData);
                     if (pageCount == 1) {
                         pageCount = res.meta.pagination.pageCount;
