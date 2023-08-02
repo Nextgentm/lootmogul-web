@@ -91,7 +91,7 @@ const TransactionHistory = memo(() => {
 
                 if (res?.meta) {
                     // remove all transaction-info data which has no transactions
-                    console.log("res.data", res.data);
+                    // console.log("res.data", res.data);
                     res.data = res.data.filter((item) => {
                         return item.transactions.data.length > 0;
                     });
