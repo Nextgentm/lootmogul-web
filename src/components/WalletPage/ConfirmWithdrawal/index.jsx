@@ -74,7 +74,7 @@ export const CancelWithdrawBody = () => {
             justifyContent="center"
         >
             <img
-                src="/assets/designupdate1/arrow-right-selected.png"
+                src="/assets/designupdate1/success.png"
                 alt="Right"
                 style={{ margin: "auto" }}
             />
