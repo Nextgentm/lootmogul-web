@@ -208,7 +208,7 @@ const WalletPage = ({ totalAmount }) => {
                 </Flex>
             </Flex>
 
-            {/* <TransactionHistory /> */}
+            <TransactionHistory />
             <LMModal
                 isShow={showModal.show}
                 scrollBehavior="outside"
