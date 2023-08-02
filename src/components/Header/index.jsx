@@ -200,7 +200,7 @@ const Header = () => {
             >
                 COMMUNITY
             </Text>
-            <Flex>
+            <Flex display={"flex"} alignItems={"center"}>
                 <Link href='https://discord.gg/mHUqAm8fsh' isExternal _focus={{boxShadow:"none"}}>
                 <Image
                     marginRight="15px"
@@ -221,8 +221,8 @@ const Header = () => {
                 <Image
                     marginRight="15px"
                     alt="twitter"
-                    boxSize={["20px", "20px"]}
-                    src="/assets/CommunityIcons/twitter-white.svg"
+                    boxSize={["18px", "18px"]}
+                    src="/assets/CommunityIcons/twitter-white-new.svg"
                 />
                 </Link>
                 <Link href='https://www.instagram.com/lootmogul/?hl=en' isExternal _focus={{boxShadow:"none"}}>
