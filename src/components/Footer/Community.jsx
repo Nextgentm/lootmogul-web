@@ -66,9 +66,22 @@ const Community = () => {
                      }}
                      href={img.link}
                      target="_blank"
+                     display={"flex"}
+                     justifyContent={"center"}
+                     alignItems={"center"}
                  >
+
+                  { img.Image.name == 'FaTwitter' ? <>
+                    <Image
+                        alt="twitter"
+                        boxSize={["19px", "19px"]}
+                        src="/assets/CommunityIcons/twitter-white-new.svg"
+                    />
+                  </>
+                  :
+                    <Icon as={img.Image} w={[5,6,6,6]} h={[5,6,6,6]} color='#fff' _hover={{ color: "#F60C67" }} />  
+                  }
                   
-                  <Icon as={img.Image} w={[5,6,6,6]} h={[5,6,6,6]} color='#fff' _hover={{ color: "#F60C67" }} />
                     
                  </Link>
              </Box>
