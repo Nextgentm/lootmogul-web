@@ -26,7 +26,8 @@ import * as Sentry from "@sentry/nextjs";
 
 // eslint-disable-next-line react/display-name
 const TransactionHistory = memo(() => {
-    const { user, amounts } = useContext(AppContext);
+    const { user, amounts, withdrawFetch, toggleWithdrawFetch } =
+        useContext(AppContext);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -232,10 +233,12 @@ const TransactionHistory = memo(() => {
     };
 
     React.useEffect(() => {
-        if (user) {
+        console.log("user?.id", user?.id);
+        if (withdrawFetch) {
             fetchData();
         }
-    }, [user]);
+        toggleWithdrawFetch(false);
+    }, [withdrawFetch]);
 
     return (
         <Box mt="40px">
@@ -344,6 +347,7 @@ const TransactionHistory = memo(() => {
                         data?.length > 0 ? (
                             <>
                                 <TransactionTable
+                                    fetchData={fetchData}
                                     isMobile={true}
                                     tableData={data}
                                     auditLogData={auditLogData}
@@ -375,6 +379,7 @@ const TransactionHistory = memo(() => {
                                 auditLogData={auditLogData}
                             /> */}
                             <TransactionTable
+                                fetchData={fetchData}
                                 tableData={data}
                                 auditLogData={auditLogData}
                                 tableColumns={[
