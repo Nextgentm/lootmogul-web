@@ -22,10 +22,11 @@ import strapi from "../../../utils/strapi";
 import AppContext from "../../../utils/AppContext";
 import TransactionTable from "./TransactionTable";
 import TableNew from "./tableNew";
+import * as Sentry from "@sentry/nextjs";
 
 // eslint-disable-next-line react/display-name
 const TransactionHistory = memo(() => {
-    const { user, amounts, refetch } = useContext(AppContext);
+    const { user, amounts } = useContext(AppContext);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -205,9 +206,16 @@ const TransactionHistory = memo(() => {
                 }
             }
             setLoading(false);
+            console.log("data", data);
             setData(data);
         } catch (error) {
             setLoading(false);
+
+            const myException = {
+                message: error,
+                code: 500
+            };
+            Sentry.captureMessage(JSON.stringify(myException));
         }
     };
 
@@ -227,7 +235,7 @@ const TransactionHistory = memo(() => {
         if (user) {
             fetchData();
         }
-    }, [user, refetch]);
+    }, [user]);
 
     return (
         <Box mt="40px">
