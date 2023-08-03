@@ -25,6 +25,7 @@ import CancelWithdraw from "../CancelWithdraw";
 import ConfirmWithdrawal from "../ConfirmWithdrawal";
 import { useEffect } from "react";
 import axios from "axios";
+import * as Sentry from "@sentry/nextjs";
 
 function CustomTable({ columns, data, alldata }) {
     const [isCancelModalActive, setCancelModalActive] = useState(false);
@@ -33,7 +34,7 @@ function CustomTable({ columns, data, alldata }) {
         useState(false);
     const [activityValue, setActivityValue] = useState("");
     const [reason, setReason] = useState("");
-	const { refetchChange } = useContext(AppContext);
+    // const { refetchChange } = useContext(AppContext);
 
     const toggleCancelModal = (i) => {
         //setCancelModalActive(!isCancelModalActive);
@@ -100,25 +101,35 @@ function CustomTable({ columns, data, alldata }) {
             //cancelled
             // console.log("newwithdrawal", newwithdrawal);
 
-            const resp = await axios.post(
-                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/withdrawals/cancel`,
-                {
-                    id: newwithdrawal.id,
-                    reason
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "strapi_jwt"
-                        )}`
+            try {
+                const resp = await axios.post(
+                    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/withdrawals/cancel`,
+                    {
+                        id: newwithdrawal.id,
+                        reason
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem(
+                                "strapi_jwt"
+                            )}`
+                        }
                     }
-                }
-            );
+                );
 
-            // console.log("resp", resp);
+                // console.log("resp", resp);
 
-            setCancelProcesseedModalActive(true);
-            refetchChange();
+                setCancelProcesseedModalActive(true);
+                // refetchChange();
+            } catch (error) {
+                console.log(error);
+
+                const myException = {
+                    message: error,
+                    code: 500
+                };
+                Sentry.captureMessage(JSON.stringify(myException));
+            }
         }
     };
 
@@ -342,16 +353,18 @@ function CustomTable({ columns, data, alldata }) {
     );
 }
 
-function TransactionTable({
-    tableData,
-    tableColumns,
-    isMobile,
-    auditLogData,
-}) {
+function TransactionTable({ tableData, tableColumns, isMobile, auditLogData }) {
     const [alteredData, setAlteredData] = useState([]);
     const [alteredColumn, setAlteredColumn] = useState([]);
     useEffect(() => {
         // console.log(refetchChange);
+        console.log(
+            "oldData",
+            tableData,
+            isMobile,
+            auditLogData,
+            tableData.length
+        );
         const newData = makeData(
             tableData,
             isMobile,
@@ -364,20 +377,24 @@ function TransactionTable({
             e["sno"] = i + 1;
         });
 
-        // console.log(newData);
+        console.log("newData", newData);
 
         setAlteredData(newData);
-    }, [tableData, isMobile, auditLogData, tableData.length]);
+    }, [tableData]);
 
     useEffect(() => {
+        console.log("oldColumn", tableColumns);
         const newColumn = makeColumn(tableColumns);
         newColumn.forEach((e, i) => {
             if (e.accessor === "s.no") {
                 e.accessor = "sno";
             }
         });
+
+        console.log("newColumn", newColumn);
         setAlteredColumn(newColumn);
     }, [tableColumns]);
+
     return (
         <CustomTable
             alldata={tableData}
