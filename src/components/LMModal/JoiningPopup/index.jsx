@@ -1,11 +1,4 @@
-import {
-    Box,
-    Heading,
-    Text,
-    Flex,
-    Button,
-    Divider,
-} from "@chakra-ui/react";
+import { Box, Heading, Text, Flex, Button, Divider } from "@chakra-ui/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext, useState, useEffect } from "react";
@@ -14,7 +7,7 @@ import strapi from "../../../utils/strapi";
 import axios from "axios";
 import LMNonCloseALert from "../../LMNonCloseALert";
 
-const JoiningPopup = ({ retry, data }) => {
+const JoiningPopup = ({ retry, data, closeShowModal }) => {
     const router = useRouter();
     const {
         setShowPaidGameConfirmation,
@@ -52,8 +45,6 @@ const JoiningPopup = ({ retry, data }) => {
         }
     }, []);
 
- 
-
     return (
         <Box
             pos="relative"
@@ -65,45 +56,50 @@ const JoiningPopup = ({ retry, data }) => {
             border="4px solid #672099;"
             borderRadius="12px"
         >
-            
-            {loading &&
+            {loading && (
                 <LMNonCloseALert
                     header={"Please Wait....."}
                     canClose={false}
                     isOpen={loading}
                 ></LMNonCloseALert>
-            }
-            {!loading &&
-                <Box
-                    w="100%"
-                    m="auto"
-                    p="15px"
-                    textAlign="left"
-                >
+            )}
+            {!loading && (
+                <Box w="100%" m="auto" p="15px" textAlign="left">
                     <Heading
                         fontWeight="500"
                         color="white"
                         fontSize={["40px", "44px"]}
-                        textAlign={['center', 'center', 'left']}
+                        textAlign={["center", "center", "left"]}
                     >
                         CONFIRMATION
                     </Heading>
                     <Text
                         color="#fff"
                         fontSize={["16px", "16px"]}
-                        textAlign={['center', 'center', 'left']}
+                        textAlign={["center", "center", "left"]}
                     >
-                        Balance : Deposit + Winnings in Chips = <Text color="#E90A63" fontWeight="600" display="inline">{(data.balance).toFixed(2)}</Text>
+                        Balance : Deposit + Winnings in Chips ={" "}
+                        <Text color="#E90A63" fontWeight="600" display="inline">
+                            {data.balance.toFixed(2)}
+                        </Text>
                     </Text>
-                    {retry && retry.retry === "exceeded" && <Text
-                        color="primary"
-                        fontSize={["12px", "16px"]}
-                        variant="textualVal" my="5px"
-                    >
-                        You have exceeded the {retry.count} retry attempts.
-                    </Text>}
+                    {retry && retry.retry === "exceeded" && (
+                        <Text
+                            color="primary"
+                            fontSize={["12px", "16px"]}
+                            variant="textualVal"
+                            my="5px"
+                        >
+                            You have exceeded the {retry.count} retry attempts.
+                        </Text>
+                    )}
                     <Box mt="20px">
-                        <Flex mt="5%" justifyContent="space-between" bg="transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box" p={"17px 12px"}>
+                        <Flex
+                            mt="5%"
+                            justifyContent="space-between"
+                            bg="transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box"
+                            p={"17px 12px"}
+                        >
                             <Text
                                 fontWeight="600"
                                 color="white"
@@ -122,8 +118,12 @@ const JoiningPopup = ({ retry, data }) => {
                                 {data.entryFee} CHIPS
                             </Text>
                         </Flex>
-                        {data?.bonus ?
-                            <Flex justifyContent="space-between" bg="#341e41" p={"17px 12px"}>
+                        {data?.bonus ? (
+                            <Flex
+                                justifyContent="space-between"
+                                bg="#341e41"
+                                p={"17px 12px"}
+                            >
                                 <Text
                                     fontWeight="600"
                                     color="white"
@@ -141,12 +141,19 @@ const JoiningPopup = ({ retry, data }) => {
                                 >
                                     {data.bonus} CHIPS
                                 </Text>
-                            </Flex> :
-                            <></>}
+                            </Flex>
+                        ) : (
+                            <></>
+                        )}
                     </Box>
 
                     <Box mt="20px">
-                        <Flex mt="5%" justifyContent="space-between" bg="transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box" p={"17px 12px"}>
+                        <Flex
+                            mt="5%"
+                            justifyContent="space-between"
+                            bg="transparent linear-gradient(180deg, #481A7F 0%, #481A7F00 100%) 0% 0% no-repeat padding-box"
+                            p={"17px 12px"}
+                        >
                             <Text
                                 fontWeight="600"
                                 color="primary"
@@ -162,9 +169,13 @@ const JoiningPopup = ({ retry, data }) => {
                                 variant="hint"
                                 fontSize={["14px", "16px", "20px"]}
                             >
-                                {(data.deductBal -
-                                    (couponAmount.amount + data.bonus)) > 0 ? (data.deductBal -
-                                        (couponAmount.amount + data.bonus)) : 0} CHIPS
+                                {data.deductBal -
+                                    (couponAmount.amount + data.bonus) >
+                                0
+                                    ? data.deductBal -
+                                      (couponAmount.amount + data.bonus)
+                                    : 0}{" "}
+                                CHIPS
                             </Text>
                         </Flex>
                         <Text
@@ -173,7 +184,8 @@ const JoiningPopup = ({ retry, data }) => {
                             variant="textualVal"
                             fontSize={["14px", "16px", "19px"]}
                         >
-                            Chips will be deducted from your wallet when joining the game.
+                            Chips will be deducted from your wallet when joining
+                            the game.
                         </Text>
                     </Box>
                     <Button
@@ -181,16 +193,16 @@ const JoiningPopup = ({ retry, data }) => {
                         my="5%"
                         onClick={() => {
                             setLoading(true);
-                            setIsPayIsStarted("started")
+                            setIsPayIsStarted("started");
                             fetchGameJoiningData();
                             // setShowPaidGameConfirmation({});
-
+                            closeShowModal();
                         }}
                     >
                         JOIN CONTEST
                     </Button>
                 </Box>
-            }
+            )}
         </Box>
     );
 };
