@@ -14,8 +14,20 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
     });
     const [showAlert, setShowAlert] = useState(false);
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
-    const { setCurrentContest, amounts, setShowPaidGameConfirmation, user, isFromNoLocationGame } =
-        useContext(AppContext);
+    const {
+        setCurrentContest,
+        amounts,
+        setShowPaidGameConfirmation,
+        user,
+        isFromNoLocationGame
+    } = useContext(AppContext);
+
+    const closeShowModal = () => {
+        setShowAlert(false);
+        setShowModal(false);
+        setShowPaidGameConfirmation({});
+    };
+
     useEffect(() => {
         setLocationCheck({
             isBan: true,
@@ -23,7 +35,6 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
         });
 
         CheckAvailableLocation(isFromNoLocationGame).then((res) => {
-            
             if (res) {
                 setLocationCheck({
                     isBan: res.isBan,
@@ -34,7 +45,7 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
                     const res = checkEligilbility(contestmaster, amounts);
                     let userTotalBonus = user
                         ? user?.wallets.find((s) => s.currency.type == "bonus")
-                            ?.balance || 0
+                              ?.balance || 0
                         : 0;
                     if (res.canPlay) {
                         setCurrentContest(contestmaster);
@@ -106,6 +117,7 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
                     <JoiningPopup
                         retry={{ retry: retry, count: contestmaster?.retries }}
                         data={showModal.data}
+                        closeShowModal={closeShowModal}
                     />
                 )}
             </LMModal>

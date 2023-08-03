@@ -310,3 +310,16 @@ nav {
 .wallet-transaction-history tr.active{background: #e90a63 !important;}
 .wallet-transaction-history tr.active:nth-of-type(odd) td {background: #e90a63 !important;}
 
+.twitter_icon_patch svg.twitter{
+  margin-top: 4px;
+}
+.twitter_icon_patch:hover svg.twitter{
+  fill:#F60C67;
+}
+@media screen and (max-width: 768px) {
+  .twitter_icon_patch svg.twitter{
+   width: 16px;
+   height: 16px;
+   margin-top: 2px;
+  }
+}
