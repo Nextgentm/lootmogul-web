@@ -59,32 +59,27 @@ const Community = () => {
      >
          {socialLinks.map((img, index) => (
              <Box key={`cimg-${index}`} mt={["5px", 0, 0, 0]} mr={["15px", "25px", "25px", "25px"]}>
-                 <Link
-                     _focus={{
-                         border: "none",
-                         boxShadow: "none"
-                     }}
-                     href={img.link}
-                     target="_blank"
-                     display={"flex"}
-                     justifyContent={"center"}
-                     alignItems={"center"}
-                 >
+             <Link
+                 _focus={{
+                     border: "none",
+                     boxShadow: "none"
+                 }}
+                 href={img.link}
+                 target="_blank"
+                 _hover={{ color: "#F60C67" }}
+                 className='twitter_icon_patch'
+             >
 
-                  { img.Image.name == 'FaTwitter' ? <>
-                    <Image
-                        alt="twitter"
-                        boxSize={["19px", "19px"]}
-                        src="/assets/CommunityIcons/twitter-white-new.svg"
-                    />
-                  </>
-                  :
-                    <Icon as={img.Image} w={[5,6,6,6]} h={[5,6,6,6]} color='#fff' _hover={{ color: "#F60C67" }} />  
-                  }
-                  
-                    
-                 </Link>
-             </Box>
+              { img.Image.name == 'FaTwitter' ? <>
+              <svg className='twitter' height="19" display={"flex"} fill='#fff' width="19px" viewBox="0 0 300 300" version="1.1" xmlns="http://www.w3.org/2000/svg" >
+                <path d="M178.57 127.15 290.27 0h-26.46l-97.03 110.38L89.34 0H0l117.13 166.93L0 300.25h26.46l102.4-116.59 81.8 116.59h89.34M36.01 19.54H76.66l187.13 262.13h-40.66"></path>
+                </svg>
+              </>
+              :
+                <Icon as={img.Image} w={[5,6,6,6]} h={[5,6,6,6]} color='#fff' _hover={{ color: "#F60C67" }} />  
+              }
+             </Link>
+         </Box>
          ))}
      </Flex>
     </Box>
