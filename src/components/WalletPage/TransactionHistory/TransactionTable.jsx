@@ -27,14 +27,14 @@ import { useEffect } from "react";
 import axios from "axios";
 import * as Sentry from "@sentry/nextjs";
 
-function CustomTable({ columns, data, alldata }) {
+function CustomTable({ columns, data, alldata, fetchData }) {
     const [isCancelModalActive, setCancelModalActive] = useState(false);
     const [modelData, setModelData] = useState();
     const [isCancelProcesseedModalActive, setCancelProcesseedModalActive] =
         useState(false);
     const [activityValue, setActivityValue] = useState("");
     const [reason, setReason] = useState("");
-    // const { refetchChange } = useContext(AppContext);
+    const { updateUser } = useContext(AppContext);
 
     const toggleCancelModal = (i) => {
         //setCancelModalActive(!isCancelModalActive);
@@ -120,6 +120,8 @@ function CustomTable({ columns, data, alldata }) {
                 // console.log("resp", resp);
 
                 setCancelProcesseedModalActive(true);
+                fetchData();
+                updateUser();
                 // refetchChange();
             } catch (error) {
                 console.log(error);
@@ -353,7 +355,13 @@ function CustomTable({ columns, data, alldata }) {
     );
 }
 
-function TransactionTable({ tableData, tableColumns, isMobile, auditLogData }) {
+function TransactionTable({
+    tableData,
+    tableColumns,
+    isMobile,
+    auditLogData,
+    fetchData
+}) {
     const [alteredData, setAlteredData] = useState([]);
     const [alteredColumn, setAlteredColumn] = useState([]);
     useEffect(() => {
@@ -400,6 +408,7 @@ function TransactionTable({ tableData, tableColumns, isMobile, auditLogData }) {
             alldata={tableData}
             columns={alteredColumn}
             data={alteredData}
+            fetchData={fetchData}
         />
     );
 }

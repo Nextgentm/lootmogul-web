@@ -35,6 +35,8 @@ export const AppContextContainer = ({ children }) => {
         useState(false);
     const [isMobileDevice, setMobileDevice] = useState(false);
 
+    const [withdrawFetch, setWithdrawFetch] = useState(true);
+
     const [isTabletOrDesktop, setIsTabletOrDesktop] = useState(false);
     const [showLoading, setShowLoading] = useState({});
     const [user, setUser] = useState();
@@ -61,6 +63,8 @@ export const AppContextContainer = ({ children }) => {
     const [isFromNoLocationGame, setIsFromNoLocationGame] = useState(false);
     const [currencyToChip, setCurrencyToChip] = useState([]);
 
+    const [withdrawalRequest, setWithdrawalRequest] = useState(false);
+
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
     };
@@ -79,6 +83,10 @@ export const AppContextContainer = ({ children }) => {
 
     const togglePasswordChangedModal = () => {
         setPasswordChangedModalActive(!isPasswordChangedModalActive);
+    };
+
+    const toggleWithdrawFetch = (toggle) => {
+        setWithdrawFetch(toggle);
     };
     // const refetchChange = () => {
     //     setRefetch(!refetch);
@@ -866,9 +874,9 @@ export const AppContextContainer = ({ children }) => {
                 currencyToChip,
                 setCurrencyToChip,
                 setShowModalwithdrawalpopup,
-                showModalwithdrawalpopup
-                // refetchChange,
-                // refetch,
+                showModalwithdrawalpopup,
+                withdrawFetch,
+                toggleWithdrawFetch
             }}
         >
             {children}

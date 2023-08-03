@@ -53,7 +53,8 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         updateUser,
         currencyToChip,
         getCurrencyToChip,
-        setShowModalwithdrawalpopup
+        setShowModalwithdrawalpopup,
+        toggleWithdrawFetch
     } = useContext(AppContext);
     const [currency, setCurrency] = useState("USD");
     const [minimumDeposit, setMinimumDeposit] = useState(5);
@@ -324,6 +325,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     title: "Withdraw request added successfully"
                 });
                 updateUser();
+                toggleWithdrawFetch(true);
             })
             .catch((error) => {
                 setAlertShow({
@@ -350,7 +352,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         let numberOfAmount =
             Number(e.target.selectedOptions[0].getAttribute("numberOfChips")) /
             Number(e.target.selectedOptions[0].getAttribute("minimumDeposit"));
-        
+
         if (currency == "BTC" || currency == "ETH") {
             setNumberOfAmount((amount / numberOfAmount).toFixed(6));
         } else {
@@ -360,7 +362,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         //setNumberOfAmount((amount / numberOfAmount).toFixed(6));
     };
     const setTotalAmount = async (addedAmount) => {
-        
         if (typeof Number(addedAmount) == "number") {
             let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
             if (currency == "BTC" || currency == "ETH") {
