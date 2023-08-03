@@ -23,7 +23,7 @@ export const AppContextContainer = ({ children }) => {
     const router = useRouter();
     const toast = useToast();
     const [isLoginModalActive, setLoginModalActive] = useState(false);
-    const [refetch, setRefetch] = useState(false);
+    // const [refetch, setRefetch] = useState(false);
 
     const [isForgotPasswordModalActive, setForgotPasswordModalActive] =
         useState(false);
@@ -80,9 +80,9 @@ export const AppContextContainer = ({ children }) => {
     const togglePasswordChangedModal = () => {
         setPasswordChangedModalActive(!isPasswordChangedModalActive);
     };
-    const refetchChange = () => {
-        setRefetch(!refetch);
-    };
+    // const refetchChange = () => {
+    //     setRefetch(!refetch);
+    // };
 
     const CheckAndStartGame = (callerKey, contestmaster) => {
         if (!user) {
@@ -393,9 +393,9 @@ export const AppContextContainer = ({ children }) => {
         return () => socket?.disconnect();
     }, []);
 
-    useEffect(() => {
-        updateUser();
-    }, [refetch]);
+    // useEffect(() => {
+    //     updateUser();
+    // }, [refetch]);
 
     useEffect(() => {
         if (!user && strapi?.user) {
@@ -866,9 +866,9 @@ export const AppContextContainer = ({ children }) => {
                 currencyToChip,
                 setCurrencyToChip,
                 setShowModalwithdrawalpopup,
-                showModalwithdrawalpopup,
-				refetchChange,
-				refetch,
+                showModalwithdrawalpopup
+                // refetchChange,
+                // refetch,
             }}
         >
             {children}
