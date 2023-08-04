@@ -58,7 +58,7 @@ const routes = [
     },
     {
         label: "Collectibles",
-        path: "/nfts",
+        path: process.env.NEXT_PUBLIC_WORDPRESS_URL+"/collectibles",
         isExternalLink: false,
         imageUrl: "/assets/MobileMenuIcons/digitalcollectibles.png",
         activeImageUrl: "/assets/MobileMenuIcons/digitalcollectibles_active.png"
