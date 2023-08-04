@@ -16,6 +16,7 @@ import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
 import * as Sentry from "@sentry/nextjs";
 import { getCurremtLocation } from "../../services/locationService";
+import { mobuppsCallService } from "../../services/mobuppsCallService";
 
 export const AppContext = createContext({});
 
@@ -101,7 +102,7 @@ export const AppContextContainer = ({ children }) => {
                 contestmaster: contestmaster,
                 callerKey
             });
-        } else if (parseInt(getCountForCaptcha()) === 5) {
+        } else if (parseInt(getCountForCaptcha()) === 100) {
             setShowCaptcha({ cm: contestmaster.id, callerKey: callerKey });
         } else {
             setShowCaptcha({});
@@ -234,6 +235,8 @@ export const AppContextContainer = ({ children }) => {
                                 "html"
                         ) {
                             if (typeof window !== "undefined") {
+								mobuppsCallService();
+
                                 window.open(
                                     data[0]?.contestmaster?.data?.game?.data
                                         ?.url +
@@ -281,13 +284,14 @@ export const AppContextContainer = ({ children }) => {
                                             data[0]?.contestmaster?.data?.game
                                                 ?.data?.config?.slug
                                     )
-                                        router.push(
-                                            "/games/" +
-                                                roomData?.id +
-                                                "/" +
-                                                data[0]?.contestmaster?.data
-                                                    ?.game?.data?.config?.slug
-                                        );
+                                    mobuppsCallService();
+                                    router.push(
+                                        "/games/" +
+                                            roomData?.id +
+                                            "/" +
+                                            data[0]?.contestmaster?.data?.game
+                                                ?.data?.config?.slug
+                                    );
                                 } else {
                                     setShowLoading(false);
 
@@ -296,6 +300,7 @@ export const AppContextContainer = ({ children }) => {
                             }
                         } else {
                             setJoiningData(resp);
+                            mobuppsCallService();
                             router.push("/joining");
                         }
                         setShowLoading({});
