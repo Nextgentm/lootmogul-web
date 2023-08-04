@@ -102,7 +102,7 @@ export const AppContextContainer = ({ children }) => {
                 contestmaster: contestmaster,
                 callerKey
             });
-        } else if (parseInt(getCountForCaptcha()) === 100) {
+        } else if (parseInt(getCountForCaptcha()) === 5) {
             setShowCaptcha({ cm: contestmaster.id, callerKey: callerKey });
         } else {
             setShowCaptcha({});
@@ -235,7 +235,7 @@ export const AppContextContainer = ({ children }) => {
                                 "html"
                         ) {
                             if (typeof window !== "undefined") {
-								mobuppsCallService();
+                                mobuppsCallService();
 
                                 window.open(
                                     data[0]?.contestmaster?.data?.game?.data
@@ -284,7 +284,7 @@ export const AppContextContainer = ({ children }) => {
                                             data[0]?.contestmaster?.data?.game
                                                 ?.data?.config?.slug
                                     )
-                                    mobuppsCallService();
+                                        mobuppsCallService();
                                     router.push(
                                         "/games/" +
                                             roomData?.id +
