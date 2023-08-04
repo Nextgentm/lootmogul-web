@@ -49,6 +49,8 @@ export const AppContextContainer = ({ children }) => {
     const [isNotMobile] = useMediaQuery("(min-width:768px)");
     // const isMobileDevice = useMediaQuery("(max-width:767px)")
 
+    const [triggerMe, setTriggerMe] = useState(false);
+
     const [currentContest, setCurrentContest] = useState();
     const [routePathAfterLogin, setRoutePathAfterLogin] = useState();
     //const [countForCaptcha, setCountForCaptcha] = useState(getCountForCaptcha());
@@ -443,6 +445,31 @@ export const AppContextContainer = ({ children }) => {
                 token = token.substring(7);
             setJwt(token);
             FetchLikes();
+
+            window.localStorage?.setItem(
+                "logged_utm_source",
+                user?.tracking?.utm_source || null
+            );
+            window.localStorage?.setItem(
+                "logged_utm_medium",
+                user?.tracking?.utm_medium || null
+            );
+            window.localStorage?.setItem(
+                "logged_utm_campaign",
+                user?.tracking?.utm_campaign || null
+            );
+            window.localStorage?.setItem(
+                "logged_utm_term",
+                user?.tracking?.utm_term || null
+            );
+            window.localStorage?.setItem(
+                "logged_utm_content",
+                user?.tracking?.utm_content || null
+            );
+            window.localStorage?.setItem(
+                "logged_trackingCode",
+                user?.tracking?.trackingCode || null
+            );
         }
     }, [user]);
 
@@ -501,6 +528,8 @@ export const AppContextContainer = ({ children }) => {
                                     user_id: data.user?.id || ""
                                 }
                             });
+
+                            setTriggerMe(!triggerMe);
                         } catch (error) {}
 
                         window.localStorage?.removeItem("utm_source");
@@ -509,6 +538,9 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("utm_term");
                         window.localStorage?.removeItem("utm_content");
                         window.localStorage?.removeItem("trackingCode");
+
+                        // setTriggerMe(!triggerMe);
+                        // console.log(jwt);
                     }
 
                     if (referral_code || input_referalcode) {
@@ -527,6 +559,7 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
                     }
+                    window.location.reload();
                 }
             }
 
@@ -699,6 +732,7 @@ export const AppContextContainer = ({ children }) => {
                                     user_id: data.user?.id || ""
                                 }
                             });
+                            setTriggerMe(!triggerMe);
                         } catch (error) {}
 
                         window.localStorage?.removeItem("utm_source");
@@ -725,6 +759,7 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
                     }
+                    window.location.reload();
                 }
             }
             /** For Mobupps */
