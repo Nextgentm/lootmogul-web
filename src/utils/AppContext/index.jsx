@@ -49,7 +49,7 @@ export const AppContextContainer = ({ children }) => {
     const [isNotMobile] = useMediaQuery("(min-width:768px)");
     // const isMobileDevice = useMediaQuery("(max-width:767px)")
 
-    const [triggerMe, setTriggerMe] = useState(false);
+    const [isNewRegst, setIsNewRegst] = useState(false);
 
     const [currentContest, setCurrentContest] = useState();
     const [routePathAfterLogin, setRoutePathAfterLogin] = useState();
@@ -446,6 +446,8 @@ export const AppContextContainer = ({ children }) => {
             setJwt(token);
             FetchLikes();
 
+			if(!isNewRegst){
+
             window.localStorage?.setItem(
                 "logged_utm_source",
                 user?.tracking?.utm_source || null
@@ -470,6 +472,7 @@ export const AppContextContainer = ({ children }) => {
                 "logged_trackingCode",
                 user?.tracking?.trackingCode || null
             );
+			}
         }
     }, [user]);
 
@@ -517,7 +520,7 @@ export const AppContextContainer = ({ children }) => {
                         utm_content
                     ) {
                         try {
-                            strapi.request("post", "sourcetracking", {
+                            await strapi.request("post", "sourcetracking", {
                                 data: {
                                     utm_source: provider || utm_source,
                                     utm_medium: utm_medium || "",
@@ -529,7 +532,32 @@ export const AppContextContainer = ({ children }) => {
                                 }
                             });
 
-                            setTriggerMe(!triggerMe);
+							setIsNewRegst(true)
+
+                            window.localStorage?.setItem(
+                                "logged_utm_source",
+                                provider || utm_source
+                            );
+                            window.localStorage?.setItem(
+                                "logged_utm_medium",
+                                utm_medium || null
+                            );
+                            window.localStorage?.setItem(
+                                "logged_utm_campaign",
+                                utm_campaign || null
+                            );
+                            window.localStorage?.setItem(
+                                "logged_utm_term",
+                                utm_term || null
+                            );
+                            window.localStorage?.setItem(
+                                "logged_utm_content",
+                                utm_content || null
+                            );
+                            window.localStorage?.setItem(
+                                "logged_trackingCode",
+                                trackingCode || null
+                            );
                         } catch (error) {}
 
                         window.localStorage?.removeItem("utm_source");
@@ -539,7 +567,6 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("utm_content");
                         window.localStorage?.removeItem("trackingCode");
 
-                        // setTriggerMe(!triggerMe);
                         // console.log(jwt);
                     }
 
@@ -559,7 +586,6 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
                     }
-                    window.location.reload();
                 }
             }
 
@@ -721,7 +747,7 @@ export const AppContextContainer = ({ children }) => {
                         utm_content
                     ) {
                         try {
-                            strapi.request("post", "sourcetracking", {
+                            await strapi.request("post", "sourcetracking", {
                                 data: {
                                     utm_source: provider || utm_source,
                                     utm_medium: utm_medium || "",
@@ -732,7 +758,33 @@ export const AppContextContainer = ({ children }) => {
                                     user_id: data.user?.id || ""
                                 }
                             });
-                            setTriggerMe(!triggerMe);
+
+							setIsNewRegst(true)
+
+                            window.localStorage?.setItem(
+                                "logged_utm_source",
+                                provider || utm_source
+                            );
+                            window.localStorage?.setItem(
+                                "logged_utm_medium",
+                                utm_medium || null
+                            );
+                            window.localStorage?.setItem(
+                                "logged_utm_campaign",
+                                utm_campaign || null
+                            );
+                            window.localStorage?.setItem(
+                                "logged_utm_term",
+                                utm_term || null
+                            );
+                            window.localStorage?.setItem(
+                                "logged_utm_content",
+                                utm_content || null
+                            );
+                            window.localStorage?.setItem(
+                                "logged_trackingCode",
+                                trackingCode || null
+                            );
                         } catch (error) {}
 
                         window.localStorage?.removeItem("utm_source");
@@ -759,7 +811,6 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
                     }
-                    window.location.reload();
                 }
             }
             /** For Mobupps */
