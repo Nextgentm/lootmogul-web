@@ -2,8 +2,8 @@ import * as Sentry from "@sentry/react";
 import axios from "axios";
 
 const mobuppsCallService = async () => {
-    const utm_medium = localStorage.getItem("utm_medium");
-    const utm_term = localStorage.getItem("utm_term");
+    const utm_medium = localStorage.getItem("logged_utm_medium");
+    const utm_term = localStorage.getItem("logged_utm_term");
 
     // console.log("*****************mobuppsCallService********************");
 
