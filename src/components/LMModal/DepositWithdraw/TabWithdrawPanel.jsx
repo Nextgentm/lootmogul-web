@@ -80,6 +80,8 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     const [defaultCrytoChip, SetDefaultCrytoChip] = useState();
     const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
 
+	const [disableWithdraw, setDisableWithdraw] = useState(false);
+
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -229,6 +231,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
         if (!numberOfAmount || numberOfAmount === 0)
             setAlertShow({ isOpen: true, msg: "Enter Amount" });
         if (numberOfAmount && numberOfAmount >= userBal.winnings) {
+            // console.log(numberOfAmount, userBal.winnings);
             setAlertShow({ isOpen: true, msg: "Your wallet Balance is low" });
             return;
         }
@@ -297,7 +300,8 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 });
         }
     };
-    const withdraw = () => {
+    const withdraw = async() => {
+		setDisableWithdraw(true);
         let withDrawReqData = {
             email: email ? email : null,
             chips: amount,
@@ -316,7 +320,8 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             account: account,
             cryptoType: data.type !== "cash" ? cryptoType : null
         };
-        strapi
+		
+        await strapi
             .create("withdrawals", withDrawReqData)
             .then((res) => {
                 setAlertShow({
@@ -326,6 +331,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 });
                 updateUser();
                 toggleWithdrawFetch(true);
+				setDisableWithdraw(false)
             })
             .catch((error) => {
                 setAlertShow({
@@ -333,6 +339,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     msg: error.message,
                     title: "Oops!!"
                 });
+				setDisableWithdraw(false)
             });
     };
     const handleChange = (e) => {
@@ -1179,7 +1186,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                             fontSize={["16px", "22px"]}
                             p={["20px 30px", "22px 40px"]}
                             mt={["2%", "1%", "1%", "0%", "0%", "1%"]}
-                            disabled={!accepted}
+                            disabled={!accepted || disableWithdraw}
                             onClick={() => {
                                 checkValidity();
                             }}
