@@ -43,18 +43,28 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
     const {referral_code } = router.query;
 
     var strapi_jwt = '';
+    var referral_code_storage = '';
     if (typeof window !== 'undefined') {
         strapi_jwt = window.localStorage.getItem("strapi_jwt");
+        referral_code_storage = window.localStorage.getItem("referral_code");
+        
     }
+    
+    
 
     if(referral_code && strapi_jwt ===  null){
         isOpen = true;
     } 
     useEffect(() => {
+        if(referral_code_storage){
+            setInputReferalCode(referral_code_storage);
+        }
+
         if(referral_code){
             setInputReferalCode(referral_code);
         }
-    }, [referral_code]);
+        
+    }, [referral_code, referral_code_storage]);
 
     useEffect(() => {
         const setValidReferalCodeAPI = async () => {
