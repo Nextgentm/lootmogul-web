@@ -30,7 +30,45 @@ const Footer = () => {
                             w={["100%", "100%", "50%", "54%"]}
                             justify={["center", "center", "flex-start", "flex-start"]}
                         >
-                            <ContactUsSubmit />
+                            <Box display={["block", "block", "block", "block"]} w={["100%", "100%", "60%", "60%"]}>
+                                <ContactUsSubmit />
+                                <Link
+                                        _focus={{ border: "none", boxShadow: "none" }}
+                                        _hover={{ textDecoration: "none" }}
+                                        href={process.env.NEXT_PUBLIC_SITE_URL}
+                                    >
+                                        <Image
+                                            alt=""
+                                            src="/assets/Final-Logo-Full.png"
+                                            width={["65%"]}
+                                            height="auto"
+                                            onClick={() => router.push("/")}
+                                            
+                                            alignItem="left"
+                                            mb="10px"
+                                            mt="30px"
+                                        />
+                                </Link>
+                                <Link
+                                        _focus={{ border: "none", boxShadow: "none" }}
+                                        _hover={{ textDecoration: "none" }}
+                                        href="https://mogulx.ai/"
+                                        target="_blank"
+                                    >
+                                        <Image
+                                            alt=""
+                                            src="/assets/MogulX-logo.png"
+                                            width={["45%"]}
+                                            height="auto"
+                                            onClick={() => router.push("/")}
+                                            
+                                            alignItem="left"
+                                            mb="10px"
+                                        />
+                                </Link>
+                            </Box>
+                            
+
                             <Box display={["block", "block", "block", "block"]} w={["100%", "100%", "40%", "40%"]}>
                                 <SiteMap />
                             </Box>
@@ -59,23 +97,7 @@ const Footer = () => {
                             </Flex>
 
                             <Flex direction="column" alignItems="flex-start" width={["50%", "50%", "45%", "60%"]}>
-                                <Link
-                                    _focus={{ border: "none", boxShadow: "none" }}
-                                    _hover={{ textDecoration: "none" }}
-                                    href={process.env.NEXT_PUBLIC_SITE_URL}
-                                >
-                                    <Image
-                                        alt=""
-                                        src="/assets/Final-Logo-Full.png"
-                                        width={["95%"]}
-                                        height="auto"
-                                        onClick={() => router.push("/")}
-                                        
-                                        alignItem="left"
-                                        mb="10px"
-                                        mt="10px"
-                                    />
-                                </Link>
+                                
 
                                 <Text
                                     variant="BoldWhiteText"
@@ -114,23 +136,6 @@ const Footer = () => {
                         pb={["0px","0px","40px"]}
                     >
                         <Flex direction="column" alignItems="flex-start" width="100%" mb="20px">
-                            <Link
-                                _focus={{ border: "none", boxShadow: "none" }}
-                                _hover={{ textDecoration: "none" }}
-                                href={process.env.NEXT_PUBLIC_SITE_URL}
-                            >
-                                <Image
-                                    alt=""
-                                    src="/assets/Final-Logo-Full.png"
-                                    width={["100%"]}
-                                    height="auto"
-                                    onClick={() => router.push("/")}
-                                   
-                                    alignItems="center"
-                                    m="10px auto"
-                                />
-                            </Link>
-
                             <Text
                                 variant="BoldWhiteText"
                                 lineHeight="1"
@@ -171,7 +176,46 @@ const Footer = () => {
                             justify="center"
                             mt={["0px","0px","20px"]}
                         >
-                            <ContactUsSubmit />
+                           <Box display={["block", "block", "block", "block"]} w={["100%", "100%", "60%", "60%"]}>
+                                <ContactUsSubmit />
+                                <Link
+                                        _focus={{ border: "none", boxShadow: "none" }}
+                                        _hover={{ textDecoration: "none" }}
+                                        href={process.env.NEXT_PUBLIC_SITE_URL}
+                                    >
+                                        <Image
+                                            alt=""
+                                            src="/assets/Final-Logo-Full.png"
+                                            width={["65%"]}
+                                            height="auto"
+                                            onClick={() => router.push("/")}
+                                            
+                                            alignItem="center"
+                                            m="auto"
+                                            mb="10px"
+                                            mt="30px"
+                                           
+                                        />
+                                </Link>
+                                <Link
+                                        _focus={{ border: "none", boxShadow: "none" }}
+                                        _hover={{ textDecoration: "none" }}
+                                        href="https://mogulx.ai/"
+                                        target="_blank"
+                                    >
+                                        <Image
+                                            alt=""
+                                            src="/assets/MogulX-logo.png"
+                                            width={["45%"]}
+                                            height="auto"
+                                            onClick={() => router.push("/")}
+                                            alignItem="center"
+                                            m="auto"
+                                            mb="10px"
+                                        />
+                                </Link>
+                            </Box>
+                            
                         </Flex>
                     </Flex>
                 )}
