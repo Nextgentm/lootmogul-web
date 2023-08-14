@@ -10,7 +10,6 @@ import {
 } from "../../services/dataService";
 import { apiLikeRequests } from "../../features/Home/api";
 import * as ga from "../../services/googleAnalytics";
-import LMNonCloseALert from "../../components/LMNonCloseALert";
 import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
@@ -330,6 +329,24 @@ export const AppContextContainer = ({ children }) => {
     const [showModalwithdrawalpopup, setShowModalwithdrawalpopup] =
         useState(false);
 
+    const handlePermission = () => {
+        debugger;
+        clevertap.notifications.push({
+            "titleText":'Would you like to receive Push Notifications?',
+            "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+            "okButtonText":'Sign me up!',
+            "rejectButtonText":'No thanks',
+            "okButtonColor":'#F28046',
+            // "askAgainTimeInSeconds":5,
+            "notification_bgcolor":"#FF0000",
+            "okButtonBgColor":"#FF0000"
+          });
+    }
+
+    useEffect(()=> {
+        // handlePermission();
+    },[])
+
     useEffect(() => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
@@ -596,9 +613,6 @@ export const AppContextContainer = ({ children }) => {
                 router.query.utm_medium === "mobupps"
             ) {
                 const utm_term = router.query.utm_term;
-                let wmadv = await axios.get(
-                    `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
-                );
                 const myMessage = {
                     message: "wmadv",
                     wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
@@ -615,6 +629,7 @@ export const AppContextContainer = ({ children }) => {
                     : provider + " user logged in",
                 params: data.user
             });
+            
             clevertap.onUserLogin.push({
                 Site: {
                     Name: data.user.username, // String
@@ -820,9 +835,6 @@ export const AppContextContainer = ({ children }) => {
                 router.query.utm_medium === "mobupps"
             ) {
                 const utm_term = router.query.utm_term;
-                let wmadv = await axios.get(
-                    `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
-                );
                 const myMessage = {
                     message: "wmadv",
                     wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
@@ -838,6 +850,7 @@ export const AppContextContainer = ({ children }) => {
                     : "custom user logged in with emailID",
                 params: data.user
             });
+            debugger;
             clevertap.onUserLogin.push({
                 Site: {
                     Name: data.user.username, // String
@@ -967,7 +980,8 @@ export const AppContextContainer = ({ children }) => {
                 setShowModalwithdrawalpopup,
                 showModalwithdrawalpopup,
                 withdrawFetch,
-                toggleWithdrawFetch
+                toggleWithdrawFetch,
+                handlePermission
             }}
         >
             {children}

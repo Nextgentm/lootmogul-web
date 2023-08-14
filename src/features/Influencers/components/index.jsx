@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../../../utils/AppContext/index";
 import SEOContainer from "../../SEOContainer";
@@ -338,7 +338,44 @@ const Influencers = ({ data, selectedCategory, banner }) => {
                 setFilterValue={setFilterValue}
                 dataPrePage={dataPrePage}
             />
-            
+            <Box
+                px={10}
+                py={["5","20"]}
+                width={["100%", "100%", "100%", "90%"]}
+                margin={"auto"}
+            >
+                <Text
+                    variant="headText"
+                    fontSize={[
+                        "30px",
+                        "30px",
+                        "50px",
+                    ]}
+                    textShadow="unset"
+                    fontFamily="var(--chakra-fonts-Blanch)"
+                    lineHeight="1"
+                >
+                   Own iconic AI avatars of legendary athletes and level up your sports fandom with an exclusive digital collectibles collection. 
+                </Text>
+
+                <Text
+                    color="white"
+                    fontSize={[
+                        "1rem",
+                        "1.3rem",
+                        "1.3rem",
+                        "1.3rem",
+                        "1.3rem"
+                    ]}
+                    mt="20px"
+                    fontFamily="Sora"
+                    fontWeight="normal"
+                    lineHeight={["30px", "30px", "36px"]}
+                    width={["100%", "100%", "90%"]}
+                >
+                    Harness the power of LootMogul's open AI architecture to craft your very own Non-Player Characters (NPCs) in the gaming realm. Step into the shoes of legendary athletes through iconic AI avatars, boosting your sports enthusiasm. Elevate your gaming experience with a unique selection of blockchain games and a coveted collection of rare sports NFTs (digital collectibles). 
+                </Text>
+            </Box>
         </Box>
     );
 };

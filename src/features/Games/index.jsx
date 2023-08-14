@@ -150,7 +150,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
       </Box>
       }
       <Box mx={[4, 8]}>
-        <Box mb={"10vw"}>
+        <Box mb={"4vw"}>
           <ExploreTrivia
             section={contestSections}
             executeScroll={executeScroll}
@@ -179,6 +179,30 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
           {bottomBanners && <BottomBanners bannersList={bottomBanners} />}
         
         </Box>
+        <Box
+              px={[0,10]}
+              width={["100%", "100%", "100%", "90%"]}
+              margin={"auto"}
+              mb={"4vw"}
+          >
+              <Text
+                  color="white"
+                  fontSize={[
+                      "1rem",
+                      "1.3rem",
+                      "1.3rem",
+                      "1.4rem",
+                      "1.5rem"
+                  ]}
+                  mt="20px"
+                  fontFamily="Sora"
+                  fontWeight="normal"
+                  lineHeight={["30px", "30px", "36px"]}
+                  width={["100%", "100%", "100%"]}
+              >
+                  Immerse yourself in blockchain gaming trivia and contests galore. Join a universe where cutting-edge technology meets thrilling gameplay. Explore a variety of titles, each offering unique experiences and rewards. Level up your gaming journey and seize the opportunity to win exciting prizes. Join us in this innovative gaming adventure today!
+              </Text>
+          </Box>
       </Box>
     </Box>
   );

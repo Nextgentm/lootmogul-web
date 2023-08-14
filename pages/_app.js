@@ -8,7 +8,6 @@ const ChakraUIContainer = dynamic(() => import("../src/styles/index"));
 import { AppContextContainer } from "../src/utils/AppContext/index";
 import MyPageLoader from "../src/components/MyPageLoader";
 
-
 import { faTelegramPlane } from '@fortawesome/free-brands-svg-icons/faTelegramPlane';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -65,6 +64,8 @@ function MyApp({ Component, pageProps }) {
 
   const [loadParticles, setLoadParticles] = useState(true);
   const [stickyBtn, setStickyBtn] = useState(false);
+
+
 
   useEffect(() => {
     if (provider && trackingCode) {
