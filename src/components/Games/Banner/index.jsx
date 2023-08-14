@@ -126,9 +126,10 @@ const Banner = ({
                             ]}
                             textShadow="unset"
                             >
-                            Join the fun and win big
+                           Experience web3 gaming with 
+ 
                             <br />
-                            with our exciting games!
+                            regenerative AI
                             </Text>
 
                             <Text
@@ -139,7 +140,7 @@ const Banner = ({
                             width={["100%", "100%", "100%", "50%"]}
                             my="1em"
                             >
-                            Get a chance to win amazing prizes
+                           Join the thrill of top blockchain games and win amazing prizes!
                             </Text>
 
                             <Button
