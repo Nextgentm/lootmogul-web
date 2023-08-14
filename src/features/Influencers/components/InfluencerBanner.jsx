@@ -23,7 +23,7 @@ const InfluencerBanner = ({ getBannerImage }) => {
                     fontFamily="var(--chakra-fonts-Blanch)"
                     lineHeight="1"
                 >
-                    Own digital collectibles of your favorite athletes
+                    Utilize LootMogul’s open AI architecture to create your own (NPCs) Non-Player Characters!
                 </Text>
 
                 <Text
@@ -41,7 +41,8 @@ const InfluencerBanner = ({ getBannerImage }) => {
                     lineHeight={["30px", "30px", "36px"]}
                     width={["100%", "100%", "80%"]}
                 >
-                    LootMogul has designed a range of unique digital assets of inspiring sports stars. Collect them today!
+                    Own iconic AI avatars of legendary athletes and level up your sports fandom with an exclusive digital collectibles collection.  <br/><br/>
+                    Harness the power of LootMogul's open AI architecture to craft your very own Non-Player Characters (NPCs) in the gaming realm. Step into the shoes of legendary athletes through iconic AI avatars, boosting your sports enthusiasm. Elevate your gaming experience with a unique selection of blockchain games and a coveted collection of rare sports NFTs (digital collectibles). 
                 </Text>
             </Box>
             <Box
