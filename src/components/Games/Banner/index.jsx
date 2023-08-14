@@ -129,7 +129,7 @@ const Banner = ({
                            Experience web3 gaming with 
  
                             <br />
-                            regenerative AI
+                            generative AI
                             </Text>
 
                             <Text
