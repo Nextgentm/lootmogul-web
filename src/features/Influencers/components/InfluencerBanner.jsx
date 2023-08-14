@@ -15,34 +15,15 @@ const InfluencerBanner = ({ getBannerImage }) => {
                 <Text
                     variant="headText"
                     fontSize={[
-                        "70px",
-                        "70px",
+                        "48px",
+                        "48px",
                         "100px",
                     ]}
                     textShadow="unset"
                     fontFamily="var(--chakra-fonts-Blanch)"
                     lineHeight="1"
                 >
-                    Utilize LootMogul’s open AI architecture to create your own (NPCs) Non-Player Characters!
-                </Text>
-
-                <Text
-                    color="white"
-                    fontSize={[
-                        "1rem",
-                        "1.3rem",
-                        "1.3rem",
-                        "1.3rem",
-                        "1.3rem"
-                    ]}
-                    mt="20px"
-                    fontFamily="Sora"
-                    fontWeight="normal"
-                    lineHeight={["30px", "30px", "36px"]}
-                    width={["100%", "100%", "80%"]}
-                >
-                    Own iconic AI avatars of legendary athletes and level up your sports fandom with an exclusive digital collectibles collection.  <br/><br/>
-                    Harness the power of LootMogul's open AI architecture to craft your very own Non-Player Characters (NPCs) in the gaming realm. Step into the shoes of legendary athletes through iconic AI avatars, boosting your sports enthusiasm. Elevate your gaming experience with a unique selection of blockchain games and a coveted collection of rare sports NFTs (digital collectibles). 
+                    Utilize LootMogul’s open AI architecture to create Athlete's (NPCs) Non-Player Characters!
                 </Text>
             </Box>
             <Box
