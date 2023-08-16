@@ -69,8 +69,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
             label: "My Report",
             action: () => router.push("/influencer-summary")
         },
-        { label: "Logout", action: () => logout() },
-        {label:"Enable Notifications", action: () => handlePermission()}
+        { label: "Logout", action: () => logout() }
     ];
 
     const ArrowIcon = isPopupMenuShowing ? ChevronUpIcon : ChevronDownIcon;
