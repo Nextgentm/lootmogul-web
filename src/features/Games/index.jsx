@@ -128,9 +128,8 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   ]}
                   textShadow="unset"
                   >
-                  Join the fun and win big
-                  <br />
-                  with our exciting games!
+                   Experience web3 gaming with 
+                  generative AI
                   </Text>
 
                   <Text
@@ -141,7 +140,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   width={["100%", "100%", "100%", "50%"]}
                   my="1em"
                   >
-                  Get a chance to win amazing prizes
+                   Join the thrill of top blockchain games and win <br/>amazing prizes!
                   </Text>
                   
               </Box>
@@ -180,11 +179,30 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
         
         </Box>
         <Box
-              px={[0,10]}
-              width={["100%", "100%", "100%", "90%"]}
+              px={[0,0]}
+              width={["100%", "100%", "100%", "100%"]}
               margin={"auto"}
               mb={"4vw"}
           >
+             <Text
+                variant="headText"
+                fontSize={[
+                    "34px",
+                    "34px",
+                    "70px",
+                ]}
+                mb={0}
+                mt="5%"
+                fontFamily="var(--chakra-fonts-Blanch)"
+                lineHeight={[
+                    "30px",
+                    "30px",
+                    "60px",
+                ]}
+                textShadow="unset"
+                >
+                Connect - Play - Learn - Earn                      
+                </Text>
               <Text
                   color="white"
                   fontSize={[
