@@ -40,7 +40,7 @@ export async function getStaticProps() {
     );
    
     const campaignsSectionsResData = await campaignsSectionsRes.json();
-    const seoData = await getSeoData("games");
+    const seoData = await getSeoData("signupcampaign");
 
     return {
       props: {campaignsSectionsResData, seoData },
