@@ -27,7 +27,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
     const [isPopupMenuShowing, togglePopupMenu] = useState(false);
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
     const [totalAmount, setTotalAmount] = useState();
-    const { logout, isTabletOrDesktop, amounts } = useContext(AppContext);
+    const { logout, isTabletOrDesktop, amounts, handlePermission } = useContext(AppContext);
     const ref = useRef();
 
 
@@ -69,7 +69,8 @@ const UserInfo = ({ user, isMobileDevice }) => {
             label: "My Report",
             action: () => router.push("/influencer-summary")
         },
-        { label: "Logout", action: () => logout() }
+        { label: "Logout", action: () => logout() },
+        {label:"Enable Notifications", action: () => handlePermission()}
     ];
 
     const ArrowIcon = isPopupMenuShowing ? ChevronUpIcon : ChevronDownIcon;

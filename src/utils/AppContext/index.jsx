@@ -10,7 +10,6 @@ import {
 } from "../../services/dataService";
 import { apiLikeRequests } from "../../features/Home/api";
 import * as ga from "../../services/googleAnalytics";
-import LMNonCloseALert from "../../components/LMNonCloseALert";
 import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
@@ -330,6 +329,24 @@ export const AppContextContainer = ({ children }) => {
     const [showModalwithdrawalpopup, setShowModalwithdrawalpopup] =
         useState(false);
 
+    const handlePermission = () => {
+        debugger;
+        clevertap.notifications.push({
+            "titleText":'Would you like to receive Push Notifications?',
+            "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
+            "okButtonText":'Sign me up!',
+            "rejectButtonText":'No thanks',
+            "okButtonColor":'#F28046',
+            // "askAgainTimeInSeconds":5,
+            "notification_bgcolor":"#FF0000",
+            "okButtonBgColor":"#FF0000"
+          });
+    }
+
+    useEffect(()=> {
+        // handlePermission();
+    },[])
+
     useEffect(() => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
@@ -596,9 +613,6 @@ export const AppContextContainer = ({ children }) => {
                 router.query.utm_medium === "mobupps"
             ) {
                 const utm_term = router.query.utm_term;
-                let wmadv = await axios.get(
-                    `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
-                );
                 const myMessage = {
                     message: "wmadv",
                     wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
@@ -615,6 +629,7 @@ export const AppContextContainer = ({ children }) => {
                     : provider + " user logged in",
                 params: data.user
             });
+            
             clevertap.onUserLogin.push({
                 Site: {
                     Name: data.user.username, // String
@@ -813,6 +828,47 @@ export const AppContextContainer = ({ children }) => {
                     }
                 }
             }
+            
+            clevertap.onUserLogin.push({
+                Site: {
+                    Name: data.user.username, // String
+                    Identity: data.user.username, // String or number
+                    Email: data.user.email, // Email address of the user
+                    Phone: data.user.mobileNumber, // Phone (with the country code)
+                    Gender: "M", // Can be either M or F
+                    DOB: new Date(), // Date of Birth. Date object
+                    // optional fields. controls whether the user will be sent email, push etc.
+                    "MSG-email": false, // Disable email notifications
+                    "MSG-push": true, // Enable push notifications
+                    "MSG-sms": true, // Enable sms notifications
+                    "MSG-whatsapp": true // Enable WhatsApp notifications
+                }
+            });
+
+            if (data.user.is_new){
+                clevertap.event.push("Registration", {
+                    "Username": data.user.username,
+                    "Player ID": data.user.id,
+                    "Email ID": data.user.email,
+                    "Mobile No.": data.user.mobileNumber,
+                    "First name": data.user.fullName,
+                    "Last Name": "",
+                    "First Visit": new Date().toISOString()
+                  });
+                  
+            }
+            else{
+                clevertap.event.push("Login", {
+                    "Username": data.user.username,
+                    "Player ID": data.user.id,
+                    "Email ID": data.user.email,
+                    "Mobile No.": data.user.mobileNumber,
+                    "First name": data.user.fullName,
+                    "Last Name": "",
+                    "First Visit": new Date().toISOString()
+                });
+            }
+            
             /** For Mobupps */
             if (
                 data.user.is_new &&
@@ -820,9 +876,6 @@ export const AppContextContainer = ({ children }) => {
                 router.query.utm_medium === "mobupps"
             ) {
                 const utm_term = router.query.utm_term;
-                let wmadv = await axios.get(
-                    `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
-                );
                 const myMessage = {
                     message: "wmadv",
                     wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
@@ -838,6 +891,7 @@ export const AppContextContainer = ({ children }) => {
                     : "custom user logged in with emailID",
                 params: data.user
             });
+            debugger;
             clevertap.onUserLogin.push({
                 Site: {
                     Name: data.user.username, // String
@@ -967,7 +1021,8 @@ export const AppContextContainer = ({ children }) => {
                 setShowModalwithdrawalpopup,
                 showModalwithdrawalpopup,
                 withdrawFetch,
-                toggleWithdrawFetch
+                toggleWithdrawFetch,
+                handlePermission
             }}
         >
             {children}

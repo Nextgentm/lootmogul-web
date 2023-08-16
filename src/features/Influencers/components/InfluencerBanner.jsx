@@ -15,33 +15,15 @@ const InfluencerBanner = ({ getBannerImage }) => {
                 <Text
                     variant="headText"
                     fontSize={[
-                        "70px",
-                        "70px",
+                        "48px",
+                        "48px",
                         "100px",
                     ]}
                     textShadow="unset"
                     fontFamily="var(--chakra-fonts-Blanch)"
                     lineHeight="1"
                 >
-                    Own digital collectibles of your favorite athletes
-                </Text>
-
-                <Text
-                    color="white"
-                    fontSize={[
-                        "1rem",
-                        "1.3rem",
-                        "1.3rem",
-                        "1.3rem",
-                        "1.3rem"
-                    ]}
-                    mt="20px"
-                    fontFamily="Sora"
-                    fontWeight="normal"
-                    lineHeight={["30px", "30px", "36px"]}
-                    width={["100%", "100%", "80%"]}
-                >
-                    LootMogul has designed a range of unique digital assets of inspiring sports stars. Collect them today!
+                    Utilize LootMogul’s open AI architecture to create Athlete's Non-Player Characters (NPCs)!
                 </Text>
             </Box>
             <Box

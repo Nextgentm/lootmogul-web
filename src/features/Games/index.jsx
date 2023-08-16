@@ -128,9 +128,8 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   ]}
                   textShadow="unset"
                   >
-                  Join the fun and win big
-                  <br />
-                  with our exciting games!
+                   Experience web3 gaming with 
+                  generative AI
                   </Text>
 
                   <Text
@@ -141,7 +140,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   width={["100%", "100%", "100%", "50%"]}
                   my="1em"
                   >
-                  Get a chance to win amazing prizes
+                   Join the thrill of top blockchain games and win <br/>amazing prizes!
                   </Text>
                   
               </Box>
@@ -150,7 +149,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
       </Box>
       }
       <Box mx={[4, 8]}>
-        <Box mb={"10vw"}>
+        <Box mb={"4vw"}>
           <ExploreTrivia
             section={contestSections}
             executeScroll={executeScroll}
@@ -179,6 +178,49 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
           {bottomBanners && <BottomBanners bannersList={bottomBanners} />}
         
         </Box>
+        <Box
+              px={[0,0]}
+              width={["100%", "100%", "100%", "100%"]}
+              margin={"auto"}
+              mb={"4vw"}
+          >
+             <Text
+                variant="headText"
+                fontSize={[
+                    "34px",
+                    "34px",
+                    "70px",
+                ]}
+                mb={0}
+                mt="5%"
+                fontFamily="var(--chakra-fonts-Blanch)"
+                lineHeight={[
+                    "30px",
+                    "30px",
+                    "60px",
+                ]}
+                textShadow="unset"
+                >
+                Connect - Play - Learn - Earn                      
+                </Text>
+              <Text
+                  color="white"
+                  fontSize={[
+                      "1rem",
+                      "1.3rem",
+                      "1.3rem",
+                      "1.4rem",
+                      "1.5rem"
+                  ]}
+                  mt="20px"
+                  fontFamily="Sora"
+                  fontWeight="normal"
+                  lineHeight={["30px", "30px", "36px"]}
+                  width={["100%", "100%", "100%"]}
+              >
+                  Immerse yourself in blockchain gaming trivia and contests galore. Join a universe where cutting-edge technology meets thrilling gameplay. Explore a variety of titles, each offering unique experiences and rewards. Level up your gaming journey and seize the opportunity to win exciting prizes. Join us in this innovative gaming adventure today!
+              </Text>
+          </Box>
       </Box>
     </Box>
   );
