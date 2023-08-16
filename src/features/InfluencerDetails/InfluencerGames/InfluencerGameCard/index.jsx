@@ -206,6 +206,16 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             _hover={{ textDecoration: "none !important" }}
                             w="90%"
                             onClick={(e) => {
+                                clevertap.event.push("Game Play Now Button", {
+                                    "Button Name": "Play Now",
+                                    "Collection Name": contestmaster.name,
+                                    "Game Name": contestmaster.name,
+                                    "Username.": user?.username,
+                                    "Player ID": user?.id,
+                                    "Email ID": user?.email,
+                                    "Mobile No": user?.mobileNumber
+                                });
+
                                 if (
                                     contestmaster?.game?.data
                                         ?.config?.game == "marketjs"
