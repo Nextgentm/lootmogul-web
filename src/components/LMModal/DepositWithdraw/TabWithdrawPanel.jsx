@@ -27,6 +27,8 @@ import MyPageLoader from "../../MyPageLoader";
 import { GridLoader } from "react-spinners";
 import { isNumber } from "../../../utils/utils";
 
+import * as ct from "../../../services/clevertapAnalytics";
+
 // eslint-disable-next-line react/display-name
 const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     const ref = useRef();
@@ -299,8 +301,27 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                     title: "Oops!!"
                 });
         }
+
+        
+
     };
     const withdraw = async() => {
+        
+        ct.onWithdrawalRequest({
+            action: "Withdrawal Request",
+            params: {
+                "Amount": Number(numberOfAmount),
+                "Chip": amount,
+                "PaymentType": withdrawalType,
+                "PaymentSubType": currency,
+                "Username": user.username,
+                "PlayerID": user.id,
+                "EmailID":  email ? email : null,
+                "MobileNo": user.mobileNumber,
+                "Firstname": user.fullName,
+            }
+        });
+
 		setDisableWithdraw(true);
         let withDrawReqData = {
             email: email ? email : null,

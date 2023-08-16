@@ -6,6 +6,7 @@ import AppContext from "../../../utils/AppContext";
 import strapi from "../../../utils/strapi";
 import axios from "axios";
 import LMNonCloseALert from "../../LMNonCloseALert";
+import * as ct from '../../../services/clevertapAnalytics';
 
 const JoiningPopup = ({ retry, data, closeShowModal }) => {
     const router = useRouter();
@@ -13,6 +14,7 @@ const JoiningPopup = ({ retry, data, closeShowModal }) => {
         setShowPaidGameConfirmation,
         user,
         fetchGameJoiningData,
+        currentContest,
         setCoupon,
         set,
         setIsPayIsStarted
@@ -23,6 +25,8 @@ const JoiningPopup = ({ retry, data, closeShowModal }) => {
     });
     const [couponList, setCouponList] = useState([]);
     const [loading, setLoading] = useState(false);
+    
+
     useEffect(() => {
         if (user) {
             strapi
@@ -192,6 +196,20 @@ const JoiningPopup = ({ retry, data, closeShowModal }) => {
                         width="100%"
                         my="5%"
                         onClick={() => {
+                            ct.onGameplayStart({action:"Gameplay Start", params: {
+                                "Category": currentContest.contest_section.data?.name,
+                                "GameType": currentContest.game.data?.name,
+                                "GameSubtype": currentContest?.name,
+                                "GameDenomination": "",
+                                "MaxPlayers": "",
+                                "PlayersPlayed": "",
+                                "Username": user?.username,
+                                "PlayerID": user?.id,
+                                "EmailID": user?.email,
+                                "MobileNo": user?.mobileNumber,
+                                "FullName": user?.fullName
+                            }});    
+
                             setLoading(true);
                             setIsPayIsStarted("started");
                             fetchGameJoiningData();
