@@ -104,3 +104,15 @@ export const onWithdrawalRequest = ({ action, params }) => {
         "First name": params.Firstname,
       });
 };
+
+
+export const onAmbassadorCategory  = ({ action, params }) => {
+    clevertap.event.push(action, {
+        "Category name": params.Category,
+        "Username": params.Username,
+        "Player ID": params.PlayerID,
+        "Email ID":  params.EmailID,
+        "Mobile No": params.MobileNo,
+        "First name": params.Firstname,
+      });
+};
