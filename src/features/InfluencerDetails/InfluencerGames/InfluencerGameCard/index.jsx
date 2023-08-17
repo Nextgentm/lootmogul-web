@@ -7,6 +7,7 @@ import { nFormatter } from "../../../../utils/utils";
 import AppContext from "../../../../utils/AppContext";
 import strapi from "../../../../utils/strapi";
 import { setCountForCaptcha } from "../../../../services/dataService";
+import * as ct from '../../../../services/clevertapAnalytics';
 import dynamic from "next/dynamic";
 import CountDownTimer from "../../../../components/CountDownTimer";
 import { InfoIcon } from "../../../../components/Icons";
@@ -206,15 +207,15 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             _hover={{ textDecoration: "none !important" }}
                             w="90%"
                             onClick={(e) => {
-                                clevertap.event.push("Game Play Now Button", {
-                                    "Button Name": "Play Now",
-                                    "Collection Name": contestmaster.name,
-                                    "Game Name": contestmaster.name,
-                                    "Username.": user?.username,
-                                    "Player ID": user?.id,
-                                    "Email ID": user?.email,
-                                    "Mobile No": user?.mobileNumber
-                                });
+                                ct.onGamePlayNowButton({action:"", params: {
+                                    "ButtonName": "Play Now",
+                                    "CollectionName": contestmaster.name,
+                                    "GameName": contestmaster.name,
+                                    "Username": user?.username,
+                                    "PlayerID": user?.id,
+                                    "EmailID": user?.email,
+                                    "MobileNo": user?.mobileNumber
+                                }});                                
 
                                 if (
                                     contestmaster?.game?.data
