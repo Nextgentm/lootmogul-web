@@ -1,7 +1,9 @@
 import { Box, Button, Flex, Heading, Text, Select, Link } from "@chakra-ui/react";
 import React from "react";
 import Search from "./Search";
-
+import * as ct from "../../../services/clevertapAnalytics";
+import { useContext } from "react";
+import AppContext from "../../../utils/AppContext";
 const Explore = ({
     data,
     defaultCategoryName,
@@ -10,6 +12,9 @@ const Explore = ({
     searchText,
     isMobile
 }) => {
+
+    const { user } = useContext(AppContext);
+
     return (
         <Box mt={5} mx={[10, 10, 16]}>
             {isMobile && (
@@ -82,6 +87,17 @@ const Explore = ({
                             fontWeight={500}
                             variant={"segment"}
                             onClick={() => {
+                                ct.onAmbassadorCategory({
+                                    action: "Ambassador Category",
+                                    params: {
+                                        "Category": defaultCategoryName,
+                                        "Username": user?.username,
+                                        "PlayerID": user?.id,
+                                        "EmailID":  user?.email,
+                                        "MobileNo": user?.mobileNumber,
+                                        "Firstname": user?.fullName,
+                                    }
+                                });
                                 handleCategoryChange(
                                     defaultCategoryName.toLowerCase()
                                 );
@@ -111,6 +127,18 @@ const Explore = ({
                            fontWeight={500}
                            variant={"segment"}
                            onClick={() => {
+                                ct.onAmbassadorCategory({
+                                    action: "Ambassador Category",
+                                    params: {
+                                        "Category": influencerCat.name,
+                                        "Username": user?.username,
+                                        "PlayerID": user?.id,
+                                        "EmailID":  user?.email,
+                                        "MobileNo": user?.mobileNumber,
+                                        "Firstname": user?.fullName,
+                                    }
+                                });
+
                                handleCategoryChange(
                                    influencerCat.name.toLowerCase()
                                );
