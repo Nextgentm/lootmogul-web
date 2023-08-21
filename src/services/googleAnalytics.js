@@ -10,5 +10,4 @@ export const event = ({ action, params }) => {
 
 export const eventTracking = ({ action, params }) => {
     window.gtag('event', action, params);
-    // clevertap.event.push(action,params);
 };
