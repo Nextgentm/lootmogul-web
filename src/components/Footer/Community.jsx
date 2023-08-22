@@ -1,39 +1,47 @@
 import React from 'react'
-import { Flex, Box, Text, Link,  Image, Icon} from "@chakra-ui/react";
+import { Flex, Box, Text, Link,  Image, Icon, Tooltip} from "@chakra-ui/react";
 import { FaDiscord, FaTelegramPlane,FaTwitter,FaInstagram,FaFacebookF,FaYoutube,FaInstagramSquare } from 'react-icons/fa'
 import { SiMedium } from "react-icons/si";
 
 const socialLinks = [
     {
         Image: FaDiscord,
+        Title: "Discord",
         link: "https://discord.gg/mHUqAm8fsh"
     },
     {
         Image: FaTelegramPlane,
+        Title: "Telegram",
         link: "https://t.me/LootMogulcommunitychat"
     },
     {
         Image: FaTwitter,
+        Title: "Twitter",
         link: "https://twitter.com/LootMogul"
     },
     {
         Image: FaInstagram,
+        Title: "Instagram",
         link: "https://www.instagram.com/lootmogul/?hl=en"
     },
     {
         Image: "Threads",
+        Title: "Threads",
         link: "https://www.threads.net/@lootmogul"
     },
     {
         Image: FaFacebookF,
+        Title: "Facebook",
         link: "https://www.facebook.com/LootMogul/"
     },
     {
         Image: FaYoutube,
+        Title: "Youtube",
         link: "https://www.youtube.com/@lootmogul"
     },
     {
         Image: SiMedium,
+        Title: "Medium",
         link: "https://lootmogul.medium.com/"
     }
 ];
@@ -63,6 +71,15 @@ const Community = () => {
      >
          {socialLinks.map((img, index) => (
              <Box key={`cimg-${index}`} mt={["5px", 0, 0, 0]} mr={["15px", "25px", "25px", "25px"]}>
+             <Tooltip
+                placement="bottom"
+                label={img.Title}
+                bg="#383838"
+                borderRadius="10px"
+                color="white"
+                fontSize="12px"
+                p="10px"
+            >
              <Link
                  _focus={{
                      border: "none",
@@ -85,6 +102,7 @@ const Community = () => {
                 <Icon as={img.Image} w={[5,6,6,6]} h={[5,6,6,6]} color='#fff' _hover={{ color: "#F60C67" }} />  
               }
              </Link>
+             </Tooltip>
          </Box>
          ))}
      </Flex>
