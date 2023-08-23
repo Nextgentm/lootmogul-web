@@ -116,3 +116,22 @@ export const onAmbassadorCategory  = ({ action, params }) => {
         "First name": params.Firstname,
       });
 };
+
+export const onGameGameOver = ({ action, params }) => {
+    clevertap.event.push(action, {
+        "Category": params.Category,
+        "Game Type": params.GameType,
+        "Game Subtype": params.GameSubtype,
+        "Total Winnings":params.TotalWinnings,
+        "Max Players": params.MaxPlayers,
+        "Players Actually Played": params.PlayersPlayed,
+        "Game Play Duration":params.GamePlayDuration,
+        "Total Points":params.TotalPoints,
+        "Rejoin Count":params.RejoinCount,
+        "Username": params.Username,
+        "Player ID": params.PlayerID,
+        "Email ID": params.EmailID,
+        "Mobile No": params.MobileNo,
+        "First name": params.FullName,
+    });
+};
