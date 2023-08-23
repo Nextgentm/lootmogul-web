@@ -114,21 +114,25 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 
                 if (data?.name == 'GameEnd') {
                     
-                    //console.log('Game End...');
-                    //console.log(joiningData);
-                    ct.onGameplayStart({action:"Test ENd", params: {
+                    console.log('Game End...');
+                    console.log(data);
+                    ct.onGameGameOver({action:"Gameplay Completed", params: {
                         "Category": "Blockchain Games",
                         "GameType": joiningData?.contestmaster?.data?.type,
                         "GameSubtype": joiningData?.contestmaster?.data?.name,
-                        "GameDenomination": "",
+                        "TotalWinnings": "",
                         "MaxPlayers": "",
                         "PlayersPlayed": "",
+                        "GamePlayDuration":"",
+                        "TotalPoints":"",
+                        "RejoinCount":"",
                         "Username": user?.username,
                         "PlayerID": user?.id,
                         "EmailID": user?.email,
                         "MobileNo": user?.mobileNumber,
                         "FullName": user?.fullName
                     }});
+
                     if (joiningData?.contestmaster?.data?.entryFee > 0) {
                         setShowLoading(true)
                         retryConst()
