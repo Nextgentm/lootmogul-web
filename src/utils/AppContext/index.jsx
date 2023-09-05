@@ -17,6 +17,7 @@ import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
 import * as Sentry from "@sentry/nextjs";
 import { getCurremtLocation } from "../../services/locationService";
 import { mobuppsCallService } from "../../services/mobuppsCallService";
+import { hasmindCallService } from "../../services/hasmindCallService";
 
 export const AppContext = createContext({});
 
@@ -648,6 +649,10 @@ export const AppContextContainer = ({ children }) => {
 
             /** For mobupps */
 
+            /** For hasmind */
+            hasmindCallService();
+            /** For hasmind */
+            
             ga.eventTracking({
                 action: data.user.is_new
                     ? provider + " new user signup happened"
@@ -870,6 +875,10 @@ export const AppContextContainer = ({ children }) => {
                 Sentry.captureMessage(JSON.stringify(myMessage));
             }
             /** For Mobupps */
+
+            /** For hasmind */
+            hasmindCallService();
+            /** For hasmind */
 
             ga.eventTracking({
                 action: data.user.is_new
