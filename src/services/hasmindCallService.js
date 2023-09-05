@@ -8,16 +8,16 @@ const hasmindCallService = async () => {
     // console.log("*****************hasmindCallService********************");
 
     let wmadv = null;
-    if (utm_medium == "hasmind") {
+    if (utm_medium == "hashmind") {
         console.log("*****************hasmindCallService********************");
         wmadv = await axios.get(
-            `https://hasmindpvtltd10992690.o18.link/p?m=18338&tid=${utm_term}`
+            `https://hasmindpvtltd10992690.o18.click/p?m=18338&event=FTD&tid=${utm_term}`
         );
     }
 
     const myMessage = {
-        message: "wmadv",
-        wmadvUrl: `https://hasmindpvtltd10992690.o18.link/p?m=18338&tid=${utm_term}`
+        message: "hashmind - wmadv",
+        wmadvUrl: `https://hasmindpvtltd10992690.o18.click/p?m=18338&event=FTD&tid=${utm_term}`
     };
 
     Sentry.captureMessage(JSON.stringify(myMessage));
