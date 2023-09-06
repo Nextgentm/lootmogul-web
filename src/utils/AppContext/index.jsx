@@ -95,7 +95,7 @@ export const AppContextContainer = ({ children }) => {
     // const refetchChange = () => {
     //     setRefetch(!refetch);
     // };
-
+    
     const CheckAndStartGame = (callerKey, contestmaster) => {
         if (!user) {
             setShowLoading({});
@@ -650,7 +650,13 @@ export const AppContextContainer = ({ children }) => {
             /** For mobupps */
 
             /** For hasmind */
-            hasmindCallService();
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
             /** For hasmind */
             
             ga.eventTracking({
@@ -877,8 +883,15 @@ export const AppContextContainer = ({ children }) => {
             /** For Mobupps */
 
             /** For hasmind */
-            hasmindCallService();
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
             /** For hasmind */
+           
 
             ga.eventTracking({
                 action: data.user.is_new

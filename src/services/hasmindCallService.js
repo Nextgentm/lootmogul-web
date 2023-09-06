@@ -9,7 +9,7 @@ const hasmindCallService = async () => {
 
     let wmadv = null;
     if (utm_medium == "hashmind") {
-        console.log("*****************hasmindCallService********************");
+        //console.log("*****************hasmindCallService********************");
         wmadv = await axios.get(
             `https://hasmindpvtltd10992690.o18.click/p?m=18338&event=FTD&tid=${utm_term}`
         );
