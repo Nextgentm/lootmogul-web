@@ -95,7 +95,7 @@ export const AppContextContainer = ({ children }) => {
     // const refetchChange = () => {
     //     setRefetch(!refetch);
     // };
-
+    console.log('Hello Load Page');
     const CheckAndStartGame = (callerKey, contestmaster) => {
         if (!user) {
             setShowLoading({});
