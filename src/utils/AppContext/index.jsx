@@ -1018,3 +1018,4 @@ export const AppContextContainer = ({ children }) => {
 };
 
 export default AppContext;
+console.log("test");
