@@ -1,12 +1,58 @@
+import axios from "axios";
+
 export const pageview = (url) => {
-    clevertap.event.push("Page View",{
-        "Page Name":url
-    });
+    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
+    const utm_source = window.localStorage?.getItem("utm_source");
+    const utm_medium = window.localStorage?.getItem("utm_medium");
+    const utm_campaign = window.localStorage?.getItem("utm_campaign");
+    const lm_user_location = window.localStorage?.getItem("lm_user_location");
+    const lm_user_state = window.localStorage?.getItem("lm_user_state");
+    if(strapi_jwt){
+        
+        const onUserLoginData =  axios.get(
+            process.env.NEXT_PUBLIC_STRAPI_API_URL +
+                `/api/clevertap/user`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: "Bearer " + strapi_jwt
+                    }
+                }
+        );
+
+        clevertap.event.push("Page View",{
+            "Page Name":url,
+            "Username": onUserLoginData.data?.data.username,
+            "Player ID": onUserLoginData.data?.data.playerId,
+            "Email": onUserLoginData.data?.data.email,
+            "Mobile": onUserLoginData.data?.data.mobile,
+            "Fname": onUserLoginData.data?.data.firstName,
+            "Lname": onUserLoginData.data?.data.lastName,
+            "State":lm_user_state ? lm_user_state : "",
+            "Country":lm_user_location ? lm_user_location : "",
+            "Source":utm_source ? utm_source : '',
+            "Medium":utm_medium ? utm_medium : '',
+            "Campaign":utm_campaign ? utm_campaign : '',
+        });
+    }
+    else{
+        clevertap.event.push("Page View",{
+            "Page Name":url,
+            "State":lm_user_state ? lm_user_state : "",
+            "Country":lm_user_location ? lm_user_location : "",
+            "Source":utm_source ? utm_source : '',
+            "Source":utm_medium ? utm_medium : '',            
+            "Campaign":utm_campaign ? utm_campaign : '',
+        });
+    }
+       
+    
 };
 
 export const onUserLogin = ({ action, params }) => {
 
-    
+
     clevertap.onUserLogin.push({
         Site: {
             Name: params.username, // String
