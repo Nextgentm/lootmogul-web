@@ -5,32 +5,52 @@ export const pageview = (url) => {
 };
 
 export const onUserLogin = ({ action, params }) => {
+
+    
     clevertap.onUserLogin.push({
         Site: {
             Name: params.username, // String
-            Identity: params.username, // String or number
+            Identity: params.email, // String or number
             Email: params.email, // Email address of the user
             Phone: params.mobileNumber, // Phone (with the country code)
             Gender: "M", // Can be either M or F
             DOB: new Date(), // Date of Birth. Date object
             // optional fields. controls whether the user will be sent email, push etc.
-            "MSG-email": false, // Disable email notifications
+            "MSG-email": true, // Disable email notifications
             "MSG-push": true, // Enable push notifications
             "MSG-sms": true, // Enable sms notifications
-            "MSG-whatsapp": true // Enable WhatsApp notifications
+            "MSG-whatsapp": false // Enable WhatsApp notifications
         }
     });
 };
 
-export const onUserLoginRegistrationEvent = ({ action, params }) => {
+export const onUserLoginRegistrationEvent = ({ action, params, pathname }) => {
+    var lm_user_location = window.localStorage?.getItem("lm_user_location");
+    var lm_user_state = window.localStorage?.getItem("lm_user_state");
+
     clevertap.event.push(action, {
         "Username": params.username,
-        "Player ID": params.id,
-        "Email ID": params.email,
-        "Mobile No.": params.mobileNumber,
-        "First name": params.fullName,
-        "Last Name": "",
-        "First Visit": new Date().toISOString()
+        "Player ID": params.playerId,
+        "Email": params.email,
+        "Mobile": params.mobile,
+        "Fname": params.firstName,
+        "Lname": params.lastName,
+        "State":lm_user_state ? lm_user_state : "",
+        "City":"",
+        "Domain Name":pathname ? pathname : '/',
+        "Country":lm_user_location ? lm_user_location : "",
+        "Last Login IP":params.lastLoginIp,
+        "Registration_IP":params.registrationIp,
+        "Registration_date":params.registrationDate,
+        "Email Verified":params.emailVerified,
+        "Mobile Verified":params.mobileVerfied,
+        "Profile Complete":params.profileComplete,
+        "Registration Device":params.registrationDevice,
+        "Registration Client":params.registrationClient,
+        "Registration OS": params.registrationOs,
+        "Login Count":params.loginCount,
+        "First login Date":params.firstLoginDate,
+        "Last login Date":params.lastLoginDate,
       });
 };
 

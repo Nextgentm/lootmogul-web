@@ -336,22 +336,20 @@ export const AppContextContainer = ({ children }) => {
         useState(false);
 
     const handlePermission = () => {
-        debugger;
+        //debugger;
         clevertap.notifications.push({
             "titleText":'Would you like to receive Push Notifications?',
             "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
             "okButtonText":'Sign me up!',
             "rejectButtonText":'No thanks',
             "okButtonColor":'#F28046',
-            // "askAgainTimeInSeconds":5,
+            //"askAgainTimeInSeconds":60,
             "notification_bgcolor":"#FF0000",
             "okButtonBgColor":"#FF0000"
           });
     }
 
-    useEffect(()=> {
-        // handlePermission();
-    },[])
+   
 
     useEffect(() => {
         if (!router.isReady) return;
@@ -499,6 +497,12 @@ export const AppContextContainer = ({ children }) => {
         }
     }, [user]);
 
+    useEffect(()=> {
+        if (user) {
+            handlePermission();
+        }
+    }, [user]);
+    
     const FetchLikes = async () => {
         const il = await apiLikeRequests(user);
         setInfluencerLikes(il);
@@ -515,6 +519,7 @@ export const AppContextContainer = ({ children }) => {
             insertLoggedInUserInDB(data);
             getCurremtLocation().then((res) => {
                 window.localStorage.setItem("lm_user_location", res?.country);
+                window.localStorage.setItem("lm_user_state", res?.state);
             });
 
             if (data.user.is_new) {
@@ -619,17 +624,36 @@ export const AppContextContainer = ({ children }) => {
             });
 
              /* Clevertap on User Login and Registration Event Tracking*/
+            const onUserLoginData = await axios.get(
+                process.env.NEXT_PUBLIC_STRAPI_API_URL +
+                    `/api/clevertap/user`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                            Authorization: "Bearer " + data.jwt
+                        }
+                    }
+            );
+          
             if (data.user.is_new){
-                ct.onUserLoginRegistrationEvent({
-                    action: "Registration",
-                    params: data.user
-                });
+                if(onUserLoginData.data){
+                    ct.onUserLoginRegistrationEvent({
+                        action: "Registration",
+                        params: onUserLoginData.data?.data,
+                        pathname:router.pathname
+                    });
+                }
             }
-            else{               
-                ct.onUserLoginRegistrationEvent({
-                    action: "Login",
-                    params: data.user
-                });
+            else{     
+                if(onUserLoginData.data){
+                    ct.onUserLoginRegistrationEvent({
+                        action: "Login",
+                        params: onUserLoginData.data?.data,
+                        pathname:router.pathname
+                    });
+                }          
+                
             }
 
             /** For mobupps */
@@ -696,6 +720,7 @@ export const AppContextContainer = ({ children }) => {
         } catch (error) {}
     };
 
+    
     const callCustomAuthService = async (
         formData,
         formType,
@@ -738,6 +763,11 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage.setItem(
                             "lm_user_location",
                             res?.country
+                        );
+
+                        window.localStorage.setItem(
+                            "lm_user_state",
+                            res?.state
                         );
                     });
                 } catch ({ error }) {
@@ -851,19 +881,38 @@ export const AppContextContainer = ({ children }) => {
                 action: "onUserLogin",
                 params: data.user
             });
-
+            
              /* Clevertap on User Login and Registration Event Tracking*/
-            if (data.user.is_new){
-                ct.onUserLoginRegistrationEvent({
-                    action: "Registration",
-                    params: data.user
-                });
+             const onUserLoginData = await axios.get(
+                process.env.NEXT_PUBLIC_STRAPI_API_URL +
+                    `/api/clevertap/user`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                            Authorization: "Bearer " + data.jwt
+                        }
+                    }
+            );
+          
+            if (data.user.is_new ){
+                if(onUserLoginData.data){
+                    ct.onUserLoginRegistrationEvent({
+                        action: "Registration",
+                        params: onUserLoginData.data?.data,
+                        pathname:router.pathname
+                    });
+                }
             }
-            else{               
-                ct.onUserLoginRegistrationEvent({
-                    action: "Login",
-                    params: data.user
-                });
+            else{     
+                if(onUserLoginData.data){
+                    ct.onUserLoginRegistrationEvent({
+                        action: "Login",
+                        params: onUserLoginData.data?.data,
+                        pathname:router.pathname
+                    });
+                }          
+                
             }
             
             /** For Mobupps */
