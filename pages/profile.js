@@ -442,7 +442,12 @@ const Profile = () => {
                                 p="6px"
                                 fontWeight={"400"}
                                 backgroundImage={"none"} backgroundColor={"#E90A63"}
-                                onClick={updateProfile}
+                                onClick={() => {
+                                    if (!user) toggleLoginModal();
+                                    else {
+                                     updateProfile()
+                                    }
+                                }}
                                 mt={["20px","20px","40px"]}
                             >
                                 {user ? "Update" : "Login"}{" "}
