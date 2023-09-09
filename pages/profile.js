@@ -10,7 +10,7 @@ import { useState, useContext, useEffect, useRef} from "react";
 import moment from "moment";
 import axios from "axios";
 import React from 'react';
-
+import { GridLoader } from "react-spinners";
 import {
     FacebookShareButton,
     TwitterShareButton,
@@ -36,7 +36,20 @@ const Profile = () => {
         jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
     }
         
-   
+    const [showLoader, setShowLoader] = useState(true);
+
+    useEffect(() => {
+      // Display the loader when the component mounts
+      const timer = setTimeout(() => {
+        setShowLoader(false); // Hide the loader after 15 seconds
+      }, 7000); // 7 seconds in milliseconds
+  
+      // Clean up the timer when the component unmounts
+      return () => {
+        clearTimeout(timer);
+      };
+    }, []); // Empty dependency array to run the effect only once
+  
     
     //console.log(user);
     //console.log(jwt_token);
@@ -46,14 +59,22 @@ const Profile = () => {
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const shareModalHandler = () => setIsShareModalOpen((prev) => !prev);
     const [avatarUrl, setAvatarUrl] = useState('')
+    const [fullName, setFullName] = useState('')
+    const [mobileNumber, setMobileNumber] = useState('')
+
     var avatarRef = '';
     useEffect(() => {
         let iFrame = iFrameRef.current
         if(iFrame) {
            iFrame.src = `https://${subdomain}.readyplayer.me/avatar?frameApi`
         }
-        console.log(user);
-        if(user?.photoURL){
+        if(user?.fullName){
+            setFullName(user?.fullName);
+        }
+        if(user?.mobileNumber){
+            setMobileNumber(user?.mobileNumber);
+        }
+        if(user?.ready_player_me_url){
             //setAvatarUrl(user?.photoURL)  
             setAvatarUrl(user?.ready_player_me_url);
         }
@@ -112,6 +133,7 @@ const Profile = () => {
           //setShowIFrame(false);
           setIsShareModalOpen(false);
           setIsShareModalOpen(false);
+          window.location.reload();
         }
         // Get user id
         if (json.eventName === 'v1.user.set') {
@@ -131,6 +153,34 @@ const Profile = () => {
     const imageChange = (e) => {        
         setIsShareModalOpen(true);
     };
+    const updateProfile = () => {
+        const response = axios.put(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/users/`+user.id,
+            { 
+                fullName: fullName,
+                mobileNumber: mobileNumber 
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + jwt_token
+                }
+            }
+        );
+        toast({
+            title: "Profile updated successfully",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            position: 'top-right',
+            render: () => (
+                <Box color='white' p={3} bg='#E90A63' borderRadius={"3px"}>
+                Profile updated successfully
+                </Box>
+            ),
+        });
+    }
 
     const ShareModal = ({ show, handleModal }) => (
         
@@ -188,13 +238,22 @@ const Profile = () => {
                 </Box>
             </Flex>
             <Flex direction={["column","column","row"]} w="100%" mt="30px">
-                <Box width={["100%","100%","34%"]} flex='1'mr="1%" border="2px solid #481A7F" borderRadius="8px" backgroundColor="#481A7F5C" p="30px">
-                    <Flex direction={["column","column","row"]}>    
-                        <model-viewer exportparts="part_name" loading="eager" poster={avatarUrl}  id="modelviewer" alt="Ready Player Me Avatar"
-                            src={avatarUrl}  shadow-intensity="1" camera-controls
-                            touch-action="pan-y"
-                            style={{"height":"300px"}}>
-                        </model-viewer>                        
+                <Box width={["100%","100%","34%"]} flex='1'mr="1%" border="2px solid #481A7F" borderRadius="8px" backgroundColor="#481A7F5C" p="30px" mt="10px">
+                <Flex direction={["column","column","row"]}>    
+                        {showLoader ? (   
+                            <GridLoader
+                                color={"#DDBF79"}
+                                loading={true}
+                                width={100}
+                                size={30}
+                            />
+                        ) : (
+                            <model-viewer exportparts="part_name" loading="eager" poster={avatarUrl}  id="modelviewer" alt="Ready Player Me Avatar"
+                                src={avatarUrl}  shadow-intensity="1" camera-controls
+                                touch-action="pan-y"
+                                style={{"height":"300px"}}>
+                            </model-viewer>     
+                        )}                    
                         <Box mt="25px">
                             <Text fontSize="14px" fontFamily={"Sora"} fontWeight={"600"}>LootMogul ID {user?.email}</Text>
                             <Text fontWeight={"600"} pt="10px">Member Since {moment(user?.createdAt).format("YYYY, MMMM")}</Text>
@@ -204,7 +263,7 @@ const Profile = () => {
                         </Box>    
                     </Flex>
                 </Box>
-                <Box width={["100%","100%","65%"]} border="2px solid #481A7F" borderRadius="8px" backgroundColor="#481A7F5C" p="30px">
+                <Box width={["100%","100%","65%"]} border="2px solid #481A7F" borderRadius="8px" backgroundColor="#481A7F5C" p="30px" mt="10px">
                     
                     <Text fontSize="24px" fontFamily={"Sora"} fontWeight={"600"} textTransform={"uppercase"}>USER INFORMATION</Text>
                     <Flex w={"100%"} mt="20px" direction={["column","row"]}>
@@ -225,10 +284,28 @@ const Profile = () => {
                         <Box mr="20px" w={"100%"}>
                             <FormControl>
                                 <FormLabel fontSize={["16px","21px"]}>Full name</FormLabel>
-                                <Input isReadOnly value={user?.fullName} w="100%" h="45px" color={"#111"} fontFamily="Sora" fontSize={"16px"} placeholder='Full name' backgroundColor="#fff" />
+                                <Input 
+                                value={fullName} 
+                                onChange={(e) => {
+                                    setFullName(e.target.value);
+                                }}
+                                w="100%" h="45px" color={"#111"} fontFamily="Sora" fontSize={"16px"} placeholder='Full name' backgroundColor="#fff" />
                             </FormControl>
                         </Box> 
                         <Box w={"100%"}>
+                            <FormControl>
+                                <FormLabel fontSize={["16px","21px"]}>Mobile</FormLabel>
+                                <Input 
+                                value={mobileNumber}
+                                onChange={(e) => {
+                                    setMobileNumber(e.target.value);
+                                }}
+                                w="100%" h="45px" color={"#111"} fontFamily="Sora" fontSize={"16px"} placeholder='Mobile Number' backgroundColor="#fff" />
+                            </FormControl>
+                        </Box>   
+                    </Flex> 
+                    <Flex w={"100%"} mt={["0px","20px"]} direction={["column","column","row"]}> 
+                        <Box mr="20px" w={"100%"}>
                             <FormControl>
                                 <FormLabel fontSize={["16px","21px"]}>Referral Code</FormLabel>
                                 <Box position={"relative"}>
@@ -352,6 +429,24 @@ const Profile = () => {
                                 </Flex>
                             </>
                         )}
+                            </FormControl>
+                        </Box>
+                        <Box w={"100%"}>
+                            <FormControl>
+                            
+                            <Button
+                                borderRadius="4px"
+                                fontSize={["15px", "15px", "15px", "15px", "21px"]}
+                                w={"100%"}
+                                h={"45px"}
+                                p="6px"
+                                fontWeight={"400"}
+                                backgroundImage={"none"} backgroundColor={"#E90A63"}
+                                onClick={updateProfile}
+                                mt={["20px","20px","40px"]}
+                            >
+                                {user ? "Update" : "Login"}{" "}
+                            </Button>
                             </FormControl>
                         </Box>    
                     </Flex> 
