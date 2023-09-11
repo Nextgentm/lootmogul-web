@@ -51,29 +51,29 @@ export const pageview = (url) => {
 };
 
 export const onUserLogin = ({ action, params }) => {
-
-
+    
+    
     clevertap.onUserLogin.push({
         Site: {
             Name: params.username, // String
-            Identity: params.email, // String or number
+            Identity: params.username, // String or number
             Email: params.email, // Email address of the user
-            Phone: params.mobileNumber, // Phone (with the country code)
+            Phone: '', // Phone (with the country code)
             Gender: "M", // Can be either M or F
             DOB: new Date(), // Date of Birth. Date object
             // optional fields. controls whether the user will be sent email, push etc.
             "MSG-email": true, // Disable email notifications
             "MSG-push": true, // Enable push notifications
             "MSG-sms": true, // Enable sms notifications
-            "MSG-whatsapp": false // Enable WhatsApp notifications
+            "MSG-whatsapp": true // Enable WhatsApp notifications
         }
     });
 };
 
-export const onUserLoginRegistrationEvent = ({ action, params, pathname }) => {
+export const onUserLoginRegistrationEvent = ({ action, params, pathname, transaction }) => {
     var lm_user_location = window.localStorage?.getItem("lm_user_location");
     var lm_user_state = window.localStorage?.getItem("lm_user_state");
-
+    
     clevertap.event.push(action, {
         "Username": params.username,
         "Player ID": params.playerId,
@@ -97,6 +97,13 @@ export const onUserLoginRegistrationEvent = ({ action, params, pathname }) => {
         "Login Count":params.loginCount,
         "First login Date":params.firstLoginDate,
         "Last login Date":params.lastLoginDate,
+        "First Deposit Date":transaction.firstDepositSuccess.date,
+        "Last Deposit Date":transaction.lastDepositSuccess.date,
+        "Deposit Count":transaction.successDepositCount,
+        "First Withdrawal Date":transaction.firstWithdrawSuccess.date,
+        "Last Withdrawal Date":transaction.lastWithdrawSuccess.date,
+        "Total Withdrawaled Amount":transaction.totalDepositChips,
+        "Withdrawal Count":transaction.successWithdrawCount,
       });
 };
 
