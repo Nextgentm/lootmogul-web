@@ -51,7 +51,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
     const popupMenuItems = [
         {
             label: "Profile",
-            action: () => window.location.replace(process.env.NEXT_PUBLIC_WORDPRESS_URL + "/profile/" + paramsLogin)
+            action: () => router.push("/profile")
         },
         {
             label: "My Wallet",
