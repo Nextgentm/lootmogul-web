@@ -343,7 +343,7 @@ export const AppContextContainer = ({ children }) => {
             "okButtonText":'Sign me up!',
             "rejectButtonText":'No thanks',
             "okButtonColor":'#F28046',
-            //"askAgainTimeInSeconds":60,
+            "askAgainTimeInSeconds":7200,
             "notification_bgcolor":"#FF0000",
             "okButtonBgColor":"#FF0000"
           });

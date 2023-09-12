@@ -108,6 +108,12 @@ export const onUserLoginRegistrationEvent = ({ action, params, pathname, transac
 };
 
 export const onGamePlayNowButton = ({ action, params }) => {
+    const utm_source = window.localStorage?.getItem("utm_source");
+    const utm_medium = window.localStorage?.getItem("utm_medium");
+    const utm_campaign = window.localStorage?.getItem("utm_campaign");
+    const lm_user_location = window.localStorage?.getItem("lm_user_location");
+    const lm_user_state = window.localStorage?.getItem("lm_user_state");
+
     clevertap.event.push("Game Play Now Button", {
         "Button Name": params.ButtonName,
         "Collection Name": params.CollectionName,
@@ -115,11 +121,21 @@ export const onGamePlayNowButton = ({ action, params }) => {
         "Username": params.Username,
         "Player ID": params.PlayerID,
         "Email ID": params.EmailID,
-        "Mobile No": params.MobileNo
+        "Mobile No": params.MobileNo,
+        "State":lm_user_state ? lm_user_state : "",
+        "Country":lm_user_location ? lm_user_location : "",
+        "Source":utm_source ? utm_source : '',
+        "Source":utm_medium ? utm_medium : '',            
+        "Campaign":utm_campaign ? utm_campaign : '',
     });
 };
 
 export const onGameplayStart = ({ action, params }) => {
+    const utm_source = window.localStorage?.getItem("utm_source");
+    const utm_medium = window.localStorage?.getItem("utm_medium");
+    const utm_campaign = window.localStorage?.getItem("utm_campaign");
+    const lm_user_location = window.localStorage?.getItem("lm_user_location");
+    const lm_user_state = window.localStorage?.getItem("lm_user_state");
     clevertap.event.push(action, {
         "Category": params.Category,
         "Game Type": params.GameType,
@@ -132,22 +148,41 @@ export const onGameplayStart = ({ action, params }) => {
         "Email ID": params.EmailID,
         "Mobile No": params.MobileNo,
         "First name": params.FullName,
+        "State":lm_user_state ? lm_user_state : "",
+        "Country":lm_user_location ? lm_user_location : "",
+        "Source":utm_source ? utm_source : '',
+        "Source":utm_medium ? utm_medium : '',            
+        "Campaign":utm_campaign ? utm_campaign : '',
     });
 };
 
 export const onUserLogout = ({ action, params }) => {
+    const utm_source = window.localStorage?.getItem("utm_source");
+    const utm_medium = window.localStorage?.getItem("utm_medium");
+    const utm_campaign = window.localStorage?.getItem("utm_campaign");
+    const lm_user_location = window.localStorage?.getItem("lm_user_location");
+    const lm_user_state = window.localStorage?.getItem("lm_user_state");
     clevertap.event.push(action, {
         "Username": params.username,
         "Player ID": params.id,
         "Email ID":  params.email,
         "Mobile No": params.mobileNumber,
         "First name": params.fullName,
+        "State":lm_user_state ? lm_user_state : "",
+        "Country":lm_user_location ? lm_user_location : "",
+        "Source":utm_source ? utm_source : '',
+        "Source":utm_medium ? utm_medium : '',            
+        "Campaign":utm_campaign ? utm_campaign : '',
       });
 };
 
 
 export const onDepositInitiate = ({ action, params }) => {
-    
+    const utm_source = window.localStorage?.getItem("utm_source");
+    const utm_medium = window.localStorage?.getItem("utm_medium");
+    const utm_campaign = window.localStorage?.getItem("utm_campaign");
+    const lm_user_location = window.localStorage?.getItem("lm_user_location");
+    const lm_user_state = window.localStorage?.getItem("lm_user_state");
     clevertap.event.push(action, {
         "Amount": params.Amount,
         "Chip": params.Chip,
@@ -159,11 +194,21 @@ export const onDepositInitiate = ({ action, params }) => {
         "Email ID":  params.EmailID,
         "Mobile No": params.MobileNo,
         "First name": params.Firstname,
+        "State":lm_user_state ? lm_user_state : "",
+        "Country":lm_user_location ? lm_user_location : "",
+        "Source":utm_source ? utm_source : '',
+        "Source":utm_medium ? utm_medium : '',            
+        "Campaign":utm_campaign ? utm_campaign : '',
       });
 };
 
 
 export const onWithdrawalRequest = ({ action, params }) => {
+    const utm_source = window.localStorage?.getItem("utm_source");
+    const utm_medium = window.localStorage?.getItem("utm_medium");
+    const utm_campaign = window.localStorage?.getItem("utm_campaign");
+    const lm_user_location = window.localStorage?.getItem("lm_user_location");
+    const lm_user_state = window.localStorage?.getItem("lm_user_state");
     clevertap.event.push(action, {
         "Withdrawal Status": "Request",
         "Withdrawal Amount": params.Amount,
@@ -175,11 +220,21 @@ export const onWithdrawalRequest = ({ action, params }) => {
         "Email ID":  params.EmailID,
         "Mobile No": params.MobileNo,
         "First name": params.Firstname,
+        "State":lm_user_state ? lm_user_state : "",
+        "Country":lm_user_location ? lm_user_location : "",
+        "Source":utm_source ? utm_source : '',
+        "Source":utm_medium ? utm_medium : '',            
+        "Campaign":utm_campaign ? utm_campaign : '',
       });
 };
 
 
 export const onAmbassadorCategory  = ({ action, params }) => {
+    const utm_source = window.localStorage?.getItem("utm_source");
+    const utm_medium = window.localStorage?.getItem("utm_medium");
+    const utm_campaign = window.localStorage?.getItem("utm_campaign");
+    const lm_user_location = window.localStorage?.getItem("lm_user_location");
+    const lm_user_state = window.localStorage?.getItem("lm_user_state");
     clevertap.event.push(action, {
         "Category name": params.Category,
         "Username": params.Username,
@@ -187,10 +242,20 @@ export const onAmbassadorCategory  = ({ action, params }) => {
         "Email ID":  params.EmailID,
         "Mobile No": params.MobileNo,
         "First name": params.Firstname,
+        "State":lm_user_state ? lm_user_state : "",
+        "Country":lm_user_location ? lm_user_location : "",
+        "Source":utm_source ? utm_source : '',
+        "Source":utm_medium ? utm_medium : '',            
+        "Campaign":utm_campaign ? utm_campaign : '',
       });
 };
 
 export const onGameGameOver = ({ action, params }) => {
+    const utm_source = window.localStorage?.getItem("utm_source");
+    const utm_medium = window.localStorage?.getItem("utm_medium");
+    const utm_campaign = window.localStorage?.getItem("utm_campaign");
+    const lm_user_location = window.localStorage?.getItem("lm_user_location");
+    const lm_user_state = window.localStorage?.getItem("lm_user_state");
     clevertap.event.push(action, {
         "Category": params.Category,
         "Game Type": params.GameType,
@@ -206,5 +271,10 @@ export const onGameGameOver = ({ action, params }) => {
         "Email ID": params.EmailID,
         "Mobile No": params.MobileNo,
         "First name": params.FullName,
+        "State":lm_user_state ? lm_user_state : "",
+        "Country":lm_user_location ? lm_user_location : "",
+        "Source":utm_source ? utm_source : '',
+        "Source":utm_medium ? utm_medium : '',            
+        "Campaign":utm_campaign ? utm_campaign : '',
     });
 };
