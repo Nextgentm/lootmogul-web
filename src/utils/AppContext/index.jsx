@@ -499,7 +499,7 @@ export const AppContextContainer = ({ children }) => {
 
     useEffect(()=> {
         if (user) {
-            //handlePermission();
+            handlePermission();
         }
     }, [user]);
     
