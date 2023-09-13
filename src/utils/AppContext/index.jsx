@@ -342,13 +342,13 @@ export const AppContextContainer = ({ children }) => {
             "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
             "okButtonText":'Sign me up!',
             "rejectButtonText":'No thanks',
-            "okButtonColor":'#F28046',
+            "okButtonColor":'#e90a63',
             "askAgainTimeInSeconds":7200,
             "notification_bgcolor":"#FF0000",
             "okButtonBgColor":"#FF0000"
           });
     }
-
+    
    
 
     useEffect(() => {
@@ -498,9 +498,9 @@ export const AppContextContainer = ({ children }) => {
     }, [user]);
 
     useEffect(()=> {
-        if (user) {
+        //if (user) {
             handlePermission();
-        }
+        //}
     }, [user]);
     
     const FetchLikes = async () => {
@@ -635,13 +635,26 @@ export const AppContextContainer = ({ children }) => {
                         }
                     }
             );
-          
+            
+            const onTransactionLoginData = await axios.get(
+                process.env.NEXT_PUBLIC_STRAPI_API_URL +
+                    `/api/clevertap/transaction`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                            Authorization: "Bearer " + data.jwt
+                        }
+                    }
+            );
+
             if (data.user.is_new){
                 if(onUserLoginData.data){
                     ct.onUserLoginRegistrationEvent({
                         action: "Registration",
                         params: onUserLoginData.data?.data,
-                        pathname:router.pathname
+                        pathname:router.pathname,
+                        transaction: onTransactionLoginData.data?.data
                     });
                 }
             }
@@ -650,7 +663,8 @@ export const AppContextContainer = ({ children }) => {
                     ct.onUserLoginRegistrationEvent({
                         action: "Login",
                         params: onUserLoginData.data?.data,
-                        pathname:router.pathname
+                        pathname:router.pathname,
+                        transaction: onTransactionLoginData.data?.data
                     });
                 }          
                 
@@ -1081,4 +1095,3 @@ export const AppContextContainer = ({ children }) => {
 };
 
 export default AppContext;
-console.log("test");
