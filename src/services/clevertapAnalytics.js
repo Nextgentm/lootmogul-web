@@ -64,10 +64,11 @@ export const onUserLogin = ({ action, params }) => {
             // optional fields. controls whether the user will be sent email, push etc.
             "MSG-email": true, // Disable email notifications
             "MSG-push": true, // Enable push notifications
-            "MSG-sms": true, // Enable sms notifications
-            "MSG-whatsapp": true // Enable WhatsApp notifications
+            "MSG-sms": false, // Enable sms notifications
+            "MSG-whatsapp": false // Enable WhatsApp notifications
         }
     });
+    //console.log(clevertap);
 };
 
 export const onUserLoginRegistrationEvent = ({ action, params, pathname, transaction }) => {
@@ -105,29 +106,94 @@ export const onUserLoginRegistrationEvent = ({ action, params, pathname, transac
         "Total Withdrawaled Amount":transaction.totalDepositChips,
         "Withdrawal Count":transaction.successWithdrawCount,
       });
+      //console.log(clevertap);
 };
 
-export const onGamePlayNowButton = ({ action, params }) => {
+export const onGamePlayNowButton = async ({ action, params }) => {
     const utm_source = window.localStorage?.getItem("utm_source");
     const utm_medium = window.localStorage?.getItem("utm_medium");
     const utm_campaign = window.localStorage?.getItem("utm_campaign");
     const lm_user_location = window.localStorage?.getItem("lm_user_location");
     const lm_user_state = window.localStorage?.getItem("lm_user_state");
 
-    clevertap.event.push("Game Play Now Button", {
-        "Button Name": params.ButtonName,
-        "Collection Name": params.CollectionName,
-        "Game Name": params.GameName,
-        "Username": params.Username,
-        "Player ID": params.PlayerID,
-        "Email ID": params.EmailID,
-        "Mobile No": params.MobileNo,
-        "State":lm_user_state ? lm_user_state : "",
-        "Country":lm_user_location ? lm_user_location : "",
-        "Source":utm_source ? utm_source : '',
-        "Source":utm_medium ? utm_medium : '',            
-        "Campaign":utm_campaign ? utm_campaign : '',
-    });
+    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
+    
+    if(strapi_jwt != null){
+        //console.log('Great to see play');
+        const onUserGameData = await axios.get(
+            process.env.NEXT_PUBLIC_STRAPI_API_URL +
+                `/api/clevertap/game`,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: "Bearer " + strapi_jwt
+                    }
+                }
+        );
+        
+        if(onUserGameData.data?.data){
+            clevertap.event.push("Game Play Now Button", {
+                "Button Name": params.ButtonName,
+                "Collection Name": params.CollectionName,
+                "Game Name": params.GameName,
+                "Username": params.Username,
+                "Player ID": params.PlayerID,
+                "Email ID": params.EmailID,
+                "Mobile No": params.MobileNo,
+                "State":lm_user_state ? lm_user_state : "",
+                "Country":lm_user_location ? lm_user_location : "",
+                "Source":utm_source ? utm_source : '',
+                "Source":utm_medium ? utm_medium : '',            
+                "Campaign":utm_campaign ? utm_campaign : '',
+                "First Game Date":onUserGameData.data?.data.firstGameDate,
+                "Last Game Date":onUserGameData.data?.data.lastGameDate,
+                "First Cash Game Date":onUserGameData.data?.data.firstCashGameDate,
+                "Last Cash Game Date":onUserGameData.data?.data.lastCashGameDate,
+                "First Free Game Date":onUserGameData.data?.data.firstFreeGameDate,
+                "Last Free Game Date":onUserGameData.data?.data.lastFreeGameDate,
+                "Total Game Play Count":onUserGameData.data?.data.totalGamePlayCount,
+                "Total Cash Play count":onUserGameData.data?.data.totalCashPlayCount,
+                "Total Free Play count":onUserGameData.data?.data.totalFreePlayCount,
+                "Total Games Won count":onUserGameData.data?.data.totalGamesWonCount,
+                "Total Games Cash Won Count":onUserGameData.data?.data.totalGamesCashWonCount,
+                "Total Games Free Won Count":onUserGameData.data?.data.totalGamesFreeWonCount,
+                "Total Games Cash Lost Count":onUserGameData.data?.data.totalGamesCashLostCount,
+                "Total Games Lost count":onUserGameData.data?.data.totalGamesLostCount,
+                "Total Cash Won Amount":onUserGameData.data?.data.totalCashWonAmount,
+                "Last Win Date":onUserGameData.data?.data.lastWinDate,
+                "First Rejoin Date":onUserGameData.data?.data.firstRejoinDate,
+                "Last Rejoin Date":onUserGameData.data?.data.lastRejoinDate,
+                "Total Rejoin Count":onUserGameData.data?.data.totalRejoinCount,
+                "Total Rejoin Cash Game Count":onUserGameData.data?.data.totalRejoinCashGameCount,
+                "Total Rejoin Free Game Count":onUserGameData.data?.data.totalRejoinFreeGameCount,
+                "First Cash Game Won Date":onUserGameData.data?.data.firstCashGameWonDate,
+                "First Free Game Won Date":onUserGameData.data?.data.firstFreeGameWonDate,
+                "Last Played Device":onUserGameData.data?.data.lastPlayedDevice,
+                "Last Played Client":onUserGameData.data?.data.lastPlayedClient,
+                "Last Played OS":onUserGameData.data?.data.lastPlayedOs,
+                "Last Played Game Type":onUserGameData.data?.data.lastPlayedGameType,
+                "Last Played Game Subtype":onUserGameData.data?.data.lastPlayedGameSubType,
+                "Last Played Game Category":onUserGameData.data?.data.lastPlayedGameCategory
+            });
+
+            console.log(clevertap);
+        }
+    }
+    else{
+        //console.log('Please login and play');
+        clevertap.event.push("Game Play Now Button", {
+            "Button Name": params.ButtonName,
+            "Collection Name": params.CollectionName,
+            "Game Name": params.GameName,
+            "State":lm_user_state ? lm_user_state : "",
+            "Country":lm_user_location ? lm_user_location : "",
+            "Source":utm_source ? utm_source : '',
+            "Source":utm_medium ? utm_medium : '',            
+            "Campaign":utm_campaign ? utm_campaign : '',
+        });
+    }
+    
 };
 
 export const onGameplayStart = ({ action, params }) => {
