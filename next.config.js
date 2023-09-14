@@ -44,6 +44,11 @@ const moduleExports = {
         "permanent": true,
       },
       { 
+        "source": '/nft',
+        "destination": "https://marketplace.lootmogul.com/",
+        "permanent": true,
+      },
+      { 
         "source": '/about-us',
         "destination": process.env.NEXT_PUBLIC_WORDPRESS_URL+'/about-us',
         "permanent": true,
