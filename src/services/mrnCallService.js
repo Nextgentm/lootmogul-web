@@ -6,7 +6,7 @@ const mrnCallService = async () => {
     const utm_term = localStorage.getItem("logged_utm_term");
 
     let wmadv = null;
-    if (utm_medium == "MRN" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'production') {
+    if (utm_medium == "mrn" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'production') {
         //console.log("*****************Mrn digital********************");
         wmadv = await axios.get(
             `https://trk.mrndigital.in/pixel?av=65018f8baa14755d251446e7&txn_id=${utm_term}`

@@ -702,7 +702,7 @@ export const AppContextContainer = ({ children }) => {
             if (
                 data.user.is_new &&
                 router.route === "/gamecampaign" &&
-                router.query.utm_medium === "MRN"
+                router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
             }
@@ -985,7 +985,7 @@ export const AppContextContainer = ({ children }) => {
             if (
                 data.user.is_new &&
                 router.route === "/gamecampaign" &&
-                router.query.utm_medium === "MRN"
+                router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
             }
