@@ -18,6 +18,7 @@ import * as Sentry from "@sentry/nextjs";
 import { getCurremtLocation } from "../../services/locationService";
 import { mobuppsCallService } from "../../services/mobuppsCallService";
 import { hasmindCallService } from "../../services/hasmindCallService";
+import { mrnCallService } from "../../services/mrnCallService";
 
 export const AppContext = createContext({});
 
@@ -659,6 +660,16 @@ export const AppContextContainer = ({ children }) => {
             }
             /** For hasmind */
             
+            /** For mrnCallService */
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+            /** For mrnCallService */
+
             ga.eventTracking({
                 action: data.user.is_new
                     ? provider + " new user signup happened"
@@ -892,7 +903,16 @@ export const AppContextContainer = ({ children }) => {
             }
             /** For hasmind */
            
-
+            /** For mrnCallService */
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+            /** For mrnCallService */
+            
             ga.eventTracking({
                 action: data.user.is_new
                     ? "new user signup happened with new emailID"
