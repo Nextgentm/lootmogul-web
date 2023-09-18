@@ -8,7 +8,6 @@ const ContactUsSubmit = () => {
         <Text
         textAlign={["center","center","left","left"]}
             variant="BoldWhiteText"
-            fontWeight="400 !important"
             mt="10px"
             mb="15px"
             lineHeight="1"
