@@ -12,6 +12,8 @@ import {
   getVoiceOverStatus,
   setVoiceOverStatus,
 } from "../../services/audioService";
+import * as ct from "../../services/clevertapAnalytics";
+
 const Quiz = (props) => {
   const router = useRouter();
   const { user } = useContext(AppContext);
@@ -37,6 +39,7 @@ const Quiz = (props) => {
     setIsHideHeader,
     setIsHideFooter,
     updateUser,
+    currentContest,
   } = useContext(AppContext);
   const [users, setUsers] = useState([]);
   const [currentQuestionNo, setCurrentQuestionNo] = useState(0);
@@ -122,6 +125,26 @@ const Quiz = (props) => {
       });
 
       socket.on("game_over", (data) => {
+        console.log(data);
+        ct.onGameGameOver({
+          action: "Gameplay Completed",
+            params: {
+              "Category": currentContest.contest_section.data?.name,
+              "GameType": currentContest.game.data?.name,
+              "GameSubtype": currentContest?.name,
+              "TotalWinnings":"",
+              "MaxPlayers": "Test",
+              "PlayersPlayed": "Test",
+              "GamePlayDuration":"",
+              "TotalPoints":"",
+              "RejoinCount":"",
+              "Username": user?.username,
+              "PlayerID": user?.id,
+              "EmailID": user?.email,
+              "MobileNo": user?.mobileNumber,
+              "FullName": user?.fullName
+            }
+        })
         setMatchResult(data.ranks);
         updateUser();
 

@@ -133,7 +133,6 @@ const moduleExports = {
         "destination": "\/influencers",
         "permanent": true
        },
-       
        {
         "source": "\/influencer\/matthew-mooney",
         "destination": "\/influencers",

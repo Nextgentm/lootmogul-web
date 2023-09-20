@@ -9,7 +9,7 @@ const hasmindCallService = async () => {
     if (utm_medium == "hashmind" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'production') {
         //console.log("*****************hasmindCallService********************");
         wmadv = await axios.get(
-            `https://hasmindpvtltd10992690.o18.click/p?m=18338&tid=${utm_term}`
+            `https://hasmindpvtltd10992690.o18.link/c?o=20723851&m=18338&a=548797`
         );
     }
 
