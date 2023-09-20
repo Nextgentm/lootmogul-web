@@ -499,9 +499,9 @@ export const AppContextContainer = ({ children }) => {
     }, [user]);
 
     useEffect(()=> {
-        //if (user) {
+        if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
             handlePermission();
-        //}
+        }
     }, [user]);
     
     const FetchLikes = async () => {
