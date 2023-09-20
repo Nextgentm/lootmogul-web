@@ -9,7 +9,7 @@ const mrnCallService = async () => {
     if (utm_medium == "mrn" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'production') {
         //console.log("*****************Mrn digital********************");
         wmadv = await axios.get(
-            `https://trk.mrndigital.in/pixel?av=65018f8baa14755d251446e7&txn_id=${utm_term}`
+            `https://mrn.vnative.co/acquisition?click_id=${utm_term}&security_token=d3117dafc420ac09ef6b`
         );
     }
 
