@@ -89,14 +89,14 @@ const Footer = () => {
                                 "row"
                             ]}
                         >
-                            <Flex justifyContent="space-around" width={["50%", "50%", "55%", "50%"]} pl={["0", "20px", "30px", "30px", "40px"]} pr="20px" my={["40px", "40px", "0", "0px"]}>
+                            <Flex justifyContent="space-around" width={["50%", "50%", "55%", "80%"]} pl={["0", "20px", "30px", "30px", "40px"]} pr="20px" my={["40px", "40px", "0", "0px"]}>
                                 <InfluencerPaymentPartner />
                                 <Box display={["none", "none", "none", "none"]}>
                                     <SiteMap />
                                 </Box>
                             </Flex>
 
-                            <Flex direction="column" alignItems="flex-start" width={["50%", "50%", "45%", "60%"]}>
+                            <Flex direction="column" alignItems="flex-start" width={["50%", "50%", "45%", "40%"]}>
                                 
 
                                 <Text
@@ -116,7 +116,7 @@ const Footer = () => {
                                     <Image
                                         alt=""
                                         src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_1200,h_414/https://metaverse.lootmogul.com/wp-content/uploads/2022/07/1_V9-OPWpauGEi-JMp05RC_A.png"
-                                        w="50%"
+                                        w="100%"
                                         border="3px solid #FFF"
                                     />
                                 </Link>
