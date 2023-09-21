@@ -200,45 +200,75 @@ const TabDepositPanel = ({ isDeposit }) => {
             const user = await strapi.fetchUser();
             if (depositType == 1) {
                 try {
-                    const { loadStripe } = await stripeJs();
+                    if (currency === "INR") {
+                        if (user) {
+                            const { id } = user;
 
-                    if (user) {
-                        const { id } = user;
-
-                        // if(currency == "INR" ){
-
-                        // }
-
-                        const resp = await axios.post(
-                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
-                            {
-                                user_id: id,
-                                redirect_url:
-                                    process.env
-                                        .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
-                                    asPath,
-                                type: "DEPOSIT",
-                                value: +numberOfAmount,
-                                couponCode: couponCode ? couponCode : "",
-                                currency: currency,
-                                calculated_chips: amount
-                            },
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${strapi.getToken()}`
+                            const resp = await axios.post(
+                                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/eazypay`,
+                                {
+                                    user_id: id,
+                                    // redirect_url:
+                                    //     process.env
+                                    //         .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                    //     asPath,
+                                    type: "DEPOSIT",
+                                    value: +numberOfAmount,
+                                    couponCode: couponCode ? couponCode : "",
+                                    currency: currency,
+                                    calculated_chips: amount
+                                },
+                                {
+                                    headers: {
+                                        Authorization: `Bearer ${strapi.getToken()}`
+                                    }
                                 }
-                            }
-                        );
-                        const { stripe_session_id } = JSON.parse(
-                            resp.data.data
-                        );
+                            );
+                            const { paymentUrl } = resp.data.data;
 
-                        const stripe = await loadStripe(
-                            process.env.NEXT_PUBLIC_STRIPE_API_KEY
-                        );
-                        stripe.redirectToCheckout({
-                            sessionId: stripe_session_id
-                        });
+                            window.open(paymentUrl, "_blank");
+                        }
+                    } else {
+                        const { loadStripe } = await stripeJs();
+
+                        if (user) {
+                            const { id } = user;
+
+                            // if(currency == "INR" ){
+
+                            // }
+
+                            const resp = await axios.post(
+                                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
+                                {
+                                    user_id: id,
+                                    redirect_url:
+                                        process.env
+                                            .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                        asPath,
+                                    type: "DEPOSIT",
+                                    value: +numberOfAmount,
+                                    couponCode: couponCode ? couponCode : "",
+                                    currency: currency,
+                                    calculated_chips: amount
+                                },
+                                {
+                                    headers: {
+                                        Authorization: `Bearer ${strapi.getToken()}`
+                                    }
+                                }
+                            );
+                            const { stripe_session_id } = JSON.parse(
+                                resp.data.data
+                            );
+
+                            const stripe = await loadStripe(
+                                process.env.NEXT_PUBLIC_STRIPE_API_KEY
+                            );
+                            stripe.redirectToCheckout({
+                                sessionId: stripe_session_id
+                            });
+                        }
                     }
                 } catch (error) {}
             } else if (depositType == 2) {
@@ -692,7 +722,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 {isDeposit ? "PROCEED" : "Withdraw"}
             </Button>
 
-            <Button
+            {/* <Button
                 w="100%"
                 fontSize={["16px", "22px"]}
                 p={["20px 30px", "25px 40px"]}
@@ -706,7 +736,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 disabled={!accepted || amount <= 0}
             >
                 {"PROCEED WITH ICICI (TEST)"}
-            </Button>
+            </Button> */}
 
             <LMNonCloseALert
                 header={"Error!"}
