@@ -59,6 +59,7 @@ clevertap.privacy.push({useIP: false}); //set the flag to true, if the user agre
   type="module"
   src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
 ></script>
+<link rel="manifest" href="/manifest.json" />
 <link
           rel="preload"
           href="/fonts/Blanch/BLANCH_CAPS.otf"
