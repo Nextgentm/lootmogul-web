@@ -73,7 +73,7 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [defaultFiatAmount, SetDefaultFiatAmount] = useState();
     const [defaultCrytoChip, SetDefaultCrytoChip] = useState();
     const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
-    
+
     var lm_user_location = window.localStorage?.getItem("lm_user_location");
 
     useEffect(() => {
@@ -87,16 +87,14 @@ const TabDepositPanel = ({ isDeposit }) => {
             var defaultCurrencyValue;
             data.data.forEach((value) => {
                 if (value.currency == "USD") {
-                    
                     setNumberOfChips(value.numberOfChips);
                     setMinimumDeposit(value.minimumDeposit);
 
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
                 }
-                
-                if(lm_user_location == 'IN' && value.currency == "INR"){
-                    
+
+                if (lm_user_location == "IN" && value.currency == "INR") {
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
                     setNumberOfChips(value.numberOfChips);
@@ -139,7 +137,6 @@ const TabDepositPanel = ({ isDeposit }) => {
                     logo: value.logo,
                     currencyCode: value.currencyCode
                 });
-
             });
 
             setBitpayCurrencyOptions(results_bitpay);
@@ -202,41 +199,123 @@ const TabDepositPanel = ({ isDeposit }) => {
         } else {
             const user = await strapi.fetchUser();
             if (depositType == 1) {
-                try {
-                    const { loadStripe } = await stripeJs();
+                if (process.env.NEXT_PUBLIC_SENTRY_ENV === "staging") {
+                    try {
+                        if (currency === "INR") {
+                            if (user) {
+                                const { id } = user;
 
-                    if (user) {
-                        const { id } = user;
-                        const resp = await axios.post(
-                            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
-                            {
-                                user_id: id,
-                                redirect_url:
-                                    process.env
-                                        .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
-                                    asPath,
-                                type: "DEPOSIT",
-                                value: +numberOfAmount,
-                                couponCode: couponCode ? couponCode : "",
-                                currency: currency,
-                                calculated_chips: amount
-                            },
-                            {
-                                headers: {
-                                    Authorization: `Bearer ${strapi.getToken()}`
-                                }
+                                const resp = await axios.post(
+                                    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/eazypay`,
+                                    {
+                                        user_id: id,
+                                        type: "DEPOSIT",
+                                        value: +numberOfAmount,
+                                        couponCode: couponCode
+                                            ? couponCode
+                                            : "",
+                                        currency: currency,
+                                        calculated_chips: amount
+                                    },
+                                    {
+                                        headers: {
+                                            Authorization: `Bearer ${strapi.getToken()}`
+                                        }
+                                    }
+                                );
+                                const { paymentUrl } = resp.data.data;
+
+                                window.open(paymentUrl, "_self");
                             }
-                        );
-                        const {stripe_session_id} = JSON.parse(resp.data.data);
+                        } else {
+                            const { loadStripe } = await stripeJs();
 
-                        const stripe = await loadStripe(
-                            process.env.NEXT_PUBLIC_STRIPE_API_KEY
-                        );
-                        stripe.redirectToCheckout({
-                            sessionId: stripe_session_id
-                        });
-                    }
-                } catch (error) {}
+                            if (user) {
+                                const { id } = user;
+
+                                // if(currency == "INR" ){
+
+                                // }
+
+                                const resp = await axios.post(
+                                    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
+                                    {
+                                        user_id: id,
+                                        redirect_url:
+                                            process.env
+                                                .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                            asPath,
+                                        type: "DEPOSIT",
+                                        value: +numberOfAmount,
+                                        couponCode: couponCode
+                                            ? couponCode
+                                            : "",
+                                        currency: currency,
+                                        calculated_chips: amount
+                                    },
+                                    {
+                                        headers: {
+                                            Authorization: `Bearer ${strapi.getToken()}`
+                                        }
+                                    }
+                                );
+                                const { stripe_session_id } = JSON.parse(
+                                    resp.data.data
+                                );
+
+                                const stripe = await loadStripe(
+                                    process.env.NEXT_PUBLIC_STRIPE_API_KEY
+                                );
+                                stripe.redirectToCheckout({
+                                    sessionId: stripe_session_id
+                                });
+                            }
+                        }
+                    } catch (error) {}
+                } else {
+                    try {
+                        const { loadStripe } = await stripeJs();
+
+                        if (user) {
+                            const { id } = user;
+
+                            // if(currency == "INR" ){
+
+                            // }
+
+                            const resp = await axios.post(
+                                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
+                                {
+                                    user_id: id,
+                                    redirect_url:
+                                        process.env
+                                            .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                        asPath,
+                                    type: "DEPOSIT",
+                                    value: +numberOfAmount,
+                                    couponCode: couponCode ? couponCode : "",
+                                    currency: currency,
+                                    calculated_chips: amount
+                                },
+                                {
+                                    headers: {
+                                        Authorization: `Bearer ${strapi.getToken()}`
+                                    }
+                                }
+                            );
+                            const { stripe_session_id } = JSON.parse(
+                                resp.data.data
+                            );
+
+                            const stripe = await loadStripe(
+                                process.env.NEXT_PUBLIC_STRIPE_API_KEY
+                            );
+                            stripe.redirectToCheckout({
+                                sessionId: stripe_session_id
+                            });
+                        }
+                    } catch (error) {}
+                }
             } else if (depositType == 2) {
                 try {
                     if (user) {
@@ -272,16 +351,18 @@ const TabDepositPanel = ({ isDeposit }) => {
             ct.onDepositInitiate({
                 action: "Deposit Initiate",
                 params: {
-                    "Amount": numberOfAmount,
-                    "Chip": amount,
-                    "PaymentGateway": depositType == 1 ? "Fiat Currency" : "Crypto Currency",
-                    "PaymentType": depositType == 1 ? "Fiat Currency" : "Crypto Currency",
-                    "PaymentSubType": currency,
-                    "Username": user.username,
-                    "PlayerID": user.id,
-                    "EmailID":  user.email,
-                    "MobileNo": user.mobileNumber,
-                    "Firstname": user.fullName,
+                    Amount: numberOfAmount,
+                    Chip: amount,
+                    PaymentGateway:
+                        depositType == 1 ? "Fiat Currency" : "Crypto Currency",
+                    PaymentType:
+                        depositType == 1 ? "Fiat Currency" : "Crypto Currency",
+                    PaymentSubType: currency,
+                    Username: user.username,
+                    PlayerID: user.id,
+                    EmailID: user.email,
+                    MobileNo: user.mobileNumber,
+                    Firstname: user.fullName
                 }
             });
         }
@@ -300,7 +381,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
 
         if (depositType == 1) {
-            lm_user_location == 'IN' ? setCurrency("INR") : setCurrency("USD");
+            lm_user_location == "IN" ? setCurrency("INR") : setCurrency("USD");
             setMinimumDeposit(defaultFiatAmount);
             setNumberOfChips(defaultFiatChip);
 
@@ -685,6 +766,22 @@ const TabDepositPanel = ({ isDeposit }) => {
             >
                 {isDeposit ? "PROCEED" : "Withdraw"}
             </Button>
+
+            {/* <Button
+                w="100%"
+                fontSize={["16px", "22px"]}
+                p={["20px 30px", "25px 40px"]}
+                mt={["2%", "1%", "1%", "1%", "1%", "3%"]}
+                onClick={(e) => {
+                    window.open(
+                        "https://eazypayuat.icicibank.com/EazyPG?merchantid=136272&mandatory fields=7YL3A5TI64io9Z/RPhz0ng==&optional fields=&returnurl=5XzuEe6B0vb7CwTIpNCqrcP3jSlDEbkAboaVLBrXSF26ohBN/1st6L7/Vkvew+z2kWRo/wPhlAoLVzCL9iibXQ==&Reference No=j4TSrH0GLRNqopM/R1IgGQ==&submerchantid=Ai7W17e/Rq6cO+3iQA1DTA==&transaction amount=Kn/0MRzWnmgPLU7bMckMiw==&paymode=Csg77fYyKS6EdfbgIIUcWw==",
+                        "_blank"
+                    );
+                }}
+                disabled={!accepted || amount <= 0}
+            >
+                {"PROCEED WITH ICICI (TEST)"}
+            </Button> */}
 
             <LMNonCloseALert
                 header={"Error!"}
