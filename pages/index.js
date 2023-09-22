@@ -31,15 +31,6 @@ export default function Home({ seoData }) {
 
   return (
     <>
-    <div className="btn">CLOSE</div>
-    <script>
-    var btn = document.querySelector('.btn');
-    var wrapper = window.parent.document.getElementById('wizParDiv0');
-    btn.addEventListener('click', closePopUp);
-    function closePopUp(){
-      wrapper.remove()
-    }
-    </script>
       <SEOContainer seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData} />
       <Box height={isMobileDevice ? "600px" : '850px'}>
         {/**
