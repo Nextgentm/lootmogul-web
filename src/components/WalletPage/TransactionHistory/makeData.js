@@ -1,6 +1,8 @@
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Text, Box, Flex, Button } from "@chakra-ui/react";
 import moment from "moment";
+import { Tooltip } from "@chakra-ui/react";
+import { InfoIcon } from "../../Icons";
 
 const transactionTableData = (transaction, isMobile) => {
     // console.log("transaction-=-=-=-=-=-=-=-", transaction);
@@ -36,21 +38,56 @@ const transactionTableData = (transaction, isMobile) => {
         ),
         activity:
             (transaction?.type === "debit" || transaction?.type === "hold") &&
-            transaction?.contest?.data?.contestmaster?.data?.name
-                ? "Played " + transaction.contest.data.contestmaster.data.name
-                : transaction?.type === "credit" &&
-                  transaction?.contest?.data?.contestmaster?.data?.name
-                ? "Won in " + transaction.contest.data.contestmaster.data.name
-                : transaction?.eventmaster?.data?.name
-                ? transaction.eventmaster.data.name
-                : transaction?.balanceBeforeConversion
-                ? transaction?.currency?.data?.name +
-                  " wallet amount " +
-                  transaction?.balanceBeforeConversion +
-                  "USD is converted to " +
-                  Math.round(transaction?.balanceBeforeConversion + 7) +
-                  " CHIPS"
-                : "transaction",
+            transaction?.contest?.data?.contestmaster?.data?.name ? (
+                "Played " + transaction.contest.data.contestmaster.data.name
+            ) : transaction?.type === "credit" &&
+              transaction?.contest?.data?.contestmaster?.data?.name ? (
+                "Won in " + transaction.contest.data.contestmaster.data.name
+            ) : transaction?.eventmaster?.data?.name ? (
+                transaction.eventmaster.data.name
+            ) : transaction?.balanceBeforeConversion ? (
+                transaction?.currency?.data?.name +
+                " wallet amount " +
+                transaction?.balanceBeforeConversion +
+                "USD is converted to " +
+                Math.round(transaction?.balanceBeforeConversion + 7) +
+                " CHIPS"
+            ) : (
+                <>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}
+                    >
+                        <div style={{ marginRight: "4px" }}>
+                            {"transaction"}
+                        </div>
+                        {transaction?.note && (
+                            <Box>
+                                <Tooltip
+                                    label={transaction?.note}
+                                    bg="#383838"
+                                    borderRadius="10px"
+                                    fontSize="sm"
+                                    p="10px"
+                                    placement="bottom-start"
+                                >
+                                    <span>
+                                        <InfoIcon
+                                            float="right"
+                                            mt="0px!important"
+                                            boxSize={"20px"}
+                                        />
+                                    </span>
+                                </Tooltip>
+                            </Box>
+                        )}
+                    </div>
+                </>
+            ),
         chips:
             transaction?.type === "debit" || transaction?.type === "hold" ? (
                 <Text color="#fff" fontWeight="400">
