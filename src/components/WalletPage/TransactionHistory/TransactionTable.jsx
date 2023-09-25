@@ -385,13 +385,13 @@ function TransactionTable({
             e["sno"] = i + 1;
         });
 
-        console.log("newData", newData);
+        // console.log("newData", newData);
 
         setAlteredData(newData);
     }, [tableData]);
 
     useEffect(() => {
-        console.log("oldColumn", tableColumns);
+        // console.log("oldColumn", tableColumns);
         const newColumn = makeColumn(tableColumns);
         newColumn.forEach((e, i) => {
             if (e.accessor === "s.no") {
@@ -399,7 +399,7 @@ function TransactionTable({
             }
         });
 
-        console.log("newColumn", newColumn);
+        // console.log("newColumn", newColumn);
         setAlteredColumn(newColumn);
     }, [tableColumns]);
 
