@@ -74,7 +74,11 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [defaultCrytoChip, SetDefaultCrytoChip] = useState();
     const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
 
-    var lm_user_location = window.localStorage?.getItem("lm_user_location");
+    var lm_user_location = window.localStorage?.getItem("lm_user_location")
+        ? window.localStorage?.getItem("lm_user_location")
+        : new Date().getTimezoneOffset() === -330
+        ? "IN"
+        : null;
 
     useEffect(() => {
         async function fetchData() {
@@ -211,6 +215,10 @@ const TabDepositPanel = ({ isDeposit }) => {
                                         user_id: id,
                                         type: "DEPOSIT",
                                         value: +numberOfAmount,
+                                        redirect_url:
+                                            process.env
+                                                .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                            asPath,
                                         couponCode: couponCode
                                             ? couponCode
                                             : "",
