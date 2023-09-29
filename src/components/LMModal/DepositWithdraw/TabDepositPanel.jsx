@@ -90,7 +90,10 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
 
         async function locationSetter() {
-            if (window.localStorage?.getItem("lm_user_location")) {
+            if (
+                window.localStorage?.getItem("lm_user_location") &&
+                window.localStorage?.getItem("lm_user_location") !== "null"
+            ) {
                 setUserLocation(
                     window.localStorage?.getItem("lm_user_location")
                 );
