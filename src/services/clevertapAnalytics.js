@@ -1,13 +1,37 @@
 import axios from "axios";
 
-export const pageview = (url) => {
+export const pageview = async (url) => {
     const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
     const utm_source = window.localStorage?.getItem("utm_source");
     const utm_medium = window.localStorage?.getItem("utm_medium");
     const utm_campaign = window.localStorage?.getItem("utm_campaign");
     const lm_user_location = window.localStorage?.getItem("lm_user_location");
     const lm_user_state = window.localStorage?.getItem("lm_user_state");
+   
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    let ipAddress = "Unknown";
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+
     if(strapi_jwt){
+        const { data } = axios.get(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
+            {
+                headers: {
+                    Authorization: `Bearer ${strapi_jwt}`
+                }
+            }
+        );
+
+        ipAddress = data?.data?.ipAddress;
         
         const onUserLoginData =  axios.get(
             process.env.NEXT_PUBLIC_STRAPI_API_URL +
@@ -34,6 +58,10 @@ export const pageview = (url) => {
             "Source":utm_source ? utm_source : '',
             "Medium":utm_medium ? utm_medium : '',
             "Campaign":utm_campaign ? utm_campaign : '',
+            "Browser Information":userAgent,
+            "Device Type":deviceType,
+            "Os Type":osType ? osType : '',
+            "IP Address":ipAddress
         });
     }
     else{
@@ -42,8 +70,12 @@ export const pageview = (url) => {
             "State":lm_user_state ? lm_user_state : "",
             "Country":lm_user_location ? lm_user_location : "",
             "Source":utm_source ? utm_source : '',
-            "Source":utm_medium ? utm_medium : '',            
+            "Medium":utm_medium ? utm_medium : '',            
             "Campaign":utm_campaign ? utm_campaign : '',
+            "Browser Information":userAgent,
+            "Device Type":deviceType,
+            "Os Type":osType ? osType : '',
+            "IP Address":ipAddress
         });
     }
        
@@ -72,8 +104,39 @@ export const onUserLogin = ({ action, params }) => {
 };
 
 export const onUserLoginRegistrationEvent = ({ action, params, pathname, transaction }) => {
-    var lm_user_location = window.localStorage?.getItem("lm_user_location");
-    var lm_user_state = window.localStorage?.getItem("lm_user_state");
+   
+    const utm_source = window.localStorage?.getItem("utm_source");
+    const utm_medium = window.localStorage?.getItem("utm_medium");
+    const utm_campaign = window.localStorage?.getItem("utm_campaign");
+    const lm_user_location = window.localStorage?.getItem("lm_user_location");
+    const lm_user_state = window.localStorage?.getItem("lm_user_state");
+   
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    let ipAddress = "Unknown";
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+
+    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
+    if(strapi_jwt){
+        const { data } = axios.get(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
+            {
+                headers: {
+                    Authorization: `Bearer ${strapi_jwt}`
+                }
+            }
+        );
+
+        ipAddress = data?.data?.ipAddress;
+    }
     
     clevertap.event.push(action, {
         "Username": params.username,
@@ -105,6 +168,14 @@ export const onUserLoginRegistrationEvent = ({ action, params, pathname, transac
         "Last Withdrawal Date":transaction.lastWithdrawSuccess.date,
         "Total Withdrawaled Amount":transaction.totalDepositChips,
         "Withdrawal Count":transaction.successWithdrawCount,
+        "Source":utm_source ? utm_source : '',
+        "Medium":utm_medium ? utm_medium : '',            
+        "Campaign":utm_campaign ? utm_campaign : '',
+        "Browser Information":userAgent,
+        "Device Type":deviceType,
+        "Os Type": osType ? osType : '',
+        "IP Address":ipAddress,
+        "Signup / Login Source": utm_medium ? utm_medium : ''
       });
       //console.log(clevertap);
 };
@@ -118,6 +189,33 @@ export const onGamePlayNowButton = async ({ action, params }) => {
 
     const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
     
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    let ipAddress = "Unknown";
+
+    
+    if(strapi_jwt){
+        const { data } = axios.get(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
+            {
+                headers: {
+                    Authorization: `Bearer ${strapi_jwt}`
+                }
+            }
+        );
+
+        ipAddress = data?.data?.ipAddress;
+    }
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+
     if(strapi_jwt != null){
         //console.log('Great to see play');
         const onUserGameData = await axios.get(
@@ -144,7 +242,7 @@ export const onGamePlayNowButton = async ({ action, params }) => {
                 "State":lm_user_state ? lm_user_state : "",
                 "Country":lm_user_location ? lm_user_location : "",
                 "Source":utm_source ? utm_source : '',
-                "Source":utm_medium ? utm_medium : '',            
+                "Medium":utm_medium ? utm_medium : '',            
                 "Campaign":utm_campaign ? utm_campaign : '',
                 "First Game Date":onUserGameData.data?.data.firstGameDate,
                 "Last Game Date":onUserGameData.data?.data.lastGameDate,
@@ -174,10 +272,14 @@ export const onGamePlayNowButton = async ({ action, params }) => {
                 "Last Played OS":onUserGameData.data?.data.lastPlayedOs,
                 "Last Played Game Type":onUserGameData.data?.data.lastPlayedGameType,
                 "Last Played Game Subtype":onUserGameData.data?.data.lastPlayedGameSubType,
-                "Last Played Game Category":onUserGameData.data?.data.lastPlayedGameCategory
+                "Last Played Game Category":onUserGameData.data?.data.lastPlayedGameCategory,
+                "Browser Information": userAgent,
+                "Device Type": deviceType,
+                "Os Type": osType ? osType : '',
+                "IP Address": ipAddress,
             });
 
-            console.log(clevertap);
+            //console.log(clevertap);
         }
     }
     else{
@@ -191,6 +293,10 @@ export const onGamePlayNowButton = async ({ action, params }) => {
             "Source":utm_source ? utm_source : '',
             "Source":utm_medium ? utm_medium : '',            
             "Campaign":utm_campaign ? utm_campaign : '',
+            "Browser Information": userAgent,
+            "Device Type": deviceType,
+            "Os Type": osType ? osType : '',
+            "IP Address": ipAddress,
         });
     }
     
@@ -202,6 +308,33 @@ export const onGameplayStart = ({ action, params }) => {
     const utm_campaign = window.localStorage?.getItem("utm_campaign");
     const lm_user_location = window.localStorage?.getItem("lm_user_location");
     const lm_user_state = window.localStorage?.getItem("lm_user_state");
+
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    let ipAddress = "Unknown";
+    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
+    if(strapi_jwt){
+        const { data } = axios.get(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
+            {
+                headers: {
+                    Authorization: `Bearer ${strapi_jwt}`
+                }
+            }
+        );
+
+        ipAddress = data?.data?.ipAddress;
+    }
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+
     clevertap.event.push(action, {
         "Category": params.Category,
         "Game Type": params.GameType,
@@ -217,8 +350,12 @@ export const onGameplayStart = ({ action, params }) => {
         "State":lm_user_state ? lm_user_state : "",
         "Country":lm_user_location ? lm_user_location : "",
         "Source":utm_source ? utm_source : '',
-        "Source":utm_medium ? utm_medium : '',            
+        "Medium":utm_medium ? utm_medium : '',            
         "Campaign":utm_campaign ? utm_campaign : '',
+        "Browser Information": userAgent,
+        "Device Type": deviceType,
+        "Os Type": osType ? osType : '',
+        "IP Address": ipAddress,
     });
 };
 
@@ -228,6 +365,33 @@ export const onUserLogout = ({ action, params }) => {
     const utm_campaign = window.localStorage?.getItem("utm_campaign");
     const lm_user_location = window.localStorage?.getItem("lm_user_location");
     const lm_user_state = window.localStorage?.getItem("lm_user_state");
+
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    let ipAddress = "Unknown";
+    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
+    if(strapi_jwt){
+        const { data } = axios.get(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
+            {
+                headers: {
+                    Authorization: `Bearer ${strapi_jwt}`
+                }
+            }
+        );
+
+        ipAddress = data?.data?.ipAddress;
+    }
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+
     clevertap.event.push(action, {
         "Username": params.username,
         "Player ID": params.id,
@@ -237,8 +401,12 @@ export const onUserLogout = ({ action, params }) => {
         "State":lm_user_state ? lm_user_state : "",
         "Country":lm_user_location ? lm_user_location : "",
         "Source":utm_source ? utm_source : '',
-        "Source":utm_medium ? utm_medium : '',            
+        "Medium":utm_medium ? utm_medium : '',            
         "Campaign":utm_campaign ? utm_campaign : '',
+        "Browser Information": userAgent,
+        "Device Type": deviceType,
+        "Os Type": osType ? osType : '',
+        "IP Address": ipAddress,
       });
 };
 
@@ -249,6 +417,33 @@ export const onDepositInitiate = ({ action, params }) => {
     const utm_campaign = window.localStorage?.getItem("utm_campaign");
     const lm_user_location = window.localStorage?.getItem("lm_user_location");
     const lm_user_state = window.localStorage?.getItem("lm_user_state");
+
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    let ipAddress = "Unknown";
+    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
+    if(strapi_jwt){
+        const { data } = axios.get(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
+            {
+                headers: {
+                    Authorization: `Bearer ${strapi_jwt}`
+                }
+            }
+        );
+
+        ipAddress = data?.data?.ipAddress;
+    }
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+
     clevertap.event.push(action, {
         "Amount": params.Amount,
         "Chip": params.Chip,
@@ -263,8 +458,13 @@ export const onDepositInitiate = ({ action, params }) => {
         "State":lm_user_state ? lm_user_state : "",
         "Country":lm_user_location ? lm_user_location : "",
         "Source":utm_source ? utm_source : '',
-        "Source":utm_medium ? utm_medium : '',            
+        "Medium":utm_medium ? utm_medium : '',            
         "Campaign":utm_campaign ? utm_campaign : '',
+        "Browser Information": userAgent,
+        "Device Type": deviceType,
+        "Os Type": osType ? osType : '',
+        "IP Address": ipAddress,
+        "Signup / Login Source": utm_medium ? utm_medium : ''
       });
 };
 
@@ -275,6 +475,33 @@ export const onWithdrawalRequest = ({ action, params }) => {
     const utm_campaign = window.localStorage?.getItem("utm_campaign");
     const lm_user_location = window.localStorage?.getItem("lm_user_location");
     const lm_user_state = window.localStorage?.getItem("lm_user_state");
+
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    let ipAddress = "Unknown";
+    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
+    if(strapi_jwt){
+        const { data } = axios.get(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
+            {
+                headers: {
+                    Authorization: `Bearer ${strapi_jwt}`
+                }
+            }
+        );
+
+        ipAddress = data?.data?.ipAddress;
+    }
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+
     clevertap.event.push(action, {
         "Withdrawal Status": "Request",
         "Withdrawal Amount": params.Amount,
@@ -289,8 +516,13 @@ export const onWithdrawalRequest = ({ action, params }) => {
         "State":lm_user_state ? lm_user_state : "",
         "Country":lm_user_location ? lm_user_location : "",
         "Source":utm_source ? utm_source : '',
-        "Source":utm_medium ? utm_medium : '',            
+        "Medium":utm_medium ? utm_medium : '',            
         "Campaign":utm_campaign ? utm_campaign : '',
+        "Browser Information": userAgent,
+        "Device Type": deviceType,
+        "Os Type": osType ? osType : '',
+        "IP Address": ipAddress,
+        "Signup / Login Source": utm_medium ? utm_medium : ''
       });
 };
 
@@ -301,6 +533,17 @@ export const onAmbassadorCategory  = ({ action, params }) => {
     const utm_campaign = window.localStorage?.getItem("utm_campaign");
     const lm_user_location = window.localStorage?.getItem("lm_user_location");
     const lm_user_state = window.localStorage?.getItem("lm_user_state");
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+
     clevertap.event.push(action, {
         "Category name": params.Category,
         "Username": params.Username,
@@ -311,8 +554,11 @@ export const onAmbassadorCategory  = ({ action, params }) => {
         "State":lm_user_state ? lm_user_state : "",
         "Country":lm_user_location ? lm_user_location : "",
         "Source":utm_source ? utm_source : '',
-        "Source":utm_medium ? utm_medium : '',            
+        "Medium":utm_medium ? utm_medium : '',            
         "Campaign":utm_campaign ? utm_campaign : '',
+        "Browser Information": userAgent,
+        "Device Type": deviceType,
+        "Os Type": osType ? osType : '',
       });
 };
 
@@ -322,6 +568,17 @@ export const onGameGameOver = ({ action, params }) => {
     const utm_campaign = window.localStorage?.getItem("utm_campaign");
     const lm_user_location = window.localStorage?.getItem("lm_user_location");
     const lm_user_state = window.localStorage?.getItem("lm_user_state");
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+    
     clevertap.event.push(action, {
         "Category": params.Category,
         "Game Type": params.GameType,
@@ -340,7 +597,10 @@ export const onGameGameOver = ({ action, params }) => {
         "State":lm_user_state ? lm_user_state : "",
         "Country":lm_user_location ? lm_user_location : "",
         "Source":utm_source ? utm_source : '',
-        "Source":utm_medium ? utm_medium : '',            
+        "Medium":utm_medium ? utm_medium : '',            
         "Campaign":utm_campaign ? utm_campaign : '',
+        "Browser Information": userAgent,
+        "Device Type": deviceType,
+        "Os Type": osType ? osType : '',
     });
 };

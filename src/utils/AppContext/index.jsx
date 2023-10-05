@@ -336,8 +336,16 @@ export const AppContextContainer = ({ children }) => {
     const [showModalwithdrawalpopup, setShowModalwithdrawalpopup] =
         useState(false);
 
+    function generateUserId() {
+        // Generate a random user ID using a combination of timestamp and a random number
+        const timestamp = new Date().getTime();
+        const random = Math.floor(Math.random() * 1000000); // Adjust the range as needed
+        const userId = `${timestamp}-${random}`;
+        return userId;
+    }
     const handlePermission = () => {
         //debugger;
+        const userId = generateUserId();
         clevertap.notifications.push({
             "titleText":'Would you like to receive Push Notifications?',
             "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
@@ -347,7 +355,27 @@ export const AppContextContainer = ({ children }) => {
             "askAgainTimeInSeconds":7200,
             "notification_bgcolor":"#FF0000",
             "okButtonBgColor":"#FF0000"
-          });
+        });
+
+        clevertap.onUserLogin.push({
+            Site: {
+                Name: "Visitor"+ userId, // String
+                Identity: "Visitor"+ userId, // String or number
+                Email: "", // Email address of the user
+                Phone: '', // Phone (with the country code)
+                Gender: "M", // Can be either M or F
+                DOB: new Date(), // Date of Birth. Date object
+                // optional fields. controls whether the user will be sent email, push etc.
+                "MSG-email": true, // Disable email notifications
+                "MSG-push": true, // Enable push notifications
+                "MSG-sms": false, // Enable sms notifications
+                "MSG-whatsapp": false // Enable WhatsApp notifications
+            }
+        });
+
+        clevertap.event.push("Web Push", {
+            "Visitor": "Visitor"+ userId
+        });
     }
     
    
