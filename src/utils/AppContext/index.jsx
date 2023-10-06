@@ -347,10 +347,10 @@ export const AppContextContainer = ({ children }) => {
         //debugger;
         const userId = generateUserId();
         clevertap.notifications.push({
-            "titleText":'Would you like to receive Push Notifications?',
-            "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
-            "okButtonText":'Sign me up!',
-            "rejectButtonText":'No thanks',
+            "titleText":'Stay updated & power up your play!',
+            "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
+            "okButtonText":'Yes',
+            "rejectButtonText":'No',
             "okButtonColor":'#e90a63',
             "askAgainTimeInSeconds":7200,
             "notification_bgcolor":"#FF0000",
