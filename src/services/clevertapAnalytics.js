@@ -11,8 +11,7 @@ export const pageview = async (url) => {
     const userAgent = navigator.userAgent;
     const osType = navigator.platform;    
     let deviceType = "Unknown";
-    let ipAddress = "Unknown";
-
+    
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
         deviceType = "Mobile";
     } else if (/Tablet|iPad/i.test(userAgent)) {
@@ -22,16 +21,6 @@ export const pageview = async (url) => {
     }
 
     if(strapi_jwt){
-        const { data } = axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
-            {
-                headers: {
-                    Authorization: `Bearer ${strapi_jwt}`
-                }
-            }
-        );
-
-        ipAddress = data?.data?.ipAddress;
         
         const onUserLoginData =  axios.get(
             process.env.NEXT_PUBLIC_STRAPI_API_URL +
@@ -61,7 +50,6 @@ export const pageview = async (url) => {
             "Browser Information":userAgent,
             "Device Type":deviceType,
             "Os Type":osType ? osType : '',
-            "IP Address":ipAddress
         });
     }
     else{
@@ -75,7 +63,6 @@ export const pageview = async (url) => {
             "Browser Information":userAgent,
             "Device Type":deviceType,
             "Os Type":osType ? osType : '',
-            "IP Address":ipAddress
         });
     }
        
@@ -114,8 +101,7 @@ export const onUserLoginRegistrationEvent = ({ action, params, pathname, transac
     const userAgent = navigator.userAgent;
     const osType = navigator.platform;    
     let deviceType = "Unknown";
-    let ipAddress = "Unknown";
-
+    
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
         deviceType = "Mobile";
     } else if (/Tablet|iPad/i.test(userAgent)) {
@@ -124,19 +110,6 @@ export const onUserLoginRegistrationEvent = ({ action, params, pathname, transac
         deviceType = "Desktop";
     }
 
-    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
-    if(strapi_jwt){
-        const { data } = axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
-            {
-                headers: {
-                    Authorization: `Bearer ${strapi_jwt}`
-                }
-            }
-        );
-
-        ipAddress = data?.data?.ipAddress;
-    }
     
     clevertap.event.push(action, {
         "Username": params.username,
@@ -174,8 +147,7 @@ export const onUserLoginRegistrationEvent = ({ action, params, pathname, transac
         "Browser Information":userAgent,
         "Device Type":deviceType,
         "Os Type": osType ? osType : '',
-        "IP Address":ipAddress,
-        "Signup / Login Source": utm_medium ? utm_medium : ''
+        "Signup_Login Source": utm_medium ? utm_medium : ''
       });
       //console.log(clevertap);
 };
@@ -192,22 +164,7 @@ export const onGamePlayNowButton = async ({ action, params }) => {
     const userAgent = navigator.userAgent;
     const osType = navigator.platform;    
     let deviceType = "Unknown";
-    let ipAddress = "Unknown";
-
-    
-    if(strapi_jwt){
-        const { data } = axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
-            {
-                headers: {
-                    Authorization: `Bearer ${strapi_jwt}`
-                }
-            }
-        );
-
-        ipAddress = data?.data?.ipAddress;
-    }
-
+        
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
         deviceType = "Mobile";
     } else if (/Tablet|iPad/i.test(userAgent)) {
@@ -276,7 +233,6 @@ export const onGamePlayNowButton = async ({ action, params }) => {
                 "Browser Information": userAgent,
                 "Device Type": deviceType,
                 "Os Type": osType ? osType : '',
-                "IP Address": ipAddress,
             });
 
             //console.log(clevertap);
@@ -296,7 +252,6 @@ export const onGamePlayNowButton = async ({ action, params }) => {
             "Browser Information": userAgent,
             "Device Type": deviceType,
             "Os Type": osType ? osType : '',
-            "IP Address": ipAddress,
         });
     }
     
@@ -312,20 +267,6 @@ export const onGameplayStart = ({ action, params }) => {
     const userAgent = navigator.userAgent;
     const osType = navigator.platform;    
     let deviceType = "Unknown";
-    let ipAddress = "Unknown";
-    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
-    if(strapi_jwt){
-        const { data } = axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
-            {
-                headers: {
-                    Authorization: `Bearer ${strapi_jwt}`
-                }
-            }
-        );
-
-        ipAddress = data?.data?.ipAddress;
-    }
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
         deviceType = "Mobile";
@@ -355,7 +296,6 @@ export const onGameplayStart = ({ action, params }) => {
         "Browser Information": userAgent,
         "Device Type": deviceType,
         "Os Type": osType ? osType : '',
-        "IP Address": ipAddress,
     });
 };
 
@@ -369,21 +309,7 @@ export const onUserLogout = ({ action, params }) => {
     const userAgent = navigator.userAgent;
     const osType = navigator.platform;    
     let deviceType = "Unknown";
-    let ipAddress = "Unknown";
-    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
-    if(strapi_jwt){
-        const { data } = axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
-            {
-                headers: {
-                    Authorization: `Bearer ${strapi_jwt}`
-                }
-            }
-        );
-
-        ipAddress = data?.data?.ipAddress;
-    }
-
+    
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
         deviceType = "Mobile";
     } else if (/Tablet|iPad/i.test(userAgent)) {
@@ -406,7 +332,6 @@ export const onUserLogout = ({ action, params }) => {
         "Browser Information": userAgent,
         "Device Type": deviceType,
         "Os Type": osType ? osType : '',
-        "IP Address": ipAddress,
       });
 };
 
@@ -421,20 +346,6 @@ export const onDepositInitiate = ({ action, params }) => {
     const userAgent = navigator.userAgent;
     const osType = navigator.platform;    
     let deviceType = "Unknown";
-    let ipAddress = "Unknown";
-    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
-    if(strapi_jwt){
-        const { data } = axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
-            {
-                headers: {
-                    Authorization: `Bearer ${strapi_jwt}`
-                }
-            }
-        );
-
-        ipAddress = data?.data?.ipAddress;
-    }
 
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
         deviceType = "Mobile";
@@ -463,8 +374,7 @@ export const onDepositInitiate = ({ action, params }) => {
         "Browser Information": userAgent,
         "Device Type": deviceType,
         "Os Type": osType ? osType : '',
-        "IP Address": ipAddress,
-        "Signup / Login Source": utm_medium ? utm_medium : ''
+        "Signup_Login Source": utm_medium ? utm_medium : ''
       });
 };
 
@@ -479,21 +389,7 @@ export const onWithdrawalRequest = ({ action, params }) => {
     const userAgent = navigator.userAgent;
     const osType = navigator.platform;    
     let deviceType = "Unknown";
-    let ipAddress = "Unknown";
-    const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
-    if(strapi_jwt){
-        const { data } = axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
-            {
-                headers: {
-                    Authorization: `Bearer ${strapi_jwt}`
-                }
-            }
-        );
-
-        ipAddress = data?.data?.ipAddress;
-    }
-
+    
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
         deviceType = "Mobile";
     } else if (/Tablet|iPad/i.test(userAgent)) {
@@ -521,8 +417,7 @@ export const onWithdrawalRequest = ({ action, params }) => {
         "Browser Information": userAgent,
         "Device Type": deviceType,
         "Os Type": osType ? osType : '',
-        "IP Address": ipAddress,
-        "Signup / Login Source": utm_medium ? utm_medium : ''
+        "Signup_Login Source": utm_medium ? utm_medium : ''
       });
 };
 
