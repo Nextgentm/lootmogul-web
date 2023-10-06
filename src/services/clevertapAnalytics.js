@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const pageview = async (url) => {
+export const pageview = (url) => {
     const strapi_jwt = window.localStorage?.getItem("strapi_jwt");
     const utm_source = window.localStorage?.getItem("utm_source");
     const utm_medium = window.localStorage?.getItem("utm_medium");
