@@ -158,6 +158,7 @@ const TabDepositPanel = ({ isDeposit }) => {
 
             setCurrencyOptions(results);
         }
+        console.log("userLocation "+userLocation);
         // Trigger the fetch
         fetchData();
     }, [userLocation]);
@@ -248,7 +249,7 @@ const TabDepositPanel = ({ isDeposit }) => {
             if (depositType == 1) {
                 if (process.env.NEXT_PUBLIC_SENTRY_ENV === "staging") {
                     try {
-                        if (currency === "INR") {
+                        if (currency === "INR" || userLocation == "IN") {
                             if (user) {
                                 const { id } = user;
 
