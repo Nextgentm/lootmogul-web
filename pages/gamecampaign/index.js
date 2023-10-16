@@ -7,6 +7,7 @@ import MultipleLoggedInUser from "../../src/components/MultipleLoggedInUser";
 import Banner from "../../src/components/Web3Games/Banner";
 import TradingGame from "../../src/components/Web3Games/TradingGame";
 import BlockChainGame from "../../src/components/Web3Games/BlockChainGame";
+import CustomBlockChainGame from "../../src/components/Web3Games/CustomBlockChainGame";
 
 const defaultSEOData = {
     metaTitle:"Lootmogul | Join LootMogul Web3 Sports Gaming",
@@ -18,6 +19,7 @@ export default function GamesPage({
   data,
   banners = [],
   contestSectionsData,
+  contestSectionsDataTrivia,
   campaignsSectionsResData,
   seoData,
 }) {
@@ -28,10 +30,17 @@ export default function GamesPage({
       <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 
         <Banner bannerData={campaignsSectionsResData?.data[0] || []}/>
         <TradingGame tradingCardData={campaignsSectionsResData?.data[0] || []}/>
+        <CustomBlockChainGame 
+            contestSectionsData={contestSectionsDataTrivia?.data || []}
+            contestmasters={data || []}
+            blockChainCardData={campaignsSectionsResData?.data[0] || []}
+            
+        />
         <BlockChainGame 
             contestSectionsData={contestSectionsData?.data || []}
             contestmasters={data || []}
             blockChainCardData={campaignsSectionsResData?.data[0] || []}
+ 
         />
     </>
   );
@@ -44,7 +53,7 @@ export async function getStaticProps() {
   let data = [];
   do {
     const res = await strapi.find("contestmasters", {
-      fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
+      fields: ["name", "slug", "priority", "gamecampaignpriority", "entryFee", "isFeatured", "retries"],
       sort: "priority",
       populate: {
         contest_section: {
@@ -88,6 +97,15 @@ export async function getStaticProps() {
         "/api/contest-sections?populate=image&sort=priority"
     );
 
+    /** For trivia games */
+    const contestSectionsRestrivia = await fetch(
+      process.env.NEXT_PUBLIC_STRAPI_API_URL +
+        "/api/contest-sections?populate=image&sort=priority"
+    );
+    const contestSectionsDataTrivia = await contestSectionsRestrivia.json();
+    
+    /** For trivia games */
+    
     const campaignsSectionsRes = await fetch(
       process.env.NEXT_PUBLIC_STRAPI_API_URL +
         "/api/game-campaigns?populate=*"
@@ -104,7 +122,7 @@ export async function getStaticProps() {
     const seoData = await getSeoData("games");
 
     return {
-      props: { data, contestSectionsData, campaignsSectionsResData, banners, seoData },
+      props: { data, contestSectionsData, contestSectionsDataTrivia, campaignsSectionsResData, banners, seoData },
       revalidate: 300,
     };
   } catch (error) {}
