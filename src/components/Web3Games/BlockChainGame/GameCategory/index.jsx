@@ -27,7 +27,7 @@ import Slider from "react-slick";
 import { getStrapiMedia } from "../../../../utils/medias";
 import { nFormatter } from "../../../../utils/utils";
 
-const GameCategory = ({ isMobileDevice, section, type }) => {
+const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
     const ref = useRef();
     const [isLargerScreen] = useMediaQuery("(min-width: 2200px)");
     const arrowTrashhold = isMobileDevice ? 2 : isLargerScreen ? 7 : 5;
@@ -70,36 +70,35 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
             }
         ]
     };
+    
     useEffect(() => {
-        setTimeout(() => {      
-            if (searchText !== '') {
-                if (searchText.length > 0) {
-                    const clonedData = structuredClone(content);  
-                    clonedData.contestmasters.data =
-                    content?.contestmasters?.data.filter((x) =>
-                    x.name.toLowerCase().includes(searchText.toLowerCase()));
-                setContent(clonedData);
-                }            
-            }
-            else {
-                setContent(section);
-            }
-            
-        }, 1000);
+        const fg = [];
         
-    }, [searchText]);
-
-    useEffect(() => {
+        
+        if(section.name == 'Blockchain Games' && gameType == 'customGame'){
+            {section?.contestmasters?.data
+                .filter((cm) => cm.gamecampaignpriority !== null)
+                .sort((a, b) => a.gamecampaignpriority - b.gamecampaignpriority)
+                .map((cm, index) => (
+                    fg.push(cm) 
+                    //section.contestmasters.data?.push(cm)
+                ))}
+                section.contestmasters.data = fg;
+                //console.log(section?.contestmasters?.data);               
+        }
+        
         setContent(section);
         setContentBackUp(section);
+
     }, [section]);
 
     return (
         <Box className="gameslider">
+           
             <>
             <Slider {...horizontalSettings}>
                 {content.name == "Blockchain Games" && content?.contestmasters?.data?.length > 0 && content?.contestmasters?.data
-                                ?.sort((a, b) => a.priority - b.priority)
+                                .slice(0, 6)
                     .map((cm, index) => 
                         type == 'free' && cm.entryFee == 0 ? ( <Box
                         bgSize="cover"
@@ -359,6 +358,7 @@ const GameCategory = ({ isMobileDevice, section, type }) => {
                 )}
                 </Slider>
             </>
+           
         </Box>
     );
 };
