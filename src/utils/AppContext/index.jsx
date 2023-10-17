@@ -760,7 +760,7 @@ export const AppContextContainer = ({ children }) => {
                 hasmindCallService();
             }
             /** For hasmind */
-
+            
             /** For mrnCallService */
             if (
                 data.user.is_new &&
@@ -770,8 +770,6 @@ export const AppContextContainer = ({ children }) => {
                 mrnCallService();
             }
             /** For mrnCallService */
-            
-            
             ga.eventTracking({
                 action: data.user.is_new
                     ? provider + " new user signup happened"
