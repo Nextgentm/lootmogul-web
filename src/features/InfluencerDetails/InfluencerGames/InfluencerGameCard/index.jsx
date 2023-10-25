@@ -142,23 +142,26 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                     : "Free"}
                             </Text>
                         </Flex>
-                        {(contestmaster?.game?.data?.config?.game == "marketjs" && contestmaster?.playCount > 50) 
-                            || (contestmaster?.game?.data?.config?.game !== "marketjs" && contestmaster?.roomsCount > 25)
-                            &&
-                            <Text
-                                color="#FFF"
-                                fontSize={["0.75rem", "0.9rem"]}
-                                fontWeight="200"
-                                mt={0}
-                                pl="6px"
-                            >
-                                {contestmaster?.game?.data?.config?.game ==
-                                    "marketjs"
-                                    ? nFormatter(contestmaster?.playCount, 1)
-                                    : nFormatter(contestmaster?.roomsCount, 1, 'roomsCount')
-                                }{" "}
-                                Players Played
-                            </Text>}
+                        <Text
+                            color="#FFF"
+                            fontSize={["0.75rem", "0.9rem"]}
+                            fontWeight="200"
+                            mt={0}
+                            pl="6px"
+                        >
+
+                            {(contestmaster?.game?.data?.config?.game == "marketjs" && contestmaster?.playCount > 50)
+                                || (contestmaster?.game?.data?.config?.game !== "marketjs" && contestmaster?.roomsCount > 25)
+                                ?
+                                <>
+                                    {contestmaster?.game?.data?.config?.game ==
+                                        "marketjs"
+                                        ? nFormatter(contestmaster?.playCount, 1)
+                                        : nFormatter(contestmaster?.roomsCount, 1, 'roomsCount')
+                                    }{" "}
+                                    Players Played
+                                </> : <Text p="3"></Text>}
+                        </Text>
                     </VStack>
                     {sectionName === 'Blockchain Games' ? (
                         <Box w={["30%", "30%", "23%"]}>
