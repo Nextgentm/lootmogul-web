@@ -139,7 +139,7 @@ const Banner = ({
                             width={["100%", "100%", "100%", "50%"]}
                             my="1em"
                             >
-                          Join to play with our blockchain games and win! 
+                          Join to play with our blockchain games and win 
                             </Text>
 
                             <Button
