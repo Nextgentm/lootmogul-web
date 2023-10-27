@@ -128,8 +128,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   ]}
                   textShadow="unset"
                   >
-                   Experience web3 gaming with 
-                  generative AI
+                  Experience AI Gaming
                   </Text>
 
                   <Text
@@ -140,7 +139,7 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
                   width={["100%", "100%", "100%", "50%"]}
                   my="1em"
                   >
-                   Join the thrill of top blockchain games and win <br/>amazing prizes!
+                   Join to play with our blockchain games and win! 
                   </Text>
                   
               </Box>
