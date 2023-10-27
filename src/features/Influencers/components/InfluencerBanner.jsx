@@ -23,7 +23,7 @@ const InfluencerBanner = ({ getBannerImage }) => {
                     fontFamily="var(--chakra-fonts-Blanch)"
                     lineHeight="1"
                 >
-                    Utilize LootMogul’s open AI architecture to create Athlete's Non-Player Characters (NPCs)!
+                    Own Avatars of Your Favorite Athletes
                 </Text>
             </Box>
             <Box
