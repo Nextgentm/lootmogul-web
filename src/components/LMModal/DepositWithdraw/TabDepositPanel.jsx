@@ -238,12 +238,12 @@ const TabDepositPanel = ({ isDeposit }) => {
     }, []);
 
     const deposit = async () => {
-        // if (amount < numberOfChips) {
-        //     setAlertShow({
-        //         isOpen: true,
-        //         msg: "Enter minimum " + numberOfChips + " chips for Deposit"
-        //     });
-        // } else {
+        if (amount < numberOfChips) {
+            setAlertShow({
+                isOpen: true,
+                msg: "Enter minimum " + numberOfChips + " chips for Deposit"
+            });
+        } else {
             const user = await strapi.fetchUser();
             if (depositType == 1) {
                 if (process.env.NEXT_PUBLIC_SENTRY_ENV === "staging") {
@@ -417,7 +417,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     Firstname: user.fullName
                 }
             });
-        // }
+        }
     };
 
     useEffect(() => {
