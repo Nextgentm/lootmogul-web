@@ -159,7 +159,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                         ? nFormatter(contestmaster?.playCount, 1)
                                         : nFormatter(contestmaster?.roomsCount, 1, 'roomsCount')
                                     }{" "}
-                                    Players Played
+                                    Players Joined
                                 </> : <Text p="3"></Text>}
                         </Text>
                     </VStack>
