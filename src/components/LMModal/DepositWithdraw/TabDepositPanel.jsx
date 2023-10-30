@@ -248,37 +248,38 @@ const TabDepositPanel = ({ isDeposit }) => {
             if (depositType == 1) {
                 if (process.env.NEXT_PUBLIC_SENTRY_ENV === "staging") {
                     try {
-                        if (currency === "INR") {
-                            if (user) {
-                                const { id } = user;
+                        // Eazypay code
+                        // if (currency === "INR") {
+                        //     if (user) {
+                        //         const { id } = user;
 
-                                const resp = await axios.post(
-                                    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/eazypay`,
-                                    {
-                                        user_id: id,
-                                        type: "DEPOSIT",
-                                        value: +numberOfAmount,
-                                        redirect_url:
-                                            process.env
-                                                .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
-                                            asPath,
-                                        couponCode: couponCode
-                                            ? couponCode
-                                            : "",
-                                        currency: currency,
-                                        calculated_chips: amount
-                                    },
-                                    {
-                                        headers: {
-                                            Authorization: `Bearer ${strapi.getToken()}`
-                                        }
-                                    }
-                                );
-                                const { paymentUrl } = resp.data.data;
+                        //         const resp = await axios.post(
+                        //             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/eazypay`,
+                        //             {
+                        //                 user_id: id,
+                        //                 type: "DEPOSIT",
+                        //                 value: +numberOfAmount,
+                        //                 redirect_url:
+                        //                     process.env
+                        //                         .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                        //                     asPath,
+                        //                 couponCode: couponCode
+                        //                     ? couponCode
+                        //                     : "",
+                        //                 currency: currency,
+                        //                 calculated_chips: amount
+                        //             },
+                        //             {
+                        //                 headers: {
+                        //                     Authorization: `Bearer ${strapi.getToken()}`
+                        //                 }
+                        //             }
+                        //         );
+                        //         const { paymentUrl } = resp.data.data;
 
-                                window.open(paymentUrl, "_self");
-                            }
-                        } else {
+                        //         window.open(paymentUrl, "_self");
+                        //     }
+                        // } else {
                             const { loadStripe } = await stripeJs();
 
                             if (user) {
@@ -321,7 +322,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                                     sessionId: stripe_session_id
                                 });
                             }
-                        }
+                        // }
                     } catch (error) {}
                 } else {
                     try {
