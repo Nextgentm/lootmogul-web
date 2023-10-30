@@ -336,18 +336,55 @@ export const AppContextContainer = ({ children }) => {
     const [showModalwithdrawalpopup, setShowModalwithdrawalpopup] =
         useState(false);
 
+    function generateUserId() {
+        // Generate a random user ID using a combination of timestamp and a random number
+        const timestamp = new Date().getTime();
+        const random = Math.floor(Math.random() * 1000000); // Adjust the range as needed
+        const userId = `${timestamp}-${random}`;
+        return userId;
+    }
     const handlePermission = () => {
         //debugger;
+        const userId = generateUserId();
         clevertap.notifications.push({
-            "titleText":'Would you like to receive Push Notifications?',
-            "bodyText":'We promise to only send you relevant content and give you updates on your transactions',
-            "okButtonText":'Sign me up!',
-            "rejectButtonText":'No thanks',
+            "titleText":'Stay updated & power up your play!',
+            "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
+            "okButtonText":'Yes',
+            "rejectButtonText":'No',
             "okButtonColor":'#e90a63',
-            "askAgainTimeInSeconds":7200,
+            "askAgainTimeInSeconds":120,
             "notification_bgcolor":"#FF0000",
-            "okButtonBgColor":"#FF0000"
-          });
+            "okButtonBgColor":"#FF0000",
+            "okButtonCallback": function () {
+                console.log("User clicked OK");
+            },
+            "dismissCallback": function () {
+                console.log("User dismissed the notification");
+            }
+        });
+        clevertap.privacy.push({optOut: true});
+        clevertap.privacy.push({useIP: true});
+        clevertap.onUserLogin.push({
+            Site: {
+                Name: "Visitor "+ userId, // String
+                Identity: "Visitor "+ userId, // String or number
+                Email: "", // Email address of the user
+                Phone: '', // Phone (with the country code)
+                Gender: "M", // Can be either M or F
+                DOB: new Date(), // Date of Birth. Date object
+                // optional fields. controls whether the user will be sent email, push etc.
+                "MSG-email": true, // Disable email notifications
+                "MSG-push": true, // Enable push notifications
+                "MSG-sms": false, // Enable sms notifications
+                "MSG-whatsapp": false // Enable WhatsApp notifications
+            }
+        });
+        
+        
+
+        clevertap.event.push("Web Push", {
+            "Visitor": "Visitor"+ userId
+        });
     }
     
    
@@ -498,10 +535,36 @@ export const AppContextContainer = ({ children }) => {
         }
     }, [user]);
 
+    const initializePage = () => {
+        // Modify the DOM or add any other necessary logic here
+        const button = document.getElementById('wzrk-confirm');
+  
+        if (button) {
+          button.click(); // Trigger a click event on the button
+        }
+      };
+  
+
     useEffect(()=> {
         if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
             handlePermission();
         }
+        setTimeout(() => {
+            const specificDiv =  document.querySelector('.wzrk-powered');      
+            if (specificDiv) {
+                specificDiv.css('display', 'none');
+            }
+         }, 2000);
+
+         setTimeout(() => {
+            //document.addEventListener('DOMContentLoaded', function () {
+                console.log("JavaScript code is running");
+
+                  // Run the function when the component mounts
+                  initializePage();
+             // });
+         }, 5000);
+         
     }, [user]);
     
     const FetchLikes = async () => {
