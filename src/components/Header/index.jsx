@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
     Link,
     Box,
@@ -96,6 +96,15 @@ const Header = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const router = useRouter();
+
+    useEffect(() => {    
+        if(router.pathname){
+            //console.log('Page ',router.pathname);
+            clevertap.event.push("Page Request",{
+                "Page":router.pathname,
+            });
+        }
+    },[router]);
 
     const isActiveLink = (path, queryPath) => {
         //TODO: need to check what condition is this and remove the proper statements
