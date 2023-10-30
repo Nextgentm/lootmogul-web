@@ -10,6 +10,14 @@ const WalletPage = dynamic(() => import("../src/components/WalletPage"), {
   loading: () => <MyPageLoader />,
 });
 
+export async function getServerSideProps(context) {
+  const { req } = context;
+
+  return {
+    props: {},
+  };
+}
+
 const Wallet = () => {
   const { user, updateUser, callAuthService } = useContext(AppContext);
   const { jwt, setJwt } = useContext(AppContext);

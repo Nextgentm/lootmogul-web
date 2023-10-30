@@ -49,7 +49,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
             const resp = await strapi.request(
                 "get",
                 "connection/toggleInfluencerLike?influencer=" +
-                    contestmaster.influencer.data.id,
+                contestmaster.influencer.data.id,
                 {}
             );
             FetchLikes();
@@ -82,7 +82,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     width={"100%"}
                     height={["360px", "500px", "400px"]}
                 >
-                   
+
 
                     {imgUrl && (
                         <Flex
@@ -137,8 +137,8 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             >
                                 {contestmaster.entryFee != 0
                                     ? "Entry Fee - " +
-                                      contestmaster.entryFee +
-                                      " CHIPS"
+                                    contestmaster.entryFee +
+                                    " CHIPS"
                                     : "Free"}
                             </Text>
                         </Flex>
@@ -149,48 +149,54 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             mt={0}
                             pl="6px"
                         >
-                            {contestmaster?.game?.data?.config?.game ==
-                            "marketjs"
-                                ? nFormatter(contestmaster?.playCount, 1)
-                                : nFormatter(contestmaster?.roomsCount, 1, 'roomsCount')
-                                  }{" "}
-                            Players Played
+
+                            {(contestmaster?.game?.data?.config?.game == "marketjs" && contestmaster?.playCount > 50)
+                                || (contestmaster?.game?.data?.config?.game !== "marketjs" && contestmaster?.roomsCount > 25)
+                                ?
+                                <>
+                                    {contestmaster?.game?.data?.config?.game ==
+                                        "marketjs"
+                                        ? nFormatter(contestmaster?.playCount, 1)
+                                        : nFormatter(contestmaster?.roomsCount, 1, 'roomsCount')
+                                    }{" "}
+                                    Players Played
+                                </> : <Text p="3"></Text>}
                         </Text>
                     </VStack>
                     {sectionName === 'Blockchain Games' ? (
-                    <Box w={["30%","30%","23%"]}>
-                        <Tooltip
-                            placement="top-end"
-                            label={'Contest end at '+moment(contestmaster.contest?.endDate).format("DD MMM, YYYY, HH:mm")} 
-                            bg="#383838"
-                            borderRadius="10px"
-                            color="white"
-                            fontSize="sm"
-                            p="10px"
-                        >
-                            <Text>
-                                <InfoIcon
-                                    color="#ddd"
-                                    float="right"
-                                    boxSize={"29px"}
-                                />
-                            </Text>
-                        </Tooltip>
-                                 
-                    <SocialActions
-                        onHeartClick={onHeartClick}
-                        isHeartClick={isHeartClick}
-                        imgSize={{ width: "25px", height: "25px" }}
-                        influencer={contestmaster.influencer}
-                    />
-                    </Box>
-                    ) : 
-                    <SocialActions
-                        onHeartClick={onHeartClick}
-                        isHeartClick={isHeartClick}
-                        imgSize={{ width: "25px", height: "25px" }}
-                        influencer={contestmaster.influencer}
-                    />
+                        <Box w={["30%", "30%", "23%"]}>
+                            <Tooltip
+                                placement="top-end"
+                                label={'Contest end at ' + moment(contestmaster.contest?.endDate).format("DD MMM, YYYY, HH:mm")}
+                                bg="#383838"
+                                borderRadius="10px"
+                                color="white"
+                                fontSize="sm"
+                                p="10px"
+                            >
+                                <Text>
+                                    <InfoIcon
+                                        color="#ddd"
+                                        float="right"
+                                        boxSize={"29px"}
+                                    />
+                                </Text>
+                            </Tooltip>
+
+                            <SocialActions
+                                onHeartClick={onHeartClick}
+                                isHeartClick={isHeartClick}
+                                imgSize={{ width: "25px", height: "25px" }}
+                                influencer={contestmaster.influencer}
+                            />
+                        </Box>
+                    ) :
+                        <SocialActions
+                            onHeartClick={onHeartClick}
+                            isHeartClick={isHeartClick}
+                            imgSize={{ width: "25px", height: "25px" }}
+                            influencer={contestmaster.influencer}
+                        />
                     }
                 </Flex>
 
@@ -207,15 +213,17 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             _hover={{ textDecoration: "none !important" }}
                             w="90%"
                             onClick={(e) => {
-                                ct.onGamePlayNowButton({action:"", params: {
-                                    "ButtonName": "Play Now",
-                                    "CollectionName": contestmaster.name,
-                                    "GameName": contestmaster.name,
-                                    "Username": user?.username,
-                                    "PlayerID": user?.id,
-                                    "EmailID": user?.email,
-                                    "MobileNo": user?.mobileNumber
-                                }});                                
+                                ct.onGamePlayNowButton({
+                                    action: "", params: {
+                                        "ButtonName": "Play Now",
+                                        "CollectionName": contestmaster.name,
+                                        "GameName": contestmaster.name,
+                                        "Username": user?.username,
+                                        "PlayerID": user?.id,
+                                        "EmailID": user?.email,
+                                        "MobileNo": user?.mobileNumber
+                                    }
+                                });
 
                                 if (
                                     contestmaster?.game?.data
@@ -293,8 +301,8 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     )}
                 {showPaidGameConfirmation?.callerKey ==
                     `igc-${contestmaster?.id}` && (
-                    <PaidGameConfirmation contestmaster={contestmaster} />
-                )}
+                        <PaidGameConfirmation contestmaster={contestmaster} />
+                    )}
 
                 <LMNonCloseALert
                     header={"Please Wait....."}

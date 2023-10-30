@@ -74,7 +74,54 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [defaultCrytoChip, SetDefaultCrytoChip] = useState();
     const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
 
-    var lm_user_location = window.localStorage?.getItem("lm_user_location");
+    const [userLocation, setUserLocation] = useState();
+
+    // var lm_user_location = window.localStorage?.getItem("lm_user_location")
+    //     ? window.localStorage?.getItem("lm_user_location")
+    //     : new Date().getTimezoneOffset() === -330
+    //     ? "IN"
+    //     : null;
+
+    useEffect(() => {
+        function setLocationTimezone() {
+            new Date().getTimezoneOffset() === -330
+                ? setUserLocation("IN")
+                : setUserLocation(null);
+        }
+
+        async function locationSetter() {
+            if (
+                window.localStorage?.getItem("lm_user_location") &&
+                window.localStorage?.getItem("lm_user_location") !== "null"
+            ) {
+                setUserLocation(
+                    window.localStorage?.getItem("lm_user_location")
+                );
+            } else {
+                try {
+                    const { data } = await axios.get(
+                        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${strapi.getToken()}`
+                            }
+                        }
+                    );
+
+                    if (data?.data?.ipCountry) {
+                        setUserLocation(data?.data?.ipCountry);
+                    } else {
+                        setLocationTimezone();
+                    }
+                } catch (err) {
+                    console.log(err);
+                    setLocationTimezone();
+                }
+            }
+        }
+
+        locationSetter();
+    }, []);
 
     useEffect(() => {
         async function fetchData() {
@@ -94,7 +141,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     SetDefaultFiatAmount(value.minimumDeposit);
                 }
 
-                if (lm_user_location == "IN" && value.currency == "INR") {
+                if (userLocation == "IN" && value.currency == "INR") {
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
                     setNumberOfChips(value.numberOfChips);
@@ -113,7 +160,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
         // Trigger the fetch
         fetchData();
-    }, []);
+    }, [userLocation]);
 
     useEffect(() => {
         async function fetchData() {
@@ -201,33 +248,38 @@ const TabDepositPanel = ({ isDeposit }) => {
             if (depositType == 1) {
                 if (process.env.NEXT_PUBLIC_SENTRY_ENV === "staging") {
                     try {
-                        if (currency === "INR") {
-                            if (user) {
-                                const { id } = user;
+                        // Eazypay code
+                        // if (currency === "INR") {
+                        //     if (user) {
+                        //         const { id } = user;
 
-                                const resp = await axios.post(
-                                    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/eazypay`,
-                                    {
-                                        user_id: id,
-                                        type: "DEPOSIT",
-                                        value: +numberOfAmount,
-                                        couponCode: couponCode
-                                            ? couponCode
-                                            : "",
-                                        currency: currency,
-                                        calculated_chips: amount
-                                    },
-                                    {
-                                        headers: {
-                                            Authorization: `Bearer ${strapi.getToken()}`
-                                        }
-                                    }
-                                );
-                                const { paymentUrl } = resp.data.data;
+                        //         const resp = await axios.post(
+                        //             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/eazypay`,
+                        //             {
+                        //                 user_id: id,
+                        //                 type: "DEPOSIT",
+                        //                 value: +numberOfAmount,
+                        //                 redirect_url:
+                        //                     process.env
+                        //                         .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                        //                     asPath,
+                        //                 couponCode: couponCode
+                        //                     ? couponCode
+                        //                     : "",
+                        //                 currency: currency,
+                        //                 calculated_chips: amount
+                        //             },
+                        //             {
+                        //                 headers: {
+                        //                     Authorization: `Bearer ${strapi.getToken()}`
+                        //                 }
+                        //             }
+                        //         );
+                        //         const { paymentUrl } = resp.data.data;
 
-                                window.open(paymentUrl, "_self");
-                            }
-                        } else {
+                        //         window.open(paymentUrl, "_self");
+                        //     }
+                        // } else {
                             const { loadStripe } = await stripeJs();
 
                             if (user) {
@@ -270,7 +322,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                                     sessionId: stripe_session_id
                                 });
                             }
-                        }
+                        // }
                     } catch (error) {}
                 } else {
                     try {
@@ -381,7 +433,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
 
         if (depositType == 1) {
-            lm_user_location == "IN" ? setCurrency("INR") : setCurrency("USD");
+            userLocation == "IN" ? setCurrency("INR") : setCurrency("USD");
             setMinimumDeposit(defaultFiatAmount);
             setNumberOfChips(defaultFiatChip);
 
@@ -391,7 +443,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                 setNumberOfAmount((amount / numberOfAmount).toFixed(2));
             }
         }
-    }, [depositType]);
+    }, [depositType, userLocation]);
 
     return (
         <Flex
