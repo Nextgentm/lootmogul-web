@@ -546,9 +546,9 @@ export const AppContextContainer = ({ children }) => {
   
 
     useEffect(()=> {
-        if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
+        //if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
             handlePermission();
-        }
+        //}
         setTimeout(() => {
             const specificDiv =  document.querySelector('.wzrk-powered');      
             if (specificDiv) {
@@ -558,7 +558,7 @@ export const AppContextContainer = ({ children }) => {
 
          setTimeout(() => {
             //document.addEventListener('DOMContentLoaded', function () {
-                console.log("JavaScript code is running");
+                //console.log("JavaScript code is running");
 
                   // Run the function when the component mounts
                   initializePage();
