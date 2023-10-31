@@ -199,7 +199,7 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
                                             ? nFormatter(cm?.playCount, 1)
                                             : nFormatter(cm?.roomsCount, 1, 'roomsCount')
                                             }{" "}
-                                        Players Played
+                                        Players Joined
                                     </Text>
                                 </VStack>
                             </Flex>
@@ -327,7 +327,7 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
                                             ? nFormatter(cm?.playCount, 1)
                                             : nFormatter(cm?.roomsCount, 1, 'roomsCount')
                                             }{" "}
-                                        Players Played
+                                        Players Joined
                                     </Text>
                                 </VStack>
                             </Flex>
