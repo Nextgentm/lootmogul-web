@@ -32,7 +32,7 @@ const TransactionHistory = memo(() => {
     const [loading, setLoading] = useState(true);
 
     const [keyword, setKeyword] = useState("");
-    const [status, setStatus] = useState("all");
+    const [status, setStatus] = useState("success");
     const [auditLogData, setAuditLogData] = useState([]);
     const [startingDate, setStartingDate] = useState(
         moment().subtract(1, "weeks").format("YYYY-MM-DD")
@@ -50,7 +50,7 @@ const TransactionHistory = memo(() => {
     });
 
     const fetchData = async (
-        status = "all",
+        status = "success",
         keyword = "",
         startingDate = startingDate,
         endingDate = endingDate
@@ -61,7 +61,7 @@ const TransactionHistory = memo(() => {
             let pageCount = 1;
             let data = [];
 
-            let filters = {
+            /*let filters = {
                 type: { $in: ["credit", "debit", "hold"] }
             };
             if (keyword !== "") {
@@ -73,8 +73,21 @@ const TransactionHistory = memo(() => {
             }
             if (startingDate && endingDate) {
                 filters["updatedAt"] = { $gte: startingDate, $lte: endingDate };
-            }
+            }*/
 
+            let filters = {};
+            if (keyword !== "") {
+                filters["id"] = keyword;
+            }
+            
+            if (status !== "all") {
+                filters["status"] = status;
+            }
+            
+            if (startingDate && endingDate) {
+                filters["updatedAt"] = { $gte: startingDate, $lte: endingDate };
+            }
+            
             do {
                 const res = await strapi.find("transaction-infos", {
                     populate: [
@@ -133,8 +146,10 @@ const TransactionHistory = memo(() => {
 
             pageNo = 1;
             pageCount = 1;
+            data = [];
             do {
                 const res = await strapi.find("transactions", {
+                    filters:filters,
                     populate: [
                         "contest.contestmaster",
                         "currency",
@@ -147,7 +162,7 @@ const TransactionHistory = memo(() => {
                         pageSize: 60
                     }
                 });
-                // console.log("Trasanction DATA =-=-=-=-=-=", res);
+                 //console.log("Trasanction DATA =-=-=-=-=-=", res);
 
                 if (res?.meta) {
                     // console.log("res.data", res.data);
@@ -167,8 +182,9 @@ const TransactionHistory = memo(() => {
 
                         return !currDataTxnId.flat().includes(item.id);
                     });
-                    // console.log("filterData", filterData);
+                    
                     data.push(filterData);
+                    
                     if (pageCount == 1) {
                         pageCount = res.meta.pagination.pageCount;
                     }
@@ -183,7 +199,9 @@ const TransactionHistory = memo(() => {
             let dataAfterConvertion = data.filter(
                 (i) => new Date(i.createdAt) >= new Date("2023-01-25")
             );
-            if (dataBeforeConvertion.length && dataAfterConvertion) {
+
+            //commented due to filter not working
+            /*if (dataBeforeConvertion.length && dataAfterConvertion) {
                 const auditLogs = await strapi.find(
                     "chips-coversion-histories",
                     {
@@ -205,9 +223,9 @@ const TransactionHistory = memo(() => {
                     });
                     setAuditLogData(data);
                 }
-            }
+            }*/
             setLoading(false);
-            console.log("data", data);
+            //console.log("data", data);
             setData(data);
         } catch (error) {
             setLoading(false);
@@ -233,7 +251,7 @@ const TransactionHistory = memo(() => {
     };
 
     React.useEffect(() => {
-        console.log("user?.id", user?.id);
+        //console.log("user?.id", user?.id);
         if (withdrawFetch) {
             fetchData();
         }
@@ -291,6 +309,7 @@ const TransactionHistory = memo(() => {
                         title="Status"
                         options={statusOptions}
                         onChange={handleChangeStatus}
+                        status={status}
                     />
                 </GridItem>
 
@@ -365,7 +384,7 @@ const TransactionHistory = memo(() => {
                             </>
                         ) : (
                             <Box>
-                                <Text style={{ textAlign: "center" }}>
+                                <Text style={{ textAlign: "center" }} color={"#fff"} p="20px">
                                     {loading
                                         ? "loading.."
                                         : "There are no transactions!"}
@@ -396,7 +415,7 @@ const TransactionHistory = memo(() => {
                         </>
                     ) : (
                         <Box>
-                            <Text style={{ textAlign: "center" }}>
+                            <Text style={{ textAlign: "center" }} color={"#fff"} p="20px">
                                 {loading
                                     ? "loading.."
                                     : "There are no transactions!"}
@@ -596,7 +615,7 @@ const SearchBox = ({ style, value, onChange }) => {
     );
 };
 
-const SelectBox = ({ style, icon, title, options, onChange }) => {
+const SelectBox = ({ style, icon, title, options, onChange, status }) => {
     return (
         <Flex style={style}>
             <Box pl={4}>{icon}</Box>
@@ -608,6 +627,7 @@ const SelectBox = ({ style, icon, title, options, onChange }) => {
                 _focus={{ borderColor: "transparent", boxShadow: "none" }}
                 onChange={onChange}
                 style={{ paddingLeft: "6px" }}
+                value={status}
             >
                 {options &&
                     options.map((item) => {
@@ -619,6 +639,7 @@ const SelectBox = ({ style, icon, title, options, onChange }) => {
                                 }}
                                 key={item}
                                 value={`${item}`.toLowerCase()}
+                                selected="success"
                             >
                                 {item}
                             </option>
