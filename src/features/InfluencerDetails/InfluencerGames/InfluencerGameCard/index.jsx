@@ -150,8 +150,8 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             pl="6px"
                         >
 
-                            {(contestmaster?.game?.data?.config?.game == "marketjs" && contestmaster?.playCount > 50)
-                                || (contestmaster?.game?.data?.config?.game !== "marketjs" && contestmaster?.roomsCount > 25)
+                            {(contestmaster?.game?.data?.config?.game == "marketjs" && contestmaster?.allTimePlayCount > 50)
+                                || (contestmaster?.game?.data?.config?.game !== "marketjs" && contestmaster?.allTimeRoomsCount > 25)
                                 ?
                                 <>
                                     {contestmaster?.game?.data?.config?.game ==
