@@ -563,7 +563,7 @@ export const AppContextContainer = ({ children }) => {
                   // Run the function when the component mounts
                   initializePage();
              // });
-         }, 5000);
+         }, 10000);
          
     }, [user]);
     
