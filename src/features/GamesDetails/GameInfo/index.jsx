@@ -54,7 +54,10 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
             fontSize={["12px", "12px", "12px", "18px", "18px"]}
             fontWeight={"400"}
           >
-            {gameData?.contest_section?.data?.name}
+            {
+            // gameData?.type == "leaderboard"
+            //         ? "Skill Games":
+                    "Skill Games"}
           </Text>
           <Text
             color="#FFF"
@@ -106,7 +109,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                 color="white"
                 fontFamily="Sora"
               >
-                Winning prize
+                Current Contest Stats {/* Winning prize */}
               </Text>
               {chipStr && (
               <Image
@@ -125,7 +128,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                 ml="10px"
                 color="#d63065"
               >
-                {modifiedDescription} {chipStr}
+                {/* {modifiedDescription} {chipStr} */}
               </Text>
             </Flex>
           ) : (

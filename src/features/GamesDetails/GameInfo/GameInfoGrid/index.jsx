@@ -13,7 +13,9 @@ const GameInfoGrid = ({ gameData }) => {
     
     const gameInfo = [
         {
-            label: gameData?.contest_section?.data?.name,
+            label: gameData?.type == "leaderboard"
+                    ? "Leaderboard Skill Game"
+                    :"Battle Skill Game",
             icon: "games_apt_icon.svg"
         },
         {
