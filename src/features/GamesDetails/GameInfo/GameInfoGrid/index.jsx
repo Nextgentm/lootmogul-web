@@ -22,6 +22,8 @@ const GameInfoGrid = ({ gameData }) => {
             label:
                 gameData?.game?.data?.config?.game == "marketjs"
                     ? nFormatter(gameData?.playCount, 1) + " Plays"
+                    : gameData?.type == "leaderboard"
+                    ? nFormatter(gameData?.roomsCount, 1)  + " Plays"
                     : nFormatter(gameData?.roomsCount, 1, 'roomsCount')  + " Plays",
             icon: "games_players_icon.svg"
         },
