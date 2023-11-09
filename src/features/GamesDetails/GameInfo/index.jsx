@@ -54,10 +54,10 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
             fontSize={["12px", "12px", "12px", "18px", "18px"]}
             fontWeight={"400"}
           >
-            {
-            // gameData?.type == "leaderboard"
-            //         ? "Skill Games":
-                    "Skill Games"}
+            {gameData?.contest_section?.data?.name}
+            {/* { gameData?.type == "leaderboard"
+                    ? "Skill Games":
+                    "Skill Games"} */}
           </Text>
           <Text
             color="#FFF"

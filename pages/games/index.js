@@ -58,7 +58,7 @@ export async function getStaticProps() {
             },
             {
               name: {
-                $eq: "Blockchain Games",
+                $eq: "Skill Games",
               },
             },
             {
