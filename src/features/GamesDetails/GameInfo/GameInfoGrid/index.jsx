@@ -13,13 +13,17 @@ const GameInfoGrid = ({ gameData }) => {
     
     const gameInfo = [
         {
-            label: gameData?.contest_section?.data?.name,
+            label: gameData?.type == "leaderboard"
+                    ? "Leaderboard Skill Game"
+                    :"Battle Skill Game",
             icon: "games_apt_icon.svg"
         },
         {
             label:
                 gameData?.game?.data?.config?.game == "marketjs"
                     ? nFormatter(gameData?.playCount, 1) + " Plays"
+                    : gameData?.type == "leaderboard"
+                    ? nFormatter(gameData?.roomsCount, 1)  + " Plays"
                     : nFormatter(gameData?.roomsCount, 1, 'roomsCount')  + " Plays",
             icon: "games_players_icon.svg"
         },
