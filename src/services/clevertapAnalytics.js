@@ -72,7 +72,7 @@ export const pageview = (url) => {
 export const onUserLogin = ({ action, params }) => {
     
     
-    clevertap.onUserLogin.push({
+    /*clevertap.onUserLogin.push({
         Site: {
             Name: params.username, // String
             Identity: params.username, // String or number
@@ -86,7 +86,7 @@ export const onUserLogin = ({ action, params }) => {
             "MSG-sms": false, // Enable sms notifications
             "MSG-whatsapp": false // Enable WhatsApp notifications
         }
-    });
+    });*/
     //console.log(clevertap);
 };
 

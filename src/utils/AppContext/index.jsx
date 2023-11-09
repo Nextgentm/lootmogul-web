@@ -364,7 +364,7 @@ export const AppContextContainer = ({ children }) => {
         });
         clevertap.privacy.push({optOut: true});
         clevertap.privacy.push({useIP: true});
-        clevertap.onUserLogin.push({
+        /*clevertap.onUserLogin.push({
             Site: {
                 Name: "Visitor "+ userId, // String
                 Identity: "Visitor "+ userId, // String or number
@@ -378,7 +378,7 @@ export const AppContextContainer = ({ children }) => {
                 "MSG-sms": false, // Enable sms notifications
                 "MSG-whatsapp": false // Enable WhatsApp notifications
             }
-        });
+        });*/
         
         
 
@@ -682,10 +682,10 @@ export const AppContextContainer = ({ children }) => {
             }
 
             /* Clevertap onUserLogin*/
-            ct.onUserLogin({
+           /* ct.onUserLogin({
                 action: "onUserLogin",
                 params: data.user
-            });
+            }); */
 
              /* Clevertap on User Login and Registration Event Tracking*/
             const onUserLoginData = await axios.get(
@@ -964,10 +964,11 @@ export const AppContextContainer = ({ children }) => {
             }
             
             /* Clevertap onUserLogin*/
-            ct.onUserLogin({
+            
+            /*ct.onUserLogin({
                 action: "onUserLogin",
                 params: data.user
-            });
+            });*/
             
              /* Clevertap on User Login and Registration Event Tracking*/
              const onUserLoginData = await axios.get(
