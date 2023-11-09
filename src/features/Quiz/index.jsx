@@ -308,7 +308,7 @@ const Quiz = (props) => {
             pos="absolute"
             bottom="2"
             w="90%"
-            h="160px"
+            h="135px"
             display={{
               base: "block",
               sm: "block",
