@@ -71,22 +71,23 @@ export const pageview = (url) => {
 
 export const onUserLogin = ({ action, params }) => {
     
-    
-    /*clevertap.onUserLogin.push({
-        Site: {
-            Name: params.username, // String
-            Identity: params.username, // String or number
-            Email: params.email, // Email address of the user
-            Phone: '', // Phone (with the country code)
-            Gender: "M", // Can be either M or F
-            DOB: new Date(), // Date of Birth. Date object
-            // optional fields. controls whether the user will be sent email, push etc.
-            "MSG-email": true, // Disable email notifications
-            "MSG-push": true, // Enable push notifications
-            "MSG-sms": false, // Enable sms notifications
-            "MSG-whatsapp": false // Enable WhatsApp notifications
-        }
-    });*/
+    if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
+        clevertap.onUserLogin.push({
+            Site: {
+                Name: params.username, // String
+                Identity: params.username, // String or number
+                Email: params.email, // Email address of the user
+                Phone: '', // Phone (with the country code)
+                Gender: "M", // Can be either M or F
+                DOB: new Date(), // Date of Birth. Date object
+                // optional fields. controls whether the user will be sent email, push etc.
+                "MSG-email": true, // Disable email notifications
+                "MSG-push": true, // Enable push notifications
+                "MSG-sms": false, // Enable sms notifications
+                "MSG-whatsapp": false // Enable WhatsApp notifications
+            }
+        });
+    }
     //console.log(clevertap);
 };
 
