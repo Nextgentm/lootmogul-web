@@ -128,13 +128,12 @@ const QuestionOption = ({
                   <AvatarGroup
                     size="xs"
                     pos="absolute"
-                    bottom={{
-                      base: "29px",
-                      sm: "29px",
-                      md: "57px",
-                      lg: "57px",
-                    }}
+                    bottom={
+                      optionUrls[index] != null && optionUrls[index] != ""?
+                      ["60px", "70px", "105px", "300px"]:["29px", "29px", "57px", "57px"]
+                    }
                     right="-4px"
+                    zIndex={9}
                   >
                     {allUserOptions?.length &&
                       allUserOptions[index].map(
@@ -156,8 +155,8 @@ const QuestionOption = ({
                       lg: "20px 5px",
                     }}
                     width={{
-                      base: "100px",
-                      sm: "100px",
+                      base: "120px",
+                      sm: "150px",
                       md: "300px",
                       lg: "300px",
                     }}
@@ -190,7 +189,7 @@ const QuestionOption = ({
                           src={optionUrls[index]}
                           alt={"option" + index}
                           pos="relative"
-                          h={["50px", "100px", "100px", "300px"]}
+                          h={["50px", "60px", "100px", "300px"]}
                           textAlign={"center"}
                           margin={"auto"}
                           objectFit="cover"
