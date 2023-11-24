@@ -231,7 +231,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             width="20px"
                                             height="20px"
                                             src={
-                                                "https://upload.wikimedia.org/wikipedia/commons/archive/5/53/20161129182045%21Google_%22G%22_Logo.svg"
+                                                "/assets/Google.svg"
                                             }
                                         />
                                     }
@@ -270,7 +270,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                                     width={"20px"}
                                                     height={"20px"}
                                                     src={
-                                                        "https://upload.wikimedia.org/wikipedia/commons/4/4d/F_icon_reversed.svg"
+                                                        "/assets/FB.svg"
                                                     }
                                                 />
                                             }
