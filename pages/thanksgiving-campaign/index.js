@@ -79,7 +79,27 @@ export default function GamesPage({
                     Gratitude meets gaming! Unlock a special Thanksgiving offer at LootMogul: Purchase $5 worth of chips and receive a generous $10 credited to your account. Available from November 23rd to 28th.
                     <br/><br/>Play more and Win more!
                 </Text>
-                 
+                <Link
+                    href={'#__next'}
+                    _hover={{ border: "none", textDecoration: "none" }}
+                    _focus={{ border: "none", textDecoration: "none" }}
+                    key={`igc-1`}
+                    
+                >
+                    <Button
+                        bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                        filter="drop-shadow(0 0 20px #FF0080)"
+                        boxShadow="inset 0 0 0px 0px #481A7F"
+                        width="180px"
+                        fontSize="21px"
+                        fontWeight="500"
+                        p="28px"
+                        mt="30px"
+                        mb="30px"
+                        >
+                        Deposit Now
+                    </Button>
+                </Link>
             </Box>
             <Box
                 bgSize="cover"
@@ -116,8 +136,8 @@ export default function GamesPage({
                                     objectFit="contain"
                                     alt="Image"
                                     layout="fill"
-                                    w="350px"
-                                    src={"/assets/Thanksgiving-Contest-Image.png"}
+                                    w="450px"
+                                    src={"/assets/Thanksgiving-Contest-Image1.png"}
                                 />
                             </Flex>
                             
