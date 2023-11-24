@@ -20,6 +20,10 @@ const Banner = ({ bannerData }) => {
         toggleLoginModal();
     };
     
+    if (router.route === "/thanksgiving-campaign") {
+        bannerData.trending_redirectionUrl = '/wallet';
+    }
+
     useEffect(() => {
         if(user?.id){
             router.push(bannerData.trending_redirectionUrl );

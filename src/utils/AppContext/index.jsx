@@ -1071,6 +1071,9 @@ export const AppContextContainer = ({ children }) => {
         if (router.route === "/gamecampaign") {
             router.push(redirectUrl);
         }
+        if (router.route === "/thanksgiving-campaign") {
+            router.push('/wallet');
+        }
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
