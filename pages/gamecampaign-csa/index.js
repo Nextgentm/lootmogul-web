@@ -24,7 +24,7 @@ export default function GamesPage({
   campaignsSectionsResData,
   seoData,
 }) {
-  console.log(campaignsSectionsResData);
+  //console.log(campaignsSectionsResData);
   const content =  campaignsSectionsResData?.data[2].trending_contestHighlights;
   const trending_subheader = campaignsSectionsResData?.data[2].trending_subheader;
   return (
@@ -193,7 +193,11 @@ export default function GamesPage({
         </Flex>
        
     </Box>
-       
+       <BlockChainGame 
+            contestSectionsData={contestSectionsData?.data || []}
+            contestmasters={data || []}
+            blockChainCardData={campaignsSectionsResData?.data[0] || []}
+        />
     </>
   );
 }

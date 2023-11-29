@@ -97,7 +97,7 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
            
             <>
             <Slider {...horizontalSettings}>
-                {content.name == "Blockchain Games" && content?.contestmasters?.data?.length > 0 && content?.contestmasters?.data
+                {content.name == "Skill Games" && content?.contestmasters?.data?.length > 0 && content?.contestmasters?.data
                                 .slice(0, 6)
                     .map((cm, index) => 
                         type == 'free' && cm.entryFee == 0 ? ( <Box
