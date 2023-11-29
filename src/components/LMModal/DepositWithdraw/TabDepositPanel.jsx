@@ -43,6 +43,7 @@ const TabDepositPanel = ({ isDeposit }) => {
         sm: "sm",
         md: "md"
     });
+    const [showCouponCode, setShowCouponCode] = useState(false);
     const [couponCode, setCouponCode] = useState("");
     const [couponList, setCouponList] = useState([]);
 
@@ -280,50 +281,71 @@ const TabDepositPanel = ({ isDeposit }) => {
                         //         window.open(paymentUrl, "_self");
                         //     }
                         // } else {
-                            const { loadStripe } = await stripeJs();
+                        console.log(couponCode);
+                        const { loadStripe } = await stripeJs();
 
-                            if (user) {
-                                const { id } = user;
+                        if (user) {
+                            const { id } = user;
 
-                                // if(currency == "INR" ){
+                            // if(currency == "INR" ){
 
-                                // }
+                            // }
+                            console.log(`${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`);
+                            console.log({
+                                user_id: id,
+                                redirect_url:
+                                    process.env
+                                        .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                    asPath,
+                                type: "DEPOSIT",
+                                value: +numberOfAmount,
+                                couponCode: couponCode
+                                    ? couponCode
+                                    : "",
+                                currency: currency,
+                                calculated_chips: amount
+                            });
+                            console.log({
+                                headers: {
+                                    Authorization: `Bearer ${strapi.getToken()}`
+                                }
+                            });
 
-                                const resp = await axios.post(
-                                    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
-                                    {
-                                        user_id: id,
-                                        redirect_url:
-                                            process.env
-                                                .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
-                                            asPath,
-                                        type: "DEPOSIT",
-                                        value: +numberOfAmount,
-                                        couponCode: couponCode
-                                            ? couponCode
-                                            : "",
-                                        currency: currency,
-                                        calculated_chips: amount
-                                    },
-                                    {
-                                        headers: {
-                                            Authorization: `Bearer ${strapi.getToken()}`
-                                        }
+                            const resp = await axios.post(
+                                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/payment/stripe`,
+                                {
+                                    user_id: id,
+                                    redirect_url:
+                                        process.env
+                                            .NEXT_PUBLIC_STRIPE_REDIRECT_URL +
+                                        asPath,
+                                    type: "DEPOSIT",
+                                    value: +numberOfAmount,
+                                    couponCode: couponCode
+                                        ? couponCode
+                                        : "",
+                                    currency: currency,
+                                    calculated_chips: amount
+                                },
+                                {
+                                    headers: {
+                                        Authorization: `Bearer ${strapi.getToken()}`
                                     }
-                                );
-                                const { stripe_session_id } = JSON.parse(
-                                    resp.data.data
-                                );
+                                }
+                            );
+                            const { stripe_session_id } = JSON.parse(
+                                resp.data.data
+                            );
 
-                                const stripe = await loadStripe(
-                                    process.env.NEXT_PUBLIC_STRIPE_API_KEY
-                                );
-                                stripe.redirectToCheckout({
-                                    sessionId: stripe_session_id
-                                });
-                            }
+                            const stripe = await loadStripe(
+                                process.env.NEXT_PUBLIC_STRIPE_API_KEY
+                            );
+                            stripe.redirectToCheckout({
+                                sessionId: stripe_session_id
+                            });
+                        }
                         // }
-                    } catch (error) {}
+                    } catch (error) { }
                 } else {
                     try {
                         const { loadStripe } = await stripeJs();
@@ -366,7 +388,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                                 sessionId: stripe_session_id
                             });
                         }
-                    } catch (error) {}
+                    } catch (error) { }
                 }
             } else if (depositType == 2) {
                 try {
@@ -398,7 +420,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                         } = resp.data;
                         window.location.href = bitpay_url;
                     }
-                } catch (error) {}
+                } catch (error) { }
             }
             ct.onDepositInitiate({
                 action: "Deposit Initiate",
@@ -758,6 +780,63 @@ const TabDepositPanel = ({ isDeposit }) => {
                     into chips
                 </Text>
             </Flex>
+
+            {/* coupon code input */}
+            <Flex>
+                <Checkbox
+                    w="100%"
+                    onChange={(e) => setShowCouponCode(e.target.checked)}
+                >
+                    <Text
+                        fontSize={["12px", "12px", "16px", "16px", "16px", "lg"]}
+                        pt="5px"
+                        pl="4px"
+                        textAlign="center"
+                        color="white"
+                        fontFamily={"Sora"}
+                        fontWeight="300"
+                        display="inline-block"
+                    >
+
+                        I have coupon code
+                    </Text>
+                </Checkbox>
+            </Flex>
+            {showCouponCode &&
+                <Flex
+                    w="100%"
+                    justifyContent={"space-evenly"}
+                    bg="#481A7F"
+                    p="2%"
+                    borderRadius="10px"
+                    display="block"
+                >
+                    <Input
+                        w={currentSize === "base" ? "100%" : "100%"}
+                        h="42px"
+                        color="white"
+                        defaultValue={couponCode}
+                        value={couponCode}
+                        onChange={(e) => {
+                            setCouponCode(e.target.value);
+                        }}
+                        placeholder="coupon code"
+                        fontSize={[
+                            "12px",
+                            "12px",
+                            "14px",
+                            "14px",
+                            "14px",
+                            "18px"
+                        ]}
+                        fontWeight="400"
+                        fontFamily="Sora"
+                        backgroundColor="#1d052b"
+                    ></Input>
+
+                </Flex>
+            }
+
             <Flex
                 mt={["1%", "1%", "1%", "1%", "1%", "3%"]}
                 ml={["10px", "10px", "15%"]}
@@ -796,7 +875,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                                 e.preventDefault();
                                 window.open(
                                     process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                                        "/terms-conditions#payment",
+                                    "/terms-conditions#payment",
                                     "_blank"
                                 );
                             }}
