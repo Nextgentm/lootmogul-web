@@ -76,6 +76,7 @@ export default function GamesPage({
                     fontWeight="normal"
                     lineHeight={["28px", "28px", "28px"]}
                     width={["100%", "100%", "80%"]}
+                    className="desc_subheader"
                 >
                    <p dangerouslySetInnerHTML={{ __html: trending_subheader }}></p>
                 </Text>
@@ -148,6 +149,25 @@ export default function GamesPage({
                 </Link>
             </Box>
         </Flex>
+        <Flex
+            flexDir={["column", "column", "column", "row"]}
+            w="100%"
+            alignItems={"center"}
+            backgroundImage={ "/assets/Banner-2.png" }
+            height={["100px", "100px", "300px", "420px"]}
+            p="2% 5%"
+            backgroundSize="contain"
+            backgroundRepeat={"no-repeat"}
+            mt={["30px","30px","10px","0px"]}
+        >
+            <Box
+                px={[5,5,10]}
+                width={["100%", "100%", "100%", "100%"]}
+            >
+                
+            </Box>
+        </Flex>
+
         <Flex
             flexDir={["column", "column", "column", "row"]}
             w="100%"
