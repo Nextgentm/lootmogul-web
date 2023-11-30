@@ -1063,7 +1063,7 @@ export const AppContextContainer = ({ children }) => {
             await updateUser(data.user);
         }
 
-        if (router.route === "/gamecampaign" || router.route === '/gamecampaign-csa') {
+        if (router.route === "/gamecampaign" || router.route === '/cricket') {
             router.push(redirectUrl);
         }
         if (router.route === "/thanksgiving-campaign") {

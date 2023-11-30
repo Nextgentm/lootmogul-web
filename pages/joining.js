@@ -23,7 +23,7 @@ const Joining = (props) => {
   useEffect(() => {
     if (!user || !currentContest) {
       setMatchCount(0);
-      router.push("/");
+      router.push("/games");
     } else {
       props.setLoading(true);
       setIsHideHeader(true);

@@ -68,7 +68,7 @@ const Quiz = (props) => {
         setShowAlert(false);
         setIsHideHeader(false);
         setIsHideFooter(false);
-        router.push("/");
+        router.push("/games");
       });
       window.addEventListener("offline", () => {
         setShowAlert(true);
@@ -77,7 +77,7 @@ const Quiz = (props) => {
   }, []);
 
   useEffect(() => {
-    if (!user) router.push("/");
+    if (!user) router.push("/games");
     else {
       setIsHideHeader(true);
       setIsHideFooter(true);
@@ -125,7 +125,7 @@ const Quiz = (props) => {
       });
 
       socket.on("game_over", (data) => {
-        console.log(data);
+        //console.log(data);
         ct.onGameGameOver({
           action: "Gameplay Completed",
             params: {
@@ -328,7 +328,7 @@ const Quiz = (props) => {
             setShowAlert(false);
             setIsHideHeader(false);
             setIsHideFooter(false);
-            router.push("/");
+            router.push("/games");
           }}
         />
       </Box>
