@@ -19,6 +19,7 @@ const Quiz = (props) => {
   const { user } = useContext(AppContext);
   const [showAlert, setShowAlert] = useState(false);
   const [options, setOptions] = useState([]);
+  const [optionUrls, setOptionUrls] = useState([]);
   const [timer, setTimer] = useState(0);
   const [milliCounter, setMilliCounter] = useState();
   const [timerValue, setTimerValue] = useState();
@@ -101,6 +102,12 @@ const Quiz = (props) => {
           data.question?.option2,
           data.question?.option3,
           data.question?.option4,
+        ]);
+        setOptionUrls([
+          data.question?.option1Url,
+          data.question?.option2Url,
+          data.question?.option3Url,
+          data.question?.option4Url,
         ]);
         setCurrentQuestionNo(data.question_no);
         setMaxTime(Math.floor(data.timer));
@@ -295,6 +302,7 @@ const Quiz = (props) => {
                 allUserOptions={selOption > -1 ? allUserOptions : []}
                 voiceOver={voiceOver}
                 options={options}
+                optionUrls={optionUrls}
                 question={question}
                 correctAns={correctAns}
                 imageURL={imageURL}
@@ -308,7 +316,7 @@ const Quiz = (props) => {
             pos="absolute"
             bottom="2"
             w="90%"
-            h="160px"
+            h="135px"
             display={{
               base: "block",
               sm: "block",
