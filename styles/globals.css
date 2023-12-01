@@ -321,7 +321,9 @@ nav {
     font-size: 55px !important;;
     line-height: 38px !important;
 }
-
+canvas[data-testid] {
+  z-index: 99;
+}
 @media screen and (max-width: 768px) {
   .twitter_icon_patch svg.twitter{
    width: 16px;
