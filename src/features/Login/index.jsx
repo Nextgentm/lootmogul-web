@@ -184,8 +184,8 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                 rounded={5}
                 mt={["100px", "100px"]}
                 marginTop={["90px", "60px", "70px", "120px"]}
-                marginLeft={["0%", "50%", "60%", "70%"]}
-                width={["375px"]}
+                marginLeft={["0%", "0%", "60%", "70%"]}
+                width={["355px"]}
                 bg={"#4C69BA"}
                 borderRadius="14"
                 background="transparent"

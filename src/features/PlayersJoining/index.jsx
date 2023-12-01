@@ -83,7 +83,7 @@ const PlayersJoining = ({ timeLeft, users }) => {
                 isOpen={showAlert}
                 onClose={() => {
                   setShowAlert(false);
-                   router.push("/");                   
+                   router.push("/games");                   
                 }
                 }
             />
