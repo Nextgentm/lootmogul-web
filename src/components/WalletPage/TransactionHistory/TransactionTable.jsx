@@ -366,13 +366,13 @@ function TransactionTable({
     const [alteredColumn, setAlteredColumn] = useState([]);
     useEffect(() => {
         // console.log(refetchChange);
-        console.log(
+       /* console.log(
             "oldData",
             tableData,
             isMobile,
             auditLogData,
             tableData.length
-        );
+        );*/
         const newData = makeData(
             tableData,
             isMobile,
