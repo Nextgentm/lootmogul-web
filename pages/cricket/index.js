@@ -1,36 +1,28 @@
 import strapi from "../../src/utils/strapi";
 import SEOContainer from "../../src/features/SEOContainer";
 import { getSeoData } from "../../src/queries/strapiQueries";
-import GamesComponent from "../../src/features/Games/index";
-import MultipleLoggedInUser from "../../src/components/MultipleLoggedInUser";
-
 import Banner from "../../src/components/Web3Games/Banner";
-import TradingGame from "../../src/components/Web3Games/TradingGame";
 import BlockChainGame from "../../src/components/Web3Games/BlockChainGame";
-import CustomBlockChainGame from "../../src/components/Web3Games/CustomBlockChainGame";
-import { Box, Flex, Image, Text, Button, VStack, Link, ListItem, UnorderedList, } from '@chakra-ui/react'
+import { Box, Flex, Image, Text, Button, VStack, Link} from '@chakra-ui/react'
 
 const defaultSEOData = {
-    metaTitle:"Lootmogul | Join LootMogul Web3 Sports Gaming",
+    metaTitle:"Lootmogul | Join LootMogul Skill Sports Gaming",
     metaDescription:"Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!",
-    canonicalURL:process.env.NEXT_PUBLIC_SITE_URL+"/web3-games"
+    canonicalURL:process.env.NEXT_PUBLIC_SITE_URL+"/games"
 };
 
 export default function GamesPage({
-  data,
-  banners = [],
+  data,  
   contestSectionsData,
-  contestSectionsDataTrivia,
   campaignsSectionsResData,
-  seoData,
 }) {
-  //console.log(campaignsSectionsResData);
+  
   const content =  campaignsSectionsResData?.data[2].trending_contestHighlights;
   const trending_subheader = campaignsSectionsResData?.data[2].trending_subheader;
   return (
     <>
       
-      <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 
+      <SEOContainer seoData={defaultSEOData}/> 
         <Banner bannerData={campaignsSectionsResData?.data[2] || []}/>
         <Box>
         <Flex
@@ -273,32 +265,16 @@ export async function getStaticProps() {
         "/api/contest-sections?populate=image&sort=priority"
     );
 
-    /** For trivia games */
-    const contestSectionsRestrivia = await fetch(
-      process.env.NEXT_PUBLIC_STRAPI_API_URL +
-        "/api/contest-sections?populate=image&sort=priority"
-    );
-    const contestSectionsDataTrivia = await contestSectionsRestrivia.json();
-    
-    /** For trivia games */
     
     const campaignsSectionsRes = await fetch(
       process.env.NEXT_PUBLIC_STRAPI_API_URL +
-        "/api/game-campaigns?populate=*&sortby=desc"
+        "/api/game-campaigns?populate=*&sort=id"
     );
     const contestSectionsData = await contestSectionsRes.json();
     const campaignsSectionsResData = await campaignsSectionsRes.json();
 
-    const bannersRes = await fetch(
-      process.env.NEXT_PUBLIC_STRAPI_API_URL +
-        "/api/campaigns?sort=priority&populate=bannerImage"
-    );
-
-    const banners = await bannersRes.json();
-    const seoData = await getSeoData("games");
-
     return {
-      props: { data, contestSectionsData, contestSectionsDataTrivia, campaignsSectionsResData, banners, seoData },
+      props: { data, contestSectionsData,  campaignsSectionsResData },
       revalidate: 300,
     };
   } catch (error) {}
