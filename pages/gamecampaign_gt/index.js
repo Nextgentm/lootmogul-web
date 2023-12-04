@@ -9,23 +9,21 @@ import TradingGame from "../../src/components/Web3Games/TradingGame";
 import BlockChainGame from "../../src/components/Web3Games/BlockChainGame";
 
 const defaultSEOData = {
-    metaTitle:"Lootmogul | Join LootMogul Web3 Sports Gaming",
+    metaTitle:"Lootmogul | Join LootMogul Skill Sports Gaming",
     metaDescription:"Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!",
     canonicalURL:process.env.NEXT_PUBLIC_SITE_URL+"/web3-games"
 };
 
 export default function GamesPage({
   data,
-  banners = [],
   contestSectionsData,
   campaignsSectionsResData,
-  seoData,
 }) {
   //console.log(data);
   return (
     <>
       
-      <SEOContainer seoData={seoData?seoData[0]?.sharedSeo:defaultSEOData}/> 
+      <SEOContainer seoData={defaultSEOData}/> 
         <Banner bannerData={campaignsSectionsResData?.data[0] || []}/>
         <TradingGame tradingCardData={campaignsSectionsResData?.data[0] || []}/>
         <BlockChainGame 
@@ -90,21 +88,13 @@ export async function getStaticProps() {
 
     const campaignsSectionsRes = await fetch(
       process.env.NEXT_PUBLIC_STRAPI_API_URL +
-        "/api/game-campaigns?populate=*"
+        "/api/game-campaigns?populate=*&sort=id"
     );
     const contestSectionsData = await contestSectionsRes.json();
     const campaignsSectionsResData = await campaignsSectionsRes.json();
 
-    const bannersRes = await fetch(
-      process.env.NEXT_PUBLIC_STRAPI_API_URL +
-        "/api/campaigns?sort=priority&populate=bannerImage"
-    );
-
-    const banners = await bannersRes.json();
-    const seoData = await getSeoData("games");
-
     return {
-      props: { data, contestSectionsData, campaignsSectionsResData, banners, seoData },
+      props: { data, contestSectionsData, campaignsSectionsResData },
       revalidate: 300,
     };
   } catch (error) {}
