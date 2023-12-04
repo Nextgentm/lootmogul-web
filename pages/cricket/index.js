@@ -5,6 +5,13 @@ import Banner from "../../src/components/Web3Games/Banner";
 import BlockChainGame from "../../src/components/Web3Games/BlockChainGame";
 import { Box, Flex, Image, Text, Button, VStack, Link} from '@chakra-ui/react'
 
+import Slider from "react-slick";
+import React, { useContext, useState, useEffect } from "react";
+import { AppContext } from "../../src/utils/AppContext";
+import dynamic from "next/dynamic";
+const Login = dynamic(() => import("../../src/features/Login"));
+const LoginForm = dynamic(() => import("../../src/features/LoginForm"));
+import { useRouter } from "next/router";
 const defaultSEOData = {
     metaTitle:"Lootmogul | Join LootMogul Skill Sports Gaming",
     metaDescription:"Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!",
@@ -23,7 +30,8 @@ export default function GamesPage({
     <>
       
       <SEOContainer seoData={defaultSEOData}/> 
-        <Banner bannerData={campaignsSectionsResData?.data[2] || []}/>
+        {/*<Banner bannerData={campaignsSectionsResData?.data[2] || []}/>*/}
+        <BannerVideo bannerData={campaignsSectionsResData?.data[2] || []} />
         <Box>
         <Flex
             flexDir={["column", "column", "column", "row"]}
@@ -213,6 +221,233 @@ export default function GamesPage({
     </>
   );
 }
+
+function BannerVideo({
+  bannerData,
+  autoplaySpeed = 2000,
+  slider_type,
+  executeScroll
+}){
+  const router = useRouter();
+  const { isMobileDevice } = useContext(AppContext);
+  const [currentSlideIndex, setcurrentSlideIndex] = useState(0);
+  const { user } = useContext(AppContext);
+  const [isLoginModalActive, setLoginModalActive] = useState(false);
+  
+  const toggleLoginModal = () => {
+    setLoginModalActive(!isLoginModalActive);
+  };
+
+  const OnLoginClose = async () => {
+      toggleLoginModal();
+  };
+
+  useEffect(() => {
+    if(user?.id){
+          router.push(bannerData.trending_redirectionUrl );
+          setLoginModalActive(false);
+      }
+  },[user]);
+
+  const PrevArrow = (props) => {
+      const { className, style, onClick } = props;
+      return (
+          <Box
+              _before={{ content: `""` }}
+              className={className}
+              onClick={onClick}
+          >
+              <img
+                  src="/assets/designupdate1/arrow-left-selected.png"
+                  alt="Left"
+              />
+          </Box>
+      );
+  };
+  const NextArrow = (props) => {
+      const { className, style, onClick } = props;
+      return (
+          <Box
+              _before={{ content: `""` }}
+              className={className}
+              onClick={onClick}
+          >
+              <img
+                  src="/assets/designupdate1/arrow-right-selected.png"
+                  alt="Right"
+              />
+          </Box>
+      );
+  };
+  const horizontalSettings = {
+      dots: false,
+      infinite: true,
+      arrows: true,
+      cssEase: "linear",
+      slidesToShow: 1,
+      autoplay: false,
+      autoplaySpeed: autoplaySpeed,
+      nextArrow: <NextArrow />,
+      prevArrow: <PrevArrow />,
+      dotsClass: "slick-dots slick-thumb customSlide limited-dots",
+      beforeChange: (prev, next) => {
+          // here to detect slide change
+          setcurrentSlideIndex(next);
+      },
+
+      customPaging: (pagi, i) => (
+          <Box
+              height="5px"
+              width={["40px", "90px"]}
+              _before={{ width: "100%" }}
+              bg={
+                  pagi === currentSlideIndex
+                      ? "linear-gradient(180deg, #43C8FF 0%, #45E470 100%), #FFFFFF"
+                      : "#8E8E8E"
+              }
+              borderRadius="20px"
+              cursor="pointer"
+          />
+      )
+  };
+
+
+      const imagestyle = {
+          margin: "auto",
+          width: "100%",
+      };
+    
+      const cricketImageStyle = {
+          margin: "auto",
+          width: "100%"
+      };
+
+      return <Slider {...horizontalSettings}>
+      <div className="gameslide">
+      {!isMobileDevice ?
+          <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
+          poster="/assets/videos/GamePosterImage.png">
+              <source
+              src={bannerData.othertrending_header}
+              type="video/mp4"
+              />
+          </video>
+          : <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
+          poster="/assets/videos/GamePosterImageMobile.png">
+              <source
+              src={bannerData.othertrending_redirectionUrl}
+              type="video/mp4"
+              />
+          </video>
+      }
+          
+          <Flex
+            flexDir={["column", "column", "column", "row"]}
+            w="100%"
+            alignItems={"center"}
+            height="700px"
+            p="2% 5%"
+            backgroundSize="cover"
+            className="banner-read-thumb-lg"
+        >
+          <Box
+                px={[5,5,10]}
+                width={["100%", "100%", "100%", "75%"]}
+            >
+                <Text
+                    variant="headText"
+                    fontSize={[
+                        "52px",
+                        "52px",
+                        "80px",
+                    ]}
+                    width={["100%", "100%", "100%", "60%"]}
+                    textShadow="0px 0px 10px #00034E94;"
+                    fontFamily="var(--chakra-fonts-Blanch)"
+                    lineHeight={[
+                        "42px",
+                        "42px",
+                        "65px",
+                    ]}
+                >
+                    {bannerData.banner_header}
+                </Text>
+
+                <Text
+                    color="white"
+                    fontSize={[
+                        "15",
+                        "15",
+                        "15",
+                        "18",
+                        "18"
+                    ]}
+                    mt="20px"
+                    fontFamily="Sora"
+                    fontWeight="normal"
+                    lineHeight={["20px", "20px", "28px"]}
+                    width={["100%", "100%", "60%"]}
+                >
+                    {bannerData.banner_subheader}
+                </Text>
+                {!user && isMobileDevice && (
+                    <>
+                        <Button
+                            mt="18px"
+                            fontFamily="Sora !important "
+                            fontWeight="500"
+                            onClick={() => toggleLoginModal()}
+                            padding={[
+                                "0px 30px",
+                                "0px 36px",
+                                "20px 50px"
+                            ]}
+                            boxShadow="inset 0 0 0px 0px #481A7F"
+                            fontSize="15px"
+                            height={["39px", "39px", "35px", "35px"]}
+                            bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                            filter="drop-shadow(0 0 20px #FF0080)"
+                            p="28px"
+                            width="180px"
+                        >
+                            Signup
+                        </Button>
+                    </>
+                )}
+            </Box>
+            <Box
+                bgSize="cover"
+                textAlign={"center"}
+                px={[0, 0, 0, 10]}
+                pb={[0, 0, 0, 12]}
+                width={["100%", "100%", "100%", "30%"]}
+            >
+                <Box> 
+                    {!isMobileDevice ?
+                    <>
+                    {!user?.id && <LoginForm
+                        isOpen={isLoginModalActive}
+                        OnLoginClose={OnLoginClose}
+                        redirectUrl={bannerData.trending_redirectionUrl}
+                    />
+                    }
+                    </> :
+                    <>
+                    {!user?.id && <Login
+                        isOpen={isLoginModalActive}
+                        OnLoginClose={OnLoginClose}
+                        redirectUrl={bannerData.trending_redirectionUrl}
+                    />
+                    }
+                    </> }                
+                    
+                </Box>
+            </Box>
+          </Flex>
+      </div>
+     
+  </Slider>;
+};
 
 export async function getStaticProps() {
   // Fetch data from external API
