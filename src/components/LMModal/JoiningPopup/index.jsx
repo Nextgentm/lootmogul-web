@@ -196,7 +196,7 @@ const JoiningPopup = ({ retry, data, closeShowModal }) => {
                         width="100%"
                         my="5%"
                         onClick={() => {
-                            ct.onGameplayStart({action:"Gameplay Start", params: {
+                            /*ct.onGameplayStart({action:"Gameplay Start", params: {
                                 "Category": currentContest.contest_section.data?.name,
                                 "GameType": currentContest.game.data?.name,
                                 "GameSubtype": currentContest?.name,
@@ -208,7 +208,7 @@ const JoiningPopup = ({ retry, data, closeShowModal }) => {
                                 "EmailID": user?.email,
                                 "MobileNo": user?.mobileNumber,
                                 "FullName": user?.fullName
-                            }});    
+                            }}); */   
 
                             setLoading(true);
                             setIsPayIsStarted("started");

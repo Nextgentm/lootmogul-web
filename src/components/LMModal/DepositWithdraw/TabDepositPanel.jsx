@@ -413,7 +413,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     }
                 } catch (error) {}
             }
-            ct.onDepositInitiate({
+            /*ct.onDepositInitiate({
                 action: "Deposit Initiate",
                 params: {
                     Amount: numberOfAmount,
@@ -429,7 +429,7 @@ const TabDepositPanel = ({ isDeposit }) => {
                     MobileNo: user.mobileNumber,
                     Firstname: user.fullName
                 }
-            });
+            });*/
         }
     };
 

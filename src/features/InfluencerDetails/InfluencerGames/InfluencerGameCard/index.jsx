@@ -213,7 +213,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             _hover={{ textDecoration: "none !important" }}
                             w="90%"
                             onClick={(e) => {
-                                ct.onGamePlayNowButton({
+                                /*ct.onGamePlayNowButton({
                                     action: "", params: {
                                         "ButtonName": "Play Now",
                                         "CollectionName": contestmaster.name,
@@ -223,7 +223,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                         "EmailID": user?.email,
                                         "MobileNo": user?.mobileNumber
                                     }
-                                });
+                                });*/
 
                                 if (
                                     contestmaster?.game?.data
