@@ -307,7 +307,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     };
     const withdraw = async() => {
         
-        ct.onWithdrawalRequest({
+        /*ct.onWithdrawalRequest({
             action: "Withdrawal Request",
             params: {
                 "Amount": Number(numberOfAmount),
@@ -320,7 +320,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 "MobileNo": user.mobileNumber,
                 "Firstname": user.fullName,
             }
-        });
+        });*/
 
 		setDisableWithdraw(true);
         let withDrawReqData = {
