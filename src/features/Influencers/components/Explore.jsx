@@ -87,7 +87,7 @@ const Explore = ({
                             fontWeight={500}
                             variant={"segment"}
                             onClick={() => {
-                                ct.onAmbassadorCategory({
+                                /*ct.onAmbassadorCategory({
                                     action: "Ambassador Category",
                                     params: {
                                         "Category": defaultCategoryName,
@@ -97,7 +97,7 @@ const Explore = ({
                                         "MobileNo": user?.mobileNumber,
                                         "Firstname": user?.fullName,
                                     }
-                                });
+                                });*/
                                 handleCategoryChange(
                                     defaultCategoryName.toLowerCase()
                                 );
@@ -127,7 +127,7 @@ const Explore = ({
                            fontWeight={500}
                            variant={"segment"}
                            onClick={() => {
-                                ct.onAmbassadorCategory({
+                                /*ct.onAmbassadorCategory({
                                     action: "Ambassador Category",
                                     params: {
                                         "Category": influencerCat.name,
@@ -137,7 +137,7 @@ const Explore = ({
                                         "MobileNo": user?.mobileNumber,
                                         "Firstname": user?.fullName,
                                     }
-                                });
+                                });*/
 
                                handleCategoryChange(
                                    influencerCat.name.toLowerCase()

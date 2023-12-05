@@ -133,7 +133,7 @@ const Quiz = (props) => {
 
       socket.on("game_over", (data) => {
         //console.log(data);
-        ct.onGameGameOver({
+        /*ct.onGameGameOver({
           action: "Gameplay Completed",
             params: {
               "Category": currentContest.contest_section.data?.name,
@@ -151,7 +151,7 @@ const Quiz = (props) => {
               "MobileNo": user?.mobileNumber,
               "FullName": user?.fullName
             }
-        })
+        })*/
         setMatchResult(data.ranks);
         updateUser();
 

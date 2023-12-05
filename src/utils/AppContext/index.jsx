@@ -172,10 +172,10 @@ export const AppContextContainer = ({ children }) => {
     };
     const logout = async () => {
         const value = await strapi.fetchUser();
-        ct.onUserLogout({
+        /*ct.onUserLogout({
             action: "Logout",
             params: user
-        });
+        });*/
 
         try {
             const resp = await axios.post(
@@ -547,7 +547,7 @@ export const AppContextContainer = ({ children }) => {
 
     useEffect(()=> {
         //if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-            handlePermission();
+            //handlePermission();
         //}
         setTimeout(() => {
             const specificDiv =  document.querySelector('.wzrk-powered');      
@@ -714,22 +714,22 @@ export const AppContextContainer = ({ children }) => {
 
             if (data.user.is_new){
                 if(onUserLoginData.data){
-                    ct.onUserLoginRegistrationEvent({
+                    /*ct.onUserLoginRegistrationEvent({
                         action: "Registration",
                         params: onUserLoginData.data?.data,
                         pathname:router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });
+                    });*/
                 }
             }
             else{     
                 if(onUserLoginData.data){
-                    ct.onUserLoginRegistrationEvent({
+                    /*ct.onUserLoginRegistrationEvent({
                         action: "Login",
                         params: onUserLoginData.data?.data,
                         pathname:router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });
+                    });*/
                 }          
                 
             }
@@ -997,22 +997,22 @@ export const AppContextContainer = ({ children }) => {
            
             if (data.user.is_new ){
                 if(onUserLoginData.data  || onTransactionLoginData){
-                    ct.onUserLoginRegistrationEvent({
+                    /*ct.onUserLoginRegistrationEvent({
                         action: "Registration",
                         params: onUserLoginData.data?.data,
                         pathname:router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });
+                    });*/
                 }
             }
             else{     
                 if(onUserLoginData.data || onTransactionLoginData){
-                    ct.onUserLoginRegistrationEvent({
+                    /*ct.onUserLoginRegistrationEvent({
                         action: "Login",
                         params: onUserLoginData.data?.data,
                         pathname: router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });
+                    });*/
                 }          
                 
             }
