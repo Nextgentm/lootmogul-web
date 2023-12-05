@@ -19,6 +19,7 @@ const Quiz = (props) => {
   const { user } = useContext(AppContext);
   const [showAlert, setShowAlert] = useState(false);
   const [options, setOptions] = useState([]);
+  const [optionUrls, setOptionUrls] = useState([]);
   const [timer, setTimer] = useState(0);
   const [milliCounter, setMilliCounter] = useState();
   const [timerValue, setTimerValue] = useState();
@@ -68,7 +69,7 @@ const Quiz = (props) => {
         setShowAlert(false);
         setIsHideHeader(false);
         setIsHideFooter(false);
-        router.push("/");
+        router.push("/games");
       });
       window.addEventListener("offline", () => {
         setShowAlert(true);
@@ -77,7 +78,7 @@ const Quiz = (props) => {
   }, []);
 
   useEffect(() => {
-    if (!user) router.push("/");
+    if (!user) router.push("/games");
     else {
       setIsHideHeader(true);
       setIsHideFooter(true);
@@ -102,6 +103,12 @@ const Quiz = (props) => {
           data.question?.option3,
           data.question?.option4,
         ]);
+        setOptionUrls([
+          data.question?.option1Url,
+          data.question?.option2Url,
+          data.question?.option3Url,
+          data.question?.option4Url,
+        ]);
         setCurrentQuestionNo(data.question_no);
         setMaxTime(Math.floor(data.timer));
         setTimer(Math.floor(data.timer));
@@ -125,7 +132,7 @@ const Quiz = (props) => {
       });
 
       socket.on("game_over", (data) => {
-        console.log(data);
+        //console.log(data);
         ct.onGameGameOver({
           action: "Gameplay Completed",
             params: {
@@ -295,6 +302,7 @@ const Quiz = (props) => {
                 allUserOptions={selOption > -1 ? allUserOptions : []}
                 voiceOver={voiceOver}
                 options={options}
+                optionUrls={optionUrls}
                 question={question}
                 correctAns={correctAns}
                 imageURL={imageURL}
@@ -328,7 +336,7 @@ const Quiz = (props) => {
             setShowAlert(false);
             setIsHideHeader(false);
             setIsHideFooter(false);
-            router.push("/");
+            router.push("/games");
           }}
         />
       </Box>

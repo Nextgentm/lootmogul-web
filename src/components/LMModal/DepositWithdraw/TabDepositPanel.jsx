@@ -59,7 +59,7 @@ const TabDepositPanel = ({ isDeposit }) => {
     };
 
     const getInitialState = () => {
-        const value = "USD";
+        const value = "ZAR";
         return value;
     };
 
@@ -134,19 +134,23 @@ const TabDepositPanel = ({ isDeposit }) => {
             // Store results in the results array
             var defaultCurrencyValue;
             data.data.forEach((value) => {
-                if (value.currency == "USD") {
+                
+                if (value.currency == "ZAR" && userLocation != "IN") {
                     setNumberOfChips(value.numberOfChips);
                     setMinimumDeposit(value.minimumDeposit);
 
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
+                    setAmount(100);
                 }
 
                 if (userLocation == "IN" && value.currency == "INR") {
                     SetDefaultFiatChip(value.numberOfChips);
                     SetDefaultFiatAmount(value.minimumDeposit);
+
                     setNumberOfChips(value.numberOfChips);
                     setMinimumDeposit(value.minimumDeposit);
+                    setAmount(value.numberOfChips);
                 }
                 results.push({
                     currency: value.currency,
@@ -195,21 +199,30 @@ const TabDepositPanel = ({ isDeposit }) => {
 
     const handleChange = (e) => {
         setCurrency(e.target.value);
+        var amt = e.target.selectedOptions[0].getAttribute("numberOfChips");
+         
+        
         setMinimumDeposit(
             e.target.selectedOptions[0].getAttribute("minimumDeposit")
         );
         setNumberOfChips(
-            e.target.selectedOptions[0].getAttribute("numberOfChips")
+            amt
         );
+        setAmount(Number(amt)); 
+        SetDefaultFiatChip(0)
+       
+        
         //setTotalAmount(amount);
         let numberOfAmount =
             Number(e.target.selectedOptions[0].getAttribute("numberOfChips")) /
             Number(e.target.selectedOptions[0].getAttribute("minimumDeposit"));
         if (e.target.value == "BTC" || e.target.value == "ETH") {
-            setNumberOfAmount((amount / numberOfAmount).toFixed(6));
+            setNumberOfAmount((amt / numberOfAmount).toFixed(6));
         } else {
-            setNumberOfAmount((amount / numberOfAmount).toFixed(2));
+            setNumberOfAmount((amt / numberOfAmount).toFixed(2));
         }
+        
+          
     };
     const setTotalAmount = (addedAmount) => {
         let numberOfAmount = Number(numberOfChips) / Number(minimumDeposit);
@@ -455,17 +468,17 @@ const TabDepositPanel = ({ isDeposit }) => {
         }
 
         if (depositType == 1) {
-            userLocation == "IN" ? setCurrency("INR") : setCurrency("USD");
-            setMinimumDeposit(defaultFiatAmount);
-            setNumberOfChips(defaultFiatChip);
-
-            if (amount) {
+            
+            if (amount && defaultFiatChip && defaultFiatAmount) {    
+                userLocation == "IN" ? setCurrency("INR") : setCurrency("ZAR");
+                setMinimumDeposit(defaultFiatAmount);
+                setNumberOfChips(defaultFiatChip);
                 let numberOfAmount =
                     Number(defaultFiatChip) / Number(defaultFiatAmount);
                 setNumberOfAmount((amount / numberOfAmount).toFixed(2));
             }
         }
-    }, [depositType, userLocation]);
+    }, [depositType, userLocation, defaultFiatChip, defaultFiatAmount, amount]);
 
     return (
         <Flex

@@ -24,6 +24,7 @@ import * as ct from '../src/services/clevertapAnalytics';
 import LMNonCloseALert from '../src/components/LMNonCloseALert';
 import MaintenancePage from '../src/features/MaintenancePage';
 import * as Sentry from '@sentry/nextjs';
+import Snowfall from 'react-snowfall';
 
 library.add(faTelegramPlane);
 
@@ -128,6 +129,15 @@ function MyApp({ Component, pageProps }) {
           {process.env.NEXT_PUBLIC_MAINTENANCE === 'true' ? <MaintenancePage></MaintenancePage> : <>
             {router.route === "/" ? '' : <Header />}
             {stickyBtn && router.route !== "/" ? <StickySocialIcons /> : ''}
+            <Snowfall
+              // The color of the snowflake, can be any valid CSS color.
+              color="#dee4fd"
+              speed={[1.2,1.3]}
+              wind={[-0.5,-0.5]}
+              // Controls the number of snowflakes that are created (defaults to 150).
+              snowflakeCount={300}
+              radius={[0.5,3]}
+            />
             {/* <Button onClick={onSentry}>hello</Button> */}
             <Component
               {...pageProps}
@@ -148,7 +158,7 @@ function MyApp({ Component, pageProps }) {
             />
             }
 
-            {router.route === "/" || router.route === "/gamecampaign" || router.route === "/thanksgiving-campaign" || router.route === "/signupcampaign" ? '' : <Footer />}
+            {router.route === "/" || router.route === "/gamecampaign" || router.route === "/thanksgiving-campaign" || router.route === "/signupcampaign" || router.route === "/cricket" ? '' : <Footer />}
 
           </>}
 
