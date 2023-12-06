@@ -15,14 +15,6 @@ const LoginForm = dynamic(() => import("../../src/features/LoginForm"));
 import { useRouter } from "next/router";
 
 
-import Slider from "react-slick";
-import React, { useContext, useState, useEffect } from "react";
-import { AppContext } from "../../src/utils/AppContext";
-import dynamic from "next/dynamic";
-const Login = dynamic(() => import("../../src/features/Login"));
-const LoginForm = dynamic(() => import("../../src/features/LoginForm"));
-import { useRouter } from "next/router";
-
 const defaultSEOData = {
     metaTitle:"Lootmogul | Join LootMogul Skill Sports Gaming",
     metaDescription:"Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!",
