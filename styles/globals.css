@@ -324,10 +324,24 @@ nav {
 canvas[data-testid] {
   z-index: 99;
 }
+
+.productcsa .slick-dots li button::before {
+  font-size: 35px;
+  color: #401772;
+  opacity: 1;
+}
+.productcsa .slick-dots li.slick-active button::before {
+  color: #d60c67;
+  font-size: 35px;
+}
+
 @media screen and (max-width: 768px) {
   .twitter_icon_patch svg.twitter{
    width: 16px;
    height: 16px;
    margin-top: 2px;
+  }
+  .gameslide video {
+    position: relative;
   }
 }
