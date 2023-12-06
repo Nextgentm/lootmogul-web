@@ -59,7 +59,7 @@ const routes = [
     {
         label: "Collectibles",
         path: process.env.NEXT_PUBLIC_WORDPRESS_URL+"/collectibles",
-        isExternalLink: false,
+        isExternalLink: true,
         imageUrl: "/assets/MobileMenuIcons/digitalcollectibles.png",
         activeImageUrl: "/assets/MobileMenuIcons/digitalcollectibles_active.png"
     },
@@ -108,10 +108,10 @@ const Header = () => {
 
     const isActiveLink = (path, queryPath) => {
         //TODO: need to check what condition is this and remove the proper statements
-        if (queryPath)
+        //if (queryPath)
             //console.log(path.split("/")[1], router.pathname.split("/")[1])
             return path.split("/")[1] === router.pathname.split("/")[1] || queryPath === router.pathname;
-        return path == router.pathname.split("/")[1];
+        /*return path == router.pathname.split("/")[1];*/
     };
 
     const {
@@ -125,7 +125,7 @@ const Header = () => {
     if (typeof window !== "undefined") {
         const jwt_token = window.localStorage?.getItem("strapi_jwt");
         if(jwt_token !== null){
-            paramsLogin = '';
+            paramsLogin = '?jwt='+jwt_token;
             
         }
         else{
@@ -444,7 +444,7 @@ const Header = () => {
                                 </Link>
                             </>
                         )}
-                        {!user && ( router.route != "/gamecampaign" && router.route !="/cricket" && router.route !=  "/thanksgiving-campaign" && router.route != "/signupcampaign")  && (
+                  {!user && ( router.route != "/gamecampaign" && router.route !="/cricket" && router.route !=  "/thanksgiving-campaign" && router.route != "/signupcampaign")  && (
                             <>
                                 <Button
                                     {...loginBtnStyle}

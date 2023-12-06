@@ -3,34 +3,29 @@ import SEOContainer from "../../src/features/SEOContainer";
 import { getSeoData } from "../../src/queries/strapiQueries";
 import GamesComponent from "../../src/features/Games/index";
 import MultipleLoggedInUser from "../../src/components/MultipleLoggedInUser";
-
-import Banner from "../../src/components/Web3Games/Banner";
-import TradingGame from "../../src/components/Web3Games/TradingGame";
-import BlockChainGame from "../../src/components/Web3Games/BlockChainGame";
-
 const defaultSEOData = {
-    metaTitle:"Lootmogul | Join LootMogul Skill Sports Gaming",
-    metaDescription:"Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!",
-    canonicalURL:process.env.NEXT_PUBLIC_SITE_URL+"/web3-games"
+  metaTitle: "Play Online Trivia Games With Your Favorite Influencers",
+  metaDescription:
+    "Play Games With Your Favorite Influencers And Win Exciting Prizes",
+  canonicalURL: process.env.NEXT_PUBLIC_SITE_URL + "/games",
 };
 
 export default function GamesPage({
   data,
+  banners = [],
   contestSectionsData,
-  campaignsSectionsResData,
+  seoData,
 }) {
-  //console.log(data);
   return (
     <>
-      
-      <SEOContainer seoData={defaultSEOData}/> 
-        <Banner bannerData={campaignsSectionsResData?.data[0] || []}/>
-        <TradingGame tradingCardData={campaignsSectionsResData?.data[0] || []}/>
-        <BlockChainGame 
-            contestSectionsData={contestSectionsData?.data || []}
-            contestmasters={data || []}
-            blockChainCardData={campaignsSectionsResData?.data[0] || []}
-        />
+      <SEOContainer
+        seoData={seoData ? seoData[0]?.sharedSeo : defaultSEOData}
+      />
+      <GamesComponent
+        contestSectionsData={contestSectionsData?.data || []}
+        contestmasters={data || []}
+        banners={banners?.data || []}
+      />
     </>
   );
 }
@@ -40,8 +35,40 @@ export async function getStaticProps() {
   let pageNo = 1;
   let pageCount = 1;
   let data = [];
+
   do {
     const res = await strapi.find("contestmasters", {
+      filters: {
+        contest_section: {
+          $or: [
+            {
+              name: {
+                $eq: "Free tournaments",
+              },
+            },
+            {
+              name: {
+                $eq: "Advanced premium tournaments",
+              },
+            },
+            {
+              name: {
+                $eq: "Ambassador tournaments",
+              },
+            },
+            {
+              name: {
+                $eq: "Skill Games",
+              },
+            },
+            {
+              name: {
+                $eq: "Trending Tournament",
+              },
+            },
+          ],
+        },
+      },
       fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
       sort: "priority",
       populate: {
@@ -59,9 +86,9 @@ export async function getStaticProps() {
           },
         },
         reward: {},
-        game:{
-          fields:"*"
-        }
+        game: {
+          fields: "*",
+        },
       },
 
       pagination: {
@@ -80,21 +107,33 @@ export async function getStaticProps() {
   // Pass data to the page via props
   data = data.flat();
 
+  const filteredDuplicateDataById = [
+    ...new Map(data.map((item) => [item["id"], item])).values(),
+  ];
+
   try {
     const contestSectionsRes = await fetch(
       process.env.NEXT_PUBLIC_STRAPI_API_URL +
         "/api/contest-sections?populate=image&sort=priority"
     );
 
-    const campaignsSectionsRes = await fetch(
-      process.env.NEXT_PUBLIC_STRAPI_API_URL +
-        "/api/game-campaigns?populate=*&sort=id"
-    );
     const contestSectionsData = await contestSectionsRes.json();
-    const campaignsSectionsResData = await campaignsSectionsRes.json();
+
+    const bannersRes = await fetch(
+      process.env.NEXT_PUBLIC_STRAPI_API_URL +
+        "/api/campaigns?sort=priority&populate=bannerImage"
+    );
+
+    const banners = await bannersRes.json();
+    const seoData = await getSeoData("games");
 
     return {
-      props: { data, contestSectionsData, campaignsSectionsResData },
+      props: {
+        data: filteredDuplicateDataById,
+        contestSectionsData,
+        banners,
+        seoData,
+      },
       revalidate: 300,
     };
   } catch (error) {}
