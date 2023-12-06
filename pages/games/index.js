@@ -66,6 +66,11 @@ export async function getStaticProps() {
                 $eq: "Trending Tournament",
               },
             },
+            {
+              name: {
+                $eq: "Cricket Games",
+              },
+            },
           ],
         },
       },
