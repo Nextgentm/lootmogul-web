@@ -59,7 +59,7 @@ const routes = [
     {
         label: "Collectibles",
         path: process.env.NEXT_PUBLIC_WORDPRESS_URL+"/collectibles",
-        isExternalLink: false,
+        isExternalLink: true,
         imageUrl: "/assets/MobileMenuIcons/digitalcollectibles.png",
         activeImageUrl: "/assets/MobileMenuIcons/digitalcollectibles_active.png"
     },
@@ -125,7 +125,7 @@ const Header = () => {
     if (typeof window !== "undefined") {
         const jwt_token = window.localStorage?.getItem("strapi_jwt");
         if(jwt_token !== null){
-            paramsLogin = '';
+            paramsLogin = '?jwt='+jwt_token;
             
         }
         else{
