@@ -2,6 +2,7 @@ import strapi from "../../src/utils/strapi";
 import SEOContainer from "../../src/features/SEOContainer";
 import { getSeoData } from "../../src/queries/strapiQueries";
 import Banner from "../../src/components/Web3Games/Banner";
+
 import BlockChainGame from "../../src/components/Web3Games/BlockChainGame";
 import { Box, Flex, Image, Text, Button, VStack, Link} from '@chakra-ui/react'
 
@@ -12,6 +13,16 @@ import dynamic from "next/dynamic";
 const Login = dynamic(() => import("../../src/features/Login"));
 const LoginForm = dynamic(() => import("../../src/features/LoginForm"));
 import { useRouter } from "next/router";
+
+
+import Slider from "react-slick";
+import React, { useContext, useState, useEffect } from "react";
+import { AppContext } from "../../src/utils/AppContext";
+import dynamic from "next/dynamic";
+const Login = dynamic(() => import("../../src/features/Login"));
+const LoginForm = dynamic(() => import("../../src/features/LoginForm"));
+import { useRouter } from "next/router";
+
 const defaultSEOData = {
     metaTitle:"Lootmogul | Join LootMogul Skill Sports Gaming",
     metaDescription:"Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!",
@@ -19,19 +30,40 @@ const defaultSEOData = {
 };
 
 export default function GamesPage({
-  data,  
+
+  data,
   contestSectionsData,
   campaignsSectionsResData,
 }) {
-  
+
   const content =  campaignsSectionsResData?.data[2].trending_contestHighlights;
   const trending_subheader = campaignsSectionsResData?.data[2].trending_subheader;
   return (
     <>
       
       <SEOContainer seoData={defaultSEOData}/> 
-        {/*<Banner bannerData={campaignsSectionsResData?.data[2] || []}/>*/}
-        <BannerVideo bannerData={campaignsSectionsResData?.data[2] || []} />
+
+         {/*<Banner bannerData={campaignsSectionsResData?.data[2] || []}/>*/}
+         <BannerVideo bannerData={campaignsSectionsResData?.data[2] || []} />
+         <Flex
+            flexDir={["column", "column", "column", "row"]}
+            w="100%"
+            alignItems={"center"}
+            backgroundImage={ "/assets/Banner-2.png" }
+            height={["100px", "100px", "300px", "420px"]}
+            p="2% 5%"
+            backgroundSize="contain"
+            backgroundRepeat={"no-repeat"}
+            mt={["30px","30px","10px","0px"]}
+        >
+            <Box
+                px={[5,5,10]}
+                width={["100%", "100%", "100%", "100%"]}
+            >
+                
+            </Box>
+        </Flex>
+
         <Box>
         <Flex
             flexDir={["column", "column", "column", "row"]}
@@ -83,7 +115,7 @@ export default function GamesPage({
                 
                 
                 <Link
-                    href={campaignsSectionsResData?.data[2].trending_redirectionUrl || '/games'}
+                    href={'/wallet'}
                     _hover={{ border: "none", textDecoration: "none" }}
                     _focus={{ border: "none", textDecoration: "none" }}
                     key={`igc-1`}
@@ -100,7 +132,7 @@ export default function GamesPage({
                         mt="30px"
                         mb="30px"
                         >
-                        Play Now
+                        Deposit Now
                     </Button>
                 </Link>
             </Box>
@@ -112,7 +144,7 @@ export default function GamesPage({
                 width={["90%", "90%", "30%", "30%"]}
             >
                 <Link
-                    href={campaignsSectionsResData?.data[2].trending_redirectionUrl || '/games'}
+                    href={'/wallet'}
                     _hover={{ border: "none", textDecoration: "none" }}
                     _focus={{ border: "none", textDecoration: "none" }}
                     key={`igc-1`}
@@ -149,24 +181,7 @@ export default function GamesPage({
                 </Link>
             </Box>
         </Flex>
-        <Flex
-            flexDir={["column", "column", "column", "row"]}
-            w="100%"
-            alignItems={"center"}
-            backgroundImage={ "/assets/Banner-2.png" }
-            height={["100px", "100px", "300px", "420px"]}
-            p="2% 5%"
-            backgroundSize="contain"
-            backgroundRepeat={"no-repeat"}
-            mt={["30px","30px","10px","0px"]}
-        >
-            <Box
-                px={[5,5,10]}
-                width={["100%", "100%", "100%", "100%"]}
-            >
-                
-            </Box>
-        </Flex>
+        
 
         <Flex
             flexDir={["column", "column", "column", "row"]}
@@ -213,11 +228,12 @@ export default function GamesPage({
         </Flex>
        
     </Box>
-       <BlockChainGame 
-            contestSectionsData={contestSectionsData?.data || []}
-            contestmasters={data || []}
-            blockChainCardData={campaignsSectionsResData?.data[0] || []}
-        />
+      <BlockChainGame 
+          contestSectionsData={contestSectionsData?.data || []}
+          contestmasters={data || []}
+          blockChainCardData={campaignsSectionsResData?.data[2] || []}
+      />
+      <Merchandise/>
     </>
   );
 }
@@ -233,7 +249,7 @@ function BannerVideo({
   const [currentSlideIndex, setcurrentSlideIndex] = useState(0);
   const { user } = useContext(AppContext);
   const [isLoginModalActive, setLoginModalActive] = useState(false);
-  
+
   const toggleLoginModal = () => {
     setLoginModalActive(!isLoginModalActive);
   };
@@ -248,7 +264,8 @@ function BannerVideo({
           setLoginModalActive(false);
       }
   },[user]);
-
+console.log(bannerData.othertrending_redirectionUrl);
+console.log('Mobile',isMobileDevice);
   const PrevArrow = (props) => {
       const { className, style, onClick } = props;
       return (
@@ -316,7 +333,7 @@ function BannerVideo({
           margin: "auto",
           width: "100%",
       };
-    
+
       const cricketImageStyle = {
           margin: "auto",
           width: "100%"
@@ -324,28 +341,30 @@ function BannerVideo({
 
       return <Slider {...horizontalSettings}>
       <div className="gameslide">
-      {!isMobileDevice ?
+      {!isMobileDevice &&
           <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-          poster="/assets/videos/GamePosterImage.png">
+          poster="/assets/product/CricketBanner_CSA_mobile.jpg">
               <source
               src={bannerData.othertrending_header}
               type="video/mp4"
               />
           </video>
-          : <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-          poster="/assets/videos/GamePosterImageMobile.png">
+      }
+      {isMobileDevice &&
+           <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
+          poster="/assets/product/CricketBanner_CSA_mobile.jpg">
               <source
               src={bannerData.othertrending_redirectionUrl}
               type="video/mp4"
               />
           </video>
       }
-          
+
           <Flex
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            height="700px"
+            height={["auto","auto","700px"]}
             p="2% 5%"
             backgroundSize="cover"
             className="banner-read-thumb-lg"
@@ -440,14 +459,485 @@ function BannerVideo({
                     />
                     }
                     </> }                
-                    
+
                 </Box>
             </Box>
           </Flex>
       </div>
-     
+
   </Slider>;
 };
+
+function Merchandise(){
+
+    const horizontalSettings = {
+      dots: true,
+      infinite: true,
+      arrows: false,
+      slidesToShow: 3,
+      slidesToScroll: 3,
+      responsive: [
+          {
+              breakpoint: 1024,
+              settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+              infinite: true,
+              dots: true
+              }
+          },
+          {
+              breakpoint: 600,
+              settings: {
+              slidesToShow: 2,
+              slidesToScroll: 2,
+              initialSlide: 2
+              }
+          },
+          {
+              breakpoint: 480,
+              settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1
+              }
+          }
+      ]
+  };
+  return(
+    <>
+      <Box>
+        <Flex
+            flexDir={["column", "column", "column", "row"]}
+            w="100%"
+            alignItems={"center"}
+            p={[
+                "2% 2%",
+                "2% 2%",
+                "2% 5%",
+            ]}
+        >
+          <Box
+              px={[5,5,10]}
+              width={["100%", "100%", "100%", "100%"]}
+          >
+                <Text
+                  variant="headText"
+                  fontSize={[
+                      "52px",
+                      "52px",
+                      "85px",
+                  ]}
+                  textShadow="0px 0px 10px #00034E94;"
+                  fontFamily="var(--chakra-fonts-Blanch)"
+                  lineHeight={[
+                      "42px",
+                      "42px",
+                      "65px",
+                  ]}
+                  textAlign="center"
+                  mb="1%"
+                  pb="0"
+              >
+                  Explore Exclusive Merchandise
+              </Text>
+          </Box>
+        </Flex>
+        <Flex
+            flexDir={["column", "column", "column", "row"]}
+            w="100%"
+            alignItems={"center"}
+            p="2% 5%"
+            pb="0"
+        >
+            <Box
+                px={[5,5,10]}
+                width={["100%", "100%", "100%", "40%"]}
+            >
+                
+                <Text
+                    color="white"
+                    fontSize={[
+                        "18",
+                        "18",
+                        "18",
+                        "18",
+                        "18"
+                    ]}
+                    mt="20px"
+                    fontFamily="Sora"
+                    fontWeight="normal"
+                    lineHeight={["28px", "28px", "28px"]}
+                    width={["100%", "100%", "80%"]}
+                    className="desc_subheader"
+                >
+                   Shop from the authentic range of your favorite Cricket Merchandise. We offer worldwide shipping on all orders. 
+                </Text>
+                {/**<Link
+                    href={'/'}
+                    _hover={{ border: "none", textDecoration: "none" }}
+                    _focus={{ border: "none", textDecoration: "none" }}
+                    key={`igc-1`}
+                    
+                >
+                    <Button
+                        bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                        filter="drop-shadow(0 0 20px #FF0080)"
+                        boxShadow="inset 0 0 0px 0px #481A7F"
+                        width="180px"
+                        fontSize="21px"
+                        fontWeight="500"
+                        p="28px"
+                        mt="30px"
+                        mb="30px"
+                        >
+                        Explore Now
+                    </Button>
+                </Link> */}
+            </Box>
+            <Box
+                bgSize="cover"
+                textAlign={"center"}
+                px={[0, 0, 0, 10]}
+                pb={[0, 0, 0, 12]}
+                width={["90%", "90%", "70%", "60%"]}
+                className="productcsa"
+            >
+                 <Slider {...horizontalSettings}>
+                 <Box
+                        bgSize="cover"
+                        textAlign={"center"}
+                        px={[5, 5, 5, 5]}
+                        pb={[5, 5, 5, 12]}
+                        mt={[10, 10, 5, 0]}
+                    >
+                        <Link
+                           href={"/games/"}
+                            _hover={{ border: "none", textDecoration: "none" }}
+                            _focus={{ border: "none", textDecoration: "none" }}
+                        >
+                            <VStack>
+                                <Flex
+                                    flexDir={"column"}
+                                    textAlign="center"
+                                    bgImage={"/assets/related_bg.png"}
+                                    bgPosition="center"
+                                    bgRepeat="no-repeat"
+                                    bgSize="100% 100%"
+                                    cursor="pointer"
+                                    width={"100%"}
+                                    height={["250px", "250px", "300px"]}
+                                >
+                                    <Flex
+                                        m="auto"
+                                        w="60%"
+                                        height={["250px", "250px", "150px"]}
+                                        className="influencerdiv"
+                                    >
+                                        <Image
+                                            objectFit="contain"
+                                            alt="Image"
+                                            layout="fill"
+                                            w={["250px", "250px", "150px"]}
+                                            src={"/assets/product/CG.webp"}
+                                        />
+                                        
+                                    </Flex>
+                                    
+                                </Flex>
+                            </VStack>
+                            {/*
+                            <Flex>
+                                <Text
+                                    mt={"5px"}
+                                    ml={"5px"}
+                                    color="#FDFFE5"
+                                    fontSize={["15px"]}
+                                    fontWeight={"600"}
+                                    align={"left"}
+                                    textOverflow="ellipsis"
+                                    overflow="visible"
+                                    height={["45px","45px","45px","45px","45px","auto"]}
+                                    lineHeight={["24px"]}
+                                >
+                                    Images
+                                </Text>
+                            </Flex> */}
+                            
+                            <Flex>
+                           
+                                <Button
+                                    variant="solid"
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="95%"
+                                    p="5px"
+                                    fontWeight="400"
+                                    m={"auto"}
+                                >
+                                    Coming Soon
+                                </Button>
+                            </Flex>
+                        </Link>
+                    </Box>
+                    <Box
+                        bgSize="cover"
+                        textAlign={"center"}
+                        px={[5, 5, 5, 5]}
+                        pb={[5, 5, 5, 12]}
+                        mt={[10, 10, 5, 0]}
+                    >
+                        <Link
+                           href={"/games/"}
+                            _hover={{ border: "none", textDecoration: "none" }}
+                            _focus={{ border: "none", textDecoration: "none" }}
+                        >
+                            <VStack>
+                                <Flex
+                                    flexDir={"column"}
+                                    textAlign="center"
+                                    bgImage={"/assets/related_bg.png"}
+                                    bgPosition="center"
+                                    bgRepeat="no-repeat"
+                                    bgSize="100% 100%"
+                                    cursor="pointer"
+                                    width={"100%"}
+                                    height={["250px", "250px", "300px"]}
+                                >
+                                    <Flex
+                                        m="auto"
+                                        w="60%"
+                                        height={["250px", "250px", "150px"]}
+                                        className="influencerdiv"
+                                    >
+                                        <Image
+                                            objectFit="contain"
+                                            alt="Image"
+                                            layout="fill"
+                                            w={["250px", "250px", "300px"]}
+                                            src={"/assets/product/Bat.webp"}
+                                        />
+                                        
+                                    </Flex>
+                                    
+                                </Flex>
+                            </VStack>                           
+                            <Flex>
+                           
+                                <Button
+                                    variant="solid"
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="95%"
+                                    p="5px"
+                                    fontWeight="400"
+                                    m={"auto"}
+                                >
+                                    Coming Soon
+                                </Button>
+                            </Flex>
+                        </Link>
+                    </Box>
+                    <Box
+                        bgSize="cover"
+                        textAlign={"center"}
+                        px={[5, 5, 5, 5]}
+                        pb={[5, 5, 5, 12]}
+                        mt={[10, 10, 5, 0]}
+                    >
+                        <Link
+                           href={"/games/"}
+                            _hover={{ border: "none", textDecoration: "none" }}
+                            _focus={{ border: "none", textDecoration: "none" }}
+                        >
+                            <VStack>
+                                <Flex
+                                    flexDir={"column"}
+                                    textAlign="center"
+                                    bgImage={"/assets/related_bg.png"}
+                                    bgPosition="center"
+                                    bgRepeat="no-repeat"
+                                    bgSize="100% 100%"
+                                    cursor="pointer"
+                                    width={"100%"}
+                                    height={["250px", "250px", "300px"]}
+                                >
+                                    <Flex
+                                        m="auto"
+                                        w="60%"
+                                        height={["250px", "250px", "150px"]}
+                                        className="influencerdiv"
+                                    >
+                                        <Image
+                                            objectFit="contain"
+                                            alt="Image"
+                                            layout="fill"
+                                            w={["250px", "250px", "150px"]}
+                                            src={"/assets/product/Glov.png"}
+                                        />
+                                        
+                                    </Flex>
+                                    
+                                </Flex>
+                            </VStack>
+                            <Flex>
+                           
+                                <Button
+                                    variant="solid"
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="95%"
+                                    p="5px"
+                                    fontWeight="400"
+                                    m={"auto"}
+                                >
+                                    Coming Soon
+                                </Button>
+                            </Flex>
+                        </Link>
+                    </Box>
+                    <Box
+                        bgSize="cover"
+                        textAlign={"center"}
+                        px={[5, 5, 5, 5]}
+                        pb={[5, 5, 5, 12]}
+                        mt={[10, 10, 5, 0]}
+                    >
+                        <Link
+                           href={"/games/"}
+                            _hover={{ border: "none", textDecoration: "none" }}
+                            _focus={{ border: "none", textDecoration: "none" }}
+                        >
+                            <VStack>
+                                <Flex
+                                    flexDir={"column"}
+                                    textAlign="center"
+                                    bgImage={"/assets/related_bg.png"}
+                                    bgPosition="center"
+                                    bgRepeat="no-repeat"
+                                    bgSize="100% 100%"
+                                    cursor="pointer"
+                                    width={"100%"}
+                                    height={["250px", "250px", "300px"]}
+                                >
+                                    <Flex
+                                        m="auto"
+                                        w="60%"
+                                        height={["250px", "250px", "150px"]}
+                                        className="influencerdiv"
+                                    >
+                                        <Image
+                                            objectFit="contain"
+                                            alt="Image"
+                                            layout="fill"
+                                            w={["250px", "250px", "150px"]}
+                                            src={"/assets/product/Shoes.png"}
+                                        />
+                                        
+                                    </Flex>
+                                    
+                                </Flex>
+                            </VStack>
+                            <Flex>
+                           
+                                <Button
+                                    variant="solid"
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="95%"
+                                    p="5px"
+                                    fontWeight="400"
+                                    m={"auto"}
+                                >
+                                    Coming Soon
+                                </Button>
+                            </Flex>
+                        </Link>
+                    </Box>
+                    <Box
+                        bgSize="cover"
+                        textAlign={"center"}
+                        px={[5, 5, 5, 5]}
+                        pb={[5, 5, 5, 12]}
+                        mt={[10, 10, 5, 0]}
+                    >
+                        <Link
+                           href={"/games/"}
+                            _hover={{ border: "none", textDecoration: "none" }}
+                            _focus={{ border: "none", textDecoration: "none" }}
+                        >
+                            <VStack>
+                                <Flex
+                                    flexDir={"column"}
+                                    textAlign="center"
+                                    bgImage={"/assets/related_bg.png"}
+                                    bgPosition="center"
+                                    bgRepeat="no-repeat"
+                                    bgSize="100% 100%"
+                                    cursor="pointer"
+                                    width={"100%"}
+                                    height={["250px", "250px", "300px"]}
+                                >
+                                    <Flex
+                                        m="auto"
+                                        w="60%"
+                                        height={["250px", "250px", "150px"]}
+                                        className="influencerdiv"
+                                    >
+                                        <Image
+                                            objectFit="contain"
+                                            alt="Image"
+                                            layout="fill"
+                                            w={["250px", "250px", "150px"]}
+                                            src={"/assets/product/2.png"}
+                                        />
+                                        
+                                    </Flex>
+                                    
+                                </Flex>
+                            </VStack> 
+                            <Flex>
+                           
+                                <Button
+                                    variant="solid"
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="95%"
+                                    p="5px"
+                                    fontWeight="400"
+                                    m={"auto"}
+                                >
+                                    Coming Soon
+                                </Button>
+                            </Flex>
+                        </Link>
+                    </Box>
+                  </Slider>
+            </Box>
+        </Flex>
+      </Box>
+    </>
+  );
+}
 
 export async function getStaticProps() {
   // Fetch data from external API
@@ -509,7 +999,7 @@ export async function getStaticProps() {
     const campaignsSectionsResData = await campaignsSectionsRes.json();
 
     return {
-      props: { data, contestSectionsData,  campaignsSectionsResData },
+      props: { data, contestSectionsData, campaignsSectionsResData },
       revalidate: 300,
     };
   } catch (error) {}
