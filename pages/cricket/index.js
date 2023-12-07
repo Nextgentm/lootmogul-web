@@ -3,11 +3,12 @@ import SEOContainer from "../../src/features/SEOContainer";
 import { getSeoData } from "../../src/queries/strapiQueries";
 import Banner from "../../src/components/Web3Games/Banner";
 
-import BlockChainGame from "../../src/components/Web3Games/BlockChainGame";
-import { Box, Flex, Image, Text, Button, VStack, Link} from '@chakra-ui/react'
+import { getStrapiMedia } from "../../src/utils/medias";
+import { nFormatter } from "../../src/utils/utils";
+import { Box, Flex, Image, Text, Button, VStack, Link, useMediaQuery} from '@chakra-ui/react'
 
 import Slider from "react-slick";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useRef, useContext, useState, useEffect } from "react";
 import { AppContext } from "../../src/utils/AppContext";
 import dynamic from "next/dynamic";
 const Login = dynamic(() => import("../../src/features/Login"));
@@ -27,7 +28,7 @@ export default function GamesPage({
   contestSectionsData,
   campaignsSectionsResData,
 }) {
-
+    const { isMobileDevice } = useContext(AppContext);
   const content =  campaignsSectionsResData?.data[2].trending_contestHighlights;
   const trending_subheader = campaignsSectionsResData?.data[2].trending_subheader;
   return (
@@ -61,21 +62,16 @@ export default function GamesPage({
          <BannerVideo bannerData={campaignsSectionsResData?.data[2] || []} />
          <Flex
             flexDir={["column", "column", "column", "row"]}
+            backgroundImage={ !isMobileDevice ? "/assets/Banner-2.png" : "/assets/product/partner.png" }
+            height={["100px", "100px", "300px", "420px"]}
             w="100%"
             alignItems={"center"}
-            backgroundImage={ "/assets/Banner-2.png" }
-            height={["100px", "100px", "300px", "420px"]}
             p="2% 5%"
             backgroundSize="contain"
             backgroundRepeat={"no-repeat"}
             mt={["30px","30px","10px","0px"]}
         >
-            <Box
-                px={[5,5,10]}
-                width={["100%", "100%", "100%", "100%"]}
-            >
-                
-            </Box>
+            
         </Flex>
 
         <Box>
@@ -104,6 +100,7 @@ export default function GamesPage({
                         "42px",
                         "62px",
                     ]}
+                    textAlign={"left"}
                 >
                      {campaignsSectionsResData?.data[2].trending_header}
                 </Text>
@@ -196,58 +193,59 @@ export default function GamesPage({
             </Box>
         </Flex>
         
-
-        <Flex
-            flexDir={["column", "column", "column", "row"]}
-            w="100%"
-            alignItems={"center"}
-            p="5%"
-        >
-            <Box
-                px={[5,5,10]}
-                width={["100%", "100%", "100%", "90%"]}
+        {content &&             
+            <Flex
+                flexDir={["column", "column", "column", "row"]}
+                w="100%"
+                alignItems={"center"}
+                p="5%"
             >
-                <Text
-                    variant="headText"
-                    fontSize={[
-                        "52px",
-                        "52px",
-                        "85px",
-                    ]}
-                    textShadow="0px 0px 10px #00034E94;"
-                    fontFamily="var(--chakra-fonts-Blanch)"
-                    lineHeight="62px"
+                <Box
+                    px={[5,5,10]}
+                    width={["100%", "100%", "100%", "90%"]}
                 >
-                   Ready for the India VS South Africa Series?
-                </Text>
+                    <Text
+                        variant="headText"
+                        fontSize={[
+                            "52px",
+                            "52px",
+                            "85px",
+                        ]}
+                        textShadow="0px 0px 10px #00034E94;"
+                        fontFamily="var(--chakra-fonts-Blanch)"
+                        lineHeight="62px"
+                    >
+                    Ready for the India VS South Africa Series?
+                    </Text>
 
-                <Text
-                    color="white"
-                    fontSize={[
-                        "18",
-                        "18",
-                        "18",
-                        "21",
-                        "21"
-                    ]}
-                    mt="20px"
-                    fontFamily="Sora"
-                    fontWeight="normal"
-                    lineHeight={["28px", "28px", "35px"]}
-                    width={["100%", "100%", "100%"]}
-                >
-                    <p dangerouslySetInnerHTML={{ __html: content }}></p>            
-                </Text>
-            </Box>
-        </Flex>
-       
-    </Box>
+                    <Text
+                        color="white"
+                        fontSize={[
+                            "18",
+                            "18",
+                            "18",
+                            "21",
+                            "21"
+                        ]}
+                        mt="20px"
+                        fontFamily="Sora"
+                        fontWeight="normal"
+                        lineHeight={["28px", "28px", "35px"]}
+                        width={["100%", "100%", "100%"]}
+                    >
+                        <p dangerouslySetInnerHTML={{ __html: content }}></p>            
+                    </Text>
+                </Box>
+            </Flex>
+        }
+        </Box>
       <BlockChainGame 
           contestSectionsData={contestSectionsData?.data || []}
           contestmasters={data || []}
           blockChainCardData={campaignsSectionsResData?.data[2] || []}
       />
       <Merchandise/>
+      <TicketSection />
     </>
   );
 }
@@ -278,8 +276,7 @@ function BannerVideo({
           setLoginModalActive(false);
       }
   },[user]);
-console.log(bannerData.othertrending_redirectionUrl);
-console.log('Mobile',isMobileDevice);
+
   const PrevArrow = (props) => {
       const { className, style, onClick } = props;
       return (
@@ -378,7 +375,7 @@ console.log('Mobile',isMobileDevice);
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            height={["auto","auto","700px"]}
+            height={["auto","auto","auto","700px"]}
             p="2% 5%"
             backgroundSize="cover"
             className="banner-read-thumb-lg"
@@ -548,7 +545,7 @@ function Merchandise(){
                       "42px",
                       "65px",
                   ]}
-                  textAlign="center"
+                  textAlign="left"
                   mb="1%"
                   pb="0"
               >
@@ -565,7 +562,7 @@ function Merchandise(){
         >
             <Box
                 px={[5,5,10]}
-                width={["100%", "100%", "100%", "40%"]}
+                width={["100%", "100%", "100%", "35%"]}
             >
                 
                 <Text
@@ -574,14 +571,14 @@ function Merchandise(){
                         "18",
                         "18",
                         "18",
-                        "18",
-                        "18"
+                        "30",
+                        "30"
                     ]}
-                    mt="20px"
+                    //mt="20px"
                     fontFamily="Sora"
                     fontWeight="normal"
-                    lineHeight={["28px", "28px", "28px"]}
-                    width={["100%", "100%", "80%"]}
+                    lineHeight={["28px", "28px", "38px", "38px"]}
+                    width={["100%", "100%", "100%"]}
                     className="desc_subheader"
                 >
                    Shop from the authentic range of your favorite Cricket Merchandise. We offer worldwide shipping on all orders. 
@@ -613,7 +610,7 @@ function Merchandise(){
                 textAlign={"center"}
                 px={[0, 0, 0, 10]}
                 pb={[0, 0, 0, 12]}
-                width={["90%", "90%", "70%", "60%"]}
+                width={["90%", "90%", "70%", "65%"]}
                 className="productcsa"
             >
                  <Slider {...horizontalSettings}>
@@ -625,7 +622,7 @@ function Merchandise(){
                         mt={[10, 10, 5, 0]}
                     >
                         <Link
-                           href={"/games/"}
+                           href={"#"}
                             _hover={{ border: "none", textDecoration: "none" }}
                             _focus={{ border: "none", textDecoration: "none" }}
                         >
@@ -639,7 +636,7 @@ function Merchandise(){
                                     bgSize="100% 100%"
                                     cursor="pointer"
                                     width={"100%"}
-                                    height={["250px", "250px", "300px"]}
+                                    height={["250px", "250px", "200px", "300px"]}
                                 >
                                     <Flex
                                         m="auto"
@@ -652,31 +649,13 @@ function Merchandise(){
                                             alt="Image"
                                             layout="fill"
                                             w={["250px", "250px", "150px"]}
-                                            src={"/assets/product/CG.webp"}
+                                            src={"/assets/product/1.webp"}
                                         />
                                         
                                     </Flex>
                                     
                                 </Flex>
-                            </VStack>
-                            {/*
-                            <Flex>
-                                <Text
-                                    mt={"5px"}
-                                    ml={"5px"}
-                                    color="#FDFFE5"
-                                    fontSize={["15px"]}
-                                    fontWeight={"600"}
-                                    align={"left"}
-                                    textOverflow="ellipsis"
-                                    overflow="visible"
-                                    height={["45px","45px","45px","45px","45px","auto"]}
-                                    lineHeight={["24px"]}
-                                >
-                                    Images
-                                </Text>
-                            </Flex> */}
-                            
+                            </VStack>                            
                             <Flex>
                            
                                 <Button
@@ -705,7 +684,7 @@ function Merchandise(){
                         mt={[10, 10, 5, 0]}
                     >
                         <Link
-                           href={"/games/"}
+                           href={"#"}
                             _hover={{ border: "none", textDecoration: "none" }}
                             _focus={{ border: "none", textDecoration: "none" }}
                         >
@@ -719,7 +698,69 @@ function Merchandise(){
                                     bgSize="100% 100%"
                                     cursor="pointer"
                                     width={"100%"}
-                                    height={["250px", "250px", "300px"]}
+                                    height={["250px", "250px", "200px", "300px"]}
+                                >
+                                    <Flex
+                                        m="auto"
+                                        w="60%"
+                                        height={["250px", "250px", "150px"]}
+                                        className="influencerdiv"
+                                    >
+                                        <Image
+                                            objectFit="contain"
+                                            alt="Image"
+                                            layout="fill"
+                                            w={["250px", "250px", "150px"]}
+                                            src={"/assets/product/Shoes.png"}
+                                        />
+                                        
+                                    </Flex>
+                                    
+                                </Flex>
+                            </VStack>                            
+                            <Flex>
+                           
+                                <Button
+                                    variant="solid"
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="95%"
+                                    p="5px"
+                                    fontWeight="400"
+                                    m={"auto"}
+                                >
+                                    Coming Soon
+                                </Button>
+                            </Flex>
+                        </Link>
+                    </Box>
+                    <Box
+                        bgSize="cover"
+                        textAlign={"center"}
+                        px={[5, 5, 5, 5]}
+                        pb={[5, 5, 5, 12]}
+                        mt={[10, 10, 5, 0]}
+                    >
+                        <Link
+                           href={"#"}
+                            _hover={{ border: "none", textDecoration: "none" }}
+                            _focus={{ border: "none", textDecoration: "none" }}
+                        >
+                            <VStack>
+                                <Flex
+                                    flexDir={"column"}
+                                    textAlign="center"
+                                    bgImage={"/assets/related_bg.png"}
+                                    bgPosition="center"
+                                    bgRepeat="no-repeat"
+                                    bgSize="100% 100%"
+                                    cursor="pointer"
+                                    width={"100%"}
+                                    height={["250px", "250px", "200px", "300px"]}
                                 >
                                     <Flex
                                         m="auto"
@@ -767,7 +808,7 @@ function Merchandise(){
                         mt={[10, 10, 5, 0]}
                     >
                         <Link
-                           href={"/games/"}
+                           href={"#"}
                             _hover={{ border: "none", textDecoration: "none" }}
                             _focus={{ border: "none", textDecoration: "none" }}
                         >
@@ -781,7 +822,7 @@ function Merchandise(){
                                     bgSize="100% 100%"
                                     cursor="pointer"
                                     width={"100%"}
-                                    height={["250px", "250px", "300px"]}
+                                    height={["250px", "250px", "200px", "300px"]}
                                 >
                                     <Flex
                                         m="auto"
@@ -829,7 +870,7 @@ function Merchandise(){
                         mt={[10, 10, 5, 0]}
                     >
                         <Link
-                           href={"/games/"}
+                           href={"#"}
                             _hover={{ border: "none", textDecoration: "none" }}
                             _focus={{ border: "none", textDecoration: "none" }}
                         >
@@ -843,7 +884,7 @@ function Merchandise(){
                                     bgSize="100% 100%"
                                     cursor="pointer"
                                     width={"100%"}
-                                    height={["250px", "250px", "300px"]}
+                                    height={["250px", "250px", "200px", "300px"]}
                                 >
                                     <Flex
                                         m="auto"
@@ -856,7 +897,7 @@ function Merchandise(){
                                             alt="Image"
                                             layout="fill"
                                             w={["250px", "250px", "150px"]}
-                                            src={"/assets/product/Shoes.png"}
+                                            src={"/assets/product/CG.webp"}
                                         />
                                         
                                     </Flex>
@@ -891,7 +932,7 @@ function Merchandise(){
                         mt={[10, 10, 5, 0]}
                     >
                         <Link
-                           href={"/games/"}
+                           href={"#"}
                             _hover={{ border: "none", textDecoration: "none" }}
                             _focus={{ border: "none", textDecoration: "none" }}
                         >
@@ -905,7 +946,7 @@ function Merchandise(){
                                     bgSize="100% 100%"
                                     cursor="pointer"
                                     width={"100%"}
-                                    height={["250px", "250px", "300px"]}
+                                    height={["250px", "250px", "200px", "300px"]}
                                 >
                                     <Flex
                                         m="auto"
@@ -953,6 +994,673 @@ function Merchandise(){
   );
 }
 
+function TicketSection(){
+
+  return(
+    <>
+      <Box>
+        <Flex
+            flexDir={["column", "column", "column", "row"]}
+            w="100%"
+            alignItems={"center"}
+            p={[
+                "2% 2%",
+                "2% 2%",
+                "2% 5%",
+                "0% 5%",
+            ]}
+            
+        >
+          <Box
+              px={[5,5,10]}
+              width={["100%", "100%", "100%", "100%"]}
+          >
+                <Text
+                  variant="headText"
+                  fontSize={[
+                      "52px",
+                      "52px",
+                      "85px",
+                  ]}
+                  textShadow="0px 0px 10px #00034E94;"
+                  fontFamily="Blanch"
+                  lineHeight={[
+                      "42px",
+                      "42px",
+                      "65px",
+                  ]}
+                  textAlign="left"
+                  mb="0%"
+                  mt="20px"
+                  pb="0"
+              >
+                  Tickets to Cricket Match
+              </Text>
+          </Box>
+        </Flex>
+        <Flex
+            flexDir={["column", "column", "column", "row"]}
+            w="100%"
+            alignItems={"center"}
+            p="2% 5%"
+            pb="0"
+        >
+            <Box
+                bgSize="cover"
+                textAlign={"center"}
+                px={[0, 0, 0, 10]}
+                pb={[0, 0, 0, 12]}
+                width={["90%", "90%", "90%", "50%"]}
+                className="productcsa"
+            >
+                    <Image
+                        objectFit="contain"
+                        alt="Image"
+                        layout="fill"
+                        w={["350px", "500px", "700px"]}
+                        src={'/assets/product/ticket.png'}
+                    />
+            </Box>
+            <Box
+                px={[5,5,10]}
+                width={["100%", "100%", "100%", "50%"]}
+            >
+                <Image
+                    objectFit="contain"
+                    alt="Image"
+                    layout="fill"
+                    w={["150px", "150px", "150px"]}
+                    src={'/assets/product/ticket_icon.png'}
+                />
+                <Text
+                    variant="headText"
+                    fontSize={[
+                        "25px",
+                        "25px",
+                        "60px",
+                    ]}
+                    textShadow="0px 0px 10px #00034E94;"
+                    fontFamily="Blanch"
+                    lineHeight={[
+                        "25px",
+                        "25px",
+                        "50px",
+                    ]}
+                    color="white"
+                    mt="20px"
+                    fontWeight="normal"
+                    width={["100%", "100%", "80%"]}
+                    className="desc_subheader"
+                >
+                   Do not miss In-Real Life Experience <br/>Get Your Ticket Here
+                </Text>
+                <Link
+                    href={'/'}
+                    _hover={{ border: "none", textDecoration: "none" }}
+                    _focus={{ border: "none", textDecoration: "none" }}
+                    key={`igc-1`}
+                    
+                >
+                    <Button
+                        bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                        filter="drop-shadow(0 0 20px #FF0080)"
+                        boxShadow="inset 0 0 0px 0px #481A7F"
+                        width="180px"
+                        fontSize="21px"
+                        fontWeight="500"
+                        p="28px"
+                        mt="30px"
+                        mb="30px"
+                        >
+                        Coming Now
+                    </Button>
+                </Link> 
+            </Box>
+            
+        </Flex>
+      </Box>
+    </>
+  );
+}
+
+function BlockChainGame({contestmasters,contestSectionsData, blockChainCardData}) {
+    
+    const { isMobileDevice } = useContext(AppContext);
+    const [contestSections, setContestSections] = useState([]);
+    useEffect(() => {
+        if (contestmasters) {
+          const fg = [];
+          const cs = [];
+    
+          contestmasters.map((cm) => {
+            if (cm.isFeatured) fg.push(cm);
+            
+                let section = contestSectionsData?.find(
+                    (sec) => sec.id == cm.contest_section?.data?.id
+                  );
+      
+                  if (section) {
+                    if (section?.contestmasters?.data)
+                      section.contestmasters.data?.push(cm);
+                    else {
+                      section.contestmasters = {
+                        data: [cm]
+                      };
+                    }
+                  }
+            
+          });
+          //console.log('hello cm.contest?.id');
+          //console.log(contestSectionsData);
+          setContestSections(contestSectionsData);
+          
+        }
+      }, [contestmasters, contestSectionsData]);
+      
+
+     
+      console.log(contestmasters.length)
+    return ( 
+    <Box>
+         {blockChainCardData.gameSection1_isVisible && (
+        <Flex
+            flexDir={["column", "column", "column", "row"]}
+            w="100%"
+            alignItems={"center"}
+            p={[
+                "2% 2%",
+                "2% 2%",
+                "2% 5%",
+            ]}
+        >
+            <Box
+                px={[5,5,10]}
+                width={["100%", "100%", "100%", "100%"]}
+            >
+                 {blockChainCardData.gameSection1_header && (<Text
+                    variant="headText"
+                    fontSize={[
+                        "52px",
+                        "52px",
+                        "85px",
+                    ]}
+                    textShadow="0px 0px 10px #00034E94;"
+                    fontFamily="var(--chakra-fonts-Blanch)"
+                    lineHeight={[
+                        "42px",
+                        "42px",
+                        "65px",
+                    ]}
+                    textAlign="left"
+                    mb="1%"
+
+                >
+                    {blockChainCardData.gameSection1_header}
+                </Text>
+                )}
+                {blockChainCardData.gameSection1_subheader && (<Text
+                    color="white"
+                    fontSize={[
+                        "18",
+                        "18",
+                        "18",
+                        "18",
+                        "18"
+                    ]}
+                    mt="20px"
+                    fontFamily="Sora"
+                    fontWeight="normal"
+                    lineHeight={["28px", "28px", "28px"]}
+                    width={["100%", "100%", "80%"]}
+                    textAlign="center"
+                    m="auto"
+                >
+                    {blockChainCardData.gameSection1_subheader}
+                </Text>
+                )}
+                <Box mt="4%" className='gameslider'>
+                    {contestSections &&
+                    contestSections.map((section, index) => (
+                        <Box
+                        key={"sec-index-" + index}
+                        
+                        >
+                        {section?.contestmasters?.data &&
+                            section?.contestmasters?.data.length > 0 && (
+                            <GameCategory
+                                key={`games-${index}`}
+                                isMobileDevice={isMobileDevice}
+                                section={section}
+                                type="paid"
+                            />
+                            )}
+                        </Box>
+                    ))}
+                </Box>
+            </Box>
+        </Flex>
+        )}
+
+        {blockChainCardData.gameSection2_isVisible && (
+        <Flex
+            flexDir={["column", "column", "column", "row"]}
+            w="100%"
+            alignItems={"center"}
+            p={[
+                "2% 0%",
+                "2% 0%",
+                "2% 5%",
+            ]}
+        >
+            <Box
+                px={[5,5,10]}
+                width={["100%", "100%", "100%", "100%"]}
+            >
+                {blockChainCardData.gameSection2_header && ( <Text
+                    variant="headText"
+                    fontSize={[
+                        "52px",
+                        "52px",
+                        "85px",
+                    ]}
+                    textShadow="0px 0px 10px #00034E94;"
+                    fontFamily="var(--chakra-fonts-Blanch)"
+                    lineHeight={[
+                        "42px",
+                        "42px",
+                        "85px",
+                    ]}
+                    textAlign="center"
+                    mb="1%"
+                    mt={[10, 10, 5, 0]}
+                >
+                    {blockChainCardData.gameSection2_header}
+                </Text>
+                )}
+                {blockChainCardData.gameSection2_subheader && ( <Text
+                    color="white"
+                    fontSize={[
+                        "18",
+                        "18",
+                        "18",
+                        "18",
+                        "18"
+                    ]}
+                    mt="20px"
+                    fontFamily="Sora"
+                    fontWeight="normal"
+                    lineHeight={["28px", "28px", "28px"]}
+                    width={["100%", "100%", "80%"]}
+                    textAlign="center"
+                    m="auto"
+                    
+                >
+                   {blockChainCardData.gameSection2_subheader}
+                </Text>
+                )}
+
+                <Box mt="4%" className='gameslider'>
+                    {contestSections &&
+                    contestSections.map((section, index) => (
+                        <Box
+                        key={"sec-index-" + index}
+                        
+                        >
+                        {section?.contestmasters?.data &&
+                            section?.contestmasters?.data.length > 0 && (
+                            <GameCategory
+                                key={`games-${index}`}
+                                isMobileDevice={isMobileDevice}
+                                section={section}
+                                type="free"
+                            />
+                            )}
+                        </Box>
+                    ))}
+                </Box>
+            </Box>
+        </Flex>
+        )}
+    </Box>
+    )
+}
+
+const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
+    const ref = useRef();
+    const [isLargerScreen] = useMediaQuery("(min-width: 2200px)");
+    const arrowTrashhold = isMobileDevice ? 2 : isLargerScreen ? 7 : 5;
+    const [showAll, setShowAll] = useState(false);
+    const [searchText, setSearchText] = useState("");
+    const [content, setContent] = useState({});
+    const [contentBackUp, setContentBackUp] = useState({});
+    const [currentSlideIndex, setcurrentSlideIndex] = useState(0);
+
+    const horizontalSettings = {
+        dots: true,
+        infinite: true,
+        arrows: false,
+        slidesToShow: 6,
+        slidesToScroll: 6,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+                initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+                }
+            }
+        ]
+    };
+    
+    useEffect(() => {
+        const fg = [];
+        
+        
+        if(gameType == 'customGame'){
+            {section?.contestmasters?.data
+                .filter((cm) => cm.gamecampaignpriority !== null)
+                .sort((a, b) => a.gamecampaignpriority - b.gamecampaignpriority)
+                .map((cm, index) => (
+                    fg.push(cm) 
+                    //section.contestmasters.data?.push(cm)
+                ))}
+                section.contestmasters.data = fg;
+                //console.log(section?.contestmasters?.data);               
+        }
+        
+        setContent(section);
+        setContentBackUp(section);
+
+    }, [section]);
+
+    return (
+        <Box className="gameslider csagameslider">
+           
+            <>
+            <Slider {...horizontalSettings}>
+                {content?.contestmasters?.data?.length > 0 && content?.contestmasters?.data
+                                .slice(0, 6)
+                    .map((cm, index) => 
+                        type == 'free' && cm.entryFee == 0 ? ( <Box
+                        bgSize="cover"
+                        textAlign={"center"}
+                        px={[5, 5, 5, 5]}
+                        pb={[5, 5, 5, 12]}
+                        mt={[10, 10, 5, 0]}
+                    >
+                        <Link
+                           href={"/games/" + cm?.slug}
+                            _hover={{ border: "none", textDecoration: "none" }}
+                            _focus={{ border: "none", textDecoration: "none" }}
+                            key={index}
+                        >
+                            <VStack>
+                                <Flex
+                                    flexDir={"column"}
+                                    textAlign="center"
+                                    bgImage={"/assets/designupdate1/gamecard_portrait.png"}
+                                    bgPosition="center"
+                                    bgRepeat="no-repeat"
+                                    bgSize="100% 100%"
+                                    cursor="pointer"
+                                    width={"100%"}
+                                    height={["350px", "350px", "170px"]}
+                                >
+                                    <Flex
+                                        m="auto"
+                                        w="60%"
+                                        height={["250px", "250px", "150px"]}
+                                        className="influencerdiv"
+                                    >
+                                        <Image
+                                            objectFit="contain"
+                                            alt="Image"
+                                            layout="fill"
+                                            w={["250px", "250px", "150px"]}
+                                            src={getStrapiMedia(cm?.icon?.data?.url)}
+                                        />
+                                        
+                                    </Flex>
+                                    
+                                </Flex>
+                            </VStack>
+                            <Flex>
+                                <Text
+                                    mt={"5px"}
+                                    ml={"5px"}
+                                    color="#FDFFE5"
+                                    fontSize={["15px"]}
+                                    fontWeight={"600"}
+                                    align={"left"}
+                                    textOverflow="ellipsis"
+                                    overflow="visible"
+                                    height={["45px","45px","45px","45px","45px","auto"]}
+                                    lineHeight={["24px"]}
+                                >
+                                    {cm.name}
+                                </Text>
+                            </Flex>
+                            <Flex
+                                w={"full"}
+                                align="left"
+                                justify={"space-between"}
+                                px="0"
+                            >
+                                <VStack style={{ "align-items": "flex-start" }}>
+                                    <Flex>
+                                        <Image
+                                            alt="tag"
+                                            boxSize={["15px", "17px"]}
+                                            src="/assets/Icon.png"
+                                            mt="3px"
+                                        />
+                                        <Text
+                                            ml="6px"
+                                            color="#FFF"
+                                            fontSize={["13px", "14px"]}
+                                            fontWeight="400"
+                                            align={"left"}
+                                        >
+                                            {cm.entryFee != 0
+                                                ? "Entry Fee - " +
+                                                cm.entryFee +
+                                                " CHIPS"
+                                                : "Free"}
+                                        </Text>
+                                    </Flex>
+                                    <Text
+                                        color="#FFF"
+                                        fontSize={["12px", "13px"]}
+                                        fontWeight="200"
+                                        mt={0}
+                                        pl="6px"
+                                    >
+                                        {cm?.game?.data?.config?.game ==
+                                        "marketjs"
+                                            ? nFormatter(cm?.playCount, 1)
+                                            : nFormatter(cm?.roomsCount, 1, 'roomsCount')
+                                            }{" "}
+                                        Players Joined
+                                    </Text>
+                                </VStack>
+                            </Flex>
+                            <Flex>
+                            {cm &&
+                            cm.contest &&
+                            (cm?.contest?.status === "active") && (
+                                <Button
+                                    variant="solid"
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="100%"
+                                    p="5px"
+                                    fontWeight="400"
+                                >
+                                    Play Now
+                                </Button>
+                            )}
+                            </Flex>
+                        </Link>
+                    </Box>
+                    )
+                    :
+                    type === "paid" && (
+                     <Box
+                        bgSize="cover"
+                        textAlign={"center"}
+                        px={[5, 5, 5, 5]}
+                        pb={[5, 5, 5, 12]}
+                        mt={[10, 10, 5, 0]}
+                    >
+                        <Link
+                           href={"/games/" + cm?.slug}
+                            _hover={{ border: "none", textDecoration: "none" }}
+                            _focus={{ border: "none", textDecoration: "none" }}
+                            key={index}
+                        >
+                            <VStack>
+                                <Flex
+                                    flexDir={"column"}
+                                    textAlign="center"
+                                    bgImage={"/assets/designupdate1/gamecard_portrait.png"}
+                                    bgPosition="center"
+                                    bgRepeat="no-repeat"
+                                    bgSize="100% 100%"
+                                    cursor="pointer"
+                                    width={"100%"}
+                                    height={["350px", "350px", "170px"]}
+                                >
+                                    <Flex
+                                        m="auto"
+                                        w="60%"
+                                        height={["250px", "250px", "150px"]}
+                                        className="influencerdiv"
+                                    >
+                                        <Image
+                                            objectFit="contain"
+                                            alt="Image"
+                                            layout="fill"
+                                            w={["250px", "250px", "150px"]}
+                                            src={getStrapiMedia(cm?.icon?.data?.url)}
+                                        />
+                                        
+                                    </Flex>
+                                    
+                                </Flex>
+                            </VStack>
+                            <Flex>
+                                <Text
+                                    mt={"5px"}
+                                    ml={"5px"}
+                                    color="#FDFFE5"
+                                    fontSize={["15px"]}
+                                    fontWeight={"600"}
+                                    align={"left"}
+                                    textOverflow="ellipsis"
+                                    overflow="visible"
+                                    height={["45px","45px","45px","45px","45px","auto"]}
+                                    lineHeight={["24px"]}
+                                >
+                                    {cm.name}
+                                </Text>
+                            </Flex>
+                            <Flex
+                                w={"full"}
+                                align="left"
+                                justify={"space-between"}
+                                px="0"
+                            >
+                                <VStack style={{ "align-items": "flex-start" }}>
+                                    <Flex>
+                                        <Image
+                                            alt="tag"
+                                            boxSize={["15px", "17px"]}
+                                            src="/assets/Icon.png"
+                                            mt="3px"
+                                        />
+                                        <Text
+                                            ml="6px"
+                                            color="#FFF"
+                                            fontSize={["13px", "14px"]}
+                                            fontWeight="400"
+                                            align={"left"}
+                                        >
+                                            {cm.entryFee != 0
+                                                ? "Entry Fee - " +
+                                                cm.entryFee +
+                                                " CHIPS"
+                                                : "Free"}
+                                        </Text>
+                                    </Flex>
+                                    <Text
+                                        color="#FFF"
+                                        fontSize={["12px", "13px"]}
+                                        fontWeight="200"
+                                        mt={0}
+                                        pl="6px"
+                                    >
+                                        {cm?.game?.data?.config?.game ==
+                                        "marketjs"
+                                            ? nFormatter(cm?.playCount, 1)
+                                            : nFormatter(cm?.roomsCount, 1, 'roomsCount')
+                                            }{" "}
+                                        Players Joined
+                                    </Text>
+                                </VStack>
+                            </Flex>
+                            <Flex>
+                            {cm &&
+                            cm.contest &&
+                            (cm?.contest?.status === "active") && (
+                                <Button
+                                    variant="solid"
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="100%"
+                                    p="5px"
+                                    fontWeight="400"
+                                >
+                                    Play Now
+                                </Button>
+                            )}
+                            </Flex>
+                        </Link>
+                    </Box>
+                    )
+                                
+                )}
+                </Slider>
+            </>
+           
+        </Box>
+    );
+};
+
 export async function getStaticProps() {
   // Fetch data from external API
   let pageNo = 1;
@@ -960,6 +1668,17 @@ export async function getStaticProps() {
   let data = [];
   do {
     const res = await strapi.find("contestmasters", {
+        filters: {
+            contest_section: {
+                $or: [
+                    {
+                        name: {
+                        $eq: "Cricket Games",
+                        },
+                    },
+                ],
+            },
+        },
       fields: ["name", "slug", "priority", "gamecampaignpriority", "entryFee", "isFeatured", "retries"],
       sort: "priority",
       populate: {
