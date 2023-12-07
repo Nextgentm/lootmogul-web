@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 const Login = dynamic(() => import("../../src/features/Login"));
 const LoginForm = dynamic(() => import("../../src/features/LoginForm"));
 import { useRouter } from "next/router";
-
+import Head from 'next/head';
 
 const defaultSEOData = {
     metaTitle:"Lootmogul | Join LootMogul Skill Sports Gaming",
@@ -32,7 +32,29 @@ export default function GamesPage({
   const trending_subheader = campaignsSectionsResData?.data[2].trending_subheader;
   return (
     <>
-      
+
+      { process.env.NEXT_PUBLIC_SENTRY_ENV === 'production' && 
+        <>
+            <Head>
+                {/* Google Analytics Global Site Tag (gtag.js) */}
+                <script
+                async
+                src={`https://www.googletagmanager.com/gtag/js?id=G-Z2ZBHH5JHF`}
+                ></script>
+                <script
+                dangerouslySetInnerHTML={{
+                    __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'G-Z2ZBHH5JHF');
+                    `,
+                }}
+                ></script>
+            </Head>
+        </>
+        }
+        
       <SEOContainer seoData={defaultSEOData}/> 
 
          {/*<Banner bannerData={campaignsSectionsResData?.data[2] || []}/>*/}
