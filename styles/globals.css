@@ -335,6 +335,15 @@ canvas[data-testid] {
   font-size: 35px;
 }
 
+.csagameslider .slick-slider {
+  width: 100% !important; /* Ensure the slider container takes up the full width */
+}
+
+.csagameslider .slick-track {
+  display: flex !important;
+  width: 100% !important; /* Make the .slick-track take up 100% of the container's width */
+}
+
 @media screen and (max-width: 768px) {
   .twitter_icon_patch svg.twitter{
    width: 16px;
@@ -343,5 +352,13 @@ canvas[data-testid] {
   }
   .gameslide video {
     position: relative;
+  }
+  .csagameslider .slick-track {
+    width: 612px !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  .csagameslider .slick-track {
+    width: 2576px !important;
   }
 }
