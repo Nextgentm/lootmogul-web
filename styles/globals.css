@@ -335,14 +335,15 @@ canvas[data-testid] {
   font-size: 35px;
 }
 
-.csagameslider .slick-slider {
-  width: 100% !important; /* Ensure the slider container takes up the full width */
+/*.csagameslider .slick-slider {
+  width: 100% !important; 
 }
 
 .csagameslider .slick-track {
   display: flex !important;
-  width: 100% !important; /* Make the .slick-track take up 100% of the container's width */
+  width: 100% !important; 
 }
+*/
 
 @media screen and (max-width: 768px) {
   .twitter_icon_patch svg.twitter{
@@ -359,12 +360,12 @@ canvas[data-testid] {
   .game_section_title .css-1uugxps {
       width: 110px;
   }
-  .csagameslider .slick-track {
+  /*.csagameslider .slick-track {
     width: 612px !important;
-  }
+  }*/
 }
 @media screen and (max-width: 768px) {
-  .csagameslider .slick-track {
+  /*.csagameslider .slick-track {
     width: 2576px !important;
-  }
+  }*/
 }
