@@ -3,11 +3,15 @@ import { Box, Flex, Text, Image } from "@chakra-ui/react";
 import GameInfoActions from "./GameInfoActions";
 import GameInfoGrid from "./GameInfoGrid";
 import MultipleLoggedInUser from "/src/components/MultipleLoggedInUser/index.jsx";
+import moment from "moment";
 
 
 
 
 const GameInfo = ({ gameData, isTabletOrDesktop }) => {
+  const startDate = moment(gameData.contest.startDate)
+  const today = moment();
+
   const renderBanner = () => (
     <Flex
       w={["100%"]}
@@ -69,13 +73,26 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
           >
             {gameData.name}
           </Text>
+          <Text
+            color="#FFF"
+            fontSize={["10px", "10px", "10px", "12px", "15px"]}
+            fontWeight={"400"}
+            flexWrap={"wrap"}
+            fontFamily="Sora"
+            textAlign={"center"}
+          >
+            {
+              (startDate.isSame(today, 'day') && 'Starting Today') ||
+              startDate.isAfter(today) && `Starting on ${startDate.format("DD MMM YYYY")}`
+            }
+          </Text>
         </Flex>
       </Flex>
     </Flex>
   );
   const rewardDescription = gameData?.reward?.data?.description;
-  const modifiedDescription = rewardDescription ?  rewardDescription.replace("$", "") : '';
-  const chipStr = (!isNaN(+modifiedDescription)) ? 'CHIPS': '';
+  const modifiedDescription = rewardDescription ? rewardDescription.replace("$", "") : '';
+  const chipStr = (!isNaN(+modifiedDescription)) ? 'CHIPS' : '';
   return (
     <>
       <Flex
@@ -112,14 +129,14 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
                 Current Contest Stats {/* Winning prize */}
               </Text>
               {chipStr && (
-              <Image
+                <Image
                   alt="tag"
                   boxSize={["25px", "35px"]}
                   src="/assets/Icon.png"
                   mt="12px"
                   ml="10px"
-                  marginBottom={"4px"}  
-              />
+                  marginBottom={"4px"}
+                />
               )}
 
               <Text
@@ -164,7 +181,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
             />
           )}
         </Box>
-        
+
       </Flex>
     </>
   );
