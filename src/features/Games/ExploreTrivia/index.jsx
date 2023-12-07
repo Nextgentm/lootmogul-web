@@ -72,7 +72,7 @@ const ExploreTrivia = ({ section, executeScroll }) => {
       </Text>
 
       <SimpleGrid
-        columns={[1, 1, 2, results?.length >= 5 ? 5 : results?.length, results?.length >= 5 ? 5 : results?.length]}
+        columns={[1, 1, 2, results?.length >= 6 ? 6 : results?.length, results?.length >= 6 ? 6 : results?.length]}
         w="100%"
         px={["5%"]}
         mt={["20px", 0]}
@@ -110,6 +110,7 @@ const ExploreTrivia = ({ section, executeScroll }) => {
               fontWeight="normal"
               color="white"
               fontSize={["20px", "20px", "13px", "13px", "16px"]}
+              style={{"text-wrap":"wrap"}}
             >
               {item.label}
             </Text>
