@@ -351,7 +351,7 @@ function BannerVideo({
       };
 
       return <Slider {...horizontalSettings}>
-      <div className="gameslide">
+      <div className="gameslide gameslidecsa">
       {!isMobileDevice &&
           <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
           poster="/assets/product/CricketBanner_CSA_mobile.jpg">
@@ -1159,7 +1159,7 @@ function BlockChainGame({contestmasters,contestSectionsData, blockChainCardData}
       
 
      
-      console.log(contestmasters.length)
+      //console.log(contestmasters.length)
     return ( 
     <Box>
          {blockChainCardData.gameSection1_isVisible && (

@@ -57,7 +57,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
     return (
         <Box>
            
-            <Flex my="40px" minWidth="max-content" alignItems="center" gap="2">
+            <Flex my="40px" minWidth="max-content" alignItems="center" gap="2" className="game_section_title">
                 <Box p="2">
                     <Heading variant="sectionTitle">{content.name}</Heading>
                 </Box>
