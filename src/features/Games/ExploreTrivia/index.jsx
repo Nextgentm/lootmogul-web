@@ -72,7 +72,7 @@ const ExploreTrivia = ({ section, executeScroll }) => {
       </Text>
 
       <SimpleGrid
-        columns={[1, 1, 2, results?.length >= 5 ? 5 : results?.length, results?.length >= 5 ? 5 : results?.length]}
+        columns={[1, 1, 2, results?.length >= 6 ? 6 : results?.length, results?.length >= 6 ? 6 : results?.length]}
         w="100%"
         px={["5%"]}
         mt={["20px", 0]}
