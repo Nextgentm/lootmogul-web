@@ -110,6 +110,7 @@ const ExploreTrivia = ({ section, executeScroll }) => {
               fontWeight="normal"
               color="white"
               fontSize={["20px", "20px", "13px", "13px", "16px"]}
+              style={{"text-wrap":"wrap"}}
             >
               {item.label}
             </Text>
