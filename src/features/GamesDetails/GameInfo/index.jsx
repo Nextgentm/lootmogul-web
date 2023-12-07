@@ -8,7 +8,7 @@ import moment from "moment";
 
 
 const GameInfo = ({ gameData, isTabletOrDesktop }) => {
-  const startDate = moment(gameData.contest.startDate)
+  const startDate = moment(gameData?.contest?.startDate)
   const today = moment();
 
   const renderBanner = () => (
@@ -80,10 +80,10 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
             fontFamily="Sora"
             textAlign={"center"}
           >
-            {
+            {gameData?.contest?.startDate && (
               (startDate.isSame(today, 'day') && 'Starting Today') ||
               startDate.isAfter(today) && `Starting on ${startDate.format("DD MMM YYYY")}`
-            }
+            )}
           </Text>
         </Flex>
       </Flex>
