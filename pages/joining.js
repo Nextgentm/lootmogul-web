@@ -49,7 +49,7 @@ const Joining = (props) => {
     }
   }, [])
 
-   
+  // Commenting below user as it is creating to sessions for the socket 
   useEffect(() => {
     if (joiningData) {
       setTicketId(joiningData.ticketId);
@@ -59,7 +59,8 @@ const Joining = (props) => {
       setSocket(sockRef);
       
     }
-  }, [user, joiningData]);
+  // }, [user, joiningData]);
+}, [joiningData]);
 
   useEffect(() => {
     if (socket) {
