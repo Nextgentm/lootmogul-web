@@ -20,6 +20,8 @@ const GameDetails = ({ gameData }) => {
     const { showPaidGameConfirmation, CheckAndStartGame, showCaptcha, setShowCaptcha } = useContext(AppContext);
     const [defaultTab, setDefaultTab] = useState(router.asPath.includes("#leaderboard") ? 1 : 0);
     const [contestStatus, setContestStatus] = useState(false);
+    // disable play again button onclick
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
 
     return (
         <Box
@@ -41,9 +43,11 @@ const GameDetails = ({ gameData }) => {
             {gameData && gameData.contest && (gameData?.contest?.status === "active" || contestStatus) &&
                 <Button m="auto"
                     onClick={() => {
-                        CheckAndStartGame(`GameDetail-${gameData?.id}`, gameData)
+                        setButtonDisabled(true);
+                        CheckAndStartGame(`GameDetail-${gameData?.id}`, gameData);
                     }
                     }
+                    disabled={isButtonDisabled}
                 >Join Contest</Button>
             }
 

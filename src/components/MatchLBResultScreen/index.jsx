@@ -43,8 +43,11 @@ const MatchLBResultScreen = (props) => {
     };
 
     const [ani, setAni] = useState(false);
+    // disable play again button onclick
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
 
     const handlePlayAgain = () => {
+        setButtonDisabled(true);
         onPlayAgain();
     };
 
@@ -157,6 +160,7 @@ const MatchLBResultScreen = (props) => {
                                 height="46px"
                                 marginTop={["30%", "4%"]}
                                 fontSize={"18px"}
+                                disabled={isButtonDisabled}
                             >
                                 PLAY AGAIN
                             </Button>
