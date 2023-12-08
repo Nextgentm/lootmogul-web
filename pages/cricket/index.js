@@ -67,7 +67,7 @@ export default function GamesPage({
             w="100%"
             alignItems={"center"}
             p="2% 5%"
-            backgroundSize="contain"
+            backgroundSize={["cover","cover","contain"]}
             backgroundRepeat={"no-repeat"}
             mt={["30px","30px","10px","0px"]}
         >
@@ -79,8 +79,8 @@ export default function GamesPage({
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            p="2% 5%"
-            pb="0"
+            p={["10% 0%","10% 0%","2% 5%"]}
+            //pb="0"
         >
             <Box
                 px={[5,5,10]}
@@ -376,7 +376,7 @@ function BannerVideo({
             w="100%"
             alignItems={"center"}
             height={["auto","auto","auto","700px"]}
-            p="2% 5%"
+            p={["7% 0%","7% 0%","2% 5%"]}
             backgroundSize="cover"
             className="banner-read-thumb-lg"
         >
@@ -487,6 +487,8 @@ function Merchandise(){
       arrows: false,
       slidesToShow: 3,
       slidesToScroll: 3,
+      autoplay: true,
+      autoplaySpeed: 5000,
       responsive: [
           {
               breakpoint: 1024,
@@ -522,8 +524,8 @@ function Merchandise(){
             w="100%"
             alignItems={"center"}
             p={[
-                "2% 2%",
-                "2% 2%",
+                "7% 0% 0%",
+                "7% 0% 0%",
                 "2% 5%",
             ]}
         >
@@ -557,7 +559,7 @@ function Merchandise(){
             flexDir={["column", "column", "column", "row"]}
             w="100%"
             alignItems={"center"}
-            p="2% 5%"
+            p={["0% 0%","0% 0%","2% 5%"]}
             pb="0"
         >
             <Box
@@ -568,16 +570,17 @@ function Merchandise(){
                 <Text
                     color="white"
                     fontSize={[
-                        "18",
-                        "18",
-                        "18",
-                        "30",
-                        "30"
+                        "16",
+                        "16",
+                        "16",
+                        "16",
+                        "20",
+                        "20"
                     ]}
-                    //mt="20px"
+                    mb={["0%","0","0","15%","15%"]}
                     fontFamily="Sora"
                     fontWeight="normal"
-                    lineHeight={["28px", "28px", "38px", "38px"]}
+                    lineHeight={["24px", "24px", "30px", "30px"]}
                     width={["100%", "100%", "100%"]}
                     className="desc_subheader"
                 >
@@ -1004,8 +1007,8 @@ function TicketSection(){
             w="100%"
             alignItems={"center"}
             p={[
-                "2% 2%",
-                "2% 2%",
+                "7% 0%",
+                "7% 0%",
                 "2% 5%",
                 "0% 5%",
             ]}
@@ -1075,15 +1078,15 @@ function TicketSection(){
                 <Text
                     variant="headText"
                     fontSize={[
-                        "25px",
-                        "25px",
+                        "30px",
+                        "35px",
                         "60px",
                     ]}
                     textShadow="0px 0px 10px #00034E94;"
                     fontFamily="Blanch"
                     lineHeight={[
-                        "25px",
-                        "25px",
+                        "30px",
+                        "30px",
                         "50px",
                     ]}
                     color="white"
@@ -1159,7 +1162,7 @@ function BlockChainGame({contestmasters,contestSectionsData, blockChainCardData}
       
 
      
-      //console.log(contestmasters.length)
+      //console.log(contestSections)
     return ( 
     <Box>
          {blockChainCardData.gameSection1_isVisible && (
@@ -1168,8 +1171,8 @@ function BlockChainGame({contestmasters,contestSectionsData, blockChainCardData}
             w="100%"
             alignItems={"center"}
             p={[
-                "2% 2%",
-                "2% 2%",
+                "2% 0%",
+                "2% 0%",
                 "2% 5%",
             ]}
         >
@@ -1492,12 +1495,17 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
                                         mt={0}
                                         pl="6px"
                                     >
+                                    {(cm?.game?.data?.config?.game == "marketjs" && cm?.allTimePlayCount > 50)
+                                        || (cm?.game?.data?.config?.game !== "marketjs" && cm?.allTimeRoomsCount > 25)
+                                        ?
+                                    <>
                                         {cm?.game?.data?.config?.game ==
-                                        "marketjs"
-                                            ? nFormatter(cm?.playCount, 1)
-                                            : nFormatter(cm?.roomsCount, 1, 'roomsCount')
+                                        "marketjs" 
+                                            ? nFormatter(cm?.allTimePlayCount, 1)
+                                            : nFormatter(cm?.allTimeRoomsCount, 1, 'roomsCount')
                                             }{" "}
                                         Players Joined
+                                        </> : <Text p="3"></Text>}
                                     </Text>
                                 </VStack>
                             </Flex>
@@ -1520,6 +1528,25 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
                                     Play Now
                                 </Button>
                             )}
+                             {cm &&
+                                cm.contest &&
+                                cm?.contest?.status === "upcoming" &&
+                                (
+                                    <Button
+                                    variant="solid"
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="100%"
+                                    p="5px"
+                                    fontWeight="400"
+                                >
+                                    Coming Soon
+                                </Button>
+                                )}
                             </Flex>
                         </Link>
                     </Box>
@@ -1620,12 +1647,17 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
                                         mt={0}
                                         pl="6px"
                                     >
+                                         {(cm?.game?.data?.config?.game == "marketjs" && cm?.allTimePlayCount > 50)
+                                        || (cm?.game?.data?.config?.game !== "marketjs" && cm?.allTimeRoomsCount > 25)
+                                        ?
+                                    <>
                                         {cm?.game?.data?.config?.game ==
-                                        "marketjs"
-                                            ? nFormatter(cm?.playCount, 1)
-                                            : nFormatter(cm?.roomsCount, 1, 'roomsCount')
+                                        "marketjs" 
+                                            ? nFormatter(cm?.allTimePlayCount, 1)
+                                            : nFormatter(cm?.allTimeRoomsCount, 1, 'roomsCount')
                                             }{" "}
                                         Players Joined
+                                        </> : <Text p="3"></Text>}
                                     </Text>
                                 </VStack>
                             </Flex>
@@ -1648,6 +1680,25 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
                                     Play Now
                                 </Button>
                             )}
+                            {cm &&
+                                cm.contest &&
+                                cm?.contest?.status === "upcoming" &&
+                                (
+                                    <Button
+                                    variant="solid"
+                                    h={["45px", "40px"]}
+                                    fontSize={["12px","12px","14px"]}
+                                    lineHeight={["10px"]}
+                                    mt="12px"
+                                    textTransform="uppercase"
+                                    _hover={{ textDecoration: "none !important" }}
+                                    w="100%"
+                                    p="5px"
+                                    fontWeight="400"
+                                >
+                                    Coming Soon
+                                </Button>
+                                )}
                             </Flex>
                         </Link>
                     </Box>
