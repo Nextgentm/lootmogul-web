@@ -1160,6 +1160,7 @@ function BlockChainGame({contestmasters,contestSectionsData, blockChainCardData}
 
      
       //console.log(contestmasters.length)
+
     return ( 
     <Box>
          {blockChainCardData.gameSection1_isVisible && (
