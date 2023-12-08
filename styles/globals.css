@@ -350,9 +350,16 @@ canvas[data-testid] {
    height: 16px;
    margin-top: 2px;
   }
-  .gameslide video {
+  .gameslidecsa video {
     position: relative;
   }
+  .game_section_title h2 {
+      font-size: 32px;
+  }
+  .game_section_title .css-1uugxps {
+      width: 110px;
+  }
+
   .csagameslider .slick-track {
     width: 612px !important;
   }
