@@ -54,7 +54,12 @@ export function reportWebVitals({ id, name, label, value }) {
 function MyApp({ Component, pageProps }) {
 
   const router = useRouter();
+  const { pathname } = router;
   const { provider, trackingCode, utm_medium, utm_source, referral_code, utm_term, utm_campaign, utm_content } = router.query
+
+  const excludedPatterns = ['/games/', '/joining', '/quizPage'];
+  const shouldExclude = excludedPatterns.some(pattern => pathname.startsWith(pattern));
+  const shouldRenderSnowfall = !shouldExclude;
 
   const handleRouteChange = (url) => {
     ga.pageview(url)
@@ -129,7 +134,7 @@ function MyApp({ Component, pageProps }) {
           {process.env.NEXT_PUBLIC_MAINTENANCE === 'true' ? <MaintenancePage></MaintenancePage> : <>
             {router.route === "/" ? '' : <Header />}
             {stickyBtn && router.route !== "/" ? <StickySocialIcons /> : ''}
-            <Snowfall
+            {shouldRenderSnowfall && <Snowfall
               // The color of the snowflake, can be any valid CSS color.
               color="#dee4fd"
               speed={[1.2,1.3]}
@@ -138,6 +143,7 @@ function MyApp({ Component, pageProps }) {
               snowflakeCount={300}
               radius={[0.5,3]}
             />
+            }
             {/* <Button onClick={onSentry}>hello</Button> */}
             <Component
               {...pageProps}
