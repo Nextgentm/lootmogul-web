@@ -18,7 +18,7 @@ const BottomAboutText = () => {
                 w={["100%", "100%", "80%", "80%"]}
                 justify={["flex-start", "flex-start", "flex-start", "flex-start"]}
             >
-                <Text pr={["0px", "0px", "20px", "20px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["15px", "18px"]} textAlign="left">
+                <Text pr={["0px", "0px", "20px", "20px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["15px","15px", "18px"]} textAlign="left">
                 LootMogul venture is accelerated (1 of 5 ventures) by National Basketball Player Association in collaboration with 
                 <a style={{color:'#e90a63'}}  href="#"> Andreessen Horowitz (a16z)’s Cultural Leadership Fund and Patricof Co</a>{" "}
                 </Text>
@@ -60,7 +60,7 @@ const BottomAboutText = () => {
                 w={["100%", "100%", "100%", "100%"]}
                 justify={["center", "center", "flex-start", "flex-start"]}
             >
-                <Text pt={["20px", "20px", "0px", "0px"]} pr={["0px", "0px", "20px", "20px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["15px", "18px"]} textAlign="left">
+                <Text pt={["20px", "20px", "0px", "0px"]} pr={["0px", "0px", "20px", "20px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["15px", "15px", "18px"]} textAlign="left">
                 Web3 Studios reports LootMogul as one of the top sports metaverse experience platforms
                 </Text>
                 
@@ -78,7 +78,7 @@ const BottomAboutText = () => {
                 w={["100%", "100%", "80%", "80%"]}
                 justify={["center", "center", "flex-start", "flex-start"]}
             >
-                <Text pr={["0px", "0px", "20px", "20px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["15px", "18px"]} textAlign="left">
+                <Text pr={["0px", "0px", "20px", "20px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["15px", "15px", "18px"]} textAlign="left">
                 LootMogul is competitively selected (1 of 6 ventures) by National Football League Player Association (NFLPA)  to participate in their <a style={{color:'#e90a63'}} href="#">2023 NFLPA Pitch Day</a> Competition during the 2023 NFL Superbowl LVII Week.
                 </Text>
                 
@@ -115,7 +115,7 @@ const BottomAboutText = () => {
                 <Text
                     variant="footerText"
                     fontWeight="500"
-                    fontSize={["15px", "18px"]}
+                    fontSize={["15px", "15px", "18px"]}
                     w="100%"
                     mx="auto"
                 >
@@ -138,7 +138,7 @@ const BottomAboutText = () => {
                 <Text
                     variant="footerText"
                     fontWeight="400"
-                    fontSize={["15px", "18px"]}
+                    fontSize={["15px", "15px", "18px"]}
                     w="100%"
                     mx="auto"
                 >
