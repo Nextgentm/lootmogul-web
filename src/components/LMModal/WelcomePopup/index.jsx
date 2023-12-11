@@ -11,6 +11,9 @@ import {
 } from "@chakra-ui/react";
 import { useBreakpointValue } from "@chakra-ui/react";
 import Image from "next/image";
+import { useState, useRef, useEffect, useContext } from "react";
+import axios from "axios";
+import strapi from "../../../utils/strapi";
 
 const WalletHeader = () => {
     const currentSize = useBreakpointValue({
@@ -126,18 +129,67 @@ export const WelcomePopup = ({
     OnLoginClose,
     user
 }) => {
+    const [userLocation, setUserLocation] = useState();
+
+    useEffect(() => {
+        function setLocationTimezone() {
+            new Date().getTimezoneOffset() === -330
+                ? setUserLocation("IN")
+                : setUserLocation(null);
+        }
+
+        async function locationSetter() {
+            if (
+                window.localStorage?.getItem("lm_user_location") &&
+                window.localStorage?.getItem("lm_user_location") !== "null"
+            ) {
+                setUserLocation(
+                    window.localStorage?.getItem("lm_user_location")
+                );
+            } else {
+                try {
+                    const { data } = await axios.get(
+                        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/ip/location`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${strapi.getToken()}`
+                            }
+                        }
+                    );
+
+                    if (data?.data?.ipCountry) {
+                        setUserLocation(data?.data?.ipCountry);
+                    } else {
+                        setLocationTimezone();
+                    }
+                } catch (err) {
+                    console.log(err);
+                    setLocationTimezone();
+                }
+            }
+        }
+
+        locationSetter();
+
+        
+
+    }, []);
+
+    let minChip = "";
+    let minOffer = "";
+    let currency = '';
     
-    var lm_user_location = window.localStorage?.getItem("lm_user_location") ?  window.localStorage?.getItem("lm_user_location") : '';
-    var minChip = "";
-    var minOffer = "";
-    var currency = '';
-   
-    if(lm_user_location == 'IN') {
+    if(userLocation == 'IN') {
         minChip = "14";
         currency = "₹";
         minOffer = "50";
     }
-    else if(lm_user_location == 'ZA'){
+    else if(userLocation == 'ZA'){
+        minChip = "36";
+        currency = "R";
+        minOffer = "100";    
+    }
+    else if(userLocation == 'GB'){
         minChip = "36";
         currency = "R";
         minOffer = "100";    
