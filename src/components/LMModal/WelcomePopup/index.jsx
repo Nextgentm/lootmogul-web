@@ -132,13 +132,16 @@ export const WelcomePopup = ({
     const [userLocation, setUserLocation] = useState();
 
     useEffect(() => {
+        console.log("called useEffect");
         function setLocationTimezone() {
+            console.log("called setLocationTimezone");
             new Date().getTimezoneOffset() === -330
                 ? setUserLocation("IN")
                 : setUserLocation(null);
         }
 
         async function locationSetter() {
+            console.log("called locationSetter");
             if (
                 window.localStorage?.getItem("lm_user_location") &&
                 window.localStorage?.getItem("lm_user_location") !== "null"
@@ -157,6 +160,8 @@ export const WelcomePopup = ({
                         }
                     );
 
+
+                    console.log("called ajax",data);
                     if (data?.data?.ipCountry) {
                         setUserLocation(data?.data?.ipCountry);
                     } else {
@@ -178,7 +183,7 @@ export const WelcomePopup = ({
     let minChip = "";
     let minOffer = "";
     let currency = '';
-    
+    console.log("userLocation",userLocation);
     if(userLocation == 'IN') {
         minChip = "14";
         currency = "₹";
