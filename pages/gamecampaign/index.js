@@ -44,11 +44,20 @@ export default function GamesPage({
 
 export async function getStaticProps() {
   // Fetch data from external API
-  let pageNo = 1;
-  let pageCount = 1;
   let data = [];
-  do {
+  
     const res = await strapi.find("contestmasters", {
+      filters: {
+        contest_section: {
+          $or: [
+            {
+              name: {
+                $eq: "Skill Games",
+              },
+            },
+          ],
+        },
+      },
       fields: ["name", "slug", "priority", "gamecampaignpriority", "entryFee", "isFeatured", "retries"],
       sort: "priority",
       populate: {
@@ -72,21 +81,14 @@ export async function getStaticProps() {
       },
 
       pagination: {
-        page: pageNo,
-        pageSize: 25,
+        page: 1,
+        pageSize: 6, // 25
       },
     });
     if (res?.meta) {
-      data.push(res.data);
-      if (pageCount == 1) {
-        pageCount = res.meta.pagination.pageCount;
-      }
+      data = res.data;
     }
-    pageNo++;
-  } while (pageNo <= pageCount);
-  // Pass data to the page via props
-  data = data.flat();
-
+    
   try {
     const contestSectionsRes = await fetch(
       process.env.NEXT_PUBLIC_STRAPI_API_URL +
@@ -104,7 +106,7 @@ export async function getStaticProps() {
     
     const campaignsSectionsRes = await fetch(
       process.env.NEXT_PUBLIC_STRAPI_API_URL +
-        "/api/game-campaigns?populate=*&sort=id"
+        "/api/game-campaigns?populate=*&sort=id&pagination[limit]=1"
     );
     const contestSectionsData = await contestSectionsRes.json();
     const campaignsSectionsResData = await campaignsSectionsRes.json();
