@@ -13,6 +13,8 @@ import { AppContext } from "../../../utils/AppContext/index";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import DepostWithdrawstop from "../../LMModal/DepositWithdraw/withdrawStop";
+import WelcomePopup from "../../LMModal/WelcomePopup";
+
 const DepostWithdrawModal = dynamic(
     () => import("../../LMModal/DepositWithdraw"),
     {
@@ -27,10 +29,10 @@ const UserInfo = ({ user, isMobileDevice }) => {
     const [isPopupMenuShowing, togglePopupMenu] = useState(false);
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
     const [totalAmount, setTotalAmount] = useState();
-    const { logout, isTabletOrDesktop, amounts, handlePermission } = useContext(AppContext);
+    const { logout, isTabletOrDesktop, amounts, handlePermission, isFirstTimeLogin, setFirstTimeLogin } = useContext(AppContext);
     const ref = useRef();
 
-
+    
     useOutsideClick({
         ref,
         handler: () => togglePopupMenu(false)
@@ -264,8 +266,15 @@ const UserInfo = ({ user, isMobileDevice }) => {
                     />
                     //  <DepostWithdrawstop/>
                 )}
-
             </LMModalComponent>
+
+            { isFirstTimeLogin == true && (
+                <WelcomePopup
+                    isOpen={isFirstTimeLogin}
+                    OnLoginClose={() => setFirstTimeLogin(false)}
+                    user={user}
+                />
+            )}
         </Flex>
     );
 };

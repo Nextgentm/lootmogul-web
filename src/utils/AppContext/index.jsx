@@ -69,6 +69,8 @@ export const AppContextContainer = ({ children }) => {
     const [currencyToChip, setCurrencyToChip] = useState([]);
 
     const [withdrawalRequest, setWithdrawalRequest] = useState(false);
+    
+    const [isFirstTimeLogin, setFirstTimeLogin] = useState(false);
 
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
@@ -875,6 +877,7 @@ export const AppContextContainer = ({ children }) => {
         }
         if (data?.user) {
             if (data.user.is_new) {
+                setFirstTimeLogin(true);
                 if (typeof window !== "undefined") {
                     const utm_source =
                         window.localStorage?.getItem("utm_source");
@@ -1177,7 +1180,9 @@ export const AppContextContainer = ({ children }) => {
                 showModalwithdrawalpopup,
                 withdrawFetch,
                 toggleWithdrawFetch,
-                handlePermission
+                handlePermission,
+                setFirstTimeLogin,
+                isFirstTimeLogin
             }}
         >
             {children}
