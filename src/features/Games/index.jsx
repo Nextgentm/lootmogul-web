@@ -32,8 +32,9 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
   const router = useRouter();
   const [contestSections, setContestSections] = useState([]);
 
-  const [featuredGames, setFeaturedGames] = useState([]);
-  const [carouselItem, setCarouselItem] = useState();
+  // Not in use - OPTIMIZE code
+  /*const [featuredGames, setFeaturedGames] = useState([]);
+  const [carouselItem, setCarouselItem] = useState();*/
 
   const bottomBanners = banners.filter(
     ({ position }) => position === "promotion_top"
@@ -58,7 +59,12 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
     }
   }, [router.isReady]);
 
+  // Optimised code
   useEffect(() => {
+    setContestSections(contestSectionsData);
+  }, [contestSectionsData]);
+  //old code
+  /*useEffect(() => {
     if (contestmasters) {
       const fg = [];
       const cs = [];
@@ -101,48 +107,48 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
       });
       setCarouselItem(ci.slice(0, 5));
     }
-  }, [contestmasters, contestSectionsData]);
+  }, [contestmasters, contestSectionsData]);*/
 
   return (
-    <Box> 
+    <Box>
       <Box className="top_game_banner">
-       <Banner executeScroll={executeScroll} />
-      </Box> 
+        <Banner executeScroll={executeScroll} />
+      </Box>
       {isMobileDevice && <Box>
         <Flex direction={["column", "column", "column", "row"]}>
           <Box w={["100%", "100%", "100%", "100%"]}>
-              <Box mt={!isMobileDevice ? 25 : 65} ml="30px">
-                  <Text
-                  variant="headText"
-                  fontSize={[
-                      "50px",
-                      "50px",
-                      "70px",
-                  ]}
-                  mb={0}
-                  fontFamily="var(--chakra-fonts-Blanch)"
-                  lineHeight={[
-                      "50px",
-                      "50px",
-                      "60px",
-                  ]}
-                  textShadow="unset"
-                  >
-                  Experience AI Gaming
-                  </Text>
+            <Box mt={!isMobileDevice ? 25 : 65} ml="30px">
+              <Text
+                variant="headText"
+                fontSize={[
+                  "50px",
+                  "50px",
+                  "70px",
+                ]}
+                mb={0}
+                fontFamily="var(--chakra-fonts-Blanch)"
+                lineHeight={[
+                  "50px",
+                  "50px",
+                  "60px",
+                ]}
+                textShadow="unset"
+              >
+                Experience AI Gaming
+              </Text>
 
-                  <Text
-                  color="#FFF !important"
-                  fontSize={["14px", "16px", "25px", "1.3em"]}
-                  lineHeight={["14px", "18px", "40px"]}
-                  fontWeight="normal"
-                  width={["100%", "100%", "100%", "50%"]}
-                  my="1em"
-                  >
-                   Join to play with our blockchain games and win
-                  </Text>
-                  
-              </Box>
+              <Text
+                color="#FFF !important"
+                fontSize={["14px", "16px", "25px", "1.3em"]}
+                lineHeight={["14px", "18px", "40px"]}
+                fontWeight="normal"
+                width={["100%", "100%", "100%", "50%"]}
+                my="1em"
+              >
+                Join to play with our blockchain games and win
+              </Text>
+
+            </Box>
           </Box>
         </Flex>
       </Box>
@@ -153,14 +159,14 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
             section={contestSections}
             executeScroll={executeScroll}
           />
-        
+
           <Box>
             {contestSections &&
               contestSections.map((section, index) => (
                 <Box
                   key={"sec-index-" + index}
                   ref={itemRefs[section.priority]}
-               
+
                 >
                   {section?.contestmasters?.data &&
                     section?.contestmasters?.data.length > 0 && (
@@ -175,51 +181,51 @@ const GamesComponent = ({ contestmasters, contestSectionsData, banners }) => {
           </Box>
 
           {bottomBanners && <BottomBanners bannersList={bottomBanners} />}
-        
+
         </Box>
         <Box
-              px={[0,0]}
-              width={["100%", "100%", "100%", "100%"]}
-              margin={"auto"}
-              mb={"4vw"}
+          px={[0, 0]}
+          width={["100%", "100%", "100%", "100%"]}
+          margin={"auto"}
+          mb={"4vw"}
+        >
+          <Text
+            variant="headText"
+            fontSize={[
+              "34px",
+              "34px",
+              "70px",
+            ]}
+            mb={0}
+            mt="5%"
+            fontFamily="var(--chakra-fonts-Blanch)"
+            lineHeight={[
+              "30px",
+              "30px",
+              "60px",
+            ]}
+            textShadow="unset"
           >
-             <Text
-                variant="headText"
-                fontSize={[
-                    "34px",
-                    "34px",
-                    "70px",
-                ]}
-                mb={0}
-                mt="5%"
-                fontFamily="var(--chakra-fonts-Blanch)"
-                lineHeight={[
-                    "30px",
-                    "30px",
-                    "60px",
-                ]}
-                textShadow="unset"
-                >
-                Connect - Play - Learn - Earn                      
-                </Text>
-              <Text
-                  color="white"
-                  fontSize={[
-                      "1rem",
-                      "1.3rem",
-                      "1.3rem",
-                      "1.4rem",
-                      "1.5rem"
-                  ]}
-                  mt="20px"
-                  fontFamily="Sora"
-                  fontWeight="normal"
-                  lineHeight={["30px", "30px", "36px"]}
-                  width={["100%", "100%", "100%"]}
-              >
-                  Immerse yourself in blockchain gaming trivia and contests galore. Join a universe where cutting-edge technology meets thrilling gameplay. Explore a variety of titles, each offering unique experiences and rewards. Level up your gaming journey and seize the opportunity to win exciting prizes. Join us in this innovative gaming adventure today!
-              </Text>
-          </Box>
+            Connect - Play - Learn - Earn
+          </Text>
+          <Text
+            color="white"
+            fontSize={[
+              "1rem",
+              "1.3rem",
+              "1.3rem",
+              "1.4rem",
+              "1.5rem"
+            ]}
+            mt="20px"
+            fontFamily="Sora"
+            fontWeight="normal"
+            lineHeight={["30px", "30px", "36px"]}
+            width={["100%", "100%", "100%"]}
+          >
+            Immerse yourself in blockchain gaming trivia and contests galore. Join a universe where cutting-edge technology meets thrilling gameplay. Explore a variety of titles, each offering unique experiences and rewards. Level up your gaming journey and seize the opportunity to win exciting prizes. Join us in this innovative gaming adventure today!
+          </Text>
+        </Box>
       </Box>
     </Box>
   );
