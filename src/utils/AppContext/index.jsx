@@ -775,6 +775,14 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 mrnCallService();
             }
+
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
             /** For mrnCallService */
             ga.eventTracking({
                 action: data.user.is_new
@@ -1055,6 +1063,14 @@ export const AppContextContainer = ({ children }) => {
             if (
                 data.user.is_new &&
                 router.route === "/gamecampaign" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
                 router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
