@@ -354,7 +354,7 @@ function BannerVideo({
       <div className="gameslide gameslidecsa">
       {!isMobileDevice &&
           <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-          poster="/assets/product/CricketBanner_CSA_mobile.jpg">
+          poster="/assets/product/InnerCrickerPoster.jpg">
               <source
               src={bannerData.othertrending_header}
               type="video/mp4"
@@ -363,7 +363,7 @@ function BannerVideo({
       }
       {isMobileDevice &&
            <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-          poster="/assets/product/CricketBanner_CSA_mobile.jpg">
+          poster="/assets/product/InnerCrickerPoster_mobile.jpg">
               <source
               src={bannerData.othertrending_redirectionUrl}
               type="video/mp4"
