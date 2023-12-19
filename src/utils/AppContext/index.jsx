@@ -688,13 +688,13 @@ export const AppContextContainer = ({ children }) => {
 
             /* Clevertap onUserLogin*/
             if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                ct.onUserLogin({
+                /*ct.onUserLogin({
                     action: "onUserLogin",
                     params: data.user
-                });
+                });*/
             }
              /* Clevertap on User Login and Registration Event Tracking*/
-            const onUserLoginData = await axios.get(
+            /*const onUserLoginData = await axios.get(
                 process.env.NEXT_PUBLIC_STRAPI_API_URL +
                     `/api/clevertap/user`,
                     {
@@ -720,26 +720,26 @@ export const AppContextContainer = ({ children }) => {
 
             if (data.user.is_new){
                 if(onUserLoginData.data){
-                    /*ct.onUserLoginRegistrationEvent({
+                    ct.onUserLoginRegistrationEvent({
                         action: "Registration",
                         params: onUserLoginData.data?.data,
                         pathname:router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });*/
+                    });
                 }
             }
             else{     
                 if(onUserLoginData.data){
-                    /*ct.onUserLoginRegistrationEvent({
+                    ct.onUserLoginRegistrationEvent({
                         action: "Login",
                         params: onUserLoginData.data?.data,
                         pathname:router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });*/
+                    });
                 }          
                 
             }
-
+            */
             /** For mobupps */
             if (
                 data.user.is_new &&
@@ -980,14 +980,14 @@ export const AppContextContainer = ({ children }) => {
             
             /* Clevertap onUserLogin*/
             if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                ct.onUserLogin({
+                /*ct.onUserLogin({
                     action: "onUserLogin",
                     params: data.user
-                });
+                });*/
             }
             
              /* Clevertap on User Login and Registration Event Tracking*/
-             const onUserLoginData = await axios.get(
+            /* const onUserLoginData = await axios.get(
                 process.env.NEXT_PUBLIC_STRAPI_API_URL +
                     `/api/clevertap/user`,
                     {
@@ -1013,26 +1013,27 @@ export const AppContextContainer = ({ children }) => {
            
             if (data.user.is_new ){
                 if(onUserLoginData.data  || onTransactionLoginData){
-                    /*ct.onUserLoginRegistrationEvent({
+                    ct.onUserLoginRegistrationEvent({
                         action: "Registration",
                         params: onUserLoginData.data?.data,
                         pathname:router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });*/
+                    });
                 }
             }
             else{     
                 if(onUserLoginData.data || onTransactionLoginData){
-                    /*ct.onUserLoginRegistrationEvent({
+                    ct.onUserLoginRegistrationEvent({
                         action: "Login",
                         params: onUserLoginData.data?.data,
                         pathname: router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });*/
+                    });
                 }          
                 
             }
-            
+            */
+
             /** For Mobupps */
             if (
                 data.user.is_new &&
