@@ -22,7 +22,7 @@ export const pageview = (url) => {
 
     if(strapi_jwt){
         
-        const onUserLoginData =  axios.get(
+        /*const onUserLoginData =  axios.get(
             process.env.NEXT_PUBLIC_STRAPI_API_URL +
                 `/api/clevertap/user`,
                 {
@@ -50,7 +50,7 @@ export const pageview = (url) => {
             "Browser Information":userAgent,
             "Device Type":deviceType,
             "Os Type":osType ? osType : '',
-        });
+        });*/
     }
     else{
         clevertap.event.push("Page View",{
@@ -176,7 +176,7 @@ export const onGamePlayNowButton = async ({ action, params }) => {
 
     if(strapi_jwt != null){
         //console.log('Great to see play');
-        const onUserGameData = await axios.get(
+        /*const onUserGameData = await axios.get(
             process.env.NEXT_PUBLIC_STRAPI_API_URL +
                 `/api/clevertap/game`,
                 {
@@ -237,7 +237,7 @@ export const onGamePlayNowButton = async ({ action, params }) => {
             });
 
             //console.log(clevertap);
-        }
+        }*/
     }
     else{
         //console.log('Please login and play');
