@@ -1342,8 +1342,8 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
         dots: true,
         infinite: true,
         arrows: false,
-        slidesToShow: 6,
-        slidesToScroll: 6,
+        slidesToShow: 3,
+        slidesToScroll: 3,
         responsive: [
             {
                 breakpoint: 1024,
@@ -1424,19 +1424,19 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
                                     bgSize="100% 100%"
                                     cursor="pointer"
                                     width={"100%"}
-                                    height={["350px", "350px", "170px"]}
+                                    height={["350px", "350px", "350px"]}
                                 >
                                     <Flex
                                         m="auto"
                                         w="60%"
-                                        height={["250px", "250px", "150px"]}
+                                        height={["250px", "250px", "350px"]}
                                         className="influencerdiv"
                                     >
                                         <Image
                                             objectFit="contain"
                                             alt="Image"
                                             layout="fill"
-                                            w={["250px", "250px", "150px"]}
+                                            w={["250px", "250px", "350px"]}
                                             src={getStrapiMedia(cm?.icon?.data?.url)}
                                         />
                                         
@@ -1576,19 +1576,19 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
                                     bgSize="100% 100%"
                                     cursor="pointer"
                                     width={"100%"}
-                                    height={["350px", "350px", "170px"]}
+                                    height={["350px", "350px", "350px"]}
                                 >
                                     <Flex
                                         m="auto"
                                         w="60%"
-                                        height={["250px", "250px", "150px"]}
+                                        height={["250px", "250px", "350px"]}
                                         className="influencerdiv"
                                     >
                                         <Image
                                             objectFit="contain"
                                             alt="Image"
                                             layout="fill"
-                                            w={["250px", "250px", "150px"]}
+                                            w={["250px", "250px", "350px"]}
                                             src={getStrapiMedia(cm?.icon?.data?.url)}
                                         />
                                         
