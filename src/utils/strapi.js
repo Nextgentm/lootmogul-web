@@ -1,7 +1,8 @@
 import Strapi from "strapi-sdk-js";
 
 const strapi = new Strapi({
-  url: `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api`,
+  url: `${process.env.NEXT_PUBLIC_STRAPI_API_URL}`,
+  prefix: '/api',
   store: {
     key: "strapi_jwt",
     useLocalStorage: true,
@@ -14,7 +15,6 @@ strapi.axios.interceptors.response.use(
     return response;
   },
   (error) => {
-    
     if (error.response) {
       const { status } = error.response;
       switch (status) {
