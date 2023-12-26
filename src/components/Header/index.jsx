@@ -593,7 +593,7 @@ const Header = () => {
             {/* <SessionTimeout /> */}
             {/* <AutoLogout /> */}
 
-            {!isHideHeader && (
+            {!isHideHeader &&  router.route !="/cricket" && (
                 <CookieConsent
                     location="bottom"
                     buttonText="Accept"
