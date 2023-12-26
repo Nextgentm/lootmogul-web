@@ -8,7 +8,7 @@ const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
 const SENTRY_ENV = process.env.SENTRY_ENV || process.env.NEXT_PUBLIC_SENTRY_ENV;
 
 Sentry.init({
-  dsn: process.env.NEXT_PUBLIC_SENTRY_ENV === "development" ? null : SENTRY_DSN,
+  dsn: process.env.NEXT_PUBLIC_SENTRY_ENV === "production" ? SENTRY_DSN : null,
   tracesSampleRate: 1.0,
   environment: SENTRY_ENV,
   // ...
