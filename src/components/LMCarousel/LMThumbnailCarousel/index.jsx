@@ -18,9 +18,11 @@ const LMThumbnailCarousel = ({
                 className={className}
                 onClick={onClick}
             >
-                <img
+                <Image
                     src="/assets/skillgame/left-arrow.png"
                     alt="Left"
+                    width={45}
+                        height={45}
                 />
             </Box>
         );
@@ -33,9 +35,11 @@ const LMThumbnailCarousel = ({
                 className={className}
                 onClick={onClick}
             >
-                <img
+                <Image
                     src="/assets/skillgame/right-arrow.png"
                     alt="Right"
+                    width={45}
+                        height={45}
                 />
             </Box>
         );
@@ -86,46 +90,56 @@ const LMThumbnailCarousel = ({
         return <Slider {...horizontalSettings}>
         <div>
             <a href="/games/hoop-star">
-            <img 
+            <Image 
                 src="/assets/skillgame/HoopStar.png"
                 alt="HoopStar"
                 style={imagestyle}
+                width={45}
+                height={45}
              />
              </a>
         </div>
         <div>
             <a href="/games/scott-flick-american-football">
-            <img
+            <Image
                 src="/assets/skillgame/FlickAmericanFootball.png"
                 alt="FlickAmericanFootball"
                 style={imagestyle}
+                width={45}
+                height={45}
              />
              </a>
         </div>
         <div>
             <a href="/games/flick-soccer">
-            <img 
+            <Image 
                 src="/assets/skillgame/FlickSoccer.png"
                 alt="FlickSoccer"
                 style={imagestyle}
+                width={45}
+                height={45}
              />
              </a>
         </div>
         <div>
             <a href="/games/cool-archer">
-            <img 
+            <Image 
                 src="/assets/skillgame/CoolArcher.png"
                 alt="CoolArcher"
                 style={imagestyle}
+                width={45}
+                height={45}
              />
              </a>
         </div>
         <div>
             <a href="/games/pro-cricket-champion">
-            <img 
+            <Image 
                 src="/assets/skillgame/Pro-Cricket_400.png"
                 alt="Pro-Cricket"
                 style={cricketImageStyle}
+                width={45}
+                height={45}
              />
              </a>
         </div>

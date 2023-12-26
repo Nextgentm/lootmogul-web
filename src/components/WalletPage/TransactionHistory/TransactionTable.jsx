@@ -12,6 +12,7 @@ import {
     Text,
     Tooltip
 } from "@chakra-ui/react";
+import Image from "next/image";
 import {
     ChevronRightIcon,
     ChevronLeftIcon,
@@ -301,10 +302,12 @@ function CustomTable({ columns, data, alldata, fetchData }) {
             >
                 <Flex key="paginator">
                     <Tooltip key="tootltip" label="Previous Page">
-                        <img
+                        <Image
                             src="/assets/designupdate1/arrow-left-unselected.png"
                             alt="Right"
                             onClick={previousPage}
+                            width={85}
+                            height={85}
                         />
                     </Tooltip>
                 </Flex>
@@ -330,10 +333,12 @@ function CustomTable({ columns, data, alldata, fetchData }) {
 
                 <Flex key="righticon">
                     <Tooltip label="Next Page" key="righticon1">
-                        <img
+                        <Image
                             src="/assets/designupdate1/arrow-right-selected.png"
                             alt="Right"
                             onClick={nextPage}
+                            width={85}
+                            height={85}
                         />
                     </Tooltip>
                 </Flex>
