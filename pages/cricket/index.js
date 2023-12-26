@@ -285,9 +285,11 @@ function BannerVideo({
               className={className}
               onClick={onClick}
           >
-              <img
+              <Image
                   src="/assets/designupdate1/arrow-left-selected.png"
                   alt="Left"
+                  width={45}
+                  height={45}
               />
           </Box>
       );
@@ -300,9 +302,11 @@ function BannerVideo({
               className={className}
               onClick={onClick}
           >
-              <img
+              <Image
                   src="/assets/designupdate1/arrow-right-selected.png"
                   alt="Right"
+                  width={45}
+                        height={45}
               />
           </Box>
       );

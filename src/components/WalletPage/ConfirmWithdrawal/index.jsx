@@ -73,10 +73,12 @@ export const CancelWithdrawBody = () => {
             borderRadius="12px"
             justifyContent="center"
         >
-            <img
+            <Image
                 src="/assets/designupdate1/success.png"
                 alt="Right"
                 style={{ margin: "auto", width: "80px", padding: "10px" }}
+                width={80}
+                height={80}
             />
             <Text
                 fontSize={[, "12px", "12px", "13px"]}
