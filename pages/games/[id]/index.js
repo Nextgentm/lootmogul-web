@@ -21,7 +21,7 @@ export async function getStaticProps(context) {
 
   const { id = "" } = context.params;
   const filter = isNaN(id) ? { slug: id } : { id: id };
-  const data = await strapi.find("contestmasters", {
+  const data = await strapi.find("contestmaster/custom-contestmaster/get-game-page-data", {
     filters: filter,
     populate: [
       "icon",
