@@ -9,18 +9,18 @@ const mobuppsCallService = async () => {
 
     let wmadv = null;
     if (utm_medium == "mobupps") {
-        console.log("*****************mobuppsCallService********************");
+        //console.log("*****************mobuppsCallService********************");
         wmadv = await axios.get(
             `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Gameplay&adv_id=5679&transaction_id=${utm_term}`
         );
     }
 
-    const myMessage = {
+    /*const myMessage = {
         message: "wmadv",
         wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Gameplay&adv_id=5679&transaction_id=${utm_term}`
     };
 
-    Sentry.captureMessage(JSON.stringify(myMessage));
+    Sentry.captureMessage(JSON.stringify(myMessage));*/
 };
 
 export { mobuppsCallService };
