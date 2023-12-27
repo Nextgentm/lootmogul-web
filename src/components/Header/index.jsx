@@ -100,9 +100,9 @@ const Header = () => {
     useEffect(() => {    
         if(router.pathname){
             //console.log('Page ',router.pathname);
-            clevertap.event.push("Page Request",{
+            /*clevertap.event.push("Page Request",{
                 "Page":router.pathname,
-            });
+            });*/
         }
     },[router]);
 
