@@ -47,7 +47,8 @@ export async function getStaticPaths() {
   let pageCount = 1;
   let data = [];
   do {
-    const res = await strapi.find("contestmasters", {
+    const res = await strapi.find("contestmaster/custom-contestmaster/simple-find", {
+      fields:['id','slug'],
       sort: "priority",
       pagination: {
         page: pageNo,
