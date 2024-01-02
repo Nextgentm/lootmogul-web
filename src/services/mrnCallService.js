@@ -13,7 +13,8 @@ const mrnCallService = async () => {
         );
     }
 
-   /* const myMessage = {
+
+    /*const myMessage = {
         message: "MRN - Reg call",
         wmadvUrl: `trk.mrndigital.in`
     };
