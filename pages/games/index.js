@@ -90,6 +90,10 @@ export async function getStaticProps() {
               fields: "*",
             },
           },
+          pagination: {
+            start: 0,
+            limit: 6
+          }
         },
         image:"*"
       },
