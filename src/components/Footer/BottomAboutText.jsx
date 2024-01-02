@@ -142,7 +142,7 @@ const BottomAboutText = () => {
                     w="100%"
                     mx="auto"
                 >
-                    © 2023 LootMogul. All Rights Reserved. NextGenTM, Inc. 831 N Tatnall Street Suite M #275 Wilmington, DE 19801 United States <br/>
+                    © 2024 LootMogul. All Rights Reserved. NextGenTM, Inc. 831 N Tatnall Street Suite M #275 Wilmington, DE 19801 United States <br/>
                     Office Address : C/105 Varsha Swapna Gawan Pada, Mulund East, Mumbai - 400081
                 </Text>
             </Flex>   

@@ -21,7 +21,7 @@ export async function getStaticProps(context) {
 
   const { id = "" } = context.params;
   const filter = isNaN(id) ? { slug: id } : { id: id };
-  const data = await strapi.find("contestmasters", {
+  const data = await strapi.find("contestmaster/custom-contestmaster/get-game-page-data", {
     filters: filter,
     populate: [
       "icon",
@@ -47,7 +47,8 @@ export async function getStaticPaths() {
   let pageCount = 1;
   let data = [];
   do {
-    const res = await strapi.find("contestmasters", {
+    const res = await strapi.find("contestmaster/custom-contestmaster/simple-find", {
+      fields:['id','slug'],
       sort: "priority",
       pagination: {
         page: pageNo,

@@ -14,12 +14,12 @@ const hasmindCallService = async () => {
         );
     }
 
-    const myMessage = {
+    /*const myMessage = {
         message: "hashmind - Login call",
         wmadvUrl: `https://hasmindpvtltd10992690.o18.link/`
     };
 
-    Sentry.captureMessage(JSON.stringify(myMessage));
+    Sentry.captureMessage(JSON.stringify(myMessage));*/
 };
 
 export { hasmindCallService };

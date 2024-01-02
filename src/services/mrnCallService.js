@@ -13,12 +13,13 @@ const mrnCallService = async () => {
         );
     }
 
-    const myMessage = {
+
+    /*const myMessage = {
         message: "MRN - Reg call",
         wmadvUrl: `trk.mrndigital.in`
     };
 
-    Sentry.captureMessage(JSON.stringify(myMessage));
+    Sentry.captureMessage(JSON.stringify(myMessage));*/
 };
 
 export { mrnCallService };
