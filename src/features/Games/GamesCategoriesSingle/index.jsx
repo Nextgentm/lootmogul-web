@@ -44,7 +44,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                         .map((cm, index) => (
                             <WrapItem mb="2%!important">
                                 <GamesCard
-                                    style={{ mr: "13px" }}
+                                    style={{ mr: "5px" }}
                                     key={`gamescard-${index}`}
                                     contestmaster={cm}
                                     sectionName={content.name}
