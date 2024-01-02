@@ -733,13 +733,13 @@ export const AppContextContainer = ({ children }) => {
                 router.route === "/gamecampaign" &&
                 router.query.utm_medium === "mobupps"
             ) {
-                const utm_term = router.query.utm_term;
-                const myMessage = {
+                mobuppsCallService();
+                /*const myMessage = {
                     message: "wmadv",
                     wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 };
 
-                Sentry.captureMessage(JSON.stringify(myMessage));
+                Sentry.captureMessage(JSON.stringify(myMessage));*/
             }
 
             /** For mobupps */
@@ -1008,13 +1008,14 @@ export const AppContextContainer = ({ children }) => {
                 router.route === "/gamecampaign" &&
                 router.query.utm_medium === "mobupps"
             ) {
-                const utm_term = router.query.utm_term;
+                /*const utm_term = router.query.utm_term;                
                 const myMessage = {
                     message: "wmadv",
                     wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 };
 
-                Sentry.captureMessage(JSON.stringify(myMessage));
+                Sentry.captureMessage(JSON.stringify(myMessage));*/
+                mobuppsCallService();
             }
             /** For Mobupps */
 
