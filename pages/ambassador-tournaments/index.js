@@ -58,7 +58,7 @@ export default function GamesPage({}) {
       },
     });
 
-    console.log('hello',res)
+    
     setContestSections(res)
   }
   useEffect(() => {
