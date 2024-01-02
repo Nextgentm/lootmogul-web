@@ -14,6 +14,7 @@ import {
 import GamesCard from "../../InfluencerDetails/InfluencerGames/InfluencerGameCard";
 import { useRef, useState, useEffect } from "react";
 import ViewAllBtn from "../../../components/ViewAllBtn";
+import ViewAllRedirectBtn from "../../../components/ViewAllRedirectBtn";
 import {
     LeftArrow,
     RightArrow
@@ -80,7 +81,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                             pos="relative"
                             right="0"
                         >
-                            <ViewAllBtn />
+                            {content.name !== "Ambassador tournaments"  ?<ViewAllBtn />:<ViewAllRedirectBtn />}
                         </Box>
                     ) : (
                         ""
