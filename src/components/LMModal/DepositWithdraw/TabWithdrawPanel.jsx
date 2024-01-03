@@ -27,7 +27,7 @@ import MyPageLoader from "../../MyPageLoader";
 import { GridLoader } from "react-spinners";
 import { isNumber } from "../../../utils/utils";
 
-import * as ct from "../../../services/clevertapAnalytics";
+//import * as ct from "../../../services/clevertapAnalytics";
 
 // eslint-disable-next-line react/display-name
 const TabWithdrawPanel = memo(({ data, isDeposit }) => {
