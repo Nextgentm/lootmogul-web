@@ -2,7 +2,7 @@ import { Flex, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-const ViewAllBtn = ({slug}) => {
+const ViewAllBtn = () => {
     const router = useRouter();
 
     return (
@@ -14,7 +14,7 @@ const ViewAllBtn = ({slug}) => {
         >
             <Text
                 onClick={() => {
-                    router.push("/contest-section/"+slug);
+                    router.push("/ambassador-tournaments");
                 }}
                 color="white"
                 fontFamily="Blanch"

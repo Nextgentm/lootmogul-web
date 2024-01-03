@@ -3,7 +3,6 @@ import SEOContainer from "../../src/features/SEOContainer";
 import GamesComponent from "../../src/features/Games/single";
 import { useEffect,  useState } from "react";
 import MyPageLoader from "../../src/components/MyPageLoader";
-import { useRouter } from "next/router";
 
 const defaultSEOData = {
   metaTitle: "Play Online Trivia Games With Your Favorite Influencers",
@@ -13,15 +12,14 @@ const defaultSEOData = {
 };
 
 export default function GamesPage({}) {
-  const { query } = useRouter();
   
-  const getAllContests =  async () =>{
+  const allAllAmbassador =  async () =>{
     const res =  await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
       filters: {
           $or: [
             {
-              slug: {
-                $eq: query.contestsectionslug,
+              name: {
+                $eq: "Ambassador tournaments",
               },
             }
           ],
@@ -64,7 +62,7 @@ export default function GamesPage({}) {
     setContestSections(res)
   }
   useEffect(() => {
-    getAllContests();
+    allAllAmbassador();
   }, []);
 
   const [contestSections, setContestSections] = useState([]);
