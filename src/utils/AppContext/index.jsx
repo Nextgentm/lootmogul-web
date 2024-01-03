@@ -10,7 +10,7 @@ import {
 } from "../../services/dataService";
 import { apiLikeRequests } from "../../features/Home/api";
 import * as ga from "../../services/googleAnalytics";
-import * as ct from "../../services/clevertapAnalytics";
+//import * as ct from "../../services/clevertapAnalytics";
 import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
@@ -336,7 +336,7 @@ export const AppContextContainer = ({ children }) => {
     const handlePermission = () => {
         //debugger;
         const userId = generateUserId();
-        clevertap.notifications.push({
+        /*clevertap.notifications.push({
             "titleText":'Stay updated & power up your play!',
             "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
             "okButtonText":'Yes',
@@ -377,7 +377,7 @@ export const AppContextContainer = ({ children }) => {
 
         clevertap.event.push("Web Push", {
             "Visitor": "Visitor"+ userId
-        });
+        });*/
     }
     
    
