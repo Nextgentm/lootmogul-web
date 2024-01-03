@@ -7,7 +7,7 @@ import { nFormatter } from "../../../../utils/utils";
 import AppContext from "../../../../utils/AppContext";
 import strapi from "../../../../utils/strapi";
 import { setCountForCaptcha } from "../../../../services/dataService";
-import * as ct from '../../../../services/clevertapAnalytics';
+//import * as ct from '../../../../services/clevertapAnalytics';
 import dynamic from "next/dynamic";
 import CountDownTimer from "../../../../components/CountDownTimer";
 import { InfoIcon } from "../../../../components/Icons";
