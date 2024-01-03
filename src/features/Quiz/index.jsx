@@ -12,7 +12,7 @@ import {
   getVoiceOverStatus,
   setVoiceOverStatus,
 } from "../../services/audioService";
-import * as ct from "../../services/clevertapAnalytics";
+///import * as ct from "../../services/clevertapAnalytics";
 
 const Quiz = (props) => {
   const router = useRouter();

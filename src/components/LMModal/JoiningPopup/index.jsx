@@ -6,7 +6,7 @@ import AppContext from "../../../utils/AppContext";
 import strapi from "../../../utils/strapi";
 import axios from "axios";
 import LMNonCloseALert from "../../LMNonCloseALert";
-import * as ct from '../../../services/clevertapAnalytics';
+//import * as ct from '../../../services/clevertapAnalytics';
 
 const JoiningPopup = ({ retry, data, closeShowModal }) => {
     const router = useRouter();
