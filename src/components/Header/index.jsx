@@ -97,14 +97,14 @@ const Header = () => {
 
     const router = useRouter();
 
-    useEffect(() => {    
+    /*useEffect(() => {    
         if(router.pathname){
             //console.log('Page ',router.pathname);
             clevertap.event.push("Page Request",{
                 "Page":router.pathname,
             });
         }
-    },[router]);
+    },[router]);*/
 
     const isActiveLink = (path, queryPath) => {
         //TODO: need to check what condition is this and remove the proper statements
@@ -593,7 +593,7 @@ const Header = () => {
             {/* <SessionTimeout /> */}
             {/* <AutoLogout /> */}
 
-            {!isHideHeader && (
+            {!isHideHeader &&  router.route !="/cricket" && (
                 <CookieConsent
                     location="bottom"
                     buttonText="Accept"

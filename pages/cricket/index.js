@@ -285,9 +285,11 @@ function BannerVideo({
               className={className}
               onClick={onClick}
           >
-              <img
+              <Image
                   src="/assets/designupdate1/arrow-left-selected.png"
                   alt="Left"
+                  width={45}
+                  height={45}
               />
           </Box>
       );
@@ -300,9 +302,11 @@ function BannerVideo({
               className={className}
               onClick={onClick}
           >
-              <img
+              <Image
                   src="/assets/designupdate1/arrow-right-selected.png"
                   alt="Right"
+                  width={45}
+                        height={45}
               />
           </Box>
       );
@@ -354,7 +358,7 @@ function BannerVideo({
       <div className="gameslide gameslidecsa">
       {!isMobileDevice &&
           <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-          poster="/assets/product/CricketBanner_CSA_mobile.jpg">
+          poster="/assets/product/InnerCrickerPoster.jpg">
               <source
               src={bannerData.othertrending_header}
               type="video/mp4"
@@ -363,7 +367,7 @@ function BannerVideo({
       }
       {isMobileDevice &&
            <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-          poster="/assets/product/CricketBanner_CSA_mobile.jpg">
+          poster="/assets/product/InnerCrickerPoster_mobile.jpg">
               <source
               src={bannerData.othertrending_redirectionUrl}
               type="video/mp4"
@@ -1342,14 +1346,14 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
         dots: true,
         infinite: true,
         arrows: false,
-        slidesToShow: 6,
-        slidesToScroll: 6,
+        slidesToShow: 2,
+        slidesToScroll: 2,
         responsive: [
             {
                 breakpoint: 1024,
                 settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
+                slidesToShow: 2,
+                slidesToScroll: 2,
                 infinite: true,
                 dots: true
                 }
@@ -1394,12 +1398,12 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
     }, [section]);
 
     return (
-        <Box className="gameslider csagameslider">
+        <Box className="gameslider csagameslider" width={["100%","100%","100%","50%"]}>
            
             <>
             <Slider {...horizontalSettings}>
                 {content?.contestmasters?.data?.length > 0 && content?.contestmasters?.data
-                                .slice(0, 6)
+                                .slice(0, 2)
                     .map((cm, index) => 
                         type == 'free' && cm.entryFee == 0 ? ( <Box
                         bgSize="cover"
@@ -1424,19 +1428,19 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
                                     bgSize="100% 100%"
                                     cursor="pointer"
                                     width={"100%"}
-                                    height={["350px", "350px", "170px"]}
+                                    height={["350px", "350px", "350px"]}
                                 >
                                     <Flex
                                         m="auto"
                                         w="60%"
-                                        height={["250px", "250px", "150px"]}
+                                        height={["250px", "250px", "350px"]}
                                         className="influencerdiv"
                                     >
                                         <Image
                                             objectFit="contain"
                                             alt="Image"
                                             layout="fill"
-                                            w={["250px", "250px", "150px"]}
+                                            w={["250px", "250px", "350px"]}
                                             src={getStrapiMedia(cm?.icon?.data?.url)}
                                         />
                                         
@@ -1576,19 +1580,19 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
                                     bgSize="100% 100%"
                                     cursor="pointer"
                                     width={"100%"}
-                                    height={["350px", "350px", "170px"]}
+                                    height={["350px", "350px", "350px"]}
                                 >
                                     <Flex
                                         m="auto"
                                         w="60%"
-                                        height={["250px", "250px", "150px"]}
+                                        height={["250px", "250px", "350px"]}
                                         className="influencerdiv"
                                     >
                                         <Image
                                             objectFit="contain"
                                             alt="Image"
                                             layout="fill"
-                                            w={["250px", "250px", "150px"]}
+                                            w={["250px", "250px", "350px"]}
                                             src={getStrapiMedia(cm?.icon?.data?.url)}
                                         />
                                         

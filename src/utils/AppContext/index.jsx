@@ -69,6 +69,8 @@ export const AppContextContainer = ({ children }) => {
     const [currencyToChip, setCurrencyToChip] = useState([]);
 
     const [withdrawalRequest, setWithdrawalRequest] = useState(false);
+    
+    const [isFirstTimeLogin, setFirstTimeLogin] = useState(false);
 
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
@@ -171,38 +173,26 @@ export const AppContextContainer = ({ children }) => {
         } else fetchGameJoiningData();
     };
     const logout = async () => {
-        const value = await strapi.fetchUser();
+        //const value = await strapi.fetchUser();
         /*ct.onUserLogout({
             action: "Logout",
             params: user
         });*/
 
         try {
-            const resp = await axios.post(
-                process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                    `/wp-json/strapi/v1/setCurrentUser/`,
-                {
-                    user_email: value.email,
-                    strapi_jwt: "logout",
-                    provider: value.provider
-                }
-            );
-            const data = resp.data;
-            if (data.success) {
-                if (typeof window !== "undefined" && window.localStorage) {
-                    localStorage.clear();
-                }
-                strapi.logout();
-                setUser(null);
-                if (
-                    router.route === "/influencers" ||
-                    router.route === "/nfts" ||
-                    router.route === "/games"
-                ) {
-                    router.push(router.route);
-                } else {
-                    router.push("/");
-                }
+            if (typeof window !== "undefined" && window.localStorage) {
+                localStorage.clear();
+            }
+            strapi.logout();
+            setUser(null);
+            if (
+                router.route === "/influencers" ||
+                router.route === "/nfts" ||
+                router.route === "/games"
+            ) {
+                router.push(router.route);
+            } else {
+                router.push("/");
             }
         } catch (error) {}
     };
@@ -583,7 +573,6 @@ export const AppContextContainer = ({ children }) => {
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
-            insertLoggedInUserInDB(data);
             getCurremtLocation().then((res) => {
                 window.localStorage.setItem("lm_user_location", res?.country);
                 window.localStorage.setItem("lm_user_state", res?.state);
@@ -686,13 +675,13 @@ export const AppContextContainer = ({ children }) => {
 
             /* Clevertap onUserLogin*/
             if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                ct.onUserLogin({
+                /*ct.onUserLogin({
                     action: "onUserLogin",
                     params: data.user
-                });
+                });*/
             }
              /* Clevertap on User Login and Registration Event Tracking*/
-            const onUserLoginData = await axios.get(
+            /*const onUserLoginData = await axios.get(
                 process.env.NEXT_PUBLIC_STRAPI_API_URL +
                     `/api/clevertap/user`,
                     {
@@ -718,39 +707,40 @@ export const AppContextContainer = ({ children }) => {
 
             if (data.user.is_new){
                 if(onUserLoginData.data){
-                    /*ct.onUserLoginRegistrationEvent({
+                    ct.onUserLoginRegistrationEvent({
                         action: "Registration",
                         params: onUserLoginData.data?.data,
                         pathname:router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });*/
+                    });
                 }
             }
             else{     
                 if(onUserLoginData.data){
-                    /*ct.onUserLoginRegistrationEvent({
+                    ct.onUserLoginRegistrationEvent({
                         action: "Login",
                         params: onUserLoginData.data?.data,
                         pathname:router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });*/
+                    });
                 }          
                 
             }
-
+            */
             /** For mobupps */
             if (
                 data.user.is_new &&
                 router.route === "/gamecampaign" &&
                 router.query.utm_medium === "mobupps"
             ) {
-                const utm_term = router.query.utm_term;
-                const myMessage = {
+                mobuppsCallService();
+
+                /*const myMessage = {
                     message: "wmadv",
                     wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 };
 
-                Sentry.captureMessage(JSON.stringify(myMessage));
+                Sentry.captureMessage(JSON.stringify(myMessage));*/
             }
 
             /** For mobupps */
@@ -769,6 +759,14 @@ export const AppContextContainer = ({ children }) => {
             if (
                 data.user.is_new &&
                 router.route === "/gamecampaign" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
                 router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
@@ -792,26 +790,7 @@ export const AppContextContainer = ({ children }) => {
             }
         }
     };
-
-    const insertLoggedInUserInDB = async (value) => {
-        try {
-            const resp = await axios.post(
-                process.env.NEXT_PUBLIC_WORDPRESS_URL +
-                    `/wp-json/strapi/v1/setCurrentUser/`,
-                {
-                    user_email: value.user.email,
-                    strapi_jwt: value.jwt,
-                    provider: value.user.provider
-                }
-            );
-
-            const data = resp.data;
-            if (data.success) {
-            }
-        } catch (error) {}
-    };
-
-    
+  
     const callCustomAuthService = async (
         formData,
         formType,
@@ -848,7 +827,7 @@ export const AppContextContainer = ({ children }) => {
                         password: formData.password
                     };
                     data = await strapi.login(apiValues);
-                    insertLoggedInUserInDB(data);
+                    
                     setJwt(data.jwt);
                     getCurremtLocation().then((res) => {
                         window.localStorage.setItem(
@@ -875,6 +854,7 @@ export const AppContextContainer = ({ children }) => {
         }
         if (data?.user) {
             if (data.user.is_new) {
+                setFirstTimeLogin(true);
                 if (typeof window !== "undefined") {
                     const utm_source =
                         window.localStorage?.getItem("utm_source");
@@ -969,14 +949,14 @@ export const AppContextContainer = ({ children }) => {
             
             /* Clevertap onUserLogin*/
             if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                ct.onUserLogin({
+                /*ct.onUserLogin({
                     action: "onUserLogin",
                     params: data.user
-                });
+                });*/
             }
             
              /* Clevertap on User Login and Registration Event Tracking*/
-             const onUserLoginData = await axios.get(
+            /* const onUserLoginData = await axios.get(
                 process.env.NEXT_PUBLIC_STRAPI_API_URL +
                     `/api/clevertap/user`,
                     {
@@ -1002,39 +982,42 @@ export const AppContextContainer = ({ children }) => {
            
             if (data.user.is_new ){
                 if(onUserLoginData.data  || onTransactionLoginData){
-                    /*ct.onUserLoginRegistrationEvent({
+                    ct.onUserLoginRegistrationEvent({
                         action: "Registration",
                         params: onUserLoginData.data?.data,
                         pathname:router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });*/
+                    });
                 }
             }
             else{     
                 if(onUserLoginData.data || onTransactionLoginData){
-                    /*ct.onUserLoginRegistrationEvent({
+                    ct.onUserLoginRegistrationEvent({
                         action: "Login",
                         params: onUserLoginData.data?.data,
                         pathname: router.pathname,
                         transaction: onTransactionLoginData.data?.data
-                    });*/
+                    });
                 }          
                 
             }
-            
+            */
+
             /** For Mobupps */
             if (
                 data.user.is_new &&
                 router.route === "/gamecampaign" &&
                 router.query.utm_medium === "mobupps"
             ) {
-                const utm_term = router.query.utm_term;
+
+                /*const utm_term = router.query.utm_term;                
                 const myMessage = {
                     message: "wmadv",
                     wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
                 };
 
-                Sentry.captureMessage(JSON.stringify(myMessage));
+                Sentry.captureMessage(JSON.stringify(myMessage));*/
+                mobuppsCallService();
             }
             /** For Mobupps */
 
@@ -1052,6 +1035,14 @@ export const AppContextContainer = ({ children }) => {
             if (
                 data.user.is_new &&
                 router.route === "/gamecampaign" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
                 router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
@@ -1177,7 +1168,9 @@ export const AppContextContainer = ({ children }) => {
                 showModalwithdrawalpopup,
                 withdrawFetch,
                 toggleWithdrawFetch,
-                handlePermission
+                handlePermission,
+                setFirstTimeLogin,
+                isFirstTimeLogin
             }}
         >
             {children}
