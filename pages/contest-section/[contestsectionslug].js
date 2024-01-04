@@ -14,56 +14,120 @@ const defaultSEOData = {
 
 export default function GamesPage({ }) {
   const { query } = useRouter();
+  const [contestSections, setContestSections] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+  
+  const nextPage = () => {
+    setCurrentPage(currentPage + 1);
+    console.log('nextPage',currentPage);
+  } 
+  const previousPage = () => {
+    setCurrentPage(currentPage - 1);
+    console.log('previousPage',currentPage);
+  } 
 
-  const getAllContests = async () => {
-    if (query.contestsectionslug) {
-      const res = await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
-        filters: {
-          slug: {
-            $eq: query.contestsectionslug,
-          },
-        },
-        sort: "priority",
-        populate: {
-          contestmasters: {
-            fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
-            sort: "priority",
-            populate: {
-              contest_section: {
-                fields: ["name", "slug"],
-              },
-              icon: {
-                fields: ["name", "url"],
-              },
-              feeWallet: {
-                populate: {
-                  currency: {
-                    fields: ["type"],
-                  },
-                },
-              },
-              reward: {},
-              game: {
-                fields: "*",
-              },
+ 
+ 
+  
+  useEffect(() => {
+    const getAllContests = async (currentPage) => {
+      
+      if (query.contestsectionslug) {
+        const res = await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
+          filters: {
+            slug: {
+              $eq: query.contestsectionslug,
             },
           },
-          image: "*"
-        },
-
-        pagination: {
-          page: 1,
-          pageSize: 25,
-        },
-      });
-      setContestSections(res)
+          sort: "priority",
+          populate: {
+            contestmasters: {
+              fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
+              sort: "priority",
+              populate: {
+                contest_section: {
+                  fields: ["name", "slug"],
+                },
+                icon: {
+                  fields: ["name", "url"],
+                },
+                feeWallet: {
+                  populate: {
+                    currency: {
+                      fields: ["type"],
+                    },
+                  },
+                },
+                reward: {},
+                game: {
+                  fields: "*",
+                },
+              },
+              pagination: {  // pagination for contest-master data
+                page: currentPage,
+                pageSize: 4,
+              }
+            },
+            image: "*"
+          },
+  
+          pagination: {
+            page: 1,
+            pageSize: 25,
+          },
+        });
+        setContestSections(res)
+      }
     }
-  }
-  useEffect(() => {
-    getAllContests();
-  }, [query]);
-
-  const [contestSections, setContestSections] = useState([]);
+    const getAllContestsSize = async () => {
+      if (query.contestsectionslug) {
+        const res = await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
+          filters: {
+            slug: {
+              $eq: query.contestsectionslug,
+            },
+          },
+          sort: "priority",
+          populate: {
+            contestmasters: {
+              fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
+              sort: "priority",
+              populate: {
+                contest_section: {
+                  fields: ["name", "slug"],
+                },
+                icon: {
+                  fields: ["name", "url"],
+                },
+                feeWallet: {
+                  populate: {
+                    currency: {
+                      fields: ["type"],
+                    },
+                  },
+                },
+                reward: {},
+                game: {
+                  fields: "*",
+                },
+              },
+            },
+            image: "*"
+          },
+  
+          pagination: {
+            page: 1,
+            pageSize: 25,
+          },
+        });
+        setTotalPage((res?.data[0].contestmasters?.data.length)/4)
+       
+      }
+    }
+    getAllContests(currentPage);
+    getAllContestsSize();
+  }, [query,currentPage]);
 
   return (
     <>
@@ -74,6 +138,10 @@ export default function GamesPage({ }) {
       <GamesComponent
         contestSectionsData={contestSections?.data || []}
         banners={[]}
+        pageOptions = {totalPage}
+        nextPage = {nextPage}
+        previousPage = {previousPage}
+        currentPage = {currentPage}
       />
 
     </>

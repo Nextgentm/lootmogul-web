@@ -9,14 +9,16 @@ import {
     Heading,
     Spacer,
     ButtonGroup,
-    Button
+    Button,
+    Tooltip,
+    Image
 } from "@chakra-ui/react";
 import GamesCard from "../../InfluencerDetails/InfluencerGames/InfluencerGameCard";
 import { useState, useEffect } from "react";
 import Search from "../../Influencers/components/Search";
 import Link from "next/link";
 
-const GamesCategories = ({ isMobileDevice, section }) => {
+const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previousPage, currentPage }) => {
 
     const [isLargerScreen] = useMediaQuery("(min-width: 2200px)");
     const arrowTrashhold = isMobileDevice ? 2 : isLargerScreen ? 7 : 5;
@@ -103,7 +105,74 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                     No Record found
                 </>
             )}
+            <Flex
+                justifyContent="space-around"
+                mt={20}
+                mb={4}
+                ml="auto"
+                mr="auto"
+                width="50%"
+                alignItems="center"
+            >
+                <Flex key="paginator">
+                    <Tooltip key="tootltip" label="Previous Page">
+                        {currentPage === 1 ? <Image
+                            src="/assets/designupdate1/arrow-left-unselected.png"
+                            alt="Right"
+                            onClick={previousPage}
+                            width={85}
+                            height={85}
+                        /> : <Image
+                            src="/assets/designupdate1/arrow-left-selected.png"
+                            alt="Right"
+                            onClick={previousPage}
+                            width={85}
+                            height={85}
+                        />
+                    }
+                    </Tooltip>
+                </Flex>
+
+                <Flex alignItems="center" key="paginator2">
+                    <Text
+                        key="pagetext"
+                        flexShrink="0"
+                        color="white"
+                        mr={8}
+                        fontSize={21}
+                    >
+                        Page{" "}
+                        <Text key="pagetext1" fontWeight="bold" as="span">
+                            {currentPage}
+                        </Text>{" "}
+                        of{" "}
+                        <Text key="pagetext2" fontWeight="bold" as="span">
+                            {pageOptions}
+                        </Text>
+                    </Text>
+                </Flex>
+
+                <Flex key="righticon">
+                    <Tooltip label="Next Page" key="righticon1">
+                        {currentPage !== pageOptions ? <><Image
+                            src="/assets/designupdate1/arrow-right-selected.png"
+                            alt="Right"
+                            onClick={nextPage}
+                            width={85}
+                            height={85}
+                        /> </>:<>
+                        <Image
+                            src="/assets/designupdate1/arrow-right-unselected.png"
+                            alt="Right"
+                            width={85}
+                            height={85}
+                        /> </>
+                        }
+                    </Tooltip>
+                </Flex>
+            </Flex>
         </Box>
+        
     );
 };
 
