@@ -2,7 +2,7 @@ import { Flex, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-const ViewAllBtn = ({slug}) => {
+const ViewAllRedirectBtn = ({slug}) => {
     const router = useRouter();
 
     return (
@@ -32,4 +32,4 @@ const ViewAllBtn = ({slug}) => {
     );
 };
 
-export default ViewAllBtn;
+export default ViewAllRedirectBtn;

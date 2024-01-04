@@ -77,7 +77,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                                 base: "none",
                                 md: "flex"
                             }}
-                            onClick={() => setShowAll(!showAll)}
+                            // onClick={() => setShowAll(!showAll)}
                             pos="relative"
                             right="0"
                         >
