@@ -105,7 +105,8 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
                     No Record found
                 </>
             )}
-            <Flex
+            {pageOptions !== 1 && <>
+                <Flex
                 justifyContent="space-around"
                 mt={20}
                 mb={4}
@@ -172,6 +173,9 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
                     </Tooltip>
                 </Flex>
             </Flex>
+            </>
+            }
+            
         </Box>
         
     );
