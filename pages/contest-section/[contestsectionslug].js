@@ -3,6 +3,7 @@ import SEOContainer from "../../src/features/SEOContainer";
 import GamesComponent from "../../src/features/Games/single";
 import { useEffect, useState } from "react";
 import MyPageLoader from "../../src/components/MyPageLoader";
+import { useRouter } from "next/router";
 
 const defaultSEOData = {
   metaTitle: "Play Online Trivia Games With Your Favorite Influencers",
