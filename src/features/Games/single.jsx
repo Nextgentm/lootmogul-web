@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import GamesCategories from "./GamesCategoriesSingle";
 import React from "react";
 
-const GamesComponent = ({ contestSectionsData }) => {
+const GamesComponent = ({ contestSectionsData, pageOptions, nextPage, previousPage, currentPage }) => {
   const { isMobileDevice } = useContext(AppContext);
 
   const [itemRefs, setItemRefs] = useState([]);
@@ -60,6 +60,10 @@ const GamesComponent = ({ contestSectionsData }) => {
                         key={`games-${index}`}
                         isMobileDevice={isMobileDevice}
                         section={section}
+                        pageOptions={pageOptions}
+                        nextPage={nextPage}
+                        previousPage={previousPage}
+                        currentPage = {currentPage}
                       />
                     )}
                 </Box>
