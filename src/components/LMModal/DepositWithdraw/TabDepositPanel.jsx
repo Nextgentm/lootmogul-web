@@ -26,7 +26,7 @@ import { useRouter } from "next/router";
 const stripeJs = async () => await import("@stripe/stripe-js/pure");
 import jsondata from "../../../../public/assets/currency.json";
 
-import * as ct from "../../../services/clevertapAnalytics";
+//import * as ct from "../../../services/clevertapAnalytics";
 
 const TabDepositPanel = ({ isDeposit }) => {
     const { asPath } = useRouter();

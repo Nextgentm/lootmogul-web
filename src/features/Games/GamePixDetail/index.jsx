@@ -8,7 +8,7 @@ import { getGameRoomOrCreateRoom } from "../../../services/gameSevice";
 import AppContext from "../../../utils/AppContext";
 import strapi from "../../../utils/strapi";
 import PaidGameConfirmation from "../PaidGameConfirmation";
-import * as ct from '../../../services/clevertapAnalytics';
+//import * as ct from '../../../services/clevertapAnalytics';
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 

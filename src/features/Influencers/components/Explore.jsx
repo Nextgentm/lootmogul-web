@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Heading, Text, Select, Link } from "@chakra-ui/react";
 import React from "react";
 import Search from "./Search";
-import * as ct from "../../../services/clevertapAnalytics";
+//import * as ct from "../../../services/clevertapAnalytics";
 import { useContext } from "react";
 import AppContext from "../../../utils/AppContext";
 const Explore = ({

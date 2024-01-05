@@ -14,7 +14,7 @@ const ViewAllRedirectBtn = ({slug}) => {
         >
             <Text
                 onClick={() => {
-                    router.push("/contest-section/"+slug);
+                    router.push("/ambassador-tournaments");
                 }}
                 color="white"
                 fontFamily="Blanch"

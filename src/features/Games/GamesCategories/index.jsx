@@ -81,7 +81,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                             pos="relative"
                             right="0"
                         >
-                            <ViewAllRedirectBtn slug={content.slug}/>
+                            {content.name !== "Ambassador tournaments"  ?<ViewAllBtn />:<ViewAllRedirectBtn />}
                         </Box>
                     ) : (
                         ""
