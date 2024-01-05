@@ -119,15 +119,15 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
                         {currentPage === 1 ? <Image
                             src="/assets/designupdate1/arrow-left-unselected.png"
                             alt="Right"
-                            onClick={previousPage}
-                            width={85}
-                            height={85}
+                            width={100}
+                            height={100}
                         /> : <Image
                             src="/assets/designupdate1/arrow-left-selected.png"
                             alt="Right"
                             onClick={previousPage}
-                            width={85}
-                            height={85}
+                            width={100}
+                            height={100}
+                            cursor={"pointer"}
                         />
                     }
                     </Tooltip>
@@ -158,14 +158,15 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
                             src="/assets/designupdate1/arrow-right-selected.png"
                             alt="Right"
                             onClick={nextPage}
-                            width={85}
-                            height={85}
+                            width={100}
+                            height={100}
+                            cursor={"pointer"}
                         /> </>:<>
                         <Image
                             src="/assets/designupdate1/arrow-right-unselected.png"
                             alt="Right"
-                            width={85}
-                            height={85}
+                            width={100}
+                            height={100}
                         /> </>
                         }
                     </Tooltip>

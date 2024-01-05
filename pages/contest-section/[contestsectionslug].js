@@ -20,11 +20,9 @@ export default function GamesPage({ }) {
   
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
-    console.log('nextPage',currentPage);
   } 
   const previousPage = () => {
     setCurrentPage(currentPage - 1);
-    console.log('previousPage',currentPage);
   } 
 
  
