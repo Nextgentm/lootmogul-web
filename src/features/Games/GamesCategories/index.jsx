@@ -77,11 +77,11 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                                 base: "none",
                                 md: "flex"
                             }}
-                            onClick={() => setShowAll(!showAll)}
+                            // onClick={() => setShowAll(!showAll)}
                             pos="relative"
                             right="0"
                         >
-                            {content.name !== "Ambassador tournaments"  ?<ViewAllBtn />:<ViewAllRedirectBtn />}
+                            <ViewAllRedirectBtn slug={content.slug}/>
                         </Box>
                     ) : (
                         ""
