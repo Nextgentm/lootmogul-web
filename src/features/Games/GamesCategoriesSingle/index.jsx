@@ -112,7 +112,7 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
                 mb={4}
                 ml="auto"
                 mr="auto"
-                width="50%"
+                width={["75%","75%","50%"]}
                 alignItems="center"
             >
                 <Flex key="paginator">
