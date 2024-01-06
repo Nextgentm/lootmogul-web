@@ -131,7 +131,7 @@ const MatchLBResultScreen = (props) => {
                     <Box pt="28px" pl="30px"></Box>
 
                     <Flex
-                        m={["10px", "60px"]}
+                        m={["10px","10px", "60px"]}
                         width={["auto", "auto"]}
                         justifyContent={["space-between", "flex-start"]}
                         direction="column"
@@ -149,7 +149,7 @@ const MatchLBResultScreen = (props) => {
 
                         <Flex
                             zIndex={11}
-                            width={["100%", "60%"]}
+                            width={["100%","100%", "60%"]}
                             direction={["column"]}
                             m="auto"
                             padding={"6%"}
