@@ -1119,7 +1119,7 @@ function TicketSection() {
                                 mt="30px"
                                 mb="30px"
                             >
-                                Coming Now
+                                Coming Soon
                             </Button>
                         </Link>
                     </Box>

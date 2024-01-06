@@ -99,7 +99,7 @@ const Footer = () => {
                             <Flex direction="column" alignItems="flex-start" width={["50%", "50%", "45%", "40%"]}>
                                 
 
-                                <Text
+                                {/*<Text
                                     variant="BoldWhiteText"
                                     
                                     lineHeight="1"
@@ -119,7 +119,7 @@ const Footer = () => {
                                         w="100%"
                                         border="3px solid #FFF"
                                     />
-                                </Link>
+                                </Link>*/}
                             </Flex>
                         </Flex>
                     </Flex>
@@ -135,7 +135,7 @@ const Footer = () => {
                         direction="column"
                         pb={["0px","0px","40px"]}
                     >
-                        <Flex direction="column" alignItems="flex-start" width="100%" mb="20px">
+                       {/* <Flex direction="column" alignItems="flex-start" width="100%" mb="20px">
                             <Text
                                 variant="BoldWhiteText"
                                 lineHeight="1"
@@ -160,8 +160,8 @@ const Footer = () => {
                                     m="0 auto"
                                     border="3px solid #FFF"
                                 />
-                            </Link>
-                        </Flex>
+                </Link>
+                        </Flex>*/}
 
                         <Flex direction="row" alignItems="flex-start" width="100%" my="20px" mb={["0px","0px","20px"]}>
                             <InfluencerPaymentPartner />
