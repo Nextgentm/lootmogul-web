@@ -53,25 +53,16 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
 
     return (
         <Box>
-
             <Flex my="40px" minWidth="max-content" alignItems="center" gap="2" className="game_section_title">
                 <Box p="2">
+                    
                     <Heading variant="sectionTitle">{content.name}</Heading>
+                    
                 </Box>
                 <Spacer />
                 
                 <Box width={"250px"} right="0">
-                            <Search searchText={setSearchText}></Search>
-                        </Box>
-                <Box
-                    display={{
-                        base: "none",
-                        md: "flex"
-                    }}
-                    pos="relative"
-                    right="0"
-                >
-                    <Link
+                <Link
                         _focus={{ border: "none", boxShadow: "none" }}
                         _hover={{ textDecoration: "none" }}
                         href={process.env.NEXT_PUBLIC_SITE_URL + "/games"}
@@ -80,9 +71,14 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
                             color="white"
                             fontFamily="Blanch"
                             fontSize={["0.9em", "1em", "1.5em", "2em", "2em"]}
+                            display={"block"}
+                            cursor={"pointer"}
+                            textAlign={"right"}
+                            pr="25px"
+                            textDecoration={"underline"}
                         >Back</Text>
                     </Link>
-                </Box>
+                        </Box>
             </Flex>
 
             {showAll ? (
