@@ -32,13 +32,17 @@ const GameTabs = ({ defaultTab, gameData }) => {
         try {
             if (gameData) {
                 const contests = await strapi.find("contests", {
+                    fields:["id"],
                     filters: {
                         contestmaster: gameData.id,
                         id: gameData.contest.id
                     },
-                    populate: ["leaderboard"]
+                    populate: {
+                        leaderboard:{
+                            fields:["id"]
+                        }
+                    }
                 });
-
                 if (contests?.data?.length && contests.data[0].leaderboard?.data) {
                     let lbs = await strapi.find("lbrecords", {
                         sort: "score:DESC",
@@ -49,7 +53,11 @@ const GameTabs = ({ defaultTab, gameData }) => {
                             "user",
                             "leaderboard.contest.contestmaster.reward.rewardrange",
                             "leaderboard.lbrecords"
-                        ]
+                        ],
+                        pagination:{
+                            page:1,
+                            pageSize:10
+                        }
                     });
                     const finalLBData = []
                     for (let i = 0; i < lbs.data?.length; i++) {
