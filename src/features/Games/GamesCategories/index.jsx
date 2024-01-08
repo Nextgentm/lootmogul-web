@@ -64,17 +64,17 @@ const GamesCategories = ({ isMobileDevice, section }) => {
                 </Box>
                 <Spacer />
                 <ButtonGroup gap="2">
-                    {content.name !== "Trending Tournament"  ? (
+                    {/*content.name !== "Trending Tournament"  ? (
                         <Box width={"250px"} right="0">
                             <Search searchText={setSearchText}></Search>
                         </Box>
                     ) : (
                         ""
-                    )}
+                    )*/}
                     {content?.contestmasters?.data.length > arrowTrashhold ? (
                         <Box
                             display={{
-                                base: "none",
+                                base: "flex",
                                 md: "flex"
                             }}
                             // onClick={() => setShowAll(!showAll)}

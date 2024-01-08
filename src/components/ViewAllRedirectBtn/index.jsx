@@ -18,7 +18,7 @@ const ViewAllRedirectBtn = ({slug}) => {
                 }}
                 color="white"
                 fontFamily="Blanch"
-                fontSize={["0.9em", "1em", "1.5em", "2em", "2em"]}
+                fontSize={["1.3em", "1.3em", "1.5em", "2em", "2em"]}
             >
                 VIEW ALL
             </Text>

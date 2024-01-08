@@ -18,7 +18,7 @@ const ScoreDisplay = ({ user, userResult, userStats, lbResult }) => {
         <Box
             className="abc"
             width={["90%","90%", "44%"]}
-            height={["350px","300px", "390px"]}
+            height={["350px","350px", "390px"]}
             border={"1px solid #E90A63"}
             margin={"auto"}
             borderRadius="10px"
