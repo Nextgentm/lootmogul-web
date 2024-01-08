@@ -4,12 +4,13 @@ import { AppContext } from "../../../../utils/AppContext";
 import strapi from "../../../../utils/strapi";
 import LeaderboardTable from "./LeaderboardTable";
 
-const LeaderboardTab = ({ lbRecords,loading,currentUser,user }) => {
+const LeaderboardTab = ({ lbRecords, lbMetas, loading,currentUser,user, nextPage, currentPage, previousPage }) => {
     const currentSize = useBreakpointValue({
         base: "base",
         sm: "sm",
         md: "md"
     });
+    console.log(lbRecords);
     return (
         <Box mt="2%" width="100%">
             {!lbRecords && loading && (
@@ -37,6 +38,10 @@ const LeaderboardTab = ({ lbRecords,loading,currentUser,user }) => {
                                 ]}
                                 user={user}
                                 currentUser={currentUser}
+                                lbMetas={lbMetas}
+                                nextPage={nextPage}
+                                currentPage={currentPage}
+                                previousPage={previousPage}
                             />
                         ) : (
                             <Box>
@@ -58,6 +63,10 @@ const LeaderboardTab = ({ lbRecords,loading,currentUser,user }) => {
                             tableColumns={["RANK", "PLAYERS", "PRIZE", "SCORE"]}
                             user={user}
                             currentUser={currentUser}
+                            lbMetas={lbMetas}
+                            nextPage={nextPage}
+                            currentPage={currentPage}
+                            previousPage={previousPage}
                         />
                     ) : (
                         <Box>
