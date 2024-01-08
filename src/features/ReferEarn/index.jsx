@@ -143,15 +143,17 @@ const ReferEarn = () => {
                                 onClick={() => {
                                     if (!user) toggleLoginModal();
                                     else {
-                                        navigator.clipboard.writeText(
-                                            user.referral_code?.code
-                                        );
-                                        toast({
-                                            title: "Referral code Copied",
-                                            status: "success",
-                                            duration: 3000,
-                                            isClosable: true
-                                        });
+                                        if (navigator?.clipboard?.writeText) {
+                                            navigator.clipboard.writeText(
+                                                user.referral_code?.code
+                                            );
+                                            toast({
+                                                title: "Referral code Copied",
+                                                status: "success",
+                                                duration: 3000,
+                                                isClosable: true
+                                            });
+                                        }
                                     }
                                 }}
                             >
@@ -183,16 +185,18 @@ const ReferEarn = () => {
                                         onClick={() => {
                                             if (!user) toggleLoginModal();
                                             else {
-                                                navigator.clipboard.writeText(
-                                                    process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
-                                                    user.referral_code?.code
-                                                );
-                                                toast({
-                                                    title: "Referral link Copied",
-                                                    status: "success",
-                                                    duration: 3000,
-                                                    isClosable: true
-                                                });
+                                                if (navigator?.clipboard?.writeText) {
+                                                    navigator.clipboard.writeText(
+                                                        process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
+                                                        user.referral_code?.code
+                                                    );
+                                                    toast({
+                                                        title: "Referral link Copied",
+                                                        status: "success",
+                                                        duration: 3000,
+                                                        isClosable: true
+                                                    });
+                                                }
                                             }
                                         }}
                                     >

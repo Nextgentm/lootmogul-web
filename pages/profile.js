@@ -37,7 +37,8 @@ const Profile = () => {
     }
         
     const [showLoader, setShowLoader] = useState(true);
-
+    
+    
     useEffect(() => {
       // Display the loader when the component mounts
       const timer = setTimeout(() => {
@@ -61,7 +62,7 @@ const Profile = () => {
     const [avatarUrl, setAvatarUrl] = useState('')
     const [fullName, setFullName] = useState('')
     const [mobileNumber, setMobileNumber] = useState('')
-
+    
     var avatarRef = '';
     useEffect(() => {
         let iFrame = iFrameRef.current
@@ -316,21 +317,23 @@ const Profile = () => {
                                         onClick={() => {
                                             if (!user) toggleLoginModal();
                                             else {
-                                                navigator.clipboard.writeText(
-                                                    user.referral_code?.code
-                                                );
-                                                toast({
-                                                    title: "Referral code Copied",
-                                                    status: "success",
-                                                    duration: 3000,
-                                                    isClosable: true,
-                                                    position: 'top-right',
-                                                    render: () => (
-                                                        <Box color='white' p={3} bg='#E90A63' borderRadius={"3px"}>
-                                                        Referral code Copied
-                                                        </Box>
-                                                    ),
-                                                });
+                                                if (navigator?.clipboard?.writeText) {
+                                                    navigator.clipboard.writeText(
+                                                        user.referral_code?.code
+                                                    );
+                                                    toast({
+                                                        title: "Referral code Copied",
+                                                        status: "success",
+                                                        duration: 3000,
+                                                        isClosable: true,
+                                                        position: 'top-right',
+                                                        render: () => (
+                                                            <Box color='white' p={3} bg='#E90A63' borderRadius={"3px"}>
+                                                            Referral code Copied
+                                                            </Box>
+                                                        ),
+                                                    });
+                                                }
                                             }
                                         }}
                                         position={"absolute"}
@@ -372,22 +375,24 @@ const Profile = () => {
                                         onClick={() => {
                                             if (!user) toggleLoginModal();
                                             else {
-                                                navigator.clipboard.writeText(
-                                                    process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
-                                                    user.referral_code?.code
-                                                );
-                                                toast({
-                                                    title: "Referral link Copied",
-                                                    status: "success",
-                                                    duration: 3000,
-                                                    isClosable: true,
-                                                    position: 'top-right',
-                                                    render: () => (
-                                                        <Box color='white' p={3} bg='#E90A63' borderRadius={"3px"}>
-                                                        Referral link Copied
-                                                        </Box>
-                                                    ),
-                                                });
+                                                if (navigator?.clipboard?.writeText) {
+                                                    navigator.clipboard.writeText(
+                                                        process.env.NEXT_PUBLIC_SITE_URL + "/games?referral_code=" +
+                                                        user.referral_code?.code
+                                                    );
+                                                    toast({
+                                                        title: "Referral link Copied",
+                                                        status: "success",
+                                                        duration: 3000,
+                                                        isClosable: true,
+                                                        position: 'top-right',
+                                                        render: () => (
+                                                            <Box color='white' p={3} bg='#E90A63' borderRadius={"3px"}>
+                                                            Referral link Copied
+                                                            </Box>
+                                                        ),
+                                                    });
+                                                }
                                             }
                                         }}
                                         style={{"padding-right":"10px"}}

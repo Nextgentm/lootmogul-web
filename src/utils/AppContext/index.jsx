@@ -808,13 +808,16 @@ export const AppContextContainer = ({ children }) => {
                     };
                     data = await strapi.register(apiValues);
                 } catch ({ error }) {
-                    toast({
-                        title: error.message,
-                        status: "error",
-                        duration: 3000,
-                        position: "top-right",
-                        isClosable: true
-                    });
+                    if(error.message){
+                        toast({
+                            title: error.message,
+                            status: "error",
+                            duration: 3000,
+                            position: "top-right",
+                            isClosable: true
+                        });
+                    }
+                    
 
                     return;
                 }
@@ -841,13 +844,15 @@ export const AppContextContainer = ({ children }) => {
                         );
                     });
                 } catch ({ error }) {
-                    toast({
-                        title: error.message,
-                        status: "error",
-                        duration: 3000,
-                        position: "top-right",
-                        isClosable: true
-                    });
+                    if(error.message){
+                        toast({
+                            title: error.message,
+                            status: "error",
+                            duration: 3000,
+                            position: "top-right",
+                            isClosable: true
+                        });
+                    }
                     return;
                 }
             }
