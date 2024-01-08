@@ -260,6 +260,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             inputReferalCode
                                         );
                                     }}
+                                    disableMobileRedirect={true}
                                     render={(renderProps) => (
                                         <Button
                                             mt="2%"
