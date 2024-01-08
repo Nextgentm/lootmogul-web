@@ -9,8 +9,10 @@ import LeaderboardTab from "./LeaderboardTab";
 const GameTabs = ({ defaultTab, gameData }) => {
     const { user } = useContext(AppContext);
     const [lbRecords, setLbRecords] = useState();
+    const [lbMetas, setLbMetas] = useState();
     const [loading, setLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
     const tabsData = [
         {
             tab: <Text>Details</Text>,
@@ -18,17 +20,28 @@ const GameTabs = ({ defaultTab, gameData }) => {
         },
 
     ];
+
+    const nextPage = () => {
+        setCurrentPage(currentPage + 1);
+        //setPageLoader(true);
+       // console.log("nextPage",currentPage);
+      } 
+      const previousPage = () => {
+        setCurrentPage(currentPage - 1);
+        //setPageLoader(true);
+      } 
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async () => {
         setLoading(true);
-        if (gameData) {
+        if (gameData || currentPage) {
 
-            getLeaderBoard()
+            getLeaderBoard(currentPage)
 
         }
-    }, [gameData, defaultTab, user]);
+    }, [gameData, defaultTab, user, currentPage]);
 
-    const getLeaderBoard = async () => {
+    const getLeaderBoard = async (currentPage = 1) => {
         try {
             if (gameData) {
                 const contests = await strapi.find("contests", {
@@ -55,7 +68,7 @@ const GameTabs = ({ defaultTab, gameData }) => {
                             "leaderboard.lbrecords"
                         ],
                         pagination:{
-                            page:1,
+                            page:currentPage,
                             pageSize:10
                         }
                     });
@@ -68,6 +81,7 @@ const GameTabs = ({ defaultTab, gameData }) => {
                                 finalLBData.push(tempData[0])
                         }
                     };
+                    
                     if (finalLBData?.length > 0) {
                         lbs.data = finalLBData
                             ?.filter(
@@ -76,7 +90,7 @@ const GameTabs = ({ defaultTab, gameData }) => {
                                     rec.user?.data?.username?.length > 0
                             )
                             ?.map((rec, recIndex) => {
-                                const prizes =
+                                                               const prizes =
                                     rec?.leaderboard?.data?.contest?.data
                                         ?.contestmaster?.data?.reward?.data
                                         ?.rewardrange;
@@ -100,6 +114,9 @@ const GameTabs = ({ defaultTab, gameData }) => {
                                             item?.rankTo >= playerRank
                                     )?.name || "----";
 
+                                if(lbs.meta?.pagination?.page > 1){
+                                    recIndex += (lbs.meta?.pagination?.page - 1) * lbs.meta?.pagination?.pageSize;
+                                }    
                                 if (user?.id === rec?.user?.data?.id) {
                                     setCurrentUser({
                                         ...rec,
@@ -118,7 +135,7 @@ const GameTabs = ({ defaultTab, gameData }) => {
                             });
                     }
                     setLbRecords(lbs.data);
-
+                    setLbMetas(lbs.meta)
 
                 }
                 setLoading(false);
@@ -134,7 +151,7 @@ const GameTabs = ({ defaultTab, gameData }) => {
     if(gameData.type != 'battle'){
         tabsData.push({
             tab: <Text>Leaderboard</Text>,
-            tabPanel: <LeaderboardTab gameData={gameData} lbRecords={lbRecords} loading={loading} currentUser={currentUser} user={user} />
+            tabPanel: <LeaderboardTab nextPage={nextPage} previousPage={previousPage} currentPage={currentPage} lbMetas={lbMetas} gameData={gameData} lbRecords={lbRecords} loading={loading} currentUser={currentUser} user={user} />
         })
     }
     if ((defaultTab == 1 && tabsData?.length == 2) || defaultTab == 0)

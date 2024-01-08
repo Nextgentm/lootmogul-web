@@ -2,7 +2,7 @@ import Geocode from "react-geocode";
 Geocode.setApiKey("AIzaSyAaEf2eeCw8mtgV8F-rG3_ISQY7Gbt7fnU");
 const getPosition = () => {
     return new Promise((resolve, reject) => {
-        if (navigator?.geolocation?.getCurrentPosition) {
+        if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     let coordinates = {

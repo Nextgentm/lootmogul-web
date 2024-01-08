@@ -16,7 +16,7 @@ import {
 import { ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 import { makeData, makeColumn } from "./makeData";
 
-function CustomTable({ columns, data, currentUser, rawData, noOfRec }) {
+function CustomTable({ columns, data, currentUser, rawData, noOfRec, pageCount, nextPage, currentPage, previousPage }) {
     const {
         getTableProps,
         getTableBodyProps,
@@ -26,9 +26,6 @@ function CustomTable({ columns, data, currentUser, rawData, noOfRec }) {
         canPreviousPage,
         canNextPage,
         pageOptions,
-
-        nextPage,
-        previousPage,
 
         state: { pageIndex, pageSize }
     } = useTable(
@@ -123,37 +120,46 @@ function CustomTable({ columns, data, currentUser, rawData, noOfRec }) {
                 alignItems="center"
             >
                 <Flex key="paginator">
-                    <Tooltip key="tootltip" label="Previous Page">
+                    {currentPage !== 1 ? <Tooltip key="tootltip" label="Previous Page">
                         <ChevronLeftIcon
                             key="lefticon"
-                            isDisabled={!canPreviousPage}
-                            color="#43C8FF
-"
+                            color="#43C8FF"
                             onClick={previousPage}
                             h={6}
                             w={6}
                         />
                     </Tooltip>
+                    :
+                    <Tooltip key="tootltip" label="Previous Page">
+                        <ChevronLeftIcon
+                            key="lefticon"
+                            color="#666"
+                            h={6}
+                            w={6}
+                        />
+                    </Tooltip>
+                    }
                 </Flex>
 
                 <Flex alignItems="center" key="paginator2">
                     <Text key="pagetext" flexShrink="0" color="white" mr={8}>
                         Page{" "}
                         <Text key="pagetext1" fontWeight="bold" as="span">
-                            {pageIndex + 1}
+                            {currentPage}
                         </Text>{" "}
                         of{" "}
                         <Text key="pagetext2" fontWeight="bold" as="span">
-                            {pageOptions.length}
+                            {pageCount}
                         </Text>
                     </Text>
                 </Flex>
-
+                  
                 <Flex key="righticon">
+                    {currentPage !== pageCount ?  
                     <Tooltip label="Next Page" key="righticon1">
                         <ChevronRightIcon
                             key="righticon2"
-                            isDisabled={!canNextPage}
+                            isDisabled={currentPage == pageCount}
                             color="#43C8FF
 "
                             onClick={nextPage}
@@ -161,13 +167,24 @@ function CustomTable({ columns, data, currentUser, rawData, noOfRec }) {
                             w={6}
                         />
                     </Tooltip>
+                    :
+                    <Tooltip label="Next Page" key="righticon1">
+                        <ChevronRightIcon
+                            key="righticon2"
+                            color="#666"
+                            h={6}
+                            w={6}
+                        />
+                    </Tooltip>
+                    }
                 </Flex>
+                
             </Flex>
         </Box>
     );
 }
 
-function LeaderboardTable({ tableData, tableColumns, user, isMobile }) {
+function LeaderboardTable({ lbMetas, tableData, tableColumns, user, isMobile, nextPage, currentPage, previousPage }) {
     const pageSize = 25; //change the table page size here
     return (
         <CustomTable
@@ -176,6 +193,10 @@ function LeaderboardTable({ tableData, tableColumns, user, isMobile }) {
             user={user}
             rawData={tableData}
             noOfRec={pageSize}
+            pageCount={lbMetas?.pagination?.pageCount}
+            nextPage={nextPage}
+            currentPage={currentPage}
+            previousPage={previousPage}
         />
     );
 }
