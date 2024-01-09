@@ -51,6 +51,8 @@ const Banner = ({ bannerData, customClass }) => {
                 px={[5,5,10]}
                 width={["100%", "100%", "100%", "75%"]}
             >
+                {router.route != "/dsg-durban-cricket-stadium" && 
+                <>
                 <Text
                     variant="headText"
                     fontSize={[
@@ -87,6 +89,9 @@ const Banner = ({ bannerData, customClass }) => {
                 >
                     {bannerData.banner_subheader}
                 </Text>
+                </>
+                }
+
                 {!user && isMobileDevice && router.route !="/dsg-durban-cricket-stadium" && (
                     <>
                         <Button
