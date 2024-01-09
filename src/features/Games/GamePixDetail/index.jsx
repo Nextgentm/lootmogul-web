@@ -114,8 +114,8 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 
                 if (data?.name == 'GameEnd') {
                     
-                    console.log('Game End...');
-                    console.log(data);
+                    //console.log('Game End...');
+                    //console.log(data);
                     /*ct.onGameGameOver({action:"Gameplay Completed", params: {
                         "Category": "Blockchain Games",
                         "GameType": joiningData?.contestmaster?.data?.type,
