@@ -10,7 +10,7 @@ const LeaderboardTab = ({ lbRecords, lbMetas, loading,currentUser,user, nextPage
         sm: "sm",
         md: "md"
     });
-    console.log(lbRecords);
+    
     return (
         <Box mt="2%" width="100%">
             {!lbRecords && loading && (
