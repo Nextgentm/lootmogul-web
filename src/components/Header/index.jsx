@@ -444,7 +444,7 @@ const Header = () => {
                                 </Link>
                             </>
                         )}
-                  {!user && ( router.route != "/gamecampaign" && router.route !="/cricket" &&  router.route !="/dsg-durban-cricket-stadium" && router.route !=  "/thanksgiving-campaign" && router.route != "/signupcampaign")  && (
+                  {!user && ( router.route != "/gamecampaign" && router.route !="/cricket" &&  router.route !="/dsg" && router.route !=  "/thanksgiving-campaign" && router.route != "/signupcampaign")  && (
                             <>
                                 <Button
                                     {...loginBtnStyle}

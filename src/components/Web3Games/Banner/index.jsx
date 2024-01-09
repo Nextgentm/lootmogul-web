@@ -24,7 +24,7 @@ const Banner = ({ bannerData, customClass }) => {
         bannerData.trending_redirectionUrl = '/wallet';
     }
 
-    if (router.route === "/dsg-durban-cricket-stadium") {
+    if (router.route === "/dsg") {
         bannerData.trending_redirectionUrl = '';
     }
 
@@ -45,13 +45,14 @@ const Banner = ({ bannerData, customClass }) => {
             p="2% 5%"
             backgroundSize="cover"
             className={customClass || 'bannerImage'}
-            onClick={(isMobileDevice && router.route =="/dsg-durban-cricket-stadium") ? OnLoginClose : console.log("")}
+            onClick={(isMobileDevice && router.route =="/dsg") ? OnLoginClose : console.log("")}
+            id='login'
         >
             <Box
                 px={[5,5,10]}
                 width={["100%", "100%", "100%", "75%"]}
             >
-                {router.route != "/dsg-durban-cricket-stadium" && 
+                {router.route != "/dsg" && 
                 <>
                 <Text
                     variant="headText"
@@ -92,7 +93,7 @@ const Banner = ({ bannerData, customClass }) => {
                 </>
                 }
 
-                {!user && isMobileDevice && router.route !="/dsg-durban-cricket-stadium" && (
+                {!user && isMobileDevice && router.route !="/dsg" && (
                     <>
                         <Button
                             mt="18px"
