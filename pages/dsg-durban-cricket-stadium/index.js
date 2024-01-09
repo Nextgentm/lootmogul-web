@@ -106,7 +106,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             ]}
                             textAlign={"center"}
                         >
-                            {campaignsSectionsResData?.data[3].trending_contestHighlights}
+                            BE PART OF GLOBAL SPORTS ARENA METAVERSE
                         </Text>
                     </Box>
                 </Flex>
@@ -145,7 +145,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             minHeight={["40px","40px","90px"]}
                             pt="15px"
                         >
-                            META GAMING ARCADE
+                            GAMING ARCADE
                         </Text>
                         <Text
                             color="white"
@@ -165,10 +165,10 @@ export default function GamesPage({campaignsSectionsResData}) {
                             textAlign={"left"}
                             minHeight={"170px"}
                         >
-                            Meta Game Arcade allows sports fans and athletes to experience the future of gaming and sports. Members can play mini-ambassador blockchain games within the Meta stadium and also win exciting rewards
+                            {campaignsSectionsResData?.data[3]?.gameSection1_subheader}
                         </Text>
                         <Link
-                            href={'#'}
+                            href={campaignsSectionsResData?.data[3]?.banner_subheader}
                             _hover={{ border: "none", textDecoration: "none" }}
                             _focus={{ border: "none", textDecoration: "none" }}
                             key={`igc-1`}
@@ -185,7 +185,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                                 mt="30px"
                                 mb="30px"
                                 >
-                                Coming Soon
+                                {campaignsSectionsResData?.data[3]?.banner_header}
                             </Button>
                         </Link>
                     </Box>
@@ -217,7 +217,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             minHeight={["40px","40px","90px"]}
                             pt="15px"
                         >
-                            META STADIUM SHOPS
+                            STADIUM SHOPS
                         </Text>
                         <Text
                             color="white"
@@ -237,7 +237,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             textAlign={"left"}
                             minHeight={"170px"}
                         >
-                            Visitors and members can explore the web3 e-commerce stores and meta shops and purchase their favorite apparel from elite sports brands within the stadium. They can get their favorite items delivered In Real Life.
+                            {campaignsSectionsResData?.data[3]?.gameSection1_gameType}
                         </Text>
                         <Link
                            href={campaignsSectionsResData?.data[3].othertrending_redirectionUrl}
@@ -289,7 +289,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             minHeight={["40px","40px","90px"]}
                             pt="15px"
                         >
-                            META EXTERNAL BRAND SPACE
+                            EXTERNAL BRAND SPACE
                         </Text>
                         <Text
                             color="white"
@@ -309,7 +309,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             textAlign={"left"}
                             minHeight={"170px"}
                         >
-                            The Meta External Brand Spaces are located outside, in exterior parts of the stadium. These spaces are highly effective in attracting global audiences to your brand, and making an overall appeal to your target audience.
+                            {campaignsSectionsResData?.data[3]?.gameSection2_header}
                         </Text>
                         <Link
                             href={campaignsSectionsResData?.data[3].othertrending_header}
@@ -362,7 +362,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             minHeight={["40px","40px","90px"]}
                             pt="15px"
                         >
-                            META STADIUM SEATS
+                             {campaignsSectionsResData?.data[3]?.trending_contestHighlights}
                         </Text>
                         <Text
                             color="white"
@@ -382,10 +382,10 @@ export default function GamesPage({campaignsSectionsResData}) {
                             textAlign={"left"}
                             minHeight={"170px"}
                         >
-                            The community members can choose their preferred seats at the LootMogul Metaverse Stadium. One can also add a touch of personalization by customizing the chosen seat with their own avatar or picture.
+                            {campaignsSectionsResData?.data[3]?.gameSection2_subheader}
                         </Text>
                         <Link
-                            href={'https://www.ticketpros.co.za/portal/web/index.php/season?account_id=c6c9db44-9ab4-79bf-17f6-637688686b55'}
+                            href={campaignsSectionsResData?.data[3]?.gameSection2_gameType}
                             _hover={{ border: "none", textDecoration: "none" }}
                             _focus={{ border: "none", textDecoration: "none" }}
                             key={`igc-1`}
@@ -408,7 +408,8 @@ export default function GamesPage({campaignsSectionsResData}) {
                         </Link>
                     </Box>
                 </Flex>
-
+                {campaignsSectionsResData?.data[3]?.gameSection1_header &&             
+                <>
                 <Flex
                     flexDir={["column", "column", "column", "row"]}
                     w="100%"
@@ -433,7 +434,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             lineHeight="62px"
                             textAlign={"center"}
                         >
-                            METAVERSE STADIUM GALLERY
+                            {campaignsSectionsResData?.data[3]?.gameSection1_header}
                         </Text>
                     </Box>
                 </Flex>
@@ -451,7 +452,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                         width={["100%", "100%", "100%", "100%"]}
                     >
                         <Image
-                            src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2023/12/11023334/Gallery_Image1-min.jpg"
+                            src={campaignsSectionsResData?.data[3]?.mobile_banner_header}
                             alt="Left"
                             width={410}
                             height={480}
@@ -466,7 +467,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                         width={["100%", "100%", "100%", "100%"]}
                     >
                         <Image
-                            src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2023/12/11023345/Gallery_Image2-min.jpg"
+                            src={campaignsSectionsResData?.data[3]?.mobile_banner_subheader}
                             alt="Left"
                             width={410}
                             height={480}
@@ -481,7 +482,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                         width={["100%", "100%", "100%", "100%"]}
                     >
                         <Image
-                            src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2023/12/11023347/Gallery_Image3-min.jpg"
+                            src={campaignsSectionsResData?.data[3]?.gameSectiontraiv_header}
                             alt="Left"
                             width={410}
                             height={480}
@@ -492,6 +493,8 @@ export default function GamesPage({campaignsSectionsResData}) {
                      
                     </Box>
                 </Flex>
+                </>
+                }
             </Box>
 
             <Box bg="#0f092d" pb="10px">
