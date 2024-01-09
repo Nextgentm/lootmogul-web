@@ -24,7 +24,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                     w="100%"
                     alignItems={"center"}
                     p={["10% 0%", "10% 0%", "2% 5%"]}
-                //pb="0"
+                    //pb="0"
                 >
                     <Box
                         px={[5, 5, 10]}
@@ -74,8 +74,147 @@ export default function GamesPage({campaignsSectionsResData}) {
                     </Box>
                 </Flex>
             </Box>
-            
 
+            <Flex
+                flexDir={["column", "column", "row", "row"]}
+                w={["100%", "100%", "100%", "80%", "60%", "60%", "60%"]}
+                alignItems={"left"}
+                p={["10% 0%", "10% 0%", "0% 2%"]}
+                margin={"auto"}
+                mb="5%"
+                
+            >
+                <Box
+                    px={[5, 5, 5]}
+                    width={["100%", "100%", "100%", "100%"]}
+                >
+                    <Text
+                        variant="headText"
+                        fontSize={[
+                            "32px",
+                            "40px",
+                            "46px",
+                        ]}
+                        textShadow="0px 0px 10px #00034E94;"
+                        fontFamily="var(--chakra-fonts-Blanch)"
+                        lineHeight={[
+                            "28px",
+                            "30px",
+                            "37px",
+                        ]}
+                        textAlign={"left"}
+                        pt="15px"
+                    >
+                        Signup for Free
+                    </Text>
+                    <Text
+                        color="white"
+                        fontSize={[
+                            "14",
+                            "14",
+                            "14",
+                            "18",
+                            "18"
+                        ]}
+                        mt="20px"
+                        fontFamily="Sora"
+                        fontWeight="normal"
+                        lineHeight={["22px","22px","22px", "28px", "28px"]}
+                        width={["100%", "100%", "100%"]}
+                        className="desc_subheader"
+                        textAlign={"left"}
+                    >
+                            Get R100 worth of Bonus chips
+                    </Text>  
+                    <Link
+                        href={'#login'}
+                        _hover={{ border: "none", textDecoration: "none" }}
+                        _focus={{ border: "none", textDecoration: "none" }}
+                        key={`igc-1`}
+                        
+                    >
+                        <Button
+                            bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                            filter="drop-shadow(0 0 20px #FF0080)"
+                            boxShadow="inset 0 0 0px 0px #481A7F"
+                            width="180px"
+                            fontSize="18px"
+                            fontWeight="400"
+                            p="28px"
+                            mt="30px"
+                            mb="30px"
+                        >
+                                Signup Now
+                        </Button>
+                    </Link>
+                </Box>
+                <Box
+                    px={[5, 5, 5]}
+                    width={["100%", "100%", "100%", "100%"]}
+                >
+                    <Text
+                        variant="headText"
+                        fontSize={[
+                            "32px",
+                            "40px",
+                            "46px",
+                        ]}
+                        textShadow="0px 0px 10px #00034E94;"
+                        fontFamily="var(--chakra-fonts-Blanch)"
+                        lineHeight={[
+                            "28px",
+                            "30px",
+                            "37px",
+                        ]}
+                        textAlign={"left"}
+                    
+                        pt="15px"
+                    >
+                        100% BONUS on First DEPOSIT
+                    </Text>
+                    <Text
+                        color="white"
+                        fontSize={[
+                            "14",
+                            "14",
+                            "14",
+                            "18",
+                            "18"
+                        ]}
+                        mt="20px"
+                        fontFamily="Sora"
+                        fontWeight="normal"
+                        lineHeight={["22px","22px","22px", "28px", "28px"]}
+                        width={["100%", "100%", "100%"]}
+                        className="desc_subheader"
+                        textAlign={"left"}
+                    >
+                            Minimum deposit - 100 Rands
+                    </Text> 
+                    <Link
+                        href={'/wallet'}
+                        _hover={{ border: "none", textDecoration: "none" }}
+                        _focus={{ border: "none", textDecoration: "none" }}
+                        key={`igc-1`}
+                        
+                    >
+                        <Button
+                            bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"
+                            filter="drop-shadow(0 0 20px #FF0080)"
+                            boxShadow="inset 0 0 0px 0px #481A7F"
+                            width="180px"
+                            fontSize="18px"
+                            fontWeight="400"
+                            p="28px"
+                            mt="30px"
+                            mb="30px"
+                        >
+                            Deposit Now
+                        </Button>
+                    </Link>
+                </Box>
+            </Flex>
+                
             <Box>
                 <Flex
                     flexDir={["column", "column", "column", "row"]}
