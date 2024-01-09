@@ -1,14 +1,8 @@
 import SEOContainer from "../../src/features/SEOContainer";
 import Banner from "../../src/components/Web3Games/Banner";
 import { Box, Flex, Image, Text, Button, VStack, Link, useMediaQuery } from '@chakra-ui/react'
-
-
 import React, { useRef, useContext, useState, useEffect } from "react";
-
-
-
-
-
+import Community from "../../src/components/Footer/Community";
 const defaultSEOData = {
     metaTitle: "Lootmogul | DSG Durban Cricket Stadium",
     metaDescription: "Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!",
@@ -22,7 +16,6 @@ export default function GamesPage({campaignsSectionsResData}) {
         <>
 
             <SEOContainer seoData={defaultSEOData} />
-
             <Banner customClass="dsg_cricket" bannerData={campaignsSectionsResData?.data[3] || []}/>
             
             <Box>
@@ -35,7 +28,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                 >
                     <Box
                         px={[5, 5, 10]}
-                        width={["100%", "100%", "100%", "100%", "80%"]}
+                        width={["100%", "100%", "100%", "100%", "93%"]}
                         margin={"auto"}
                     >
                         <Text
@@ -119,7 +112,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                 </Flex>
                 <Flex
                     flexDir={["column","column", "column", "row", "row"]}
-                    w={["100%", "100%", "50%", "98%", "82%"]}
+                    w={["100%", "100%", "50%", "98%", "94%"]}
                     alignItems={"left"}
                     p={["10% 0%", "10% 0%", "0% 0%"]}
                     margin={"auto"}
@@ -501,6 +494,72 @@ export default function GamesPage({campaignsSectionsResData}) {
                 </Flex>
             </Box>
 
+            <Box bg="#0f092d" pb="10px">
+                <Flex
+                    py="50px"
+                    px="20px"
+                    w="100%"
+                    maxW="90%"
+                    m="0 auto"
+                    display={['block','block','flex','flex']}
+                >
+                    <Box w={["100%", "100%", "100%", "100%"]} mr={["20px", "20px", "20px", "20px"]}>
+                        <Box mb={["0px","0px","30px"]} pt="10px">
+                            <Text
+                            textAlign={["center","center","left","left"]}
+                                variant="BoldWhiteText"
+                                mt="10px"
+                                mb="15px"
+                                lineHeight="1"
+                                fontSize="40px"
+                                fontWeight="600"
+                            >
+                                Contact Us
+                            </Text>
+                            <Link
+                                _focus={{
+                                    border: "none",
+                                    boxShadow: "none"
+                                }}
+                                _hover={{ textDecoration: "none" }}
+                                href="mailto:support@lootmogul.com"
+                            >
+                                <Text  textAlign={["center","center","left","left"]}  variant="LightWhiteText" fontSize="22px" mb="0">
+                                    support@lootmogul.com
+                                </Text>
+                            </Link>
+                        </Box>
+                    </Box> 
+                    <Box w={["100%", "100%", "100%", "100%"]} mr={["20px", "20px", "20px", "20px"]}>
+                        <Community />
+                    </Box> 
+                </Flex>
+                <Box w="100%" h="3px" bg="#FFF" my="20px" mt="0" />
+                <Flex
+                    py="40px"
+                    px="40px"
+                    w="100%"
+                    maxW="95%"
+                    m="0 auto"
+                >
+                    <Flex
+                        w={["100%", "100%", "100%", "100%"]}
+                        justify={["center", "center", "flex-start", "flex-start"]}
+                    >
+
+                        <Text
+                            variant="footerText"
+                            fontWeight="400"
+                            fontSize={["12px", "12px", "18px"]}
+                            w="100%"
+                            mx="auto"
+                        >
+                            © 2024 LootMogul. All Rights Reserved. NextGenTM, Inc. 831 N Tatnall Street Suite M #275 Wilmington, DE 19801 United States <br/>
+                            Office Address : C/105 Varsha Swapna Gawan Pada, Mulund East, Mumbai - 400081
+                        </Text>
+            </Flex>   
+        </Flex>
+            </Box>                
         </>
     );
 }
