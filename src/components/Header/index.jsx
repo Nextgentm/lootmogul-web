@@ -444,7 +444,29 @@ const Header = () => {
                                 </Link>
                             </>
                         )}
-                  {!user && ( router.route != "/gamecampaign" && router.route !="/cricket" &&  (router.route =="/dsg" && isMobileDevice) && router.route !=  "/thanksgiving-campaign" && router.route != "/signupcampaign")  && (
+                  {!user && ( router.route != "/gamecampaign" && router.route !="/cricket" &&  router.route != "/dsg" && router.route !=  "/thanksgiving-campaign" && router.route != "/signupcampaign")  && (
+                            <>
+                                <Button
+                                    {...loginBtnStyle}
+                                    fontFamily="Sora !important "
+                                    fontWeight="500"
+                                    onClick={() => toggleLoginModal()}
+                                    padding={[
+                                        "0px 30px",
+                                        "0px 36px",
+                                        "20px 50px"
+                                    ]}
+                                    boxShadow="0px 0px 10px rgba(0,0,0,.3)"
+                                    fontSize="15px"
+                                    height={["39px", "39px", "35px", "35px"]}
+                                >
+                                    LOGIN
+                                </Button>
+                                {/* )} */}
+                            </>
+                        )}
+
+                        {!user && ( router.route == "/dsg" && isMobileDevice)  && (
                             <>
                                 <Button
                                     {...loginBtnStyle}
