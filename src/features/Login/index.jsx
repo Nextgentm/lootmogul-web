@@ -42,7 +42,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
 
     const router = useRouter();
     const {referral_code } = router.query;
-
+    const { isMobileDevice } = useContext(AppContext);
     var strapi_jwt = '';
     var referral_code_storage = '';
     if (typeof window !== 'undefined') {
@@ -191,14 +191,18 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                 borderRadius="14"
                 background="transparent"
             >
-                <ModalCloseButton
-                    color="#fff"
-                    background="transparent linear-gradient(90deg, #E90A63 0%, #481A7F 100%) 0% 0% no-repeat padding-box"
-                    borderRadius="full"
-                    outline="#303030"
-                    boxShadow="inset 0px 3px 18px #481A7F73, 0px 0px 20px #FF0080CF"
-                    zIndex={"9999999"}
-                />
+                {isMobileDevice && 
+                <>
+                    <ModalCloseButton
+                        color="#fff"
+                        background="transparent linear-gradient(90deg, #E90A63 0%, #481A7F 100%) 0% 0% no-repeat padding-box"
+                        borderRadius="full"
+                        outline="#303030"
+                        boxShadow="inset 0px 3px 18px #481A7F73, 0px 0px 20px #FF0080CF"
+                        zIndex={"9999999"}
+                    />
+                </>
+                }
                 <ModalBody>
                     <Flex
                         zIndex={999999}
