@@ -51,13 +51,15 @@ const IdDetail = ({ roomData }) => {
                       size="sm"
                       mb="0px"
                       onClick={() => {
-                        navigator.clipboard.writeText(
-                          "Game Id:" +
-                            roomData?.id +
-                            " - Joined Date &amp; Time:" +
-                            roomData?.createdAt
-                        );
-                      }}
+                        if (navigator?.clipboard?.writeText) {
+                          navigator.clipboard.writeText(
+                            "Game Id:" +
+                              roomData?.id +
+                              " - Joined Date &amp; Time:" +
+                              roomData?.createdAt
+                          );
+                        }}
+                      }
                     >
                       <Image
                         boxSize="15px"
@@ -141,13 +143,15 @@ const IdDetail = ({ roomData }) => {
                         size="sm"
                         mb="0px"
                         onClick={() => {
-                          navigator.clipboard.writeText(
-                            "Game Id:" +
-                              roomData?.id +
-                              " - Joined Date &amp; Time:" +
-                              roomData?.createdAt
-                          );
-                        }}
+                          if (navigator?.clipboard?.writeText) {
+                            navigator.clipboard.writeText(
+                              "Game Id:" +
+                                roomData?.id +
+                                " - Joined Date &amp; Time:" +
+                                roomData?.createdAt
+                            );
+                          }}
+                        }
                       >
                         <Image
                           boxSize="15px"

@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 const Login = dynamic(() => import("../../../features/Login"));
 const LoginForm = dynamic(() => import("../../../features/LoginForm"));
 
-const Banner = ({ bannerData }) => {
+const Banner = ({ bannerData, customClass }) => {
     const router = useRouter();
     const [isLoginModalActive, setLoginModalActive] = useState(false);
     const { user } = useContext(AppContext);
@@ -22,6 +22,10 @@ const Banner = ({ bannerData }) => {
     
     if (router.route === "/thanksgiving-campaign") {
         bannerData.trending_redirectionUrl = '/wallet';
+    }
+
+    if (router.route === "/dsg") {
+        bannerData.trending_redirectionUrl = '';
     }
 
     useEffect(() => {
@@ -40,11 +44,16 @@ const Banner = ({ bannerData }) => {
             height="700px"
             p="2% 5%"
             backgroundSize="cover"
+            className={customClass || 'bannerImage'}
+            onClick={(isMobileDevice && router.route =="/dsg") ? OnLoginClose : console.log("")}
+            id='login'
         >
             <Box
                 px={[5,5,10]}
                 width={["100%", "100%", "100%", "75%"]}
             >
+                {router.route != "/dsg" && 
+                <>
                 <Text
                     variant="headText"
                     fontSize={[
@@ -81,7 +90,10 @@ const Banner = ({ bannerData }) => {
                 >
                     {bannerData.banner_subheader}
                 </Text>
-                {!user && isMobileDevice && (
+                </>
+                }
+
+                {!user && isMobileDevice && router.route !="/dsg" && (
                     <>
                         <Button
                             mt="18px"

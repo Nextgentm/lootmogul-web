@@ -345,6 +345,10 @@ canvas[data-testid] {
 }
 */
 
+.dsg_cricket {
+  padding-right: 5px !important;
+}
+
 @media screen and (max-width: 768px) {
   .twitter_icon_patch svg.twitter{
    width: 16px;
