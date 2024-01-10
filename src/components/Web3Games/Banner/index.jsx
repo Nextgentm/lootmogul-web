@@ -29,6 +29,12 @@ const Banner = ({ bannerData, customClass }) => {
     }
 
     useEffect(() => {
+        if(isMobileDevice){
+            setLoginModalActive(true);
+        }
+    },[isMobileDevice]);
+
+    useEffect(() => {
         if(user?.id){
             router.push(bannerData.trending_redirectionUrl );
             setLoginModalActive(false);
@@ -41,11 +47,12 @@ const Banner = ({ bannerData, customClass }) => {
             w="100%"
             alignItems={"center"}
             backgroundImage={isMobileDevice ? bannerData.mobile_banner_image.data[0].url ||  "/assets/web-3Mobilebanner.jpg" : bannerData.banner_image.data[0].url || "/assets/web-3Desktopbanner.jpg" }
-            height="700px"
+            height={isMobileDevice ? "650px" : "700px"}
             p="2% 5%"
-            backgroundSize="cover"
+            backgroundSize={isMobileDevice ? "100%" : "cover"}
             className={customClass || 'bannerImage'}
-            onClick={(isMobileDevice && router.route =="/dsg") ? OnLoginClose : console.log("")}
+            backgroundPosition={"center top"}
+            backgroundRepeat={"no-repeat"}
             id='login'
         >
             <Box
