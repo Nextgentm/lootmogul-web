@@ -32,40 +32,40 @@ export async function getStaticProps() {
   // Fetch data from external API
   
     const res = await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
-      filters: {
-          $or: [
-            {
-              name: {
-                $eq: "Free tournaments",
-              },
-            },
-            {
-              name: {
-                $eq: "Advanced premium tournaments",
-              },
-            },
-            {
-              name: {
-                $eq: "Ambassador tournaments",
-              },
-            },
-            {
-              name: {
-                $eq: "Skill Games",
-              },
-            },
-            {
-              name: {
-                $eq: "Trending Tournament",
-              },
-            },
-            {
-              name: {
-                $eq: "Cricket Games",
-              },
-            },
-          ],
-      },
+      // filters: {
+      //     $or: [
+      //       {
+      //         name: {
+      //           $eq: "Free tournaments",
+      //         },
+      //       },
+      //       {
+      //         name: {
+      //           $eq: "Advanced premium tournaments",
+      //         },
+      //       },
+      //       {
+      //         name: {
+      //           $eq: "Ambassador tournaments",
+      //         },
+      //       },
+      //       {
+      //         name: {
+      //           $eq: "Skill Games",
+      //         },
+      //       },
+      //       {
+      //         name: {
+      //           $eq: "Trending Tournament",
+      //         },
+      //       },
+      //       {
+      //         name: {
+      //           $eq: "DSG Cricket Games",
+      //         },
+      //       },
+      //     ],
+      // },
       sort: "priority",
       populate: {
         contestmasters: {
