@@ -71,7 +71,8 @@ const MultipleLoggedInUser = ({ openPopup }) => {
                             if (
                                 router.route === "/influencers" ||
                                 router.route === "/nfts" ||
-                                router.route === "/games"
+                                router.route === "/games" ||
+                                router.route === "/dsg"
                             ) {
                                 router.push(router.route);
                             } else {
