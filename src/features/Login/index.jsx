@@ -22,7 +22,8 @@ import {
     AlertDialogOverlay,
     IconButton,
     InputGroup,
-    InputRightElement 
+    InputRightElement,
+    ModalCloseButton
 } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 
@@ -41,7 +42,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
 
     const router = useRouter();
     const {referral_code } = router.query;
-
+    const { isMobileDevice } = useContext(AppContext);
     var strapi_jwt = '';
     var referral_code_storage = '';
     if (typeof window !== 'undefined') {
@@ -190,6 +191,18 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                 borderRadius="14"
                 background="transparent"
             >
+                {isMobileDevice && 
+                <>
+                    <ModalCloseButton
+                        color="#fff"
+                        background="transparent linear-gradient(90deg, #E90A63 0%, #481A7F 100%) 0% 0% no-repeat padding-box"
+                        borderRadius="full"
+                        outline="#303030"
+                        boxShadow="inset 0px 3px 18px #481A7F73, 0px 0px 20px #FF0080CF"
+                        zIndex={"9999999"}
+                    />
+                </>
+                }
                 <ModalBody>
                     <Flex
                         zIndex={999999}
@@ -482,6 +495,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         ? <Flex>New to LootMogul? <Text color="primary" ml="5px">Sign Up</Text></Flex>
                                         : <Flex>Already user? <Text color="primary" ml="5px">Login</Text></Flex>}
                                 </Text>
+                                {selectedOption != "login" && (
                                 <Text
                                     my="12px"
                                     textAlign="center"
@@ -512,6 +526,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         Privacy Policy
                                     </Link>
                                 </Text>
+                                )}
                             </Flex>
                         </Box>
                     </Flex>
