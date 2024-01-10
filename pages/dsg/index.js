@@ -266,7 +266,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             ]}
                             textAlign={"center"}
                         >
-                            BE PART OF GLOBAL SPORTS ARENA METAVERSE
+                            BE PART OF GLOBAL SPORTS METAVERSE
                         </Text>
                     </Box>
                 </Flex>
