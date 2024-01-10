@@ -444,7 +444,7 @@ const Header = () => {
                                 </Link>
                             </>
                         )}
-                  {!user && ( router.route != "/gamecampaign" && router.route !="/cricket" &&  router.route !="/dsg" && router.route !=  "/thanksgiving-campaign" && router.route != "/signupcampaign")  && (
+                  {!user && ( router.route != "/gamecampaign" && router.route !="/cricket" &&  (router.route =="/dsg" && isMobileDevice) && router.route !=  "/thanksgiving-campaign" && router.route != "/signupcampaign")  && (
                             <>
                                 <Button
                                     {...loginBtnStyle}
@@ -593,7 +593,7 @@ const Header = () => {
             {/* <SessionTimeout /> */}
             {/* <AutoLogout /> */}
 
-            {!isHideHeader &&  router.route !="/cricket" && (
+            {!isHideHeader &&  router.route !="/cricket" && router.route !="/dsg" && (
                 <CookieConsent
                     location="bottom"
                     buttonText="Accept"
