@@ -6,6 +6,8 @@ import Community from "../../src/components/Footer/Community";
 import { AppContext } from "../../src/utils/AppContext";
 import dynamic from "next/dynamic";
 const Login = dynamic(() => import("../../src/features/Login"));
+import Head from 'next/head';
+
 const defaultSEOData = {
     metaTitle: "Lootmogul | DSG Durban Cricket Stadium",
     metaDescription: "Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!",
@@ -30,6 +32,28 @@ export default function GamesPage({campaignsSectionsResData}) {
     const trending_subheader = campaignsSectionsResData?.data[3].trending_subheader;
     return (
         <>
+
+            {process.env.NEXT_PUBLIC_SENTRY_ENV === 'production' &&
+                <>
+                    <Head>
+                        {/* Google Analytics Global Site Tag (gtag.js) */}
+                        <script
+                            async
+                            src={`https://www.googletagmanager.com/gtag/js?id=G-D61VSCKP4X`}
+                        ></script>
+                        <script
+                            dangerouslySetInnerHTML={{
+                                __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'G-D61VSCKP4X');
+                    `,
+                            }}
+                        ></script>
+                    </Head>
+                </>
+            }
 
             <SEOContainer seoData={defaultSEOData} />
             <Banner customClass="dsg_cricket" bannerData={campaignsSectionsResData?.data[3] || []}/>
