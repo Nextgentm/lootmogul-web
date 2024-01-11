@@ -261,7 +261,7 @@ function BannerVideo({
     const [currentSlideIndex, setcurrentSlideIndex] = useState(0);
     const { user } = useContext(AppContext);
     const [isLoginModalActive, setLoginModalActive] = useState(false);
-
+    let trending_redirectionUrl = bannerData?.trending_redirectionUrl; 
     const toggleLoginModal = () => {
         setLoginModalActive(!isLoginModalActive);
     };
@@ -272,7 +272,9 @@ function BannerVideo({
 
     useEffect(() => {
         if (user?.id) {
-            //router.push(bannerData.trending_redirectionUrl);
+            if(trending_redirectionUrl){
+                router.push(trending_redirectionUrl);
+            }
             setLoginModalActive(false);
         }
     }, [user]);
@@ -468,6 +470,7 @@ function BannerVideo({
                                 {!user?.id && <LoginForm
                                     isOpen={isLoginModalActive}
                                     OnLoginClose={OnLoginClose}
+                                    redirectUrl={trending_redirectionUrl}
                                 />
                                 }
                             </> :
@@ -475,6 +478,7 @@ function BannerVideo({
                                 {!user?.id && <Login
                                     isOpen={isLoginModalActive}
                                     OnLoginClose={OnLoginClose}
+                                    redirectUrl={trending_redirectionUrl}
                                 />
                                 }
                             </>}
