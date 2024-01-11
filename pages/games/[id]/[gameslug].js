@@ -9,6 +9,8 @@ export default function Gamepix({ data, error }) {
     const { query } = useRouter();
     return (
         <GamePixDetail gameSlug={query.gameslug} gameid={query.id} />
+console.log('force error');
+<GamePixDetail 
     );
 }
 
