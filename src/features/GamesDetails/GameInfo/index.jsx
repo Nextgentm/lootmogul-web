@@ -51,7 +51,6 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
           justifyContent="space-between"
           h="100%"
           mr="35px"
-          //background={"red"}
         >
           <Text
             color="#FDFFE5"
