@@ -272,11 +272,17 @@ function BannerVideo({
 
     useEffect(() => {
         if (user?.id) {
-            router.push(bannerData.trending_redirectionUrl);
+            //router.push(bannerData.trending_redirectionUrl);
             setLoginModalActive(false);
         }
     }, [user]);
 
+    useEffect(() => {
+        if(isMobileDevice){
+            setLoginModalActive(true);
+        }
+    },[isMobileDevice]);
+    
     const PrevArrow = (props) => {
         const { className, style, onClick } = props;
         return (
@@ -462,7 +468,6 @@ function BannerVideo({
                                 {!user?.id && <LoginForm
                                     isOpen={isLoginModalActive}
                                     OnLoginClose={OnLoginClose}
-                                    redirectUrl={bannerData.trending_redirectionUrl}
                                 />
                                 }
                             </> :
@@ -470,7 +475,6 @@ function BannerVideo({
                                 {!user?.id && <Login
                                     isOpen={isLoginModalActive}
                                     OnLoginClose={OnLoginClose}
-                                    redirectUrl={bannerData.trending_redirectionUrl}
                                 />
                                 }
                             </>}
@@ -1346,14 +1350,14 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
         dots: true,
         infinite: true,
         arrows: false,
-        slidesToShow: 2,
-        slidesToScroll: 2,
+        slidesToShow: 3,
+        slidesToScroll: 3,
         responsive: [
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
                     infinite: true,
                     dots: true
                 }
@@ -1361,9 +1365,9 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
             {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    initialSlide: 2
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    initialSlide: 3
                 }
             },
             {
@@ -1400,12 +1404,12 @@ const GameCategory = ({ isMobileDevice, section, type, gameType }) => {
     }, [section]);
 
     return (
-        <Box className="gameslider csagameslider" width={["100%", "100%", "100%", "50%"]}>
+        <Box className="gameslider csagameslider" width={["100%", "100%", "100%", "100%"]}>
 
             <>
                 <Slider {...horizontalSettings}>
                     {content?.contestmasters?.data?.length > 0 && content?.contestmasters?.data
-                        .slice(0, 2)
+                        .slice(0, 6)
                         .map((cm, index) =>
                             type == 'free' && cm.entryFee == 0 ? (<Box
                                 bgSize="cover"
@@ -1728,7 +1732,7 @@ export async function getStaticProps() {
             filters: {
                 contest_section: {
                     name: {
-                        $eq: "Cricket Games",
+                        $eq: "DSG Match Day Cricket Games",
                     },
                 },
             },
