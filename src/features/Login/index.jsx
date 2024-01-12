@@ -422,7 +422,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             </Text>
                                         }
                                     </FormControl>
-                                    {/* {loggingIn && <Loader size={12} />} */}
+                                    {loggingIn && <Loader size={12} />}
                                     <Button
                                         width="100%"
                                         h="30px"
@@ -435,11 +435,11 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         textTransform="uppercase"
                                         outline="0"
                                         fontFamily="Open Sans,Sans-serif !important"
-                                        // onClick={handleSubmit}
                                         type="submit"
                                         isDisabled = {selectedOption != "login" && validReferalCode == false  ? true : false }
                                     >
-                                        {loggingIn ? <Loader size={12} /> : selectedOption === "login" ? "Login" : "SignUp" }
+                                        {/* {loggingIn ? <Loader size={12} /> : selectedOption === "login" ? "Login" : "SignUp" } */}
+                                        {selectedOption === "login" ? "Login" : "SignUp" }
                                     </Button>
                                 </form>
                                 </Box>
