@@ -18,18 +18,36 @@ export default function GamesPage({ }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageLoader, setPageLoader] = useState(false);
   const [totalPage, setTotalPage] = useState(1);
-  
+  const [searchText, setSearchText] = useState("");
+
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
     setPageLoader(true);
-  } 
+  }
   const previousPage = () => {
     setCurrentPage(currentPage - 1);
     setPageLoader(true);
-  } 
+  }
 
   useEffect(() => {
-    const getAllContests = async (currentPage) => {  
+    setCurrentPage(1);
+  }, [searchText]);
+
+  useEffect(() => {
+    const getAllContests = async (currentPage, text) => {
+      let filters = {};
+      if (text) {
+        filters = {
+          name: {
+            $contains: text
+          },
+          contest_section: {
+            slug: {
+              $eq: query.contestsectionslug,
+            },
+          }
+        };
+      }
       if (query.contestsectionslug) {
         const res = await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
           filters: {
@@ -40,6 +58,7 @@ export default function GamesPage({ }) {
           sort: "priority",
           populate: {
             contestmasters: {
+              filters,
               fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
               sort: "priority",
               populate: {
@@ -68,7 +87,7 @@ export default function GamesPage({ }) {
             },
             image: "*"
           },
-  
+
           pagination: {
             page: 1,
             pageSize: 25,
@@ -78,9 +97,22 @@ export default function GamesPage({ }) {
         setTotalPage(res?.data[0]?.contestmasters?.pagination?.pageCount)
         setPageLoader(false);
       }
-    } 
-    getAllContests(currentPage);
-  }, [query,currentPage]);
+    }
+
+    // Debounce on search
+    const timer = setTimeout(async () => {
+      if (searchText !== '' && searchText.length > 0) {
+          getAllContests(currentPage, searchText);
+      } else{
+        getAllContests(currentPage, null);
+      }
+    }, 500);
+
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [query, currentPage, searchText]);
 
   return (
     <>
@@ -92,10 +124,11 @@ export default function GamesPage({ }) {
       <GamesComponent
         contestSectionsData={contestSections?.data || []}
         banners={[]}
-        pageOptions = {totalPage}
-        nextPage = {nextPage}
-        previousPage = {previousPage}
-        currentPage = {currentPage}
+        pageOptions={totalPage}
+        nextPage={nextPage}
+        previousPage={previousPage}
+        currentPage={currentPage}
+        setSearchText={setSearchText}
       />
 
     </>
