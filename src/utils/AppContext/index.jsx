@@ -799,9 +799,9 @@ export const AppContextContainer = ({ children }) => {
                 try {
                     data = await strapi.register({ username , password, identifier: email })
                     setLoggingIn(false)
-                } catch ({ error }) {
+                } catch ( error ) {
                     setLoggingIn(false)
-                    if(error.message){
+                    if(error?.message){
                         toast({
                             title: error.message,
                             status: "error",
@@ -830,9 +830,9 @@ export const AppContextContainer = ({ children }) => {
                             res?.state
                         );
                     });
-                } catch ({ error }) {
+                } catch ( error ) {
                     setLoggingIn(false)
-                    if(error.message){
+                    if(error?.message){
                         toast({
                             title: error.message,
                             status: "error",

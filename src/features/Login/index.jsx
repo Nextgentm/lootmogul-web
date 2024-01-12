@@ -30,9 +30,10 @@ import { root, loginTitleStyle } from "./styles";
 import { TriangleDownIcon, TriangleUpIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router';
 import axios from "axios";
+import Loader from "../../components/Loader";
 
 const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
-    const { callAuthService, callCustomAuthService, setLoginModalActive, toggleForgotPasswordModal ,loggingIn, } = useContext(AppContext);
+    const { callAuthService, callCustomAuthService, setLoginModalActive, toggleForgotPasswordModal ,loggingIn, setLoggingIn } = useContext(AppContext);
 
     const [selectedOption, setSelectedOption] = useState("login");
     const [showPassword, setShowPassword] = useState(false)
@@ -97,13 +98,20 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
 
     const { signIn } = useGoogleLogin({
         clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+        onRequest: () => setLoggingIn(true),
+        onFailure: () => setLoggingIn(false),
         onSuccess: (data) => {
             callAuthService("google", data.accessToken, inputReferalCode);
         }
     });
 
+    const loginWidGoogle = (e) => {
+        if (loggingIn) return
+        signIn(e)
+    }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         if (loggingIn) return
         const formData = {
             username: inputEmailId,
@@ -116,7 +124,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                 callCustomAuthService(formData, selectedOption, redirectUrl);
                 if (selectedOption == 'signup' && inputEmailId && inputPassword) {
                     setSelectedOption('login');
-                    setInputReferalCode(null);
+                    setInputReferalCode('');
                 }
             }
         }
@@ -226,7 +234,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     backgroundColor="#FFF"
                                     color="black"
                                     variant="login"
-                                    onClick={signIn}
+                                    onClick={loginWidGoogle}
                                     isDisabled = {validReferalCode == false  ? true : false }
                                     _hover={{backgroundColor:"#fff"}}
                                 >
@@ -238,6 +246,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     callback={({ accessToken }) => {
                                         callAuthService( "facebook", accessToken, inputReferalCode );
                                     }}
+                                    onFailure={() => setLoggingIn(false)}
                                     disableMobileRedirect={true}
                                     render={(renderProps) => (
                                         <Button
@@ -336,7 +345,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     />
                                 </Box>
                                 <Box w="100%">
-                                <form onSubmit={e => e.preventDefault()}>
+                                <form onSubmit={handleSubmit}>
                                     <FormControl mb="15px">
                                         <Input
                                             id="emailid"
@@ -413,7 +422,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             </Text>
                                         }
                                     </FormControl>
-                                    {loggingIn && <p style={{color: 'white'}}> Loading... </p> }
+                                    {/* {loggingIn && <Loader size={12} />} */}
                                     <Button
                                         width="100%"
                                         h="30px"
@@ -426,10 +435,11 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         textTransform="uppercase"
                                         outline="0"
                                         fontFamily="Open Sans,Sans-serif !important"
-                                        onClick={handleSubmit}
+                                        // onClick={handleSubmit}
+                                        type="submit"
                                         isDisabled = {selectedOption != "login" && validReferalCode == false  ? true : false }
                                     >
-                                        { selectedOption === "login" ? "Login" : "SignUp" }
+                                        {loggingIn ? <Loader size={12} /> : selectedOption === "login" ? "Login" : "SignUp" }
                                     </Button>
                                 </form>
                                 </Box>
