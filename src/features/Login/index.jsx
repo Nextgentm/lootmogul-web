@@ -31,15 +31,12 @@ import { root, loginTitleStyle } from "./styles";
 import { TriangleDownIcon, TriangleUpIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router';
 import axios from "axios";
-import Loader from "../../components/Loader";
 
 const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
-    const { callAuthService, callCustomAuthService, setLoginModalActive, toggleForgotPasswordModal ,loggingIn, setLoggingIn } = useContext(AppContext);
-
-    const [selectedOption, setSelectedOption] = useState("login");
-    const [showPassword, setShowPassword] = useState(false)
-    const [inputEmailId, setInputEmailId] = useState('');
-    const [inputPassword, setInputPassword] = useState('');
+    const [selectedOption, setSelectedOption] = useState("signup");
+    const [passwordType, setPasswordType] = useState("password");
+    const [inputEmailId, setInputEmailId] = useState();
+    const [inputPassword, setInputPassword] = useState();
     const [inputReferalCode, setInputReferalCode] = useState('');
     const [validReferalCode, setValidReferalCode] = useState();
 
@@ -95,25 +92,28 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
           
     }, [inputReferalCode]);
 
-    
+    const { callAuthService, callCustomAuthService, setLoginModalActive, toggleForgotPasswordModal } = useContext(AppContext);
 
     const { signIn } = useGoogleLogin({
         clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-        onRequest: () => setLoggingIn(true),
-        onFailure: () => setLoggingIn(false),
+
         onSuccess: (data) => {
             callAuthService("google", data.accessToken, inputReferalCode);
         }
     });
 
-    const loginWidGoogle = (e) => {
-        if (loggingIn) return
-        signIn(e)
+    const togglePassword = () => {
+        if (passwordType === "password") {
+            setPasswordType("text")
+            return;
+        }
+        setPasswordType("password")
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if (loggingIn) return
+    const handleSubmit = () => {
+        // if (inputEmailId === '' && inputPassword === '') {
+        //     return;
+        // }
         const formData = {
             username: inputEmailId,
             email: inputEmailId,
@@ -125,7 +125,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                 callCustomAuthService(formData, selectedOption, redirectUrl);
                 if (selectedOption == 'signup' && inputEmailId && inputPassword) {
                     setSelectedOption('login');
-                    setInputReferalCode('');
+                    setInputReferalCode(null);
                 }
             }
         }
@@ -230,7 +230,9 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     my="5%"
                                     {...loginTitleStyle}
                                 >
-                                    {selectedOption === "login" ? "LOGIN" : "SIGNUP"}
+                                    {selectedOption === "login"
+                                        ? "LOGIN"
+                                        : "SIGNUP"}
                                 </Text>
 
                                 <Button
@@ -241,25 +243,36 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             alt="google"
                                             width="20px"
                                             height="20px"
-                                            src={"/assets/Google.svg" }
+                                            src={
+                                                "/assets/Google.svg"
+                                            }
                                         />
                                     }
                                     backgroundColor="#FFF"
                                     color="black"
                                     variant="login"
-                                    onClick={loginWidGoogle}
+                                    onClick={signIn}
                                     isDisabled = {validReferalCode == false  ? true : false }
                                     _hover={{backgroundColor:"#fff"}}
                                 >
-                                    {selectedOption === "login" ? "Login" : "Signup"} with Google
+                                    {selectedOption === "login"
+                                        ? "Login"
+                                        : "Signup"}{" "}
+                                    with Google
                                 </Button>
 
                                 {<FacebookLogin
-                                    appId={process.env.NEXT_PUBLIC_FACEBOOK_CLIENT_ID}
+                                    appId={
+                                        process.env
+                                            .NEXT_PUBLIC_FACEBOOK_CLIENT_ID
+                                    }
                                     callback={({ accessToken }) => {
-                                        callAuthService( "facebook", accessToken, inputReferalCode );
+                                        callAuthService(
+                                            "facebook",
+                                            accessToken,
+                                            inputReferalCode
+                                        );
                                     }}
-                                    onFailure={() => setLoggingIn(false)}
                                     disableMobileRedirect={true}
                                     render={(renderProps) => (
                                         <Button
@@ -270,7 +283,9 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                                     alt="google"
                                                     width={"20px"}
                                                     height={"20px"}
-                                                    src={"/assets/FB.svg"}
+                                                    src={
+                                                        "/assets/FB.svg"
+                                                    }
                                                 />
                                             }
                                             onClick={renderProps.onClick}
@@ -280,7 +295,10 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             isDisabled = {validReferalCode == false  ? true : false }
                                             _hover={{backgroundColor:"#fff"}}
                                         >
-                                            {selectedOption === "login" ? "Login" : "Signup"} with Facebook
+                                            {selectedOption === "login"
+                                                ? "Login"
+                                                : "Signup"}{" "}
+                                            with Facebook
                                         </Button>
                                     )}
                                 />
@@ -295,7 +313,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         fontWeight="500"
                                         fontSize={["12px", "13px"]}
                                     >
-                                        {"Referral Code (Optional)"} 
+                                        Referral Code (Optional) 
                                         <IconButton
                                             backgroundImage="none"
                                             backgroundColor="transparent"
@@ -357,8 +375,8 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         margin="20px 0"
                                     />
                                 </Box>
+
                                 <Box w="100%">
-                                <form onSubmit={handleSubmit}>
                                     <FormControl mb="15px">
                                         <Input
                                             id="emailid"
@@ -384,7 +402,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             <Input
                                                 id="password"
                                                 name="password"
-                                                type={showPassword ? 'text': 'password'}
+                                                type={passwordType}
                                                 placeholder="Password"
                                                 bgColor="#fff"
                                                 color="#707070"
@@ -397,7 +415,6 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                                 _focus={{ outline: "0" }}
                                                 value={inputPassword}
                                                 onChange={(e) => setInputPassword(e.target.value)}
-                                                autoComplete="password"
                                             />
                                             <Text
                                                 position="absolute"
@@ -408,7 +425,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                                 p="7px 10px"
                                                 display="flex"
                                                 alignItems="center"
-                                                onClick={() => setShowPassword(!showPassword)}
+                                                onClick={togglePassword}
                                             >
                                                 <Image
                                                     alt="toggle password"
@@ -435,7 +452,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             </Text>
                                         }
                                     </FormControl>
-                                    {loggingIn && <Loader size={12} />}
+
                                     <Button
                                         width="100%"
                                         h="30px"
@@ -448,29 +465,37 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                         textTransform="uppercase"
                                         outline="0"
                                         fontFamily="Open Sans,Sans-serif !important"
-                                        type="submit"
+                                        onClick={handleSubmit}
                                         isDisabled = {selectedOption != "login" && validReferalCode == false  ? true : false }
                                     >
-                                        {/* {loggingIn ? <Loader size={12} /> : selectedOption === "login" ? "Login" : "SignUp" } */}
-                                        {selectedOption === "login" ? "Login" : "SignUp" }
+                                        {
+                                            selectedOption === "login"
+                                                ? "Login"
+                                                : "SignUp"
+                                        }
                                     </Button>
-                                </form>
                                 </Box>
-                                <Box
+
+                                <Text
                                     color="#fff"
                                     mt="15px"
                                     cursor="pointer"
                                     fontFamily="var(--chakra-fonts-Blanch)"
                                     fontWeight="500"
                                     fontSize={["24px", "24px"]}
-                                    onClick={() => setSelectedOption(selectedOption === "login" ? "signup" : "login")}
+                                    onClick={() =>
+                                        setSelectedOption(
+                                            selectedOption === "login"
+                                                ? "signup"
+                                                : "login"
+                                        )
+                                    }
                                 >
                                     {selectedOption === "login"
                                         ? <Flex>New to LootMogul? <Text color="primary" ml="5px">Sign Up</Text></Flex>
                                         : <Flex>Already user? <Text color="primary" ml="5px">Login</Text></Flex>}
-                                </Box>
+                                </Text>
                                 {selectedOption != "login" && (
-
                                 <Text
                                     my="12px"
                                     textAlign="center"
