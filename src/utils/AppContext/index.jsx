@@ -793,11 +793,11 @@ export const AppContextContainer = ({ children }) => {
             }
         }
         } catch (error) {
-            if(error.message){
+            if(error.message || error?.error?.message){
                 toast({
-                    title: error.message,
+                    title: error.message || error?.error?.message,
                     status: "error",
-                    duration: 3000,
+                    duration: 5000,
                     position: "top-right",
                     isClosable: true
                 });
