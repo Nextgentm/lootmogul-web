@@ -15,7 +15,7 @@ export default function GamesPage({
   contestSectionsData,
   seoData,
 }) {
-
+  console.log('Gamepage loading....');
   return (
     <>
       <SEOContainer
