@@ -287,10 +287,6 @@ const Header = () => {
         </Flex>
     );
 
-    const OnLoginClose = async () => {
-        toggleLoginModal();
-    };
-
     const OnForgotPasswordClose = async () => {
         toggleForgotPasswordModal();
     };
@@ -581,7 +577,7 @@ const Header = () => {
             <Box>                 
                 <Login
                     isOpen={isLoginModalActive}
-                    OnLoginClose={OnLoginClose}
+                    OnLoginClose={toggleLoginModal}
                 />
             </Box>
 
