@@ -567,18 +567,21 @@ export const AppContextContainer = ({ children }) => {
         setInfluencerLikes(il);
     };
     const callAuthService = async (provider, token, input_referalcode) => {
-        try {
+        try{
         let data;
         defaultDataSettings();
 
         data = await strapi.authenticateProvider(provider, token);
-
+            console.log("data",data);
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
-            getCurremtLocation().then((res) => {
+            getCurremtLocation().then(/* async */(res) => {
                 window.localStorage.setItem("lm_user_location", res?.country);
                 window.localStorage.setItem("lm_user_state", res?.state);
+                /* const updatedSession = await */strapi.request('PATCH', '/sessions/location', 
+                    { data : { state: res?.state, browserCountry: res?.country }}
+                )
             });
 
             if (data.user.is_new) {
@@ -821,6 +824,13 @@ export const AppContextContainer = ({ children }) => {
                         password: formData.password
                     };
                     data = await strapi.register(apiValues);
+                    getCurremtLocation().then((res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem("lm_user_state", res?.state);
+                        strapi.request('PATCH', '/sessions/location', 
+                            { data : { state: res?.state, browserCountry: res?.country }}
+                        )
+                    });
                 } catch ({ error }) {
                     if(error.message){
                         toast({
@@ -844,18 +854,13 @@ export const AppContextContainer = ({ children }) => {
                         password: formData.password
                     };
                     data = await strapi.login(apiValues);
-                    
                     setJwt(data.jwt);
-                    getCurremtLocation().then((res) => {
-                        window.localStorage.setItem(
-                            "lm_user_location",
-                            res?.country
-                        );
-
-                        window.localStorage.setItem(
-                            "lm_user_state",
-                            res?.state
-                        );
+                    getCurremtLocation().then(/* async */(res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem("lm_user_state", res?.state);
+                        /* const updatedSession = await */strapi.request('PATCH', '/sessions/location', 
+                            { data : { state: res?.state, browserCountry: res?.country }}
+                        )
                     });
                 } catch ({ error }) {
                     if(error.message){
