@@ -3,6 +3,11 @@ import Banner from "../../src/components/Web3Games/Banner";
 import { Box, Flex, Image, Text, Button, VStack, Link, useMediaQuery } from '@chakra-ui/react'
 import React, { useRef, useContext, useState, useEffect } from "react";
 import Community from "../../src/components/Footer/Community";
+import { AppContext } from "../../src/utils/AppContext";
+import dynamic from "next/dynamic";
+const Login = dynamic(() => import("../../src/features/Login"));
+import Head from 'next/head';
+
 const defaultSEOData = {
     metaTitle: "Lootmogul | DSG Durban Cricket Stadium",
     metaDescription: "Immerse yourself in LootMogul's captivating blockchain games, where you'll not only earn valuable in-game rewards but also unlock real-world benefits!",
@@ -10,10 +15,45 @@ const defaultSEOData = {
 };
 
 export default function GamesPage({campaignsSectionsResData}) {
-    
+    const [isLoginModalActive, setLoginModalActive] = useState(false);
+    const {
+        isMobileDevice,
+        user
+    } = useContext(AppContext);
+    const toggleLoginModal = () => {
+        setLoginModalActive(!isLoginModalActive);
+    };
+    const OnLoginClose = async () => {
+        if(isMobileDevice){
+            toggleLoginModal();
+        }
+        
+    };
     const trending_subheader = campaignsSectionsResData?.data[3].trending_subheader;
     return (
         <>
+
+            {process.env.NEXT_PUBLIC_SENTRY_ENV === 'production' &&
+                <>
+                    <Head>
+                        {/* Google Analytics Global Site Tag (gtag.js) */}
+                        <script
+                            async
+                            src={`https://www.googletagmanager.com/gtag/js?id=G-D61VSCKP4X`}
+                        ></script>
+                        <script
+                            dangerouslySetInnerHTML={{
+                                __html: `
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'G-D61VSCKP4X');
+                    `,
+                            }}
+                        ></script>
+                    </Head>
+                </>
+            }
 
             <SEOContainer seoData={defaultSEOData} />
             <Banner customClass="dsg_cricket" bannerData={campaignsSectionsResData?.data[3] || []}/>
@@ -23,7 +63,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                     flexDir={["column", "column", "column", "row"]}
                     w="100%"
                     alignItems={"center"}
-                    p={["10% 0%", "10% 0%", "2% 5%"]}
+                    p={["0% 0%", "10% 0%", "2% 5%"]}
                     //pb="0"
                 >
                     <Box
@@ -77,14 +117,15 @@ export default function GamesPage({campaignsSectionsResData}) {
 
             <Flex
                 flexDir={["column", "column", "row", "row"]}
-                w={["100%", "100%", "100%", "80%", "60%", "60%", "60%"]}
+                w={["100%", "100%", "100%", "80%", "80%", "60%", "60%"]}
                 alignItems={"left"}
-                p={["10% 0%", "10% 0%", "0% 2%"]}
+                p={["0% 0%", "0% 0%", "0% 2%"]}
                 margin={"auto"}
                 mb="5%"
                 
             >
-                <Box
+                {!user?.id && 
+                <><Box
                     px={[5, 5, 5]}
                     width={["100%", "100%", "100%", "100%"]}
                 >
@@ -127,10 +168,11 @@ export default function GamesPage({campaignsSectionsResData}) {
                             Get R100 worth of Bonus chips
                     </Text>  
                     <Link
-                        href={'#login'}
+                        href={!isMobileDevice ? '#login': '#'}
                         _hover={{ border: "none", textDecoration: "none" }}
                         _focus={{ border: "none", textDecoration: "none" }}
                         key={`igc-1`}
+                        onClick={OnLoginClose}
                         
                     >
                         <Button
@@ -148,6 +190,9 @@ export default function GamesPage({campaignsSectionsResData}) {
                         </Button>
                     </Link>
                 </Box>
+                </>
+                }
+                
                 <Box
                     px={[5, 5, 5]}
                     width={["100%", "100%", "100%", "100%"]}
@@ -220,7 +265,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                     flexDir={["column", "column", "column", "row"]}
                     w="100%"
                     alignItems={"center"}
-                    p={["10% 0%", "0% 0%", "2% 5%"]}
+                    p={["0% 0%", "0% 0%", "2% 5%"]}
                     pb="0"
                 >
                     <Box
@@ -245,7 +290,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             ]}
                             textAlign={"center"}
                         >
-                            BE PART OF GLOBAL SPORTS ARENA METAVERSE
+                            BE PART OF GLOBAL SPORTS METAVERSE
                         </Text>
                     </Box>
                 </Flex>
@@ -700,6 +745,11 @@ export default function GamesPage({campaignsSectionsResData}) {
                             Office Address : C/105 Varsha Swapna Gawan Pada, Mulund East, Mumbai - 400081
                         </Text>
             </Flex>   
+            {!user?.id && <Login
+                        isOpen={isLoginModalActive}
+                        OnLoginClose={OnLoginClose}
+                    />
+                    }
         </Flex>
             </Box>                
         </>

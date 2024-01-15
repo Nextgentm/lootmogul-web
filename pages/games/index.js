@@ -15,6 +15,7 @@ export default function GamesPage({
   contestSectionsData,
   seoData,
 }) {
+  console.log('Game loading...');
   return (
     <>
       <SEOContainer
@@ -61,7 +62,7 @@ export async function getStaticProps() {
             },
             {
               name: {
-                $eq: "Cricket Games",
+                $eq: "DSG Match Day Cricket Games",
               },
             },
           ],

@@ -32,7 +32,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
         pos="relative"
         top={["70px", "70px", "55px", "40px", "50px"]}
       >
-        <Flex w="50%" justifyContent="center" pos="relative" bottom="-26px">
+        <Flex w={["50%","50%","50%","32%","40%","30%"]} justifyContent="center" pos="relative" bottom="-26px">
           <Image
             pos="relative"
             bottom="0px"
@@ -47,7 +47,7 @@ const GameInfo = ({ gameData, isTabletOrDesktop }) => {
         </Flex>
         <Flex
           direction="column"
-          w="50%"
+          w={["50%","50%","50%","50%","45%","30%"]}
           justifyContent="space-between"
           h="100%"
           mr="35px"
