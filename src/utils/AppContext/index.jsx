@@ -793,9 +793,17 @@ export const AppContextContainer = ({ children }) => {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
-    } catch (error){
-        console.log("error", error);
-    }
+        } catch (error) {
+            if(error.message){
+                toast({
+                    title: error.message,
+                    status: "error",
+                    duration: 3000,
+                    position: "top-right",
+                    isClosable: true
+                });
+            }
+        }
     };
   
     const callCustomAuthService = async ( formData, formType, redirectUrl = "") => {
