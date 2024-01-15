@@ -15,6 +15,7 @@ export default function GamesPage({
   contestSectionsData,
   seoData,
 }) {
+
   return (
     <>
       <SEOContainer
