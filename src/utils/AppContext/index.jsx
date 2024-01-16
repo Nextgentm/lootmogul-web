@@ -756,6 +756,20 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 hasmindCallService();
             }
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
             /** For hasmind */
             
             /** For mrnCallService */
@@ -1050,6 +1064,20 @@ export const AppContextContainer = ({ children }) => {
             if (
                 data.user.is_new &&
                 router.route === "/gamecampaign" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
                 router.query.utm_medium === "hashmind"
             ) {
                 hasmindCallService();
