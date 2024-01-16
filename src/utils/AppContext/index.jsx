@@ -19,6 +19,7 @@ import { getCurremtLocation } from "../../services/locationService";
 import { mobuppsCallService } from "../../services/mobuppsCallService";
 import { hasmindCallService } from "../../services/hasmindCallService";
 import { mrnCallService } from "../../services/mrnCallService";
+import { growThanCallService } from "../../services/growthanService";
 
 export const AppContext = createContext({});
 
@@ -759,6 +760,20 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 hasmindCallService();
             }
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
             /** For hasmind */
             
             /** For mrnCallService */
@@ -770,9 +785,26 @@ export const AppContextContainer = ({ children }) => {
                 mrnCallService();
             }
 
+            /** For GrowThanCallService */
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "GT"
+            ) {
+                growThanCallService();
+            }
+
             if (
                 data.user.is_new &&
                 router.route === "/cricket" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
                 router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
@@ -1054,8 +1086,32 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 hasmindCallService();
             }
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
             /** For hasmind */
            
+            
+            /** For GrowThanCallService */
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "GT"
+            ) {
+                growThanCallService();
+            }
+
             /** For mrnCallService */
             if (
                 data.user.is_new &&
@@ -1068,6 +1124,14 @@ export const AppContextContainer = ({ children }) => {
             if (
                 data.user.is_new &&
                 router.route === "/cricket" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
                 router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
