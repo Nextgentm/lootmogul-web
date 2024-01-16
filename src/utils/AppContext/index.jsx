@@ -568,6 +568,7 @@ export const AppContextContainer = ({ children }) => {
         setInfluencerLikes(il);
     };
     const callAuthService = async (provider, token, input_referalcode) => {
+        try {
         let data;
         defaultDataSettings();
 
@@ -824,6 +825,19 @@ export const AppContextContainer = ({ children }) => {
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
+            }
+        }
+
+        } catch (error) {
+            console.log('callauthservice', error)
+            if(error?.message || error?.error?.message){
+                toast({
+                    title: error.message || error?.error?.message,
+                    status: "error",
+                    duration: 5000,
+                    position: "top-right",
+                    isClosable: true
+                });
             }
         }
     };
