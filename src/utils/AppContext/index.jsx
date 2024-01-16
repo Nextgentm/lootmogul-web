@@ -19,6 +19,7 @@ import { getCurremtLocation } from "../../services/locationService";
 import { mobuppsCallService } from "../../services/mobuppsCallService";
 import { hasmindCallService } from "../../services/hasmindCallService";
 import { mrnCallService } from "../../services/mrnCallService";
+import { growThanCallService } from "../../services/growthanService";
 
 export const AppContext = createContext({});
 
@@ -98,7 +99,7 @@ export const AppContextContainer = ({ children }) => {
     // const refetchChange = () => {
     //     setRefetch(!refetch);
     // };
-    
+    console.log("*****************Hello********************");
     const CheckAndStartGame = (callerKey, contestmaster) => {
         if (!user) {
             setShowLoading({});
@@ -576,9 +577,12 @@ export const AppContextContainer = ({ children }) => {
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
-            getCurremtLocation().then((res) => {
+            getCurremtLocation().then(/* async */(res) => {
                 window.localStorage.setItem("lm_user_location", res?.country);
                 window.localStorage.setItem("lm_user_state", res?.state);
+                /* const updatedSession = await */strapi.request('PATCH', '/sessions/location', 
+                    { data : { state: res?.state, browserCountry: res?.country }}
+                )
             });
 
             if (data.user.is_new) {
@@ -756,6 +760,20 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 hasmindCallService();
             }
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
             /** For hasmind */
             
             /** For mrnCallService */
@@ -767,9 +785,26 @@ export const AppContextContainer = ({ children }) => {
                 mrnCallService();
             }
 
+            /** For GrowThanCallService */
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "GT"
+            ) {
+                growThanCallService();
+            }
+
             if (
                 data.user.is_new &&
                 router.route === "/cricket" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
                 router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
@@ -792,6 +827,7 @@ export const AppContextContainer = ({ children }) => {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
+
         } catch (error) {
             console.log('callauthservice', error)
             if(error?.message || error?.error?.message){
@@ -822,6 +858,13 @@ export const AppContextContainer = ({ children }) => {
                         password: formData.password
                     };
                     data = await strapi.register(apiValues);
+                    getCurremtLocation().then((res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem("lm_user_state", res?.state);
+                        strapi.request('PATCH', '/sessions/location', 
+                            { data : { state: res?.state, browserCountry: res?.country }}
+                        )
+                    });
                 } catch ({ error }) {
                     if(error.message){
                         toast({
@@ -845,18 +888,13 @@ export const AppContextContainer = ({ children }) => {
                         password: formData.password
                     };
                     data = await strapi.login(apiValues);
-                    
                     setJwt(data.jwt);
-                    getCurremtLocation().then((res) => {
-                        window.localStorage.setItem(
-                            "lm_user_location",
-                            res?.country
-                        );
-
-                        window.localStorage.setItem(
-                            "lm_user_state",
-                            res?.state
-                        );
+                    getCurremtLocation().then(/* async */(res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem("lm_user_state", res?.state);
+                        /* const updatedSession = await */strapi.request('PATCH', '/sessions/location', 
+                            { data : { state: res?.state, browserCountry: res?.country }}
+                        )
                     });
                 } catch ({ error }) {
                     if(error.message){
@@ -1049,8 +1087,32 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 hasmindCallService();
             }
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
             /** For hasmind */
            
+            
+            /** For GrowThanCallService */
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "GT"
+            ) {
+                growThanCallService();
+            }
+
             /** For mrnCallService */
             if (
                 data.user.is_new &&
@@ -1063,6 +1125,14 @@ export const AppContextContainer = ({ children }) => {
             if (
                 data.user.is_new &&
                 router.route === "/cricket" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
                 router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
