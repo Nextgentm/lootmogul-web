@@ -793,7 +793,8 @@ export const AppContextContainer = ({ children }) => {
             }
         }
         } catch (error) {
-            if(error.message || error?.error?.message){
+            console.log('callauthservice', error)
+            if(error?.message || error?.error?.message){
                 toast({
                     title: error.message || error?.error?.message,
                     status: "error",
