@@ -115,7 +115,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 
                 if (data?.name == 'GameEnd') {
                     
-                    //console.log('Skill Game End...');
+                    console.log('Skill Game End...');
                     mrnGamePlayService();
                     //console.log(data);
                     /*ct.onGameGameOver({action:"Gameplay Completed", params: {
