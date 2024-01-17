@@ -133,7 +133,7 @@ const Quiz = (props) => {
       });
 
       socket.on("game_over", (data) => {
-        console.log('Travia game_over..');
+        //console.log('Travia game_over..');
         mrnGamePlayService();
         /*ct.onGameGameOver({
           action: "Gameplay Completed",
