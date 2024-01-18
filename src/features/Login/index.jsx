@@ -260,7 +260,10 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                                     src={"/assets/FB.svg"}
                                                 />
                                             }
-                                            onClick={renderProps.onClick}
+                                            onClick={(e) => {
+                                                if (loggingIn) return
+                                                renderProps.onClick(e)
+                                            }}
                                             backgroundColor="#FFF"
                                             color="black"
                                             variant="login"
