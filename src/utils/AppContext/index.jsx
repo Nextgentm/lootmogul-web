@@ -574,9 +574,12 @@ export const AppContextContainer = ({ children }) => {
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
-            getCurremtLocation().then((res) => {
+            getCurremtLocation().then(/* async */(res) => {
                 window.localStorage.setItem("lm_user_location", res?.country);
                 window.localStorage.setItem("lm_user_state", res?.state);
+                /* const updatedSession = await */strapi.request('PATCH', '/sessions/location', 
+                    { data : { state: res?.state, browserCountry: res?.country }}
+                )
             });
 
             if (data.user.is_new) {
@@ -821,6 +824,7 @@ export const AppContextContainer = ({ children }) => {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
+
         } catch (error) {
             console.log('callauthservice', error)
             setLoggingIn(false)
@@ -847,6 +851,13 @@ export const AppContextContainer = ({ children }) => {
                 try {
                     data = await strapi.register({ username , password, identifier: email })
                     setLoggingIn(false)
+                    getCurremtLocation().then((res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem("lm_user_state", res?.state);
+                        strapi.request('PATCH', '/sessions/location', 
+                            { data : { state: res?.state, browserCountry: res?.country }}
+                        )
+                    });
                 } catch (error) {
                     setLoggingIn(false)
                     if(error?.message){
@@ -867,16 +878,12 @@ export const AppContextContainer = ({ children }) => {
                     data = await strapi.login({ password , identifier: username })
                     setLoggingIn(false)
                     setJwt(data.jwt);
-                    getCurremtLocation().then((res) => {
-                        window.localStorage.setItem(
-                            "lm_user_location",
-                            res?.country
-                        );
-
-                        window.localStorage.setItem(
-                            "lm_user_state",
-                            res?.state
-                        );
+                    getCurremtLocation().then(/* async */(res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem("lm_user_state", res?.state);
+                        /* const updatedSession = await */strapi.request('PATCH', '/sessions/location', 
+                            { data : { state: res?.state, browserCountry: res?.country }}
+                        )
                     });
                     } catch ( error ) {
                     setLoggingIn(false)

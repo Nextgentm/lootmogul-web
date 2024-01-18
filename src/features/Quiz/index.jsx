@@ -13,6 +13,7 @@ import {
   setVoiceOverStatus,
 } from "../../services/audioService";
 ///import * as ct from "../../services/clevertapAnalytics";
+import { mrnGamePlayService } from "../../services/mrnCallService";
 
 const Quiz = (props) => {
   const router = useRouter();
@@ -132,7 +133,8 @@ const Quiz = (props) => {
       });
 
       socket.on("game_over", (data) => {
-        //console.log(data);
+        //console.log('Travia game_over..');
+        mrnGamePlayService();
         /*ct.onGameGameOver({
           action: "Gameplay Completed",
             params: {

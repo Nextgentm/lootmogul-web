@@ -9,6 +9,7 @@ import AppContext from "../../../utils/AppContext";
 import strapi from "../../../utils/strapi";
 import PaidGameConfirmation from "../PaidGameConfirmation";
 //import * as ct from '../../../services/clevertapAnalytics';
+import { mrnGamePlayService } from "../../../services/mrnCallService";
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
@@ -114,7 +115,8 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 
                 if (data?.name == 'GameEnd') {
                     
-                    //console.log('Game End...');
+                    //console.log('Skill Game End...');
+                    mrnGamePlayService();
                     //console.log(data);
                     /*ct.onGameGameOver({action:"Gameplay Completed", params: {
                         "Category": "Blockchain Games",
