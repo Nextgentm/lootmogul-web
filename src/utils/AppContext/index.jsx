@@ -570,7 +570,6 @@ export const AppContextContainer = ({ children }) => {
         defaultDataSettings();
         data = await strapi.authenticateProvider(provider, token);
         setLoggingIn(false)
-        console.log("data",data);
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
@@ -824,6 +823,7 @@ export const AppContextContainer = ({ children }) => {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
+
         } catch (error) {
             console.log('callauthservice', error)
             setLoggingIn(false)
