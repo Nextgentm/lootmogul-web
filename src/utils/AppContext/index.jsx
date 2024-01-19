@@ -568,12 +568,12 @@ export const AppContextContainer = ({ children }) => {
         setInfluencerLikes(il);
     };
     const callAuthService = async (provider, token, input_referalcode) => {
-        try{
+        try {
         let data;
         defaultDataSettings();
 
         data = await strapi.authenticateProvider(provider, token);
-            console.log("data",data);
+
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
@@ -827,6 +827,7 @@ export const AppContextContainer = ({ children }) => {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
+
         } catch (error) {
             console.log('callauthservice', error)
             if(error?.message || error?.error?.message){
