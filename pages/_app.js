@@ -20,7 +20,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import "../styles/globals.css";
 import * as ga from '../src/services/googleAnalytics';
-//import * as ct from '../src/services/clevertapAnalytics';
+import * as ct from '../src/services/clevertapAnalytics';
 import LMNonCloseALert from '../src/components/LMNonCloseALert';
 import MaintenancePage from '../src/features/MaintenancePage';
 import * as Sentry from '@sentry/nextjs';
@@ -63,7 +63,8 @@ function MyApp({ Component, pageProps }) {
 
   const handleRouteChange = (url) => {
     ga.pageview(url)
-    //ct.pageview(url)
+    //console.log("Page view",url)
+    ct.pageview(url)
 
   };
   const [loading, setLoading] = useState(false);
