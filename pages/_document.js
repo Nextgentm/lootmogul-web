@@ -39,7 +39,7 @@ export default class MyDocument extends Document {
       })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}');`,
     }}
   />
-  <script defer  dangerouslySetInnerHTML={{
+ <script defer  dangerouslySetInnerHTML={{
               __html:
      ` var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
     
@@ -55,6 +55,7 @@ clevertap.privacy.push({useIP: true}); //set the flag to true, if the user agree
          s.parentNode.insertBefore(wzrk, s);
   })();`,}}
 />
+
 <script
   type="module"
   src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
