@@ -287,10 +287,6 @@ const Header = () => {
         </Flex>
     );
 
-    const OnLoginClose = async () => {
-        toggleLoginModal();
-    };
-
     const OnForgotPasswordClose = async () => {
         toggleForgotPasswordModal();
     };
@@ -450,7 +446,7 @@ const Header = () => {
                                     {...loginBtnStyle}
                                     fontFamily="Sora !important "
                                     fontWeight="500"
-                                    onClick={() => toggleLoginModal()}
+                                    onClick={toggleLoginModal}
                                     padding={[
                                         "0px 30px",
                                         "0px 36px",
@@ -472,7 +468,7 @@ const Header = () => {
                                     {...loginBtnStyle}
                                     fontFamily="Sora !important "
                                     fontWeight="500"
-                                    onClick={() => toggleLoginModal()}
+                                    onClick={toggleLoginModal}
                                     padding={[
                                         "0px 30px",
                                         "0px 36px",
@@ -581,7 +577,7 @@ const Header = () => {
             <Box>                 
                 <Login
                     isOpen={isLoginModalActive}
-                    OnLoginClose={OnLoginClose}
+                    OnLoginClose={toggleLoginModal}
                 />
             </Box>
 

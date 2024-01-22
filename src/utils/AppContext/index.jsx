@@ -19,6 +19,7 @@ import { getCurremtLocation } from "../../services/locationService";
 import { mobuppsCallService } from "../../services/mobuppsCallService";
 import { hasmindCallService } from "../../services/hasmindCallService";
 import { mrnCallService } from "../../services/mrnCallService";
+import { growThanCallService } from "../../services/growthanService";
 
 export const AppContext = createContext({});
 
@@ -28,14 +29,11 @@ export const AppContextContainer = ({ children }) => {
     const [isLoginModalActive, setLoginModalActive] = useState(false);
     // const [refetch, setRefetch] = useState(false);
 
-    const [isForgotPasswordModalActive, setForgotPasswordModalActive] =
-        useState(false);
-    const [isCheckYourMailModalActive, setCheckYourMailModalActive] =
-        useState(false);
-    const [isChangePasswordModalActive, setChangePasswordModalActive] =
-        useState(false);
-    const [isPasswordChangedModalActive, setPasswordChangedModalActive] =
-        useState(false);
+    const [loggingIn, setLoggingIn] = useState(false)
+    const [isForgotPasswordModalActive, setForgotPasswordModalActive] = useState(false);
+    const [isCheckYourMailModalActive, setCheckYourMailModalActive] = useState(false);
+    const [isChangePasswordModalActive, setChangePasswordModalActive] = useState(false);
+    const [isPasswordChangedModalActive, setPasswordChangedModalActive] = useState(false);
     const [isMobileDevice, setMobileDevice] = useState(false);
 
     const [withdrawFetch, setWithdrawFetch] = useState(true);
@@ -72,9 +70,8 @@ export const AppContextContainer = ({ children }) => {
     
     const [isFirstTimeLogin, setFirstTimeLogin] = useState(false);
 
-    const toggleLoginModal = () => {
-        setLoginModalActive(!isLoginModalActive);
-    };
+    const toggleLoginModal = () => setLoginModalActive(!isLoginModalActive);
+    
 
     const toggleForgotPasswordModal = () => {
         setForgotPasswordModalActive(!isForgotPasswordModalActive);
@@ -98,7 +95,7 @@ export const AppContextContainer = ({ children }) => {
     // const refetchChange = () => {
     //     setRefetch(!refetch);
     // };
-    
+    //console.log("*****************Hello********************");
     const CheckAndStartGame = (callerKey, contestmaster) => {
         if (!user) {
             setShowLoading({});
@@ -567,17 +564,22 @@ export const AppContextContainer = ({ children }) => {
         setInfluencerLikes(il);
     };
     const callAuthService = async (provider, token, input_referalcode) => {
+        try {
+        setLoggingIn(true)
         let data;
         defaultDataSettings();
-
         data = await strapi.authenticateProvider(provider, token);
-
+        setLoggingIn(false)
+        
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
-            getCurremtLocation().then((res) => {
+            getCurremtLocation().then(/* async */(res) => {
                 window.localStorage.setItem("lm_user_location", res?.country);
                 window.localStorage.setItem("lm_user_state", res?.state);
+                /* const updatedSession = await */strapi.request('PATCH', '/sessions/location', 
+                    { data : { state: res?.state, browserCountry: res?.country }}
+                )
             });
 
             if (data.user.is_new) {
@@ -755,6 +757,20 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 hasmindCallService();
             }
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
             /** For hasmind */
             
             /** For mrnCallService */
@@ -766,9 +782,26 @@ export const AppContextContainer = ({ children }) => {
                 mrnCallService();
             }
 
+            /** For GrowThanCallService */
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "GT"
+            ) {
+                growThanCallService();
+            }
+
             if (
                 data.user.is_new &&
                 router.route === "/cricket" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
                 router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
@@ -791,26 +824,43 @@ export const AppContextContainer = ({ children }) => {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
+
+        } catch (error) {
+            console.log('callauthservice', error)
+            setLoggingIn(false)
+            if(error?.message || error?.error?.message){
+                toast({
+                    title: error.message || error?.error?.message,
+                    status: "error",
+                    duration: 5000,
+                    position: "top-right",
+                    isClosable: true
+                });
+            }
+        }
     };
   
-    const callCustomAuthService = async (
-        formData,
-        formType,
-        redirectUrl = ""
-    ) => {
+    const callCustomAuthService = async ( formData, formType, redirectUrl = "" ) => {
         let data;
         defaultDataSettings();
+
         if (formType === "signup" || formType === "login") {
+            setLoggingIn(true)
+            const { password, username , email, } = formData
             if (formType === "signup") {
                 try {
-                    const apiValues = {
-                        username: formData.username,
-                        identifier: formData.email,
-                        password: formData.password
-                    };
-                    data = await strapi.register(apiValues);
-                } catch ({ error }) {
-                    if(error.message){
+                    data = await strapi.register({ username , password, identifier: email })
+                    setLoggingIn(false)
+                    getCurremtLocation().then((res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem("lm_user_state", res?.state);
+                        strapi.request('PATCH', '/sessions/location', 
+                            { data : { state: res?.state, browserCountry: res?.country }}
+                        )
+                    });
+                } catch (error) {
+                    setLoggingIn(false)
+                    if(error?.message){
                         toast({
                             title: error.message,
                             status: "error",
@@ -819,34 +869,25 @@ export const AppContextContainer = ({ children }) => {
                             isClosable: true
                         });
                     }
-                    
-
                     return;
                 }
             }
 
             if (formType === "login") {
                 try {
-                    const apiValues = {
-                        identifier: formData.username,
-                        password: formData.password
-                    };
-                    data = await strapi.login(apiValues);
-                    
+                    data = await strapi.login({ password , identifier: username })
+                    setLoggingIn(false)
                     setJwt(data.jwt);
-                    getCurremtLocation().then((res) => {
-                        window.localStorage.setItem(
-                            "lm_user_location",
-                            res?.country
-                        );
-
-                        window.localStorage.setItem(
-                            "lm_user_state",
-                            res?.state
-                        );
+                    getCurremtLocation().then(/* async */(res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem("lm_user_state", res?.state);
+                        /* const updatedSession = await */strapi.request('PATCH', '/sessions/location', 
+                            { data : { state: res?.state, browserCountry: res?.country }}
+                        )
                     });
-                } catch ({ error }) {
-                    if(error.message){
+                    } catch ( error ) {
+                    setLoggingIn(false)
+                    if(error?.message){
                         toast({
                             title: error.message,
                             status: "error",
@@ -1036,8 +1077,32 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 hasmindCallService();
             }
+            if (
+                data.user.is_new &&
+                router.route === "/cricket" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "hashmind"
+            ) {
+                hasmindCallService();
+            }
             /** For hasmind */
            
+            
+            /** For GrowThanCallService */
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "GT"
+            ) {
+                growThanCallService();
+            }
+
             /** For mrnCallService */
             if (
                 data.user.is_new &&
@@ -1050,6 +1115,14 @@ export const AppContextContainer = ({ children }) => {
             if (
                 data.user.is_new &&
                 router.route === "/cricket" &&
+                router.query.utm_medium === "mrn"
+            ) {
+                mrnCallService();
+            }
+
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
                 router.query.utm_medium === "mrn"
             ) {
                 mrnCallService();
@@ -1112,6 +1185,8 @@ export const AppContextContainer = ({ children }) => {
     return (
         <AppContext.Provider
             value={{
+                loggingIn,
+                setLoggingIn,
                 toggleLoginModal,
                 setLoginModalActive,
                 isLoginModalActive,
