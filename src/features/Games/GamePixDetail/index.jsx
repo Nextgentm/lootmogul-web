@@ -8,7 +8,8 @@ import { getGameRoomOrCreateRoom } from "../../../services/gameSevice";
 import AppContext from "../../../utils/AppContext";
 import strapi from "../../../utils/strapi";
 import PaidGameConfirmation from "../PaidGameConfirmation";
-//import * as ct from '../../../services/clevertapAnalytics';
+import * as ct from '../../../services/clevertapAnalytics';
+import { mrnGamePlayService } from "../../../services/mrnCallService";
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
@@ -71,7 +72,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             setGameUrl(joiningData?.contestmaster?.data?.game?.data?.config?.url + "&tournament_id=" + gameid + "&user_id=" + user?.id + "&game_id=" + joiningData?.id)
             //console.log('Game start...');
             //console.log(joiningData);
-            /*ct.onGameplayStart({action:"Gameplay Start", params: {
+            ct.onGameplayStart({action:"Gameplay Start", params: {
                 "Category": "Blockchain Games",
                 "GameType": joiningData?.contestmaster?.data?.type,
                 "GameSubtype": joiningData?.contestmaster?.data?.name,
@@ -83,7 +84,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 "EmailID": user?.email,
                 "MobileNo": user?.mobileNumber,
                 "FullName": user?.fullName
-            }});*/
+            }});
         }
 
     }, [gameSlug, gameid, joiningData, user?.id])
@@ -114,7 +115,8 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 
                 if (data?.name == 'GameEnd') {
                     
-                    //console.log('Game End...');
+                    //console.log('Skill Game End...');
+                    mrnGamePlayService();
                     //console.log(data);
                     /*ct.onGameGameOver({action:"Gameplay Completed", params: {
                         "Category": "Blockchain Games",

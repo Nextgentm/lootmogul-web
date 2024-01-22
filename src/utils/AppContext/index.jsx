@@ -10,7 +10,7 @@ import {
 } from "../../services/dataService";
 import { apiLikeRequests } from "../../features/Home/api";
 import * as ga from "../../services/googleAnalytics";
-//import * as ct from "../../services/clevertapAnalytics";
+import * as ct from "../../services/clevertapAnalytics";
 import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
@@ -570,13 +570,15 @@ export const AppContextContainer = ({ children }) => {
         defaultDataSettings();
         data = await strapi.authenticateProvider(provider, token);
         setLoggingIn(false)
-        
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
-            getCurremtLocation().then((res) => {
+            getCurremtLocation().then(/* async */(res) => {
                 window.localStorage.setItem("lm_user_location", res?.country);
                 window.localStorage.setItem("lm_user_state", res?.state);
+                /* const updatedSession = await */strapi.request('PATCH', '/sessions/location', 
+                    { data : { state: res?.state, browserCountry: res?.country }}
+                )
             });
 
             if (data.user.is_new) {
@@ -676,10 +678,11 @@ export const AppContextContainer = ({ children }) => {
 
             /* Clevertap onUserLogin*/
             if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                /*ct.onUserLogin({
+                ct.onUserLogin({
                     action: "onUserLogin",
-                    params: data.user
-                });*/
+                    params: data.user,
+                    jwt: data.jwt
+                });
             }
              /* Clevertap on User Login and Registration Event Tracking*/
             /*const onUserLoginData = await axios.get(
@@ -821,6 +824,7 @@ export const AppContextContainer = ({ children }) => {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
+
         } catch (error) {
             console.log('callauthservice', error)
             setLoggingIn(false)
@@ -847,6 +851,13 @@ export const AppContextContainer = ({ children }) => {
                 try {
                     data = await strapi.register({ username , password, identifier: email })
                     setLoggingIn(false)
+                    getCurremtLocation().then((res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem("lm_user_state", res?.state);
+                        strapi.request('PATCH', '/sessions/location', 
+                            { data : { state: res?.state, browserCountry: res?.country }}
+                        )
+                    });
                 } catch (error) {
                     setLoggingIn(false)
                     if(error?.error?.message || error?.message){
@@ -868,16 +879,12 @@ export const AppContextContainer = ({ children }) => {
                     data = await strapi.login({ password , identifier: username })
                     setLoggingIn(false)
                     setJwt(data.jwt);
-                    getCurremtLocation().then((res) => {
-                        window.localStorage.setItem(
-                            "lm_user_location",
-                            res?.country
-                        );
-
-                        window.localStorage.setItem(
-                            "lm_user_state",
-                            res?.state
-                        );
+                    getCurremtLocation().then(/* async */(res) => {
+                        window.localStorage.setItem("lm_user_location", res?.country);
+                        window.localStorage.setItem("lm_user_state", res?.state);
+                        /* const updatedSession = await */strapi.request('PATCH', '/sessions/location', 
+                            { data : { state: res?.state, browserCountry: res?.country }}
+                        )
                     });
                     } catch ( error ) {
                     setLoggingIn(false)
@@ -991,10 +998,11 @@ export const AppContextContainer = ({ children }) => {
             
             /* Clevertap onUserLogin*/
             if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                /*ct.onUserLogin({
+                ct.onUserLogin({
                     action: "onUserLogin",
-                    params: data.user
-                });*/
+                    params: data.user,
+                    jwt: data.jwt
+                });
             }
             
              /* Clevertap on User Login and Registration Event Tracking*/

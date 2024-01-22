@@ -356,6 +356,7 @@ export default function GamesPage({campaignsSectionsResData}) {
                             _hover={{ border: "none", textDecoration: "none" }}
                             _focus={{ border: "none", textDecoration: "none" }}
                             key={`igc-1`}
+                            target="_blank"
                             
                         >
                             <Button
