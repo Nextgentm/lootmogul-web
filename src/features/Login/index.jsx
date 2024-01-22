@@ -437,7 +437,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             </Text>
                                         }
                                     </FormControl>
-                                    {loggingIn && <Loader fullPage={true} size={250} />}
+                                    {loggingIn && <Loader fullPage={true} />}
                                     <Button
                                         width="100%"
                                         h="30px"
