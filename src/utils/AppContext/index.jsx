@@ -10,7 +10,7 @@ import {
 } from "../../services/dataService";
 import { apiLikeRequests } from "../../features/Home/api";
 import * as ga from "../../services/googleAnalytics";
-//import * as ct from "../../services/clevertapAnalytics";
+import * as ct from "../../services/clevertapAnalytics";
 import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
@@ -570,7 +570,6 @@ export const AppContextContainer = ({ children }) => {
         defaultDataSettings();
         data = await strapi.authenticateProvider(provider, token);
         setLoggingIn(false)
-        
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
@@ -679,10 +678,11 @@ export const AppContextContainer = ({ children }) => {
 
             /* Clevertap onUserLogin*/
             if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                /*ct.onUserLogin({
+                ct.onUserLogin({
                     action: "onUserLogin",
-                    params: data.user
-                });*/
+                    params: data.user,
+                    jwt: data.jwt
+                });
             }
              /* Clevertap on User Login and Registration Event Tracking*/
             /*const onUserLoginData = await axios.get(
@@ -997,10 +997,11 @@ export const AppContextContainer = ({ children }) => {
             
             /* Clevertap onUserLogin*/
             if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                /*ct.onUserLogin({
+                ct.onUserLogin({
                     action: "onUserLogin",
-                    params: data.user
-                });*/
+                    params: data.user,
+                    jwt: data.jwt
+                });
             }
             
              /* Clevertap on User Login and Registration Event Tracking*/
