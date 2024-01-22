@@ -18,33 +18,13 @@ import { useState, useEffect } from "react";
 import Search from "../../Influencers/components/Search";
 import Link from "next/link";
 
-const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previousPage, currentPage }) => {
+const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previousPage, currentPage, setSearchText }) => {
 
     const [isLargerScreen] = useMediaQuery("(min-width: 2200px)");
     const arrowTrashhold = isMobileDevice ? 2 : isLargerScreen ? 7 : 5;
     const [showAll, setShowAll] = useState(true);
     const [content, setContent] = useState({});
     const [contentBackUp, setContentBackUp] = useState({});
-    const [searchText, setSearchText] = useState("");
-
-    useEffect(() => {
-        setTimeout(() => {      
-            if (searchText !== '') {
-                if (searchText.length > 0) {
-                    const clonedData = structuredClone(content);  
-                    clonedData.contestmasters.data =
-                    content?.contestmasters?.data.filter((x) =>
-                    x.name.toLowerCase().includes(searchText.toLowerCase()));
-                setContent(clonedData);
-                }            
-            }
-            else {
-                setContent(section);
-            }
-            
-        }, 1000);
-        
-    }, [searchText]);
     
     useEffect(() => {
         setContent(section);
@@ -62,6 +42,16 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
                 <Spacer />
                 
                 <Box width={"250px"} right="0">
+                    <Search searchText={setSearchText}></Search>
+                </Box>
+                <Box
+                    display={{
+                        base: "none",
+                        md: "flex"
+                    }}
+                    pos="relative"
+                    right="0"
+                >
                 <Link
                         _focus={{ border: "none", boxShadow: "none" }}
                         _hover={{ textDecoration: "none" }}
