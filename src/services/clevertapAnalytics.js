@@ -28,7 +28,7 @@ export const onUserLogin = async ({ action, params, jwt }) => {
             }
     );
 
-    //console.log(onUserLoginData);
+    console.log(onUserLoginData);
    
     if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging' && onUserLoginData?.data) {
         console.log('Updating onUserLoginData...');

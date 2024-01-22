@@ -570,6 +570,7 @@ export const AppContextContainer = ({ children }) => {
         defaultDataSettings();
         data = await strapi.authenticateProvider(provider, token);
         setLoggingIn(false)
+        
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
