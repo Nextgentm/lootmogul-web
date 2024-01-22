@@ -860,7 +860,7 @@ export const AppContextContainer = ({ children }) => {
                     });
                 } catch (error) {
                     setLoggingIn(false)
-                    if(error?.message){                
+                    if(error?.message){
                         toast({
                             title: error.message,
                             status: "error",
