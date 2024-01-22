@@ -570,6 +570,7 @@ export const AppContextContainer = ({ children }) => {
         defaultDataSettings();
         data = await strapi.authenticateProvider(provider, token);
         setLoggingIn(false)
+        
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
@@ -861,7 +862,6 @@ export const AppContextContainer = ({ children }) => {
                 } catch (error) {
                     setLoggingIn(false)
                     if(error?.error?.message || error?.message){
-                        console.log(error?.error?.message || error?.message)
                         toast({
                             title: error?.error?.message || error?.message,
                             status: "error",
