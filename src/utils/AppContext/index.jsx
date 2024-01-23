@@ -861,9 +861,9 @@ export const AppContextContainer = ({ children }) => {
                     });
                 } catch (error) {
                     setLoggingIn(false)
-                    if(error?.message){
+                    if(error?.error?.message || error?.message){
                         toast({
-                            title: error.message,
+                            title: error?.error?.message || error?.message,
                             status: "error",
                             duration: 3000,
                             position: "top-right",
@@ -888,9 +888,9 @@ export const AppContextContainer = ({ children }) => {
                     });
                     } catch ( error ) {
                     setLoggingIn(false)
-                    if(error?.message){
+                    if(error?.message || error?.error?.message){
                         toast({
-                            title: error.message,
+                            title: error.message || error?.error?.message,
                             status: "error",
                             duration: 3000,
                             position: "top-right",
