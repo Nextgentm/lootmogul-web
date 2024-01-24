@@ -166,6 +166,7 @@ function MyApp({ Component, pageProps }) {
             }
 
             {router.route === "/" || router.route === "/gamecampaign" || router.route === "/thanksgiving-campaign" || router.route === "/signupcampaign" || router.route === "/dsg"  ? '' : <Footer />}
+            <img style={{display:'none'}} src="/assets/loader/loader.200.120kb.gif" width={200} height={200} alt="Loader..." />
 
           </>}
 
