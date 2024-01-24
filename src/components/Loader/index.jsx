@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import GridLoader from 'react-spinners/GridLoader';
 import Image from 'next/image';
 import styles from './Loader.module.css';
-
-// Memoized Image component
-const MemoizedImage = React.memo(() => (
-  <Image src="/assets/loader/loader.200.120kb.gif" width={200} height={200} alt="Loader..." />
-));
+import Head from 'next/head';
 
 const Loader = ({ style, size, color = '#DDBF79', fullPage }) => {
+  const memoizedImage = useMemo(() => (
+    <img src="/assets/loader/loader.200.120kb.gif" width={200} height={200} alt="Loader..." />
+  ), []);
+
   if (fullPage) {
     return (
-      <div className={styles.fullPageLoader}>
-        <div className={styles.overlay}></div>
-        <div className={styles.loaderContainer}>
-          <MemoizedImage />
+      <>
+        <div className={styles.fullPageLoader}>
+          <div className={styles.overlay}></div>
+          <div className={styles.loaderContainer}>
+            {memoizedImage}
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
