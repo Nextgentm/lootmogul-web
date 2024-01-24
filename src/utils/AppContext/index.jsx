@@ -29,14 +29,11 @@ export const AppContextContainer = ({ children }) => {
     const [isLoginModalActive, setLoginModalActive] = useState(false);
     // const [refetch, setRefetch] = useState(false);
 
-    const [isForgotPasswordModalActive, setForgotPasswordModalActive] =
-        useState(false);
-    const [isCheckYourMailModalActive, setCheckYourMailModalActive] =
-        useState(false);
-    const [isChangePasswordModalActive, setChangePasswordModalActive] =
-        useState(false);
-    const [isPasswordChangedModalActive, setPasswordChangedModalActive] =
-        useState(false);
+    const [loggingIn, setLoggingIn] = useState(false)
+    const [isForgotPasswordModalActive, setForgotPasswordModalActive] = useState(false);
+    const [isCheckYourMailModalActive, setCheckYourMailModalActive] = useState(false);
+    const [isChangePasswordModalActive, setChangePasswordModalActive] = useState(false);
+    const [isPasswordChangedModalActive, setPasswordChangedModalActive] = useState(false);
     const [isMobileDevice, setMobileDevice] = useState(false);
 
     const [withdrawFetch, setWithdrawFetch] = useState(true);
@@ -73,9 +70,8 @@ export const AppContextContainer = ({ children }) => {
     
     const [isFirstTimeLogin, setFirstTimeLogin] = useState(false);
 
-    const toggleLoginModal = () => {
-        setLoginModalActive(!isLoginModalActive);
-    };
+    const toggleLoginModal = () => setLoginModalActive(!isLoginModalActive);
+    
 
     const toggleForgotPasswordModal = () => {
         setForgotPasswordModalActive(!isForgotPasswordModalActive);
@@ -569,11 +565,12 @@ export const AppContextContainer = ({ children }) => {
     };
     const callAuthService = async (provider, token, input_referalcode) => {
         try {
+        setLoggingIn(true)
         let data;
         defaultDataSettings();
-
         data = await strapi.authenticateProvider(provider, token);
-
+        setLoggingIn(false)
+        
         if (data?.user) {
             window.localStorage.setItem("token", data.jwt);
 
@@ -829,6 +826,7 @@ export const AppContextContainer = ({ children }) => {
         }
         } catch (error) {
             console.log('callauthservice', error)
+            setLoggingIn(false)
             if(error?.message || error?.error?.message){
                 toast({
                     title: error.message || error?.error?.message,
@@ -841,22 +839,17 @@ export const AppContextContainer = ({ children }) => {
         }
     };
   
-    const callCustomAuthService = async (
-        formData,
-        formType,
-        redirectUrl = ""
-    ) => {
+    const callCustomAuthService = async ( formData, formType, redirectUrl = "" ) => {
         let data;
         defaultDataSettings();
+
         if (formType === "signup" || formType === "login") {
+            setLoggingIn(true)
+            const { password, username , email, } = formData
             if (formType === "signup") {
                 try {
-                    const apiValues = {
-                        username: formData.username,
-                        identifier: formData.email,
-                        password: formData.password
-                    };
-                    data = await strapi.register(apiValues);
+                    data = await strapi.register({ username , password, identifier: email })
+                    setLoggingIn(false)
                     getCurremtLocation().then((res) => {
                         window.localStorage.setItem("lm_user_location", res?.country);
                         window.localStorage.setItem("lm_user_state", res?.state);
@@ -864,29 +857,26 @@ export const AppContextContainer = ({ children }) => {
                             { data : { state: res?.state, browserCountry: res?.country }}
                         )
                     });
-                } catch ({ error }) {
-                    if(error.message){
+                } catch (error) {
+                    setLoggingIn(false)
+                    if(error?.error?.message || error?.message){
+                        console.log(error?.error?.message || error?.message)
                         toast({
-                            title: error.message,
+                            title: error?.error?.message || error?.message,
                             status: "error",
                             duration: 3000,
                             position: "top-right",
                             isClosable: true
                         });
                     }
-                    
-
                     return;
                 }
             }
 
             if (formType === "login") {
                 try {
-                    const apiValues = {
-                        identifier: formData.username,
-                        password: formData.password
-                    };
-                    data = await strapi.login(apiValues);
+                    data = await strapi.login({ password , identifier: username })
+                    setLoggingIn(false)
                     setJwt(data.jwt);
                     getCurremtLocation().then(/* async */(res) => {
                         window.localStorage.setItem("lm_user_location", res?.country);
@@ -895,10 +885,11 @@ export const AppContextContainer = ({ children }) => {
                             { data : { state: res?.state, browserCountry: res?.country }}
                         )
                     });
-                } catch ({ error }) {
-                    if(error.message){
+                    } catch ( error ) {
+                    setLoggingIn(false)
+                    if(error?.message || error?.error?.message){
                         toast({
-                            title: error.message,
+                            title: error.message || error?.error?.message,
                             status: "error",
                             duration: 3000,
                             position: "top-right",
@@ -1194,6 +1185,8 @@ export const AppContextContainer = ({ children }) => {
     return (
         <AppContext.Provider
             value={{
+                loggingIn,
+                setLoggingIn,
                 toggleLoginModal,
                 setLoginModalActive,
                 isLoginModalActive,
