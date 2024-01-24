@@ -11,14 +11,12 @@ const Loader = ({ style, size, color = '#DDBF79', fullPage }) => {
 
   if (fullPage) {
     return (
-      <>
-        <div className={styles.fullPageLoader}>
-          <div className={styles.overlay}></div>
-          <div className={styles.loaderContainer}>
-            {memoizedImage}
-          </div>
+      <div className={styles.fullPageLoader}>
+        <div className={styles.overlay}></div>
+        <div className={styles.loaderContainer}>
+          {memoizedImage}
         </div>
-      </>
+      </div>
     );
   }
 
