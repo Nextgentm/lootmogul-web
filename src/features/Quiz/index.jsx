@@ -12,7 +12,7 @@ import {
   getVoiceOverStatus,
   setVoiceOverStatus,
 } from "../../services/audioService";
-///import * as ct from "../../services/clevertapAnalytics";
+import * as ct from "../../services/clevertapAnalytics";
 import { mrnGamePlayService } from "../../services/mrnCallService";
 
 const Quiz = (props) => {
@@ -135,26 +135,13 @@ const Quiz = (props) => {
       socket.on("game_over", (data) => {
 
         //console.log('Travia game_over..');
+        ct.onGameplayStart({
+            action:"Gameplay Completed", 
+            params: user,
+            currentContest: currentContest,
+            score:data.ranks
+        });
         mrnGamePlayService();
-        /*ct.onGameGameOver({
-          action: "Gameplay Completed",
-            params: {
-              "Category": currentContest.contest_section.data?.name,
-              "GameType": currentContest.game.data?.name,
-              "GameSubtype": currentContest?.name,
-              "TotalWinnings":"",
-              "MaxPlayers": "Test",
-              "PlayersPlayed": "Test",
-              "GamePlayDuration":"",
-              "TotalPoints":"",
-              "RejoinCount":"",
-              "Username": user?.username,
-              "PlayerID": user?.id,
-              "EmailID": user?.email,
-              "MobileNo": user?.mobileNumber,
-              "FullName": user?.fullName
-            }
-        })*/
         setMatchResult(data.ranks);
         updateUser();
 

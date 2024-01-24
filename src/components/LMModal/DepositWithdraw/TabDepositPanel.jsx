@@ -26,7 +26,7 @@ import { useRouter } from "next/router";
 const stripeJs = async () => await import("@stripe/stripe-js/pure");
 import jsondata from "../../../../public/assets/currency.json";
 
-//import * as ct from "../../../services/clevertapAnalytics";
+import * as ct from "../../../services/clevertapAnalytics";
 
 const TabDepositPanel = ({ isDeposit }) => {
     const { asPath } = useRouter();
@@ -435,23 +435,22 @@ const TabDepositPanel = ({ isDeposit }) => {
                     }
                 } catch (error) { }
             }
-            /*ct.onDepositInitiate({
+            ct.onDepositInitiate({
                 action: "Deposit Initiate",
-                params: {
+                params: user,
+                deposit:
+                {
                     Amount: numberOfAmount,
                     Chip: amount,
                     PaymentGateway:
-                        depositType == 1 ? "Fiat Currency" : "Crypto Currency",
+                        depositType == 1 ? "Stripe" : "Bitpay",
                     PaymentType:
                         depositType == 1 ? "Fiat Currency" : "Crypto Currency",
-                    PaymentSubType: currency,
-                    Username: user.username,
-                    PlayerID: user.id,
-                    EmailID: user.email,
-                    MobileNo: user.mobileNumber,
-                    Firstname: user.fullName
-                }
-            });*/
+                    PaymentSubType: '',
+                    currency: currency,
+                },    
+                pathname:router.pathname,
+            });
         }
     };
 
