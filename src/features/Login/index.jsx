@@ -189,7 +189,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                 borderRadius="14"
                 background="transparent"
             >
-                {isMobileDevice && 
+                {isMobileDevice && !loggingIn && 
                 <>
                     <ModalCloseButton
                         color="#fff"
@@ -258,6 +258,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                     callback={({ accessToken }) => {
                                         callAuthService( "facebook", accessToken, inputReferalCode );
                                     }}
+                                    onFailure={() => setLoggingIn(false)}
                                     disableMobileRedirect={true}
                                     render={(renderProps) => (
                                         <Button
@@ -273,6 +274,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             }
                                             onClick={(e) => {
                                                 if (loggingIn) return
+                                                setLoggingIn(true)
                                                 renderProps.onClick(e)
                                             }}
                                             backgroundColor="#FFF"
@@ -437,7 +439,7 @@ const Login = ({ isOpen, OnLoginClose, redirectUrl }) => {
                                             </Text>
                                         }
                                     </FormControl>
-                                    {loggingIn && <Loader size={12} />}
+                                    {loggingIn && <Loader fullPage={true} />}
                                     <Button
                                         width="100%"
                                         h="30px"
