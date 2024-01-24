@@ -9,7 +9,7 @@ const Loader = ({ style, size, color = '#DDBF79', fullPage }) => {
       <div className={styles.fullPageLoader}>
         <div className={styles.overlay}></div>
         <div className={styles.loaderContainer}>
-          <Image src="/assets/loader/loader.gif" width={size || 200} height={size || 200} alt="Loader..." />
+          <Image src="/assets/loader/loader.200.120kb.gif" width={200} height={200} alt="Loader..." />
         </div>
       </div>
     );
