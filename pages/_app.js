@@ -63,8 +63,6 @@ function MyApp({ Component, pageProps }) {
 
   const handleRouteChange = (url) => {
     ga.pageview(url)
-    //console.log("Page view",url)
-    ct.pageview(url)
 
   };
   const [loading, setLoading] = useState(false);

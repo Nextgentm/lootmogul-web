@@ -171,10 +171,11 @@ export const AppContextContainer = ({ children }) => {
     };
     const logout = async () => {
         //const value = await strapi.fetchUser();
-        /*ct.onUserLogout({
+        ct.onUserLogout({
             action: "Logout",
-            params: user
-        });*/
+            params: user,
+            pathname:router.pathname,
+        });
 
         try {
             if (typeof window !== "undefined" && window.localStorage) {
@@ -332,55 +333,7 @@ export const AppContextContainer = ({ children }) => {
         const userId = `${timestamp}-${random}`;
         return userId;
     }
-    const handlePermission = () => {
-        //debugger;
-        const userId = generateUserId();
-        /*clevertap.notifications.push({
-            "titleText":'Stay updated & power up your play!',
-            "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
-            "okButtonText":'Yes',
-            "rejectButtonText":'No',
-            "okButtonColor":'#e90a63',
-            "askAgainTimeInSeconds":120,
-            "notification_bgcolor":"#FF0000",
-            "okButtonBgColor":"#FF0000",
-            "okButtonCallback": function () {
-                console.log("User clicked OK");
-            },
-            "dismissCallback": function () {
-                console.log("User dismissed the notification");
-            }
-        });
-        clevertap.privacy.push({optOut: true});
-        clevertap.privacy.push({useIP: true});
-        if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-            clevertap.onUserLogin.push({
-                Site: {
-                    Name: "Visitor "+ userId, // String
-                    Identity: "Visitor "+ userId, // String or number
-                    Email: "", // Email address of the user
-                    Phone: '', // Phone (with the country code)
-                    Gender: "M", // Can be either M or F
-                    DOB: new Date(), // Date of Birth. Date object
-                    // optional fields. controls whether the user will be sent email, push etc.
-                    "MSG-email": true, // Disable email notifications
-                    "MSG-push": true, // Enable push notifications
-                    "MSG-sms": false, // Enable sms notifications
-                    "MSG-whatsapp": false // Enable WhatsApp notifications
-                }
-            });
-        }
-        
-        
-        
-
-        clevertap.event.push("Web Push", {
-            "Visitor": "Visitor"+ userId
-        });*/
-    }
-    
    
-
     useEffect(() => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
@@ -538,9 +491,7 @@ export const AppContextContainer = ({ children }) => {
   
 
     useEffect(()=> {
-        //if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-            //handlePermission();
-        //}
+        
         setTimeout(() => {
             const specificDiv =  document.querySelector('.wzrk-powered');      
             if (specificDiv) {
@@ -549,12 +500,7 @@ export const AppContextContainer = ({ children }) => {
          }, 2000);
 
          setTimeout(() => {
-            //document.addEventListener('DOMContentLoaded', function () {
-                //console.log("JavaScript code is running");
-
-                  // Run the function when the component mounts
-                  initializePage();
-             // });
+            initializePage(); 
          }, 10000);
          
     }, [user]);
@@ -679,59 +625,24 @@ export const AppContextContainer = ({ children }) => {
 
             /* Clevertap onUserLogin*/
             if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                ct.onUserLogin({
-                    action: "onUserLogin",
-                    params: data.user,
-                    jwt: data.jwt
-                });
-            }
-             /* Clevertap on User Login and Registration Event Tracking*/
-            /*const onUserLoginData = await axios.get(
-                process.env.NEXT_PUBLIC_STRAPI_API_URL +
-                    `/api/clevertap/user`,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Accept: "application/json",
-                            Authorization: "Bearer " + data.jwt
-                        }
-                    }
-            );
-            
-            const onTransactionLoginData = await axios.get(
-                process.env.NEXT_PUBLIC_STRAPI_API_URL +
-                    `/api/clevertap/transaction`,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Accept: "application/json",
-                            Authorization: "Bearer " + data.jwt
-                        }
-                    }
-            );
-
-            if (data.user.is_new){
-                if(onUserLoginData.data){
-                    ct.onUserLoginRegistrationEvent({
+                if (data.user.is_new){
+                    ct.onUserLogin({
                         action: "Registration",
-                        params: onUserLoginData.data?.data,
+                        params: data.user,
+                        jwt: data.jwt,
                         pathname:router.pathname,
-                        transaction: onTransactionLoginData.data?.data
                     });
                 }
-            }
-            else{     
-                if(onUserLoginData.data){
-                    ct.onUserLoginRegistrationEvent({
+                else{     
+                    ct.onUserLogin({
                         action: "Login",
-                        params: onUserLoginData.data?.data,
+                        params: data.user,
+                        jwt: data.jwt,
                         pathname:router.pathname,
-                        transaction: onTransactionLoginData.data?.data
-                    });
-                }          
-                
+                    });         
+                }
             }
-            */
+            
             /** For mobupps */
             if (
                 data.user.is_new &&
@@ -739,13 +650,6 @@ export const AppContextContainer = ({ children }) => {
                 router.query.utm_medium === "mobupps"
             ) {
                 mobuppsCallService();
-
-                /*const myMessage = {
-                    message: "wmadv",
-                    wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
-                };
-
-                Sentry.captureMessage(JSON.stringify(myMessage));*/
             }
 
             /** For mobupps */
@@ -996,77 +900,32 @@ export const AppContextContainer = ({ children }) => {
                 }
             }
             
-            /* Clevertap onUserLogin*/
+            /* Clevertap on User Login and Registration Event Tracking*/
             if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                ct.onUserLogin({
-                    action: "onUserLogin",
-                    params: data.user,
-                    jwt: data.jwt
-                });
-            }
-            
-             /* Clevertap on User Login and Registration Event Tracking*/
-            /* const onUserLoginData = await axios.get(
-                process.env.NEXT_PUBLIC_STRAPI_API_URL +
-                    `/api/clevertap/user`,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Accept: "application/json",
-                            Authorization: "Bearer " + data.jwt
-                        }
-                    }
-            );
-            
-            const onTransactionLoginData = await axios.get(
-                process.env.NEXT_PUBLIC_STRAPI_API_URL +
-                    `/api/clevertap/transaction`,
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Accept: "application/json",
-                            Authorization: "Bearer " + data.jwt
-                        }
-                    }
-            );
-           
-            if (data.user.is_new ){
-                if(onUserLoginData.data  || onTransactionLoginData){
-                    ct.onUserLoginRegistrationEvent({
+                if (data.user.is_new){
+                    ct.onUserLogin({
                         action: "Registration",
-                        params: onUserLoginData.data?.data,
+                        params: data.user,
+                        jwt: data.jwt,
                         pathname:router.pathname,
-                        transaction: onTransactionLoginData.data?.data
                     });
                 }
-            }
-            else{     
-                if(onUserLoginData.data || onTransactionLoginData){
-                    ct.onUserLoginRegistrationEvent({
+                else{     
+                    ct.onUserLogin({
                         action: "Login",
-                        params: onUserLoginData.data?.data,
-                        pathname: router.pathname,
-                        transaction: onTransactionLoginData.data?.data
-                    });
-                }          
-                
+                        params: data.user,
+                        jwt: data.jwt,
+                        pathname:router.pathname,
+                    });         
+                }
             }
-            */
-
+          
             /** For Mobupps */
             if (
                 data.user.is_new &&
                 router.route === "/gamecampaign" &&
                 router.query.utm_medium === "mobupps"
             ) {
-
-                /*const utm_term = router.query.utm_term;                
-                const myMessage = {
-                    message: "wmadv",
-                    wmadvUrl: `https://wmadv.go2cloud.org/aff_goal?a=lsr&goal_name=Registration&adv_id=5679&transaction_id=${utm_term}`
-                };
-
-                Sentry.captureMessage(JSON.stringify(myMessage));*/
                 mobuppsCallService();
             }
             /** For Mobupps */
@@ -1147,6 +1006,7 @@ export const AppContextContainer = ({ children }) => {
         if (router.route === "/thanksgiving-campaign") {
             router.push('/wallet');
         }
+
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
@@ -1252,7 +1112,6 @@ export const AppContextContainer = ({ children }) => {
                 showModalwithdrawalpopup,
                 withdrawFetch,
                 toggleWithdrawFetch,
-                handlePermission,
                 setFirstTimeLogin,
                 isFirstTimeLogin
             }}
