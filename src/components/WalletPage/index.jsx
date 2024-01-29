@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { useContext, useEffect, useState } from "react";
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, Tooltip } from "@chakra-ui/react";
 import Image from "next/image";
 import { WalletIcon } from "../Icons";
 import WalletCard from "./WalletCard";
@@ -12,6 +12,7 @@ import DepostWithdraw from "../LMModal/DepositWithdraw";
 import AppContext from "../../utils/AppContext";
 import { useRouter } from "next/router";
 import DepostWithdrawstop from "../LMModal/DepositWithdraw/withdrawStop";
+import { InfoIcon } from "../Icons";
 
 const WalletPage = ({ totalAmount }) => {
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
@@ -60,7 +61,7 @@ const WalletPage = ({ totalAmount }) => {
         btnText: "Learn more",
         showMore: false,
         tooltip:
-            "chips accumulated through promotions. Part of it can be used to play cash games. Can't be withdrawn."
+            "Use bonus chips to cover 10% of the paid contest's cost and pay the rest from your deposits or winnings."
     };
 
     const onChangeAmount = (type, amount) => {
@@ -188,7 +189,26 @@ const WalletPage = ({ totalAmount }) => {
                     >
                         Maximum usable Bonus per match is 10% of the contest
                         entry fee
-                        <Text
+                        <Tooltip
+                            placement="top-end"
+                            label="Use bonus chips to cover 10% of the paid contest's cost and pay the rest from your deposits or winnings."
+                            bg="#383838"
+                            borderRadius="10px"
+                            color="white"
+                            fontSize="sm"
+                            p="10px"
+                        >
+                            <Text
+                                float="right"
+                                marginLeft="10px"
+                            >
+                                <InfoIcon
+                                    color="white"
+                                    boxSize={"29px"}
+                                />
+                            </Text>
+                        </Tooltip>
+                        {/**<Text
                             variant="hint"
                             fontSize={["10px", "12px", "16px"]}
                             lineHeight={["13px", "19px", "35px"]}
@@ -203,7 +223,7 @@ const WalletPage = ({ totalAmount }) => {
                             }}
                         >
                             Know more....
-                        </Text>
+                        </Text>/ */}
                     </Text>
                 </Flex>
             </Flex>
