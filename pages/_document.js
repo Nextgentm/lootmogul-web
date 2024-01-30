@@ -39,7 +39,7 @@ export default class MyDocument extends Document {
       })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER}');`,
     }}
   />
- {process.env.CLEVER_TAP_STATUS == 'true' && 
+ {process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true' && 
   <script defer  dangerouslySetInnerHTML={{
                 __html:
       ` var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};

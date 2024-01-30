@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const pageview = async (url) => {
-    if(process.env.CLEVER_TAP_STATUS == 'true'){
+    if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true'){
         const utm_source = window.localStorage?.getItem("utm_source");
         const utm_medium = window.localStorage?.getItem("utm_medium");
         const utm_campaign = window.localStorage?.getItem("utm_campaign");
@@ -59,8 +59,8 @@ export const pageview = async (url) => {
 }
 
 export const onUserLogin = async ({ action, params, jwt, pathname }) => {
-    console.log(process.env.CLEVER_TAP_STATUS);
-    if(process.env.CLEVER_TAP_STATUS == 'true'){
+    
+    if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true'){
         //console.log('onUserLogin Called');
         const utm_source = window.localStorage?.getItem("utm_source");
         const utm_medium = window.localStorage?.getItem("utm_medium");
@@ -229,7 +229,7 @@ export const onUserLogin = async ({ action, params, jwt, pathname }) => {
 };
 
 export const onGameplayStart = ({ action, params, currentContest, score = '' }) => {
-    if(process.env.CLEVER_TAP_STATUS == 'true'){
+    if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true'){
         const utm_source = window.localStorage?.getItem("utm_source");
         const utm_medium = window.localStorage?.getItem("utm_medium");
         const utm_campaign = window.localStorage?.getItem("utm_campaign");
@@ -283,7 +283,7 @@ export const onGameplayStart = ({ action, params, currentContest, score = '' }) 
 };
 
 export const onUserLogout = ({ action, params, pathname }) => {
-    if(process.env.CLEVER_TAP_STATUS == 'true'){
+    if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true'){
         const utm_source = window.localStorage?.getItem("utm_source");
         const utm_medium = window.localStorage?.getItem("utm_medium");
         const utm_campaign = window.localStorage?.getItem("utm_campaign");
@@ -325,7 +325,7 @@ export const onUserLogout = ({ action, params, pathname }) => {
 };
 
 export const onDepositInitiate = ({ action, params, deposit, pathname }) => {
-    if(process.env.CLEVER_TAP_STATUS == 'true'){
+    if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true'){
         const utm_source = window.localStorage?.getItem("utm_source");
         const utm_medium = window.localStorage?.getItem("utm_medium");
         const utm_campaign = window.localStorage?.getItem("utm_campaign");
@@ -375,7 +375,7 @@ export const onDepositInitiate = ({ action, params, deposit, pathname }) => {
 };
 
 export const onWithdrawalRequest = ({ action, params, withdrawalData }) => {
-    if(process.env.CLEVER_TAP_STATUS == 'true'){
+    if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true'){
         const utm_source = window.localStorage?.getItem("utm_source");
         const utm_medium = window.localStorage?.getItem("utm_medium");
         const utm_campaign = window.localStorage?.getItem("utm_campaign");
