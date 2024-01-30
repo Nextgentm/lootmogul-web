@@ -2,6 +2,10 @@ import axios from "axios";
 
 export const pageview = async (url) => {
     if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true'){
+        let strapi_jwt = '';
+        if (typeof window !== 'undefined') {
+            strapi_jwt = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
+        }
         const utm_source = window.localStorage?.getItem("utm_source");
         const utm_medium = window.localStorage?.getItem("utm_medium");
         const utm_campaign = window.localStorage?.getItem("utm_campaign");
