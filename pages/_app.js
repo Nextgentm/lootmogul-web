@@ -20,7 +20,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from "react";
 import "../styles/globals.css";
 import * as ga from '../src/services/googleAnalytics';
-//import * as ct from '../src/services/clevertapAnalytics';
+import * as ct from '../src/services/clevertapAnalytics';
 import LMNonCloseALert from '../src/components/LMNonCloseALert';
 import MaintenancePage from '../src/features/MaintenancePage';
 import * as Sentry from '@sentry/nextjs';
@@ -60,10 +60,15 @@ function MyApp({ Component, pageProps }) {
   const excludedPatterns = ['/games/', '/joining', '/quizPage'];
   const shouldExclude = excludedPatterns.some(pattern => pathname.startsWith(pattern));
   const shouldRenderSnowfall = !shouldExclude;
-
+  let jwt_token = '';
+  if (typeof window !== 'undefined') {
+    jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
+}
   const handleRouteChange = (url) => {
     ga.pageview(url)
-    //ct.pageview(url)
+    if(jwt_token){
+      ct.pageview(url)
+    }
 
   };
   const [loading, setLoading] = useState(false);

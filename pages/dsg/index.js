@@ -356,7 +356,8 @@ export default function GamesPage({campaignsSectionsResData}) {
                             _hover={{ border: "none", textDecoration: "none" }}
                             _focus={{ border: "none", textDecoration: "none" }}
                             key={`igc-1`}
-                            
+                            target="_blank"
+
                         >
                             <Button
                                 bgImage="linear-gradient(90deg, #E90A63 0%, #481A7F 100%)"

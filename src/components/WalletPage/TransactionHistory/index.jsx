@@ -37,7 +37,7 @@ const TransactionHistory = memo(() => {
     const [startingDate, setStartingDate] = useState(
         moment().subtract(1, "weeks").format("YYYY-MM-DD")
     );
-
+    const [dateRangeFilter, setdateRangeFilter] = useState();        
     const [endingDate, setEndingDate] = useState(
         moment().endOf("day").format("YYYY-MM-DD")
     );
@@ -53,7 +53,8 @@ const TransactionHistory = memo(() => {
         status = "success",
         keyword = "",
         startingDate = startingDate,
-        endingDate = endingDate
+        endingDate = endingDate,
+        dateRangeFlag = false,
     ) => {
         try {
             setLoading(true);
@@ -61,6 +62,9 @@ const TransactionHistory = memo(() => {
             let pageCount = 1;
             let data = [];
 
+            if(dateRangeFlag){
+                setdateRangeFilter(true);
+            }
             /*let filters = {
                 type: { $in: ["credit", "debit", "hold"] }
             };
@@ -84,7 +88,7 @@ const TransactionHistory = memo(() => {
                 filters["status"] = status;
             }
             
-            if (startingDate && endingDate) {
+            if (startingDate && endingDate && (dateRangeFilter || dateRangeFlag)) {
                 filters["updatedAt"] = { $gte: startingDate, $lte: endingDate };
             }
             
@@ -328,7 +332,7 @@ const TransactionHistory = memo(() => {
                         value={startingDate}
                         onChange={(e) => {
                             setStartingDate(new Date(e));
-                            fetchData(status, keyword, new Date(e), endingDate);
+                            fetchData(status, keyword, new Date(e), endingDate,true);
                         }}
                     />
                 </GridItem>
@@ -353,7 +357,8 @@ const TransactionHistory = memo(() => {
                                 status,
                                 keyword,
                                 startingDate,
-                                new Date(e)
+                                new Date(e),
+                                true
                             );
                         }}
                     />
