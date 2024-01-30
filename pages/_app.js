@@ -60,10 +60,16 @@ function MyApp({ Component, pageProps }) {
   const excludedPatterns = ['/games/', '/joining', '/quizPage'];
   const shouldExclude = excludedPatterns.some(pattern => pathname.startsWith(pattern));
   const shouldRenderSnowfall = !shouldExclude;
+  let jwt_token = '';
+  if (typeof window !== 'undefined') {
+    jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
+}
 
   const handleRouteChange = (url) => {
     ga.pageview(url)
-
+    if(jwt_token){
+      ct.pageview(url)
+    }
   };
   const [loading, setLoading] = useState(false);
 
@@ -71,7 +77,6 @@ function MyApp({ Component, pageProps }) {
 
   const [loadParticles, setLoadParticles] = useState(true);
   const [stickyBtn, setStickyBtn] = useState(false);
-
 
 
   useEffect(() => {
