@@ -29,7 +29,7 @@ const UserInfo = ({ user, isMobileDevice }) => {
     const [isPopupMenuShowing, togglePopupMenu] = useState(false);
     const [showModal, setShowModal] = useState({ show: false, mode: "" });
     const [totalAmount, setTotalAmount] = useState();
-    const { logout, isTabletOrDesktop, amounts, handlePermission, isFirstTimeLogin, setFirstTimeLogin } = useContext(AppContext);
+    const { logout, isTabletOrDesktop, amounts, isFirstTimeLogin, setFirstTimeLogin } = useContext(AppContext);
     const ref = useRef();
 
     

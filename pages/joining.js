@@ -5,6 +5,7 @@ import { AppContext } from "../src/utils/AppContext/index";
 import strapi from "../src/utils/strapi";
 import {setMatchCount } from "../src/services/dataService";
 import dynamic from "next/dynamic";
+import * as ct from '../src/services/clevertapAnalytics';
 
 const PlayersJoining = dynamic(() => import("../src/features/PlayersJoining"));
 
@@ -71,6 +72,12 @@ const Joining = (props) => {
       });
 
       socket.on("start_game", (data) => {
+        //console.log('Travia Game Start.....');
+        ct.onGameplayStart({
+            action:"Gameplay Start", 
+            params: user,
+            currentContest: currentContest
+        }); 
         setGameInProgress(true);
         updateUser();
         router.push({
