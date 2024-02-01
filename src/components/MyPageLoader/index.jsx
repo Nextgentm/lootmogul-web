@@ -44,6 +44,7 @@ const MyPageLoader = () => {
         <div>
         <div style={style}> 
         {router.route === "/joining" &&
+
         <>
             <Box fontSize={["18","18","30"]} fontFamily={"Blanch"}>Hi {user?.username}, 
                 <Typewriter color="#fff" text=" Hold tight while we prepare your game questions" delay={150} infinite />...

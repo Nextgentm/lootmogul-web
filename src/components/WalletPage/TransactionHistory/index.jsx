@@ -87,7 +87,7 @@ const TransactionHistory = memo(() => {
             if (status !== "all") {
                 filters["status"] = status;
             }
-            
+
             if (startingDate && endingDate && (dateRangeFilter || dateRangeFlag)) {
                 filters["updatedAt"] = { $gte: startingDate, $lte: endingDate };
             }
@@ -331,6 +331,7 @@ const TransactionHistory = memo(() => {
                         title={"Date Range From "}
                         value={startingDate}
                         onChange={(e) => {
+                            
                             setStartingDate(new Date(e));
                             fetchData(status, keyword, new Date(e), endingDate,true);
                         }}
@@ -352,6 +353,7 @@ const TransactionHistory = memo(() => {
                         title={"Date Range To "}
                         value={endingDate}
                         onChange={(e) => {
+                            setdateRangeFilter(true);
                             setEndingDate(new Date(e));
                             fetchData(
                                 status,

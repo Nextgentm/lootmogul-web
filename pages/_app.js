@@ -64,6 +64,7 @@ function MyApp({ Component, pageProps }) {
   if (typeof window !== 'undefined') {
     jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
 }
+
   const handleRouteChange = (url) => {
     ga.pageview(url)
     if(jwt_token){
@@ -77,7 +78,6 @@ function MyApp({ Component, pageProps }) {
 
   const [loadParticles, setLoadParticles] = useState(true);
   const [stickyBtn, setStickyBtn] = useState(false);
-
 
 
   useEffect(() => {

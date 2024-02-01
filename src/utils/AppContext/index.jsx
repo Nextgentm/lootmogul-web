@@ -333,7 +333,6 @@ export const AppContextContainer = ({ children }) => {
         const userId = `${timestamp}-${random}`;
         return userId;
     }
-
     useEffect(() => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
@@ -729,6 +728,7 @@ export const AppContextContainer = ({ children }) => {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
+
         } catch (error) {
             console.log('callauthservice', error)
             setLoggingIn(false)
@@ -765,7 +765,6 @@ export const AppContextContainer = ({ children }) => {
                 } catch (error) {
                     setLoggingIn(false)
                     if(error?.error?.message || error?.message){
-                        console.log(error?.error?.message || error?.message)
                         toast({
                             title: error?.error?.message || error?.message,
                             status: "error",
@@ -925,7 +924,6 @@ export const AppContextContainer = ({ children }) => {
                 router.route === "/gamecampaign" &&
                 router.query.utm_medium === "mobupps"
             ) {
-
                 mobuppsCallService();
             }
             /** For Mobupps */
@@ -1006,6 +1004,7 @@ export const AppContextContainer = ({ children }) => {
         if (router.route === "/thanksgiving-campaign") {
             router.push('/wallet');
         }
+
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
                 CheckLocationAndConfirm(routePathAfterLogin.contestmaster);

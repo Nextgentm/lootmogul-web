@@ -40,6 +40,7 @@ export default class MyDocument extends Document {
     }}
   />
  {process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true' && 
+
   <script defer  dangerouslySetInnerHTML={{
                 __html:
       ` var clevertap = {event:[], profile:[], account:[], onUserLogin:[], notifications:[], privacy:[]};
