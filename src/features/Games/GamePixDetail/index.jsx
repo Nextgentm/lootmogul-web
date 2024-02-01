@@ -11,6 +11,7 @@ import PaidGameConfirmation from "../PaidGameConfirmation";
 import * as ct from '../../../services/clevertapAnalytics';
 import { mrnGamePlayService } from "../../../services/mrnCallService";
 
+
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
     const {
@@ -71,7 +72,6 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             
             setGameUrl(joiningData?.contestmaster?.data?.game?.data?.config?.url + "&tournament_id=" + gameid + "&user_id=" + user?.id + "&game_id=" + joiningData?.id)
             //console.log('Skill Game start...',currentContest);
-            
             ct.onGameplayStart({
                 action:"Gameplay Start", 
                 params: user,
@@ -109,12 +109,13 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     
                     //console.log('Skill Game End...',data);
                     mrnGamePlayService();
+
                     ct.onGameplayStart({
                         action:"Gameplay Completed", 
                         params: user,
                         currentContest: currentContest                        
                     });
-                    
+
                     if (joiningData?.contestmaster?.data?.entryFee > 0) {
                         setShowLoading(true)
                         retryConst()

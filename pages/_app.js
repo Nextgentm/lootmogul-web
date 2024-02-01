@@ -70,6 +70,7 @@ function MyApp({ Component, pageProps }) {
     if(jwt_token){
       ct.pageview(url)
     }
+
   };
   const [loading, setLoading] = useState(false);
 

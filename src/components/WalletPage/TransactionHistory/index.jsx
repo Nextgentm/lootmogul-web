@@ -37,7 +37,7 @@ const TransactionHistory = memo(() => {
     const [startingDate, setStartingDate] = useState(
         moment().subtract(1, "weeks").format("YYYY-MM-DD")
     );
-    const [dateRangeFilter, setdateRangeFilter] = useState();    
+    const [dateRangeFilter, setdateRangeFilter] = useState();        
     const [endingDate, setEndingDate] = useState(
         moment().endOf("day").format("YYYY-MM-DD")
     );
@@ -359,7 +359,8 @@ const TransactionHistory = memo(() => {
                                 status,
                                 keyword,
                                 startingDate,
-                                new Date(e)
+                                new Date(e),
+                                true
                             );
                         }}
                     />
