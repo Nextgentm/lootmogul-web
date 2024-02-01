@@ -15,6 +15,7 @@ import {
 import * as ct from "../../services/clevertapAnalytics";
 import { mrnGamePlayService } from "../../services/mrnCallService";
 
+
 const Quiz = (props) => {
   const router = useRouter();
   const { user } = useContext(AppContext);
@@ -140,7 +141,9 @@ const Quiz = (props) => {
             currentContest: currentContest,
             score:data.ranks
         });
+
         mrnGamePlayService();
+
         setMatchResult(data.ranks);
         updateUser();
 

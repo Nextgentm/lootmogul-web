@@ -333,7 +333,6 @@ export const AppContextContainer = ({ children }) => {
         const userId = `${timestamp}-${random}`;
         return userId;
     }
-   
     useEffect(() => {
         if (!router.isReady) return;
         const access_token = router.query.access_token;
@@ -500,7 +499,7 @@ export const AppContextContainer = ({ children }) => {
          }, 2000);
 
          setTimeout(() => {
-            initializePage(); 
+            initializePage();
          }, 10000);
          
     }, [user]);
@@ -623,26 +622,26 @@ export const AppContextContainer = ({ children }) => {
                 }
             }
 
-            /* Clevertap onUserLogin*/
-            if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                if (data.user.is_new){
-                    ct.onUserLogin({
-                        action: "Registration",
-                        params: data.user,
-                        jwt: data.jwt,
-                        pathname:router.pathname,
-                    });
-                }
-                else{     
-                    ct.onUserLogin({
-                        action: "Login",
-                        params: data.user,
-                        jwt: data.jwt,
-                        pathname:router.pathname,
-                    });         
-                }
-            }
+            /* Clevertap onUserLogin*/            
+             /* Clevertap on User Login and Registration Event Tracking*/
             
+            if (data.user.is_new){
+                ct.onUserLogin({
+                    action: "Registration",
+                    params: data.user,
+                    jwt: data.jwt,
+                    pathname:router.pathname,
+                });
+            }
+            else{     
+                ct.onUserLogin({
+                    action: "Login",
+                    params: data.user,
+                    jwt: data.jwt,
+                    pathname:router.pathname,
+                });    
+            }
+
             /** For mobupps */
             if (
                 data.user.is_new &&
@@ -900,26 +899,25 @@ export const AppContextContainer = ({ children }) => {
                 }
             }
             
-            /* Clevertap on User Login and Registration Event Tracking*/
-            if (process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-                if (data.user.is_new){
-                    ct.onUserLogin({
-                        action: "Registration",
-                        params: data.user,
-                        jwt: data.jwt,
-                        pathname:router.pathname,
-                    });
-                }
-                else{     
-                    ct.onUserLogin({
-                        action: "Login",
-                        params: data.user,
-                        jwt: data.jwt,
-                        pathname:router.pathname,
-                    });         
-                }
+            /* Clevertap onUserLogin*/
+             /* Clevertap on User Login and Registration Event Tracking*/
+            if (data.user.is_new){
+                ct.onUserLogin({
+                    action: "Registration",
+                    params: data.user,
+                    jwt: data.jwt,
+                    pathname:router.pathname,
+                });
             }
-          
+            else{     
+                ct.onUserLogin({
+                    action: "Login",
+                    params: data.user,
+                    jwt: data.jwt,
+                    pathname:router.pathname,
+                });    
+            }
+
             /** For Mobupps */
             if (
                 data.user.is_new &&
