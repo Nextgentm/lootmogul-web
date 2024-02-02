@@ -15,7 +15,7 @@ import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
 import * as Sentry from "@sentry/nextjs";
-import { getCurremtLocation } from "../../services/locationService";
+import { getCurremtLocation, getCurrentLocationData } from "../../services/locationService";
 import { mobuppsCallService } from "../../services/mobuppsCallService";
 import { hasmindCallService } from "../../services/hasmindCallService";
 import { mrnCallService } from "../../services/mrnCallService";
@@ -221,7 +221,19 @@ export const AppContextContainer = ({ children }) => {
                   user?.id
                 : "contest/custom-contest/join?contest=" + data[0].id;
             if (data?.length > 0) {
-                const resp = await strapi.request("post", query, {});
+                const locationData=await getCurrentLocationData();
+                const resp = await strapi.request("post", query, {data: {
+                    street: locationData?.premise,
+                    neighbourhood:locationData?.sublocality_level_2,
+                    subLocality:locationData?.sublocality_level_1,
+                    locality:locationData?.locality,
+                    city:locationData?.administrative_area_level_3,
+                    division:locationData?.administrative_area_level_2,
+                    state:locationData?.administrative_area_level_1,
+                    country:locationData?.country,
+                    pincode:locationData?.postal_code,
+                    ipAddress:locationData?.ipAddress
+                } });
 
                 if (resp?.ticketId) {
                     setCoupon("");
