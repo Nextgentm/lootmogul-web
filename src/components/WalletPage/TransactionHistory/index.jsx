@@ -182,9 +182,9 @@ const TransactionHistory = memo(() => {
                         //         item.eventmaster.data.name === "Deposit Cash"
                         //     );
                         // }
-                        // return true;
+                         return true;
 
-                        return !currDataTxnId.flat().includes(item.id);
+                        //return !currDataTxnId.flat().includes(item.id);
                     });
                     
                     data.push(filterData);
