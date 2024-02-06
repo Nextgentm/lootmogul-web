@@ -219,8 +219,9 @@ export const getCurrentLocationData = () => {
                     });
                 } else
                     resolve({});
+            }).catch((err)=>{
+                resolve({});
             });
-            resolve({});
         },
         (error) => reject(error),
         { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000 }
