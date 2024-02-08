@@ -52,6 +52,7 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
                     pos="relative"
                     right="0"
                 >
+                    {console.log(process.env.NEXT_PUBLIC_SITE_URL + "/games")}
                 <Link
                         _focus={{ border: "none", boxShadow: "none" }}
                         _hover={{ textDecoration: "none" }}
