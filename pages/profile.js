@@ -79,7 +79,7 @@ const Profile = () => {
             //setAvatarUrl(user?.photoURL)  
             setAvatarUrl(user?.ready_player_me_url);
         }
-    })    
+    },[user])    
 
     useEffect(() => {
         window.addEventListener('message', subscribe)
@@ -90,7 +90,7 @@ const Profile = () => {
         }
     });
     
-    function subscribe(event) {
+    async function subscribe(event) {
         const json = parse(event)
         if (json?.source !== 'readyplayerme') {
           return;
@@ -118,7 +118,7 @@ const Profile = () => {
           let result = text.replace("glb", "png");
           localStorage.setItem('image3dAvtar', result);
           setAvatarUrl(text)  
-          const response = axios.put(
+          const response = await axios.put(
                 `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/users/`+user.id,
                 { photoURL: result,ready_player_me_url:text },
                 {
@@ -130,11 +130,13 @@ const Profile = () => {
                 }
             );
               
-          
+          //console.log(response.data);
           //setShowIFrame(false);
           setIsShareModalOpen(false);
           setIsShareModalOpen(false);
-          window.location.reload();
+          if(response.data){
+            window.location.reload();
+          }
         }
         // Get user id
         if (json.eventName === 'v1.user.set') {
