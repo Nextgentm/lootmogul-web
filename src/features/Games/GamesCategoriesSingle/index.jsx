@@ -55,7 +55,7 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
                 <Link
                         _focus={{ border: "none", boxShadow: "none" }}
                         _hover={{ textDecoration: "none" }}
-                        href={process.env.NEXT_PUBLIC_SITE_URL + "/games"}
+                        href={"/games"}
                     >
                         <Text
                             color="white"
