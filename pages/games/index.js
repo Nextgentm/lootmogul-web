@@ -61,7 +61,7 @@ export async function getStaticProps() {
             },
             {
               name: {
-                $eq: "DSG Match Day Cricket Games",
+                $eq: "Match Day Contests",
               },
             },
           ],
