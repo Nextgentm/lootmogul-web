@@ -3,6 +3,7 @@ import { useLocation, useParams } from "react-router-dom";
 import queryString from "query-string";
 import { useRouter } from "next/router";
 import {
+    useToast,
     Flex,
     Text,
     Box,
@@ -29,12 +30,14 @@ import { root, loginTitleStyle } from "./styles";
 import strapi from "../../utils/strapi";
 import axios from "axios";
 
-const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
+const ChangePassword = ({ isOpen, onClose , forgotEmail }) => {
     const [inputNewPwd, setInputNewPwd] = useState();
     const [inputConfirmPwd, setInputConfirmPwd] = useState();
     const [inputCode, setInputCode] = useState("");
     const router = useRouter();
     const secCode = router.query.code || "";
+    const queryEmail = decodeURIComponent(router.query.email)
+    const toast = useToast();
 
     // Effect to set the code from the query string
     useEffect(() => {
@@ -46,62 +49,68 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
     const { setChangePasswordModalActive, togglePasswordChangedModal } =
         useContext(AppContext);
 
-    const handleSubmit = async () => {
-        if (inputNewPwd && inputConfirmPwd) {
-            if (inputNewPwd !== inputConfirmPwd) {
-                setAlertMsg({
-                    isOpen: true,
-                    title: "Error",
-                    message: "New password and Confirm password not match"
-                });
-            } else {
-                try {
-                    const { jwt, user } = await strapi.resetPassword({
-                        code: inputCode,
-                        password: inputNewPwd,
-                        passwordConfirmation: inputConfirmPwd
-                    });
-
-                    const email = user.email;
-                    const username = user.username;
-
-                    if (jwt && email && username) {
-                        axios
-                            .post(
-                                `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/sendEmail`,
-                                {
-                                    email,
-                                    jwt,
-                                    username
-                                }
-                            )
-                            .then((res) => {
-                                console.log(res);
-                            })
-                            .catch((err) => {
-                                console.log(err);
-                            });
-                    }
-
-                    setInputNewPwd("");
-                    setInputConfirmPwd("");
-                    togglePasswordChangedModal();
-                    setChangePasswordModalActive(false);
-                } catch ({ error }) {
-                    setAlertMsg({
-                        isOpen: true,
-                        title: "Error",
-                        message: error.message
-                    });
-                }
-            }
-        } else {
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        if(!inputNewPwd || !inputConfirmPwd) {
             setAlertMsg({
                 isOpen: true,
                 title: "Error",
-                message: "New password and Confirm password is required"
+                message: "Password and Confirm password is required"
+            });
+            return
+        }
+        if (inputNewPwd !== inputConfirmPwd) {
+            setAlertMsg({
+                isOpen: true,
+                title: "Error",
+                message: "New password and Confirm password is not matching"
+            });
+            return
+        } 
+        try {
+            const { jwt, user } = await strapi.resetPassword({
+                otp: Number(inputCode),
+                email: forgotEmail || queryEmail,
+                password: inputNewPwd,
+                confirmPassword: inputConfirmPwd,
+            });
+
+            /* const email = user.email;
+            const username = user.username;
+
+            if (jwt && email && username) {
+                axios
+                    .post(
+                        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/sendEmail`,
+                        {
+                            email,
+                            jwt,
+                            username
+                        }
+                    )
+                    .then((res) => {
+                        console.log(res);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            } */
+
+            setInputNewPwd("");
+            setInputConfirmPwd("");
+            togglePasswordChangedModal();
+            setChangePasswordModalActive(false);
+        } catch ( error ) {
+            toast({
+                title: error.message || error?.error?.message,
+                status: "error",
+                duration: 5000,
+                position: "top-right",
+                isClosable: true
             });
         }
+        
+         
     };
 
     const [alertMsg, setAlertMsg] = useState({});
@@ -139,7 +148,7 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
     return (
         <Modal
             isOpen={isOpen}
-            onClose={OnChangePasswordClose}
+            onClose={onClose}
             scrollBehavior="inside"
         >
             <ModalOverlay />
@@ -197,12 +206,13 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                                 </Text>
 
                                 <Box w="100%">
+                                    <form onSubmit={handleSubmit}>
                                     <FormControl mb="15px">
                                         <Input
                                             id="code"
                                             name="code"
                                             type="text"
-                                            placeholder="Please Enter Code"
+                                            placeholder="Please Enter OTP"
                                             bgColor="#fff"
                                             color="#707070"
                                             _placeholder={{ color: "#707070" }}
@@ -279,10 +289,12 @@ const ChangePassword = ({ isOpen, OnChangePasswordClose }) => {
                                         textTransform="uppercase"
                                         outline="0"
                                         fontFamily="Open Sans,Sans-serif !important"
-                                        onClick={handleSubmit}
+                                        // onClick={handleSubmit}
+                                        type="submit"
                                     >
                                         CHANGE PASSWORD
                                     </Button>
+                                    </form>
                                 </Box>
                             </Flex>
                         </Box>

@@ -97,6 +97,8 @@ const Header = () => {
 
     const router = useRouter();
 
+    const [email, setEmail] = useState('')
+
     /*useEffect(() => {    
         if(router.pathname){
             //console.log('Page ',router.pathname);
@@ -287,9 +289,8 @@ const Header = () => {
         </Flex>
     );
 
-    const OnForgotPasswordClose = async () => {
-        toggleForgotPasswordModal();
-    };
+    const OnForgotPasswordClose = async () => toggleForgotPasswordModal();
+    
 
     const OnCheckYourMailClose = async () => {
         toggleCheckYourMailModal();
@@ -584,7 +585,9 @@ const Header = () => {
             <Box>
                 <ForgotPassword
                     isOpen={isForgotPasswordModalActive}
-                    OnForgotPasswordClose={OnForgotPasswordClose}
+                    onClose={toggleForgotPasswordModal}
+                    email={email}
+                    setEmail={setEmail}
                 />
             </Box>
 
@@ -597,8 +600,9 @@ const Header = () => {
 
             <Box>
                 <ChangePassword
+                    forgotEmail={email}
                     isOpen={isChangePasswordModalActive}
-                    OnChangePasswordClose={OnChangePasswordClose}
+                    onClose={OnChangePasswordClose}
                 />
             </Box>
 
