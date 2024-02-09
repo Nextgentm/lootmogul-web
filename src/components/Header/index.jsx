@@ -601,6 +601,7 @@ const Header = () => {
             <Box>
                 <ChangePassword
                     forgotEmail={email}
+                    setEmail={setEmail}
                     isOpen={isChangePasswordModalActive}
                     onClose={OnChangePasswordClose}
                 />

@@ -30,7 +30,7 @@ import { root, loginTitleStyle } from "./styles";
 import strapi from "../../utils/strapi";
 import axios from "axios";
 
-const ChangePassword = ({ isOpen, onClose , forgotEmail }) => {
+const ChangePassword = ({ isOpen, onClose , forgotEmail , setEmail}) => {
     const [inputNewPwd, setInputNewPwd] = useState();
     const [inputConfirmPwd, setInputConfirmPwd] = useState();
     const [inputCode, setInputCode] = useState("");
@@ -98,12 +98,13 @@ const ChangePassword = ({ isOpen, onClose , forgotEmail }) => {
 
             setInputNewPwd("");
             setInputConfirmPwd("");
-            router.push('/games')
-            // setChangePasswordModalActive(false);
+            setEmail("")
+            setChangePasswordModalActive(false);
             onClose()
+            router.push('/games')
         } catch ( error ) {
             toast({
-                title: error.message || error?.error?.message,
+                title: error?.message || error?.error?.message,
                 status: "error",
                 duration: 5000,
                 position: "top-right",

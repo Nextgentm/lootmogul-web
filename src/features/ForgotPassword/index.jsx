@@ -61,7 +61,7 @@ const ForgotPassword = ({ isOpen, onClose , setEmail, email }) => {
         } catch (error) {
             if(error?.message || error?.error?.message){
                 toast({
-                    title: error.message || error?.error?.message,
+                    title: error?.message || error?.error?.message,
                     status: "error",
                     duration: 5000,
                     position: "top-right",
