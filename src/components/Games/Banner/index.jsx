@@ -117,14 +117,14 @@ const Banner = ({
                 alt="Image"
                 layout="fill"
                 //w="350px"
-                src="/assets/banner_dsg_website_new.jpg"
+                src="/assets/banner_dsg_website_HD.jpg"
             /> :
             <Image
                 objectFit="cover"
                 alt="Image"
                 layout="fill"
                 w="350px"
-                src="/assets/banner_dsg_website_2_mobile1.jpg"
+                src="/assets/banner_dsg_website_2_mobile.jpg"
             />
         }
             <div className="banner-read-thumb-lg">
