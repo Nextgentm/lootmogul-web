@@ -46,7 +46,7 @@ const ChangePassword = ({ isOpen, onClose , forgotEmail }) => {
         }
     }, [secCode]);
 
-    const { setChangePasswordModalActive, togglePasswordChangedModal } =
+    const { setChangePasswordModalActive, togglePasswordChangedModal , toggleChangePasswordModal } =
         useContext(AppContext);
 
     const handleSubmit = async (e) => {
@@ -98,8 +98,9 @@ const ChangePassword = ({ isOpen, onClose , forgotEmail }) => {
 
             setInputNewPwd("");
             setInputConfirmPwd("");
-            togglePasswordChangedModal();
-            setChangePasswordModalActive(false);
+            router.push('/games')
+            // setChangePasswordModalActive(false);
+            onClose()
         } catch ( error ) {
             toast({
                 title: error.message || error?.error?.message,
