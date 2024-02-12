@@ -53,89 +53,65 @@ const GameTabs = ({ defaultTab, gameData }) => {
                     populate: {
                         leaderboard:{
                             fields:["id"]
+                        },
+                        contestmaster:{
+                            populate:['reward.rewardrange']
                         }
                     }
                 });
+                // get only top score of unique user
                 if (contests?.data?.length && contests.data[0].leaderboard?.data) {
-                    let lbs = await strapi.find("lbrecords", {
-                        sort: "score:DESC",
-                        filters: {
-                            leaderboard: contests.data[0].leaderboard?.data?.id
-                        },
-                        populate: [
-                            "user",
-                            "leaderboard.contest.contestmaster.reward.rewardrange",
-                            "leaderboard.lbrecords"
-                        ],
-                        pagination:{
-                            page:currentPage,
-                            pageSize:10
-                        }
-                    });
-                    const finalLBData = []
-                    for (let i = 0; i < lbs.data?.length; i++) {
-                        const e = lbs.data[i]
-                        if (!finalLBData?.find(s => s.user?.data?.id == e.user?.data?.id)) {
-                            let tempData = lbs.data?.filter(s => s?.user?.data?.id == e.user?.data?.id)
-                            if (tempData[0])
-                                finalLBData.push(tempData[0])
-                        }
-                    };
-                    
-                    if (finalLBData?.length > 0) {
-                        lbs.data = finalLBData
-                            ?.filter(
-                                (rec) =>
-                                    rec.user?.data?.fullName?.length > 0 ||
-                                    rec.user?.data?.username?.length > 0
-                            )
-                            ?.map((rec, recIndex) => {
-                                                               const prizes =
-                                    rec?.leaderboard?.data?.contest?.data
-                                        ?.contestmaster?.data?.reward?.data
-                                        ?.rewardrange;
-                                const ranksList =
-                                    rec?.leaderboard?.data?.lbrecords?.data?.sort(
-                                        (a, b) => (a.score < b.score ? 1 : -1)
-                                    );
-
-                                let playerRank = ranksList?.findIndex(
-                                    (item) => item.id === rec.id
-                                );
-
-                                if (playerRank > -1) {
-                                    playerRank += 1;
-                                }
-
+                    let pageSize=10;
+                    let res = await strapi.request("get",
+                    `lbrecord/get-leaderboard-details?leaderboardId=${contests.data[0].leaderboard?.data?.id}&page=${currentPage}&pageSize=${pageSize}`);
+                    // console.log("res ",res);
+                    const finalLBData = [];
+                    if (res?.data?.length > 0) {
+                        const prizes = contests.data[0]
+                                ?.contestmaster?.data?.reward?.data
+                                ?.rewardrange;
+                        res?.data.map((rec, recIndex) => {
+                            const currentRank=(pageSize*(currentPage-1))+recIndex+1;
                                 const playerPrize =
                                     prizes?.find(
                                         (item) =>
-                                            item?.rankFrom <= playerRank &&
-                                            item?.rankTo >= playerRank
+                                            item?.rankFrom <= currentRank &&
+                                            item?.rankTo >= currentRank
                                     )?.name || "----";
 
-                                if(lbs.meta?.pagination?.page > 1){
-                                    recIndex += (lbs.meta?.pagination?.page - 1) * lbs.meta?.pagination?.pageSize;
-                                }    
-                                if (user?.id === rec?.user?.data?.id) {
+                                if (user?.id === rec?.UserId) {
                                     setCurrentUser({
-                                        ...rec,
-                                        rank: recIndex + 1,
-                                        isActive: true,
+                                        createdAt: rec.createdAt,
+                                        id: rec.id,
+                                        leaderboard:{data: {id:rec.leaderboardId}},
+                                        user:{data:{id:rec.userId,
+                                            fullName: rec.fullName,
+                                            username:rec.username,
+                                            photoURL:rec.photoUrl}},
+                                        score: rec.score,
+                                        rank: currentRank,
+                                        isActive: user?.id === rec.userId,
                                         prize: playerPrize
                                     });
                                 }
 
-                                return {
-                                    ...rec,
-                                    rank: recIndex + 1,
-                                    isActive: user?.id === rec?.user?.data?.id,
+                                finalLBData.push({
+                                    createdAt: rec.createdAt,
+                                    id: rec.id,
+                                    leaderboard:{data: {id:rec.leaderboardId}},
+                                    user:{data:{id:rec.userId,
+                                        fullName: rec.fullName,
+                                        username:rec.username,
+                                        photoURL:rec.photoUrl}},
+                                    score: rec.score,
+                                    rank: currentRank,
+                                    isActive: user?.id === rec.userId,
                                     prize: playerPrize
-                                };
+                                });
                             });
                     }
-                    setLbRecords(lbs.data);
-                    setLbMetas(lbs.meta)
+                    setLbRecords(finalLBData);
+                    setLbMetas(res.meta)
 
                 }
                 setLoading(false);
