@@ -15,7 +15,7 @@ import moment from "moment";
 import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
 import * as Sentry from "@sentry/nextjs";
-import { getCurremtLocation } from "../../services/locationService";
+import { getCurremtLocation, getCurrentLocationData } from "../../services/locationService";
 import { mobuppsCallService } from "../../services/mobuppsCallService";
 import { hasmindCallService } from "../../services/hasmindCallService";
 import { mrnCallService } from "../../services/mrnCallService";
@@ -227,6 +227,21 @@ export const AppContextContainer = ({ children }) => {
                     setCoupon("");
                     if (resp?.status == 0) {
                     } else {
+                        getCurrentLocationData().then((locationData)=>{
+                            let query = "ticket/custom-ticket/location-update/" + resp?.ticketId;
+                            strapi.request("post", query, {data: {
+                                street: locationData?.premise,
+                                neighbourhood:locationData?.sublocality_level_2,
+                                subLocality:locationData?.sublocality_level_1,
+                                locality:locationData?.locality,
+                                city:locationData?.administrative_area_level_3,
+                                division:locationData?.administrative_area_level_2,
+                                state:locationData?.administrative_area_level_1,
+                                country:locationData?.country,
+                                pincode:locationData?.postal_code,
+                                ipAddress:locationData?.ipAddress
+                            } });
+                        }).catch((err)=>{console.log("Error while getCurrentLocationData" ,err)});
                         if (
                             data[0]?.contestmaster?.data?.game?.data?.url &&
                             data[0]?.contestmaster?.data?.game?.data?.type ==
