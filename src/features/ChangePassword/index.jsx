@@ -25,19 +25,35 @@ import {
     AlertDialogOverlay
 } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
+import moment from 'moment';
 
 import { root, loginTitleStyle } from "./styles";
 import strapi from "../../utils/strapi";
 import axios from "axios";
 
-const ChangePassword = ({ isOpen, onClose , forgotEmail , setEmail}) => {
-    const [inputNewPwd, setInputNewPwd] = useState();
-    const [inputConfirmPwd, setInputConfirmPwd] = useState();
-    const [inputCode, setInputCode] = useState("");
+const RESEND_OTP_WAIT_TIME = 100 * 1000 + 1000 //in mili sec
+
+const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
+    const { setChangePasswordModalActive, /* togglePasswordChangedModal, toggleChangePasswordModal */ } = useContext(AppContext);
+    const toast = useToast();
     const router = useRouter();
+    
     const secCode = router.query.code || "";
     const queryEmail = decodeURIComponent(router.query.email)
-    const toast = useToast();
+    
+    const [inputNewPwd, setInputNewPwd] = useState("");
+    const [inputConfirmPwd, setInputConfirmPwd] = useState("");
+    const [inputCode, setInputCode] = useState("");
+    const [alertMsg, setAlertMsg] = useState({});
+    
+    
+    const lastResentLocalStorage =  typeof window !== 'undefined' ? window?.localStorage?.getItem('lastResent') : 0
+    const [state, setState] = useState({
+        // reSending: false,
+        lastResent: lastResentLocalStorage || 0,
+        waitTime: 0,
+    })
+    const { /* reSending, */ lastResent, waitTime } = state
 
     // Effect to set the code from the query string
     useEffect(() => {
@@ -46,12 +62,11 @@ const ChangePassword = ({ isOpen, onClose , forgotEmail , setEmail}) => {
         }
     }, [secCode]);
 
-    const { setChangePasswordModalActive, togglePasswordChangedModal , toggleChangePasswordModal } =
-        useContext(AppContext);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(!inputNewPwd || !inputConfirmPwd) {
+        if (!inputNewPwd || !inputConfirmPwd) {
             setAlertMsg({
                 isOpen: true,
                 title: "Error",
@@ -66,7 +81,7 @@ const ChangePassword = ({ isOpen, onClose , forgotEmail , setEmail}) => {
                 message: "New password and Confirm password is not matching"
             });
             return
-        } 
+        }
         try {
             const { jwt, user } = await strapi.resetPassword({
                 otp: Number(inputCode),
@@ -75,34 +90,13 @@ const ChangePassword = ({ isOpen, onClose , forgotEmail , setEmail}) => {
                 confirmPassword: inputConfirmPwd,
             });
 
-            /* const email = user.email;
-            const username = user.username;
-
-            if (jwt && email && username) {
-                axios
-                    .post(
-                        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/sendEmail`,
-                        {
-                            email,
-                            jwt,
-                            username
-                        }
-                    )
-                    .then((res) => {
-                        console.log(res);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-            } */
-
             setInputNewPwd("");
             setInputConfirmPwd("");
             setEmail("")
             setChangePasswordModalActive(false);
             onClose()
             router.push('/games')
-        } catch ( error ) {
+        } catch (error) {
             toast({
                 title: error?.message || error?.error?.message,
                 status: "error",
@@ -111,11 +105,30 @@ const ChangePassword = ({ isOpen, onClose , forgotEmail , setEmail}) => {
                 isClosable: true
             });
         }
-        
-         
+
+
     };
 
-    const [alertMsg, setAlertMsg] = useState({});
+    useEffect(() => {
+        if (lastResent) {
+            const interval = setInterval(() => {
+                setState(prev => {
+                    const nextWaitTime = RESEND_OTP_WAIT_TIME - (Date.now() - prev.lastResent)
+                    if (nextWaitTime > 0) return ({ ...prev, waitTime: nextWaitTime })
+                    clearInterval(interval)
+                    return ({ ...prev, waitTime: 0, lastResent: 0 })
+                })
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+    }, [lastResent])
+
+    const resendOTP = () => {
+        if (lastResent > 0) return
+        localStorage.setItem('lastResent', Date.now())
+        setState(prev => ({ ...prev, lastResent: Date.now() }))
+    }
+
     const ShowAlert = () => {
         return (
             <AlertDialog
@@ -209,95 +222,111 @@ const ChangePassword = ({ isOpen, onClose , forgotEmail , setEmail}) => {
 
                                 <Box w="100%">
                                     <form onSubmit={handleSubmit}>
-                                    <FormControl mb="15px">
-                                        <Input
-                                            id="code"
-                                            name="code"
-                                            type="text"
-                                            placeholder="Please Enter OTP"
-                                            bgColor="#fff"
-                                            color="#707070"
-                                            _placeholder={{ color: "#707070" }}
-                                            required
-                                            boxShadow="unset"
-                                            p="6px 10px"
-                                            border="1px solid #707070 !important"
-                                            height="35px"
-                                            _focus={{ outline: "0" }}
-                                            value={inputCode}
-                                            onChange={(e) =>
-                                                setInputCode(e.target.value)
-                                            }
-                                        />
-                                    </FormControl>
+                                        <FormControl mb="15px">
+                                            <Input
+                                                name="code"
+                                                type="text"
+                                                placeholder="Please Enter OTP"
+                                                bgColor="#fff"
+                                                color="#707070"
+                                                _placeholder={{ color: "#707070" }}
+                                                required
+                                                boxShadow="unset"
+                                                p="6px 10px"
+                                                border="1px solid #707070 !important"
+                                                height="35px"
+                                                _focus={{ outline: "0" }}
+                                                value={inputCode}
+                                                onChange={(e) =>
+                                                    setInputCode(e.target.value)
+                                                }
+                                            />
+                                        </FormControl>
 
-                                    <FormControl mb="15px">
-                                        <Input
-                                            id="new_password"
-                                            name="new_password"
-                                            type="password"
-                                            placeholder="Create new password"
-                                            bgColor="#fff"
-                                            color="#707070"
-                                            _placeholder={{ color: "#707070" }}
-                                            required
-                                            boxShadow="unset"
-                                            p="6px 10px"
-                                            border="1px solid #707070 !important"
-                                            height="35px"
-                                            _focus={{ outline: "0" }}
-                                            value={inputNewPwd}
-                                            autoComplete="new-password"
-                                            onChange={(e) =>
-                                                setInputNewPwd(e.target.value)
-                                            }
-                                        />
-                                    </FormControl>
+                                        <FormControl mb="15px">
+                                            <Input
+                                                name="new_password"
+                                                type="password"
+                                                placeholder="Create new password"
+                                                bgColor="#fff"
+                                                color="#707070"
+                                                _placeholder={{ color: "#707070" }}
+                                                required
+                                                boxShadow="unset"
+                                                p="6px 10px"
+                                                border="1px solid #707070 !important"
+                                                height="35px"
+                                                _focus={{ outline: "0" }}
+                                                value={inputNewPwd}
+                                                autoComplete="new-password"
+                                                onChange={(e) =>
+                                                    setInputNewPwd(e.target.value)
+                                                }
+                                            />
+                                        </FormControl>
 
-                                    <FormControl mb="15px">
-                                        <Input
-                                            id="confirm_password"
-                                            name="confirm_password"
-                                            type="password"
-                                            placeholder="Confirm your password"
-                                            bgColor="#fff"
-                                            color="#707070"
-                                            _placeholder={{ color: "#707070" }}
-                                            required
-                                            boxShadow="unset"
-                                            p="6px 10px"
-                                            border="1px solid #707070 !important"
-                                            height="35px"
-                                            _focus={{ outline: "0" }}
-                                            value={inputConfirmPwd}
-                                            autoComplete="new-password"
-                                            onChange={(e) =>
-                                                setInputConfirmPwd(
-                                                    e.target.value
-                                                )
-                                            }
-                                        />
-                                    </FormControl>
+                                        <FormControl mb="15px">
+                                            <Input
+                                                id="confirm_password"
+                                                name="confirm_password"
+                                                type="password"
+                                                placeholder="Confirm your password"
+                                                bgColor="#fff"
+                                                color="#707070"
+                                                _placeholder={{ color: "#707070" }}
+                                                required
+                                                boxShadow="unset"
+                                                p="6px 10px"
+                                                border="1px solid #707070 !important"
+                                                height="35px"
+                                                _focus={{ outline: "0" }}
+                                                value={inputConfirmPwd}
+                                                autoComplete="new-password"
+                                                onChange={(e) =>
+                                                    setInputConfirmPwd(
+                                                        e.target.value
+                                                    )
+                                                }
+                                            />
+                                        </FormControl>
 
-                                    <Button
-                                        width="100%"
-                                        h="30px"
-                                        bgImage="linear-gradient(90deg,#e90a63 0%,#481a7f 100%)"
-                                        boxShadow="0px 0px 20px 0px #481a7f"
-                                        fontSize="12px"
-                                        p="10px"
-                                        lineHeight="1"
-                                        fontWeight="600"
-                                        textTransform="uppercase"
-                                        outline="0"
-                                        fontFamily="Open Sans,Sans-serif !important"
-                                        // onClick={handleSubmit}
-                                        type="submit"
-                                    >
-                                        CHANGE PASSWORD
-                                    </Button>
+                                        <Button
+                                            width="100%"
+                                            h="30px"
+                                            bgImage="linear-gradient(90deg,#e90a63 0%,#481a7f 100%)"
+                                            boxShadow="0px 0px 20px 0px #481a7f"
+                                            fontSize="12px"
+                                            p="10px"
+                                            lineHeight="1"
+                                            fontWeight="600"
+                                            textTransform="uppercase"
+                                            outline="0"
+                                            fontFamily="Open Sans,Sans-serif !important"
+                                            // onClick={handleSubmit}
+                                            type="submit"
+                                        >
+                                            CHANGE PASSWORD
+                                        </Button>
                                     </form>
                                 </Box>
+                                <Text
+                                    color={waitTime ? '#79848e' : "#3182ce"}
+                                    cursor={waitTime ? "progress" : 'pointer'}
+                                    fontFamily="Open Sans,Sans-serif"
+                                    fontWeight="500"
+                                    fontSize="14px"
+                                    mb="20px"
+                                    textAlign="center"
+                                    marginTop={5}
+                                    marginBottom={-3}
+                                    onClick={resendOTP}
+                                >
+                                    {/* {waitTime > 0 ?
+                                        `${moment.duration(waitTime).minutes()}: ${moment.duration(waitTime).seconds()}`
+                                        : `Resend OTP`} */}
+                                    {waitTime > 0 ? `${moment.utc(waitTime).format("mm:ss")}` : `Resend OTP`}
+
+                                </Text>
                             </Flex>
                         </Box>
                     </Flex>
