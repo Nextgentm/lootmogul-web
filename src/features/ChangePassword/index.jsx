@@ -31,23 +31,23 @@ import { root, loginTitleStyle } from "./styles";
 import strapi from "../../utils/strapi";
 import axios from "axios";
 
-const RESEND_OTP_WAIT_TIME = 100 * 1000 + 1000 //in mili sec
+const RESEND_OTP_WAIT_TIME = 120 * 1000 + 1000 //in mili sec (1 sec is added to fix timing issue)
 
 const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
     const { setChangePasswordModalActive, /* togglePasswordChangedModal, toggleChangePasswordModal */ } = useContext(AppContext);
     const toast = useToast();
     const router = useRouter();
-    
+
     const secCode = router.query.code || "";
     const queryEmail = decodeURIComponent(router.query.email)
-    
+
     const [inputNewPwd, setInputNewPwd] = useState("");
     const [inputConfirmPwd, setInputConfirmPwd] = useState("");
     const [inputCode, setInputCode] = useState("");
     const [alertMsg, setAlertMsg] = useState({});
-    
-    
-    const lastResentLocalStorage =  typeof window !== 'undefined' ? window?.localStorage?.getItem('lastResent') : 0
+
+
+    const lastResentLocalStorage = typeof window !== 'undefined' ? window?.localStorage?.getItem('lastResent') : 0
     const [state, setState] = useState({
         // reSending: false,
         lastResent: lastResentLocalStorage || 0,
@@ -92,7 +92,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
 
             setInputNewPwd("");
             setInputConfirmPwd("");
-            setEmail("")
+            if(setEmail) setEmail("")
             setChangePasswordModalActive(false);
             onClose()
             router.push('/games')
@@ -110,23 +110,52 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
     };
 
     useEffect(() => {
+        let intervalId;
         if (lastResent) {
-            const interval = setInterval(() => {
+            intervalId = setInterval(() => {
                 setState(prev => {
                     const nextWaitTime = RESEND_OTP_WAIT_TIME - (Date.now() - prev.lastResent)
-                    if (nextWaitTime > 0) return ({ ...prev, waitTime: nextWaitTime })
-                    clearInterval(interval)
-                    return ({ ...prev, waitTime: 0, lastResent: 0 })
+                    if (nextWaitTime > 0) return { ...prev, waitTime: nextWaitTime }
+
+                    clearInterval(intervalId);
+                    localStorage.removeItem('lastResent')
+                    return { ...prev, waitTime: 0, lastResent: 0 }
                 })
             }, 1000);
-            return () => clearInterval(interval);
         }
+        return () => {
+            clearInterval(intervalId);
+            localStorage.removeItem('lastResent');
+        };
     }, [lastResent])
 
-    const resendOTP = () => {
+    const resendOTP = async () => {
         if (lastResent > 0) return
         localStorage.setItem('lastResent', Date.now())
         setState(prev => ({ ...prev, lastResent: Date.now() }))
+
+        axios.post(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-otps/resend`,
+            { email: forgotEmail || queryEmail }
+        )
+            .then((res) => {
+                toast({
+                    title: res?.data?.message,
+                    status: "success",
+                    duration: 4000,
+                    isClosable: true,
+                    position: "top-right",
+                });
+            })
+            .catch((error) => {
+                toast({
+                    title: error?.response?.data?.message || error?.error?.message || error?.message,
+                    status: "error",
+                    duration: 4000,
+                    position: "top-right",
+                    isClosable: true
+                });
+            });
     }
 
     const ShowAlert = () => {
