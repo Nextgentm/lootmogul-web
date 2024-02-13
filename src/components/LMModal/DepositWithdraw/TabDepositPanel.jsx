@@ -27,6 +27,7 @@ const stripeJs = async () => await import("@stripe/stripe-js/pure");
 import jsondata from "../../../../public/assets/currency.json";
 
 import * as ct from "../../../services/clevertapAnalytics";
+import {getCurrentLocationData} from "../../../services/locationService";
 
 const TabDepositPanel = ({ isDeposit }) => {
     const { asPath } = useRouter();
@@ -76,6 +77,7 @@ const TabDepositPanel = ({ isDeposit }) => {
     const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
 
     const [userLocation, setUserLocation] = useState();
+    const [userSessionData, setUserSessionData] = useState();
 
     // var lm_user_location = window.localStorage?.getItem("lm_user_location")
     //     ? window.localStorage?.getItem("lm_user_location")
@@ -120,7 +122,19 @@ const TabDepositPanel = ({ isDeposit }) => {
                 }
             }
         }
+        // Inside an async function
+        async function fetchCurrentLocationHandle() {
+            try {
+                const data = await getCurrentLocationData();
+                setUserSessionData(data);
+               return data;
+            } catch (error) {
+                // Handle errors
+                console.error(error);
+            }
+        }
 
+        fetchCurrentLocationHandle();
         locationSetter();
     }, []);
 
@@ -252,6 +266,8 @@ const TabDepositPanel = ({ isDeposit }) => {
     }, []);
 
     const deposit = async () => {
+        //console.log("userLocation",userSessioncountry);
+        //return true;
         if (amount < numberOfChips) {
             setAlertShow({
                 isOpen: true,
@@ -316,7 +332,16 @@ const TabDepositPanel = ({ isDeposit }) => {
                                     ? couponCode
                                     : "",
                                 currency: currency,
-                                calculated_chips: amount
+                                calculated_chips: amount,
+                                country: userSessionData?.country || '',
+                                state: userSessionData?.administrative_area_level_1 || '',
+                                division: userSessionData?.administrative_area_level_2 || '',
+                                city: userSessionData?.administrative_area_level_3 || '',
+                                locality: userSessionData?.locality || '',
+                                subLocality: userSessionData?.sublocality_level_1 || '',
+                                neighbourhood: userSessionData?.neighborhood || '',
+                                street: userSessionData?.sublocality_level_2 || '',
+                                pincode: userSessionData?.postal_code || ''
                             });
                             console.log({
                                 headers: {
@@ -338,7 +363,16 @@ const TabDepositPanel = ({ isDeposit }) => {
                                         ? couponCode
                                         : "",
                                     currency: currency,
-                                    calculated_chips: amount
+                                    calculated_chips: amount,
+                                    country: userSessionData?.country || '',
+                                    state: userSessionData?.administrative_area_level_1 || '',
+                                    division: userSessionData?.administrative_area_level_2 || '',
+                                    city: userSessionData?.administrative_area_level_3 || '',
+                                    locality: userSessionData?.locality || '',
+                                    subLocality: userSessionData?.sublocality_level_1 || '',
+                                    neighbourhood: userSessionData?.neighborhood || '',
+                                    street: userSessionData?.sublocality_level_2 || '',
+                                    pincode: userSessionData?.postal_code || ''
                                 },
                                 {
                                     headers: {
@@ -382,7 +416,16 @@ const TabDepositPanel = ({ isDeposit }) => {
                                     value: +numberOfAmount,
                                     couponCode: couponCode ? couponCode : "",
                                     currency: currency,
-                                    calculated_chips: amount
+                                    calculated_chips: amount,
+                                    country: userSessionData?.country || '',
+                                    state: userSessionData?.administrative_area_level_1 || '',
+                                    division: userSessionData?.administrative_area_level_2 || '',
+                                    city: userSessionData?.administrative_area_level_3 || '',
+                                    locality: userSessionData?.locality || '',
+                                    subLocality: userSessionData?.sublocality_level_1 || '',
+                                    neighbourhood: userSessionData?.neighborhood || '',
+                                    street: userSessionData?.sublocality_level_2 || '',
+                                    pincode: userSessionData?.postal_code || ''
                                 },
                                 {
                                     headers: {
@@ -419,7 +462,16 @@ const TabDepositPanel = ({ isDeposit }) => {
                                 value: +numberOfAmount,
                                 couponCode: couponCode ? couponCode : "",
                                 currency: currency,
-                                calculated_chips: amount
+                                calculated_chips: amount,
+                                country: userSessionData?.country || '',
+                                state: userSessionData?.administrative_area_level_1 || '',
+                                division: userSessionData?.administrative_area_level_2 || '',
+                                city: userSessionData?.administrative_area_level_3 || '',
+                                locality: userSessionData?.locality || '',
+                                subLocality: userSessionData?.sublocality_level_1 || '',
+                                neighbourhood: userSessionData?.neighborhood || '',
+                                street: userSessionData?.sublocality_level_2 || '',
+                                pincode: userSessionData?.postal_code || ''
                             },
                             {
                                 headers: {

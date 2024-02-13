@@ -28,6 +28,7 @@ import { GridLoader } from "react-spinners";
 import { isNumber } from "../../../utils/utils";
 
 import * as ct from "../../../services/clevertapAnalytics";
+import {getCurrentLocationData} from "../../../services/locationService";
 
 // eslint-disable-next-line react/display-name
 const TabWithdrawPanel = memo(({ data, isDeposit }) => {
@@ -83,9 +84,9 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
 
 	const [disableWithdraw, setDisableWithdraw] = useState(false);
-
+    const [userSessionData, setUserSessionData] = useState();
     const [loading, setLoading] = useState(true);
-
+    
     useEffect(() => {
         if (currencyToChip?.length) setCurrencyRecord(currencyToChip);
         else {
@@ -122,6 +123,20 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             }
         }
     }, [data]);
+
+    useEffect(() => {
+        async function fetchCurrentLocationHandle() {
+            try {
+                const data = await getCurrentLocationData();
+                setUserSessionData(data);
+               return data;
+            } catch (error) {
+                // Handle errors
+                console.error(error);
+            }
+        }
+        fetchCurrentLocationHandle();
+    }, []);
 
     useEffect(() => {
         if (withdrawalType == "crypto") {
@@ -346,7 +361,16 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
             bankAddress: bankaddress ? bankaddress : null,
             user: user?.id,
             account: account,
-            cryptoType: data.type !== "cash" ? cryptoType : null
+            cryptoType: data.type !== "cash" ? cryptoType : null,
+            country: userSessionData?.country || '',
+            state: userSessionData?.administrative_area_level_1 || '',
+            division: userSessionData?.administrative_area_level_2 || '',
+            city: userSessionData?.administrative_area_level_3 || '',
+            locality: userSessionData?.locality || '',
+            subLocality: userSessionData?.sublocality_level_1 || '',
+            neighbourhood: userSessionData?.neighborhood || '',
+            street: userSessionData?.sublocality_level_2 || '',
+            pincode: userSessionData?.postal_code || ''
         };
 		
         await strapi

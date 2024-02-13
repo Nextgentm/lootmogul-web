@@ -59,11 +59,6 @@ export async function getStaticProps() {
                 $eq: "Trending Tournament",
               },
             },
-            {
-              name: {
-                $eq: "DSG Match Day Cricket Games",
-              },
-            },
           ],
       },
       sort: "priority",
