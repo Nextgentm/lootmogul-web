@@ -92,7 +92,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
 
             setInputNewPwd("");
             setInputConfirmPwd("");
-            if(setEmail) setEmail("")
+            if (setEmail) setEmail("")
             setChangePasswordModalActive(false);
             onClose()
             router.push('/games')
@@ -123,14 +123,11 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                 })
             }, 1000);
         }
-        return () => {
-            clearInterval(intervalId);
-            localStorage.removeItem('lastResent');
-        };
+        return () => clearInterval(intervalId)
     }, [lastResent])
 
     const resendOTP = async () => {
-        if (lastResent > 0) return
+        if (lastResent > 0 && (Date.now() - lastResent) < RESEND_OTP_WAIT_TIME) return
         localStorage.setItem('lastResent', Date.now())
         setState(prev => ({ ...prev, lastResent: Date.now() }))
 
