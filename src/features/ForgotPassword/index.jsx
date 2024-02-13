@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import {
+    useToast,
     Flex,
     Text,
     Box,
@@ -29,41 +30,52 @@ function isValidEmail(email) {
     return /\S+@\S+\.\S+/.test(email);
 }
 
-const ForgotPassword = ({ isOpen, OnForgotPasswordClose }) => {
-    const [inputEmailId, setInputEmailId] = useState();
+const ForgotPassword = ({ isOpen, onClose , setEmail, email }) => {
+    const toast = useToast();
 
-    const { setForgotPasswordModalActive, toggleCheckYourMailModal } = useContext(AppContext);
+    const { setForgotPasswordModalActive, /* toggleCheckYourMailModal, */ toggleChangePasswordModal } = useContext(AppContext);
 
-    function handleSubmit() {
-        if( inputEmailId )
-        {
-            if( !isValidEmail(inputEmailId) )
-            {
-                setAlertMsg({
-                    isOpen: true,
-                    title: "Error",
-                    message: "Email address is invalid",
-                });
-            }
-            else
-            {
-                strapi.forgotPassword({
-                    email:inputEmailId
-                });
-                setInputEmailId('');
-                setForgotPasswordModalActive(false);
-                toggleCheckYourMailModal();
-            }
+    const  handleSubmit = async (e) => {
+        e.preventDefault()
+        if(!email) {
+            setAlertMsg({ isOpen: true, title: "Error", message: "Email address is required",});
+            return
         }
-        else
-        {
-            setAlertMsg({
-                isOpen: true,
-                title: "Error",
-                message: "Email address is required",
+        if( !isValidEmail(email) ){
+            setAlertMsg({ isOpen: true, title: "Error", message: "Email address is invalid" })
+            return
+        } 
+        
+        try {
+            const res = await strapi.forgotPassword({ email:email });
+            setForgotPasswordModalActive(false);
+            // toggleCheckYourMailModal();
+            toggleChangePasswordModal()
+            toast({
+                title: res.message,
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "top-right",
             });
+        } catch (error) {
+            if(error?.message || error?.error?.message){
+                toast({
+                    title: error?.message || error?.error?.message,
+                    status: "error",
+                    duration: 5000,
+                    position: "top-right",
+                    isClosable: true
+                });
+            }
         }
+        
     }
+
+    /* const handleChange = (e) => {
+        const {value} = e.target
+        setEmail(value)
+    } */
 
     const [alertMsg, setAlertMsg] = useState({});
     const ShowAlert = () => {
@@ -98,7 +110,7 @@ const ForgotPassword = ({ isOpen, OnForgotPasswordClose }) => {
     };
 
     return (
-        <Modal isOpen={isOpen} onClose={OnForgotPasswordClose} scrollBehavior="inside">
+        <Modal isOpen={isOpen} onClose={onClose} scrollBehavior="inside">
             <ModalOverlay />
 
             <ModalContent
@@ -153,6 +165,7 @@ const ForgotPassword = ({ isOpen, OnForgotPasswordClose }) => {
                                 </Text>
 
                                 <Box w="100%">
+                                    <form onSubmit={handleSubmit}>
                                     <FormControl mb="15px">
                                         <Input
                                             id="emailid"
@@ -168,8 +181,9 @@ const ForgotPassword = ({ isOpen, OnForgotPasswordClose }) => {
                                             border="1px solid #707070 !important"
                                             height="35px"
                                             _focus={{ outline: "0" }}
-                                            value={inputEmailId}
-                                            onChange={(e) => setInputEmailId(e.target.value)}
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            // onChange={handleChange}
                                         />
                                     </FormControl>
                                      
@@ -185,10 +199,11 @@ const ForgotPassword = ({ isOpen, OnForgotPasswordClose }) => {
                                         textTransform="uppercase"
                                         outline="0"
                                         fontFamily="Open Sans,Sans-serif !important"
-                                        onClick={handleSubmit}
+                                        type="submit"
                                     >
                                         RESET PASSWORD
                                     </Button>
+                                    </form>
                                 </Box>
                             </Flex>
                         </Box>
