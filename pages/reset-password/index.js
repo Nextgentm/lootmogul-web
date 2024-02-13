@@ -1,5 +1,8 @@
 import dynamic from "next/dynamic";
 import MyPageLoader from "../../src/components/MyPageLoader";
+import { useContext , useEffect } from "react";
+// import { AppContext } from "../../utils/AppContext";
+import { AppContext } from "../../src/utils/AppContext";
 
 const ChangePassword = dynamic(
     () => import("../../src/features/ChangePassword"),
@@ -7,9 +10,19 @@ const ChangePassword = dynamic(
   );
 
 export default function ResetPasswordPage({ }) {
+  const { toggleChangePasswordModal , setChangePasswordModalActive, isChangePasswordModalActive } = useContext(AppContext);
+  // setOpen true on mount
+  useEffect(() =>{
+    setChangePasswordModalActive(true)
+  }, [])
+
   return (
-    <><ChangePassword
-          isOpen={true} OnChangePasswordClose={true} /></> 
+      <ChangePassword
+          isOpen={isChangePasswordModalActive} 
+          onClose={toggleChangePasswordModal}
+          // onClose={true} 
+          // isOpen={isChangePasswordModalActive}
+      />
   );
 }
 
