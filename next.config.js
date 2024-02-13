@@ -4,7 +4,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const withPlugins = require("next-compose-plugins");
 const { withSentryConfig } = require('@sentry/nextjs');
 
-const moduleExports = {
+const moduleExports = {.lgkdkdsf:>
   staticPageGenerationTimeout: 700,
   sentry: {
     // Use `hidden-source-map` rather than `source-map` as the Webpack `devtool`
