@@ -130,7 +130,11 @@ const Profile = () => {
                 }
             );
               
+<<<<<<< HEAD
           console.log(response.data);
+=======
+          //console.log(response.data);
+>>>>>>> 4617b5590bd3bc92860903fb847ff6ae7c8d3ef8
           //setShowIFrame(false);
           setIsShareModalOpen(false);
           setIsShareModalOpen(false);

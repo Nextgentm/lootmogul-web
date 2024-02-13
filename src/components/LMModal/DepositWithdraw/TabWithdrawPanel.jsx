@@ -86,7 +86,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
 	const [disableWithdraw, setDisableWithdraw] = useState(false);
     const [userSessionData, setUserSessionData] = useState();
     const [loading, setLoading] = useState(true);
-
+    
     useEffect(() => {
         if (currencyToChip?.length) setCurrencyRecord(currencyToChip);
         else {
@@ -135,7 +135,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 console.error(error);
             }
         }
-  
         fetchCurrentLocationHandle();
     }, []);
 
