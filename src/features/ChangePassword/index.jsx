@@ -242,8 +242,20 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     mb="20px"
                                     textAlign="center"
                                 >
-                                    Please make sure your new password must be
-                                    different from previous used password
+                                    {'OTP has been sent to your email. Please check your inbox & spam folder'}
+                                </Text>
+
+                                <Text
+                                    color="#fff"
+                                    fontFamily="Open Sans,Sans-serif"
+                                    fontWeight="500"
+                                    fontSize="14px"
+                                    mb="20px"
+                                    textAlign="center"
+                                >
+                                    {'Please Note:'} <br />
+                                    OTP is valid for 15 min <br />
+                                    Maximum 3 attempts is allowed <br />
                                 </Text>
 
                                 <Box w="100%">

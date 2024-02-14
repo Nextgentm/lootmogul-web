@@ -201,7 +201,7 @@ const ForgotPassword = ({ isOpen, onClose , setEmail, email }) => {
                                         fontFamily="Open Sans,Sans-serif !important"
                                         type="submit"
                                     >
-                                        RESET PASSWORD
+                                        SUBMIT
                                     </Button>
                                     </form>
                                 </Box>
