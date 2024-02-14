@@ -139,18 +139,6 @@ const WalletBody = ({ isDeposit }) => {
             name: "Paypal",
             mode: "paypal",
             type: "cash"
-        },
-        {
-            url: "/assets/images/metamask.png",
-            name: "Crypto",
-            mode: "crypto",
-            type: "crypto"
-        },
-        {
-            url: "/assets/images/coinbase.png",
-            name: "Wire/bank transfer",
-            mode: "bank",
-            type: "bank"
         }
     ];
 
