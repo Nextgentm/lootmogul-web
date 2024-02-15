@@ -55,7 +55,18 @@ export default class MyDocument extends Document {
           wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';        
           var s = document.getElementsByTagName('script')[0];
           s.parentNode.insertBefore(wzrk, s);
-    })();`,}}
+    })();
+    clevertap.notifications.push({
+      "titleText":'Stay updated & power up your play!',
+      "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
+      "okButtonText":'Yes',
+      "rejectButtonText":'No',
+      "okButtonColor":'#e90a63',
+      "askAgainTimeInSeconds":120,
+      "notification_bgcolor":"#FF0000",
+      "okButtonBgColor":"#FF0000"
+  });
+    `,}}
   />
 }
 <script
