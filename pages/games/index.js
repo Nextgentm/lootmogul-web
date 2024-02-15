@@ -104,7 +104,7 @@ export async function getStaticProps() {
         pageSize: 25,
       },
     });
-    
+    console.log('hello');
     try {
       const bannersRes = await fetch(
         process.env.NEXT_PUBLIC_STRAPI_API_URL +
