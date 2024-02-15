@@ -22,7 +22,10 @@ import {
     Heading,
     AlertDialogHeader,
     AlertDialogContent,
-    AlertDialogOverlay
+    AlertDialogOverlay,
+    InputRightElement,
+    InputGroup,
+    Tooltip,
 } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 import moment from 'moment';
@@ -30,6 +33,7 @@ import moment from 'moment';
 import { root, loginTitleStyle } from "./styles";
 import strapi from "../../utils/strapi";
 import axios from "axios";
+import { CheckCircleIcon, InfoIcon } from "@chakra-ui/icons";
 
 const RESEND_OTP_WAIT_TIME = 120 * 1000 + 1000 //in mili sec (1 sec is added to fix timing issue)
 
@@ -230,7 +234,6 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                 >
                                     NEW PASSWORD
                                 </Text>
-
                                 <Text
                                     color="#fff"
                                     fontFamily="Open Sans,Sans-serif"
@@ -250,7 +253,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     mb="20px"
                                     textAlign="center"
                                 >
-                                    {'Please Note:'} <br />
+                                    <span style={{ fontWeight: '900' }}> {'Please Note:'} </span> <br />
                                     OTP is valid for 15 min <br />
                                     Maximum 3 attempts is allowed <br />
                                 </Text>
@@ -258,42 +261,80 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                 <Box w="100%">
                                     <form onSubmit={handleSubmit}>
                                         <FormControl mb="15px">
-                                            <Input
-                                                name="code"
-                                                value={code}
-                                                onChange={handleChange}
-                                                type="text"
-                                                placeholder="Please Enter OTP"
-                                                bgColor="#fff"
-                                                color="#707070"
-                                                _placeholder={{ color: "#707070" }}
-                                                required
-                                                boxShadow="unset"
-                                                p="6px 10px"
-                                                border="1px solid #707070 !important"
-                                                height="35px"
-                                                _focus={{ outline: "0" }}
-                                            />
-                                        </FormControl>
+                                            <InputGroup>
+                                                <Input
+                                                    name="code"
+                                                    value={code}
+                                                    onChange={handleChange}
+                                                    type="text"
+                                                    placeholder="Please Enter OTP"
+                                                    bgColor="#fff"
+                                                    color="#707070"
+                                                    _placeholder={{ color: "#707070" }}
+                                                    required
+                                                    boxShadow="unset"
+                                                    p="6px 10px"
+                                                    border="1px solid #707070 !important"
+                                                    height="35px"
+                                                    _focus={{ outline: "0" }}
 
+                                                />
+                                                {code.length === 6 && < InputRightElement >
+                                                    <CheckCircleIcon color={"green.500"} />
+                                                </InputRightElement>}
+                                            </InputGroup>
+                                        </FormControl>
+                                        <Text
+                                            color={waitTime ? '#79848e' : "#fff"}
+                                            fontSize={waitTime ? "13px" : '11px'}
+                                            cursor={waitTime ? "progress" : 'auto'}
+                                            fontFamily="Open Sans,Sans-serif"
+                                            textAlign="center"
+                                            fontWeight="500"
+                                            m={3}
+                                        >
+                                            {waitTime > 0 ?
+                                                `${moment.utc(waitTime).format("mm:ss")}` : <>
+                                                    {"Did not received the OTP?"}
+                                                    <Text
+                                                        cursor={waitTime ? "progress" : 'pointer'}
+                                                        display={'inline-block'}
+                                                        onClick={resendOTP}
+                                                        color="primary"
+                                                        as="span"
+                                                        ml={2}
+                                                    >
+                                                        Resend OTP
+                                                    </Text>
+                                                </>
+                                            }
+
+                                        </Text>
                                         <FormControl mb="15px">
-                                            <Input
-                                                name="password"
-                                                onChange={handleChange}
-                                                value={password}
-                                                type="password"
-                                                placeholder="Create new password"
-                                                bgColor="#fff"
-                                                color="#707070"
-                                                _placeholder={{ color: "#707070" }}
-                                                required
-                                                boxShadow="unset"
-                                                p="6px 10px"
-                                                border="1px solid #707070 !important"
-                                                height="35px"
-                                                _focus={{ outline: "0" }}
-                                                autoComplete="new-password"
-                                            />
+                                            <InputGroup>
+                                                <Input
+                                                    name="password"
+                                                    onChange={handleChange}
+                                                    value={password}
+                                                    type="password"
+                                                    placeholder="Create new password"
+                                                    bgColor="#fff"
+                                                    color="#707070"
+                                                    _placeholder={{ color: "#707070" }}
+                                                    required
+                                                    boxShadow="unset"
+                                                    p="6px 10px"
+                                                    border="1px solid #707070 !important"
+                                                    height="35px"
+                                                    _focus={{ outline: "0" }}
+                                                    autoComplete="new-password"
+                                                />
+                                                <InputRightElement>
+                                                    <Tooltip label="Password must be between 6 and 20 characters long" aria-label="Password tooltip">
+                                                        <InfoIcon color="#505054" />
+                                                    </Tooltip>
+                                                </InputRightElement>
+                                            </InputGroup>
                                         </FormControl>
 
                                         <FormControl mb="15px">
@@ -335,32 +376,14 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                         </Button>
                                     </form>
                                 </Box>
-                                <Text
-                                    color={waitTime ? '#79848e' : "#3182ce"}
-                                    cursor={waitTime ? "progress" : 'pointer'}
-                                    fontFamily="Open Sans,Sans-serif"
-                                    fontWeight="500"
-                                    fontSize="14px"
-                                    mb="20px"
-                                    textAlign="center"
-                                    marginTop={5}
-                                    marginBottom={-3}
-                                    onClick={resendOTP}
-                                >
-                                    {/* {waitTime > 0 ?
-                                        `${moment.duration(waitTime).minutes()}: ${moment.duration(waitTime).seconds()}`
-                                        : `Resend OTP`} */}
-                                    {waitTime > 0 ? `${moment.utc(waitTime).format("mm:ss")}` : `Resend OTP`}
-
-                                </Text>
                             </Flex>
                         </Box>
                     </Flex>
 
                     {ShowAlert()}
                 </ModalBody>
-            </ModalContent>
-        </Modal>
+            </ModalContent >
+        </Modal >
     );
 };
 
