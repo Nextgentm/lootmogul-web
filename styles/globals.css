@@ -286,7 +286,8 @@ nav {
     .top_game_banner {
         height: 290px;
     }
-    .gameslide {
+    
+    .gameslide,.gameslide.videobanner {
         min-height: 290px;
     }
     .banner-read-thumb-lg {

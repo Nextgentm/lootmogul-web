@@ -92,7 +92,7 @@ const Banner = ({
 
         return <Slider {...horizontalSettings}>
         <div className="gameslide videobanner">
-        {!isMobileDevice ?
+        {!isMobileDevice &&
             <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
             poster="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/15062247/thumbnail-Games-page-mobile-banner-for-desktop.jpg">
                 <source
@@ -100,7 +100,8 @@ const Banner = ({
                 type="video/mp4"
                 />
             </video>
-            : <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
+            }
+        {isMobileDevice && <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
             poster="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/15062316/thumbnail-Games-page-mobile-banner-for-mobile.jpg">
                 <source
                 src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/15062310/Games-page-mobile-for-mobile.mp4"
