@@ -64,6 +64,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
 
     const handleChange = e => {
         const { name, value } = e.target
+        if (name === 'code' && !/^\d{0,6}$/.test(value)) return
         setForm(prev => ({ ...prev, [name]: value }))
     }
 
