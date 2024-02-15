@@ -264,7 +264,9 @@ nav {
     display: flex;
     align-items: center;
 }
-
+.gameslide.videobanner{
+  min-height: 85vh;
+}
 .gameslide video {
     position: absolute;
     height: 100%;
