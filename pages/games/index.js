@@ -15,6 +15,7 @@ export default function GamesPage({
   contestSectionsData,
   seoData,
 }) {
+  console.log(contestSectionsData);
   return (
     <>
       <SEOContainer
@@ -103,7 +104,7 @@ export async function getStaticProps() {
         pageSize: 25,
       },
     });
-
+    
     try {
       const bannersRes = await fetch(
         process.env.NEXT_PUBLIC_STRAPI_API_URL +
