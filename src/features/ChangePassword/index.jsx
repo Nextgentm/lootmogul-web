@@ -34,64 +34,62 @@ import axios from "axios";
 const RESEND_OTP_WAIT_TIME = 120 * 1000 + 1000 //in mili sec (1 sec is added to fix timing issue)
 
 const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
-    const { setChangePasswordModalActive, /* togglePasswordChangedModal, toggleChangePasswordModal */ } = useContext(AppContext);
+    const { setChangePasswordModalActive } = useContext(AppContext);
     const toast = useToast();
     const router = useRouter();
 
-    const secCode = router.query.code || "";
+    const queryCode = router.query.code || "";
     const queryEmail = decodeURIComponent(router.query.email)
 
-    const [inputNewPwd, setInputNewPwd] = useState("");
-    const [inputConfirmPwd, setInputConfirmPwd] = useState("");
-    const [inputCode, setInputCode] = useState("");
+    const [form, setForm] = useState({
+        code: '',
+        password: '',
+        confirmPassword: '',
+    })
+    const { password, confirmPassword, code } = form
     const [alertMsg, setAlertMsg] = useState({});
 
 
     const lastResentLocalStorage = typeof window !== 'undefined' ? window?.localStorage?.getItem('lastResent') : 0
     const [state, setState] = useState({
-        // reSending: false,
         lastResent: lastResentLocalStorage || 0,
         waitTime: 0,
     })
-    const { /* reSending, */ lastResent, waitTime } = state
+    const { lastResent, waitTime } = state
 
-    // Effect to set the code from the query string
+
     useEffect(() => {
-        if (secCode) {
-            setInputCode(secCode);
-        }
-    }, [secCode]);
+        if (queryCode) setForm(prev => ({ ...prev, code: queryCode }))
+    }, [queryCode]);
 
-
+    const handleChange = e => {
+        const { name, value } = e.target
+        setForm(prev => ({ ...prev, [name]: value }))
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!inputNewPwd || !inputConfirmPwd) {
-            setAlertMsg({
-                isOpen: true,
-                title: "Error",
-                message: "Password and Confirm password is required"
-            });
-            return
-        }
-        if (inputNewPwd !== inputConfirmPwd) {
-            setAlertMsg({
-                isOpen: true,
-                title: "Error",
-                message: "New password and Confirm password is not matching"
-            });
-            return
-        }
+        if (!password || !confirmPassword)
+            return setAlertMsg({ message: "Password and Confirm password is required", isOpen: true, title: "Error", })
+
+        if (password !== confirmPassword)
+            return setAlertMsg({ message: "New password and Confirm password is not matching", isOpen: true, title: "Error", })
+
+        if (password.length < 6 || password.length > 20)
+            return setAlertMsg({ message: "Password length should be in 6 & 20", isOpen: true, title: "Error", })
+
+        if (isNaN(code) || code.length !== 6 || code < 100000)
+            return setAlertMsg({ message: "OTP should be 6 digit number", isOpen: true, title: "Error", })
+
         try {
             const { jwt, user } = await strapi.resetPassword({
-                otp: Number(inputCode),
+                password,
+                confirmPassword,
+                otp: Number(code),
                 email: forgotEmail || queryEmail,
-                password: inputNewPwd,
-                confirmPassword: inputConfirmPwd,
             });
 
-            setInputNewPwd("");
-            setInputConfirmPwd("");
+            setForm(prev => ({ ...prev, password: '', confirmPassword: '' }))
             if (setEmail) setEmail("")
             setChangePasswordModalActive(false);
             onClose()
@@ -105,8 +103,6 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                 isClosable: true
             });
         }
-
-
     };
 
     useEffect(() => {
@@ -263,6 +259,8 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                         <FormControl mb="15px">
                                             <Input
                                                 name="code"
+                                                value={code}
+                                                onChange={handleChange}
                                                 type="text"
                                                 placeholder="Please Enter OTP"
                                                 bgColor="#fff"
@@ -274,16 +272,14 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                 border="1px solid #707070 !important"
                                                 height="35px"
                                                 _focus={{ outline: "0" }}
-                                                value={inputCode}
-                                                onChange={(e) =>
-                                                    setInputCode(e.target.value)
-                                                }
                                             />
                                         </FormControl>
 
                                         <FormControl mb="15px">
                                             <Input
-                                                name="new_password"
+                                                name="password"
+                                                onChange={handleChange}
+                                                value={password}
                                                 type="password"
                                                 placeholder="Create new password"
                                                 bgColor="#fff"
@@ -295,18 +291,15 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                 border="1px solid #707070 !important"
                                                 height="35px"
                                                 _focus={{ outline: "0" }}
-                                                value={inputNewPwd}
                                                 autoComplete="new-password"
-                                                onChange={(e) =>
-                                                    setInputNewPwd(e.target.value)
-                                                }
                                             />
                                         </FormControl>
 
                                         <FormControl mb="15px">
                                             <Input
-                                                id="confirm_password"
-                                                name="confirm_password"
+                                                name="confirmPassword"
+                                                value={confirmPassword}
+                                                onChange={handleChange}
                                                 type="password"
                                                 placeholder="Confirm your password"
                                                 bgColor="#fff"
@@ -318,13 +311,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                 border="1px solid #707070 !important"
                                                 height="35px"
                                                 _focus={{ outline: "0" }}
-                                                value={inputConfirmPwd}
                                                 autoComplete="new-password"
-                                                onChange={(e) =>
-                                                    setInputConfirmPwd(
-                                                        e.target.value
-                                                    )
-                                                }
                                             />
                                         </FormControl>
 
