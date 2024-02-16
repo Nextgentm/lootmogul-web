@@ -91,28 +91,25 @@ const Banner = ({
         };
 
         return <Slider {...horizontalSettings}>
-        <div className="gameslide" 
-            onClick={() => {
-                executeScroll(1);
-            }}
-        >
-        {!isMobileDevice ?
-            /*<video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-            poster="/assets/videos/GamePosterImage.png">
+        <div className="gameslide videobanner">
+        {!isMobileDevice &&
+            <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
+            poster="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/16070002/Thumbnail2.jpg">
                 <source
-                src="https://lootmogul.s3.us-west-2.amazonaws.com/Gamespagebannerfordesktop.mp4"
+                src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/16065947/Games-page-banner-for-desktop-2.mp4"
                 type="video/mp4"
                 />
             </video>
-            : <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-            poster="/assets/videos/GamePosterImageMobile.png">
+            }
+        {isMobileDevice && <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
+            poster="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/16065956/Thumbnail1.jpg">
                 <source
-                src="https://lootmogul.s3.us-west-2.amazonaws.com/Gamespagebannerformobile.mp4"
+                src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/16065953/Games-page-banner-for-mobile.mp4"
                 type="video/mp4"
                 />
-            </video>*/
+            </video>
             
-            <Image
+            /*<Image
                 objectFit="cover"
                 alt="Image"
                 layout="fill"
@@ -125,7 +122,7 @@ const Banner = ({
                 layout="fill"
                 w="350px"
                 src="/assets/banner_dsg_website_2_mobile.jpg"
-            />
+            />**/
         }
             <div className="banner-read-thumb-lg">
             <Box>
@@ -140,7 +137,7 @@ const Banner = ({
                                 "70px",
                             ]}
                             mb={0}
-                            mt="5%"
+                            mt="10%"
                             fontFamily="var(--chakra-fonts-Blanch)"
                             lineHeight={[
                                 "30px",
