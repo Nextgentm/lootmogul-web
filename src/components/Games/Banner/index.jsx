@@ -94,17 +94,17 @@ const Banner = ({
         <div className="gameslide videobanner">
         {!isMobileDevice &&
             <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-            poster="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/15062247/thumbnail-Games-page-mobile-banner-for-desktop.jpg">
+            poster="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/16070002/Thumbnail2.jpg">
                 <source
-                src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/15062314/Games-page-banner-for-desktop.mp4"
+                src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/16065947/Games-page-banner-for-desktop-2.mp4"
                 type="video/mp4"
                 />
             </video>
             }
         {isMobileDevice && <video style={{ "width": "100%" }} autoPlay muted loop controlsList="nofullscreen nodownload noremoteplayback noplaybackrate foobar" 
-            poster="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/15062316/thumbnail-Games-page-mobile-banner-for-mobile.jpg">
+            poster="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/16065956/Thumbnail1.jpg">
                 <source
-                src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/15062310/Games-page-mobile-for-mobile.mp4"
+                src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/02/16065953/Games-page-banner-for-mobile.mp4"
                 type="video/mp4"
                 />
             </video>
