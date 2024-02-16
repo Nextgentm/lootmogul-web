@@ -513,9 +513,9 @@ export const AppContextContainer = ({ children }) => {
             }
          }, 2000);
 
-         setTimeout(() => {
+         /*setTimeout(() => {
             initializePage();
-         }, 10000);
+         }, 10000);*/
          
     }, [user]);
     
