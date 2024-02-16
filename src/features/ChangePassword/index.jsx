@@ -22,7 +22,10 @@ import {
     Heading,
     AlertDialogHeader,
     AlertDialogContent,
-    AlertDialogOverlay
+    AlertDialogOverlay,
+    InputRightElement,
+    InputGroup,
+    Tooltip,
 } from "@chakra-ui/react";
 import { AppContext } from "../../utils/AppContext/index";
 import moment from 'moment';
@@ -30,68 +33,68 @@ import moment from 'moment';
 import { root, loginTitleStyle } from "./styles";
 import strapi from "../../utils/strapi";
 import axios from "axios";
+import { CheckCircleIcon, InfoIcon } from "@chakra-ui/icons";
 
 const RESEND_OTP_WAIT_TIME = 120 * 1000 + 1000 //in mili sec (1 sec is added to fix timing issue)
 
 const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
-    const { setChangePasswordModalActive, /* togglePasswordChangedModal, toggleChangePasswordModal */ } = useContext(AppContext);
+    const { setChangePasswordModalActive } = useContext(AppContext);
     const toast = useToast();
     const router = useRouter();
 
-    const secCode = router.query.code || "";
+    const queryCode = router.query.code || "";
     const queryEmail = decodeURIComponent(router.query.email)
 
-    const [inputNewPwd, setInputNewPwd] = useState("");
-    const [inputConfirmPwd, setInputConfirmPwd] = useState("");
-    const [inputCode, setInputCode] = useState("");
+    const [form, setForm] = useState({
+        code: '',
+        password: '',
+        confirmPassword: '',
+    })
+    const { password, confirmPassword, code } = form
     const [alertMsg, setAlertMsg] = useState({});
 
 
     const lastResentLocalStorage = typeof window !== 'undefined' ? window?.localStorage?.getItem('lastResent') : 0
     const [state, setState] = useState({
-        // reSending: false,
         lastResent: lastResentLocalStorage || 0,
         waitTime: 0,
     })
-    const { /* reSending, */ lastResent, waitTime } = state
+    const { lastResent, waitTime } = state
 
-    // Effect to set the code from the query string
+
     useEffect(() => {
-        if (secCode) {
-            setInputCode(secCode);
-        }
-    }, [secCode]);
+        if (queryCode) setForm(prev => ({ ...prev, code: queryCode }))
+    }, [queryCode]);
 
-
+    const handleChange = e => {
+        const { name, value } = e.target
+        if (name === 'code' && !/^\d{0,6}$/.test(value)) return
+        setForm(prev => ({ ...prev, [name]: value }))
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!inputNewPwd || !inputConfirmPwd) {
-            setAlertMsg({
-                isOpen: true,
-                title: "Error",
-                message: "Password and Confirm password is required"
-            });
-            return
-        }
-        if (inputNewPwd !== inputConfirmPwd) {
-            setAlertMsg({
-                isOpen: true,
-                title: "Error",
-                message: "New password and Confirm password is not matching"
-            });
-            return
-        }
+        if (!password || !confirmPassword)
+            return setAlertMsg({ message: "Password and Confirm password is required", isOpen: true, title: "Error", })
+
+        if (password !== confirmPassword)
+            return setAlertMsg({ message: "New password and Confirm password is not matching", isOpen: true, title: "Error", })
+
+        if (password.length < 6 || password.length > 20)
+            return setAlertMsg({ message: "Password length should be in 6 & 20", isOpen: true, title: "Error", })
+
+        if (isNaN(code) || code.length !== 6 || code < 100000)
+            return setAlertMsg({ message: "OTP should be 6 digit number", isOpen: true, title: "Error", })
+
         try {
             const { jwt, user } = await strapi.resetPassword({
-                otp: Number(inputCode),
+                password,
+                confirmPassword,
+                otp: Number(code),
                 email: forgotEmail || queryEmail,
-                password: inputNewPwd,
-                confirmPassword: inputConfirmPwd,
             });
 
-            setInputNewPwd("");
-            setInputConfirmPwd("");
+            setForm(prev => ({ ...prev, password: '', confirmPassword: '' }))
             if (setEmail) setEmail("")
             setChangePasswordModalActive(false);
             onClose()
@@ -105,8 +108,6 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                 isClosable: true
             });
         }
-
-
     };
 
     useEffect(() => {
@@ -233,6 +234,16 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                 >
                                     NEW PASSWORD
                                 </Text>
+                                <Text
+                                    color="#fff"
+                                    fontFamily="Open Sans,Sans-serif"
+                                    fontWeight="500"
+                                    fontSize="14px"
+                                    mb="20px"
+                                    textAlign="center"
+                                >
+                                    {'OTP has been sent to your email. Please check your inbox & spam folder'}
+                                </Text>
 
                                 <Text
                                     color="#fff"
@@ -242,59 +253,95 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     mb="20px"
                                     textAlign="center"
                                 >
-                                    Please make sure your new password must be
-                                    different from previous used password
+                                    <span style={{ fontWeight: '900' }}> {'Please Note:'} </span> <br />
+                                    OTP is valid for 15 min <br />
+                                    Maximum 3 attempts is allowed <br />
                                 </Text>
 
                                 <Box w="100%">
                                     <form onSubmit={handleSubmit}>
                                         <FormControl mb="15px">
-                                            <Input
-                                                name="code"
-                                                type="text"
-                                                placeholder="Please Enter OTP"
-                                                bgColor="#fff"
-                                                color="#707070"
-                                                _placeholder={{ color: "#707070" }}
-                                                required
-                                                boxShadow="unset"
-                                                p="6px 10px"
-                                                border="1px solid #707070 !important"
-                                                height="35px"
-                                                _focus={{ outline: "0" }}
-                                                value={inputCode}
-                                                onChange={(e) =>
-                                                    setInputCode(e.target.value)
-                                                }
-                                            />
+                                            <InputGroup>
+                                                <Input
+                                                    name="code"
+                                                    value={code}
+                                                    onChange={handleChange}
+                                                    type="text"
+                                                    placeholder="Please Enter OTP"
+                                                    bgColor="#fff"
+                                                    color="#707070"
+                                                    _placeholder={{ color: "#707070" }}
+                                                    required
+                                                    boxShadow="unset"
+                                                    p="6px 10px"
+                                                    border="1px solid #707070 !important"
+                                                    height="35px"
+                                                    _focus={{ outline: "0" }}
+
+                                                />
+                                                {code.length === 6 && < InputRightElement >
+                                                    <CheckCircleIcon color={"green.500"} />
+                                                </InputRightElement>}
+                                            </InputGroup>
+                                        </FormControl>
+                                        <Text
+                                            color={waitTime ? '#79848e' : "#fff"}
+                                            fontSize={waitTime ? "13px" : '11px'}
+                                            cursor={waitTime ? "progress" : 'auto'}
+                                            fontFamily="Open Sans,Sans-serif"
+                                            textAlign="center"
+                                            fontWeight="500"
+                                            m={3}
+                                        >
+                                            {waitTime > 0 ?
+                                                `${moment.utc(waitTime).format("mm:ss")}` : <>
+                                                    {"Did not received the OTP?"}
+                                                    <Text
+                                                        cursor={waitTime ? "progress" : 'pointer'}
+                                                        display={'inline-block'}
+                                                        onClick={resendOTP}
+                                                        color="primary"
+                                                        as="span"
+                                                        ml={2}
+                                                    >
+                                                        Resend OTP
+                                                    </Text>
+                                                </>
+                                            }
+
+                                        </Text>
+                                        <FormControl mb="15px">
+                                            <InputGroup>
+                                                <Input
+                                                    name="password"
+                                                    onChange={handleChange}
+                                                    value={password}
+                                                    type="password"
+                                                    placeholder="Create new password"
+                                                    bgColor="#fff"
+                                                    color="#707070"
+                                                    _placeholder={{ color: "#707070" }}
+                                                    required
+                                                    boxShadow="unset"
+                                                    p="6px 10px"
+                                                    border="1px solid #707070 !important"
+                                                    height="35px"
+                                                    _focus={{ outline: "0" }}
+                                                    autoComplete="new-password"
+                                                />
+                                                <InputRightElement>
+                                                    <Tooltip label="Password must be between 6 and 20 characters long" aria-label="Password tooltip">
+                                                        <InfoIcon color="#505054" />
+                                                    </Tooltip>
+                                                </InputRightElement>
+                                            </InputGroup>
                                         </FormControl>
 
                                         <FormControl mb="15px">
                                             <Input
-                                                name="new_password"
-                                                type="password"
-                                                placeholder="Create new password"
-                                                bgColor="#fff"
-                                                color="#707070"
-                                                _placeholder={{ color: "#707070" }}
-                                                required
-                                                boxShadow="unset"
-                                                p="6px 10px"
-                                                border="1px solid #707070 !important"
-                                                height="35px"
-                                                _focus={{ outline: "0" }}
-                                                value={inputNewPwd}
-                                                autoComplete="new-password"
-                                                onChange={(e) =>
-                                                    setInputNewPwd(e.target.value)
-                                                }
-                                            />
-                                        </FormControl>
-
-                                        <FormControl mb="15px">
-                                            <Input
-                                                id="confirm_password"
-                                                name="confirm_password"
+                                                name="confirmPassword"
+                                                value={confirmPassword}
+                                                onChange={handleChange}
                                                 type="password"
                                                 placeholder="Confirm your password"
                                                 bgColor="#fff"
@@ -306,13 +353,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                 border="1px solid #707070 !important"
                                                 height="35px"
                                                 _focus={{ outline: "0" }}
-                                                value={inputConfirmPwd}
                                                 autoComplete="new-password"
-                                                onChange={(e) =>
-                                                    setInputConfirmPwd(
-                                                        e.target.value
-                                                    )
-                                                }
                                             />
                                         </FormControl>
 
@@ -335,32 +376,14 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                         </Button>
                                     </form>
                                 </Box>
-                                <Text
-                                    color={waitTime ? '#79848e' : "#3182ce"}
-                                    cursor={waitTime ? "progress" : 'pointer'}
-                                    fontFamily="Open Sans,Sans-serif"
-                                    fontWeight="500"
-                                    fontSize="14px"
-                                    mb="20px"
-                                    textAlign="center"
-                                    marginTop={5}
-                                    marginBottom={-3}
-                                    onClick={resendOTP}
-                                >
-                                    {/* {waitTime > 0 ?
-                                        `${moment.duration(waitTime).minutes()}: ${moment.duration(waitTime).seconds()}`
-                                        : `Resend OTP`} */}
-                                    {waitTime > 0 ? `${moment.utc(waitTime).format("mm:ss")}` : `Resend OTP`}
-
-                                </Text>
                             </Flex>
                         </Box>
                     </Flex>
 
                     {ShowAlert()}
                 </ModalBody>
-            </ModalContent>
-        </Modal>
+            </ModalContent >
+        </Modal >
     );
 };
 
