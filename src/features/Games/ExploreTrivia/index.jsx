@@ -67,6 +67,7 @@ const ExploreTrivia = ({ section, executeScroll }) => {
           "5rem"
         ]}
         my="30px"
+        mt="5%"
       >
         EXPLORE TRIVIA
       </Text>
