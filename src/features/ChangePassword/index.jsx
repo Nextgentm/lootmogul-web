@@ -84,7 +84,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
             return setAlertMsg({ message: "Password length should be in 6 & 20", isOpen: true, title: "Error", })
 
         if (isNaN(code) || code.length !== 6 || code < 100000)
-            return setAlertMsg({ message: "OTP should be 6 digit number", isOpen: true, title: "Error", })
+            return setAlertMsg({ message: "code should be 6 digit number", isOpen: true, title: "Error", })
 
         try {
             const { jwt, user } = await strapi.resetPassword({
@@ -242,7 +242,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     mb="20px"
                                     textAlign="center"
                                 >
-                                    {'OTP has been sent to your email. Please check your inbox & spam folder'}
+                                    {'Code has been sent to your email. Please check your inbox & spam folder'}
                                 </Text>
 
                                 <Text
@@ -254,7 +254,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     textAlign="center"
                                 >
                                     <span style={{ fontWeight: '900' }}> {'Please Note:'} </span> <br />
-                                    OTP is valid for 15 min <br />
+                                    Code is valid for 15 min <br />
                                     Maximum 3 attempts is allowed <br />
                                 </Text>
 
@@ -267,7 +267,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                     value={code}
                                                     onChange={handleChange}
                                                     type="text"
-                                                    placeholder="Please Enter OTP"
+                                                    placeholder="Please Enter code"
                                                     bgColor="#fff"
                                                     color="#707070"
                                                     _placeholder={{ color: "#707070" }}
@@ -295,7 +295,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                         >
                                             {waitTime > 0 ?
                                                 `${moment.utc(waitTime).format("mm:ss")}` : <>
-                                                    {"Did not received the OTP?"}
+                                                    {"Did not received the code?"}
                                                     <Text
                                                         cursor={waitTime ? "progress" : 'pointer'}
                                                         display={'inline-block'}
@@ -304,7 +304,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                         as="span"
                                                         ml={2}
                                                     >
-                                                        Resend OTP
+                                                        Resend Code
                                                     </Text>
                                                 </>
                                             }
