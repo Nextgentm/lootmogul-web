@@ -146,7 +146,7 @@ const ForgotPassword = ({ isOpen, onClose, setEmail, email }) => {
                                     lineHeight="1"
                                     {...loginTitleStyle}
                                 >
-                                    FORGOT PASSWORD
+                                    FORGOT PASSWORD?
                                 </Text>
 
                                 <Text
@@ -157,7 +157,7 @@ const ForgotPassword = ({ isOpen, onClose, setEmail, email }) => {
                                     mb="30px"
                                     textAlign="center"
                                 >
-                                    Enter the email associated with account and we'll send you a link to reset your password
+                                    Enter the email linked to your LootMogul account. We will send you a code to reset your password
                                 </Text>
 
                                 <Box w="100%">

@@ -33,7 +33,8 @@ import moment from 'moment';
 import { root, loginTitleStyle } from "./styles";
 import strapi from "../../utils/strapi";
 import axios from "axios";
-import { CheckCircleIcon, InfoIcon } from "@chakra-ui/icons";
+import { CheckCircleIcon, InfoIcon, } from "@chakra-ui/icons";
+import ErrOrSuccessMsg from "../../components/ErrOrSuccessMsg";
 
 const RESEND_OTP_WAIT_TIME = 120 * 1000 + 1000 //in mili sec (1 sec is added to fix timing issue)
 
@@ -51,8 +52,10 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
         confirmPassword: '',
     })
     const { password, confirmPassword, code } = form
-    const [alertMsg, setAlertMsg] = useState({});
 
+    const [alertMsg, setAlertMsg] = useState({});
+    const [err, setErr] = useState({})
+    const [success, setSuccess] = useState({})
 
     const lastResentLocalStorage = typeof window !== 'undefined' ? window?.localStorage?.getItem('lastResent') : 0
     const [state, setState] = useState({
@@ -70,43 +73,42 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
         const { name, value } = e.target
         if (name === 'code' && !/^\d{0,6}$/.test(value)) return
         setForm(prev => ({ ...prev, [name]: value }))
+        setErr(prev => ({ ...prev, [name]: '', submit: '' }))
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!password || !confirmPassword)
-            return setAlertMsg({ message: "Password and Confirm password is required", isOpen: true, title: "Error", })
+        if (!password && !confirmPassword && !code) return setErr({ submit: 'Please fill all the required fields' })
 
-        if (password !== confirmPassword)
-            return setAlertMsg({ message: "New password and Confirm password is not matching", isOpen: true, title: "Error", })
+        const error = {}
+        if (!password) error.password = 'This field is required'
+        if (!confirmPassword) error.confirmPassword = 'This field is required'
+        if (!code) error.code = 'This field is required'
+        if (Object.keys(error).length) return setErr(error)
 
-        if (password.length < 6 || password.length > 20)
-            return setAlertMsg({ message: "Password length should be in 6 & 20", isOpen: true, title: "Error", })
+        if (password.length < 6) return setErr({ password: 'Password must be minimum 6 characters' })
+        if (password !== confirmPassword) return setErr({ password: 'New password and Confirm password does not match' })
 
-        if (isNaN(code) || code.length !== 6 || code < 100000)
-            return setAlertMsg({ message: "code should be 6 digit number", isOpen: true, title: "Error", })
+        if (isNaN(code) || code.length !== 6) return setErr({ code: 'Code should have 6 digits' })
 
         try {
-            const { jwt, user } = await strapi.resetPassword({
+            const { jwt, user, message } = await strapi.resetPassword({
                 password,
                 confirmPassword,
                 otp: Number(code),
                 email: forgotEmail || queryEmail,
             });
-
+            toast({ title: message, status: "success", duration: 4000, isClosable: true, position: "top-right", })
             setForm(prev => ({ ...prev, password: '', confirmPassword: '' }))
             if (setEmail) setEmail("")
             setChangePasswordModalActive(false);
             onClose()
             router.push('/games')
         } catch (error) {
-            toast({
-                title: error?.message || error?.error?.message,
-                status: "error",
-                duration: 5000,
-                position: "top-right",
-                isClosable: true
-            });
+            const errMsg = error?.response?.data?.message || error?.message || error?.error?.message
+            const errObj = error?.response?.data?.error || error?.error || {}
+            setErr(errObj)
+            errMsg && toast({ title: errMsg, status: "error", duration: 4000, position: "top-right", isClosable: true })
         }
     };
 
@@ -137,22 +139,14 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
             { email: forgotEmail || queryEmail }
         )
             .then((res) => {
-                toast({
-                    title: res?.data?.message,
-                    status: "success",
-                    duration: 4000,
-                    isClosable: true,
-                    position: "top-right",
-                });
+                const msgObj = res?.data?.message
+                setSuccess(msgObj)
             })
             .catch((error) => {
-                toast({
-                    title: error?.response?.data?.message || error?.error?.message || error?.message,
-                    status: "error",
-                    duration: 4000,
-                    position: "top-right",
-                    isClosable: true
-                });
+                const errMsg = error?.response?.data?.message || error?.message || error?.error?.message
+                const errObj = error?.response?.data?.error || {}
+                setErr(errObj)
+                errMsg && toast({ title: errMsg, status: "error", duration: 4000, position: "top-right", isClosable: true })
             });
     }
 
@@ -232,7 +226,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     lineHeight="1"
                                     {...loginTitleStyle}
                                 >
-                                    NEW PASSWORD
+                                    Setup New Password
                                 </Text>
                                 <Text
                                     color="#fff"
@@ -240,9 +234,9 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     fontWeight="500"
                                     fontSize="14px"
                                     mb="20px"
-                                    textAlign="center"
+                                // textAlign="center"
                                 >
-                                    {'Code has been sent to your email. Please check your inbox & spam folder'}
+                                    {'A code has been sent to your email linked to LootMogul account. Please check your spam folder incase not received'}
                                 </Text>
 
                                 <Text
@@ -251,11 +245,12 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     fontWeight="500"
                                     fontSize="14px"
                                     mb="20px"
-                                    textAlign="center"
+                                    ml={-20}
+                                // textAlign="center"
                                 >
-                                    <span style={{ fontWeight: '900' }}> {'Please Note:'} </span> <br />
-                                    Code is valid for 15 min <br />
-                                    Maximum 3 attempts is allowed <br />
+                                    <span style={{ fontWeight: '900' }}> {'Note:'} </span> <br />
+                                    Code is valid for 15 minutes only <br />
+                                    Maximum 3 attempts allowed <br />
                                 </Text>
 
                                 <Box w="100%">
@@ -271,7 +266,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                     bgColor="#fff"
                                                     color="#707070"
                                                     _placeholder={{ color: "#707070" }}
-                                                    required
+                                                    /* required */
                                                     boxShadow="unset"
                                                     p="6px 10px"
                                                     border="1px solid #707070 !important"
@@ -279,10 +274,11 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                     _focus={{ outline: "0" }}
 
                                                 />
-                                                {code.length === 6 && < InputRightElement >
+                                                {!err.code && code.length === 6 && < InputRightElement >
                                                     <CheckCircleIcon color={"green.500"} />
                                                 </InputRightElement>}
                                             </InputGroup>
+                                            <ErrOrSuccessMsg msg={err.code || success.code} success={success.code}  />
                                         </FormControl>
                                         <Text
                                             color={waitTime ? '#79848e' : "#fff"}
@@ -294,8 +290,8 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                             m={3}
                                         >
                                             {waitTime > 0 ?
-                                                `${moment.utc(waitTime).format("mm:ss")}` : <>
-                                                    {"Did not received the code?"}
+                                                `Time left : ${moment.utc(waitTime).format("mm:ss")}` : <>
+                                                    {"Didn't receive the code?"}
                                                     <Text
                                                         cursor={waitTime ? "progress" : 'pointer'}
                                                         display={'inline-block'}
@@ -304,7 +300,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                         as="span"
                                                         ml={2}
                                                     >
-                                                        Resend Code
+                                                        Resend
                                                     </Text>
                                                 </>
                                             }
@@ -321,7 +317,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                     bgColor="#fff"
                                                     color="#707070"
                                                     _placeholder={{ color: "#707070" }}
-                                                    required
+                                                    /* required */
                                                     boxShadow="unset"
                                                     p="6px 10px"
                                                     border="1px solid #707070 !important"
@@ -330,11 +326,12 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                     autoComplete="new-password"
                                                 />
                                                 <InputRightElement>
-                                                    <Tooltip label="Password must be between 6 and 20 characters long" aria-label="Password tooltip">
+                                                    <Tooltip label="Password must be minimum 6 characters" aria-label="Password tooltip">
                                                         <InfoIcon color="#505054" />
                                                     </Tooltip>
                                                 </InputRightElement>
                                             </InputGroup>
+                                            <ErrOrSuccessMsg msg={err.password} />
                                         </FormControl>
 
                                         <FormControl mb="15px">
@@ -347,7 +344,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                 bgColor="#fff"
                                                 color="#707070"
                                                 _placeholder={{ color: "#707070" }}
-                                                required
+                                                /* required */
                                                 boxShadow="unset"
                                                 p="6px 10px"
                                                 border="1px solid #707070 !important"
@@ -355,8 +352,9 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                 _focus={{ outline: "0" }}
                                                 autoComplete="new-password"
                                             />
+                                            <ErrOrSuccessMsg msg={err.confirmPassword} />
                                         </FormControl>
-
+                                        <ErrOrSuccessMsg msg={err.submit} align="center" />
                                         <Button
                                             width="100%"
                                             h="30px"
