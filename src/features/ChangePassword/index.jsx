@@ -218,13 +218,14 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                 py="30px"
                                 direction={"column"}
                                 zIndex={999}
-                                align="center"
+                                // align="center"
                             >
                                 <Text
                                     fontSize={["38px", "38px"]}
                                     fontWeight="var(--chakra-fontWeights-normal)"
                                     mb="10px"
                                     lineHeight="1"
+                                    align={'center'}
                                     {...loginTitleStyle}
                                 >
                                     Setup New Password
@@ -246,7 +247,6 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     fontWeight="500"
                                     fontSize="14px"
                                     mb="20px"
-                                    ml={-20}
                                 // textAlign="center"
                                 >
                                     <span style={{ fontWeight: '900' }}> {'Note:'} </span> <br />
