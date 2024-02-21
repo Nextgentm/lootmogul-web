@@ -260,8 +260,11 @@ const Profile = () => {
                         <Box mt="25px">
                             <Text fontSize="14px" fontFamily={"Sora"} fontWeight={"600"}>LootMogul ID {user?.email}</Text>
                             <Text fontWeight={"600"} pt="10px">Member Since {moment(user?.createdAt).format("YYYY, MMMM")}</Text>
-                            {user?.email && (
+                            {user?.email && user?.ready_player_me_url !== '' && (
                             <Button onClick={imageChange} fontSize={"14px"} p="20px" mt="45px" backgroundImage={"none"} backgroundColor={"#E90A63"}>Update Avatar</Button>
+                            )}
+                            {user?.email && user?.ready_player_me_url === '' && (
+                            <Button onClick={imageChange} fontSize={"14px"} p="20px" mt="45px" backgroundImage={"none"} backgroundColor={"#E90A63"}>Create Avatar</Button>
                             )}
                         </Box>    
                     </Flex>
