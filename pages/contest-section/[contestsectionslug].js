@@ -60,7 +60,7 @@ export default function GamesPage({ }) {
             contestmasters: {
               filters,
               fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
-              sort: "priority",
+              //sort: "priority",
               populate: {
                 contest_section: {
                   fields: ["name", "slug"],
