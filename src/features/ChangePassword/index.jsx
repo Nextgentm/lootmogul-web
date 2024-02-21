@@ -74,6 +74,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
         if (name === 'code' && !/^\d{0,6}$/.test(value)) return
         setForm(prev => ({ ...prev, [name]: value }))
         setErr(prev => ({ ...prev, [name]: '', submit: '' }))
+        setSuccess(prev => ({ ...prev, [name]: '', submit: '' }))
     }
 
     const handleSubmit = async (e) => {
@@ -92,13 +93,13 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
         if (isNaN(code) || code.length !== 6) return setErr({ code: 'Code should have 6 digits' })
 
         try {
-            const { jwt, user, message } = await strapi.resetPassword({
+            await strapi.resetPassword({
                 password,
                 confirmPassword,
                 otp: Number(code),
                 email: forgotEmail || queryEmail,
             });
-            toast({ title: message, status: "success", duration: 4000, isClosable: true, position: "top-right", })
+            toast({ title: 'Congratulations, your password has been updated successfully', status: "success", duration: 4000, isClosable: true, position: "top-right", })
             setForm(prev => ({ ...prev, password: '', confirmPassword: '' }))
             if (setEmail) setEmail("")
             setChangePasswordModalActive(false);
@@ -278,7 +279,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                                     <CheckCircleIcon color={"green.500"} />
                                                 </InputRightElement>}
                                             </InputGroup>
-                                            <ErrOrSuccessMsg msg={err.code || success.code} success={success.code}  />
+                                            <ErrOrSuccessMsg msg={err.code || success.code} success={success.code} />
                                         </FormControl>
                                         <Text
                                             color={waitTime ? '#79848e' : "#fff"}
