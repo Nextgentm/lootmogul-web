@@ -11,9 +11,9 @@ const defaultSEOData = {
 };
 
 export default function GamesPage({
-  banners = [],
   contestSectionsData,
-  seoData,
+  banners,
+  seoData
 }) {
   return (
     <>
@@ -65,7 +65,7 @@ export async function getStaticProps() {
       populate: {
         contestmasters: {
           fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
-          sort: "priority",
+          //sort: "id",
           populate: {
             contest_section: {
               fields: ["name", "slug"],
@@ -104,17 +104,15 @@ export async function getStaticProps() {
         process.env.NEXT_PUBLIC_STRAPI_API_URL +
         "/api/campaigns?sort=priority&populate=bannerImage"
       );
-
       const banners = await bannersRes.json();
       const seoData = await getSeoData("games");
-
       return {
         props: {
           contestSectionsData: res,
           banners,
-          seoData,
+          seoData, 
         },
-        revalidate: 300,
+       revalidate: 300,
       };
     } catch (error) { }
     return {

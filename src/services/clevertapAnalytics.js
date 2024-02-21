@@ -37,6 +37,18 @@ export const pageview = async (url) => {
         );
 
         if(onUserLoginData.data){
+
+            clevertap.notifications.push({
+                "titleText":'Stay updated & power up your play!',
+                "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
+                "okButtonText":'Yes',
+                "rejectButtonText":'No',
+                "okButtonColor":'#e90a63',
+                "askAgainTimeInSeconds":120,
+                "notification_bgcolor":"#FF0000",
+                "okButtonBgColor":"#FF0000"
+            });
+            
             clevertap.event.push("Page View",{
                 "Page Name":url,
                 "Username": onUserLoginData.data?.data.username,
