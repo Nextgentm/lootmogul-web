@@ -79,6 +79,11 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        /* removing all message before submission */
+        setSuccess({})
+        setErr({})
+
         if (!password && !confirmPassword && !code) return setErr({ submit: 'Please fill all the required fields' })
 
         const error = {}
