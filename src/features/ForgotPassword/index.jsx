@@ -25,23 +25,21 @@ import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
 import strapi from "../../../src/utils/strapi";
+import ErrOrSuccessMsg from "../../components/ErrOrSuccessMsg";
 
-function isValidEmail(email) {
-    return /\S+@\S+\.\S+/.test(email);
-}
+const isValidEmail = (email) => /^\S+@\S+\.\S+$/.test(email)
 
 const ForgotPassword = ({ isOpen, onClose, setEmail, email }) => {
     const toast = useToast();
 
-    const { setForgotPasswordModalActive, /* toggleCheckYourMailModal, */ toggleChangePasswordModal } = useContext(AppContext);
+    const { setForgotPasswordModalActive, toggleChangePasswordModal } = useContext(AppContext);
+
+    const [err, setErr] = useState({})
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!email)
-            return setAlertMsg({ message: "Email address is required", isOpen: true, title: "Error", })
-
-        if (!isValidEmail(email))
-            return setAlertMsg({ message: "Email address is invalid", isOpen: true, title: "Error", })
+        if (!email.trim()) return setErr({ email: 'Email address is required' })
+        if (!isValidEmail(email)) return setErr({ email: 'Email address is invalid' })
 
         try {
             const res = await strapi.forgotPassword({ email: email });
@@ -68,10 +66,11 @@ const ForgotPassword = ({ isOpen, onClose, setEmail, email }) => {
 
     }
 
-    /* const handleChange = (e) => {
-        const {value} = e.target
+    const handleChange = (e) => {
+        const { value, name } = e.target
         setEmail(value)
-    } */
+        setErr(prev => ({ ...prev, [name]: '' }))
+    }
 
     const [alertMsg, setAlertMsg] = useState({});
     const ShowAlert = () => {
@@ -146,7 +145,7 @@ const ForgotPassword = ({ isOpen, onClose, setEmail, email }) => {
                                     lineHeight="1"
                                     {...loginTitleStyle}
                                 >
-                                    FORGOT PASSWORD
+                                    FORGOT PASSWORD?
                                 </Text>
 
                                 <Text
@@ -157,30 +156,30 @@ const ForgotPassword = ({ isOpen, onClose, setEmail, email }) => {
                                     mb="30px"
                                     textAlign="center"
                                 >
-                                    Enter the email associated with account and we'll send you a link to reset your password
+                                    Enter the email linked to your LootMogul account. We will send you a code to reset your password
                                 </Text>
 
                                 <Box w="100%">
                                     <form onSubmit={handleSubmit}>
                                         <FormControl mb="15px">
                                             <Input
-                                                id="emailid"
-                                                name="emailid"
-                                                type="email"
+                                                name="email"
+                                                value={email}
+                                                onChange={handleChange}
+                                                // type="email"
+                                                // onChange={(e) => setEmail(e.target.value)}
+                                                // required
                                                 placeholder="Enter email address"
                                                 bgColor="#fff"
                                                 color="#707070"
                                                 _placeholder={{ color: "#707070" }}
-                                                required
                                                 boxShadow="unset"
                                                 p="6px 10px"
                                                 border="1px solid #707070 !important"
                                                 height="35px"
                                                 _focus={{ outline: "0" }}
-                                                value={email}
-                                                onChange={(e) => setEmail(e.target.value)}
-                                            // onChange={handleChange}
                                             />
+                                            <ErrOrSuccessMsg msg={err.email} />
                                         </FormControl>
 
                                         <Button
