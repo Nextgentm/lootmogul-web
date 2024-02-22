@@ -99,15 +99,25 @@ const Header = () => {
 
     const [email, setEmail] = useState('')
 
-    /*useEffect(() => {    
-        if(router.pathname){
+    useEffect(() => {    
+        if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true' && user && router.pathname){
+                clevertap.notifications.push({
+                    "titleText":'Stay updated & power up your play!',
+                    "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
+                    "okButtonText":'Yes',
+                    "rejectButtonText":'No',
+                    "okButtonColor":'#e90a63',
+                    "askAgainTimeInSeconds":5,
+                    "notification_bgcolor":"#FF0000",
+                    "okButtonBgColor":"#FF0000"
+                })
             //console.log('Page ',router.pathname);
-            clevertap.event.push("Page Request",{
+            /*clevertap.event.push("Page Request Notifications",{
                 "Page":router.pathname,
-            });
+            });*/
         }
-    },[router]);*/
-
+    },[router,user]);
+    
     const isActiveLink = (path, queryPath) => {
         //TODO: need to check what condition is this and remove the proper statements
         //if (queryPath)
