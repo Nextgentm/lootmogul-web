@@ -38,7 +38,7 @@ export const pageview = async (url) => {
 
         if(onUserLoginData.data){
 
-            clevertap.notifications.push({
+            /*clevertap.notifications.push({
                 "titleText":'Stay updated & power up your play!',
                 "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
                 "okButtonText":'Yes',
@@ -47,7 +47,7 @@ export const pageview = async (url) => {
                 "askAgainTimeInSeconds":120,
                 "notification_bgcolor":"#FF0000",
                 "okButtonBgColor":"#FF0000"
-            });
+            });*/
             
             clevertap.event.push("Page View",{
                 "Page Name":url,
@@ -124,7 +124,7 @@ export const onUserLogin = async ({ action, params, jwt, pathname }) => {
         if (onUserLoginData?.data && onUserGameData?.data && onUserTransactionData?.data) {
             //console.log('Updating onUserLoginData...');
             
-            clevertap.notifications.push({
+            /*clevertap.notifications.push({
                 "titleText":'Stay updated & power up your play!',
                 "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
                 "okButtonText":'Yes',
@@ -133,7 +133,7 @@ export const onUserLogin = async ({ action, params, jwt, pathname }) => {
                 "askAgainTimeInSeconds":120,
                 "notification_bgcolor":"#FF0000",
                 "okButtonBgColor":"#FF0000"
-            });
+            });*/
             
             clevertap.event.push(action, {
                 "Page Name":pathname ? pathname : '/',
