@@ -15,6 +15,7 @@ export default function GamesPage({
   banners,
   seoData
 }) {
+  console.log(contestSectionsData);
   return (
     <>
       <SEOContainer
@@ -65,7 +66,7 @@ export async function getStaticProps() {
       populate: {
         contestmasters: {
           fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
-          //sort: "id",
+          sort: "priority",
           populate: {
             contest_section: {
               fields: ["name", "slug"],
@@ -87,7 +88,7 @@ export async function getStaticProps() {
           },
           pagination: {
             start: 0,
-            limit: 6
+            limit: 10
           }
         },
         image:"*"
