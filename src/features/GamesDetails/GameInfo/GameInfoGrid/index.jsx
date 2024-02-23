@@ -38,7 +38,7 @@ const GameInfoGrid = ({ gameData }) => {
         {
             label:
                 gameData?.game?.data?.config?.game == "marketjs"
-                    ? nFormatter(gameData?.ticketsCount, 1) + " Players"
+                    ? nFormatter(gameData?.playerCount, 1) + " Players"
                     : nFormatter(gameData?.ticketsCount, 1) + " Players",
             icon: "games_plays_icon.svg"
         }
