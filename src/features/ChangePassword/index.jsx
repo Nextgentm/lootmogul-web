@@ -235,7 +235,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     align={'center'}
                                     {...loginTitleStyle}
                                 >
-                                    Setup New Password
+                                    Reset Password
                                 </Text>
                                 <Text
                                     color="#fff"
@@ -245,7 +245,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     mb="20px"
                                 // textAlign="center"
                                 >
-                                    {'A code has been sent to your email linked to LootMogul account. Please check your spam folder incase not received'}
+                                    {'Code sent to your email id. Email not received? Check Spam folder.'}
                                 </Text>
 
                                 <Text
@@ -258,6 +258,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                 >
                                     <span style={{ fontWeight: '900' }}> {'Note:'} </span> <br />
                                     Code is valid for 15 minutes only <br />
+                                    {/* Max. 3 attempts permitted to reset password <br /> */}
                                     Maximum 3 attempts allowed <br />
                                 </Text>
 
