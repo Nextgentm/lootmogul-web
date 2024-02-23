@@ -38,6 +38,12 @@ import ErrOrSuccessMsg from "../../components/ErrOrSuccessMsg";
 
 const RESEND_OTP_WAIT_TIME = 120 * 1000 + 1000 //in mili sec (1 sec is added to fix timing issue)
 
+const defaultForm = {
+    code: '',
+    password: '',
+    confirmPassword: '',
+}
+
 const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
     const { setChangePasswordModalActive } = useContext(AppContext);
     const toast = useToast();
@@ -46,11 +52,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
     const queryCode = router.query.code || "";
     const queryEmail = decodeURIComponent(router.query.email)
 
-    const [form, setForm] = useState({
-        code: '',
-        password: '',
-        confirmPassword: '',
-    })
+    const [form, setForm] = useState({ ...defaultForm })
     const { password, confirmPassword, code } = form
 
     const [alertMsg, setAlertMsg] = useState({});
@@ -105,7 +107,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                 email: forgotEmail || queryEmail,
             });
             toast({ title: 'Congratulations, your password has been updated successfully', status: "success", duration: 4000, isClosable: true, position: "top-right", })
-            setForm(prev => ({ ...prev, password: '', confirmPassword: '' }))
+            setForm({ ...defaultForm })
             if (setEmail) setEmail("")
             setChangePasswordModalActive(false);
             onClose()
@@ -217,13 +219,14 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                             zIndex={999}
                             border="7px solid #5f2593"
                             borderRadius="10px"
+                            width={'100%'}
                         >
                             <Flex
                                 px="20px"
                                 py="30px"
                                 direction={"column"}
                                 zIndex={999}
-                                // align="center"
+                            // align="center"
                             >
                                 <Text
                                     fontSize={["38px", "38px"]}
@@ -233,7 +236,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     align={'center'}
                                     {...loginTitleStyle}
                                 >
-                                    Setup New Password
+                                    Reset Password
                                 </Text>
                                 <Text
                                     color="#fff"
@@ -243,7 +246,8 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     mb="20px"
                                 // textAlign="center"
                                 >
-                                    {'A code has been sent to your email linked to LootMogul account. Please check your spam folder incase not received'}
+                                    Code sent to your email id. <br />
+                                    {'Email not received? Check spam folder.'}
                                 </Text>
 
                                 <Text
@@ -256,6 +260,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                 >
                                     <span style={{ fontWeight: '900' }}> {'Note:'} </span> <br />
                                     Code is valid for 15 minutes only <br />
+                                    {/* Max. 3 attempts permitted to reset password <br /> */}
                                     Maximum 3 attempts allowed <br />
                                 </Text>
 
@@ -360,7 +365,9 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                             />
                                             <ErrOrSuccessMsg msg={err.confirmPassword} />
                                         </FormControl>
-                                        <ErrOrSuccessMsg msg={err.submit} align="center" />
+                                        <div style={{ marginBottom: '0.35rem' }}>
+                                            <ErrOrSuccessMsg msg={err.submit} align="center" />
+                                        </div>
                                         <Button
                                             width="100%"
                                             h="30px"
