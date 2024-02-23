@@ -266,6 +266,8 @@ const TabDepositPanel = ({ isDeposit }) => {
     }, []);
 
     const deposit = async () => {
+        //console.log("userLocation",userSessioncountry);
+        //return true;
         if (amount < numberOfChips) {
             setAlertShow({
                 isOpen: true,

@@ -84,7 +84,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     const [defaultCrytoAmount, SetDefaultCrytoAmount] = useState();
 
 	const [disableWithdraw, setDisableWithdraw] = useState(false);
-
     const [userSessionData, setUserSessionData] = useState();
     const [loading, setLoading] = useState(true);
     
@@ -136,7 +135,6 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 console.error(error);
             }
         }
-
         fetchCurrentLocationHandle();
     }, []);
 
