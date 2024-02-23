@@ -35,14 +35,18 @@ const ForgotPassword = ({ isOpen, onClose, setEmail, email }) => {
     const { setForgotPasswordModalActive, toggleChangePasswordModal } = useContext(AppContext);
 
     const [err, setErr] = useState({})
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (loading) return
         if (!email.trim()) return setErr({ email: 'Email address is required' })
         if (!isValidEmail(email)) return setErr({ email: 'Email address is invalid' })
 
+        setLoading(true)
         try {
             const res = await strapi.forgotPassword({ email: email });
+            setLoading(false)
             setForgotPasswordModalActive(false);
             toggleChangePasswordModal()
             toast({
@@ -53,6 +57,7 @@ const ForgotPassword = ({ isOpen, onClose, setEmail, email }) => {
                 position: "top-right",
             });
         } catch (error) {
+            setLoading(false)
             if (error?.message || error?.error?.message) {
                 toast({
                     title: error?.message || error?.error?.message,
@@ -63,7 +68,6 @@ const ForgotPassword = ({ isOpen, onClose, setEmail, email }) => {
                 });
             }
         }
-
     }
 
     const handleChange = (e) => {
