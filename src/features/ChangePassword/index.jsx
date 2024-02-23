@@ -219,6 +219,7 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                             zIndex={999}
                             border="7px solid #5f2593"
                             borderRadius="10px"
+                            width={'100%'}
                         >
                             <Flex
                                 px="20px"
@@ -245,7 +246,8 @@ const ChangePassword = ({ isOpen, onClose, forgotEmail, setEmail }) => {
                                     mb="20px"
                                 // textAlign="center"
                                 >
-                                    {'Code sent to your email id. Email not received? Check Spam folder.'}
+                                    Code sent to your email id. <br />
+                                    {'Email not received? Check spam folder.'}
                                 </Text>
 
                                 <Text
