@@ -112,7 +112,7 @@ export const onUserLogin = async ({ action, params, jwt, pathname }) => {
         if (onUserLoginData?.data && onUserGameData?.data && onUserTransactionData?.data) {
             //console.log('Updating onUserLoginData...');
             
-            clevertap.notifications.push({
+            /*clevertap.notifications.push({
                 "titleText":'Stay updated & power up your play!',
                 "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
                 "okButtonText":'Yes',
@@ -127,7 +127,7 @@ export const onUserLogin = async ({ action, params, jwt, pathname }) => {
                 "dismissCallback": function () {
                     console.log("User dismissed the notification");
                 }
-            });
+            });*/
             
             clevertap.event.push(action, {
                 "Page Name":pathname ? pathname : '/',

@@ -460,7 +460,16 @@ const TabDepositPanel = ({ isDeposit }) => {
                                 value: +numberOfAmount,
                                 couponCode: couponCode ? couponCode : "",
                                 currency: currency,
-                                calculated_chips: amount
+                                calculated_chips: amount,
+                                country: userSessionData?.country || '',
+                                state: userSessionData?.administrative_area_level_1 || '',
+                                division: userSessionData?.administrative_area_level_2 || '',
+                                city: userSessionData?.administrative_area_level_3 || '',
+                                locality: userSessionData?.locality || '',
+                                subLocality: userSessionData?.sublocality_level_1 || '',
+                                neighbourhood: userSessionData?.neighborhood || '',
+                                street: userSessionData?.sublocality_level_2 || '',
+                                pincode: userSessionData?.postal_code || ''
                             },
                             {
                                 headers: {
