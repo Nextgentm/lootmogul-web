@@ -112,7 +112,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
     }, [user]);
 
     useEffect(() => {
-        if (data) {
+        if (data && defaultFiatAmount && defaultFiatChip) {
             if (data.type === "cash") {
                 setCashOption(["USD"]);
                 setMinimumDeposit(defaultFiatAmount);
@@ -123,7 +123,7 @@ const TabWithdrawPanel = memo(({ data, isDeposit }) => {
                 setNumberOfChips(defaultFiatChip);
             }
         }
-    }, [data]);
+    }, [data, defaultFiatAmount, defaultFiatChip]);
 
     useEffect(() => {
         async function fetchCurrentLocationHandle() {
