@@ -15,6 +15,7 @@ export default function GamesPage({
   contestSectionsData,
   seoData,
 }) {
+  console.log("contestSectionsData",contestSectionsData);
   return (
     <>
       <SEOContainer
@@ -107,7 +108,7 @@ export async function getStaticProps() {
 
       const banners = await bannersRes.json();
       const seoData = await getSeoData("games");
-
+      console.log("getStaticProps",res);
       return {
         props: {
           contestSectionsData: res,
