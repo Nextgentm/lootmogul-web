@@ -92,7 +92,7 @@ const GamesCategories = ({ isMobileDevice, section }) => {
             {showAll ? (
                 <Wrap m="auto !important">
                     {content?.contestmasters?.data
-                        //.sort((a, b) => Number(a.priority) - Number(b.priority))
+                        //.sort((a, b) => a.priority - b.priority)
                         .map((cm, index) => (
                             <WrapItem mb="2%!important">
                                 <GamesCard
