@@ -96,7 +96,6 @@ const Header = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const router = useRouter();
-
     const [email, setEmail] = useState('')
 
     useEffect(() => {    
@@ -117,7 +116,6 @@ const Header = () => {
             });*/
         }
     },[router,user]);
-    
     const isActiveLink = (path, queryPath) => {
         //TODO: need to check what condition is this and remove the proper statements
         //if (queryPath)

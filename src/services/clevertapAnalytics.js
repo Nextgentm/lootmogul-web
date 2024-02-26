@@ -132,7 +132,13 @@ export const onUserLogin = async ({ action, params, jwt, pathname }) => {
                 "okButtonColor":'#e90a63',
                 "askAgainTimeInSeconds":120,
                 "notification_bgcolor":"#FF0000",
-                "okButtonBgColor":"#FF0000"
+                "okButtonBgColor":"#FF0000",
+                "okButtonCallback": function () {
+                    console.log("User clicked OK");
+                },
+                "dismissCallback": function () {
+                    console.log("User dismissed the notification");
+                }
             });*/
             
             clevertap.event.push(action, {
