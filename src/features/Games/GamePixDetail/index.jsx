@@ -10,7 +10,7 @@ import strapi from "../../../utils/strapi";
 import PaidGameConfirmation from "../PaidGameConfirmation";
 import * as ct from '../../../services/clevertapAnalytics';
 import { mrnGamePlayService } from "../../../services/mrnCallService";
-
+import { clearpierGamePlayService } from "../../../services/clearpierCallService";
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
@@ -109,6 +109,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     
                     //console.log('Skill Game End...',data);
                     mrnGamePlayService();
+                    clearpierGamePlayService();
 
                     ct.onGameplayStart({
                         action:"Gameplay Completed", 

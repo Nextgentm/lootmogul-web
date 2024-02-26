@@ -14,7 +14,7 @@ import {
 } from "../../services/audioService";
 import * as ct from "../../services/clevertapAnalytics";
 import { mrnGamePlayService } from "../../services/mrnCallService";
-
+import { clearpierGamePlayService } from "../../services/clearpierCallService";
 
 const Quiz = (props) => {
   const router = useRouter();
@@ -143,6 +143,7 @@ const Quiz = (props) => {
         });
 
         mrnGamePlayService();
+        clearpierGamePlayService();
 
         setMatchResult(data.ranks);
         updateUser();
