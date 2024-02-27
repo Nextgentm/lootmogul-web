@@ -143,7 +143,7 @@ const Quiz = (props) => {
         });
 
         mrnGamePlayService();
-        clearpierGamePlayService();
+        clearpierGamePlayService(user);
 
         setMatchResult(data.ranks);
         updateUser();

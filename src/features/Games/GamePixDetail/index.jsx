@@ -109,7 +109,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     
                     //console.log('Skill Game End...',data);
                     mrnGamePlayService();
-                    clearpierGamePlayService();
+                    clearpierGamePlayService(user);
 
                     ct.onGameplayStart({
                         action:"Gameplay Completed", 
