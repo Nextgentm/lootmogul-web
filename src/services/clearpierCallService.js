@@ -42,6 +42,7 @@ export { clearpierCallService };
 
 
 const clearpierGamePlayService = async (user) => {
+    //console.log(user);
     const utm_medium = user?.tracking?.utm_medium;
     const utm_term = user?.tracking?.utm_term;
     const startTimeString = new Date(user?.createdAt);
@@ -63,17 +64,20 @@ const clearpierGamePlayService = async (user) => {
     const startTime = startTimeString.toISOString();
     const endTime = endTimeString.toISOString();
 
-    console.log("utm_medium",utm_medium);
+    /*const startTime = "2023-02-03T06:40:00Z";
+    const endTime = "2024-02-28T06:40:59Z";
+    user.id = 25130;*/
+
+    /*console.log("utm_medium",utm_medium);
     console.log("utm_term",utm_term);
     console.log("Start Time:", startTime);
-    console.log("End Time:", endTime);
+    console.log("End Time:", endTime);*/
     console.log("***************** Clearpier Game Played ********************");
 
-    let totalGameplays = null;
     if (utm_medium == "cp" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
 
         const response = axios.get(
-            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/contest/custom-contest/user-gameplay-userid?userid=${user?.id}&startTime=${startTime}&endTime=${endTime}&page=1&pageSize=10&utmMedium=all&totalGameplayCount=3&totalGameplayCondition=>`,
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/contest/custom-contest/user-gameplay-userid?userid=${user?.id}&utmMedium=${utm_medium}&utm_term=${utm_term}&startTime=${startTime}&endTime=${endTime}&page=1&pageSize=10&totalGameplayCount=2&totalGameplayCondition=>`,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -82,40 +86,7 @@ const clearpierGamePlayService = async (user) => {
                 }
             }
         );
-        console.log("***************** Waiting for Response ********************");
-        if(response.data){
-            console.log("***************** Clearpier Game Played ********************");
-            console.log("TotalGameplays",response.data[0].totalGameplays);
-            totalGameplays = Number(response.data[0]?.totalGameplays);
-            /*wmadv = await axios.get(
-                `http://tracking.hangmytracking.com/conv.php?cid=${utm_term}&stoken=2222ad3b7bcc4e18cf90017ebe31251a&event_name=gameplay`
-            );*/
-
-            if(totalGameplays >= 3 ){
-                fetch(`http://tracking.hangmytracking.com/conv.php?cid=${utm_term}&stoken=2222ad3b7bcc4e18cf90017ebe31251a&event_name=gameplay`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*',
-                    },
-                    mode: 'no-cors',
-                    credentials: 'include',
-                })
-                .then(response => {
-                    console.log("***************** Sent Tracking ********************",response);
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log("***************** Data Sent Tracking ********************",data);
-                })
-                .catch(error => {
-                    console.error('There was a problem with your fetch operation:', error);
-                });
-            }
-        }    
+       // console.log(response)   
     }
 };
 
