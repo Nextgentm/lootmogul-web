@@ -25,31 +25,29 @@ import { AppContext } from "../../utils/AppContext/index";
 
 import { root, loginTitleStyle } from "./styles";
 import strapi from "../../../src/utils/strapi";
+import ErrOrSuccessMsg from "../../components/ErrOrSuccessMsg";
 
-function isValidEmail(email) {
-    return /\S+@\S+\.\S+/.test(email);
-}
+const isValidEmail = (email) => /^\S+@\S+\.\S+$/.test(email)
 
-const ForgotPassword = ({ isOpen, onClose , setEmail, email }) => {
+const ForgotPassword = ({ isOpen, onClose, setEmail, email }) => {
     const toast = useToast();
 
-    const { setForgotPasswordModalActive, /* toggleCheckYourMailModal, */ toggleChangePasswordModal } = useContext(AppContext);
+    const { setForgotPasswordModalActive, toggleChangePasswordModal } = useContext(AppContext);
 
-    const  handleSubmit = async (e) => {
+    const [err, setErr] = useState({})
+    const [loading, setLoading] = useState(false)
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if(!email) {
-            setAlertMsg({ isOpen: true, title: "Error", message: "Email address is required",});
-            return
-        }
-        if( !isValidEmail(email) ){
-            setAlertMsg({ isOpen: true, title: "Error", message: "Email address is invalid" })
-            return
-        } 
-        
+        if (loading) return
+        if (!email.trim()) return setErr({ email: 'Email address is required' })
+        if (!isValidEmail(email)) return setErr({ email: 'Email address is invalid' })
+
+        setLoading(true)
         try {
-            const res = await strapi.forgotPassword({ email:email });
+            const res = await strapi.forgotPassword({ email: email });
+            setLoading(false)
             setForgotPasswordModalActive(false);
-            // toggleCheckYourMailModal();
             toggleChangePasswordModal()
             toast({
                 title: res.message,
@@ -59,7 +57,8 @@ const ForgotPassword = ({ isOpen, onClose , setEmail, email }) => {
                 position: "top-right",
             });
         } catch (error) {
-            if(error?.message || error?.error?.message){
+            setLoading(false)
+            if (error?.message || error?.error?.message) {
                 toast({
                     title: error?.message || error?.error?.message,
                     status: "error",
@@ -69,13 +68,13 @@ const ForgotPassword = ({ isOpen, onClose , setEmail, email }) => {
                 });
             }
         }
-        
     }
 
-    /* const handleChange = (e) => {
-        const {value} = e.target
+    const handleChange = (e) => {
+        const { value, name } = e.target
         setEmail(value)
-    } */
+        setErr(prev => ({ ...prev, [name]: '' }))
+    }
 
     const [alertMsg, setAlertMsg] = useState({});
     const ShowAlert = () => {
@@ -95,15 +94,15 @@ const ForgotPassword = ({ isOpen, onClose , setEmail, email }) => {
                 <AlertDialogOverlay />
 
                 <AlertDialogContent p="10px" bg="background">
-                <Box border="2.7033px dashed #515151">
-                    <AlertDialogHeader>
-                    <Heading color="white">{alertMsg?.title}</Heading>
-                    </AlertDialogHeader>
+                    <Box border="2.7033px dashed #515151">
+                        <AlertDialogHeader>
+                            <Heading color="white">{alertMsg?.title}</Heading>
+                        </AlertDialogHeader>
 
-                    <AlertDialogBody>
-                    <Text variant="hint">{alertMsg?.message}</Text>
-                    </AlertDialogBody>
-                </Box>
+                        <AlertDialogBody>
+                            <Text variant="hint">{alertMsg?.message}</Text>
+                        </AlertDialogBody>
+                    </Box>
                 </AlertDialogContent>
             </AlertDialog>
         );
@@ -150,7 +149,7 @@ const ForgotPassword = ({ isOpen, onClose , setEmail, email }) => {
                                     lineHeight="1"
                                     {...loginTitleStyle}
                                 >
-                                    FORGOT PASSWORD
+                                    FORGOT PASSWORD?
                                 </Text>
 
                                 <Text
@@ -161,48 +160,48 @@ const ForgotPassword = ({ isOpen, onClose , setEmail, email }) => {
                                     mb="30px"
                                     textAlign="center"
                                 >
-                                    Enter the email associated with account and we'll send you a link to reset your password 
+                                    Enter the email linked to your LootMogul account. You will get code to reset password
                                 </Text>
 
                                 <Box w="100%">
                                     <form onSubmit={handleSubmit}>
-                                    <FormControl mb="15px">
-                                        <Input
-                                            id="emailid"
-                                            name="emailid"
-                                            type="email"
-                                            placeholder="Enter email address"
-                                            bgColor="#fff"
-                                            color="#707070"
-                                            _placeholder={{ color: "#707070" }}
-                                            required
-                                            boxShadow="unset"
-                                            p="6px 10px"
-                                            border="1px solid #707070 !important"
-                                            height="35px"
-                                            _focus={{ outline: "0" }}
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            // onChange={handleChange}
-                                        />
-                                    </FormControl>
-                                     
-                                    <Button
-                                        width="100%"
-                                        h="30px"
-                                        bgImage="linear-gradient(90deg,#e90a63 0%,#481a7f 100%)"
-                                        boxShadow="0px 0px 20px 0px #481a7f"
-                                        fontSize="12px"
-                                        p="10px"
-                                        lineHeight="1"
-                                        fontWeight="600"
-                                        textTransform="uppercase"
-                                        outline="0"
-                                        fontFamily="Open Sans,Sans-serif !important"
-                                        type="submit"
-                                    >
-                                        RESET PASSWORD
-                                    </Button>
+                                        <FormControl mb="15px">
+                                            <Input
+                                                name="email"
+                                                value={email}
+                                                onChange={handleChange}
+                                                // type="email"
+                                                // onChange={(e) => setEmail(e.target.value)}
+                                                // required
+                                                placeholder="Enter email address"
+                                                bgColor="#fff"
+                                                color="#707070"
+                                                _placeholder={{ color: "#707070" }}
+                                                boxShadow="unset"
+                                                p="6px 10px"
+                                                border="1px solid #707070 !important"
+                                                height="35px"
+                                                _focus={{ outline: "0" }}
+                                            />
+                                            <ErrOrSuccessMsg msg={err.email} />
+                                        </FormControl>
+
+                                        <Button
+                                            width="100%"
+                                            h="30px"
+                                            bgImage="linear-gradient(90deg,#e90a63 0%,#481a7f 100%)"
+                                            boxShadow="0px 0px 20px 0px #481a7f"
+                                            fontSize="12px"
+                                            p="10px"
+                                            lineHeight="1"
+                                            fontWeight="600"
+                                            textTransform="uppercase"
+                                            outline="0"
+                                            fontFamily="Open Sans,Sans-serif !important"
+                                            type="submit"
+                                        >
+                                            SUBMIT
+                                        </Button>
                                     </form>
                                 </Box>
                             </Flex>
