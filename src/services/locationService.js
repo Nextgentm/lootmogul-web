@@ -141,7 +141,7 @@ export const getCurremtLocation = () => {
             getPosition().then((res) => {
                 if (res) {
                     Geocode.fromLatLng(res.lat, res.lng).then((address) => {
-                        console.log(address);
+                        //console.log(address);
                         if (address) {
                             let state =
                                 address.results[0].address_components.find(
@@ -171,7 +171,7 @@ export const getCurremtLocation = () => {
                                                 "administrative_area_level_1"
                                         )
                                 )?.long_name;
-                                console.log({ state, country, city, city1 });
+                                ///console.log({ state, country, city, city1 });
                             let location = { state: state, country: country };
                             resolve(location);
                         } else
