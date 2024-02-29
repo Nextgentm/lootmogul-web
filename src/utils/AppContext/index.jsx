@@ -97,7 +97,7 @@ export const AppContextContainer = ({ children }) => {
     // };
     //console.log("*****************Hello********************");
     const CheckAndStartGame = (callerKey, contestmaster) => {
-        if (!user) {
+        if (!user && !strapi.user) {
             setShowLoading({});
             toggleLoginModal();
             setRoutePathAfterLogin({
@@ -191,14 +191,20 @@ export const AppContextContainer = ({ children }) => {
                 router.route === "/cricket" ||
                 router.route === "/gamecampaign" || 
                 router.route === "/gamecampaign_gt" || 
-                router.route === "/games/[id]" || 
                 router.route === "/signupcampaign" || 
                 router.route === "/promotions" ||
+                router.route === "/games/[id]" || 
                 router.route === "/promotions/[id]" || 
                 router.route === "/influencer/[id]"  ||
+                router.route === "/refer-and-earn"  ||
                 router.route === "/contest-section/[contestsectionslug]"  
             ) {
-                router.push(router.route);
+                if(router.route === "/games/[id]" || router.route === "/promotions/[id]" || router.route === "/influencer/[id]" || router.route === "/contest-section/[contestsectionslug]"){
+                    router.push(router.asPath);
+                }
+                else{
+                    router.push(router.route);
+                }
             } else {
                 router.push("/");
             }
@@ -748,7 +754,8 @@ export const AppContextContainer = ({ children }) => {
 
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
-                CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
+                CheckAndStartGame(routePathAfterLogin.callerKey,routePathAfterLogin.contestmaster);
+                //CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
 
@@ -1030,7 +1037,8 @@ export const AppContextContainer = ({ children }) => {
 
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
-                CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
+                CheckAndStartGame(routePathAfterLogin.callerKey,routePathAfterLogin.contestmaster);
+                //CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
     };
