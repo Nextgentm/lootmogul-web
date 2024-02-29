@@ -47,7 +47,7 @@ const GameDetails = ({ gameData }) => {
                         CheckAndStartGame(`GameDetail-${gameData?.id}`, gameData);
                     }
                     }
-                    disabled={isButtonDisabled}
+                    //disabled={isButtonDisabled}
                 >Join Contest</Button>
             }
 
