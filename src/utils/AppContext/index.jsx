@@ -190,7 +190,14 @@ export const AppContextContainer = ({ children }) => {
                 router.route === "/games" ||
                 router.route === "/dsg" || 
                 router.route === "/cricket" ||
-                router.route === "/gamecampaign"
+                router.route === "/gamecampaign" || 
+                router.route === "/gamecampaign_gt" || 
+                router.route === "/games/[id]" || 
+                router.route === "/signupcampaign" || 
+                router.route === "/promotions" ||
+                router.route === "/promotions/[id]" || 
+                router.route === "/influencer/[id]"  ||
+                router.route === "/contest-section/[contestsectionslug]"  
             ) {
                 router.push(router.route);
             } else {
