@@ -233,7 +233,7 @@ export const AppContextContainer = ({ children }) => {
                   "&coupon=" +
                   coupon +
                   "&userId=" +
-                  user?.id
+                  user?.id || strapi?.user?.id
                 : "contest/custom-contest/join?contest=" + data[0].id;
             if (data?.length > 0) {
                 const resp = await strapi.request("post", query, {});
@@ -298,7 +298,7 @@ export const AppContextContainer = ({ children }) => {
                                 // try {
                                 const roomData = await getGameRoomOrCreateRoom(
                                     data[0]?.id,
-                                    user?.id
+                                    user?.id || strapi?.user?.id
                                 );
                                 if (roomData) {
                                     setIsPayIsStarted("ended");
@@ -762,6 +762,10 @@ export const AppContextContainer = ({ children }) => {
 
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
+                setShowLoading({
+                    key: routePathAfterLogin.callerKey,
+                    show: true,
+                  });
                 CheckAndStartGame(routePathAfterLogin.callerKey,routePathAfterLogin.contestmaster);
                 //CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
@@ -1053,6 +1057,10 @@ export const AppContextContainer = ({ children }) => {
 
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
+                setShowLoading({
+                    key: routePathAfterLogin.callerKey,
+                    show: true,
+                  });
                 CheckAndStartGame(routePathAfterLogin.callerKey,routePathAfterLogin.contestmaster);
                 //CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
