@@ -31,7 +31,7 @@ export default function GamesPage({
 export async function getStaticProps() {
   // Fetch data from external API
   
-    const res = await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
+    const res = await strapi.find("contest-section/custom-contest-section/test-get-all-games-page-data", {
       filters: {
           $or: [
             {
@@ -86,8 +86,8 @@ export async function getStaticProps() {
             },
           },
           pagination: {
-            start: 0,
-            limit: 6
+            page: 1,
+            pageSize: 10
           }
         },
         image:"*"
