@@ -20,6 +20,7 @@ import { mobuppsCallService } from "../../services/mobuppsCallService";
 import { hasmindCallService } from "../../services/hasmindCallService";
 import { mrnCallService } from "../../services/mrnCallService";
 import { growThanCallService } from "../../services/growthanService";
+import { clearpierCallService } from "../../services/clearpierCallService";
 
 export const AppContext = createContext({});
 
@@ -97,7 +98,7 @@ export const AppContextContainer = ({ children }) => {
     // };
     //console.log("*****************Hello********************");
     const CheckAndStartGame = (callerKey, contestmaster) => {
-        if (!user) {
+        if (!user && !strapi.user) {
             setShowLoading({});
             toggleLoginModal();
             setRoutePathAfterLogin({
@@ -191,14 +192,20 @@ export const AppContextContainer = ({ children }) => {
                 router.route === "/cricket" ||
                 router.route === "/gamecampaign" || 
                 router.route === "/gamecampaign_gt" || 
-                router.route === "/games/[id]" || 
                 router.route === "/signupcampaign" || 
                 router.route === "/promotions" ||
+                router.route === "/games/[id]" || 
                 router.route === "/promotions/[id]" || 
                 router.route === "/influencer/[id]"  ||
+                router.route === "/refer-and-earn"  ||
                 router.route === "/contest-section/[contestsectionslug]"  
             ) {
-                router.push(router.route);
+                if(router.route === "/games/[id]" || router.route === "/promotions/[id]" || router.route === "/influencer/[id]" || router.route === "/contest-section/[contestsectionslug]"){
+                    router.push(router.asPath);
+                }
+                else{
+                    router.push(router.route);
+                }
             } else {
                 router.push("/");
             }
@@ -226,7 +233,7 @@ export const AppContextContainer = ({ children }) => {
                   "&coupon=" +
                   coupon +
                   "&userId=" +
-                  user?.id
+                  user?.id || strapi?.user?.id
                 : "contest/custom-contest/join?contest=" + data[0].id;
             if (data?.length > 0) {
                 const resp = await strapi.request("post", query, {});
@@ -291,7 +298,7 @@ export const AppContextContainer = ({ children }) => {
                                 // try {
                                 const roomData = await getGameRoomOrCreateRoom(
                                     data[0]?.id,
-                                    user?.id
+                                    user?.id || strapi?.user?.id
                                 );
                                 if (roomData) {
                                     setIsPayIsStarted("ended");
@@ -717,6 +724,13 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 growThanCallService();
             }
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "cp"
+            ) {
+                clearpierCallService();
+            }
 
             if (
                 data.user.is_new &&
@@ -748,7 +762,12 @@ export const AppContextContainer = ({ children }) => {
 
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
-                CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
+                setShowLoading({
+                    key: routePathAfterLogin.callerKey,
+                    show: true,
+                  });
+                CheckAndStartGame(routePathAfterLogin.callerKey,routePathAfterLogin.contestmaster);
+                //CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
 
@@ -985,6 +1004,14 @@ export const AppContextContainer = ({ children }) => {
                 growThanCallService();
             }
 
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "cp"
+            ) {
+                clearpierCallService();
+            }
+
             /** For mrnCallService */
             if (
                 data.user.is_new &&
@@ -1030,7 +1057,12 @@ export const AppContextContainer = ({ children }) => {
 
         if (routePathAfterLogin) {
             if (routePathAfterLogin.nextPath === "/joining") {
-                CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
+                setShowLoading({
+                    key: routePathAfterLogin.callerKey,
+                    show: true,
+                  });
+                CheckAndStartGame(routePathAfterLogin.callerKey,routePathAfterLogin.contestmaster);
+                //CheckLocationAndConfirm(routePathAfterLogin.contestmaster);
             }
         }
     };

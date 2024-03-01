@@ -77,7 +77,7 @@ export default function GamesPage({ }) {
               },
               pagination: {  // pagination for contest-master data
                 page: currentPage,
-                pageSize: 8,
+                pageSize: 12,
               }
             },
             image: "*"

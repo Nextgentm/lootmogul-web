@@ -55,7 +55,8 @@ export default class MyDocument extends Document {
           wzrk.src = ('https:' == document.location.protocol ? 'https://d2r1yp2w7bby2u.cloudfront.net' : 'http://static.clevertap.com') + '/js/clevertap.min.js';        
           var s = document.getElementsByTagName('script')[0];
           s.parentNode.insertBefore(wzrk, s);
-    })();`,}}
+    })();
+    `,}}
   />
 }
 <script

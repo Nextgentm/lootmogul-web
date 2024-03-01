@@ -24,38 +24,38 @@ export const pageview = async (url) => {
             deviceType = "Desktop";
         }
 
-        const onUserLoginData =  await axios.get(
-            process.env.NEXT_PUBLIC_STRAPI_API_URL +
-                `/api/clevertap/user`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                        Authorization: "Bearer " + strapi_jwt
+        if(strapi_jwt){
+            const onUserLoginData =  await axios.get(
+                process.env.NEXT_PUBLIC_STRAPI_API_URL +
+                    `/api/clevertap/user`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                            Authorization: "Bearer " + strapi_jwt
+                        }
                     }
-                }
-        );
-
-        if(onUserLoginData.data){
-            clevertap.event.push("Page View",{
-                "Page Name":url,
-                "Username": onUserLoginData.data?.data.username,
-                "Player ID": onUserLoginData.data?.data.playerId,
-                "Email": onUserLoginData.data?.data.email,
-                "Mobile": onUserLoginData.data?.data.mobile,
-                "Fname": onUserLoginData.data?.data.firstName,
-                "Lname": onUserLoginData.data?.data.lastName,
-                "State":lm_user_state ? lm_user_state : "",
-                "Country":lm_user_location ? lm_user_location : "",
-                "Source":utm_source ? utm_source : '',
-                "Medium":utm_medium ? utm_medium : '',
-                "Campaign":utm_campaign ? utm_campaign : '',
-                "Browser Information":userAgent,
-                "Device Type":deviceType,
-                "Os Type":osType ? osType : '',
-            });
+            );
+            if(onUserLoginData.data){
+                clevertap.event.push("Page View",{
+                    "Page Name":url,
+                    "Username": onUserLoginData.data?.data.username,
+                    "Player ID": onUserLoginData.data?.data.playerId,
+                    "Email": onUserLoginData.data?.data.email,
+                    "Mobile": onUserLoginData.data?.data.mobile,
+                    "Fname": onUserLoginData.data?.data.firstName,
+                    "Lname": onUserLoginData.data?.data.lastName,
+                    "State":lm_user_state ? lm_user_state : "",
+                    "Country":lm_user_location ? lm_user_location : "",
+                    "Source":utm_source ? utm_source : '',
+                    "Medium":utm_medium ? utm_medium : '',
+                    "Campaign":utm_campaign ? utm_campaign : '',
+                    "Browser Information":userAgent,
+                    "Device Type":deviceType,
+                    "Os Type":osType ? osType : '',
+                });
+            }
         }
-        
     }
     else{
         console.log('Error : CleverTap Disable from System');

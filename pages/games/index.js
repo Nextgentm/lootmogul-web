@@ -11,10 +11,11 @@ const defaultSEOData = {
 };
 
 export default function GamesPage({
-  banners = [],
   contestSectionsData,
-  seoData,
+  banners,
+  seoData
 }) {
+  console.log(contestSectionsData);
   return (
     <>
       <SEOContainer
@@ -104,17 +105,15 @@ export async function getStaticProps() {
         process.env.NEXT_PUBLIC_STRAPI_API_URL +
         "/api/campaigns?sort=priority&populate=bannerImage"
       );
-
       const banners = await bannersRes.json();
       const seoData = await getSeoData("games");
-
       return {
         props: {
           contestSectionsData: res,
           banners,
-          seoData,
+          seoData, 
         },
-        revalidate: 300,
+       revalidate: 300,
       };
     } catch (error) { }
     return {
