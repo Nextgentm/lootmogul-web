@@ -39,17 +39,12 @@ export default function GamesPage({ }) {
       if (text) {
         filters = {
           name: {
-            $contains: text
-          },
-          contest_section: {
-            slug: {
-              $eq: query.contestsectionslug,
-            },
+            searchText: text
           }
         };
       }
       if (query.contestsectionslug) {
-        const res = await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
+        const res = await strapi.find("contest-section/custom-contest-section/test-get-all-games-page-data", {
           filters: {
             slug: {
               $eq: query.contestsectionslug,
