@@ -39,12 +39,7 @@ export default function GamesPage({ }) {
       if (text) {
         filters = {
           name: {
-            $contains: text
-          },
-          contest_section: {
-            slug: {
-              $eq: query.contestsectionslug,
-            },
+            searchText: text
           }
         };
       }
@@ -58,7 +53,7 @@ export default function GamesPage({ }) {
           sort: "priority",
           populate: {
             contestmasters: {
-              // filters,
+              filters,
               fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
               sort: "priority",
               populate: {
