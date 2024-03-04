@@ -44,7 +44,7 @@ export default function GamesPage({ }) {
         };
       }
       if (query.contestsectionslug) {
-        const res = await strapi.find("contest-section/custom-contest-section/test-get-all-games-page-data", {
+        const res = await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
           filters: {
             slug: {
               $eq: query.contestsectionslug,
@@ -77,7 +77,7 @@ export default function GamesPage({ }) {
               },
               pagination: {  // pagination for contest-master data
                 page: currentPage,
-                pageSize: 12,
+                pageSize: 8,
               }
             },
             image: "*"

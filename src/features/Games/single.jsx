@@ -54,8 +54,7 @@ const GamesComponent = ({ contestSectionsData, pageOptions, nextPage, previousPa
                   ref={itemRefs[section.priority]}
 
                 >
-                  {section?.contestmasters?.data &&
-                    section?.contestmasters?.data.length > 0 && (
+                  {section?.contestmasters?.data && (
                       <GamesCategories
                         key={`games-${index}`}
                         isMobileDevice={isMobileDevice}
