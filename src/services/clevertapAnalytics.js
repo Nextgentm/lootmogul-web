@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import strapi from "../utils/strapi";
 export const pageview = async (url) => {
     if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true'){
         let strapi_jwt = '';
@@ -433,3 +433,241 @@ export const onWithdrawalRequest = ({ action, params, withdrawalData }) => {
         console.log('Error : CleverTap Disable from System');
     }
 };
+
+export const userClevertapAcknowledgements = async () => {
+    const {data} = await axios.get(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements?populate=*&filters[Username][$eq]=${strapi.user?.username}`
+    );
+    
+    var jwt_token = '';
+    if (typeof window !== 'undefined') {
+        jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
+    }
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+    //console.log(data.data);
+    if(data.data.length){
+        const id = data.data[0].id;
+        let browserArr = data.data[0].Browser;
+        let notifications = data.data[0].Device;
+        const updateDate = new Date();
+        browserArr = browserArr +"<br>"+userAgent+" - "+updateDate.toISOString();
+        notifications = notifications +"<br>"+"Auto Allow - "+updateDate.toISOString();
+        const response = axios.put(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements/${id}`,
+            {
+                "data": {
+                   
+                    "Browserid": osType,
+                    "Notifications": "Auto Allow",
+                    "Browser": browserArr,
+                    "Date": updateDate.toISOString(),
+                    "Device": notifications,
+                    "IPAddress": deviceType,
+                }
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + jwt_token
+                }
+            }
+        )
+    }
+    else{
+        const updateDate = new Date();
+        const response = axios.post(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements/`,
+            {
+                "data": {
+                    "Name": strapi.user?.fullName || strapi.user?.username,
+                    "Browserid": osType,
+                    "Identity": "string",
+                    "Username": strapi.user?.username,
+                    "Email": strapi.user?.email,
+                    "Notifications": "Auto Allow",
+                    "Browser": userAgent,
+                    "Date": updateDate.toISOString(),
+                    "Device": deviceType,
+                    "IPAddress": "string",
+                }
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + jwt_token
+                }
+            }
+        );
+    }
+    
+}
+
+export const userClevertapAcknowledgementsManual = async () => {
+    const {data} = await axios.get(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements?populate=*&filters[Username][$eq]=${strapi.user?.username}`
+    );
+    var jwt_token = '';
+    if (typeof window !== 'undefined') {
+        jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
+    }
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+
+    if(data.data.length){
+        const id = data.data[0].id;
+        let browserArr = data.data[0].Browser;
+        let notifications = data.data[0].Device;
+        const updateDate = new Date();
+        browserArr = browserArr +"<br>"+userAgent+" - "+updateDate.toISOString();
+        notifications = notifications +"<br>"+"Manually Allow - "+updateDate.toISOString();
+        const response = axios.put(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements/${id}`,
+            {
+                "data": {
+                   
+                    "Browserid": osType,
+                    "Notifications": "Manually Allow",
+                    "Browser": browserArr,
+                    "Date": updateDate.toISOString(),
+                    "Device": notifications,
+                    "IPAddress": deviceType,
+                }
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + jwt_token
+                }
+            }
+        )
+    }
+    else{
+        const updateDate = new Date();
+        const response = axios.post(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements/`,
+            {
+                "data": {
+                    "Name": strapi.user?.fullName || strapi.user?.username,
+                    "Browserid": osType,
+                    "Identity": "string",
+                    "Username": strapi.user?.username,
+                    "Email": strapi.user?.email,
+                    "Notifications": "Manually Allow",
+                    "Browser": userAgent,
+                    "Date": updateDate.toISOString(),
+                    "Device": deviceType,
+                    "IPAddress": "string",
+                }
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + jwt_token
+                }
+            }
+        );
+    }
+}
+
+export const userClevertapAcknowledgementsReject = async () => {
+    //console.log("userClevertapAcknowledgementsReject");
+    const {data} = await axios.get(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements?populate=*&filters[Username][$eq]=${strapi.user?.username}`
+    );
+    var jwt_token = '';
+    if (typeof window !== 'undefined') {
+        jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
+    }
+    const userAgent = navigator.userAgent;
+    const osType = navigator.platform;    
+    let deviceType = "Unknown";
+    
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent)) {
+        deviceType = "Mobile";
+    } else if (/Tablet|iPad/i.test(userAgent)) {
+        deviceType = "Tablet";
+    } else if (/Windows|Mac|Linux/i.test(userAgent)) {
+        deviceType = "Desktop";
+    }
+
+    if(data.data.length){
+        const id = data.data[0].id;
+        let browserArr = data.data[0].Browser;
+        let notifications = data.data[0].Device;
+        const updateDate = new Date();
+        browserArr = browserArr +"<br>"+userAgent+" - "+updateDate.toISOString();
+        notifications = notifications +"<br>"+"Reject - "+updateDate.toISOString();
+        const response = axios.put(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements/${id}`,
+            {
+                "data": {
+                   
+                    "Browserid": osType,
+                    "Notifications": "Reject",
+                    "Browser": browserArr,
+                    "Date": updateDate.toISOString(),
+                    "Device": notifications,
+                    "IPAddress": deviceType,
+                }
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + jwt_token
+                }
+            }
+        )
+    }
+    else{
+        const updateDate = new Date();
+        const response = axios.post(
+            `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements/`,
+            {
+                "data": {
+                    "Name": strapi.user?.fullName || strapi.user?.username,
+                    "Browserid": osType,
+                    "Identity": "string",
+                    "Username": strapi.user?.username,
+                    "Email": strapi.user?.email,
+                    "Notifications": "Reject",
+                    "Browser": userAgent,
+                    "Date": updateDate.toISOString(),
+                    "Device": deviceType,
+                    "IPAddress": "string",
+                }
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: "Bearer " + jwt_token
+                }
+            }
+        );
+    }
+}
+    

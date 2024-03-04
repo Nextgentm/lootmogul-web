@@ -15,7 +15,7 @@ export default function GamesPage({
   banners,
   seoData
 }) {
-  // console.log(contestSectionsData);
+  //console.log(contestSectionsData);
   return (
     <>
       <SEOContainer
