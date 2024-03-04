@@ -21,6 +21,7 @@ import { hasmindCallService } from "../../services/hasmindCallService";
 import { mrnCallService } from "../../services/mrnCallService";
 import { growThanCallService } from "../../services/growthanService";
 import { clearpierCallService } from "../../services/clearpierCallService";
+import { appmonetizeCallService } from "../../services/appmonetizeCallService";
 
 export const AppContext = createContext({});
 
@@ -753,6 +754,14 @@ export const AppContextContainer = ({ children }) => {
 
             if (
                 data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "appmonetize"
+            ) {
+                appmonetizeCallService();
+            }
+            
+            if (
+                data.user.is_new &&
                 router.route === "/cricket" &&
                 router.query.utm_medium === "mrn"
             ) {
@@ -1031,6 +1040,14 @@ export const AppContextContainer = ({ children }) => {
                 clearpierCallService();
             }
 
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "appmonetize"
+            ) {
+                appmonetizeCallService();
+            }
+            
             /** For mrnCallService */
             if (
                 data.user.is_new &&
