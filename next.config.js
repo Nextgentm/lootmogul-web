@@ -630,11 +630,6 @@ const moduleExports = {
         "permanent": true
        },
        {
-        "source": "\/games\/darnell-rogers-basketball",
-        "destination": "\/games",
-        "permanent": true
-       },
-       {
         "source": "\/games\/kartik-tyagi-cricket",
         "destination": "\/games",
         "permanent": true
