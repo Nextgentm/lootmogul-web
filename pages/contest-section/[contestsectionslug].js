@@ -39,12 +39,7 @@ export default function GamesPage({ }) {
       if (text) {
         filters = {
           name: {
-            $contains: text
-          },
-          contest_section: {
-            slug: {
-              $eq: query.contestsectionslug,
-            },
+            searchText: text
           }
         };
       }
@@ -82,7 +77,7 @@ export default function GamesPage({ }) {
               },
               pagination: {  // pagination for contest-master data
                 page: currentPage,
-                pageSize: 12,
+                pageSize: 8,
               }
             },
             image: "*"

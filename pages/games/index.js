@@ -87,8 +87,8 @@ export async function getStaticProps() {
             },
           },
           pagination: {
-            start: 0,
-            limit: 10
+            page: 1,
+            pageSize: 6
           }
         },
         image:"*"
