@@ -39,12 +39,7 @@ export default function GamesPage({ }) {
       if (text) {
         filters = {
           name: {
-            $contains: text
-          },
-          contest_section: {
-            slug: {
-              $eq: query.contestsectionslug,
-            },
+            searchText: text
           }
         };
       }
