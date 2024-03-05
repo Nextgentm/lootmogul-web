@@ -12,6 +12,7 @@ import * as ct from '../../../services/clevertapAnalytics';
 import { mrnGamePlayService } from "../../../services/mrnCallService";
 import { clearpierGamePlayService } from "../../../services/clearpierCallService";
 import { appmonetizeGamePlayService } from "../../../services/appmonetizeCallService";
+import { ventesGamePlayService } from "../../../services/ventesCallService";
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
@@ -112,6 +113,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     mrnGamePlayService();
                     clearpierGamePlayService(user);
                     appmonetizeGamePlayService(user);
+                    ventesGamePlayService(user);
 
                     ct.onGameplayStart({
                         action:"Gameplay Completed", 
