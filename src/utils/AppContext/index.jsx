@@ -22,6 +22,7 @@ import { mrnCallService } from "../../services/mrnCallService";
 import { growThanCallService } from "../../services/growthanService";
 import { clearpierCallService } from "../../services/clearpierCallService";
 import { appmonetizeCallService } from "../../services/appmonetizeCallService";
+import { ventesCallService } from "../../services/ventesCallService";
 
 export const AppContext = createContext({});
 
@@ -759,6 +760,14 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 appmonetizeCallService();
             }
+
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "va"
+            ) {
+                ventesCallService();
+            }
             
             if (
                 data.user.is_new &&
@@ -1048,6 +1057,14 @@ export const AppContextContainer = ({ children }) => {
                 appmonetizeCallService();
             }
             
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "va"
+            ) {
+                ventesCallService();
+            }
+
             /** For mrnCallService */
             if (
                 data.user.is_new &&
