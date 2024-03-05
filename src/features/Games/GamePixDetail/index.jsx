@@ -11,6 +11,7 @@ import PaidGameConfirmation from "../PaidGameConfirmation";
 import * as ct from '../../../services/clevertapAnalytics';
 import { mrnGamePlayService } from "../../../services/mrnCallService";
 import { clearpierGamePlayService } from "../../../services/clearpierCallService";
+import { appmonetizeGamePlayService } from "../../../services/appmonetizeCallService";
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
@@ -110,6 +111,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     //console.log('Skill Game End...',data);
                     mrnGamePlayService();
                     clearpierGamePlayService(user);
+                    appmonetizeGamePlayService(user);
 
                     ct.onGameplayStart({
                         action:"Gameplay Completed", 
