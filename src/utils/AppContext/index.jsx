@@ -16,13 +16,7 @@ import axios from "axios";
 import { getGameRoomOrCreateRoom } from "../../services/gameSevice";
 import * as Sentry from "@sentry/nextjs";
 import { getCurremtLocation, getCurrentLocationData } from "../../services/locationService";
-import { mobuppsCallService } from "../../services/mobuppsCallService";
-import { hasmindCallService } from "../../services/hasmindCallService";
-import { mrnCallService } from "../../services/mrnCallService";
-import { growThanCallService } from "../../services/growthanService";
-import { clearpierCallService } from "../../services/clearpierCallService";
-import { appmonetizeCallService } from "../../services/appmonetizeCallService";
-import { ventesCallService } from "../../services/ventesCallService";
+import { registerPostTracking } from "../../services/postTrackingService";
 
 export const AppContext = createContext({});
 
@@ -265,7 +259,6 @@ export const AppContextContainer = ({ children }) => {
                                 "html"
                         ) {
                             if (typeof window !== "undefined") {
-                                mobuppsCallService();
 
                                 window.open(
                                     data[0]?.contestmaster?.data?.game?.data
@@ -314,7 +307,6 @@ export const AppContextContainer = ({ children }) => {
                                             data[0]?.contestmaster?.data?.game
                                                 ?.data?.config?.slug
                                     )
-                                        mobuppsCallService();
                                     router.push(
                                         "/games/" +
                                             roomData?.id +
@@ -330,7 +322,6 @@ export const AppContextContainer = ({ children }) => {
                             }
                         } else {
                             setJoiningData(resp);
-                            mobuppsCallService();
                             router.push("/joining");
                         }
                         setShowLoading({});
@@ -693,98 +684,16 @@ export const AppContextContainer = ({ children }) => {
                 });    
             }
 
-            /** For mobupps */
+            /** For registerPostTracking */
             if (
                 data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "mobupps"
+                ( router.route === "/dsg" || router.route === "/signupcampaign" || router.route === "/cricket" || router.route === "/gamecampaign" ) &&
+                router.query.utm_medium != ""
             ) {
-                mobuppsCallService();
+                registerPostTracking(data.user);
             }
-
-            /** For mobupps */
-
-            /** For hasmind */
-            if (
-                data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "hashmind"
-            ) {
-                hasmindCallService();
-            }
-            if (
-                data.user.is_new &&
-                router.route === "/cricket" &&
-                router.query.utm_medium === "hashmind"
-            ) {
-                hasmindCallService();
-            }
-            if (
-                data.user.is_new &&
-                router.route === "/dsg" &&
-                router.query.utm_medium === "hashmind"
-            ) {
-                hasmindCallService();
-            }
-            /** For hasmind */
+            /** For registerPostTracking */
             
-            /** For mrnCallService */
-            if (
-                data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "mrn"
-            ) {
-                mrnCallService();
-            }
-
-            /** For GrowThanCallService */
-            if (
-                data.user.is_new &&
-                router.route === "/dsg" &&
-                router.query.utm_medium === "GT"
-            ) {
-                growThanCallService();
-            }
-            if (
-                data.user.is_new &&
-                router.route === "/dsg" &&
-                router.query.utm_medium === "cp"
-            ) {
-                clearpierCallService();
-            }
-
-            if (
-                data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "appmonetize"
-            ) {
-                appmonetizeCallService();
-            }
-
-            if (
-                data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "va"
-            ) {
-                ventesCallService();
-            }
-            
-            if (
-                data.user.is_new &&
-                router.route === "/cricket" &&
-                router.query.utm_medium === "mrn"
-            ) {
-                mrnCallService();
-            }
-
-            if (
-                data.user.is_new &&
-                router.route === "/dsg" &&
-                router.query.utm_medium === "mrn"
-            ) {
-                mrnCallService();
-            }
-            /** For mrnCallService */
             ga.eventTracking({
                 action: data.user.is_new
                     ? provider + " new user signup happened"
@@ -997,100 +906,16 @@ export const AppContextContainer = ({ children }) => {
                 });    
             }
 
-            /** For Mobupps */
+            /** For registerPostTracking */
             if (
                 data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "mobupps"
+                ( router.route === "/dsg" || router.route === "/signupcampaign" || router.route === "/cricket" || router.route === "/gamecampaign" ) &&
+                router.query.utm_medium != ""
             ) {
-                mobuppsCallService();
+                registerPostTracking(data.user);
             }
-            /** For Mobupps */
+            /** For registerPostTracking */
 
-            /** For hasmind */
-            if (
-                data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "hashmind"
-            ) {
-                hasmindCallService();
-            }
-            if (
-                data.user.is_new &&
-                router.route === "/cricket" &&
-                router.query.utm_medium === "hashmind"
-            ) {
-                hasmindCallService();
-            }
-            if (
-                data.user.is_new &&
-                router.route === "/dsg" &&
-                router.query.utm_medium === "hashmind"
-            ) {
-                hasmindCallService();
-            }
-            /** For hasmind */
-           
-            
-            /** For GrowThanCallService */
-            if (
-                data.user.is_new &&
-                router.route === "/dsg" &&
-                router.query.utm_medium === "GT"
-            ) {
-                growThanCallService();
-            }
-
-            if (
-                data.user.is_new &&
-                router.route === "/dsg" &&
-                router.query.utm_medium === "cp"
-            ) {
-                clearpierCallService();
-            }
-
-            if (
-                data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "appmonetize"
-            ) {
-                appmonetizeCallService();
-            }
-            
-            if (
-                data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "va"
-            ) {
-                ventesCallService();
-            }
-
-            /** For mrnCallService */
-            if (
-                data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "mrn"
-            ) {
-                mrnCallService();
-            }
-
-            if (
-                data.user.is_new &&
-                router.route === "/cricket" &&
-                router.query.utm_medium === "mrn"
-            ) {
-                mrnCallService();
-            }
-
-            if (
-                data.user.is_new &&
-                router.route === "/dsg" &&
-                router.query.utm_medium === "mrn"
-            ) {
-                mrnCallService();
-            }
-            /** For mrnCallService */
-            
             ga.eventTracking({
                 action: data.user.is_new
                     ? "new user signup happened with new emailID"
