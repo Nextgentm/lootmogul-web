@@ -9,6 +9,8 @@ const defaultSEOData = {
     "Play Games With Your Favorite Influencers And Win Exciting Prizes",
   canonicalURL: process.env.NEXT_PUBLIC_SITE_URL + "/games",
 };
+import AppContext from "../../src/utils/AppContext";
+import { useContext } from "react"
 
 export default function GamesPage({
   contestSectionsData,
@@ -16,6 +18,13 @@ export default function GamesPage({
   seoData
 }) {
   //console.log(contestSectionsData);
+  
+  const {
+      setIsHideHeader,
+      setIsHideFooter,
+  } = useContext(AppContext);
+  setIsHideHeader(false);
+  setIsHideFooter(false);
   return (
     <>
       <SEOContainer

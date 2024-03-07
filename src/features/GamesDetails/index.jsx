@@ -14,7 +14,7 @@ import CountDownTimer from "../../components/CountDownTimer";
 
 
 const GameDetails = ({ gameData }) => {
-    const { isTabletOrDesktop } = useContext(AppContext);
+    const { isTabletOrDesktop, setIsHideHeader, setIsHideFooter, } = useContext(AppContext);
     const router = useRouter();
 
     const { showPaidGameConfirmation, CheckAndStartGame, showCaptcha, setShowCaptcha } = useContext(AppContext);
@@ -23,6 +23,8 @@ const GameDetails = ({ gameData }) => {
     // disable play again button onclick
     const [isButtonDisabled, setButtonDisabled] = useState(false);
 
+    setIsHideHeader(false);
+    setIsHideFooter(false);
     return (
         <Box
             mr={["18px", "60px"]}
