@@ -23,7 +23,7 @@ const MaintenancePage = () => {
                     UNDER MAINTENANCE
                 </Heading>
                 <Text style={{ lineHeight: '25px' }} w={["100%","100%","100%", "85%"]} mt={["0%", "5%"]} ml={["0%", "0%"]} variant="hint" color={"#fff"} fontSize={18} textAlign={['center','center','center','left']} >
-                <Text color='#E90A63'  display={"inline-block"}>Lootmogul.com</Text> website will be not available on 20 December 2022 from 12:30 am to 01:00 am GMT for period of 30 minutes.
+                <Text color='#E90A63'  display={"inline-block"}>Lootmogul.com</Text> website will be not available on 7th March 2024 from 09:00 am to 11:00 am PST for period of 120 minutes.
                 </Text>
             </Box>
             <Box  w={["100%","100%","100%", "50%"]} p={4} color='red' display={"inline-block"}>
