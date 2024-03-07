@@ -79,6 +79,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 params: user,
                 currentContest: currentContest
             }); 
+            setShouldShowCancel(true)
         }
 
     }, [gameSlug, gameid, joiningData, user?.id])
@@ -122,6 +123,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     });
 
                     if (joiningData?.contestmaster?.data?.entryFee > 0) {
+                        setShouldShowCancel(true)
                         setShowLoading(true)
                         retryConst()
                     }
@@ -141,8 +143,9 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         }, globalUrl);
     }
     const handleClose = async () => {
-        setIsHideHeader(false);
-        setIsHideFooter(false);
+        //setIsHideHeader(false);
+        //setIsHideFooter(false);
+        setShowLoading(true);
         router.push("/games/" + joiningData?.contestmaster?.data?.slug + "#leaderboard");
 
     }
