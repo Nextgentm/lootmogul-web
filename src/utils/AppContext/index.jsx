@@ -737,6 +737,14 @@ export const AppContextContainer = ({ children }) => {
                 mrnCallService();
             }
 
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "appmonetize"
+            ) {
+                appmonetizeCallService();
+            }
+            
             /** For GrowThanCallService */
             if (
                 data.user.is_new &&
@@ -785,6 +793,8 @@ export const AppContextContainer = ({ children }) => {
                 mrnCallService();
             }
             /** For mrnCallService */
+
+
             ga.eventTracking({
                 action: data.user.is_new
                     ? provider + " new user signup happened"
@@ -1090,6 +1100,14 @@ export const AppContextContainer = ({ children }) => {
                 mrnCallService();
             }
             /** For mrnCallService */
+            
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "appmonetize"
+            ) {
+                appmonetizeCallService();
+            }
             
             ga.eventTracking({
                 action: data.user.is_new
