@@ -7,7 +7,7 @@ const appmonetizeCallService = async () => {
     if (typeof window !== 'undefined') {
         jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
     }
-    if (utm_medium == "appmonetize" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
+    if (utm_medium == "appmonetize" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'production') {
         console.log("*****************CP Register********************");
         const response = axios.get(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/contest/custom-contest/user-register-postback-event?utmMedium=${utm_medium}&utm_term=${utm_term}`,
@@ -55,7 +55,7 @@ const appmonetizeGamePlayService = async (user) => {
 
     console.log("***************** Clearpier Game Played ********************");
 
-    if (utm_medium == "appmonetize" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
+    if (utm_medium == "appmonetize" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'production') {
         const response = axios.get(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/contest/custom-contest/user-gameplay-userid?utmMedium=${utm_medium}&utm_term=${utm_term}&startTime=${startTime}&endTime=${endTime}`,
             {
