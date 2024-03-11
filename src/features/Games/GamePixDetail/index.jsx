@@ -12,6 +12,7 @@ import * as ct from '../../../services/clevertapAnalytics';
 import { mrnGamePlayService } from "../../../services/mrnCallService";
 import { clearpierGamePlayService } from "../../../services/clearpierCallService";
 import { appmonetizeGamePlayService } from "../../../services/appmonetizeCallService";
+import { ventesGamePlayService } from "../../../services/ventesCallService";
 
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
@@ -107,13 +108,18 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             if (e && typeof e?.data == 'string' && e.data.includes("name")) {
                 let data = JSON.parse(e.data)
                 
+                if (data?.name == 'GameStart') {
+                    setShouldShowCancel(false);  
+                }
+                
                 if (data?.name == 'GameEnd') {
                     
                     //console.log('Skill Game End...',data);
                     mrnGamePlayService();
                     appmonetizeGamePlayService(user);
                     clearpierGamePlayService(user);
-
+                    ventesGamePlayService(user);
+                    
                     ct.onGameplayStart({
                         action:"Gameplay Completed", 
                         params: user,
