@@ -25,7 +25,7 @@ import structuredClone from "@ungap/structured-clone";
 const GamesCategories = ({ isMobileDevice, section }) => {
     const ref = useRef();
     const [isLargerScreen] = useMediaQuery("(min-width: 2200px)");
-    const arrowTrashhold = isMobileDevice ? 2 : isLargerScreen ? 7 : 5;
+    const arrowTrashhold = isMobileDevice ? 2 : isLargerScreen ? 5 : 5;
     const [showAll, setShowAll] = useState(false);
     const [searchText, setSearchText] = useState("");
     const [content, setContent] = useState({});

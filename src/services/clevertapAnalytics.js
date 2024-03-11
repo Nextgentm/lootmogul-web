@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import strapi from "../utils/strapi";
 export const pageview = async (url) => {
     if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true'){
         let strapi_jwt = '';
@@ -24,27 +24,15 @@ export const pageview = async (url) => {
             deviceType = "Desktop";
         }
 
-        const onUserLoginData =  await axios.get(
-            process.env.NEXT_PUBLIC_STRAPI_API_URL +
-                `/api/clevertap/user`,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json",
-                        Authorization: "Bearer " + strapi_jwt
-                    }
-                }
-        );
-
-        if(onUserLoginData.data){
+        if(strapi_jwt && strapi.user){
             clevertap.event.push("Page View",{
                 "Page Name":url,
-                "Username": onUserLoginData.data?.data.username,
-                "Player ID": onUserLoginData.data?.data.playerId,
-                "Email": onUserLoginData.data?.data.email,
-                "Mobile": onUserLoginData.data?.data.mobile,
-                "Fname": onUserLoginData.data?.data.firstName,
-                "Lname": onUserLoginData.data?.data.lastName,
+                "Username": strapi.user?.username,
+                "Player ID": strapi.user?.id,
+                "Email": strapi.user?.email,
+                "Mobile": strapi.user?.mobileNumber,
+                "Fname": strapi.user?.fullName,
+                "Lname": strapi.user?.fullName,
                 "State":lm_user_state ? lm_user_state : "",
                 "Country":lm_user_location ? lm_user_location : "",
                 "Source":utm_source ? utm_source : '',
