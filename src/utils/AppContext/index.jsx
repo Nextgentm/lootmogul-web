@@ -21,6 +21,7 @@ import { hasmindCallService } from "../../services/hasmindCallService";
 import { mrnCallService } from "../../services/mrnCallService";
 import { growThanCallService } from "../../services/growthanService";
 import { appmonetizeCallService } from "../../services/appmonetizeCallService";
+import { clearpierCallService } from "../../services/clearpierCallService";
 
 export const AppContext = createContext({});
 
@@ -724,6 +725,22 @@ export const AppContextContainer = ({ children }) => {
                 appmonetizeCallService();
             }
             
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "cp"
+            ) {
+                clearpierCallService();
+            }
+            
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "cp"
+            ) {
+                clearpierCallService();
+            }
+            
             /** For GrowThanCallService */
             if (
                 data.user.is_new &&
@@ -1039,6 +1056,22 @@ export const AppContextContainer = ({ children }) => {
                 router.query.utm_medium === "appmonetize"
             ) {
                 appmonetizeCallService();
+            }
+            
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "cp"
+            ) {
+                clearpierCallService();
+            }
+            
+            if (
+                data.user.is_new &&
+                router.route === "/dsg" &&
+                router.query.utm_medium === "cp"
+            ) {
+                clearpierCallService();
             }
             
             ga.eventTracking({

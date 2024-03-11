@@ -99,7 +99,7 @@ const Header = () => {
     const [email, setEmail] = useState('')
 
     useEffect(() => {    
-        if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true' && user && router.pathname){
+        if(process.env.NEXT_PUBLIC_CLEVER_TAP_STATUS == 'true' && user && router.pathname && router.pathname != "/games/[id]/[gameslug]" && router.pathname != "/joining" && router.pathname != "/quizPage"){
                 clevertap.notifications.push({
                     "titleText":'Stay updated & power up your play!',
                     "bodyText":'Enable push notifications for the latest updates! We assure you that we will send relevant content only.',
