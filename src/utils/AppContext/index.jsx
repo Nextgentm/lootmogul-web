@@ -785,28 +785,13 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 growThanCallService();
             }
-            if (
-                data.user.is_new &&
-                router.route === "/dsg" &&
-                router.query.utm_medium === "cp"
-            ) {
-                clearpierCallService();
-            }
-
+           
             if (
                 data.user.is_new &&
                 router.route === "/gamecampaign" &&
                 router.query.utm_medium === "appmonetize"
             ) {
                 appmonetizeCallService();
-            }
-
-            if (
-                data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "va"
-            ) {
-                ventesCallService();
             }
             
             if (
@@ -1083,13 +1068,6 @@ export const AppContextContainer = ({ children }) => {
                 growThanCallService();
             }
 
-            if (
-                data.user.is_new &&
-                router.route === "/dsg" &&
-                router.query.utm_medium === "cp"
-            ) {
-                clearpierCallService();
-            }
 
             if (
                 data.user.is_new &&
@@ -1099,13 +1077,6 @@ export const AppContextContainer = ({ children }) => {
                 appmonetizeCallService();
             }
             
-            if (
-                data.user.is_new &&
-                router.route === "/gamecampaign" &&
-                router.query.utm_medium === "va"
-            ) {
-                ventesCallService();
-            }
 
             /** For mrnCallService */
             if (
