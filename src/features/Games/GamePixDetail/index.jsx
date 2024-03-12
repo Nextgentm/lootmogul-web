@@ -14,6 +14,7 @@ import { clearpierGamePlayService } from "../../../services/clearpierCallService
 import { appmonetizeGamePlayService } from "../../../services/appmonetizeCallService";
 import { ventesGamePlayService } from "../../../services/ventesCallService";
 
+
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
     const {
@@ -108,14 +109,19 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             if (e && typeof e?.data == 'string' && e.data.includes("name")) {
                 let data = JSON.parse(e.data)
                 
+                if (data?.name == 'GameStart') {
+                    setShouldShowCancel(false);  
+                }
+                
                 if (data?.name == 'GameEnd') {
                     
                     //console.log('Skill Game End...',data);
                     mrnGamePlayService();
                     clearpierGamePlayService(user);
                     appmonetizeGamePlayService(user);
+                    clearpierGamePlayService(user);
                     ventesGamePlayService(user);
-
+                    
                     ct.onGameplayStart({
                         action:"Gameplay Completed", 
                         params: user,

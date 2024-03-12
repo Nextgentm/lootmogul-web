@@ -26,7 +26,7 @@ const BottomAboutText = () => {
                         w={'auto'}
                         h="70px"
                         alt=""
-                        src="https://lootmogulstg.wpengine.com/wp-content/uploads/2023/09/Logo-1.png"
+                        src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/03/11010641/Logo-1.png"
                         display={'block'}
                         margin={"auto"}
                     />
@@ -54,7 +54,7 @@ Cricket South Africa and SA20 team - Durban Super Giants
                         w={["100%", "100%", "80%", "80%"]}
                         h={["auto","auto","70px","70px"]}
                         alt=""
-                        src="https://lootmogulstg.wpengine.com/wp-content/uploads/2023/09/Wide-Logo-1.png"
+                        src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/03/11010633/Wide-Logo-1.png"
                         display={'block'}
                         margin={"auto"}
                     />
@@ -81,7 +81,7 @@ Cricket South Africa and SA20 team - Durban Super Giants
                         w={["50%", "50%", "50%", "auto"]}
                         h="70px"
                         alt=""
-                        src="https://lootmogulstg.wpengine.com/wp-content/uploads/2023/09/NFLPA-Logo.png"
+                        src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/03/11010643/NFLPA-Logo.png"
                         display={'block'}
                         margin={"auto"}
                         p="13px"

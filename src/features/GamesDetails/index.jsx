@@ -14,7 +14,7 @@ import CountDownTimer from "../../components/CountDownTimer";
 
 
 const GameDetails = ({ gameData }) => {
-    const { isTabletOrDesktop, setIsHideHeader, setIsHideFooter, } = useContext(AppContext);
+    const { isTabletOrDesktop, setIsHideHeader, setIsHideFooter } = useContext(AppContext);
     const router = useRouter();
 
     const { showPaidGameConfirmation, CheckAndStartGame, showCaptcha, setShowCaptcha } = useContext(AppContext);
