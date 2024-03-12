@@ -18,6 +18,7 @@ import { clearpierGamePlayService } from "../../services/clearpierCallService";
 import { appmonetizeGamePlayService } from "../../services/appmonetizeCallService";
 import { ventesGamePlayService } from "../../services/ventesCallService";
 
+
 const Quiz = (props) => {
   const router = useRouter();
   const { user } = useContext(AppContext);
@@ -145,8 +146,8 @@ const Quiz = (props) => {
         });
 
         mrnGamePlayService();
-        clearpierGamePlayService(user);
         appmonetizeGamePlayService(user);
+        clearpierGamePlayService(user)
         ventesGamePlayService(user);
 
         setMatchResult(data.ranks);
