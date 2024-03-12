@@ -53,7 +53,7 @@ const ventesGamePlayService = async (user) => {
     user.id = 25130;*/
 
 
-    console.log("***************** ventes Game Played ********************");
+    //console.log("***************** ventes Game Played ********************");
 
     if (utm_medium == "va" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'production') {
         const response = axios.get(

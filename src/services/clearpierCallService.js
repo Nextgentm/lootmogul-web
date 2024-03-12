@@ -53,7 +53,7 @@ const clearpierGamePlayService = async (user) => {
     user.id = 25130;*/
 
 
-    console.log("***************** Clearpier Game Played ********************");
+    //console.log("***************** Clearpier Game Played ********************");
 
     if (utm_medium == "cp" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'production') {
         const response = axios.get(
