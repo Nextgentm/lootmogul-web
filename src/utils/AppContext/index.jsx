@@ -23,6 +23,7 @@ import { growThanCallService } from "../../services/growthanService";
 import { appmonetizeCallService } from "../../services/appmonetizeCallService";
 import { clearpierCallService } from "../../services/clearpierCallService";
 import { ventesCallService } from "../../services/ventesCallService";
+import DeviceUUID from "../device-uuid";
 
 export const AppContext = createContext({});
 
@@ -545,6 +546,11 @@ export const AppContextContainer = ({ children }) => {
         setLoggingIn(true)
         let data;
         defaultDataSettings();
+
+        if(typeof window !== "undefined" && window.navigator){
+            var uuid = new DeviceUUID(window?.navigator?.userAgent).get();
+            console.log(uuid);
+        }
         data = await strapi.authenticateProvider(provider, token);
         setLoggingIn(false)
         
@@ -826,6 +832,11 @@ export const AppContextContainer = ({ children }) => {
     const callCustomAuthService = async ( formData, formType, redirectUrl = "" ) => {
         let data;
         defaultDataSettings();
+
+        if(typeof window !== "undefined" && window.navigator){
+            var uuid = new DeviceUUID(window?.navigator?.userAgent).get();
+            console.log(uuid);
+        }
 
         if (formType === "signup" || formType === "login") {
             setLoggingIn(true)
