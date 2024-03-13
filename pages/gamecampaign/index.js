@@ -18,14 +18,16 @@ export default function GamesPage({
   contestSectionsData,
   contestSectionsDataTrivia,
   campaignsSectionsResData,
+  trending_tmt_data
 }) {
-  //console.log(data);
+  //console.log(trending_tmt_data?.contestmasters.data);
   return (
     <>
 
       <SEOContainer seoData={defaultSEOData} />
       <Banner bannerData={campaignsSectionsResData?.data[0] || []} />
-      <TradingGame tradingCardData={campaignsSectionsResData?.data[0] || []} />
+      <TradingGame tradingCardData={campaignsSectionsResData?.data[0] || []}
+        trendingtmtData={trending_tmt_data?.contestmasters?.data || []} />
       <CustomBlockChainGame
         contestSectionsData={contestSectionsDataTrivia?.data || []}
         contestmasters={data || []}
@@ -45,6 +47,7 @@ export default function GamesPage({
 export async function getStaticProps() {
   // Fetch data from external API
   let data = [];
+  let trending_tmt_data = [];
 
   const res = await strapi.find("contestmasters", {
     filters: {
@@ -81,9 +84,62 @@ export async function getStaticProps() {
       pageSize: 6, // 25
     },
   });
+
+  const trending_tmt = await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
+    filters: {
+        $or: [          {
+            name: {
+              $eq: "Trending Tournament",
+            },
+          },
+        ],
+    },
+    sort: "priority",
+    populate: {
+      contestmasters: {
+        fields: ["name", "slug", "priority", "entryFee", "isFeatured", "retries"],
+        sort: "priority",
+        populate: {
+          contest_section: {
+            fields: ["name", "slug"],
+          },
+          icon: {
+            fields: ["name", "url"],
+          },
+          feeWallet: {
+            populate: {
+              currency: {
+                fields: ["type"],
+              },
+            },
+          },
+          reward: {},
+          game: {
+            fields: "*",
+          },
+        },
+        pagination: {
+          page: 1,
+          pageSize: 6
+        }
+      },
+      image:"*"
+    },
+
+    pagination: {
+      page: 1,
+      pageSize: 25,
+    },
+  });
+
   if (res?.meta) {
     data = res.data;
   }
+  
+  if (trending_tmt?.meta) {
+    trending_tmt_data = trending_tmt.data[0];
+  }
+  
 
   try {
     const contestSectionsRes = await fetch(
@@ -109,7 +165,7 @@ export async function getStaticProps() {
 
 
     return {
-      props: { data, contestSectionsData, contestSectionsDataTrivia, campaignsSectionsResData },
+      props: { data, contestSectionsData, contestSectionsDataTrivia, campaignsSectionsResData,trending_tmt_data },
       revalidate: 300,
     };
   } catch (error) { }
