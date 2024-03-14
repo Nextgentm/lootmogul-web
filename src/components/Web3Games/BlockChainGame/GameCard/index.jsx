@@ -83,6 +83,7 @@ const GamesCard = ({ contestmaster, style, sectionName, boxstyle }) => {
                         overflow="visible"
                         height={["45px","45px","45px","45px","45px","auto"]}
                         lineHeight={["24px"]}
+                        width={["100%","100%","100%","175px"]}
                     >
                         {contestmaster.name}
                     </Text>
