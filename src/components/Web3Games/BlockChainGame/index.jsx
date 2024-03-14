@@ -1,46 +1,14 @@
-import { Box, Flex, Image, Text, VStack, Link } from '@chakra-ui/react'
+import { Box, Flex, Image, Text, Wrap, WrapItem } from '@chakra-ui/react'
 import React from 'react'
 import { useState, useEffect, useContext } from "react";
 import GameCategory from "./GameCategory";
 import { AppContext } from "../../../utils/AppContext/index";
+import GamesCard from "../BlockChainGame/GameCard";
 
-const BlackChainGame = ({contestmasters,contestSectionsData, blockChainCardData}) => {
+const BlackChainGame = ({blockChainCardData, skillGameData}) => {
     
     const { isMobileDevice } = useContext(AppContext);
-    const [contestSections, setContestSections] = useState([]);
-    useEffect(() => {
-        if (contestmasters) {
-          const fg = [];
-          const cs = [];
     
-          contestmasters.map((cm) => {
-            if (cm.isFeatured) fg.push(cm);
-            
-                let section = contestSectionsData?.find(
-                    (sec) => sec.id == cm.contest_section?.data?.id
-                  );
-      
-                  if (section) {
-                    if (section?.contestmasters?.data)
-                      section.contestmasters.data?.push(cm);
-                    else {
-                      section.contestmasters = {
-                        data: [cm]
-                      };
-                    }
-                  }
-            
-          });
-          //console.log('hello cm.contest?.id');
-          //console.log(contestSectionsData);
-          setContestSections(contestSectionsData);
-          
-        }
-      }, [contestmasters, contestSectionsData]);
-      
-
-     
-
     return ( 
     <Box>
          {blockChainCardData.gameSection1_isVisible && (
@@ -49,8 +17,8 @@ const BlackChainGame = ({contestmasters,contestSectionsData, blockChainCardData}
             w="100%"
             alignItems={"center"}
             p={[
-                "2% 2%",
-                "2% 2%",
+                "2% 5%",
+                "2% 5%",
                 "2% 5%",
             ]}
         >
@@ -73,7 +41,8 @@ const BlackChainGame = ({contestmasters,contestSectionsData, blockChainCardData}
                         "65px",
                     ]}
                     textAlign="center"
-                    mb="1%"
+                    mb="3%"
+                    mt={["5%","5%","1%"]}
                 >
                     {blockChainCardData.gameSection1_header}
                 </Text>
@@ -94,29 +63,26 @@ const BlackChainGame = ({contestmasters,contestSectionsData, blockChainCardData}
                     width={["100%", "100%", "80%"]}
                     textAlign="center"
                     m="auto"
+                    mb="25px"
                 >
                     {blockChainCardData.gameSection1_subheader}
                 </Text>
                 )}
-                <Box mt="4%" className='gameslider'>
-                    {contestSections &&
-                    contestSections.map((section, index) => (
-                        <Box
-                        key={"sec-index-" + index}
-                        
-                        >
-                        {section?.contestmasters?.data &&
-                            section?.contestmasters?.data.length > 0 && (
-                            <GameCategory
-                                key={`games-${index}`}
-                                isMobileDevice={isMobileDevice}
-                                section={section}
-                                type="paid"
+                <Wrap m="auto !important">
+                {skillGameData &&
+                    skillGameData.map((section, index) => ( 
+                        <WrapItem mb="2%!important">
+                            <GamesCard
+                                style={{ mr: "24px" }}
+                                key={`gamescard-${index}`}
+                                contestmaster={section}
+                                sectionName={""}
+                                boxstyle="small"
                             />
-                            )}
-                        </Box>
-                    ))}
-                </Box>
+                        </WrapItem>
+                    ))
+                }    
+                 </Wrap>
             </Box>
         </Flex>
         )}
