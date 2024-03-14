@@ -11,7 +11,8 @@ const Banner = ({ bannerData, customClass }) => {
     const router = useRouter();
     const [isLoginModalActiveInner, setLoginModalActiveInner] = useState(false);
     const { user } = useContext(AppContext);
-    const { isMobileDevice, isLoginModalActive } = useContext(AppContext);
+    const { isMobileDevice, isLoginModalActive, setIsHideHeader } = useContext(AppContext);
+    
     
     const toggleLoginModal = () => {
         setLoginModalActiveInner(!isLoginModalActiveInner);
@@ -42,6 +43,7 @@ const Banner = ({ bannerData, customClass }) => {
         }
     },[user]);
 
+    setIsHideHeader(false);
     return (
         <Flex
             flexDir={["column", "column", "column", "row"]}
