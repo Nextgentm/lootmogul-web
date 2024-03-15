@@ -1,14 +1,13 @@
 import axios from "axios";
 
-const registerPostTracking = async (user) => {
-    const utm_medium = user?.tracking?.utm_medium;
-    const utm_term = user?.tracking?.utm_term;
+const registerPostTracking = async (utm_medium,utm_term) => {
     let jwt_token = '';
     if (typeof window !== 'undefined') {
         jwt_token = window.localStorage?.getItem("token") ? window.localStorage?.getItem("token") : window.localStorage?.getItem("strapi_jwt");
     }
+    //console.log("utm_medium",utm_medium,utm_term);
     if (utm_medium != "" && utm_term != "" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
-        console.log("*****************CP Register********************");
+        //console.log("*****************CP Register********************");
         const response = axios.get(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/contest/custom-contest/user-register-postback-event?utmMedium=${utm_medium}&utm_term=${utm_term}`,
             {

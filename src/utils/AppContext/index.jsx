@@ -661,6 +661,17 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
                     }
+                        
+                    /** For registerPostTracking */
+                    if (
+                        data.user.is_new &&
+                        ( router.route === "/dsg" || router.route === "/signupcampaign" || router.route === "/cricket" || router.route === "/gamecampaign" ) &&
+                        router.query.utm_medium != ""
+                    ) {
+                        registerPostTracking(utm_medium,utm_term);
+                    }
+                    /** For registerPostTracking */
+
                 }
             }
 
@@ -683,16 +694,6 @@ export const AppContextContainer = ({ children }) => {
                     pathname:router.pathname,
                 });    
             }
-
-            /** For registerPostTracking */
-            if (
-                data.user.is_new &&
-                ( router.route === "/dsg" || router.route === "/signupcampaign" || router.route === "/cricket" || router.route === "/gamecampaign" ) &&
-                router.query.utm_medium != ""
-            ) {
-                registerPostTracking(data.user);
-            }
-            /** For registerPostTracking */
             
             ga.eventTracking({
                 action: data.user.is_new
@@ -884,7 +885,18 @@ export const AppContextContainer = ({ children }) => {
                         window.localStorage?.removeItem("utm_source");
                         window.localStorage?.removeItem("trackingCode");
                     }
+
+                    /** For registerPostTracking */
+                    if (
+                        data.user.is_new &&
+                        ( router.route === "/dsg" || router.route === "/signupcampaign" || router.route === "/cricket" || router.route === "/gamecampaign" ) &&
+                        router.query.utm_medium != ""
+                    ) {
+                        registerPostTracking(utm_medium,utm_term);
+                    }
+                    /** For registerPostTracking */
                 }
+                
             }
             
             /* Clevertap onUserLogin*/
@@ -905,16 +917,6 @@ export const AppContextContainer = ({ children }) => {
                     pathname:router.pathname,
                 });    
             }
-
-            /** For registerPostTracking */
-            if (
-                data.user.is_new &&
-                ( router.route === "/dsg" || router.route === "/signupcampaign" || router.route === "/cricket" || router.route === "/gamecampaign" ) &&
-                router.query.utm_medium != ""
-            ) {
-                registerPostTracking(data.user);
-            }
-            /** For registerPostTracking */
 
             ga.eventTracking({
                 action: data.user.is_new
