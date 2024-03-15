@@ -16,8 +16,10 @@ export default function GamesPage({
   data,
   campaignsSectionsResData,
 }) {
-  const skillGameData = data?.data[0] || [];
-  const trendingTournamentData = data?.data[1] || [];
+  
+  const skillGameData = data.data.find(item => item.name === "Skill Games") || [];
+  const trendingTournamentData = data.data.find(item => item.name === "Trending Tournament") || [];
+  
   return (
     <>
 
