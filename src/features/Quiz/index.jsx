@@ -13,10 +13,7 @@ import {
   setVoiceOverStatus,
 } from "../../services/audioService";
 import * as ct from "../../services/clevertapAnalytics";
-import { mrnGamePlayService } from "../../services/mrnCallService";
-import { clearpierGamePlayService } from "../../services/clearpierCallService";
-import { appmonetizeGamePlayService } from "../../services/appmonetizeCallService";
-import { ventesGamePlayService } from "../../services/ventesCallService";
+import { gamePlayPostTracking } from "../../services/postTrackingService";
 
 const Quiz = (props) => {
   const router = useRouter();
@@ -144,10 +141,7 @@ const Quiz = (props) => {
             score:data.ranks
         });
 
-        mrnGamePlayService();
-        clearpierGamePlayService(user);
-        appmonetizeGamePlayService(user);
-        ventesGamePlayService(user);
+        gamePlayPostTracking(user);
 
         setMatchResult(data.ranks);
         updateUser();

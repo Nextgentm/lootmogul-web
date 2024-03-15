@@ -52,7 +52,7 @@ const gamePlayPostTracking = async (user) => {
     user.id = 25130;*/
 
 
-    console.log("***************** Clearpier Game Played ********************");
+    console.log("***************** Posttracking Game Played ********************");
 
     if (utm_medium != "" && utm_term != "" && process.env.NEXT_PUBLIC_SENTRY_ENV === 'staging') {
         const response = axios.get(
