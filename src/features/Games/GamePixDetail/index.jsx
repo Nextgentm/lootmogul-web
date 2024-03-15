@@ -12,6 +12,7 @@ import * as ct from '../../../services/clevertapAnalytics';
 import { gamePlayPostTracking } from "../../../services/postTrackingService";
 
 
+
 export const GamePixDetail = ({ gameSlug, gameid }) => {
 
     const {
@@ -35,6 +36,21 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     const [retryCount, setRetryCount] = useState();
     const [shouldShowCancel, setShouldShowCancel] = useState(false)
     
+    useEffect(() => {
+        const disableBackButton = (e) => {
+          e.preventDefault();
+          window.history.forward();
+        };
+    
+        window.history.pushState(null, null, window.location.pathname);
+        window.addEventListener('popstate', disableBackButton);
+    
+        return () => {
+          window.removeEventListener('popstate', disableBackButton);
+        };
+      }, []);
+    
+
     useEffect(() => {
 
         if (gameUrl)
@@ -77,6 +93,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 params: user,
                 currentContest: currentContest
             }); 
+            setShouldShowCancel(true)
         }
 
     }, [gameSlug, gameid, joiningData, user?.id])
@@ -105,6 +122,10 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             if (e && typeof e?.data == 'string' && e.data.includes("name")) {
                 let data = JSON.parse(e.data)
                 
+                if (data?.name == 'GameStart') {
+                    setShouldShowCancel(false);  
+                }
+                
                 if (data?.name == 'GameEnd') {
                     
                     //console.log('Skill Game End...',data);
@@ -117,6 +138,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     });
 
                     if (joiningData?.contestmaster?.data?.entryFee > 0) {
+                        setShouldShowCancel(true)
                         setShowLoading(true)
                         retryConst()
                     }
@@ -136,8 +158,9 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         }, globalUrl);
     }
     const handleClose = async () => {
-        setIsHideHeader(false);
-        setIsHideFooter(false);
+        //setIsHideHeader(false);
+        //setIsHideFooter(false);
+        setShowLoading(true);
         router.push("/games/" + joiningData?.contestmaster?.data?.slug + "#leaderboard");
 
     }
@@ -230,24 +253,23 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 : <></>}
             <div style={{
                 position: "absolute",
-                top: 0,
-                right: 0,
+                top: 10,
+                right: 50,
             }}>
                 {shouldShowCancel ?
                     <Button
-                        fontSize={['20px', '20px']}
-                        p={['5px 30px', '5px 20px']}
-                        m={["5px auto", "5px auto", "5px auto"]}
-                        size='lg'
-                        textAlign={'center'}
-                        display="flex"
-                        boxShadow={0}
-                        height="50px"
-                        backgroundImage="linear-gradient(90deg, #672099 0%, #481A7F 100%)"
+                        type="button"
+                        className="btn-close"
+                        aria-label="Close"
+                        borderRadius={"50%"}
+                        p={"10px"}
                         onClick={handleClose}
+                        textAlign={"center"}
                     >
-                        Cancel
-                    </Button> : <></>}
+                        X
+                    </Button>
+
+                     : <></>}
             </div>
         </div >
     )

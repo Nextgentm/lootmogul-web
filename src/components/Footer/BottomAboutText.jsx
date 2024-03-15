@@ -1,12 +1,12 @@
 import React from 'react'
-import {Box, Text, Flex, Image } from "@chakra-ui/react";
+import {Box, Text, Flex, Image,GridItem } from "@chakra-ui/react";
 
 const BottomAboutText = () => {
   return (
     <Box>
         <Box w="100%" h="3px" bg="#FFF" my="20px" />
         <Flex
-            py="50px"
+            py="10px"
             px="20px"
             pb="0px"
             w="80%"
@@ -14,94 +14,93 @@ const BottomAboutText = () => {
             m="0 auto"
             display={['block','block','flex','flex']}
         >
-            <Flex
-                w={["100%", "100%", "80%", "80%"]}
-                justify={["flex-start", "flex-start", "flex-start", "flex-start"]}
-            >
-                <Text pr={["0px", "0px", "20px", "20px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["12px","12px", "18px"]} textAlign="left">
-                LootMogul venture is accelerated (1 of 5 ventures) by National Basketball Player Association in collaboration with 
-                <a style={{color:'#e90a63'}}  href="#"> Andreessen Horowitz (a16z)’s Cultural Leadership Fund and Patricof Co</a>{" "}
-                </Text>
-               
-            </Flex>
-            <Flex
-                w={["100%", "100%", "20%", "20%"]}
-                justify={["center", "center", "flex-start", "flex-start"]}
-                display="block"
-                pt={["15px", "15px", "0px", "0px"]}
-                pb={["15px", "15px", "0px", "0px"]}
-            >
-                <Image
-                    w={["70%", "70%", "100%", "100%"]}
-                    h="auto"
-                    alt=""
-                    src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2022/07/22051935/NBPA.jpg"
-                    display={'block'}
-                />
-                <Image
-                    w={["70%", "70%", "100%", "100%"]}
-                    h="auto"
-                    mt="5px"
-                    alt=""
-                    src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2022/07/22052008/Andreessen-Horowitz-1.png"
-                    display={'block'}
-                />
-            </Flex>
+             <GridItem  w={["100%", "100%", "31%", "31%"]} h={['150px','150px','150px','170px','150px']} >
+                <Flex
+                    w={["100%", "100%", "100%", "100%"]}
+                    justify={["center", "center", "flex-start", "flex-start"]}
+                    display="block"
+                    pt={["15px", "15px", "0px", "0px"]}
+                    pb={["15px", "15px", "0px", "0px"]}
+                >
+                    <Image
+                        w={'auto'}
+                        h="70px"
+                        alt=""
+                        src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/03/11010641/Logo-1.png"
+                        display={'block'}
+                        margin={"auto"}
+                    />
+                </Flex>
+                <Flex
+                    w={["100%", "100%", "100%", "100%"]}
+                    justify={["flex-start", "flex-start", "flex-start", "flex-start"]}
+                >
+                    <Text pr={["0px", "0px", "10px", "10px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["10px","10px","8px", "12px"]} textAlign={["center","center","left"]}>
+                    Official Metaverse and Gaming Partner: <br/>
+Cricket South Africa and SA20 team - Durban Super Giants
+                    </Text>
+                
+                </Flex>
+             </GridItem>
+             <GridItem w={["100%", "100%", "43%", "43%"]} h={['130px','130px','150px']} >
+                <Flex
+                    w={["100%", "100%", "100%", "100%"]}
+                    justify={["center", "center", "flex-start", "flex-start"]}
+                    display="block"
+                    pt={["15px", "15px", "0px", "0px"]}
+                    pb={["15px", "15px", "0px", "0px"]}
+                >
+                    <Image
+                        w={["100%", "100%", "80%", "80%"]}
+                        h={["auto","auto","70px","70px"]}
+                        alt=""
+                        src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/03/11010633/Wide-Logo-1.png"
+                        display={'block'}
+                        margin={"auto"}
+                    />
+                </Flex>
+                <Flex
+                    w={["100%", "100%", "100%", "100%"]}
+                    justify={["flex-start", "flex-start", "flex-start", "flex-start"]}
+                >
+                    <Text pr={["0px", "0px", "10px", "10px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["10px","10px","8px", "12px"]} textAlign={["center","center","left"]}>
+                    LootMogul venture is accelerated (1 of 5 ventures) by National Basketball Player Association in collaboration with Andreessen Horowitz (a16z)’s Cultural Leadership Fund and Patricof Co
+                    </Text>
+                
+                </Flex>
+             </GridItem>
+             <GridItem w={["100%", "100%", "48%", "48%"]} h='150px' >
+                <Flex
+                    w={["100%", "100%", "100%", "100%"]}
+                    justify={["center", "center", "flex-start", "flex-start"]}
+                    display="block"
+                    pt={["0px", "0px", "0px", "0px"]}
+                    pb={["0px", "0px", "0px", "0px"]}
+                >
+                    <Image
+                        w={["50%", "50%", "50%", "auto"]}
+                        h="70px"
+                        alt=""
+                        src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2024/03/11010643/NFLPA-Logo.png"
+                        display={'block'}
+                        margin={"auto"}
+                        p="13px"
+                    />
+                </Flex>
+                <Flex
+                    w={["100%", "100%", "100%", "100%"]}
+                    justify={["flex-start", "flex-start", "flex-start", "flex-start"]}
+                >
+                    <Text pr={["0px", "0px", "10px", "10px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["10px","10px","8px", "12px"]} textAlign={["center","center","left"]}>
+                    LootMogul is competitively selected (1 of 6 ventures) by National Football League Player Association (NFLPA)  to participate in their 2023 NFLPA Pitch Day Competition during the 2023 NFL Superbowl LVII Week.
+                    </Text>  
+                </Flex>
+             </GridItem>      
         </Flex>
+        
+        
         <Flex
             py="0px"
-            px="20px"
-            w="80%"
-            maxW="90%"
-            m="0 auto"
-            display={['block','block','flex','flex']}
-        >
-            <Flex
-                w={["100%", "100%", "100%", "100%"]}
-                justify={["center", "center", "flex-start", "flex-start"]}
-            >
-                <Text pt={["20px", "20px", "0px", "0px"]} pr={["0px", "0px", "20px", "20px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["12px", "12px", "18px"]} textAlign="left">
-                Web3 Studios reports LootMogul as one of the top sports metaverse experience platforms
-                </Text>
-                
-            </Flex>
-        </Flex>
-        <Flex
-            py="20px"
-            px="20px"
-            w="80%"
-            maxW="90%"
-            m="0 auto"
-            display={['block','block','flex','flex']}
-        >
-            <Flex
-                w={["100%", "100%", "80%", "80%"]}
-                justify={["center", "center", "flex-start", "flex-start"]}
-            >
-                <Text pr={["0px", "0px", "20px", "20px"]} variant="footerText" w="100%" fontWeight="400" fontSize={["12px", "12px", "18px"]} textAlign="left">
-                LootMogul is competitively selected (1 of 6 ventures) by National Football League Player Association (NFLPA)  to participate in their <a style={{color:'#e90a63'}} href="#">2023 NFLPA Pitch Day</a> Competition during the 2023 NFL Superbowl LVII Week.
-                </Text>
-                
-            </Flex>
-            <Flex
-                w={["100%", "100%", "20%", "20%"]}
-                justify={["center", "center", "flex-start", "flex-start"]}
-                pt={["15px", "15px", "0px", "0px"]}
-                pb={["15px", "15px", "0px", "0px"]}
-                display="block"
-            >
-               <Image
-                    w={["70%", "70%", "100%", "100%"]}
-                    h="auto"
-                    alt=""
-                    src="https://lootmogul-wp-cdn-buckets.s3.us-west-2.amazonaws.com/wp-content/uploads/2022/07/22051955/NFLPA-1.png"
-                    display={'block'}
-                />
-                
-            </Flex>
-        </Flex>
-        <Flex
-            py="25px"
             px="20px"
             pb="0"
             w="100%"
@@ -115,7 +114,7 @@ const BottomAboutText = () => {
                 <Text
                     variant="footerText"
                     fontWeight="500"
-                    fontSize={["12px", "12px", "18px"]}
+                    fontSize={["8px", "8px","8px", "10px"]}
                     w="100%"
                     mx="auto"
                 >
@@ -125,10 +124,11 @@ const BottomAboutText = () => {
         </Flex>
         <Flex
             py="40px"
-            px="40px"
+            px="20px"
             w="100%"
             maxW="95%"
             m="0 auto"
+            pt="15px"
         >
             <Flex
                 w={["100%", "100%", "100%", "100%"]}
@@ -138,7 +138,7 @@ const BottomAboutText = () => {
                 <Text
                     variant="footerText"
                     fontWeight="400"
-                    fontSize={["12px", "12px", "18px"]}
+                    fontSize={["8px", "8px","8px", "10px"]}
                     w="100%"
                     mx="auto"
                 >

@@ -9,11 +9,13 @@ const LoginForm = dynamic(() => import("../../../features/LoginForm"));
 
 const Banner = ({ bannerData, customClass }) => {
     const router = useRouter();
-    const [isLoginModalActive, setLoginModalActive] = useState(false);
+    const [isLoginModalActiveInner, setLoginModalActiveInner] = useState(false);
     const { user } = useContext(AppContext);
-    const { isMobileDevice } = useContext(AppContext);
+    const { isMobileDevice, isLoginModalActive, setIsHideHeader } = useContext(AppContext);
+    
+    
     const toggleLoginModal = () => {
-        setLoginModalActive(!isLoginModalActive);
+        setLoginModalActiveInner(!isLoginModalActiveInner);
     };
 
     const OnLoginClose = async () => {
@@ -27,20 +29,21 @@ const Banner = ({ bannerData, customClass }) => {
     if (router.route === "/dsg") {
         bannerData.trending_redirectionUrl = '';
     }
-
+    
     useEffect(() => {
         if(isMobileDevice){
-            setLoginModalActive(true);
+            setLoginModalActiveInner(true);
         }
     },[isMobileDevice]);
 
     useEffect(() => {
         if(user?.id){
-            router.push(bannerData.trending_redirectionUrl );
-            setLoginModalActive(false);
+            //router.push(bannerData.trending_redirectionUrl );
+            setLoginModalActiveInner(false);
         }
     },[user]);
 
+    setIsHideHeader(false);
     return (
         <Flex
             flexDir={["column", "column", "column", "row"]}
@@ -135,18 +138,18 @@ const Banner = ({ bannerData, customClass }) => {
                 <Box> 
                     {!isMobileDevice ?
                     <>
-                    {!user?.id && <LoginForm
-                        isOpen={isLoginModalActive}
+                    {!user?.id && isLoginModalActive == false && <LoginForm
+                        isOpen={isLoginModalActiveInner}
                         OnLoginClose={OnLoginClose}
-                        redirectUrl={bannerData.trending_redirectionUrl}
+                        redirectUrl={"/games/"+bannerData.trending_redirectionUrl}
                     />
                     }
                     </> :
                     <>
                     {!user?.id && <Login
-                        isOpen={isLoginModalActive}
+                        isOpen={isLoginModalActiveInner}
                         OnLoginClose={OnLoginClose}
-                        redirectUrl={bannerData.trending_redirectionUrl}
+                        redirectUrl={"/games/"+bannerData.trending_redirectionUrl}
                     />
                     }
                     </> }                
