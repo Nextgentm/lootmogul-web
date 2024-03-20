@@ -444,8 +444,8 @@ export const userClevertapAcknowledgements = async () => {
     //console.log(data.data);
     if(data.data.length){
         const id = data.data[0].id;
-        let browserArr = data.data[0].Browser;
-        let notifications = data.data[0].Device;
+        let browserArr = data.data[0].BrowserRecords;
+        let notifications = data.data[0].ModeChangeHistory;
         const updateDate = new Date();
         browserArr = browserArr +"<br>"+userAgent+" - "+updateDate.toISOString();
         notifications = notifications +"<br>"+"Auto Allow - "+updateDate.toISOString();
@@ -454,12 +454,12 @@ export const userClevertapAcknowledgements = async () => {
             {
                 "data": {
                    
-                    "Browserid": osType,
-                    "Notifications": "Auto Allow",
-                    "Browser": browserArr,
+                    "OperatingSystem": osType,
+                    "Mode": "Auto Allow",
+                    "BrowserRecords": browserArr,
                     "Date": updateDate.toISOString(),
-                    "Device": notifications,
-                    "IPAddress": deviceType,
+                    "ModeChangeHistory": notifications,
+                    "Device": deviceType,
                 }
             },
             {
@@ -473,20 +473,21 @@ export const userClevertapAcknowledgements = async () => {
     }
     else{
         const updateDate = new Date();
+        const notifications = "Auto Allow - "+updateDate.toISOString();
+        const browserArr = userAgent +" - "+updateDate.toISOString();
         const response = axios.post(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements/`,
             {
                 "data": {
                     "Name": strapi.user?.fullName || strapi.user?.username,
-                    "Browserid": osType,
-                    "Identity": "string",
+                    "OperatingSystem": osType,
                     "Username": strapi.user?.username,
                     "Email": strapi.user?.email,
-                    "Notifications": "Auto Allow",
-                    "Browser": userAgent,
+                    "Mode": "Auto Allow",
+                    "BrowserRecords": browserArr,
                     "Date": updateDate.toISOString(),
+                    "ModeChangeHistory": notifications,
                     "Device": deviceType,
-                    "IPAddress": "string",
                 }
             },
             {
@@ -523,8 +524,8 @@ export const userClevertapAcknowledgementsManual = async () => {
 
     if(data.data.length){
         const id = data.data[0].id;
-        let browserArr = data.data[0].Browser;
-        let notifications = data.data[0].Device;
+        let browserArr = data.data[0].BrowserRecords;
+        let notifications = data.data[0].ModeChangeHistory;
         const updateDate = new Date();
         browserArr = browserArr +"<br>"+userAgent+" - "+updateDate.toISOString();
         notifications = notifications +"<br>"+"Manually Allow - "+updateDate.toISOString();
@@ -533,12 +534,12 @@ export const userClevertapAcknowledgementsManual = async () => {
             {
                 "data": {
                    
-                    "Browserid": osType,
-                    "Notifications": "Manually Allow",
-                    "Browser": browserArr,
+                    "OperatingSystem": osType,
+                    "Mode": "Manually Allow",
+                    "BrowserRecords": browserArr,
                     "Date": updateDate.toISOString(),
-                    "Device": notifications,
-                    "IPAddress": deviceType,
+                    "ModeChangeHistory": notifications,
+                    "Device": deviceType,
                 }
             },
             {
@@ -552,20 +553,21 @@ export const userClevertapAcknowledgementsManual = async () => {
     }
     else{
         const updateDate = new Date();
+        const notifications = "Manually Allow - "+updateDate.toISOString();
+        const browserArr = userAgent +" - "+updateDate.toISOString();
         const response = axios.post(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements/`,
             {
                 "data": {
                     "Name": strapi.user?.fullName || strapi.user?.username,
-                    "Browserid": osType,
-                    "Identity": "string",
+                    "OperatingSystem": osType,
                     "Username": strapi.user?.username,
                     "Email": strapi.user?.email,
-                    "Notifications": "Manually Allow",
-                    "Browser": userAgent,
+                    "Mode": "Manually Allow",
+                    "BrowserRecords": browserArr,
                     "Date": updateDate.toISOString(),
+                    "ModeChangeHistory": notifications,
                     "Device": deviceType,
-                    "IPAddress": "string",
                 }
             },
             {
@@ -602,8 +604,8 @@ export const userClevertapAcknowledgementsReject = async () => {
 
     if(data.data.length){
         const id = data.data[0].id;
-        let browserArr = data.data[0].Browser;
-        let notifications = data.data[0].Device;
+        let browserArr = data.data[0].BrowserRecords;
+        let notifications = data.data[0].ModeChangeHistory;
         const updateDate = new Date();
         browserArr = browserArr +"<br>"+userAgent+" - "+updateDate.toISOString();
         notifications = notifications +"<br>"+"Reject - "+updateDate.toISOString();
@@ -612,12 +614,12 @@ export const userClevertapAcknowledgementsReject = async () => {
             {
                 "data": {
                    
-                    "Browserid": osType,
-                    "Notifications": "Reject",
-                    "Browser": browserArr,
+                    "OperatingSystem": osType,
+                    "Mode": "Reject",
+                    "BrowserRecords": browserArr,
                     "Date": updateDate.toISOString(),
-                    "Device": notifications,
-                    "IPAddress": deviceType,
+                    "ModeChangeHistory": notifications,
+                    "Device": deviceType,
                 }
             },
             {
@@ -631,20 +633,21 @@ export const userClevertapAcknowledgementsReject = async () => {
     }
     else{
         const updateDate = new Date();
+        const notifications = "Reject - "+updateDate.toISOString();
+        const browserArr = userAgent +" - "+updateDate.toISOString();
         const response = axios.post(
             `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgements/`,
             {
                 "data": {
                     "Name": strapi.user?.fullName || strapi.user?.username,
-                    "Browserid": osType,
-                    "Identity": "string",
+                    "OperatingSystem": osType,
                     "Username": strapi.user?.username,
                     "Email": strapi.user?.email,
-                    "Notifications": "Reject",
-                    "Browser": userAgent,
+                    "Mode": "Reject",
+                    "BrowserRecords": browserArr,
                     "Date": updateDate.toISOString(),
+                    "ModeChangeHistory": notifications,
                     "Device": deviceType,
-                    "IPAddress": "string",
                 }
             },
             {
