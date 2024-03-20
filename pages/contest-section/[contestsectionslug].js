@@ -4,6 +4,7 @@ import GamesComponent from "../../src/features/Games/single";
 import { useEffect, useState } from "react";
 import MyPageLoader from "../../src/components/MyPageLoader";
 import { useRouter } from "next/router";
+import { useMediaQuery } from "@chakra-ui/react";
 
 const defaultSEOData = {
   metaTitle: "Play Online Trivia Games With Your Favorite Influencers",
@@ -29,10 +30,46 @@ export default function GamesPage({ }) {
     setPageLoader(true);
   }
 
+  const [isSmallDesktop] = useMediaQuery('(min-width: 1145px)');
+  //const [isAvarageDesktop] = useMediaQuery('(min-width: 1360px)');
+  //const [isMediumDesktop] = useMediaQuery('(min-width: 1440px)');
+  const [isLargeDesktop] = useMediaQuery('(min-width: 1510px)');
+  const [isXLargeDesktop] = useMediaQuery('(min-width: 1871px)');
+  const [isXXLargeDesktop] = useMediaQuery('(min-width: 2234px)');
+  const [isEXLargeDesktop] = useMediaQuery('(min-width: 2600px)');
+  const [isEXXLargeDesktop] = useMediaQuery('(min-width: 2960px)');
+  
+  let isPaginationSize = 8;
+  if(isSmallDesktop){isPaginationSize = 9;}
+  if(isLargeDesktop){isPaginationSize = 8;}
+  if(isXLargeDesktop){isPaginationSize = 10;}
+  if(isXXLargeDesktop){isPaginationSize = 12;}
+  if(isEXLargeDesktop){isPaginationSize = 14;}
+  if(isEXXLargeDesktop){isPaginationSize = 16;}
+
+  useEffect(() => {
+    const handleZoomChange = (event) => {
+      if (event.ctrlKey && (event.key === '+' || event.key === '-')) {
+        if (event.key === '+') {
+          console.log('Zoom in'); // User zoomed in
+        } else {
+          console.log('Zoom out'); // User zoomed out
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleZoomChange);
+
+    return () => {
+      window.removeEventListener('keydown', handleZoomChange);
+    };
+  }, []);
+  
   useEffect(() => {
     setCurrentPage(1);
   }, [searchText]);
 
+  
   useEffect(() => {
     const getAllContests = async (currentPage, text) => {
       let filters = {};
@@ -77,7 +114,7 @@ export default function GamesPage({ }) {
               },
               pagination: {  // pagination for contest-master data
                 page: currentPage,
-                pageSize: 8,
+                pageSize: isPaginationSize,
               }
             },
             image: "*"
