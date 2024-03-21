@@ -24,6 +24,7 @@ import { clearpierCallService } from "../../services/clearpierCallService";
 import { appmonetizeCallService } from "../../services/appmonetizeCallService";
 import { ventesCallService } from "../../services/ventesCallService";
 import DeviceUUID from "../device-uuid";
+import strapiInstanceWithCustomHeader from "../strapiInstanceWithCustomHeader";
 
 export const AppContext = createContext({});
 
@@ -565,12 +566,19 @@ export const AppContextContainer = ({ children }) => {
         setLoggingIn(true)
         let data;
         defaultDataSettings();
-
+        let uuidObj={};
         if(typeof window !== "undefined" && window.navigator){
-            var uuid = new DeviceUUID(window?.navigator?.userAgent).get();
-            console.log(uuid);
+            if(window.localStorage.getItem("fcm-token-hash")===null){
+                uuidObj = new DeviceUUID(window?.navigator?.userAgent).getHeaderDataForDeviceID(true);
+                window.localStorage.setItem("fcm-token-hash", uuidObj.fcmToken);
+            } else{
+                uuidObj = new DeviceUUID(window?.navigator?.userAgent).getHeaderDataForDeviceID(false);
+                uuidObj.fcmToken = window.localStorage.getItem("fcm-token-hash");
+            }
+            // console.log(uuidObj);
         }
-        data = await strapi.authenticateProvider(provider, token);
+  
+        data = await strapiInstanceWithCustomHeader(uuidObj).authenticateProvider(provider, token);
         setLoggingIn(false)
         
         if (data?.user) {
@@ -859,10 +867,16 @@ export const AppContextContainer = ({ children }) => {
     const callCustomAuthService = async ( formData, formType, redirectUrl = "" ) => {
         let data;
         defaultDataSettings();
-
+        let uuidObj={};
         if(typeof window !== "undefined" && window.navigator){
-            var uuid = new DeviceUUID(window?.navigator?.userAgent).get();
-            console.log(uuid);
+            if(window.localStorage.getItem("fcm-token-hash")===null){
+                uuidObj = new DeviceUUID(window?.navigator?.userAgent).getHeaderDataForDeviceID(true);
+                window.localStorage.setItem("fcm-token-hash", uuidObj.fcmToken);
+            } else{
+                uuidObj = new DeviceUUID(window?.navigator?.userAgent).getHeaderDataForDeviceID(false);
+                uuidObj.fcmToken = window.localStorage.getItem("fcm-token-hash");
+            }
+            // console.log(uuidObj);
         }
 
         if (formType === "signup" || formType === "login") {
@@ -870,7 +884,7 @@ export const AppContextContainer = ({ children }) => {
             const { password, username , email, } = formData
             if (formType === "signup") {
                 try {
-                    data = await strapi.register({ username , password, identifier: email })
+                    data = await strapiInstanceWithCustomHeader(uuidObj).register({ username , password, identifier: email })
                     setLoggingIn(false)
                     getCurremtLocation().then((res) => {
                         window.localStorage.setItem("lm_user_location", res?.country);
@@ -896,7 +910,7 @@ export const AppContextContainer = ({ children }) => {
 
             if (formType === "login") {
                 try {
-                    data = await strapi.login({ password , identifier: username })
+                    data = await strapiInstanceWithCustomHeader(uuidObj).login({ password , identifier: username })
                     setLoggingIn(false)
                     setJwt(data.jwt);
                     getCurremtLocation().then(/* async */(res) => {

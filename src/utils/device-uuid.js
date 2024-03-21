@@ -1,5 +1,5 @@
-function DeviceUUID (options) {
-    
+function DeviceUUID(options) {
+
     var BOTS = [
         '\\+https:\\/\\/developers.google.com\\/\\+\\/web\\/snippet\\/',
         'googlebot',
@@ -67,7 +67,7 @@ function DeviceUUID (options) {
         isPhantomJS: false,
         isEpiphany: false,
         source: false,
-        cpuCores: false
+        cpuCores: true
     };
     for (var key in options) {
         if (options.hasOwnProperty(key) && typeof defOptions[key] !== 'undefined') {
@@ -994,28 +994,81 @@ function DeviceUUID (options) {
     this.get = function (customData) {
         var pref = 'a', du = this.parse();
         var dua = [];
+        // console.log("du", du);
         for (var key in this.options) {
+            // console.log("loop started");
             if (this.options.hasOwnProperty(key) && this.options[key] === true) {
                 dua.push(du[key]);
             }
         }
+        // console.log("loop ended");
+        // console.log("dua", dua);
         if (customData) {
             dua.push(customData);
         }
         if (!this.options.resolution && du.isMobile) {
             dua.push(du.resolution);
         }
+        // console.log("dua", dua);
         // 8, 9, a, b
         pref = 'b';
         var tmpUuid = du.hashMD5(dua.join(':'));
+        // console.log("tmpUuid", tmpUuid);
         var uuid = [
-            tmpUuid.slice(0,8),
-            tmpUuid.slice(8,12),
-            '4' + tmpUuid.slice(12,15),
-            pref + tmpUuid.slice(15,18),
+            tmpUuid.slice(0, 8),
+            tmpUuid.slice(8, 12),
+            '4' + tmpUuid.slice(12, 15),
+            pref + tmpUuid.slice(15, 18),
             tmpUuid.slice(20)
         ];
         return uuid.join('-');
+    };
+
+    // randomly generated hash value to sotre in local storage
+    this.getRandomGenHash = function () {
+        var pref = 'a', du = this.parse();
+        var dua = [];
+        // Generate a timestamp
+        const timestamp = new Date().getTime();
+        const source = navigator.userAgent.replace(/^\s*/, '').replace(/\s*$/, '');
+        dua.push(source);
+        dua.push(timestamp);
+        ;
+        // 8, 9, a, b
+        pref = 'b';
+        var tmpUuid = du.hashMD5(dua.join(':'));
+        
+        var uuid = [
+            tmpUuid.slice(0, 8),
+            tmpUuid.slice(8, 12),
+            '4' + tmpUuid.slice(12, 15),
+            pref + tmpUuid.slice(15, 18),
+            tmpUuid.slice(20)
+        ];
+        return uuid.join('-');
+    };
+
+    // get data to store in user device
+    this.getHeaderDataForDeviceID = function (newRandomHash) {
+        var du = this.parse();
+        const filteredObj = Object.fromEntries(
+            Object.entries(du).filter(([_, value]) => value === true)
+        );
+
+        return {
+            deviceId: this.get(),
+            fcmToken: newRandomHash?this.getRandomGenHash():null,
+            browzer: du.browser,
+            colorDepth: du.colorDepth,
+            cpuCores: du.cpuCores,
+            isDesktop: du.isDesktop,
+            os: du.os,
+            platform: du.platform,
+            resolution: JSON.stringify(du.resolution),
+            pixelDepth: du.pixelDepth,
+            version: du.version,
+            details: JSON.stringify(filteredObj)
+        };
     };
 
     this.Agent = this.DefaultAgent;
