@@ -43,7 +43,6 @@ export const pageview = async (url) => {
                 "Os Type":osType ? osType : '',
             });
         }
-        
     }
     else{
         console.log('Error : CleverTap Disable from System');
@@ -421,3 +420,4 @@ export const onWithdrawalRequest = ({ action, params, withdrawalData }) => {
         console.log('Error : CleverTap Disable from System');
     }
 };
+    

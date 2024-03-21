@@ -516,7 +516,7 @@ export const AppContextContainer = ({ children }) => {
         const button = document.getElementById('wzrk-confirm');
   
         if (button) {
-          button.click(); // Trigger a click event on the button
+            button.click(); // Trigger a click event on the button
         }
       };
   
@@ -529,7 +529,7 @@ export const AppContextContainer = ({ children }) => {
                 specificDiv.css('display', 'none');
             }
          }, 2000);
-
+         
         setTimeout(() => {
             initializePage();
         }, 5000);

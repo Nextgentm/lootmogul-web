@@ -75,7 +75,7 @@ const GamesCategories = ({ isMobileDevice, section, pageOptions, nextPage, previ
                     {content?.contestmasters?.data
                         //.sort((a, b) => a.priority - b.priority)
                         .map((cm, index) => (
-                            <WrapItem mb="2%!important">
+                            <WrapItem mb="2%!important" display={["contents","contents","contents","flex"]}>
                                 <GamesCard
                                     style={{ mr: "5px" }}
                                     key={`gamescard-${index}`}
