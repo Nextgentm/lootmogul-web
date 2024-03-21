@@ -184,7 +184,9 @@ export const AppContextContainer = ({ children }) => {
 
         try {
             if (typeof window !== "undefined" && window.localStorage) {
-                localStorage.clear();
+                let fcmToken = window.localStorage.getItem("fcm-token-hash");
+                localStorage.clear(); // remove all
+                window.localStorage.setItem("fcm-token-hash", fcmToken); // except fcm token
             }
             strapi.logout();
             setUser(null);
