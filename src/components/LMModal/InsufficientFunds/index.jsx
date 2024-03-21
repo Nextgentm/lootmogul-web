@@ -31,7 +31,7 @@ const WalletHeader = ({score}) => {
                                 fontWeight="400"
                                 lineHeight={"0px"}
                             >
-                                Alert! insufficient Chips
+                                Oops! You need more chips!
                             </Heading>
                         </Box>
                     </Flex>
@@ -54,7 +54,7 @@ const WalletHeader = ({score}) => {
                             fontWeight="400"
                             lineHeight={"0px"}
                         >
-                            Alert! insufficient Chips
+                            Oops! You need more chips!
                         </Heading>
                     </Box>
                 )}
@@ -76,7 +76,7 @@ export const GameBody = ({addDeposit}) => {
     return (
         <Box m="auto" bg="#fff" pb="10px" width="100%" borderRadius="12px" justifyContent="center">
             <Heading
-                fontSize={[, "14px", "14px", "16px"]}
+                fontSize={[, "16px", "16px", "20px"]}
                 p={"10px"}
                 pt={"25px"}
                 textAlign={'center'}
@@ -84,19 +84,9 @@ export const GameBody = ({addDeposit}) => {
                 fontWeight="400"
                 fontFamily="Open Sans"
             >
-                It seems you don't have enough chips to continue playing. 
-                Would you like to purchase more chips & play paid games or explore our Free games and enjoy.
+            Don't miss out on the chance to win big and enjoy non-stop fun. Simply click on the "Get Chips" button below to stock up and continue your winning streak!
             </Heading>
-            <Heading
-                fontSize={[, "20px", "20px", "24px"]}
-                padding={"10px"}
-                textAlign={'center'}
-                color="#000000"
-                fontWeight="700"
-                fontFamily="Open Sans"
-            >
-                Do you want to add chip?
-            </Heading>
+            
             <Button
                 fontSize={['16px', '18px', '22px']}
                 p={['20px 30px', '20px 30px', '25px 40px']}
@@ -106,7 +96,7 @@ export const GameBody = ({addDeposit}) => {
                 boxShadow={0}
                 onClick={addDeposit}
             >
-                Deposit Now
+                Get Chips
             </Button>
 
             
