@@ -4,6 +4,7 @@ import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import JoiningPopup from "../../../components/LMModal/JoiningPopup";
 import LMModal from "../../../components/LMModal";
 import DepostWithdraw from "../../../components/LMModal/DepositWithdraw";
+import InsufficientFunds from "../../../components/LMModal/InsufficientFunds";
 import { useContext, useEffect, useState } from "react";
 import AppContext from "../../../utils/AppContext";
 
@@ -69,13 +70,22 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
                             }
                         });
                     } else if (!res.canPlay) {
+                        console.log('hello no cash need help');
                         setShowModal({
+                            show: true,
+                            mode: "insufficientFunds",
+                            data: {
+                                balance: res.balance
+                            }
+                        });
+
+                       /* setShowModal({
                             show: true,
                             mode: "add",
                             data: {
                                 balance: res.balance
                             }
-                        });
+                        });*/
                     }
                 } else {
                     setShowAlert(true);
@@ -107,6 +117,11 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
                     setShowPaidGameConfirmation({});
                 }}
             >
+                {showModal.mode === "insufficientFunds" && (
+                    <InsufficientFunds
+                        totalAmount={showModal.data.balance}
+                    />
+                )}
                 {showModal.mode === "add" && (
                     <DepostWithdraw
                         totalAmount={showModal.data.balance}
