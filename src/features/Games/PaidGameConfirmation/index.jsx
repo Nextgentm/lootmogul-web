@@ -29,6 +29,17 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
         setShowPaidGameConfirmation({});
     };
 
+    const handleAddDeposit = () => {
+        //console.log('Hello handleAddDeposit',showModal.data.balance);
+        setShowModal({
+            show: true,
+            mode: "add",
+            data: {
+                balance: showModal.data.balance
+            }
+        });
+    }
+
     useEffect(() => {
         setLocationCheck({
             isBan: true,
@@ -70,7 +81,6 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
                             }
                         });
                     } else if (!res.canPlay) {
-                        console.log('hello no cash need help');
                         setShowModal({
                             show: true,
                             mode: "insufficientFunds",
@@ -120,6 +130,7 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
                 {showModal.mode === "insufficientFunds" && (
                     <InsufficientFunds
                         totalAmount={showModal.data.balance}
+                        addDeposit={handleAddDeposit}
                     />
                 )}
                 {showModal.mode === "add" && (

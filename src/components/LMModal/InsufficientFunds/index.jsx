@@ -72,7 +72,7 @@ const WalletFooter = () => {
     );
 };
 
-export const GameBody = () => {
+export const GameBody = ({addDeposit}) => {
     return (
         <Box m="auto" bg="#fff" pb="10px" width="100%" borderRadius="12px" justifyContent="center">
             <Heading
@@ -104,7 +104,7 @@ export const GameBody = () => {
                 textAlign={'center'}
                 display="flex"
                 boxShadow={0}
-                //onClick={onJoin}
+                onClick={addDeposit}
             >
                 Deposit Now
             </Button>
@@ -114,11 +114,11 @@ export const GameBody = () => {
     );
 };
 
-export const InsufficientFunds = ({ totalAmount }) => {
+export const InsufficientFunds = ({ totalAmount,addDeposit }) => {
     return (
         <Box width="100%" bg="#672099" borderRadius="12px" border="20px solid #672099" boxShadow="0px 6px 40px #090014">
             <WalletHeader score={totalAmount} />
-            <GameBody />
+            <GameBody addDeposit={addDeposit} />
             <WalletFooter />
         </Box>
     );
