@@ -9,10 +9,8 @@ import AppContext from "../../../utils/AppContext";
 import strapi from "../../../utils/strapi";
 import PaidGameConfirmation from "../PaidGameConfirmation";
 import * as ct from '../../../services/clevertapAnalytics';
-import { mrnGamePlayService } from "../../../services/mrnCallService";
-import { clearpierGamePlayService } from "../../../services/clearpierCallService";
-import { appmonetizeGamePlayService } from "../../../services/appmonetizeCallService";
-import { ventesGamePlayService } from "../../../services/ventesCallService";
+import { gamePlayPostTracking } from "../../../services/postTrackingService";
+
 
 
 export const GamePixDetail = ({ gameSlug, gameid }) => {
@@ -131,12 +129,8 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                 if (data?.name == 'GameEnd') {
                     
                     //console.log('Skill Game End...',data);
-                    mrnGamePlayService();
-                    clearpierGamePlayService(user);
-                    appmonetizeGamePlayService(user);
-                    clearpierGamePlayService(user);
-                    ventesGamePlayService(user);
-                    
+                    gamePlayPostTracking(user)
+
                     ct.onGameplayStart({
                         action:"Gameplay Completed", 
                         params: user,
