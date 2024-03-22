@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import MyPageLoader from "../../src/components/MyPageLoader";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@chakra-ui/react";
-import { useMediaQuery } from "@chakra-ui/react";
 
 const defaultSEOData = {
   metaTitle: "Play Online Trivia Games With Your Favorite Influencers",
