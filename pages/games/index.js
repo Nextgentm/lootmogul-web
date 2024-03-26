@@ -44,6 +44,11 @@ export async function getStaticProps() {
           $or: [
             {
               name: {
+                $eq: "Match Day Contests",
+              },
+            },
+            {
+              name: {
                 $eq: "Free tournaments",
               },
             },

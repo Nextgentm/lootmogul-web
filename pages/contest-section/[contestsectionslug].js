@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import MyPageLoader from "../../src/components/MyPageLoader";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@chakra-ui/react";
+import { useMediaQuery } from "@chakra-ui/react";
 
 const defaultSEOData = {
   metaTitle: "Play Online Trivia Games With Your Favorite Influencers",
@@ -38,7 +39,7 @@ export default function GamesPage({ }) {
   const [isXXLargeDesktop] = useMediaQuery('(min-width: 2234px)');
   const [isEXLargeDesktop] = useMediaQuery('(min-width: 2600px)');
   const [isEXXLargeDesktop] = useMediaQuery('(min-width: 2960px)');
-  
+
   let isPaginationSize = 8;
   if(isSmallDesktop){isPaginationSize = 9;}
   if(isLargeDesktop){isPaginationSize = 8;}
@@ -47,24 +48,6 @@ export default function GamesPage({ }) {
   if(isEXLargeDesktop){isPaginationSize = 14;}
   if(isEXXLargeDesktop){isPaginationSize = 16;}
 
-  useEffect(() => {
-    const handleZoomChange = (event) => {
-      if (event.ctrlKey && (event.key === '+' || event.key === '-')) {
-        if (event.key === '+') {
-          console.log('Zoom in'); // User zoomed in
-        } else {
-          console.log('Zoom out'); // User zoomed out
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleZoomChange);
-
-    return () => {
-      window.removeEventListener('keydown', handleZoomChange);
-    };
-  }, []);
-  
   useEffect(() => {
     setCurrentPage(1);
   }, [searchText]);

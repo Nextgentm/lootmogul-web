@@ -43,16 +43,16 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
           e.preventDefault();
           window.history.forward();
         };
-    
+
         window.history.pushState(null, null, window.location.pathname);
         window.addEventListener('popstate', disableBackButton);
-    
+
         return () => {
           window.removeEventListener('popstate', disableBackButton);
         };
       }, []);
-    
 
+    
     useEffect(() => {
 
         if (gameUrl)
@@ -272,10 +272,8 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                         onClick={handleClose}
                         textAlign={"center"}
                     >
-                        X
-                    </Button>
-
-                     : <></>}
+                         X
+                    </Button> : <></>}
             </div>
         </div >
     )
