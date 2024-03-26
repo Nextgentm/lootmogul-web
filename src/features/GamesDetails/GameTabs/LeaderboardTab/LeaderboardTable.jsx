@@ -15,8 +15,12 @@ import {
 } from "@chakra-ui/react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@chakra-ui/icons";
 import { makeData, makeColumn } from "./makeData";
+import strapi from "../../../../utils/strapi";
+import {useEffect,useState} from "react";
 
-function CustomTable({ columns, data, currentUser, rawData, noOfRec, pageCount, nextPage, currentPage, previousPage }) {
+function CustomTable({ columns, data, currentUser, rawData, noOfRec, pageCount, nextPage, currentPage, previousPage, user}) {
+    
+
     const {
         getTableProps,
         getTableBodyProps,
@@ -39,7 +43,6 @@ function CustomTable({ columns, data, currentUser, rawData, noOfRec, pageCount, 
         },
         usePagination
     );
-
     return (
         <Box width="90%">
             <Table
@@ -184,8 +187,12 @@ function CustomTable({ columns, data, currentUser, rawData, noOfRec, pageCount, 
     );
 }
 
-function LeaderboardTable({ lbMetas, tableData, tableColumns, user, isMobile, nextPage, currentPage, previousPage }) {
+function LeaderboardTable({ lbMetas, tableData, tableColumns, user, isMobile, nextPage, currentPage, previousPage,activeUserRank }) {
     const pageSize = 25; //change the table page size here
+    //console.log("activeUserRank 2",activeUserRank);
+    
+    //const newData = activeUserRank ? [activeUserRank.data[0], ...tableData] : tableData;
+
     return (
         <CustomTable
             columns={makeColumn(tableColumns)}

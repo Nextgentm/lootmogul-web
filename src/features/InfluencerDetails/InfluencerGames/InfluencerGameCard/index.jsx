@@ -62,6 +62,8 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
         }
     }, [contestmaster, influencerLikes]);
     //console.log(contestmaster.contest?.endDate);
+    const startDate = moment(contestmaster?.contest?.startDate)
+    const today = moment();
     return (
         <Link
             href={"/games/" + contestmaster?.slug}
@@ -142,7 +144,10 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                     : "Free"}
                             </Text>
                         </Flex>
-                        <Text
+                        {contestmaster &&
+                        contestmaster.contest &&
+                        contestmaster?.contest?.status !== "upcoming" &&
+                        !contestStatus && ( <Text
                             color="#FFF"
                             fontSize={["0.75rem", "0.9rem"]}
                             fontWeight="200"
@@ -161,9 +166,29 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                                     }{" "}
                                     Players Joined
                                 </> : <Text p="3"></Text>}
+                               
                         </Text>
+                        )}
+
+                        {contestmaster &&
+                        contestmaster.contest &&
+                        contestmaster?.contest?.status === "upcoming" &&
+                        !contestStatus && ( <Text
+                            color="#FFF"
+                            fontSize={["0.75rem", "0.9rem"]}
+                            fontWeight="200"
+                            mt={0}
+                            pl="6px"
+                        >
+                            {contestmaster?.contest?.startDate && (
+                            (startDate.isSame(today, 'day') && 'Starting Today') ||
+                            startDate.isAfter(today) && `Starting on ${startDate.format("DD MMM YYYY")}`
+                            )}
+                        </Text>
+                    )}
+
                     </VStack>
-                    {sectionName === 'Blockchain Games' ? (
+                    {sectionName === 'Skill Games' ? (
                         <Box w={["30%", "30%", "23%"]}>
                             <Tooltip
                                 placement="top-end"
@@ -275,7 +300,9 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                             m="auto"
                             variant="outline"
                             disabled
-                            fontSize={"32px"}
+                            fontSize={"20px"}
+                            fontFamily={"Sora"}
+                            textTransform={"uppercase"}
                         >
                             Completed{" "}
                         </Button>
