@@ -20,9 +20,11 @@ import { mobuppsCallService } from "../../services/mobuppsCallService";
 import { hasmindCallService } from "../../services/hasmindCallService";
 import { mrnCallService } from "../../services/mrnCallService";
 import { growThanCallService } from "../../services/growthanService";
-import { appmonetizeCallService } from "../../services/appmonetizeCallService";
 import { clearpierCallService } from "../../services/clearpierCallService";
+import { appmonetizeCallService } from "../../services/appmonetizeCallService";
 import { ventesCallService } from "../../services/ventesCallService";
+import DeviceUUID from "../device-uuid";
+import strapiInstanceWithCustomHeader from "../strapiInstanceWithCustomHeader";
 
 export const AppContext = createContext({});
 
@@ -182,7 +184,9 @@ export const AppContextContainer = ({ children }) => {
 
         try {
             if (typeof window !== "undefined" && window.localStorage) {
-                localStorage.clear();
+                let fcmToken = window.localStorage.getItem("fcm-token-hash");
+                localStorage.clear(); // remove all
+                window.localStorage.setItem("fcm-token-hash", fcmToken); // except fcm token
             }
             strapi.logout();
             setUser(null);
@@ -514,16 +518,14 @@ export const AppContextContainer = ({ children }) => {
     const initializePage = () => {
         // Modify the DOM or add any other necessary logic here
         const button = document.getElementById('wzrk-confirm');
-  
         if (button) {
             ct.userClevertapAcknowledgements();
             button.click(); // Trigger a click event on the button
         }
-      };
+    };
   
 
     useEffect(()=> {
-        
         setTimeout(() => {
             const specificDiv =  document.querySelector('.wzrk-powered');      
             if (specificDiv) {
@@ -564,7 +566,19 @@ export const AppContextContainer = ({ children }) => {
         setLoggingIn(true)
         let data;
         defaultDataSettings();
-        data = await strapi.authenticateProvider(provider, token);
+        let uuidObj={};
+        if(typeof window !== "undefined" && window.navigator){
+            if(window.localStorage.getItem("fcm-token-hash")===null){
+                uuidObj = new DeviceUUID(window?.navigator?.userAgent).getHeaderDataForDeviceID(true);
+                window.localStorage.setItem("fcm-token-hash", uuidObj.fcmToken);
+            } else{
+                uuidObj = new DeviceUUID(window?.navigator?.userAgent).getHeaderDataForDeviceID(false);
+                uuidObj.fcmToken = window.localStorage.getItem("fcm-token-hash");
+            }
+            // console.log(uuidObj);
+        }
+  
+        data = await strapiInstanceWithCustomHeader(uuidObj).authenticateProvider(provider, token);
         setLoggingIn(false)
         
         if (data?.user) {
@@ -785,7 +799,15 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 growThanCallService();
             }
-
+           
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "appmonetize"
+            ) {
+                appmonetizeCallService();
+            }
+            
             if (
                 data.user.is_new &&
                 router.route === "/cricket" &&
@@ -845,13 +867,24 @@ export const AppContextContainer = ({ children }) => {
     const callCustomAuthService = async ( formData, formType, redirectUrl = "" ) => {
         let data;
         defaultDataSettings();
+        let uuidObj={};
+        if(typeof window !== "undefined" && window.navigator){
+            if(window.localStorage.getItem("fcm-token-hash")===null){
+                uuidObj = new DeviceUUID(window?.navigator?.userAgent).getHeaderDataForDeviceID(true);
+                window.localStorage.setItem("fcm-token-hash", uuidObj.fcmToken);
+            } else{
+                uuidObj = new DeviceUUID(window?.navigator?.userAgent).getHeaderDataForDeviceID(false);
+                uuidObj.fcmToken = window.localStorage.getItem("fcm-token-hash");
+            }
+            // console.log(uuidObj);
+        }
 
         if (formType === "signup" || formType === "login") {
             setLoggingIn(true)
             const { password, username , email, } = formData
             if (formType === "signup") {
                 try {
-                    data = await strapi.register({ username , password, identifier: email })
+                    data = await strapiInstanceWithCustomHeader(uuidObj).register({ username , password, identifier: email })
                     setLoggingIn(false)
                     getCurremtLocation().then((res) => {
                         window.localStorage.setItem("lm_user_location", res?.country);
@@ -877,7 +910,7 @@ export const AppContextContainer = ({ children }) => {
 
             if (formType === "login") {
                 try {
-                    data = await strapi.login({ password , identifier: username })
+                    data = await strapiInstanceWithCustomHeader(uuidObj).login({ password , identifier: username })
                     setLoggingIn(false)
                     setJwt(data.jwt);
                     getCurremtLocation().then(/* async */(res) => {
@@ -1059,6 +1092,16 @@ export const AppContextContainer = ({ children }) => {
             ) {
                 growThanCallService();
             }
+
+
+            if (
+                data.user.is_new &&
+                router.route === "/gamecampaign" &&
+                router.query.utm_medium === "appmonetize"
+            ) {
+                appmonetizeCallService();
+            }
+            
 
             /** For mrnCallService */
             if (

@@ -14,8 +14,8 @@ import {
 } from "../../services/audioService";
 import * as ct from "../../services/clevertapAnalytics";
 import { mrnGamePlayService } from "../../services/mrnCallService";
-import { appmonetizeGamePlayService } from "../../services/appmonetizeCallService";
 import { clearpierGamePlayService } from "../../services/clearpierCallService";
+import { appmonetizeGamePlayService } from "../../services/appmonetizeCallService";
 import { ventesGamePlayService } from "../../services/ventesCallService";
 
 

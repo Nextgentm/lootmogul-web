@@ -13,9 +13,9 @@ import AppContext from "../../src/utils/AppContext";
 import { useContext } from "react"
 
 export default function GamesPage({
-  banners = [],
   contestSectionsData,
-  seoData,
+  banners,
+  seoData
 }) {
   const {
       setIsHideHeader,
@@ -42,6 +42,11 @@ export async function getStaticProps() {
     const res = await strapi.find("contest-section/custom-contest-section/get-all-games-page-data", {
       filters: {
           $or: [
+            {
+              name: {
+                $eq: "Match Day Contests",
+              },
+            },
             {
               name: {
                 $eq: "Free tournaments",
@@ -112,17 +117,15 @@ export async function getStaticProps() {
         process.env.NEXT_PUBLIC_STRAPI_API_URL +
         "/api/campaigns?sort=priority&populate=bannerImage"
       );
-
       const banners = await bannersRes.json();
       const seoData = await getSeoData("games");
-
       return {
         props: {
           contestSectionsData: res,
           banners,
-          seoData,
+          seoData, 
         },
-        revalidate: 300,
+       revalidate: 300,
       };
     } catch (error) { }
     return {

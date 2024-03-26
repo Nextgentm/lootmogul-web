@@ -251,7 +251,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     !contestStatus && (
                         <Button
                             m="auto"
-                            h={["34px", "28px"]}
+                            h={["60px", "60px"]}
                             mt="12px"
                             opacity="1!important"
                             color="primary"
@@ -269,12 +269,13 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     contestmaster.contest &&
                     contestmaster?.contest?.status === "closed" && (
                         <Button
-                            h={["34px", "28px"]}
-                            mt="12px"
+                            h={["60px", "60px"]}
+                            //mt="12px"
                             w="90%"
                             m="auto"
                             variant="outline"
                             disabled
+                            fontSize={"32px"}
                         >
                             Completed{" "}
                         </Button>
