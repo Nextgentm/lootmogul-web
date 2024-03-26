@@ -26,7 +26,7 @@ const CountDownTimer = ({ startDate, onZero }) => {
         <>
             <Text
                 display="flex"
-                fontSize={["20px", "20px"]}
+                fontSize={["20px", "40px"]}
                 fontWeight="normal"
                 textAlign="center"
                 lineHeight="25px"
