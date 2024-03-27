@@ -2,6 +2,7 @@ import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogConten
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react"
 import GameOverPopup, { GameBody } from "../../../components/LMModal/GameOverPopup";
+import AlertChipPopup from "../../../components/LMModal/AlertChipPopup";
 import LMNonCloseALert from "../../../components/LMNonCloseALert";
 import MultipleLoggedInUser from "../../../components/MultipleLoggedInUser";
 import { getGameRoomOrCreateRoom } from "../../../services/gameSevice";
@@ -37,7 +38,8 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
     const [isOpen, setOpen] = useState(false);
     const [retryCount, setRetryCount] = useState();
     const [shouldShowCancel, setShouldShowCancel] = useState(false)
-    
+    const [alertLostChip, setAlertLostChip] = useState(false)
+
     useEffect(() => {
         const disableBackButton = (e) => {
           e.preventDefault();
@@ -163,11 +165,25 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         }, globalUrl);
     }
     const handleClose = async () => {
+        //console.log(joiningData?.contestmaster?.data?.entryFee);
         //setIsHideHeader(false);
         //setIsHideFooter(false);
+        if(joiningData?.contestmaster?.data?.entryFee != 0){
+            setAlertLostChip(true);
+        }
+        else{
+            setShowLoading(true);
+            router.push("/games/" + joiningData?.contestmaster?.data?.slug + "#leaderboard");
+        }
+
+    }
+    const handleYes = async () => {
         setShowLoading(true);
         router.push("/games/" + joiningData?.contestmaster?.data?.slug + "#leaderboard");
 
+    }
+    const handleNo = async () => {
+        setAlertLostChip(false);
     }
     const retryConst = async () => {
         try {
@@ -256,6 +272,24 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
                     }
                 ></LMNonCloseALert>
                 : <></>}
+            {alertLostChip && <AlertDialog
+                motionPreset="slideInBottom"
+                onClose={handleNo}
+                isOpen={alertLostChip}
+                onClick={handleNo}
+                isCentered
+                size={"xl"}
+                bg="background"
+                closeOnOverlayClick={false}
+                closeOnEsc={false}
+            >
+                <AlertDialogOverlay />
+
+                <AlertDialogContent p="10px" bg="transparent">
+                    <AlertChipPopup  onCancel={handleYes} onCancelNo={handleNo} />
+                </AlertDialogContent>
+            </AlertDialog>}    
+            
             <div style={{
                 position: "absolute",
                 top: 10,

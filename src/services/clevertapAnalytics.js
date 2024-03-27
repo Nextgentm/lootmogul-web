@@ -420,4 +420,25 @@ export const onWithdrawalRequest = ({ action, params, withdrawalData }) => {
         console.log('Error : CleverTap Disable from System');
     }
 };
-    
+
+export const userClevertapAcknowledgements = () => {
+    //console.log("Auto");
+    const response = axios.get(
+        `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgement/store-acknowledgement-data/?action=Auto Allow&user_id=${strapi.user?.username}&user_email=${strapi.user?.email}`
+    )
+    console.log(response);
+}
+export const userClevertapAcknowledgements_1 = () => {
+    //console.log("Manually Allow");
+     const response = axios.get(
+         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgement/store-acknowledgement-data/?action=Manually Allow&user_id=${strapi.user?.username}&user_email=${strapi.user?.email}`
+     )
+     //console.log(response);
+ }
+ export const userClevertapAcknowledgements_2 = () => {
+    //console.log("Reject");
+     const response = axios.get(
+         `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/user-clevertap-acknowledgement/store-acknowledgement-data/?action=Reject&user_id=${strapi.user?.username}&user_email=${strapi.user?.email}`
+     )
+     //console.log(response);
+ }

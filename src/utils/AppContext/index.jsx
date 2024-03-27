@@ -516,6 +516,7 @@ export const AppContextContainer = ({ children }) => {
         const button = document.getElementById('wzrk-confirm');
   
         if (button) {
+            ct.userClevertapAcknowledgements();
             button.click(); // Trigger a click event on the button
         }
       };
@@ -528,7 +529,25 @@ export const AppContextContainer = ({ children }) => {
             if (specificDiv) {
                 specificDiv.css('display', 'none');
             }
-         }, 2000);
+            const confirm = document.getElementById('wzrk-confirm');
+            const cancel = document.getElementById('wzrk-cancel');
+
+            if (confirm) {
+                confirm.addEventListener('click', function(event) {
+                    if(event.clientX != 0 && event.clientY != 0){
+                        //console.log('User Allow clicked Event!', event);
+                        ct.userClevertapAcknowledgements_1();
+                    }
+                });
+            }
+            if (cancel) {
+                cancel.addEventListener('click', function(event) {
+                    //console.log('User Disallow clicked Event!', event);
+                    ct.userClevertapAcknowledgements_2();
+                });
+            }  
+
+         }, 1000);
          
         setTimeout(() => {
             initializePage();
