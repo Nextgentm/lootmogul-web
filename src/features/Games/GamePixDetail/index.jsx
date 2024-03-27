@@ -166,7 +166,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         }, globalUrl);
     }
     const handleClose = async () => {
-        console.log(joiningData?.contestmaster?.data?.entryFee);
+        //console.log(joiningData?.contestmaster?.data?.entryFee);
         //setIsHideHeader(false);
         //setIsHideFooter(false);
         if(joiningData?.contestmaster?.data?.entryFee != 0){
