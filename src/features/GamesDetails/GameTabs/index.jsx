@@ -13,6 +13,8 @@ const GameTabs = ({ defaultTab, gameData }) => {
     const [loading, setLoading] = useState(true);
     const [currentUser, setCurrentUser] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    
+
     const tabsData = [
         {
             tab: <Text>Details</Text>,
@@ -41,6 +43,9 @@ const GameTabs = ({ defaultTab, gameData }) => {
         }
     }, [gameData, defaultTab, user, currentPage]);
 
+    const [activeUserRank, setActiveUserRank] = useState();
+
+
     const getLeaderBoard = async (currentPage = 1) => {
         try {
             if (gameData) {
@@ -66,6 +71,12 @@ const GameTabs = ({ defaultTab, gameData }) => {
                     `lbrecord/get-leaderboard-details?leaderboardId=${contests.data[0].leaderboard?.data?.id}&page=${currentPage}&pageSize=${pageSize}`);
                     // console.log("res ",res);
                     const finalLBData = [];
+                    if(user?.id){
+                        const res_user = await strapi.request("get",
+                        `lbrecord/get-user-leaderboard-details?leaderboardId=${contests.data[0].leaderboard?.data?.id}&page=1&pageSize=1&userId=${user?.id}`);
+                        setActiveUserRank(res_user);
+                    }
+                    
                     if (res?.data?.length > 0) {
                         const prizes = contests.data[0]
                                 ?.contestmaster?.data?.reward?.data
@@ -106,13 +117,12 @@ const GameTabs = ({ defaultTab, gameData }) => {
                                     score: rec.score,
                                     rank: currentRank,
                                     isActive: user?.id === rec.userId,
-                                    prize: playerPrize
+                                    prize: playerPrize  
                                 });
                             });
                     }
                     setLbRecords(finalLBData);
                     setLbMetas(res.meta)
-
                 }
                 setLoading(false);
             }
@@ -127,7 +137,7 @@ const GameTabs = ({ defaultTab, gameData }) => {
     if(gameData.type != 'battle'){
         tabsData.push({
             tab: <Text>Leaderboard</Text>,
-            tabPanel: <LeaderboardTab nextPage={nextPage} previousPage={previousPage} currentPage={currentPage} lbMetas={lbMetas} gameData={gameData} lbRecords={lbRecords} loading={loading} currentUser={currentUser} user={user} />
+            tabPanel: <LeaderboardTab activeUserRank={activeUserRank} nextPage={nextPage} previousPage={previousPage} currentPage={currentPage} lbMetas={lbMetas} gameData={gameData} lbRecords={lbRecords} loading={loading} currentUser={currentUser} user={user} />
         })
     }
     if ((defaultTab == 1 && tabsData?.length == 2) || defaultTab == 0)
