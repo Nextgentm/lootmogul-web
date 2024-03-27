@@ -9,7 +9,7 @@ const CountDownTimer = ({ startDate, onZero }) => {
     const [currentTime, setCurrentTime] = useState(moment());
     const timeBetween = moment
         .duration(moment(startDate).diff(currentTime), "milliseconds")
-        .format(" dd[days]:hh[hrs]:mm[m]:ss[s]");
+        .format(" dd [days]:hh[hrs]:mm[m]:ss[s]");
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -26,11 +26,12 @@ const CountDownTimer = ({ startDate, onZero }) => {
         <>
             <Text
                 display="flex"
-                fontSize={["20px", "40px"]}
+                fontSize={["20px", "20px"]}
                 fontWeight="normal"
                 textAlign="center"
                 lineHeight="25px"
                 margin="auto"
+                fontFamily={"Sora"}
             >
                 {moment(startDate).diff(currentTime) > 0
                     ? timeBetween

@@ -84,7 +84,7 @@ export const GameBody = ({addDeposit}) => {
                 fontWeight="400"
                 fontFamily="Open Sans"
             >
-            Don't miss out on the chance to win big and enjoy non-stop fun. Simply click on the "Get Chips" button below to stock up and continue your winning streak!
+Insufficient Chips in your wallet to play paid contest. Click on the "Deposit" button to top up and continue playing cash games.
             </Heading>
             
             <Button
@@ -96,7 +96,7 @@ export const GameBody = ({addDeposit}) => {
                 boxShadow={0}
                 onClick={addDeposit}
             >
-                Get Chips
+                Deposit
             </Button>
 
             
