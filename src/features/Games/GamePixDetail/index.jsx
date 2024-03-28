@@ -166,12 +166,16 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
         }, globalUrl);
     }
     const handleClose = async () => {
+        //console.log(joiningData?.contestmaster?.data?.entryFee);
         //setIsHideHeader(false);
         //setIsHideFooter(false);
-        setAlertLostChip(true);
-        //setShowLoading(true);
-        //router.push("/games/" + joiningData?.contestmaster?.data?.slug + "#leaderboard");
-
+        if(joiningData?.contestmaster?.data?.entryFee != 0){
+            setAlertLostChip(true);
+        }
+        else{
+            setShowLoading(true);
+            router.push("/games/" + joiningData?.contestmaster?.data?.slug + "#leaderboard");
+        }
     }
     const handleYes = async () => {
         setShowLoading(true);
