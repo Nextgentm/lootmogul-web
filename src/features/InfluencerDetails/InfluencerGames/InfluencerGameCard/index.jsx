@@ -188,7 +188,7 @@ const GamesCard = ({ contestmaster, style, sectionName }) => {
                     )}
 
                     </VStack>
-                    {sectionName === 'Skill Games' ? (
+                    {sectionName  ? (
                         <Box w={["30%", "30%", "23%"]}>
                             <Tooltip
                                 placement="top-end"
