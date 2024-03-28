@@ -88,8 +88,8 @@ const PaidGameConfirmation = ({ retry, contestmaster }) => {
                                 balance: res.balance
                             }
                         });
-
-                       /* setShowModal({
+                        
+                        /* setShowModal({
                             show: true,
                             mode: "add",
                             data: {

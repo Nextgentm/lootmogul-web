@@ -176,6 +176,7 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             setShowLoading(true);
             router.push("/games/" + joiningData?.contestmaster?.data?.slug + "#leaderboard");
         }
+
     }
     const handleYes = async () => {
         setShowLoading(true);
@@ -285,11 +286,11 @@ export const GamePixDetail = ({ gameSlug, gameid }) => {
             >
                 <AlertDialogOverlay />
 
-                <AlertDialogContent p="10px" bg="background">
+                <AlertDialogContent p="10px" bg="transparent">
                     <AlertChipPopup  onCancel={handleYes} onCancelNo={handleNo} />
                 </AlertDialogContent>
             </AlertDialog>}    
-
+            
             <div style={{
                 position: "absolute",
                 top: 10,
