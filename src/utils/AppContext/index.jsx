@@ -537,20 +537,20 @@ export const AppContextContainer = ({ children }) => {
             if (confirm) {
                 confirm.addEventListener('click', function(event) {
                     if(event.clientX != 0 && event.clientY != 0){
-                        console.log('User Allow clicked Event!', event);
+                        //console.log('User Allow clicked Event!', event);
                         ct.userClevertapAcknowledgements_1();
                     }
                 });
             }
             if (cancel) {
                 cancel.addEventListener('click', function(event) {
-                    console.log('User Disallow clicked Event!', event);
+                    //console.log('User Disallow clicked Event!', event);
                     ct.userClevertapAcknowledgements_2();
                 });
             }  
 
-         }, 1000);;
-
+         }, 1000);
+         
         setTimeout(() => {
             initializePage();
         }, 5000);
